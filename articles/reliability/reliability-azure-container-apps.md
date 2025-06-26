@@ -38,7 +38,7 @@ When zone redundancy is enabled, Container Apps spreads your replicas across mul
 ### Key considerations
 
 - **Session state**: Use stateless apps or external session storage to avoid data loss during failovers
-- **Scaling costs**: Failed zones may trigger extra replicas in remaining zones
+- **Scaling costs**: Failed zones could trigger extra replicas in remaining zones
 - **Deployments**: Updates apply to all zones at once - use blue-green deployments for safety
 
 ## Handle temporary failures
@@ -90,9 +90,9 @@ When a failure occurs traffic is routed to a replica running in a different zone
 |--------|-------------|
 | **Detection and response** | Azure automatically detects zone failures and starts traffic rerouting. No action needed from you. |
 | **Notification** | Zone failures show up in Azure Monitor metrics and can trigger alerts. Watch *Replica count* and *Request success rate* metrics. |
-| **Active requests** | Requests to containers in the failed zone may timeout or get connection errors. New requests go to healthy replicas in other zones. |
+| **Active requests** | Requests to containers in the failed zone can time out or get connection errors. New requests go to healthy replicas in other zones. |
 | **Expected data loss** | No data loss at the platform level since Container Apps is for stateless workloads. Any app data loss depends on your external data services. |
-| **Expected downtime** | Minimal downtime as traffic reroutes to healthy zones within seconds. Some requests may see brief latency spikes during failover. |
+| **Expected downtime** | Minimal downtime as traffic reroutes to healthy zones within seconds. Some requests might see brief latency spikes during failover. |
 | **Traffic rerouting** | The ingress controller automatically removes failed zone replicas from load balancing and sends traffic to healthy replicas. |
 
 ### Zone recovery
@@ -103,9 +103,11 @@ When a failed zone comes back online, Container Apps automatically restores prop
 
 Test your app's resilience by monitoring these metrics during zone outages:
 
-- *Replica count*, *Request success rate*, and *Response time*
-- Autoscaling behavior and resource usage patterns
-- How well your scaling rules handle reduced zone capacity
+- Replica count
+- Request success rate
+- Response time
+
+Make sure to check autoscaling behavior and resource usage patterns and how well your scaling rules handle reduced zone capacity
 
 Use Azure Monitor to track performance during both real and simulated zone failures.
 
@@ -169,12 +171,6 @@ For detailed patterns, see [Geode pattern](/azure/architecture/patterns/geodes) 
 **Maintenance**: Container Apps handles planned maintenance with rolling updates to minimize disruption. You can set maintenance windows for preferred update times. During maintenance, at least one healthy replica stays available in zone-redundant deployments.
 
 For maintenance configuration, see [Azure Container Apps planned maintenance](/azure/container-apps/planned-maintenance).
-
-## Service Level Agreement
-
-Container Apps provides an SLA for applications with multiple replicas across availability zones. The SLA covers platform infrastructure - your app's availability also depends on your design, health probes, and replica settings.
-
-See [SLA for Azure Container Apps](https://azure.microsoft.com/support/legal/sla/container-apps/) for complete details.
 
 ## Related content
 
