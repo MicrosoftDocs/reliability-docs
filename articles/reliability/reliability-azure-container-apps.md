@@ -1,243 +1,186 @@
 ---
 title: Reliability in Azure Container Apps
-description: Learn how to ensure application reliability in Azure Container Apps
-services: container-apps
-author: craigshoemaker
+description: Learn about reliability in Azure Container Apps, including availability zones and multi-region deployments.
 ms.author: cshoe
-ms.service: azure-container-apps
-ms.custom: subject-reliability,  devx-track-azurepowershell, devx-track-azurecli
+author: craigshoemaker
 ms.topic: reliability-article
-ms.date: 10/23/2023
+ms.custom: subject-reliability, devx-track-azurepowershell, devx-track-azurecli
+ms.service: azure-container-apps
+ms.date: 06/26/2025
+ms.update-cycle: 180-days
+#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Container Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Container Apps
 
-This article describes reliability support in [Azure Container Apps](/azure/container-apps/overview), and covers both regional resiliency with availability zones and cross-region resiliency with disaster recovery. For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/well-architected/resiliency/).
+This article covers reliability features in [Azure Container Apps](/azure/container-apps/overview), including availability zones and disaster recovery. For a complete overview of reliability in Azure, see [Azure reliability](/azure/reliability/overview).
 
-## Availability zone support
+## Production setup
 
-[!INCLUDE [availability zone overview](includes/reliability-availability-zone-description-include.md)]
+For production workloads, consider the following setup:
 
-Azure Container Apps uses [availability zones](availability-zones-overview.md#zonal-and-zone-redundant-services) in regions where they're available to provide high-availability protection for your applications and data from data center failures.
+- **Enable zone redundancy** when creating your Container Apps environment
+- **Use 3+ replicas** for proper distribution across availability zones
+- **Configure health probes** with appropriate timeouts
+- **Store deployment configs** in source control for disaster recovery
 
-By enabling Container Apps' zone redundancy feature, replicas are automatically distributed across the zones in the region.  Traffic is load balanced among the replicas.  If a zone outage occurs, traffic is automatically routed to the replicas in the remaining zones.
+## How Container Apps provides reliability
 
-> [!NOTE]
-> There is no extra charge for enabling zone redundancy, but it only provides benefits when you have 2 or more replicas, with 3 or more being ideal since most regions that support zone redundancy have 3 zones.
+Container Apps automatically handles reliability through:
 
-### Prerequisites
+- **Replica distribution** across availability zones
+- **Automatic load balancing** between healthy replicas  
+- **Health monitoring** with container replacement
+- **Traffic rerouting** during zone failures
 
-Azure Container Apps offers the same reliability support regardless of your plan type.
+When zone redundancy is enabled, Container Apps spreads your replicas across multiple zones. If one zone fails, traffic automatically routes to healthy zones without manual intervention.
 
-Azure Container Apps uses [availability zones](availability-zones-overview.md#zonal-and-zone-redundant-services) in regions where they're available. For a list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
+### Key considerations
 
-### SLA improvements
+- **Session state**: Use stateless apps or external session storage to avoid data loss during failovers
+- **Scaling costs**: Failed zones may trigger extra replicas in remaining zones
+- **Deployments**: Updates apply to all zones at once - use blue-green deployments for safety
 
-There are no increased SLAs for Azure Container Apps. For more information on the Azure Container Apps SLAs, see [Service Level Agreement for Azure Container Apps](https://azure.microsoft.com/support/legal/sla/container-apps/).
+## Handle temporary failures
 
-### Create a resource with availability zone enabled
+Container Apps automatically recovers from temporary issues like network problems or container crashes. For best results:
 
-#### Set up zone redundancy in your Container Apps environment
+- **Configure health probes**:
+  - Set liveness probe: `failureThreshold: 3`, `periodSeconds: 10`, `timeoutSeconds: 5`
+  - Use readiness and startup probes for complete coverage
+  - See [Health probes](/azure/container-apps/health-probes) for details
 
-To take advantage of availability zones, you must enable zone redundancy when you create a Container Apps environment.  The environment must include a virtual network with an available subnet. To ensure proper distribution of replicas, set your app's minimum replica count to three.
+- **Add retry logic to your app**:
+  - Use exponential backoff for external service calls
+  - Implement circuit breakers to prevent cascading failures
+  - Follow [transient fault guidance](/azure/well-architected/reliability/handle-transient-faults)
 
-##### Enable zone redundancy via the Azure portal
+## Availability zones
 
-To create a container app in an environment with zone redundancy enabled using the Azure portal:
+Container Apps supports zone redundancy to protect against single zone failures. Zone redundancy automatically spreads replicas across multiple zones in a region.
 
-1. Navigate to the Azure portal.
-1. Search for **Container Apps** in the top search box.
-1. Select **Container Apps**.
-1. Select **Create New** in the *Container Apps Environment* field to open the *Create Container Apps Environment* panel.
-1. Enter the environment name.
-1. Select **Enabled** for the *Zone redundancy* field.
+### Setup requirements
 
-Zone redundancy requires a virtual network with an infrastructure subnet.  You can choose an existing virtual network or create a new one.  When creating a new virtual network, you can accept the values provided for you or customize the settings.
+- **Enable during environment creation** as you can't change this setting after you create your environment
+- **Use virtual network** with available subnet
+- **Available in all regions** that support availability zones ([see list](/azure/reliability/regions-list))
+- **Works with all plans** including both Consumption and Dedicated workload profiles
 
-1. Select the **Networking** tab.  
-1. To assign a custom virtual network name, select **Create New** in the *Virtual Network* field.
-1. To assign a custom infrastructure subnet name, select **Create New** in the *Infrastructure subnet* field.
-1. You can select **Internal** or **External** for the *Virtual IP*.
-1. Select **Create**.
+### Configuration
 
-:::image type="content" source="../container-apps/media/screen-shot-vnet-configuration.png" alt-text="Screenshot of Networking tab in Create Container Apps Environment page.":::
+Enable zone redundancy as you create your environment. For step-by-step instructions, see [Configure zone redundancy](/azure/container-apps/configure-zone-redundancy).
 
-##### Enable zone redundancy with the Azure CLI
+Verify setup with: `az containerapp env show` and check for `"zoneRedundant": true`
 
-Create a virtual network and infrastructure subnet to include with the Container Apps environment.
+### Monitoring and scaling
 
-When using these commands, replace the `<PLACEHOLDERS>` with your values.
+Set up autoscaling rules based on:
 
->[!NOTE]
-> The Consumption only environment requires a dedicated subnet with a CIDR range of `/23` or larger. The workload profiles environment requires a dedicated subnet with a CIDR range of `/27` or larger. To learn more about subnet sizing, see the [networking architecture overview](../container-apps/networking.md#subnet).
+- CPU and memory usage
+- HTTP request queues  
+- Custom metrics for your workload
 
-# [Azure CLI](#tab/azure-cli)
+For more information, see [Set scaling rules](/azure/container-apps/scale-app) for configuration options.
 
-```azurecli-interactive
-az network vnet create \
-  --resource-group <RESOURCE_GROUP_NAME> \
-  --name <VNET_NAME> \
-  --location <LOCATION> \
-  --address-prefix 10.0.0.0/16
-```
+### What happens during zone failures
 
-```azurecli-interactive
-az network vnet subnet create \
-  --resource-group <RESOURCE_GROUP_NAME> \
-  --vnet-name <VNET_NAME> \
-  --name infrastructure \
-  --address-prefixes 10.0.0.0/21
-```
+When a failure occurs traffic is routed to a replica running in a different zone.
 
-# [Azure PowerShell](#tab/azure-powershell)
+| Aspect | Description |
+|--------|-------------|
+| **Detection and response** | Azure automatically detects zone failures and starts traffic rerouting. No action needed from you. |
+| **Notification** | Zone failures show up in Azure Monitor metrics and can trigger alerts. Watch *Replica count* and *Request success rate* metrics. |
+| **Active requests** | Requests to containers in the failed zone may timeout or get connection errors. New requests go to healthy replicas in other zones. |
+| **Expected data loss** | No data loss at the platform level since Container Apps is for stateless workloads. Any app data loss depends on your external data services. |
+| **Expected downtime** | Minimal downtime as traffic reroutes to healthy zones within seconds. Some requests may see brief latency spikes during failover. |
+| **Traffic rerouting** | The ingress controller automatically removes failed zone replicas from load balancing and sends traffic to healthy replicas. |
 
-```azurepowershell-interactive
-$SubnetArgs = @{
-    Name = 'infrastructure-subnet'
-    AddressPrefix = '10.0.0.0/21'
-}
-$subnet = New-AzVirtualNetworkSubnetConfig @SubnetArgs
-```
+### Zone recovery
 
-```azurepowershell-interactive
-$VnetArgs = @{
-    Name = <VNetName>
-    Location = <Location>
-    ResourceGroupName = <ResourceGroupName>
-    AddressPrefix = '10.0.0.0/16'
-    Subnet = $subnet 
-}
-$vnet = New-AzVirtualNetwork @VnetArgs
-```
+When a failed zone comes back online, Container Apps automatically restores proper zone distribution. New replicas are created in the recovered zone through normal autoscaling. All new replicas must pass health checks before getting traffic.
 
----
+### Testing zone failures
 
-Next, query for the infrastructure subnet ID.
+Test your app's resilience by monitoring these metrics during zone outages:
 
-# [Azure CLI](#tab/azure-cli)
+- *Replica count*, *Request success rate*, and *Response time*
+- Autoscaling behavior and resource usage patterns
+- How well your scaling rules handle reduced zone capacity
 
-```azurecli-interactive
-INFRASTRUCTURE_SUBNET=`az network vnet subnet show --resource-group <RESOURCE_GROUP_NAME> --vnet-name <VNET_NAME> --name infrastructure --query "id" -o tsv | tr -d '[:space:]'`
-```
+Use Azure Monitor to track performance during both real and simulated zone failures.
 
-# [Azure PowerShell](#tab/azure-powershell)
+## Disaster recovery across regions
 
-```azurepowershell-interactive
-$InfrastructureSubnet=(Get-AzVirtualNetworkSubnetConfig -Name $SubnetArgs.Name -VirtualNetwork $vnet).Id
-```
+If you configure your container app to run in a single region that goes down, your apps are unavailable. You have two options:
 
----
+1. **Manual recovery**: Wait for the region to recover, then redeploy everything
+2. **Multi-region setup**: Deploy to multiple regions with traffic routing for automatic failover
 
-Finally, create the environment with the `--zone-redundant` parameter.  The location must be the same location used when creating the virtual network.
+> [!TIP]
+> Always keep deployment configs in source control for easy redeployment.
 
-# [Azure CLI](#tab/azure-cli)
+### Multi-region setup requirements
 
-```azurecli-interactive
-az containerapp env create \
-  --name <CONTAINER_APP_ENV_NAME> \
-  --resource-group <RESOURCE_GROUP_NAME> \
-  --location "<LOCATION>" \
-  --infrastructure-subnet-resource-id $INFRASTRUCTURE_SUBNET \
-  --zone-redundant
-```
+- Separate Container Apps environments in each region
+- Azure Front Door or Traffic Manager for traffic routing
+- Azure Container Registry with geo-replication
+- Multi-region data services (Cosmos DB, SQL Database with geo-replication)
 
-# [Azure PowerShell](#tab/azure-powershell)
+### Setup steps
 
-A Log Analytics workspace is required for the Container Apps environment.  The following commands create a Log Analytics workspace and save the workspace ID and primary shared key to environment variables.
+1. **Create environments** in each target region with consistent naming
+2. **Configure traffic routing** with Azure Front Door or Traffic Manager ([setup guide](/azure/frontdoor/quickstart-create-front-door))
+3. **Enable geo-replication** for Container Registry ([instructions](/azure/container-registry/container-registry-geo-replication))
 
-```azurepowershell-interactive
-$WorkspaceArgs = @{
-    Name = 'myworkspace'
-    ResourceGroupName = <ResourceGroupName>
-    Location = <Location>
-    PublicNetworkAccessForIngestion = 'Enabled'
-    PublicNetworkAccessForQuery = 'Enabled'
-}
-New-AzOperationalInsightsWorkspace @WorkspaceArgs
-$WorkspaceId = (Get-AzOperationalInsightsWorkspace -ResourceGroupName <ResourceGroupName> -Name $WorkspaceArgs.Name).CustomerId
-$WorkspaceSharedKey = (Get-AzOperationalInsightsWorkspaceSharedKey -ResourceGroupName <ResourceGroupName> -Name $WorkspaceArgs.Name).PrimarySharedKey
-```
+### Costs and considerations
 
-To create the environment, run the following command:
+Multi-region deployment increases costs through:
 
-```azurepowershell-interactive
-$EnvArgs = @{
-    EnvName = <EnvironmentName>
-    ResourceGroupName = <ResourceGroupName>
-    Location = <Location>
-    AppLogConfigurationDestination = "log-analytics"
-    LogAnalyticConfigurationCustomerId = $WorkspaceId
-    LogAnalyticConfigurationSharedKey = $WorkspaceSharedKey
-    VnetConfigurationInfrastructureSubnetId = $InfrastructureSubnet
-    VnetConfigurationInternal = $true
-}
-New-AzContainerAppManagedEnv @EnvArgs
-```
+- Multiple Container Apps environments
+- Data transfer between regions
+- Geo-replication for supporting services
 
----
+Plan for configuration management across multiple regions. Container Apps doesn't replicate data automatically. Design your apps to handle eventual data consistency with global data services.
 
-##### Verify zone redundancy with the Azure CLI
+### When regions fail
 
-> [!NOTE]
-> The Azure Portal does not show whether zone redundancy is enabled.
+Prepare your app to recover from an unlikely region failure using the following approach:
 
-Use the [`az container app env show`](/cli/azure/containerapp/env#az-containerapp-env-show) command to verify zone redundancy is enabled for your Container Apps environment.
+| Aspect | Description |
+|--------|-------------|
+| **Detection** | Traffic routing services detect outages through health probes and route traffic to healthy regions |
+| **Downtime** | Downtime duration depends on traffic routing service configuration and health probe settings. Typical failover times range from 30 seconds to several minutes for Container Apps endpoints. |
+| **Recovery** | Manually test recovered region before routing traffic back |
 
-# [Azure CLI](#tab/azure-cli)
+### Deployment patterns
 
-```azurecli
-az containerapp env show \
-  --name <CONTAINER_APP_ENV_NAME> \
-  --resource-group <RESOURCE_GROUP_NAME> \
-  --subscription <SUBSCRIPTION_ID>
-```
+Consider these approaches for multi-region apps:
 
-# [Azure PowerShell](#tab/azure-powershell)
+- **Active-passive**: Primary region handles traffic, secondary takes over during outages
+- **Active-active**: Traffic distributed across all regions for performance
+- **Blue-green across regions**: Zero-downtime updates with immediate rollback
 
-```powershell
-az containerapp env show `
-  --name <CONTAINER_APP_ENV_NAME> `
-  --resource-group <RESOURCE_GROUP_NAME> `
-  --subscription <SUBSCRIPTION_ID>
-```
+For detailed patterns, see [Geode pattern](/azure/architecture/patterns/geodes) and [Multi-region load balancing](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
 
----
+## Data backup and maintenance
 
-The command returns a JSON response. Verify the response contains `"zoneRedundant": true`.
+**Backups**: Container Apps doesn't provide built-in backup for app data. Store important data in external Azure services like Cosmos DB, Azure Database, or Azure Storage - each has their own backup features. Keep deployment configs and container images in source control and Azure Container Registry with geo-replication.
 
-### Safe deployment techniques
+**Maintenance**: Container Apps handles planned maintenance with rolling updates to minimize disruption. You can set maintenance windows for preferred update times. During maintenance, at least one healthy replica stays available in zone-redundant deployments.
 
-When you set up [zone redundancy in your container app](#set-up-zone-redundancy-in-your-container-apps-environment), replicas are distributed automatically across the zones in the region. After the replicas are distributed, traffic is load balanced among them. If a zone outage occurs, traffic automatically routes to the replicas in the remaining zone.
+For maintenance configuration, see [Azure Container Apps planned maintenance](/azure/container-apps/planned-maintenance).
 
-You should still use safe deployment techniques such as [blue-green deployment](../container-apps/blue-green-deployment.md). Azure Container Apps doesn't provide one-zone-at-a-time deployment or upgrades.
+## Service Level Agreement
 
-If you have enabled [session affinity](../container-apps/sticky-sessions.md), and a zone goes down, clients for that zone are routed to new replicas because the previous replicas are no longer available. Any state associated with the previous replicas is lost.
+Container Apps provides an SLA for applications with multiple replicas across availability zones. The SLA covers platform infrastructure - your app's availability also depends on your design, health probes, and replica settings.
 
-### Availability zone migration
+See [SLA for Azure Container Apps](https://azure.microsoft.com/support/legal/sla/container-apps/) for complete details.
 
-To take advantage of availability zones, enable zone redundancy as you create the Container Apps environment. The environment must include a virtual network with an available subnet. You can't migrate an existing Container Apps environment from nonavailability zone support to availability zone support.
+## Related content
 
-## Cross-region disaster recovery and business continuity
-
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
-
-In the unlikely event of a full region outage, you have the option of using one of two strategies:
-
-- **Manual recovery**: Manually deploy to a new region, or wait for the region to recover, and then manually redeploy all environments and apps.
-
-- **Resilient recovery**: First, deploy your container apps in advance to multiple regions. Next, use Azure Front Door or Azure Traffic Manager to handle incoming requests, pointing traffic to your primary region. Then, should an outage occur, you can redirect traffic away from the affected region. For more information, see [Cross-region replication in Azure](cross-region-replication-azure.md).
-
-> [!NOTE]
-> Regardless of which strategy you choose, make sure your deployment configuration files are in source control so you can easily redeploy if necessary.
-
-## More guidance
-
-The following resources can help you create your own disaster recovery plan:
-
-- [Failure and disaster recovery for Azure applications](/azure/architecture/reliability/disaster-recovery)
-- [Azure resiliency technical guidance](/azure/architecture/checklist/resiliency-per-service)
-
-## Next steps
-
-> [!div class="nextstepaction"]
-> [Reliability in Azure](availability-zones-overview.md)
+- [Azure Container Apps overview](/azure/container-apps/overview)
+- [Health probes in Azure Container Apps](/azure/container-apps/health-probes)
+- [Autoscaling in Azure Container Apps](/azure/container-apps/scale-app)
+- [Observability in Azure Container Apps](/azure/container-apps/observability)
+- [Azure reliability documentation](/azure/reliability/)
+- [Azure Well-Architected Framework reliability guidance](/azure/well-architected/reliability/)
