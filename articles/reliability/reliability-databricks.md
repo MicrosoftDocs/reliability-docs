@@ -82,7 +82,7 @@ Azure Databricks costs include both compute and storage components:
 
 **Compute costs:** Databricks bills based on Databricks Units (DBUs), which are units of processing capability per hour based on VM instance type. Zone distribution doesn't affect compute costs, as you pay for the same number of virtual machines regardless of their availability zone placement.
 
-**Storage costs:** When creating new Azure Databricks workspaces, the default redundancy for the managed storage account (DBFS Root) is geo-redundant storage (GRS) <!-- PG: As per note above, please verify the behavior in non-paired regions. -->. Changing from GRS to ZRS may reduce storage costs while maintaining zone-level protection. ZRS provides protection against data center failures within a region without the additional cost of geo-replication.
+**Storage costs:** When creating new Azure Databricks workspaces, the default redundancy for the managed storage account (DBFS Root) is geo-redundant storage (GRS) <!-- PG: As per note above, please verify the behavior in non-paired regions. -->. Changing to ZRS may affect your storage costs while maintaining zone-level protection. ZRS provides protection against data center failures within a region without the additional cost of geo-replication.
 
 For detailed pricing information, see [Azure Databricks pricing](https://azure.microsoft.com/pricing/details/databricks/) for compute costs and [Azure Storage pricing](https://azure.microsoft.com/pricing/details/storage/) for storage redundancy options.
 
@@ -90,14 +90,14 @@ For detailed pricing information, see [Azure Databricks pricing](https://azure.m
 
 <!-- PG: Please verify this information. -->
 
-- *Control plane:* The control plane automatically supports zone redundancy in regions with availability zones. No customer configuration is required.
+**Control plane:** The control plane automatically supports zone redundancy in regions with availability zones. No customer configuration is required.
 
-- *DBFS Root:*
+**DBFS Root:**
     - **Create new workspace with zone-redundant DBFS Root storage**: When creating new Azure Databricks workspaces, you can optionally configure the associated storage account to use ZRS or GZRS instead of the default GRS during workspace creation. See [Change workspace storage redundancy options](/azure/databricks/admin/workspace/workspace-storage-redundancy).
     
     - **Enable zone redundancy on DBFS Root storage**: For existing workspaces, you can change the redundancy configuration of the workspace storage account to ZRS or GZRS. See [Change how a storage account is replicated](/azure/storage/common/redundancy-migration) for migration procedures.
 
-- *Compute plane:* Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution.
+**Compute plane:** Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution.
 
 ### Normal operations
 
@@ -119,29 +119,29 @@ This section describes what to expect when a workspace is configured with availa
 
 - **Expected data loss:**
 
-    - *Control plane:* The control plane is stateless, and no data loss is expected when a zone is down.
+    - **Control plane:** The control plane is stateless, and no data loss is expected when a zone is down.
 
-    - *DBFS Root:* Workspace data remains available if it uses ZRS or GZRS storage configurations.
+    - **DBFS Root:** Workspace data remains available if it uses ZRS or GZRS storage configurations.
     
-    - *Compute plane:* <!-- PG: Please clarify whether any data on VMs in the affected zone could be lost. I assume they're stateless so this wouldn't be an issue? -->
+    - **Compute plane:** <!-- PG: Please clarify whether any data on VMs in the affected zone could be lost. I assume they're stateless so this wouldn't be an issue? -->
 
 - **Expected downtime**:
 
-    - *Control plane:* The Databricks control plane performs automatic failover to healthy zones within approximately 15 minutes.
+    - **Control plane:** The Databricks control plane performs automatic failover to healthy zones within approximately 15 minutes.
 
-    - *DBFS Root:* No downtime is expected for storage accounts that are configured to use ZRS or GZRS storage.
+    - **DBFS Root:** No downtime is expected for storage accounts that are configured to use ZRS or GZRS storage.
 
-    - *Compute plane:* If nodes are lost because their VMs are in the affected availability zone, the Azure cluster manager requests replacement nodes from the Azure compute provider. If there is sufficient capacity in the remaining healthy zones to fulfill the request, the compute provider pulls nodes from the healthy zones to replace the nodes that were lost. <!-- PG: Can we give any indication of how long it takes for the VMs to be reinstated - even if it's a ballpark? -->
+    - **Compute plane:** If nodes are lost because their VMs are in the affected availability zone, the Azure cluster manager requests replacement nodes from the Azure compute provider. If there is sufficient capacity in the remaining healthy zones to fulfill the request, the compute provider pulls nodes from the healthy zones to replace the nodes that were lost. <!-- PG: Can we give any indication of how long it takes for the VMs to be reinstated - even if it's a ballpark? -->
 
         If the driver node is lost due to the zone failure, the entire cluster restarts, which may cause longer recovery times compared to losing worker nodes. Plan for this behavior in your job scheduling and monitoring strategies.
 
 - **Traffic rerouting:**
 
-    - *Control plane:* The Databricks control plane performs automatic failover to healthy zones within approximately 15 minutes.
+    - **Control plane:** The Databricks control plane performs automatic failover to healthy zones within approximately 15 minutes.
 
-    - *DBFS Root:* Azure Storage automatically redirects requests to storage clusters in healthy zones.
+    - **DBFS Root:** Azure Storage automatically redirects requests to storage clusters in healthy zones.
 
-    - *Compute plane:* <!-- PG: Please confirm how this works. I assume the cluster manager begins routing work to nodes in healthy zones as they are created? -->
+    - **Compute plane:** <!-- PG: Please confirm how this works. I assume the cluster manager begins routing work to nodes in healthy zones as they are created? -->
 
 ### Failback
 
