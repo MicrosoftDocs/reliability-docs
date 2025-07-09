@@ -37,6 +37,8 @@
       href: ../data-share/disaster-recovery.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Chaos Studio
       href: reliability-chaos-studio.md
+    - name: Azure Databricks
+      href: reliability-databricks.md
     - name: Microsoft Fabric
       href: reliability-fabric.md
     - name: Microsoft Purview
