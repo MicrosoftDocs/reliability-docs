@@ -80,6 +80,9 @@ Set up autoscaling rules based on:
 - HTTP request queues  
 - Custom metrics for your workload
 
+>[!NOTE]
+> The Consumption only environment requires a dedicated subnet with a CIDR range of `/23` or larger. The workload profiles environment requires a dedicated subnet with a CIDR range of `/27` or larger. To learn more about subnet sizing, see the [networking architecture overview](../container-apps/custom-virtual-networks.md#subnet).
+
 For more information, see [Set scaling rules](/azure/container-apps/scale-app) for configuration options.
 
 ### What happens during zone failures
