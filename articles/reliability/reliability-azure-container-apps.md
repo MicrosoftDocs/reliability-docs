@@ -102,6 +102,10 @@ When a failure occurs traffic is routed to a replica running in a different zone
 
 When a failed zone comes back online, Container Apps automatically restores proper zone distribution. New replicas are created in the recovered zone through normal autoscaling. All new replicas must pass health checks before getting traffic.
 
+### Availability zone migration
+
+To take advantage of availability zones, enable zone redundancy as you create the Container Apps environment. The environment must include a virtual network with an available subnet. You can't migrate an existing Container Apps environment from nonavailability zone support to availability zone support.
+
 ### Testing zone failures
 
 Test your app's resilience by monitoring these metrics during zone outages:
@@ -114,7 +118,9 @@ Make sure to check autoscaling behavior and resource usage patterns and how well
 
 Use Azure Monitor to track performance during both real and simulated zone failures.
 
-## Disaster recovery across regions
+## Cross-region disaster recovery and business continuity
+
+[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
 
 If you configure your container app to run in a single region that goes down, your apps are unavailable. You have two options:
 
