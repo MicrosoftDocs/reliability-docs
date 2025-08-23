@@ -79,6 +79,8 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
 **Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
 
+  However, tumbling window triggers are not resilient to zone outages.
+
 **IRs:** Zone redundancy support depends on the type of IR that you use.
 
 - *An Azure IR* supports zone redundancy, and Microsoft manages this capability.
@@ -129,6 +131,8 @@ This section describes what to expect when Data Factory resources are configured
 
 - **Traffic routing between zones:** During normal operations, Data Factory automatically distributes pipeline activities, triggers, and other work among healthy instances in each availability zone.
 
+- **Data replication between zones:** Overall, Data Factory is a stateless service, so no state needs to be replicated between zones. However, tumbling window triggers contain state, which might not be replicated between zones.
+
 ### Zone-down experience
 
 This section describes what to expect when Data Factory resources are configured for zone redundancy and there's an availability zone outage.
@@ -140,6 +144,10 @@ This section describes what to expect when Data Factory resources are configured
   Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
 
 - **Active requests:** Any pipelines and triggers in progress continue to run, and you don't experience any immediate disruption from a zone failure. However, activities in progress during a zone failure might fail and be restarted. It's important to design activities to be idempotent, which helps them recover from zone failures and other faults. For more information, see [Transient faults](#transient-faults).
+
+- **Expected downtime:** No downtime is expected during a zone failure.
+
+- **Expected data loss:** Overall, Data Factory is a stateless service, so no data loss is expected during a zone failure. However, if you use a tumbling window trigger, the state of the trigger might be lost after a zone failure.
 
 ### Zone recovery
 
