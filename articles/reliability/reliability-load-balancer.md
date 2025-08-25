@@ -226,11 +226,58 @@ With Cross-region Load Balancer, you deploy Standard public load balancers in ea
 
 ### Region support
 
-Cross-region Load Balancer is a global service available in all Azure public cloud regions. The regional Standard Load Balancers that serve as origins can be deployed in any Azure region based on your requirements.
+You can only deploy your global load balancer or Public IP in Global tier in one of the listed Home regions.
 
-**Sources:**
-- [Cross-region Load Balancer availability](../load-balancer/cross-region-overview.md#availability)
-- [Supported regions](../load-balancer/cross-region-overview.md#prerequisites)
+A **Home region** is where the global load balancer or Public IP Address of Global tier is deployed. 
+This region doesn't affect how the traffic is routed. If a home region goes down, traffic flow is unaffected.
+
+### Home regions
+* Central US
+* East Asia
+* East US 2
+* North Europe
+* Southeast Asia
+* UK South
+* US Gov Virginia
+* West Europe
+* West US
+
+
+A **participating region** is where the global public IP of the load balancer is being advertised.
+
+Traffic started by the user travels to the closest participating region through the Microsoft core network. 
+
+Global load balancer routes the traffic to the appropriate regional load balancer.
+
+:::image type="content" source="../load-balancer/media/cross-region-overview/multiple-region-global-traffic.png" alt-text="Diagram of multiple region global traffic.":::
+
+### Participating regions
+* Australia East 
+* Australia Southeast 
+* Central India 
+* Central US 
+* East Asia 
+* East US 
+* East US 2 
+* Japan East 
+* North Central US 
+* North Europe 
+* South Central US 
+* Southeast Asia 
+* UK South 
+* US DoD Central
+* US DoD East
+* US Gov Arizona
+* US Gov Texas
+* US Gov Virginia
+* West Central US 
+* West Europe 
+* West US 
+* West US 2 
+
+> [!NOTE]
+> The backend regional load balancers can be deployed in any publicly available Azure Region and isn't limited to just participating regions.
+
 
 ### Requirements
 
@@ -286,7 +333,25 @@ Monitor regional load balancer metrics and health probe status through Azure Mon
 
 ### Normal operations
 
-**Traffic routing between regions**. Cross-region Load Balancer operates in an active/active model, routing each client connection to the lowest-latency healthy regional deployment based on Microsoft's global network proximity data and regional health status.
+**Traffic routing between regions**. Cross-region Load Balancer operates in an active/active model, routing each client connection to the lowest-latency healthy regional deployment based on Microsoft's global network proximity data and regional health status. The geo-proximity load-balancing algorithm is based on the geographic location of your users and your regional deployments. 
+
+Traffic started from a client hits the closest participating region and travel through the Microsoft global network backbone to arrive at the closest regional deployment. 
+
+For example, you have a global load balancer with standard load balancers in Azure regions:
+
+* West US
+* North Europe
+
+If a flow is started from Seattle, traffic enters West US. This region is the closest participating region from Seattle. The traffic is routed to the closest region load balancer, which is West US.
+
+Azure global load balancer uses geo-proximity load-balancing algorithm for the routing decision. 
+
+The configured load distribution mode of the regional load balancers is used for making the final routing decision when multiple regional load balancers are used for geo-proximity. 
+
+For more information, see [Configure the distribution mode for Azure Load Balancer](../load-balancer/load-balancer-distribution-mode.md).
+
+Egress traffic follows the routing preference set on the regional load balancers.
+
 
 **Data replication between regions**. Cross-region Load Balancer doesn't replicate application data between regions. Configuration changes to the Cross-region Load Balancer are globally replicated with strong consistency. Regional load balancer configurations remain independent and must be managed separately in each region.
 
@@ -298,7 +363,10 @@ Monitor regional load balancer metrics and health probe status through Azure Mon
 
 During a regional failure with Cross-region Load Balancer:
 
-- **Detection and response**: Microsoft's global monitoring automatically detects regional load balancer failures through health probes. Cross-region Load Balancer stops routing traffic to the failed region within seconds.
+- **Detection and response**: Microsoft's global monitoring automatically detects regional load balancer failures through health probes. The health probe of the global load balancer gathers information about availability of each regional load balancer every 5 seconds. If one regional load balancer drops its availability to 0, global load balancer detects the failure. The regional load balancer is then taken out of rotation. 
+
+    :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.png" alt-text="Diagram of global region traffic view." border="true":::
+
 - **Notification**: Regional failures appear in Azure Service Health. Configure alerts to notify your operations team of regional events.
 - **Active requests**: Existing connections to the failed region are terminated. New connections are automatically routed to the next-best healthy region based on latency.
 - **Expected data loss**: As a stateless service, Load Balancer doesn't cause data loss. Application-level data loss depends on your data replication strategy.
