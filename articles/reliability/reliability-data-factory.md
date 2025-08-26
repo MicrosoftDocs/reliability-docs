@@ -6,7 +6,7 @@ ms.author: jburchel
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-data-factory
-ms.date: 04/04/2025
+ms.date: 08/27/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Data Factory works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
 ---
 
@@ -79,7 +79,7 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
 **Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
 
-  However, tumbling window triggers are not resilient to zone outages.
+  However, after a zone failure, Microsoft doesn't guarantee the state of tumbling window triggers.
 
 **IRs:** Zone redundancy support depends on the type of IR that you use.
 
@@ -131,7 +131,9 @@ This section describes what to expect when Data Factory resources are configured
 
 - **Traffic routing between zones:** During normal operations, Data Factory automatically distributes pipeline activities, triggers, and other work among healthy instances in each availability zone.
 
-- **Data replication between zones:** Overall, Data Factory is a stateless service, so no state needs to be replicated between zones. However, tumbling window triggers contain state, which might not be replicated between zones.
+- **Data replication between zones:** In general, Data Factory is a stateless service, so no state needs to be replicated between zones.
+
+    However, tumbling window triggers contain state, which might not be fully replicated between zones.
 
 ### Zone-down experience
 
@@ -147,7 +149,9 @@ This section describes what to expect when Data Factory resources are configured
 
 - **Expected downtime:** No downtime is expected during a zone failure.
 
-- **Expected data loss:** Overall, Data Factory is a stateless service, so no data loss is expected during a zone failure. However, if you use a tumbling window trigger, the state of the trigger might be lost after a zone failure.
+- **Expected data loss:** Overall, Data Factory is a stateless service, so no data loss is expected during a zone failure.
+
+    However, if you use a tumbling window trigger, the state of the trigger might be lost after a zone failure. You should restart or re-run any triggers that were running at the time of the zone failure. 
 
 ### Zone recovery
 
