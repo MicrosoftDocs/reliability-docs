@@ -79,7 +79,7 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
 **Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
 
-  However, after a zone failure, Microsoft doesn't guarantee the state of tumbling window triggers.
+    However, after a zone failure, Microsoft doesn't guarantee the state of tumbling window triggers.
 
 **IRs:** Zone redundancy support depends on the type of IR that you use.
 
