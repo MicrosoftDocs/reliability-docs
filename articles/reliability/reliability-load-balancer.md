@@ -42,7 +42,7 @@ Each load balancer consists of multiple components, which include:
 
 To learn more about how Load Balancer works, see [Load Balancer components](../load-balancer/components.md).
 
-For globally deployed solutions, a global load balancer provides a single anycast IP address that routes traffic to the closest healthy regional load balancer based on client proximity and regional health status.
+For globally deployed solutions, you can deploy a *global load balancer*, which is a special type of public load balancer designed to route traffic among different regional deployments of your solution. A global load balancer provides a single anycast IP address. It routes traffic to the closest healthy regional load balancer based on client proximity and regional health status. For more information, see [Multi-region support](#multi-region-support).
 
 ## Transient faults
 
@@ -60,13 +60,21 @@ When you use Load Balancer, consider the following best practices to minimize th
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-<!-- John: I realize load balancer supports zonal, but not clear whether you want to mention it here or not.-->
-With Standard Load Balancer in availability zone-enabled regions, you can configure zone-redundant frontends where the load balancer's IP address is served simultaneously from independent infrastructure in multiple zones. This configuration ensures that zone failures don't impact the load balancer's ability to receive and distribute traffic. Backend instances can be distributed across zones, with health probes automatically removing unhealthy instances from rotation regardless of their zone location.
+Load Balancer provides two types of availability zone support:
+
+- *Zone-redundant:* A zone-redundant load balancer is served simultaneously from independent infrastructure in multiple zones. This configuration ensures that zone failures don't impact the load balancer's ability to receive and distribute traffic. 
+
+- *Zonal:* A zonal load balancer is served only from within one availability zone. You should only use a zonal load balancer if you deploy your backends within the same zone and you need your traffic to remain within the zone.
+
+    > [!IMPORTANT]
+    > Pinning to a single availability zone is only recommended when [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and when you verify that the latency doesn't meet your requirements. By itself, a zonal load balancer doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal load balancer, you need to explicitly deploy separate load balancers and backend infrastructure into multiple availability zones and configure traffic routing and failover.
+
+If you don't configure a load balancr to be zone-redundant or zonal, it's considered *nonzonal* or *regional*. Nonzonal load balancers can be placed in any availability zone within the region. If an availability zone in the region experiences an outage, nonzonal load balancers might be in the affected zone and could experience downtime.
+
+Regardless of how your load balancer is configured, your backend instances can be distributed across zones. Health probes automatically removing unhealthy backend instances from rotation regardless of their zone location.
 
 <!-- TODO -->
 Azure Standard Load Balancer supports both zone-redundant and zonal frontend configurations in regions with availability zones. The load balancer's availability zone selection is synonymous with its frontend IP's zone selection. For public load balancers, if the public IP in the load balancer's frontend is zone redundant, then the load balancer is also zone-redundant. If the public IP in the load balancer's frontend is zonal, then the load balancer is designated to the same zone. 
-
-Standard Load Balancer supports cross-zone load balancing, allowing a frontend in any configuration (zone-redundant, zonal, or nonzonal) to reach backend instances in any zone within the region. Health probes originate from all zones and determine the health of backend instances independently, automatically removing unhealthy instances from rotation regardless of their zone.
 
 ### Zone redundant load balancer
 
