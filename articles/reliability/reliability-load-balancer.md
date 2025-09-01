@@ -165,6 +165,8 @@ This section describes what to expect when a load balancer's frontend IP configu
 
     - *Zone-redundant:* The Azure platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
 
+        Up to one availability zone can fail and the data path survives as long as the remaining zones in the region remain healthy. <!-- PG: please verify that two simultaneous zone failures are not handled? --> 
+
     - *Zonal:* You need to detect the loss of an availability zone. You might choose to initiate a failover to a secondary frontend IP configuration, another load balancer, or other infrastructure that you create in another availability zone. You're responsible for any of these failover activities.
 
 - **Notification**: Azure Load Balancer doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your load balancer. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure Load Balancer service, including any zone failures.
@@ -185,9 +187,9 @@ This section describes what to expect when a load balancer's frontend IP configu
 
 - **Traffic rerouting**: The traffic rerouting behavior depends on the availability zone configuration that your load balancer's frontend IP configuration uses. 
 
-    - *Zone-redundant:* The load balancer continues to operate from the surviving zones. New connections are automatically established through remaining healthy zones.
+    - *Zone-redundant:* The load balancer continues to operate from the surviving zones. The Load Balancer service maintains the same frontend IP address during zone failures, eliminating the need for DNS updates or client reconfiguration. New connections are automatically established through remaining healthy zones.
 
-    - *Zonal:* When a zone is unavailable, your load balancer's frontend IP is unavailable. If you have secondary infrastructure in another availability zone, you're responsible for rerouting traffic to that secondary infrastructure.
+    - *Zonal:* When a zone is unavailable, your load balancer's frontend IP is unavailable. If you have secondary infrastructure in another availability zone, you're responsible for rerouting client traffic to that secondary infrastructure.
 
 ### Zone recovery
 
