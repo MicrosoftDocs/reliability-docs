@@ -92,7 +92,7 @@ If you don't configure a load balancer to be zone-redundant or zonal, it's consi
 >
 > Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone. Avoid using nonzonal frontend IP configurations, because they don't provide resiliency to zone failures.
 
-### Backends and zones
+#### Backends and availability zones
 
 Regardless of the load balancer's frontend IP configuration, your backend instances can be distributed across zones. Health probes automatically removing unhealthy backend instances from rotation regardless of their zone location.
 
@@ -176,7 +176,9 @@ This section describes what to expect when a load balancer's frontend IP configu
     
     For both zone-redundant and zonal frontend IP configurations, traffic is then sent to healthy backend instances specified in the backend pool, without consideration of which availability zone the backend instance is in.
 
-- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data. The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones.
+- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data.
+
+    The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones. <!-- PG: Please verify. -->
 
 ### Zone-down experience
 
@@ -238,7 +240,7 @@ The options for testing for zone failures depend on the availability zone config
 
 Azure Load Balancer provides native multi-region support through [Global Load Balancer](../load-balancer/cross-region-overview.md), which enables load balancing across Azure regions. Global Load Balancer provides a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global Load Balancer can help to improve your application's reliability and performance.
 
-With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If a region has a problem, traffic fails over to healthy regions automatically and without DNS changes because the anycast IP remains constant.
+With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If a region has a problem, traffic fails over to healthy regions automatically and without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
 The following diagram shows a global load balancer that routes traffic among three regional load balancers in different Azure regions:
 
@@ -250,21 +252,19 @@ Global Load Balancer operates at layer 4 and doesn't provide application-layer f
 
 Your regional load balancers can be deployed into any Azure region.
 
-A global load balancer, and its global public IP address, are deployed into a single *home region*. This region doesn't affect how the traffic is routed. If the home region goes down, traffic flow is unaffected.
+A global load balancer, and its global public IP address, are deployed into a single *home region*. This region doesn't affect how the traffic is routed. If the home region goes down, traffic flow is unaffected. You must select a home region from a specific list of Azure regions.
 
-Azure has a set of *participating regions*, which are the locations where the global public IP address of the load balancer is advertised from. When a client initiates a request, the traffic is routed to the closest participating region to the client. Then, the traffic travels from the participating region, through the Microsoft core network, until it reaches the closest regional load balancer.
+Azure also has a number of *participating regions*, which are the locations where the global public IP address of the load balancer is advertised from. You don't configure the participating regions for your global load balancer because Azure preselects the participating regions. When a client initiates a request, the traffic is routed to the closest participating region to the client. Then, the traffic travels from the participating region, through the Microsoft core network, until it reaches the closest regional load balancer.
 
 For more information, see [Home regions and participating regions](../load-balancer/cross-region-overview.md#home-regions-and-participating-regions).
-
-### Considerations
-
-Health probes for Global Load Balancer originate from the global load balancing infrastructure and evaluate the health of regional load balancer frontends, not individual backend instances. For more information, see [Health probes](../load-balancer/cross-region-overview.md#health-probes).
 
 ### Cost
 
 Global Load Balancer incurs charges for the global load balancer resource in addition to the regional load balancers. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
 
 ### Configure multi-region support
+
+This section explains how to configure a global load balancer.
 
 - **Create a global load balancer.** Deploy public load balancers in your target regions first, then create a global load balancer with these regional load balancers as backends. For detailed steps, see [Create an Azure Global Load Balancer](../load-balancer/tutorial-cross-region-portal.md).
 
@@ -276,7 +276,9 @@ This section describes what to expect when you use a global load balancer and al
 
 - **Traffic routing between regions**. Global Load Balancer operates in an active/active model. Each client connection is automatically routed to the lowest-latency healthy regional deployment based on Microsoft's global network proximity data and regional health status. The geo-proximity load-balancing algorithm is based on the geographic location of your users and your regional deployments. For more information, see [Global Load Balancer](../load-balancer/cross-region-overview.md#ultra-low-latency).
 
-- **Data replication between regions**. Global Load Balancer is a network pass-through service that doesn't store or replicate application data. Configuration changes to your global load balancer are globally replicated with strong consistency. Regional load balancer configurations remain independent and must be managed separately in each region.
+- **Data replication between regions**. Global Load Balancer is a network pass-through service that doesn't store or replicate application data.
+
+    Configuration changes to your global load balancer are globally replicated with strong consistency. Regional load balancer configurations remain independent and must be managed separately in each region. <!-- PG: Please verify. -->
 
 ### Region-down experience
 
@@ -285,8 +287,8 @@ This section describes what to expect when you use a global load balancer and th
 - **Detection and response**: Global Load Balancer is responsible for detecting a regional outage and responding.
     
     The health probe of the global load balancer gathers information about availability of each regional load balancer every 5 seconds. A regional load balancer is considered to be unhealthy if either of the following conditions apply:
-        - The regional load balancer is unreachable or otherwise unhealthy.
-        - The regional load balancer reports that there are no healthy backends available.
+    - The regional load balancer is unreachable or otherwise unhealthy.
+    - The regional load balancer reports that there are no healthy backends available.
     <!-- PG: Please verify the above paragraph. -->
 
     If a regional load balancer is unavailable, the global load balancer detects the failure. The regional load balancer is then taken out of rotation.
@@ -294,6 +296,8 @@ This section describes what to expect when you use a global load balancer and th
     The following diagram shows an example where traffic from a client would ordinarily be routed to their closest region, but due to a failure in that region, it's routed to another regional load balancer instead:
 
     :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.png" alt-text="Diagram of global region traffic view." border="false":::
+
+    For more information, see [Health probes](../load-balancer/cross-region-overview.md#health-probes).
 
 - **Notification**: Global Load Balancer doesn't notify you when a region is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Global Load Balancer service, including any region failures.
 
@@ -321,9 +325,7 @@ You can simulate a region failure by temporarily making the virtual machines wit
 
 For HTTP/HTTPS workloads requiring application-layer features, use [Azure Front Door](../frontdoor/front-door-overview.md) as a global entry point with regional load balancers or Application Gateways as origins. This provides SSL termination, WAF capabilities, and URL-based routing alongside global load balancing.
 
-For DNS-based global load balancing across regions, use [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md). Traffic Manager provides geographic routing, priority routing, and weighted routing methods, though it requires DNS TTL considerations for failover timing.
-
-For multi-region architectures with complex routing requirements, review [Multi-region load balancing with Traffic Manager and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
+For DNS-based global load balancing across regions, use [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md). Traffic Manager provides geographic routing, priority routing, and weighted routing methods, though it requires DNS TTL considerations for failover timing. For an example architecture that combines Azure Traffic Manager and Azure Application Gateway, see [Multi-region load balancing with Traffic Manager and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
 
 ## Service-level agreement
 
