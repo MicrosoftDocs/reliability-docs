@@ -21,9 +21,9 @@ This article describes reliability support in [Azure Load Balancer](../load-bala
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
 > [!IMPORTANT]
-> The reliability of your overall solution depends on the configuration of the backend servers that your load balancer routes traffic to, such as Azure virtual machines (VMs) or Azure virtual machine scale sets.
+> The reliability of your overall solution depends on the configuration of the backend instances (servers) that your load balancer routes traffic to, such as Azure virtual machines (VMs) or Azure virtual machine scale sets.
 >
-> Your backend servers aren't in scope for this article, but their availability configurations directly affect your application's resilience. Review the reliability guides for all of the Azure services in your solution to understand how each service supports your reliability requirements. By ensuring that your backend servers are also configured for high availability and zone redundancy, you can achieve end-to-end reliability for your application.
+> Your backend instances aren't in scope for this article, but their availability configurations directly affect your application's resilience. Review the reliability guides for all of the Azure services in your solution to understand how each service supports your reliability requirements. By ensuring that your backend instances are also configured for high availability and zone redundancy, you can achieve end-to-end reliability for your application.
 
 ## Production deployment recommendations
 
@@ -35,10 +35,10 @@ A load balancer can be public or internal. A public load balancer accepts traffi
 
 Each load balancer consists of multiple components, which include:
 
-- Frontend IP configurations, which receive traffic. A public load balancer receives traffic on a public IP address. An internal load balancer receives traffic on an IP address within your virtual network.
-- Backend pools, which represent your backend application instances, such as individual VMs.
-- Load balancing rules, which define how traffic from a frontend should be distributed to a backend pool.
-- Health probes, which monitor the availability of backends.
+- *Frontend IP configurations*, which receive traffic. A public load balancer receives traffic on a public IP address. An internal load balancer receives traffic on an IP address within your virtual network.
+- *Backend pools*, which contain a collection of *backend instances* that can receive traffic, such as individual VMs that run your application.
+- *Load balancing rules*, which define how traffic from a frontend should be distributed to a backend pool.
+- *Health probes*, which monitor the availability of backend instances.
 
 To learn more about how Load Balancer works, see [Load Balancer components](../load-balancer/components.md).
 
@@ -72,10 +72,10 @@ Load Balancer provides two types of availability zone support: zonal and zone-re
 
     :::image type="content" source="./media/reliability-load-balancer/zone-redundant-internal-load-balancer.png" alt-text="Diagram showing a zone-redundant internal load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
 
-- *Zonal:* A zonal frontend IP configuration is deployed into a single availability zone. The inbound and outbound flows are served within that one zone. If the availability zone has a problem, the load balancer is unavailable. You should only use a zonal frontend IP configuration if you deploy your backends within the same zone *and* you need all your traffic to remain within the zone, which is uncommon.
+- *Zonal:* A zonal frontend IP configuration is deployed into a single availability zone. The inbound and outbound flows are served within that one zone. If the availability zone has a problem, the load balancer is unavailable. You should only use a zonal frontend IP configuration if you deploy your backend instances within the same zone *and* you need all your traffic to remain within the zone, which is uncommon.
 
     > [!IMPORTANT]
-    > Pinning to a single availability zone is only recommended when [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and when you verify that the latency doesn't meet your requirements. By itself, a zonal load balancer doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal load balancer, you need to explicitly deploy separate load balancers and backend infrastructure into multiple availability zones and configure traffic routing and failover.
+    > Pinning to a single availability zone is only recommended when [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and when you verify that the latency doesn't meet your requirements. By itself, a zonal load balancer doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal load balancer, you need to explicitly deploy separate load balancers and backend instances into multiple availability zones and configure traffic routing and failover.
 
     The following diagram shows a zonal internal load balancer in availability zone 1, which is configured by creating a zonal public IP address in that zone:
     
@@ -86,17 +86,18 @@ Load Balancer provides two types of availability zone support: zonal and zone-re
     :::image type="content" source="./media/reliability-load-balancer/zonal-internal-load-balancer.png" alt-text="Diagram showing a zonal internal load balancer in zone 1, directing traffic to three different VMs in zone 1." border="false" :::
 
 If you don't configure a load balancer to be zone-redundant or zonal, it's considered *nonzonal* or *regional*. Nonzonal load balancers can be placed in any availability zone within the region. If an availability zone in the region experiences an outage, nonzonal load balancers might be in the affected zone and could experience downtime.
+<!-- PG: When will nonzonal public IP addresses be retired (per https://azure.microsoft.com/en-us/blog/azure-public-ips-are-now-zone-redundant-by-default/)? I can still create one as of September 2025. -->
 
 > [!TIP]
 > Use zone-redundant frontend IP configurations wherever possible.
 >
 > Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone. Avoid using nonzonal frontend IP configurations, because they don't provide resiliency to zone failures.
 
-#### Backends and availability zones
+#### Backend instances and availability zones
 
 Regardless of the load balancer's frontend IP configuration, your backend instances can be distributed across zones. Health probes automatically removing unhealthy backend instances from rotation regardless of their zone location.
 
-When you use virtual machines, a common design approach for production workloads is to have multiple zonal VMs in different zones. For example, you might deploy VMs into zones 1, 2, and 3. You can create a zone-redundant load balancer and configure those VMs as the backends within the load balancer.
+When you use virtual machines, a common design approach for production workloads is to have multiple zonal VMs in different zones. For example, you might deploy VMs into zones 1, 2, and 3. You can create a zone-redundant load balancer and configure those VMs as the backend instances within the load balancer.
 
 > [!NOTE]
 > Distributing backend instances across multiple availability zones is essential for resilience. If all backend instances are located in a single zone, an outage in that zone will make your application unavailable, even if you use a zone-redundant load balancer.
@@ -105,7 +106,7 @@ When you use virtual machines, a common design approach for production workloads
 
 Using multiple frontends allow you to load balance traffic on more than one port or IP address.
 
-Because each load balancer can have multiple frontend IP configurations, it's possible to have one load balancer that includes a combination of zone-redundant, zonal, and nonzonal frontend IP configurations. However, in practice, you typically only have one type of availability zone configuration for your load balancer. <!-- Please verify that this is indeed the most common (and recommended) configuration. -->
+Because each load balancer can have multiple frontend IP configurations, it's possible to have one load balancer that includes a combination of zone-redundant, zonal, and nonzonal frontend IP configurations. However, in practice, you typically only have one type of availability zone configuration for your load balancer. <!-- PG: please verify that this is indeed the most common (and recommended) configuration. -->
 
 When designing your architecture:
 
@@ -176,7 +177,7 @@ This section describes what to expect when a load balancer's frontend IP configu
     
     For both zone-redundant and zonal frontend IP configurations, traffic is then sent to healthy backend instances specified in the backend pool, without consideration of which availability zone the backend instance is in.
 
-- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data.
+- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data. Even if you enable [session persistence](../load-balancer/distribution-mode-concepts.md#session-persistence) on the load balancer, no state is stored on the load balancer. Session persistence adjusts the hashing process to route requests to the same backend instance. However, session persistence isn't guaranteed. When the backend pool changes, the distribution of client requests is recomputed. This process is done without storing or synchronizing state.
 
     The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones. <!-- PG: Please verify. -->
 
@@ -204,7 +205,7 @@ This section describes what to expect when a load balancer's frontend IP configu
 
     - *Zone-redundant:* There's no downtime is expected for the load balancer service.
 
-        However, if the failure affects compute services in the zone, then any VMs or other resources that are in the affected zone could be unavailable. The load balancer's health probes are designed to detect these failures and route traffic to alternative instances in another zone based on the load balancing algorithm and backend health status.
+        However, if the failure affects compute services in the zone, then any VMs or other resources that are in the affected zone could be unavailable. The load balancer's health probes are designed to detect these failures and route traffic to alternative instances in another zone based on the load balancing algorithm and backend instances' health status.
 
     - *Zonal:* When a zone is unavailable, your load balancer's frontend IP is unavailable until the availability zone recovers.
 
@@ -222,7 +223,7 @@ When an availability zone recovers, Load Balancer automatically resumes normal o
 
 - *Zonal:* If you've switched clients to use alternative infrastructure during the zone outage, you're responsible for reconfiguring those clients to send traffic to the load balancer's frontend IP address.
 
-If the zone failure also affected your compute services in the zone, then as backend instances in the recovered zone pass health checks, they're automatically added back to the healthy backend pool. Traffic distribution rebalances across all available zones based on the load balancing algorithm and backend health status.
+If the zone failure also affected your compute services in the zone, then as backend instances in the recovered zone pass health checks, they're automatically added back to the healthy backend pool. Traffic distribution rebalances across all available zones based on the load balancing algorithm and backend instances' health status.
 
 ### Testing for zone failures
 
@@ -266,7 +267,7 @@ Global Load Balancer incurs charges for the global load balancer resource in add
 
 This section explains how to configure a global load balancer.
 
-- **Create a global load balancer.** Deploy public load balancers in your target regions first, then create a global load balancer with these regional load balancers as backends. For detailed steps, see [Create an Azure Global Load Balancer](../load-balancer/tutorial-cross-region-portal.md).
+- **Create a global load balancer.** Deploy public load balancers in your target regions first, then create a global load balancer that has a backend pool containing these regional load balancers. For detailed steps, see [Create an Azure Global Load Balancer](../load-balancer/tutorial-cross-region-portal.md).
 
 - **Disable global load balancer.** To disable cross-region functionality, remove the global load balancer resource. Regional load balancers continue operating independently, but clients need to be updated to send traffic to the correct regional IP address.
 
@@ -288,7 +289,7 @@ This section describes what to expect when you use a global load balancer and th
     
     The health probe of the global load balancer gathers information about availability of each regional load balancer every 5 seconds. A regional load balancer is considered to be unhealthy if either of the following conditions apply:
     - The regional load balancer is unreachable or otherwise unhealthy.
-    - The regional load balancer reports that there are no healthy backends available.
+    - The regional load balancer reports that there are no healthy backend instances available.
     <!-- PG: Please verify the above paragraph. -->
 
     If a regional load balancer is unavailable, the global load balancer detects the failure. The regional load balancer is then taken out of rotation.
@@ -331,7 +332,7 @@ For DNS-based global load balancing across regions, use [Azure Traffic Manager](
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-The Azure Load Balancer SLA applies when there are at least two healthy VMs configured as backends. The SLA excludes downtime due to SNAT port exhaustion or NSGs that block traffic.
+The Azure Load Balancer SLA applies when there are at least two healthy VMs configured as backend instances. The SLA excludes downtime due to SNAT port exhaustion or NSGs that block traffic.
 
 ### Related content
 
