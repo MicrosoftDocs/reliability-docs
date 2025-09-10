@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
-ms.date: 09/02/2025
+ms.date: 09/10/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Load Balancer works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -23,7 +23,7 @@ This article describes reliability support in [Azure Load Balancer](../load-bala
 > [!IMPORTANT]
 > The reliability of your overall solution depends on the configuration of the backend instances (servers) that your load balancer routes traffic to, such as Azure virtual machines (VMs) or Azure virtual machine scale sets.
 >
-> Your backend instances aren't in scope for this article, but their availability configurations directly affect your application's resilience. Review the reliability guides for all of the Azure services in your solution to understand how each service supports your reliability requirements. By ensuring that your backend instances are also configured for high availability and zone redundancy, you can achieve end-to-end reliability for your application.
+> Your backend instances aren't in scope for this article, but their availability configurations directly affect your application's resilience. Review the [reliability guides for all of the Azure services in your solution](./overview-reliability-guidance.md) to understand how each service supports your reliability requirements. By ensuring that your backend instances are also configured for high availability and zone redundancy, you can achieve end-to-end reliability for your application.
 
 ## Production deployment recommendations
 
@@ -31,9 +31,9 @@ To learn about how to deploy Load Balancer to support your solution's reliabilit
 
 ## Reliability architecture overview
 
-A load balancer can be public or internal. A public load balancer accepts traffic from the internet through a public IP address resource. An internal load balancer is only accessible within your virtual network and other network that you connect to the virtual network.
+A load balancer can be either public or internal. A public load balancer accepts traffic from the internet through a public IP address resource. An internal load balancer is accessible only within your virtual network and other networks that you connect to the virtual network.
 
-Each load balancer consists of multiple components, which include:
+Each load balancer consists of multiple components, including:
 
 - *Frontend IP configurations*, which receive traffic. A public load balancer receives traffic on a public IP address. An internal load balancer receives traffic on an IP address within your virtual network.
 - *Backend pools*, which contain a collection of *backend instances* that can receive traffic, such as individual VMs that run your application.
@@ -60,7 +60,7 @@ When you use Load Balancer, consider the following best practices to minimize th
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Load Balancer provides two types of availability zone support: zonal and zone-redundant. You set the availability zone configuration on each frontend IP configuration you create.
+Load Balancer provides two types of availability zone support: zonal and zone-redundant. To configure for either configuration, you set the availability zone configuration on each frontend IP configuration that you create.
 
 - *Zone-redundant:* A zone-redundant frontend IP configuration is served simultaneously from independent infrastructure in multiple zones. This configuration ensures that zone failures don't impact the load balancer's ability to receive and distribute traffic.
 
@@ -110,9 +110,9 @@ Because each load balancer can have multiple frontend IP configurations, it's po
 
 When designing your architecture:
 
-- If your goal is to always have every frontend IP configuration resilient to failure, then configure all of your frontend IP addresses to be zone-redundant. We recommend this configuration for most scenarios.
+- If your goal is to always have every frontend IP configuration resilient to failure, then we recommend that you configure all of your frontend IP addresses to be zone-redundant. 
 
-- If a frontend IP address is intended to be associated with a single zone, then configure that frontend IP to be zonal.
+- If you watn to assiociate a frontend IP address with a single zone, then you must configure that frontend IP to be zonal.
 
     If you need to use multiple zonal deployments, each in different zones, you don't need to deploy a load balancer in each zone. Instead, you can deploy a single load balancer with a zonal frontend in each zone. Configure the load balancing rules to route traffic from the zonal frontends to the virtual machines in the backend pool that are part of the same availability zone.
 
@@ -136,13 +136,13 @@ When you work with Load Balancer, you set the availability zone on the frontend 
 
 - **Create a new load balancer with availability zone support.**
 
-    - For public load balancers, the frontend IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it.
+    - For *public load balancers*, the frontend IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it.
         
         Create or select a zone-redundant public IP address to make the frontend IP configuration zone-redundant. Alternatively, create or select a zonal public IP address to make the frontend IP configuration zonal. Azure places the load balancer in the same zone.
     
         For detailed steps, see [Create a public load balancer to load balance VMs using the Azure portal](../load-balancer/quickstart-load-balancer-standard-public-portal.md).
 
-    - For internal load balancers, when you configure the frontend IP of the load balancer, you set the availability zone support type on the frontend IP configuration.
+    - For *internal load balancer*s, when you configure the frontend IP of the load balancer, you set the availability zone support type on the frontend IP configuration.
         
         For detailed steps, see [Create an internal load balancer to load balance VMs using the Azure portal](../load-balancer/quickstart-load-balancer-standard-internal-portal.md).
 
@@ -152,9 +152,9 @@ When you work with Load Balancer, you set the availability zone on the frontend 
 
     1. Create a new frontend IP configuration with the desired availability zone configuration.
     
-        For public load balancers, create a new public IP address that uses your desired availability zone configuration first. Then reconfigure your load balancer to add a frontend IP configuration that references that public IP address.
+        For *public load balancers*, create a new public IP address that uses your desired availability zone configuration first. Then, reconfigure your load balancer to add a frontend IP configuration that references that public IP address.
 
-        For internal load balancers, reconfigure your load balancer to add a new frontend IP configuration with your desired availability configuration. This step assigns a new private IP address from within your subnet.
+        For *internal load balancers*, reconfigure your load balancer to add a new frontend IP configuration with your desired availability configuration. This step assigns a new private IP address from within your subnet.
     
     1. Reconfigure your load balancing rules to use the new frontend IP configuration.
     
@@ -163,7 +163,7 @@ When you work with Load Balancer, you set the availability zone on the frontend 
     
     1. Remove the old frontend IP configuration.
 
-    You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
+           You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
 
 ### Normal operations
 
@@ -253,11 +253,10 @@ Global Load Balancer operates at layer 4 and doesn't provide application-layer f
 
 Your regional load balancers can be deployed into any Azure region.
 
-A global load balancer, and its global public IP address, are deployed into a single *home region*. This region doesn't affect how the traffic is routed. If the home region goes down, traffic flow is unaffected. You must select a home region from a specific list of Azure regions.
+A global load balancer, and its global public IP address, are deployed into a single *home region*. This region doesn't affect how the traffic is routed. If the home region goes down, traffic flow is unaffected. You must [select a home region from a specific list of Azure regions](/azure/load-balancer/cross-region-overview?branch=pr-en-us-304657#home-regions-in-azure).
 
-Azure also has a number of *participating regions*, which are the locations where the global public IP address of the load balancer is advertised from. You don't configure the participating regions for your global load balancer because Azure preselects the participating regions. When a client initiates a request, the traffic is routed to the closest participating region to the client. Then, the traffic travels from the participating region, through the Microsoft core network, until it reaches the closest regional load balancer.
+Azure also has a number of [*participating regions*](/azure/load-balancer/cross-region-overview?branch=pr-en-us-304657#participating-regions-in-azure), which are the locations where the global public IP address of the load balancer is advertised from. You don't need to configure the participating regions for your global load balancer because Azure preselects the participating regions. When a client initiates a request, the traffic is routed to the closest participating region to the client. Then, the traffic travels from the participating region, through the Microsoft core network, until it reaches the closest regional load balancer.
 
-For more information, see [Home regions and participating regions](../load-balancer/cross-region-overview.md#home-regions-and-participating-regions).
 
 ### Cost
 
