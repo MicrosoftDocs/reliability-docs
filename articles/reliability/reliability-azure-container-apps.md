@@ -59,6 +59,8 @@ Container Apps automatically recovers from temporary issues like network problem
   - Implement circuit breakers to prevent cascading failures
   - Follow [transient fault guidance](/azure/well-architected/reliability/handle-transient-faults)
 
+<a name="availability-zone-support"></a>
+
 ## Availability zones
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
@@ -79,9 +81,7 @@ To enable zone-redundancy, you must meet the following requirements:
 
 ### Configure availability zone support
 
-Enable zone redundancy as you create your environment. For step-by-step instructions, see [Configure zone redundancy](../container-apps/configure-zone-redundancy.md).
-
-Verify setup with: `az containerapp env show` and check for `"zoneRedundant": true`
+Enable zone redundancy as you create your environment. Verify setup with: `az containerapp env show` and check for `"zoneRedundant": true`.
 
 >[!NOTE]
 > The Consumption only environment requires a dedicated subnet with a CIDR range of `/23` or larger. The workload profiles environment requires a dedicated subnet with a CIDR range of `/27` or larger. To learn more about subnet sizing, see the [networking architecture overview](../container-apps/custom-virtual-networks.md#subnet).
@@ -158,7 +158,7 @@ To configure a multi-region deployment:
 
 1. **Create environments** in each target region with consistent naming
 2. **Configure traffic routing** with Azure Front Door or Traffic Manager ([setup guide](../frontdoor/quickstart-create-front-door.md))
-3. **Enable geo-replication** for Container Registry ([instructions](../container-registry/container-registry-geo-replication.md))
+3. **Enable geo-replication** for Container Registry ([instructions](/azure/container-registry/container-registry-geo-replication))
 
 ### Cost and considerations
 
