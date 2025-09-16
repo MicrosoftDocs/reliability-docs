@@ -77,15 +77,8 @@ For the complete list of regions that support availability zones, see [Azure reg
 
 ### Requirements
 
-To use availability zones with Azure Event Hubs:
+To use availability zones with Azure Event Hubs you must create your Event Hubs namespace in a region that supports availability zones.
 
-- You must use Standard, Premium, or Dedicated tier. Basic tier doesn't support availability zones.
-- Create your Event Hubs namespace in a region that supports availability zones.
-- Zone redundancy must be enabled during namespace creation for Standard tier. It cannot be changed after creation.
-
-**Sources:**
-- [Event Hubs tier comparison](../event-hubs/compare-tiers.md)
-- [Create an Event Hubs namespace](../event-hubs/event-hubs-create.md)
 
 ### Considerations
 
@@ -97,7 +90,7 @@ The zone-redundant configuration applies to all event hubs within the namespace.
 
 ### Cost
 
-Enabling zone redundancy for Event Hubs Standard, Premium, and Dedicated tiers doesn't incur additional charges. The pricing is the same whether zone redundancy is enabled or not.
+Enabling zone redundancy for Event Hubs doesn't incur additional charges. The pricing is the same whether zone redundancy is enabled or not.
 
 **Sources:**
 - [Azure Event Hubs pricing](https://azure.microsoft.com/pricing/details/event-hubs/)
@@ -106,7 +99,7 @@ Enabling zone redundancy for Event Hubs Standard, Premium, and Dedicated tiers d
 
 ### Configure availability zone support
 
-- **Create a zone-redundant Event Hubs namespace.** When creating a Standard, Premium, or Dedicated tier namespace in a region with availability zones, zone redundancy is automatically enabled. For detailed steps, see [Create an Event Hubs namespace](../event-hubs/event-hubs-create.md).
+- **Create a zone-redundant Event Hubs namespace.** When creating a namespace in a region with availability zones, zone redundancy is automatically enabled. For detailed steps, see [Create an Event Hubs namespace](../event-hubs/event-hubs-create.md).
 
 - **Migrate to zone-redundant deployment.** You cannot enable zone redundancy on an existing namespace. To migrate, create a new namespace in a zone-enabled region and migrate your applications. For migration guidance, see [Relocate Azure Event Hubs to another region](/azure-resource-manager/management/relocation/relocation-event-hub?tabs=azure-portal).
 
@@ -172,7 +165,6 @@ Azure Event Hubs provides two multi-region capabilities:
     For geo-replication scenarios, see [Event Hubs geo-replication scenarios](../event-hubs/geo-replication.md#scenarios)
 
 
-
 **Sources:**
 - [Event Hubs geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md)
 - [Event Hubs geo-replication](../event-hubs/geo-replication.md)
@@ -189,7 +181,17 @@ Both geo-disaster recovery and geo-replication support pairing between any two A
 ### Requirements
 
 - *Geo-disaster recovery (Standard tier and above):*
-    - Both primary and secondary namespaces must be the same tier and have the same configuration for throughput units or processing units.
+    - The following combinations of primary and secondary namespaces are supported:  
+
+        | Primary namespace tier | Allowed secondary namespace tier |
+        | ----------------- | -------------------- |
+        | Standard | Standard, Dedicated | 
+        | Premium | Premium | 
+        | Dedicated | Dedicated | 
+
+        > [!IMPORTANT]
+        > You can't pair namespaces that are in the same dedicated cluster. You can pair namespaces that are in separate clusters. 
+
     - The secondary namespace must not contain any event hubs before pairing.
 
 - *Geo-replication (Premium tier only):*
@@ -223,11 +225,12 @@ Both geo-disaster recovery and geo-replication support pairing between any two A
 
 ### Configure multi-region support
 
+
 - **Create geo-disaster recovery pairing.** To configure disaster recovery between primary and secondary namespaces see [Implement geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md#setup).
 
 - **Enable geo-replication (Premium only).** To set up active-active replication between Premium namespaces, see [Configure geo-replication](../event-hubs/event-hubs-geo-replication.md#set-up-geo-replication).
 
-- **Disable geo-disaster recovery or geo-replication.** To break the pairing between namespaces, see [Disable disaster recovery](../event-hubs/event-hubs-geo-dr.md#break-pairing).
+- **Disable geo-disaster recovery or geo-replication.** To break the pairing between namespaces, see [Disable disaster recovery](../event-hubs/event-hubs-geo-dr.md#setup).
 
 - **Migrate to multi-region configuration.**  To create a new namespace in the secondary region and establish pairing for existing single-region deployments, see  [Relocate Azure Event Hubs to another region](/azure-resource-manager/management/relocation/relocation-event-hub?tabs=azure-portal).
 
@@ -258,14 +261,13 @@ For geo-replication, both regions actively process events, so size each region t
 
 ### Region-down experience
 
-**Customer-managed failover**: For both geo-disaster recovery and geo-replication, you must monitor region health and initiate failover manually.
+**Customer-managed failover**: For both geo-disaster recovery and geo-replication, you must monitor region health and initiate failover manually. 
 
-For geo-disaster recovery (Standard tier and above):
-
+The geo-disaster recovery feature doesn't support an automatic failover. Failing over activates the secondary namespace and removes the primary namespace from the Geo-Disaster Recovery pairing. Create another namespace to have a new geo-disaster recovery pair.
 
 For geo-replication (Premium tier only):
 
-- **Detection and response**: You must detect the region failure through monitoring and initiate failover through Azure portal, PowerShell, or CLI.
+- **Detection and response**: You must detect the region failure through monitoring and initiate failover through Azure portal, PowerShell, or CLI. To learn how to initiate failover, see [Initiate failover](../event-hubs/event-hubs-geo-dr.md#failover-flow).
 - **Notification**: Configure Azure Monitor alerts for Event Hubs metrics and Service Health notifications to detect region issues.
 - **Active requests**: All in-flight requests to the failed region are lost. Clients must reconnect to the new primary endpoint.
 - **Expected data loss**: All events not consumed from the primary region before failure are lost (geo-disaster recovery). With geo-replication, only events not yet replicated are lost.
