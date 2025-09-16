@@ -13,7 +13,9 @@ ms.date: 12/29/2024
 
 # Reliability in Azure Event Hubs
 
-Azure Event Hubs is a fully managed, real-time data ingestion service that's simple, trusted, and scalable. Stream millions of events per second from any source to build dynamic data pipelines and immediately respond to business challenges. This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region disaster recovery options](#multi-region-support).
+Azure Event Hubs is a native data-streaming service in the cloud that can stream millions of events per second, with low latency, from any source to any destination. Businesses can use Event Hubs to ingest and store streaming data. By using streaming data, businesses can gain valuable insights, drive real-time analytics, and respond to events as they happen. They can use this data to enhance their overall efficiency and customer experience. 
+
+This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region disaster recovery options](#multi-region-support).
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -26,9 +28,9 @@ To learn about how to deploy App Service to support your solution's reliability 
 
 Azure Event Hubs operates on a distributed architecture designed for high availability and fault tolerance. The service consists of front-end gateways that handle client connections, a distributed messaging infrastructure that manages event streams, and a storage layer that persists events for the configured retention period.
 
-Event Hubs namespaces contain one or more event hubs (similar to topics in other messaging systems). Each event hub is partitioned to enable parallel processing and horizontal scaling. The service automatically manages load distribution across partitions and handles failures transparently. 
+Event Hubs namespaces contain one or more event hubs. Each event hub is partitioned to enable parallel processing and horizontal scaling. The service automatically manages load distribution across partitions and handles failures transparently. 
 
-In regions that support availability zones, Event Hubs infrastructure components are distributed across zones, providing resilience against zone-level failures without requiring any customer configuration beyond enabling the feature during namespace creation.
+In regions that support availability zones, Event Hubs infrastructure components are automatically distributed across zones to provide resilience against zone-level failures without requiring any customer configuration.
 
 For Premium and Dedicated tiers, Event Hubs provides dedicated compute resources (Event Hubs Clusters) that offer predictable performance, enhanced security through customer-managed keys, and network isolation capabilities through private endpoints and dedicated virtual network integration.
 
@@ -100,6 +102,7 @@ Enabling zone redundancy for Event Hubs Standard, Premium, and Dedicated tiers d
 **Sources:**
 - [Azure Event Hubs pricing](https://azure.microsoft.com/pricing/details/event-hubs/)
 - [Event Hubs billing overview](../event-hubs/event-hubs-pricing-billing.md)
+
 
 ### Configure availability zone support
 
