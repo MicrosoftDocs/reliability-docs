@@ -191,7 +191,7 @@ This section describes what to expect when a load balancer's frontend IP configu
 
     - *Zone-redundant:* The Azure platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
 
-    - *Zonal:* You need to detect the loss of an availability zone and for responding.
+    - *Zonal:* You're responsible for detecting the loss of an availability zone and for responding.
     
         You might choose to initiate a failover to a secondary frontend IP configuration, another load balancer, or other infrastructure that you create in another availability zone or region. You're responsible for any of these failover activities.
 
