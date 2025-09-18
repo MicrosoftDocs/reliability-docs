@@ -95,9 +95,12 @@ If you don't configure a load balancer to be zone-redundant or zonal, it's consi
 
 #### Backend instances and availability zones
 
-Regardless of the load balancer's frontend IP configuration, your backend instances can be distributed across zones. Health probes automatically removing unhealthy backend instances from rotation regardless of their zone location.
+The availability zone configuration of your backend instances is independent of your load balancer's frontend IP configuration. 
 
-When you use virtual machines, a common design approach for production workloads is to have multiple zonal VMs in different zones. For example, you might deploy VMs into zones 1, 2, and 3. You can create a zone-redundant load balancer and configure those VMs as the backend instances within the load balancer.
+Distribute your backend instances across zones by configuring the relevant service, in accordance with the reliability features of the service they belong to and the architecture that you design.
+
+For example, when you use Azure Virtual Machines, a common design approach for production workloads is to achieve zone resiliency by placing multiple zonal VMs in zones 1, 2, and 3. For load balancing, you can then create a zone-redundant load balancer and configure those VMs as the backend instances within the load balancer. The load balancer's health probes automatically remove unhealthy VMs from rotation regardless of their zone location.
+
 
 > [!NOTE]
 > Distributing backend instances across multiple availability zones is essential for resilience. If all backend instances are located in a single zone, an outage in that zone will make your application unavailable, even if you use a zone-redundant load balancer.
@@ -165,7 +168,7 @@ When you work with Load Balancer, you set the availability zone support type - z
     
     1. Remove the old frontend IP configuration.
 
-           You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
+        You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
 
 ### Normal operations
 
