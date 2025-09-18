@@ -1,7 +1,7 @@
 ---
 title: Reliability in Azure Load Balancer
 description: Learn how to improve reliability in Azure Load Balancer by using availability zones, cross-zone load balancing, cross-region load balancing, and operational best practices.
-author: anaharris-ms 
+author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
