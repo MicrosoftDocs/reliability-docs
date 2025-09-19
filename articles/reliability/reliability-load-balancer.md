@@ -106,7 +106,7 @@ For example, when you use Azure Virtual Machines, a common design approach for p
 
 However, if you choose to deploy your VMs into the same availability zone, you can still deploy a zone-redundant frontend IP configuration on your load balancer, which the following diagram illustrates:
 
-:::image type="content" source="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.png" alt-text="Diagram showing a zone-redundant public load balancer, directing traffic to two different VMs in zone 1." order="false" :::
+:::image type="content" source="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.png" alt-text="Diagram showing a zone-redundant public load balancer, directing traffic to two different VMs in zone 1." border="false" :::
 
 #### Multiple frontends on a single load balancer
 
