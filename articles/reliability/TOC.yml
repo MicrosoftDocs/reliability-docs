@@ -333,15 +333,15 @@ items:
       - name: Azure AI Search
         href: reliability-ai-search.md#configure-availability-zone-support
       - name: Azure API Management
-        href: migrate-api-mgt.md
+        href: reliability-api-management.md#configure-availability-zone-support
       - name: Azure App Configuration
         href: migrate-app-configuration.md
       - name: Azure App Service
         href: reliability-app-service.md#configure-availability-zone-support
       - name: Azure Application Gateway
-        href: migrate-app-gateway-v2.md
+        href: reliability-application-gateway-v2.md#configure-availability-zone-support
       - name: Azure Blob Storage
-        href: reliability-storage-blob.md
+        href: reliability-storage-blob.md#configure-availability-zone-support
       - name: Azure Functions
         href: migrate-functions.md
       - name: Azure Backup
@@ -355,7 +355,7 @@ items:
       - name: Azure Container Instances
         href: migrate-container-instances.md
       - name: Azure Container Registry
-        href: /azure/container-registry/zone-redundancy?toc=/azure/reliability
+        href: reliability-container-registry.md#configure-availability-zone-support
       - name: Azure Cosmos DB for NoSQL
         href: migrate-cosmos-nosql.md
       - name: Azure Database for MySQL - Flexible Server
@@ -369,7 +369,7 @@ items:
       - name: Azure Kubernetes Service
         href: reliability-aks.md
       - name: Azure Load Balancer 
-        href: reliability-load-balancer.md
+        href: reliability-load-balancer.md#configure-availability-zone-support
       - name: Log Analytics Dedicated Cluster workspaces
         href: migrate-monitor-log-analytics.md
       - name: Azure Recovery Services vault
@@ -381,7 +381,7 @@ items:
       - name: Azure SQL Database
         href: /azure/azure-sql/database/enable-zone-redundancy?view=azuresql-db&preserve-view=true&toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Azure SQL Managed Instance
-        href: /azure/azure-sql/managed-instance/instance-zone-redundancy-configure
+        href: reliability-sql-managed-instance.md#configure-availability-zone-support
       - name: Azure Virtual Machines and Virtual Machine Scale Sets
         href: migrate-vm.md
 - name: Reliability concepts

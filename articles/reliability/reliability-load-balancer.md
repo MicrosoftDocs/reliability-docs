@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
-ms.date: 09/19/2025
+ms.date: 09/22/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Load Balancer works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -156,7 +156,6 @@ When you work with Load Balancer, you set the availability zone support type - z
 
 - **Change the availability zone configuration of an existing load balancer.** To change the availability zone configuration of an existing load balancer, you need to replace the frontend IP configuration. The high-level approach is:
 
-    <!-- Anastasia: I know this is veering into how-to territory. I'll leave this for you to decide whether we keep it (since it's pretty high level), or if we should move this into a new migration how-to within the product docs. -->
 
     1. Create a new frontend IP configuration with the desired availability zone configuration.
     
