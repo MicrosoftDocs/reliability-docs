@@ -6,23 +6,22 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
-ms.date: 12/29/2024
+ms.date: 09/26/2025
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Event Hubs works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Event Hubs
 
-Azure Event Hubs is a native data-streaming service in the cloud that can stream millions of events per second, with low latency, from any source to any destination. Businesses can use Event Hubs to ingest and store streaming data. By using streaming data, businesses can gain valuable insights, drive real-time analytics, and respond to events as they happen. They can use this data to enhance their overall efficiency and customer experience. 
+Azure Event Hubs is a native data-streaming service in the cloud that can stream millions of events per second, with low latency, from any source to any destination. Businesses can use Event Hubs to ingest and store streaming data.
 
-This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region disaster recovery options](#multi-region-support).
+This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region support options](#multi-region-support).
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
 ## Production deployment recommendations
 
-To learn about how to deploy App Service to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/eventhubs).
-
+To learn about how to deploy Event Hubs to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/eventhubs).
 
 ## Reliability architecture overview
 
@@ -45,116 +44,70 @@ For Premium and Dedicated tiers, Event Hubs provides dedicated compute resources
 
 Azure Event Hubs handles transient faults through built-in retry mechanisms in the client SDKs and automatic request routing during temporary service disruptions. When working with Event Hubs:
 
-- Use the built-in retry policies in Event Hubs SDKs, which implement exponential backoff by default. The SDKs automatically retry operations for retriable errors like network timeouts or throttling responses.
+- Use the built-in retry policies in Event Hubs SDKs, which implement exponential backoff by default. The SDKs automatically retry operations for retriable errors like network timeouts, throttling responses, or when the server is busy.
 - Configure appropriate timeout values based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
 - Implement checkpointing in your event processor to track progress and enable recovery from the last processed position after transient failures.
-- Monitor metrics like throttled requests and connection failures through Azure Monitor to identify patterns and adjust capacity accordingly.
-- For send operations, use batching to improve throughput and reduce the impact of transient network issues on individual messages.
-- Handle `ServerBusyException` by implementing backoff strategies, as this indicates the service is temporarily overwhelmed.
-
-**Sources:**
-- [Event Hubs messaging exceptions](../event-hubs/event-hubs-messaging-exceptions.md)
-- [Azure Event Hubs client library retry options](../event-hubs/event-hubs-retry-policy.md)
-- [Event processor checkpointing](../event-hubs/event-processor-balance-partition-load.md#checkpointing)
+- For send operations, use batching to improve throughput and reduce the impact of transient network issues on individual messages. <!-- PG: please verify this is accurate. -->
 
 ## Availability zone support
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Event Hubs Standard, Premium, and Dedicated tiers support zone-redundant deployments in regions with availability zones. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The service transparently replicates metadata and data across all three availability zones in the region, providing automatic failover capability without any customer intervention required.
+Azure Event Hubs supports zone-redundant deployments in regions with availability zones. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The service transparently replicates your configuration, metadata, and data across all three availability zones in the region, providing automatic failover capability without any customer intervention required.
 
 Event Hubs implements zone-redundant storage for both the messaging infrastructure and the event data. All components including compute, networking, and storage are replicated across zones. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
 
 ### Region support
 
-Zone-redundant Event Hubs namespaces can be deployed in any Azure region that supports availability zones. 
-
-For the complete list of regions that support availability zones, see [Azure regions](./regions-list.md).
-
-**Sources:**
-- [Event Hubs availability and consistency](../event-hubs/event-hubs-availability-and-consistency.md)
-- [Azure regions with availability zones](./availability-zones-service-support.md)
-
-### Requirements
-
-To use availability zones with Azure Event Hubs you must create your Event Hubs namespace in a region that supports availability zones.
-
-
-### Considerations
-
-The zone-redundant configuration applies to all event hubs within the namespace. You cannot selectively enable or disable zone redundancy for individual event hubs.
-
-**Sources:**
-- [Event Hubs availability zones](../event-hubs/event-hubs-availability-and-consistency.md#availability-zones)
-- [Event Hubs geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md)
+Zone-redundant Event Hubs namespaces can be deployed in [any Azure region that supports availability zones](./regions-list.md).
 
 ### Cost
 
-Enabling zone redundancy for Event Hubs doesn't incur additional charges. The pricing is the same whether zone redundancy is enabled or not.
-
-**Sources:**
-- [Azure Event Hubs pricing](https://azure.microsoft.com/pricing/details/event-hubs/)
-- [Event Hubs billing overview](../event-hubs/event-hubs-pricing-billing.md)
-
+There's no extra cost for zone redundancy with Event Hubs.
 
 ### Configure availability zone support
 
-- **Create a zone-redundant Event Hubs namespace.** When creating a namespace in a region with availability zones, zone redundancy is automatically enabled. For detailed steps, see [Create an Event Hubs namespace](../event-hubs/event-hubs-create.md).
-
-- **Migrate to zone-redundant deployment.** You cannot enable zone redundancy on an existing namespace. To migrate, create a new namespace in a zone-enabled region and migrate your applications. For migration guidance, see [Relocate Azure Event Hubs to another region](/azure-resource-manager/management/relocation/relocation-event-hub?tabs=azure-portal).
-
-- **Disable zone redundancy.** Zone redundancy cannot be disabled once enabled. If you require a non-zone-redundant deployment, create the namespace in a region without availability zone support.
-
-**Sources:**
-- [Create Event Hubs namespace with Azure portal](../event-hubs/event-hubs-create.md)
-- [Create Event Hubs using Azure CLI](../event-hubs/event-hubs-quickstart-cli.md)
-- [Move Event Hubs namespace across regions](../event-hubs/move-across-regions.md)
+Event Hubs namespaces automatically support zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
 
 ### Normal operations
 
-**Traffic routing between zones**. Event Hubs operates in an active/active model where all zones simultaneously process incoming events. Client connections are distributed across zones through the front-end gateways, and events are written to all zones synchronously. Partition ownership is distributed across zones to ensure balanced processing.
+This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and all availability zones are operational.
 
-**Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
+- **Traffic routing between zones**. Event Hubs operates in an active/active model where all zones simultaneously process incoming events. Client connections are distributed across zones through the front-end gateways, and events are written to all zones synchronously. Partition ownership is distributed across zones to ensure balanced processing. <!-- TODO confirm -->
 
-**Sources:**
-- [Event Hubs availability and consistency](../event-hubs/event-hubs-availability-and-consistency.md)
-- [Event Hubs partitions](../event-hubs/event-hubs-features.md#partitions)
+- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
 
 ### Zone-down experience
 
-During an availability zone failure with zone-redundant Event Hubs:
+This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and there's an availability zone outage.
 
-- **Detection and response**: Microsoft's monitoring systems automatically detect zone failures. Event Hubs automatically redirects traffic from the failed zone to healthy zones without customer intervention.
-- **Notification**: Zone failures are tracked in Azure Service Health. Configure Service Health alerts to receive notifications about zone-level events affecting your Event Hubs namespaces.
-- **Active requests**: In-flight write requests to the failed zone are automatically retried to healthy zones. Read operations seamlessly continue from replicas in operational zones.
-- **Expected data loss**: No data loss occurs with zone-redundant Event Hubs as events are synchronously replicated across zones before acknowledgment.
-- **Expected downtime**: No downtime for zone-redundant deployments. Brief latency increases (typically milliseconds) might occur during traffic redistribution.
-- **Traffic rerouting**: Client connections are automatically redirected to healthy zones. The Event Hubs client SDKs handle connection management and retry logic transparently.
+- **Detection and response**: The Event Hubs service is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
 
-**Sources:**
-- [Event Hubs high availability](../event-hubs/event-hubs-availability-and-consistency.md#availability-zones)
-- [Azure Service Health overview](../service-health/service-health-overview.md)
-- [Event Hubs client resilience](../event-hubs/event-hubs-messaging-exceptions.md)
++ **Notification**: Event Hubs doesn't notify you when a zone is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any zone failures.
+
+  Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
+
+- **Active requests**: During a zone failure, active requests might be dropped. Your clients should have sufficient [retry logic](../iot/concepts-manage-device-reconnections.md#retry-patterns) implemented to handle transient faults.
+
+- **Expected data loss**: No data loss occurs with zone-redundant Event Hubs as events are synchronously replicated across zones before acknowledgment. <!-- TODO confirm -->
+
+- **Expected downtime**: A zone failure shouldn't cause downtime to your namespace.
+
+- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to a new primary instance of the service in one of the healthy availability zones. <!-- TODO confirm -->
+    
+    Event Hubs client SDKs and frontend gateways handle connection management and retry logic transparently.
 
 ### Zone recovery
 
 When an availability zone recovers, Event Hubs automatically reintegrates the zone into the active service topology. The recovered zone begins accepting new connections and processing events alongside the other zones. Data that was replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. No customer action is required for zone recovery and reintegration.
 
-**Sources:**
-- [Event Hubs automatic recovery](../event-hubs/event-hubs-availability-and-consistency.md)
-- [Event Hubs fault tolerance](../event-hubs/event-hubs-geo-dr.md#availability-zones)
-
 ### Testing for zone failures
 
-Because Event Hubs zone redundancy is fully managed by Microsoft, you cannot directly trigger a zone failover for testing. However, you can validate your application's resilience by simulating failures at the application layer using Azure Chaos Studio. Create experiments that inject network faults or resource failures to test your event processing application's behavior during zone disruptions. Regular testing ensures your retry policies and error handling work correctly during actual zone failures.
-
-**Sources:**
-- [Azure Chaos Studio overview](../chaos-studio/chaos-studio-overview.md)
-- [Chaos Studio fault library](../chaos-studio/chaos-studio-fault-library.md)
+Because Event Hubs fully manages traffic routing, failover, and failback for zone failures, you don't need to validate availability zone failure processes or provide any further input.
 
 ## Multi-region support
 
-Azure Event Hubs provides two multi-region capabilities: 
+Azure Event Hubs provides two multi-region capabilities:
 
 - *Geo-disaster recovery (Standard tier and above)*.  Geo-Disaster recovery ensures that the entire configuration of a namespace (Event Hubs, Consumer Groups, and settings) is continuously replicated from a primary namespace to a secondary namespace when paired. With Geo-Disaster recovery, you can initiate a once-only failover move from the primary to the secondary at any time. The failover move points the chosen alias name for the namespace to the secondary namespace. After the move, the pairing is then removed. The failover is nearly instantaneous once initiated.
 
