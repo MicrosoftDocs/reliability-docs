@@ -66,11 +66,11 @@ Load Balancer provides two types of availability zone support: *zonal* and *zone
 
     The following diagram shows a zone-redundant public load balancer, which is configured by creating a zone-redundant public IP address:
     
-    :::image type="content" source="./media/reliability-load-balancer/zone-redundant-public-load-balancer.png" alt-text="Diagram showing a zone-redundant public load balancer, with a zone-redundant public IP address, directing traffic to three different VMs in different availability zones." border="false" :::
+    :::image type="content" source="./media/reliability-load-balancer/zone-redundant-public-load-balancer.svg" alt-text="Diagram showing a zone-redundant public load balancer, with a zone-redundant public IP address, directing traffic to three different VMs in different availability zones." border="false" :::
 
     The following diagram shows an internal load balancer using a similar zone-redundant configuration:
 
-    :::image type="content" source="./media/reliability-load-balancer/zone-redundant-internal-load-balancer.png" alt-text="Diagram showing a zone-redundant internal load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
+    :::image type="content" source="./media/reliability-load-balancer/zone-redundant-internal-load-balancer.svg" alt-text="Diagram showing a zone-redundant internal load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
 
 - *Zonal:* A zonal frontend IP configuration is deployed into a single availability zone. The inbound and outbound flows are served within that one zone. If the availability zone has a problem, the load balancer is unavailable. You should only use a zonal frontend IP configuration if you deploy your backend instances within the same zone *and* you need all your traffic to remain within the zone, which is uncommon.
 
@@ -79,11 +79,11 @@ Load Balancer provides two types of availability zone support: *zonal* and *zone
 
     The following diagram shows a zonal internal load balancer in availability zone 1, which is configured by creating a zonal public IP address in that zone:
     
-    :::image type="content" source="./media/reliability-load-balancer/zonal-public-load-balancer.png" alt-text="Diagram showing a zonal public load balancer in zone 1, with a zonal public IP address, directing traffic to two different VMs in zone 1." border="false" :::
+    :::image type="content" source="./media/reliability-load-balancer/zonal-public-load-balancer.svg" alt-text="Diagram showing a zonal public load balancer in zone 1, with a zonal public IP address, directing traffic to two different VMs in zone 1." border="false" :::
 
     The following diagram shows an internal load balancer using a similar zone-redundant configuration:
 
-    :::image type="content" source="./media/reliability-load-balancer/zonal-internal-load-balancer.png" alt-text="Diagram showing a zonal internal load balancer in zone 1, directing traffic to two different VMs in zone 1." border="false" :::
+    :::image type="content" source="./media/reliability-load-balancer/zonal-internal-load-balancer.svg" alt-text="Diagram showing a zonal internal load balancer in zone 1, directing traffic to two different VMs in zone 1." border="false" :::
 
 If you don't configure a load balancer to be zone-redundant or zonal, it's considered *nonzonal* or *regional*. Nonzonal load balancers can be placed in any availability zone within the region. If an availability zone in the region experiences an outage, nonzonal load balancers might be in the affected zone and could experience downtime.
 <!-- PG: When will nonzonal public IP addresses be retired (per https://azure.microsoft.com/en-us/blog/azure-public-ips-are-now-zone-redundant-by-default/)? I can still create one as of September 2025. -->
@@ -106,7 +106,7 @@ For example, when you use Azure Virtual Machines, a common design approach for p
 
 However, if you choose to deploy your VMs into the same availability zone, you can still deploy a zone-redundant frontend IP configuration on your load balancer, which the following diagram illustrates:
 
-:::image type="content" source="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.png" alt-text="Diagram showing a zone-redundant public load balancer, directing traffic to two different VMs in zone 1." border="false" :::
+:::image type="content" source="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.svg" alt-text="Diagram showing a zone-redundant public load balancer, directing traffic to two different VMs in zone 1." border="false" :::
 
 #### Multiple frontends on a single load balancer
 
@@ -252,7 +252,7 @@ With Global Load Balancer, you deploy multiple public load balancers in differen
 
 The following diagram shows a global load balancer that routes traffic among three regional load balancers in different Azure regions:
 
-:::image type="content" source="../load-balancer/media/cross-region-overview/cross-region-load-balancer.png" alt-text="Diagram of global load balancer." border="false":::
+:::image type="content" source="../load-balancer/media/cross-region-overview/cross-region-load-balancer.svg" alt-text="Diagram of global load balancer." border="false":::
 
 Global Load Balancer operates at layer 4 and doesn't provide application-layer features like SSL/TLS termination, cookie-based session affinity, or URL path-based routing. For these capabilities, consider using Azure Front Door. You can also consider using Azure Traffic Manager for layer 7 HTTP load balancing across regions.
 
@@ -301,7 +301,7 @@ This section describes what to expect when you use a global load balancer and th
 
     The following diagram shows an example where traffic from a client would ordinarily be routed to their closest region, but due to a failure in that region, it's routed to another regional load balancer instead:
 
-    :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.png" alt-text="Diagram of global region traffic view." border="false":::
+    :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.svg" alt-text="Diagram of global region traffic view." border="false":::
 
     For more information, see [Health probes](../load-balancer/cross-region-overview.md#health-probes).
 
