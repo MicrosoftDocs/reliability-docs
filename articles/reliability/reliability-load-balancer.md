@@ -252,7 +252,7 @@ With Global Load Balancer, you deploy multiple public load balancers in differen
 
 The following diagram shows a global load balancer that routes traffic among three regional load balancers in different Azure regions:
 
-:::image type="content" source="../load-balancer/media/cross-region-overview/cross-region-load-balancer.svg" alt-text="Diagram of global load balancer." border="false":::
+:::image type="content" source="../load-balancer/media/cross-region-overview/cross-region-load-balancer.png" alt-text="Diagram of global load balancer." border="false":::
 
 Global Load Balancer operates at layer 4 and doesn't provide application-layer features like SSL/TLS termination, cookie-based session affinity, or URL path-based routing. For these capabilities, consider using Azure Front Door. You can also consider using Azure Traffic Manager for layer 7 HTTP load balancing across regions.
 
@@ -301,7 +301,7 @@ This section describes what to expect when you use a global load balancer and th
 
     The following diagram shows an example where traffic from a client would ordinarily be routed to their closest region, but due to a failure in that region, it's routed to another regional load balancer instead:
 
-    :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.svg" alt-text="Diagram of global region traffic view." border="false":::
+    :::image type="content" source="../load-balancer/media/cross-region-overview/global-region-view.png" alt-text="Diagram of global region traffic view." border="false":::
 
     For more information, see [Health probes](../load-balancer/cross-region-overview.md#health-probes).
 
