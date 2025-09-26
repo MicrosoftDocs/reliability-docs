@@ -33,11 +33,6 @@ In regions that support availability zones, Event Hubs infrastructure components
 
 For Premium and Dedicated tiers, Event Hubs provides dedicated compute resources (Event Hubs Clusters) that offer predictable performance, enhanced security through customer-managed keys, and network isolation capabilities through private endpoints and dedicated virtual network integration.
 
-**Sources:**
-- [Event Hubs architecture](../event-hubs/event-hubs-about.md#key-architecture-components)
-- [Event Hubs scalability](../event-hubs/event-hubs-scalability.md)
-- [Event Hubs Premium and Dedicated tiers](../event-hubs/compare-tiers.md)
-
 ## Transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
@@ -73,9 +68,11 @@ Event Hubs namespaces automatically support zone redundancy when deployed in [su
 
 This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and all availability zones are operational.
 
-- **Traffic routing between zones**. Event Hubs operates in an active/active model where all zones simultaneously process incoming events. Client connections are distributed across zones through the front-end gateways, and events are written to all zones synchronously. Partition ownership is distributed across zones to ensure balanced processing. <!-- TODO confirm -->
+- **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in all of the region's zones simultaneously process incoming events. <!-- PG: Please verify, and advise whether South Central US going to 4 zones changes anything. -->
 
-- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
+    Partition ownership is distributed across zones to ensure balanced processing. <!-- TODO confirm -->
+
+- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols. <!-- PG: Please verify replication is synchronous. -->
 
 ### Zone-down experience
 
@@ -87,15 +84,15 @@ This section describes what to expect when Event Hubs namespaces are configured 
 
   Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
-- **Active requests**: During a zone failure, active requests might be dropped. Your clients should have sufficient [retry logic](../iot/concepts-manage-device-reconnections.md#retry-patterns) implemented to handle transient faults.
+- **Active requests**: During a zone failure, active requests might be dropped. If your clients should handle [transient faults](#transient-faults) appropriately by retrying after a short period of time, it's unlikely they'll be substantially affected. <!-- PG: Please verify this statement. -->
 
-- **Expected data loss**: No data loss occurs with zone-redundant Event Hubs as events are synchronously replicated across zones before acknowledgment. <!-- TODO confirm -->
+- **Expected data loss**: No data loss occurs with zone-redundant Event Hubs because events are synchronously replicated across zones before acknowledgment. <!-- PG: Please verify this statement. -->
 
-- **Expected downtime**: A zone failure shouldn't cause downtime to your namespace.
+- **Expected downtime**: A zone failure shouldn't cause downtime to your namespace. <!-- PG: Please verify this statement. -->
 
-- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to a new primary instance of the service in one of the healthy availability zones. <!-- TODO confirm -->
+- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to another instance of the service in one of the healthy availability zones. <!-- PG: Please verify this statement. -->
     
-    Event Hubs client SDKs and frontend gateways handle connection management and retry logic transparently.
+    Event Hubs client SDKs typically handle connection management and retry logic transparently.
 
 ### Zone recovery
 
@@ -109,38 +106,38 @@ Because Event Hubs fully manages traffic routing, failover, and failback for zon
 
 Azure Event Hubs provides two multi-region capabilities:
 
-- *Geo-disaster recovery (Standard tier and above):* TODO
+- *Geo-disaster recovery (Standard tier and above):* Geo-disaster recovery, as its name implies, is a solution to assist in disaster recovery scenarios, including the catastrophic loss of a region. Geo-disaster recovery only replicates the configuration and metadata of your namespace, but it doesn't replicate event data. It assists disaster recovery by ensuring a namespace in another region is preconfigured and ready to immediately accept events from clients. Geo-disaster recovery is intended as a one-way recovery solution, and doesn't support failback to the prior primary region.
 
- - *Geo-replication (Premium tier):* TODO
+- *Geo-replication (Premium tier):* TODO
+
+Typically you would only use one of these two approaches.
 
 ### Geo-disaster recovery
 
-Geo-disaster recovery, available in the Standard tier and above, ensures that the entire configuration of a namespace (Event Hubs, Consumer Groups, and settings) is continuously replicated from a primary namespace to a secondary namespace when paired. With Geo-Disaster recovery, you can initiate a once-only failover move from the primary to the secondary at any time. The failover move points the chosen alias name for the namespace to the secondary namespace. After the move, the pairing is then removed. The failover is nearly instantaneous once initiated.
+Geo-disaster recovery, available in the Standard tier and above, ensures that the entire configuration of a namespace (Event Hubs, Consumer Groups, and settings) is continuously replicated from a primary namespace to a secondary namespace.
+
+> [!IMPORTANT]
+> Geo-disaster recovery enables instantaneous continuity of operations with the same configuration, but **doesn't replicate the event data**. If you need to replicate event data, or if you need to operate multiple regional namespaces in active/active configurations for resiliency purposes, consider using [geo-replication](#geo-replication) or an [alternative multi-region approach](#alternative-multi-region-approaches).
+
+When you use geo-disaster recovery, you can initiate a single-time, one-way failover move from the primary to the secondary at any time. The failover move points the chosen alias name for the namespace to the secondary namespace. After the move, the pairing is then removed. The failover is nearly instantaneous once initiated.
+
+This section provides a summary of some of the important aspects of geo-disaster recovery, but it's important you review the full documentation to understand exactly how it works. For more information, see [Azure Event Hubs - Geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md).
 
 #### Region support
 
-Both geo-disaster recovery and geo-replication support pairing between any two Azure regions where Event Hubs is available. Because you're not restricted to Azure paired regions, you have the flexibility to choose secondary regions based on your requirements for latency, compliance, or data residency.
+You can select any Azure region where Event Hubs is available for your primary or secondary namespace. Because you're not restricted to Azure paired regions, you have the flexibility to choose secondary regions based on your requirements for latency, compliance, or data residency.
 
 #### Requirements
 
-- The following combinations of primary and secondary namespaces are supported:  
+- **Tiers:** Geo-disaster recovery supports specific combinations of tiers for the primary and secondary namespaces. For detailed information, see TODO.
 
-    | Primary namespace tier | Allowed secondary namespace tier |
-    | ----------------- | -------------------- |
-    | Standard | Standard, Dedicated | 
-    | Premium | Premium | 
-    | Dedicated | Dedicated | 
-
-    > [!IMPORTANT]
-    > You can't pair namespaces that are in the same dedicated cluster. You can pair namespaces that are in separate clusters. 
-
-- The secondary namespace must not contain any event hubs before pairing.
+- **Empty namespaces:** The secondary namespace must not contain any event hubs before pairing. <!-- TODO confirm -->
 
 #### Considerations
 
-Geo-disaster recovery (Standard tier and above) enables instantaneous continuity of operations with the same configuration, but **does not replicate the event data**. Unless the disaster caused the loss of all zones, the event data that is preserved in the primary Event Hub after failover will be recoverable and the historic events can be obtained from there once access is restored. For replicating event data and operating corresponding namespaces in active/active configurations to cope with outages and disasters, don't lean on this Geo-disaster recovery feature set, but follow the [replication guidance](event-hubs-federation-overview.md).  
+- Microsoft Entra role-based access control (RBAC) assignments to entities in the primary namespace aren't replicated to the secondary namespace. Create role assignments manually in the secondary namespace to secure access to them.
 
-Microsoft Entra role-based access control (RBAC) assignments to entities in the primary namespace aren't replicated to the secondary namespace. Create role assignments manually in the secondary namespace to secure access to them. 
+- **Application design.** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [TODO](TODO).
 
 #### Cost
 
@@ -160,21 +157,37 @@ When planning for multi-region deployments, ensure that both regions have suffic
 
 This section describes what to expect when an IoT hub is configured for geo-disaster recovery, and the primary region is operational.
 
-- **Traffic routing between regions**. Oonly the primary region actively processes events during normal operations. The secondary remains passive in standby mode.
+- **Traffic routing between regions**. TODO alias. Only the primary region actively processes events during normal operations. The secondary remains passive in standby mode.
 
-- **Data replication between regions**. Only configuration metadata is replicated between regions. Replication occurs continuously and synchronously. Event data remains in the primary region only. <!-- TODO check synchronous -->
+- **Data replication between regions**. Only configuration metadata is replicated between regions. Replication of configuration occurs continuously and is performed asynchronously. Event data remains in the primary region only.
 
 #### Region-down experience
 
 This section describes what to expect when an Event Hubs namespace is configured for geo-disaster recovery and there's an outage in the primary region.
 
-- You must monitor region health and initiate failover manually. 
+- **Detection and response:** You must monitor region health and initiate failover manually. Microsoft does not perform failover automatically.
 
-- The geo-disaster recovery feature doesn't support an automatic failover. Failing over activates the secondary namespace and removes the primary namespace from the Geo-Disaster Recovery pairing. Create another namespace to have a new geo-disaster recovery pair.
+    To initiate failover, TODO.
+
+    > [!IMPORTANT]
+    > Failing over activates the secondary namespace and removes the primary namespace from the geo-disaster recovery pairing. You must create a new namespace to have a new geo-disaster recovery pair.
+
+- **Notification**: TODO ARH?
+
+- **Active requests:** TODO
+
+- **Expected data loss:** TODO config might not be updated if recent and complex. Data will not be replicated at all.
+
+- **Expected downtime:** TODO failover time? "near instantaneous" - what are the TTLs on the DNS?
+
+- **Traffic rerouting:** TODO the function of the alias is to redirect
 
 #### Region recovery
 
 After the original primary region recovers, you must manually re-establish the pairing and optionally fail back. For geo-disaster recovery, create a new pairing with the recovered region as secondary, then perform another failover if you want to return to the original region. This process involves potential data loss of events sent to the temporary primary.
+
+<!-- TODO integrate this -->
+Unless the disaster caused the loss of all zones, the event data that is preserved in the primary Event Hub after failover will be recoverable and the historic events can be obtained from there once access is restored.
 
 #### Testing for region failures
 
@@ -186,7 +199,7 @@ Geo-replication, which is available in the Premium tier, provides replication of
     
 At any time, the secondary region can be promoted to become a primary region. Promoting a secondary repoints the namespace FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region.
 
-For geo-replication scenarios, see [Event Hubs geo-replication scenarios](../event-hubs/geo-replication.md#scenarios)
+This section provides a summary of some of the important aspects of geo-replication, but it's important you review the full documentation to understand exactly how it works. For more information, see [Azure Event Hubs Geo-replication](../event-hubs/geo-replication.md).
 
 #### Region support
 
@@ -194,7 +207,7 @@ Both geo-disaster recovery and geo-replication support pairing between any two A
 
 #### Requirements
 
-<!-- TODO does Dedicated support? -->
+<!-- TODO does Dedicated support it? -->
 
 - Both namespaces must be Premium tier with the same processing unit configuration.
 - Namespaces must be in different regions.
@@ -248,6 +261,12 @@ If you need multi-region capabilities beyond what geo-disaster recovery or geo-r
 
 You can also implement active-active patterns using Event Hubs federation with custom replication functions to synchronize events across multiple independent namespaces. This provides flexibility for complex routing scenarios and selective replication.
 
+## Backups
+
+Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub a short period of time, and if required it's then persisted into another data storage system.
+
+However, if you need to retain a copy of your events, consider using [Event Hubs Capture](TODO), which saves copies of events to an Azure Blob Storage account.
+
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
@@ -256,7 +275,5 @@ Your availability SLA is higher when you use the Premium or Dedicated tiers.
 
 ### Related content
 
-- [Azure reliability overview](/azure/reliability/overview)
-- [Availability zones overview](/azure/reliability/availability-zones-overview)
-- [Azure regions and availability zones](/azure/reliability/availability-zones-service-support)
 - [Event Hubs documentation](../event-hubs/event-hubs-about.md)
+- [Azure reliability overview](/azure/reliability/overview)
