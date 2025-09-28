@@ -25,14 +25,17 @@ To learn about how to deploy Event Hubs to support your solution's reliability r
 
 ## Reliability architecture overview
 
-<!-- TODO check this section -->
-Azure Event Hubs operates on a distributed architecture designed for high availability and fault tolerance. The service consists of front-end gateways that handle client connections, a distributed messaging infrastructure that manages event streams, and a storage layer that persists events for the configured retention period.
+The container for your Event Hubs resources is a *namespace*. A namespace is associated with a *cluster*, which provides the underlying compute and storage resources for the service. When you use most of the Event Hubs tiers, your namespace runs on a shared cluster. When your namespace uses the Premium tier, the namespace is allocated dedicated resources within a shared cluster.  When you use the Dedicated tier, you have a cluster dedicated to your namespaces. To learn more about dedicated clusters, see [Azure Event Hubs Dedicated tier overview](../event-hubs/event-hubs-dedicated-overview.md).
 
-Event Hubs namespaces contain one or more event hubs. Each event hub is partitioned to enable parallel processing and horizontal scaling. The service automatically manages load distribution across partitions and handles failures transparently. 
+Your namespace contains one or more *event hubs*, which store your *events*. The sequencing of events is managed by the service based on timestamps, and consumers that read from the event hub can maintain a *checkpoint* to read their events sequentially.
 
-In regions that support availability zones, Event Hubs infrastructure components are automatically distributed across zones to provide resilience against zone-level failures without requiring any customer configuration.
+Clusters provide the physical resources that its namespaces use. Each cluster has multiple storage replicas for high availability and performance optimization. You manage your namespace's compute resources by deploying throughput units, processing units, or capacity units, depending on the tier. For more information, see [Scaling with Event Hubs](../event-hubs/event-hubs-scalability.md).
 
-For Premium and Dedicated tiers, Event Hubs provides dedicated compute resources (Event Hubs Clusters) that offer predictable performance, enhanced security through customer-managed keys, and network isolation capabilities through private endpoints and dedicated virtual network integration.
+Each event hub contains one or more *partitions*, which are sequences of sequential events. Partitions enable your event hub to perform parallel processing and allow for horizontal scaling. You should select a number of partitions that meets your requirements for throughput and consistency.
+
+When you use Event Hubs, you should make an explicit decision about whether you maximize availability or the consistency of your sequence of events. Your decision affects how you design your client applications to write to and read from partitions. If you need to maximize availability, you should avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
+
+Event Hubs also provides a *schema registry* to maintain a repository of event schemas that you can use throughout your organization. For more information, see [Schema Registry in Azure Event Hubs](../event-hubs/schema-registry-concepts.md).
 
 ## Transient faults
 
@@ -49,9 +52,9 @@ Azure Event Hubs handles transient faults through built-in retry mechanisms in t
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Event Hubs supports zone-redundant deployments in regions with availability zones. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The service transparently replicates your configuration, metadata, and data across all three availability zones in the region, providing automatic failover capability without any customer intervention required.
+Azure Event Hubs supports zone-redundant deployments in all service tiers. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The service transparently replicates your configuration, metadata, and data across all three availability zones in the region, providing automatic failover capability without any customer intervention required.
 
-Event Hubs implements zone-redundant storage for both the messaging infrastructure and the event data. All components including compute, networking, and storage are replicated across zones. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
+Event Hubs implements zone-redundant storage for both the messaging infrastructure and the event data. All Event Hubs components including compute, networking, and storage are replicated across zones. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
 
 ### Region support
 
@@ -70,8 +73,6 @@ Event Hubs namespaces automatically support zone redundancy when deployed in [su
 This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and all availability zones are operational.
 
 - **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in all of the region's zones simultaneously process incoming events. <!-- PG: Please verify, and advise whether South Central US going to 4 zones changes anything. -->
-
-    Partition ownership is distributed across zones to ensure balanced processing. <!-- TODO confirm -->
 
 - **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols. <!-- PG: Please verify replication is synchronous. -->
 
@@ -276,7 +277,7 @@ You can also implement active-active patterns using Event Hubs federation with c
 
 ## Backups
 
-Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub for a short period of time, and if required it can be then persisted into another data storage system.
+Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub for a short period of time, and is then processed or persisted into another data storage system.
 
 However, if you need to retain a copy of your events, consider using [Event Hubs Capture](../event-hubs/event-hubs-capture-overview.md), which saves copies of events to an Azure Blob Storage account.
 
