@@ -21,7 +21,7 @@ This article describes reliability support in [Azure Event Hubs](../event-hubs/e
 
 ## Production deployment recommendations
 
-To learn about how to deploy Event Hubs to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/eventhubs).
+To learn about how to deploy Event Hubs to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/event-hubs).
 
 ## Reliability architecture overview
 
@@ -138,7 +138,7 @@ You can select any Azure region where Event Hubs is available for your primary o
 
 - Microsoft Entra role-based access control (RBAC) assignments to entities in the primary namespace aren't replicated to the secondary namespace. Create role assignments manually in the secondary namespace to secure access to them.
 
-- **Application design.** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [TODO](TODO).
+- **Application design.** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [Considerations](../event-hubs/event-hubs-geo-dr.md#considerations).
 
 #### Cost
 
@@ -278,7 +278,7 @@ You can also implement active-active patterns using Event Hubs federation with c
 
 Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub a short period of time, and if required it's then persisted into another data storage system.
 
-However, if you need to retain a copy of your events, consider using [Event Hubs Capture](TODO), which saves copies of events to an Azure Blob Storage account.
+However, if you need to retain a copy of your events, consider using [Event Hubs Capture](../event-hubs/event-hubs-capture-overview.md), which saves copies of events to an Azure Blob Storage account.
 
 ## Service-level agreement
 
