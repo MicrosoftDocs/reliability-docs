@@ -276,7 +276,7 @@ You can also implement active-active patterns using Event Hubs federation with c
 
 ## Backups
 
-Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub a short period of time, and if required it's then persisted into another data storage system.
+Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub for a short period of time, and if required it can be then persisted into another data storage system.
 
 However, if you need to retain a copy of your events, consider using [Event Hubs Capture](../event-hubs/event-hubs-capture-overview.md), which saves copies of events to an Azure Blob Storage account.
 
