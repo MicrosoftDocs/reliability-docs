@@ -129,7 +129,7 @@ Metadata geo-disaster recovery, available in the Standard tier and above, ensure
 > [!IMPORTANT]
 > Geo-disaster recovery enables instantaneous continuity of operations with the same configuration, but **doesn't replicate the event data**. If you need to replicate event data, or if you need to operate multiple regional namespaces in active/active configurations for resiliency purposes, consider using [geo-replication](#geo-replication) or an [alternative multi-region approach](#alternative-multi-region-approaches).
 
-When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is a DNS entry. By default, the alias directs all traffic to the primary namespace.
+When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is a FQDN (fully qualified domain name). By default, the alias directs all traffic to the primary namespace.
 
 If the primary region fails or there's another type of disaster, you can manually initiate a single-time, one-way failover move from the primary to the secondary at any time. The failover is nearly instantaneous once initiated. During the failover process, the geo-disaster recovery alias is repointed to the secondary namespace. After the move, the pairing is then removed.
 
@@ -216,7 +216,9 @@ To test your response and disaster recovery processes, you can perform a planned
 
 ### Geo-replication
 
-Geo-replication, which is available in the Premium and Dedicated tiers, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace. This feature ensures that metadata and data of a namespace is continuously replicated from a primary region to the secondary region. The namespace can be thought of as being extended to more than one region, with one region being the primary and the other being the secondary.
+Geo-replication, which is available in the Premium and Dedicated tiers, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace.
+
+Geo-replication ensures that metadata and data of a namespace is continuously replicated from a primary region to the secondary region, and you can customize how the replication occurs. The namespace can be thought of as being extended to more than one region, with one region being the primary and the other being the secondary.
     
 At any time, the secondary region can be promoted to become a primary region. Promoting a secondary repoints the namespace FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region.
 
@@ -224,7 +226,7 @@ This section provides a summary of some of the important aspects of geo-replicat
 
 #### Region support
 
-Both geo-disaster recovery and geo-replication support pairing between any two Azure regions where Event Hubs is available. Because you're not restricted to Azure paired regions, you have the flexibility to choose secondary regions based on your requirements for latency, compliance, or data residency.
+You can select any Azure region where Event Hubs is available for your primary or secondary namespace. Because you're not restricted to Azure paired regions, you have the flexibility to choose secondary regions based on your requirements for latency, compliance, or data residency.
 
 #### Requirements
 
