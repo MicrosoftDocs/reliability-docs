@@ -25,6 +25,7 @@ To learn about how to deploy Event Hubs to support your solution's reliability r
 
 ## Reliability architecture overview
 
+<!-- TODO check this section -->
 Azure Event Hubs operates on a distributed architecture designed for high availability and fault tolerance. The service consists of front-end gateways that handle client connections, a distributed messaging infrastructure that manages event streams, and a storage layer that persists events for the configured retention period.
 
 Event Hubs namespaces contain one or more event hubs. Each event hub is partitioned to enable parallel processing and horizontal scaling. The service automatically manages load distribution across partitions and handles failures transparently. 
@@ -39,10 +40,10 @@ For Premium and Dedicated tiers, Event Hubs provides dedicated compute resources
 
 Azure Event Hubs handles transient faults through built-in retry mechanisms in the client SDKs and automatic request routing during temporary service disruptions. When working with Event Hubs:
 
-- Use the built-in retry policies in Event Hubs SDKs, which implement exponential backoff by default. The SDKs automatically retry operations for retriable errors like network timeouts, throttling responses, or when the server is busy.
-- Configure appropriate timeout values based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
-- Implement checkpointing in your event processor to track progress and enable recovery from the last processed position after transient failures.
-- For send operations, use batching to improve throughput and reduce the impact of transient network issues on individual messages. <!-- PG: please verify this is accurate. -->
+- **Use the built-in retry policies in Event Hubs SDKs**, which implement exponential backoff by default. The SDKs automatically retry operations for retriable errors like network timeouts, throttling responses, or when the server is busy.
+- **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
+- **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
+- **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages. <!-- PG: please verify this is accurate. -->
 
 ## Availability zone support
 
@@ -90,7 +91,7 @@ This section describes what to expect when Event Hubs namespaces are configured 
 
 - **Expected downtime**: A zone failure shouldn't cause downtime to your namespace. <!-- PG: Please verify this statement. -->
 
-- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to another instance of the service in one of the healthy availability zones. <!-- PG: Please verify this statement. -->
+- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to another instance of the service in one of the healthy availability zones.
     
     Event Hubs client SDKs typically handle connection management and retry logic transparently.
 
@@ -108,9 +109,9 @@ Azure Event Hubs provides two multi-region capabilities:
 
 - *Geo-disaster recovery (Standard tier and above):* Geo-disaster recovery, as its name implies, is a solution to assist in disaster recovery scenarios, including the catastrophic loss of a region. Geo-disaster recovery only replicates the configuration and metadata of your namespace, but it doesn't replicate event data. It assists disaster recovery by ensuring a namespace in another region is preconfigured and ready to immediately accept events from clients. Geo-disaster recovery is intended as a one-way recovery solution, and doesn't support failback to the prior primary region.
 
-- *Geo-replication (Premium tier):* TODO
+- *Geo-replication (Premium and Dedicated tiers):* Geo-replication replicates your namespace's configuration and the event data using a replication approach that you configure. Gei-replication ensures that your events are available in another region, and you can switch to use the secondary region when you need to.
 
-Typically you would only use one of these two approaches.
+Typically you would only use one of these two approaches. <!-- PG: Do we have documented guidance about when to use one over the other? -->
 
 ### Geo-disaster recovery
 
@@ -195,7 +196,7 @@ To test your disaster recovery configuration, you can perform a planned failover
 
 ### Geo-replication
 
-Geo-replication, which is available in the Premium tier, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace. This feature ensures that metadata and data of a namespace is continuously replicated from a primary region to the secondary region. The namespace can be thought of as being extended to more than one region, with one region being the primary and the other being the secondary.
+Geo-replication, which is available in the Premium and Dedicated tiers, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace. This feature ensures that metadata and data of a namespace is continuously replicated from a primary region to the secondary region. The namespace can be thought of as being extended to more than one region, with one region being the primary and the other being the secondary.
     
 At any time, the secondary region can be promoted to become a primary region. Promoting a secondary repoints the namespace FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region.
 
@@ -218,9 +219,13 @@ When you enable geo-replication, you pay for processing units in each region plu
 
 #### Configure multi-region support
 
-- **Enable geo-replication (Premium only).** To set up active-active replication between Premium namespaces, see [Configure geo-replication](../event-hubs/event-hubs-geo-replication.md#set-up-geo-replication).
+- **Enable geo-replication on a new namespace.** To set up active-active replication between a newly created pair of namespaces, see [Enable Geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-a-new-namespace).
 
-- **Disable geo-replication.** TODO
+- **Enable geo-replication on a new namespace.** To set up active-active replication between existing namespaces, see [Enable Geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-an-existing-namespace).
+
+- **Change replication approach.** TODO see [Switch replication mode](../event-hubs/use-geo-replication.md#switch-replication-mode).
+
+- **Disable geo-replication.** To disable geo-replication to a secondary namespace, see [Remove a secondary](../event-hubs/use-geo-replication.md#remove-a-secondary).
 
 #### Capacity planning and management
 
@@ -236,20 +241,27 @@ This section describes what to expect when an IoT hub is configured for geo-repl
 
 - **Data replication between regions**. Both metadata and event data replicate asynchronously between regions with configurable replication policies to balance consistency and performance.
 
-## Region-down experience
+#### Region-down experience
 
-This section describes what to expect when an Event Hubs namespace is configured for geo-replication and there's an outage in the primary region. <!-- TODO is there a concept of a primary region? -->
+This section describes what to expect when an Event Hubs namespace is configured for geo-replication and there's an outage in the primary region.
 
-- **Detection and response**: You must detect the region failure through monitoring and initiate failover through Azure portal, PowerShell, or CLI. To learn how to initiate failover, see [Initiate failover](../event-hubs/event-hubs-geo-dr.md#failover-flow).
-- **Notification**: Configure Azure Monitor alerts for Event Hubs metrics and Service Health notifications to detect region issues.
-- **Active requests**: All in-flight requests to the failed region are lost. Clients must reconnect to the new primary endpoint.
-- **Expected data loss**: All events not consumed from the primary region before failure are lost (geo-disaster recovery). With geo-replication, only events not yet replicated are lost.
-- **Expected downtime**: Typically 15-30 minutes for failover completion plus time for client reconnection.
-- **Traffic rerouting**: After failover, the secondary namespace becomes primary with a new connection endpoint. Update client applications to use the new endpoint or use the alias if configured..
+- **Detection and response**: You're responsible for deciding when to promote your secondary namespace to primary. Microsoft doesn't make this decision or initiate the process for you.
+
+    To learn how to initiate failover, see [Promote secondary](../event-hubs/use-geo-replication.md#promote-secondary).
+
+- **Notification**: TODO
+
+- **Active requests**: All in-flight requests to the failed region are lost. After the promotion or failover completes, clients must reconnect to the namespace's endpoint.
+
+- **Expected data loss**: TODO sync vs async
+
+- **Expected downtime**: TODO Typically 15-30 minutes for failover completion plus time for client reconnection. <!-- PG: Please confirm -->
+
+- **Traffic rerouting**: TODO
 
 #### Region recovery
 
-Re-establish replication to the recovered region and promote it back to primary when ready. The bi-directional replication minimizes data loss during failback operations.
+TODO
 
 #### Testing for region failures
 
@@ -257,6 +269,7 @@ For geo-replication testing, temporarily promote the secondary region to primary
 
 ### Alternative multi-region approaches
 
+<!-- TODO check this section -->
 If you need multi-region capabilities beyond what geo-disaster recovery or geo-replication provide, consider implementing event replication using Azure Functions or custom applications. This approach gives you full control over replication logic, filtering, and transformation.
 
 You can also implement active-active patterns using Event Hubs federation with custom replication functions to synchronize events across multiple independent namespaces. This provides flexibility for complex routing scenarios and selective replication.
