@@ -131,9 +131,9 @@ You can select any Azure region where Event Hubs is available for your primary o
 
 #### Requirements
 
-- **Tiers:** Geo-disaster recovery supports specific combinations of tiers for the primary and secondary namespaces. For detailed information, see TODO.
+- **Tiers:** Geo-disaster recovery supports specific combinations of tiers for the primary and secondary namespaces. For detailed information, see [Supported namespace pairs](../event-hubs/event-hubs-geo-dr.md#supported-namespace-pairs).
 
-- **Empty namespaces:** The secondary namespace must not contain any event hubs before pairing. <!-- TODO confirm -->
+- **Empty namespaces:** The secondary namespace must not contain any event hubs before pairing. <!-- TODO research -->
 
 #### Considerations
 
