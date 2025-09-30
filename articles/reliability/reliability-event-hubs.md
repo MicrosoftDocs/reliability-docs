@@ -54,7 +54,7 @@ When you're designing client applications to work with Event Hubs, follow this g
 - **Use the built-in retry policies in Event Hubs SDKs**, which implement exponential backoff by default. The SDKs automatically retry operations for retryable errors like network timeouts, throttling responses, or when the server is busy.
 - **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
 - **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
-- **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages. <!-- PG: please verify this is accurate. -->
+- **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages.
 
 ## Availability zone support
 
@@ -197,7 +197,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
         When you configure asynchronous replication, you configure the maximum acceptable lag time for replication to take. At any time, you can verify the current replication lag [by using Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
         
-        If the asynchronous replication lag increases beyond the maximum you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, it's important to select secondary regions that aren't too geographically distant, and to ensure that your capacity is sufficient for the throughput. <!-- PG: Please verify that these factors are correct. -->
+        If the asynchronous replication lag increases beyond the maximum you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, it's important to select secondary regions that aren't too geographically distant, and to ensure that your capacity is sufficient for the throughput.
 
     For more information, see [Replication modes](../event-hubs/geo-replication.md#replication-modes).
 
@@ -240,7 +240,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Expected downtime**: The amount of downtime you can expect depends on the type of promotion you perform (planned or forced):
 
-    - *Planned promotion:* The first step in a planned promotion is for the data to finish replicating to the secondary region. That can take several minutes or hours depending on the replication lag. <!-- PG: Please verify. --> After the replication completes, the promotion process typically takes approximately 5 to 10 minutes, although it can sometimes take longer for DNS entries to be fully replicated and updated by clients.
+    - *Planned promotion:* The first step in a planned promotion is for the data to finish replicating to the secondary region. Usually that completes quickly, but in some situations it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes approximately 5 to 10 minutes, although it can sometimes take longer for DNS entries to be fully replicated and updated by clients.
     
         No writes are accepted in the primary region during the entire promotion process.
 
@@ -258,7 +258,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 After the original primary region recovers, if you want it to be the namespace's primary region again then you must promote it by following the same region promotion process.
 
-<!-- PG: What happens to orphaned events if I trigger a second failover? -->
+If you performed a forced promotion, then any data that was lost is unrecoverable, even after the primary region is available again.
 
 #### Testing for region failures
 
