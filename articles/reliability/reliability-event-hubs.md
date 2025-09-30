@@ -25,7 +25,7 @@ To learn about how to deploy Event Hubs to support your solution's reliability r
 
 ## Reliability architecture overview
 
-The container for your Event Hubs resources is a *namespace*. A namespace contains one or more *event hubs*, which store your *events*. The sequencing of events is managed by the service based on timestamps. Consumers that read from the event hub can maintain a *checkpoint* to read their events sequentially. To learn more about the fundamental concepts in Event Hubs, see TODO.
+The container for your Event Hubs resources is a *namespace*. A namespace contains one or more *event hubs*, which store your *events*. The sequencing of events is managed by the service based on timestamps. Consumers that read from the event hub can maintain a *checkpoint* to read their events sequentially. To learn more about the fundamental concepts in Event Hubs, see [Features and terminology in Azure Event Hubs](../event-hubs/event-hubs-features.md).
 
 Event Hubs also provides a *schema registry* to maintain a repository of event schemas that you can use throughout your organization. For more information, see [Schema Registry in Azure Event Hubs](../event-hubs/schema-registry-concepts.md).
 
@@ -60,12 +60,9 @@ When you're designing client applications to work with Event Hubs, follow this g
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-<!-- TODO deduplicate -->
-Azure Event Hubs supports zone-redundant deployments in all service tiers. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The service transparently replicates your configuration, metadata, and event data across all three availability zones in the region, providing automatic failover capability without any customer intervention required. 
+Azure Event Hubs supports zone-redundant deployments in all service tiers. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
 
-Event Hubs implements zone-redundant storage for both the messaging infrastructure and the event data. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
-
-<!-- /TODO deduplicate -->
+The service transparently replicates your configuration, metadata, and event data across three availability zones in the region, providing automatic failover capability without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications.
 
 ![Diagram that shows a zone-redundant Event Hubs namespace.](./media/reliability-event-hubs/availability-zones.png)
 
@@ -87,7 +84,7 @@ This section describes what to expect when Event Hubs namespaces are configured 
 
 - **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in three availability zones simultaneously process incoming events.
 
-- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to replicas in multiple zones before the send operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
+- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to replicas in multiple zones before the write operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
 
 ### Zone-down experience
 
@@ -129,7 +126,7 @@ Azure Event Hubs provides two types of multi-region support, which each provides
 
 - *Metadata geo-disaster recovery (Standard tier and above):* Metadata geo-disaster recovery is a solution to assist in your recovery from disaster scenarios, including the catastrophic loss of a region. Geo-disaster recovery only replicates the configuration and metadata of your namespace, but it doesn't replicate event data. It assists disaster recovery by ensuring a namespace in another region is preconfigured and ready to immediately accept events from clients. Geo-disaster recovery is intended as a one-way recovery solution, and doesn't support failback to the prior primary region.
 
-    Metadata geo-disaster recovery is most useful for applications that don't have a strict need to maintain every event and that can tolerate some loss of data during a disaster scenario. For example, if your events represent sensor readings that you later aggregate, it might be acceptable to lose some events from a lost region as long as you can quickly start to process new events in another region. <!-- PG: Please verify this positioning is accurate. -->
+    Metadata geo-disaster recovery is most useful for applications that don't have a strict need to maintain every event and that can tolerate some loss of data during a disaster scenario. For example, if your events represent sensor readings that you later aggregate, it might be acceptable to lose some events from a lost region as long as you can quickly start to process new events in another region.
 
 ### Geo-replication
 
@@ -139,7 +136,7 @@ Geo-replication ensures that metadata and data of a namespace is continuously re
 
 ![Diagram that shows an Event Hubs namespace that's configured for geo-replication.](./media/reliability-event-hubs/geo-replication.png)
     
-At any time, you can *promote* the secondary region to become a primary region. Promoting a secondary repoints the namespace's FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region. When you promote a secondary region to primary, you decide whether to perform a *planned promotion*, which means you wait for data to finish being replicated, or to perform a *forced promotion* that might result in data loss in some situations.
+At any time, you can *promote* the secondary region to become a primary region. When you promote a secondary, Event Hubs repoints the namespace's FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region. When you promote a secondary region to primary, you decide whether to perform a *planned promotion*, which means you wait for data to finish being replicated, or to perform a *forced promotion* that might result in data loss in some situations.
 
 > [!NOTE]
 > Event Hubs geo-replication uses the term *promotion* because it best represents the process of promoting a secondary to primary (and subsequently demoting a secondary to primary). You might also see the term *failover* used to describe the general process.
@@ -261,7 +258,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 After the original primary region recovers, if you want it to be the namespace's primary region again then you must promote it by following the same region promotion process.
 
-<!-- TODO: can data be merged? -->
+<!-- PG: What happens to orphaned events if I trigger a second failover? -->
 
 #### Testing for region failures
 
@@ -330,7 +327,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Data replication between regions**. Only configuration metadata is replicated between the namespaces. Replication of configuration occurs continuously and is performed asynchronously.
 
-    All event data remains in the primary namespace only and is not replicated to the secondary namespace.
+    All event data remains in the primary namespace only and isn't replicated to the secondary namespace.
 
 #### Region-down experience
 
@@ -362,7 +359,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 #### Region recovery
 
-After the original primary region recovers, you must manually re-establish the pairing and optionally fail back. Ceate a new geo-disaster recovery pairing with the recovered region as secondary, then perform another failover if you want to return to the original region. This process involves potential data loss of events sent to the temporary primary.
+After the original primary region recovers, you must manually re-establish the pairing and optionally fail back. Create a new geo-disaster recovery pairing with the recovered region as secondary, then perform another failover if you want to return to the original region. This process involves potential data loss of events sent to the temporary primary.
 
 If the disaster caused the loss of all zones in the primary region, your data might be unrecoverable. However, in other scenarios, your event data is preserved in the primary namespace from before the failover is recoverable, and the historic events can be obtained from the old primary namespace once access is restored. You're responsible for configuring your applications to receive process those events. Microsoft doesn't automatically restore them into your secondary region.
 
