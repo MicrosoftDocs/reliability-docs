@@ -118,7 +118,7 @@ Because Event Hubs fully manages traffic routing, failover, and failback for zon
 
 Azure Event Hubs provides two types of multi-region support, which each provides different types of resiliency to region outages. If you require your namespace to be resilient to region issues, you can select one of these approaches to use.
 
-<!-- Anastasia: I wasn't sure whether this is too much intro text about each support type here? -->
+<!-- Anastasia: I wasn't sure whether the bullets have too much intro text about each support type here, or if it's ok for this kind of introduction. What do you think? -->
 
 - *Geo-replication (Premium and Dedicated tiers):* Geo-replication replicates your namespace's configuration and the event data by using a replication approach that you configure. Geo-replication ensures that your events are available in another region, and you can switch to use the secondary region when you need to.
 
