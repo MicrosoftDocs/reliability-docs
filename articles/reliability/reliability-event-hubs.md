@@ -31,7 +31,7 @@ This section describes some of the important aspects of how Event Hubs works tha
 
 An Event Hubs [**namespace**](../event-hubs/event-hubs-features.md#namespace) is the management container for one or more event hubs. Management tasks such as allocating streaming capacity, configuring network security, and enabling geo-resilency and geo-disaster recovery are handled at the namespace level.
 
-Within a namespace, you can organize events into an **event hub**, or **topic** for Apache Kafka applications. The event hub or topic is an append-only distributed log of your events.
+Within a namespace, you can organize events into an **event hub**, or **topic** in the Apache® Kafka ecosystem. The event hub or topic is an append-only distributed log of your events.
 
 Each event hub contains one or more [**partitions**](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning is an important aspect of your application's reliability design. When you design your application, you need to make a tradeoff between maximizing availability and consistency. For most applications, to maximize uptime, you should avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
 
@@ -59,20 +59,27 @@ When you're designing client applications to work with Event Hubs, follow this g
 - **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
 - **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
 - **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages.
+- **Use Apache Kafka SDKs** if you're using the Kafka protocol. The Kafka SDKs also implement retry policies and other best practices for working with transient faults.
 
 ## Availability zone support
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Event Hubs supports zone-redundant deployments in all service tiers. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
+Azure Event Hubs supports zone-redundant deployments in all service tiers. However, with Dedicated tier, availability zones are supported only with a minimum of three Capacity Units (CUs). When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
 
 The service transparently replicates your configuration, metadata, and event data across three availability zones in the region, providing automatic failover capability without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications.
+
 
 ![Diagram that shows a zone-redundant Event Hubs namespace.](./media/reliability-event-hubs/availability-zones.png)
 
 ### Region support
 
 Zone-redundant Event Hubs namespaces can be deployed in [any Azure region that supports availability zones](./regions-list.md).
+
+### Requirements
+
+- Standard and Premium tiers support availability zones with no additional configuration required.
+- For the Dedicated tier, availability zones are supported only with a minimum of three Capacity Units (CUs).
 
 ### Cost
 
