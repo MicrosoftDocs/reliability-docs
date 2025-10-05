@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
-ms.date: 10/02/2025
+ms.date: 10/06/2025
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Event Hubs works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -55,7 +55,7 @@ Azure Event Hubs service implements transparent failure detection and failover m
 
 When you're designing client applications to work with Event Hubs, follow this guidance:
 
-- **Use the built-in retry policies in Event Hubs SDKs**, which implement exponential backoff by default. The SDKs automatically retry operations for retryable errors like network timeouts, throttling responses, or when the server is busy.
+- **Use the built-in retry policies.** The Event Hubs and Apache Kafka SDKs automatically retry operations for retryable errors like network timeouts, throttling responses, or when the server is busy. To avoid unnecessarily overloading the service, they implement exponential backoff by default.
 - **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
 - **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
 - **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages.
@@ -69,7 +69,6 @@ Azure Event Hubs supports zone-redundant deployments in all service tiers. Howev
 
 The service transparently replicates your configuration, metadata, and event data across three availability zones in the region, providing automatic failover capability without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications.
 
-
 ![Diagram that shows a zone-redundant Event Hubs namespace.](./media/reliability-event-hubs/availability-zones.png)
 
 ### Region support
@@ -79,7 +78,7 @@ Zone-redundant Event Hubs namespaces can be deployed in [any Azure region that s
 ### Requirements
 
 - Standard and Premium tiers support availability zones with no additional configuration required.
-- For the Dedicated tier, availability zones are supported only with a minimum of three Capacity Units (CUs).
+- For the Dedicated tier, availability zones are supported only when you use a minimum of three Capacity Units (CUs).
 
 ### Cost
 
@@ -170,11 +169,11 @@ When you enable geo-replication, consider the following:
 
 #### Cost
 
-When you enable geo-replication, you pay for processing units in each region, plus inter-region data transfer charges for replication traffic. For more information, see [Pricing](../event-hubs/geo-replication.md#pricing).
+To understand how pricing works for geo-replication, see [Pricing](../event-hubs/geo-replication.md#pricing).
 
 #### Configure multi-region support
 
-- **Enable geo-replication on a new or existing namespace.** To set up active-active replication between a newly created namespace, see [Enable Geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable Geo-replication on a existing namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-an-existing-namespace).
+- **Enable geo-replication on a new or existing namespace.** To set up active-active replication for a newly created namespace, see [Enable Geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable Geo-replication on a existing namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-an-existing-namespace).
 
     When you configure geo-replication, you select how you want your data to be replicated. You can select synchronous or asynchronous replication. If you configure asynchronous replication, you also must specify the maximum replication lag you're prepared to accept. See [Normal operations](#normal-operations-1) for a summary of how these replication modes work and their tradeoffs.
 
@@ -184,9 +183,7 @@ When you enable geo-replication, you pay for processing units in each region, pl
 
 #### Capacity planning and management
 
-When planning for multi-region deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails.
-
-For geo-replication, both regions actively process events, so size each region to handle the expected load plus overhead for replication traffic. Monitor metrics like incoming messages, throughput unit utilization, and replication lag to ensure the namespace has adequate capacity in each region.
+When planning for a geo-replicated deployment, ensure that both regions have sufficient capacity to handle the full load if one region fails plus overhead for replication traffic. Monitor metrics like incoming messages, throughput unit utilization, and replication lag to ensure the namespace has adequate capacity in each region.
 
 #### Normal operations
 
@@ -261,7 +258,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
         No writes are accepted in the primary region during the entire promotion process.
 
-- **Traffic rerouting**: After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on client applications updating their DNS records and honoring the time-to-live (TTL) of the namespace DNS records.
+- **Traffic rerouting**: After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honour the time-to-live (TTL) of the namespace DNS records.
 
     In some situations, consumer applications need to be configured to behave consistently after region promotion occurs. For more information, see [Consuming data](../event-hubs/geo-replication.md#consuming-data).
 
@@ -310,7 +307,7 @@ You can select any Azure region where Event Hubs is available for your primary o
 
 - **Role assignments:** Microsoft Entra role-based access control (RBAC) assignments to entities in the primary namespace aren't replicated to the secondary namespace. Create role assignments manually in the secondary namespace to secure access to them.
 
-- **Schema registry:** Schema registry metadata is replicated when you use metadata geo-disaster recovery, but data within the schema registry isn't replicated.
+- **Schema registry:** Schema registry metadata is replicated when you use metadata geo-disaster recovery, but schemas registered with the schema registry aren't replicated.
 
 - **Application design:** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [Considerations](../event-hubs/event-hubs-geo-dr.md#considerations).
 
@@ -392,7 +389,7 @@ There are a range of design patterns to achieve different types of multi-region 
 
 ## Backups
 
-Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub for a short period of time, and is then processed or persisted into another data storage system.
+Event Hubs isn't designed as a long-term storage location for your data. Typically, data is stored in an event hub for a short period of time, and is then processed or persisted into another data storage system. You can configure the data retention period for your event hub based on your requirements and on the tier your namespace uses. For more information, see [Event retention](../event-hubs/event-hubs-features.md#event-retention).
 
 However, if you need to retain a copy of your events, consider using [Event Hubs Capture](../event-hubs/event-hubs-capture-overview.md), which saves copies of events to an Azure Blob Storage account.
 
