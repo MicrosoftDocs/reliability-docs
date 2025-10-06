@@ -17,6 +17,9 @@ Azure Stream Analytics is a fully managed real-time analytics service designed t
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
+> [!IMPORTANT]
+> When you consider the reliability of Stream Analytics, you also need to consider the reliability of your data sources, including inputs and outputs. Improving the resiliency of Stream Analytics alone might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas.
+
 ## Production deployment recommendations
 
 To ensure high reliability in production environments with Azure Stream Analytics:
@@ -32,6 +35,9 @@ To ensure high reliability in production environments with Azure Stream Analytic
 - [Introduction to Azure Stream Analytics](../stream-analytics/stream-analytics-introduction.md)
 - [Azure Stream Analytics compatibility level](../stream-analytics/stream-analytics-compatibility-level.md)
 - [Understand and adjust streaming units](../stream-analytics/stream-analytics-streaming-unit-consumption.md)
+
+> [!NOTE]
+> [Azure Stream Analytics on IoT Edge](../stream-analytics/stream-analytics-edge.md) enables you to run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for configuring it to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
 
 ## Reliability architecture overview
 
