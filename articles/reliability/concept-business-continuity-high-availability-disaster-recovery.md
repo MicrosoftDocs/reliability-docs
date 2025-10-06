@@ -4,7 +4,7 @@ description: Understand business continuity, high availability, and disaster rec
 author: anaharris-ms
 ms.service: azure
 ms.topic: conceptual
-ms.date: 01/17/2025
+ms.date: 10/06/2025
 ms.author: anaharris
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
@@ -93,7 +93,8 @@ Business continuity plans must address both common and uncommon risks.
 
 High availability and disaster recovery are interrelated, and so it's important to plan strategies for both of them together.
 
-It's important to understand that risk classification depends on workload architecture and the business requirements, and some risks can be classified as HA for one workload and DR for another workload. For example, a full Azure region outage would generally be considered a DR risk to workloads in that region. But for workloads that use multiple Azure regions in an active-active configuration with full replication, redundancy, and automatic region failover, a region outage is classified as an HA risk.
+Risk classification depends on workload architecture and the business requirements, and some risks can be classified as HA for one workload and DR for another workload. For example, a full Azure region outage would generally be considered a DR risk to workloads in that region. But for workloads that use multiple Azure regions in an active-active configuration with full replication, redundancy, and automatic region failover, a region outage is classified as an HA risk.
+
 
 #### Risk mitigation
 
@@ -153,8 +154,23 @@ The higher the uptime requirement, the less tolerance you have for outages, and 
 
 To achieve HA requirements, a workload can include a number of design elements. Some of the common elements are listed and described below in this section.
 
-> [!NOTE]
-> Some workloads are *mission-critical*, which means any downtime can have severe consequences to human life and safety, or major financial losses. If you're designing a mission-critical workload, there are specific things you need to think about when you design your solution and manage your business continuity. For more information, see the [Azure Well-Architected Framework: Mission-critical workloads](/azure/well-architected/mission-critical/mission-critical-overview).
+
+#### Criticality tiers
+
+Workloads can be classified into different *criticality tiers* based on their importance to the business. Each tier has different requirements for availability, and therefore different requirements for HA design. Once you have defined your SLOs and recovery metrics, you can use them to determine which criticality tier your workload falls into and guide your design decisions.
+
+The following table lists some common criticality tiers:
+
+| Criticality Tier | Description | Example Workloads |
+|-------------------|-------------|----------|
+| Tier 0 - Mission Critical | The mission-critical tier includes entire workloads or specific components where downtime isn't an option and cost saving is secondary to continuity. These systems are fundamental to the organization, directly driving revenue, safeguarding customer trust, or impacting lives.| Financial platforms, healthcare systems, and security infrastructure. |
+| Tier 1 - Business Critical | Business-critical systems are essential for day-to-day operations and customer experience, but unlike mission-critical systems, they can tolerate brief periods of disruption, as long as recovery is fast and data loss is minimal. These systems are often driven by revenue incentive. | E-commerce platforms, customer-facing applications, and partner portals. |
+| Tier 2 - Business Operational | Business-operational systems support internal teams and processes. While not directly customer-facing, they're essential for productivity and operational continuity. | Reporting platforms, internal dashboards, and administrative tools. |
+| Tier 3 -  Administrative | Administrative systems are non-critical workloads that support background operations or serve low-urgency use cases. | Archival platforms, sandbox environments, training portals, or batch-processing tools where availability isn't time-sensitive. |
+
+For detailed guidance on the WAF criticality tiers, how classify your workload and optimize recovery costs, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
+
+
 
 #### Azure services and tiers that support high availability
 
@@ -283,7 +299,11 @@ Regardless of the cause of the disaster, it's important that you create a well-d
 
 DR isn't an automatic feature of Azure. However, many services do provide features and capabilities that you can use to support your DR strategies. You should review the [reliability guides for each Azure service](./overview-reliability-guidance.md) to understand how the service works and its capabilities, and then map those capabilities to your DR plan.
 
-The following sections list some common elements of a disaster recovery plan, and describe how Azure can help you to achieve them.
+A strong Disaster Recovery (DR) plan turns strategy into decisive action. It provides a clear roadmap for responding to disasters, minimizing downtime, and ensuring business continuity.
+
+To make this possible, every DR plan should be documented to include a clear runbook, a well-defined communication plan, and a structured escalation path. To learn more about these DR plan elements, see [Well-Architected Framework - Document your DR plan](/azure/well-architected/design-guides/disaster-recovery#document-your-dr-plan).
+
+The following sections list some common approaches in a disaster recovery plan, and describe how Azure can help you to achieve them.
 
 #### Failover and failback
 
@@ -315,6 +335,8 @@ Many Azure data and storage services support backups, such as the following:
 - [Azure Backup](/azure/reliability/reliability-backup) provides automated backups for virtual machine disks, storage accounts, AKS, and a variety of other sources.
 - Many Azure database services, including [Azure SQL Database](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy) and [Azure Cosmos DB](/azure/reliability/reliability-cosmos-db-nosql), have an automated backup capability for your databases.
 - [Azure Key Vault](./reliability-key-vault.md) provides features to back up your secrets, certificates, and keys.
+
+To learn more about recovery strategies for backup and restore, see [Well-Architected Framework - Recovery strategy for backup and restore](/azure/well-architected/design-guides/disaster-recovery#recovery-strategy-for-backup-and-restore).
 
 #### Automated deployments
 
