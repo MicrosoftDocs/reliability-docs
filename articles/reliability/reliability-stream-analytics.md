@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure Stream Analytics
 description: Learn how to improve reliability in Azure Stream Analytics by using availability zones, geo-redundancy, and operational best practices for streaming data processing.
-author: anaharris-ms 
+author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
-ms.date: 12/29/2024
+ms.date: 10/06/2025
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Stream Analytics works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -28,7 +28,6 @@ To ensure high reliability in production environments with Azure Stream Analytic
 - Configure alerts for critical metrics like watermark delay, backlogged input events, and runtime errors to detect issues before they impact data processing. Use event ordering policies that align with your business requirements while understanding the trade-offs between data completeness and processing latency.
 - For *mission-critical streaming workloads*, consider implementing a multi-region deployment strategy with synchronized job configurations across regions. While Stream Analytics doesn't provide native multi-region replication, you can achieve regional redundancy by deploying identical jobs in multiple regions with appropriate data routing mechanisms.
 
-
 **Sources:**
 - [Introduction to Azure Stream Analytics](../stream-analytics/stream-analytics-introduction.md)
 - [Azure Stream Analytics compatibility level](../stream-analytics/stream-analytics-compatibility-level.md)
@@ -36,19 +35,30 @@ To ensure high reliability in production environments with Azure Stream Analytic
 
 ## Reliability architecture overview
 
-Azure Stream Analytics operates on a distributed computing architecture where your streaming jobs run across multiple compute nodes for high availability and fault tolerance. The service automatically handles job placement, scaling, and recovery without requiring manual intervention. Each Stream Analytics job consists of inputs that read streaming data, a query that transforms the data, and outputs that write results to various destinations.
+TODO
 
-Within a region, Stream Analytics jobs are automatically distributed across fault domains to provide resilience against hardware failures. The service continuously monitors job health and automatically relocates jobs from failed nodes to healthy ones. This architecture ensures that transient infrastructure issues don't interrupt your streaming data processing. Stream Analytics maintains job state through regular checkpointing, enabling quick recovery with minimal data reprocessing in case of failures.
+### Logical architecture
 
-The service provides exactly-once processing semantics within a job through its checkpointing and replay mechanisms. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint, reprocessing any events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job, though achieving end-to-end exactly-once delivery depends on your output destination's capabilities.
+Each Stream Analytics *job* consists of:
+- *Inputs* that read streaming data.
+- A *query* that transforms the data.
+- *Outputs* that write results to various destinations.
 
-Stream Analytics in availability zone-enabled regions automatically distributes job resources across multiple zones without additional configuration or cost. This zone-redundant deployment ensures that your streaming jobs continue processing even if an entire availability zone becomes unavailable, providing protection against zone-level infrastructure failures.
+Stream Analytics maintains job state through regular checkpointing, enabling quick recovery with minimal data reprocessing in case of failures. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint, reprocessing any events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job, though achieving end-to-end exactly-once delivery depends on your output destination's capabilities.
+
+### Physical architecture
+
+<!-- TODO verify this -->
+Azure Stream Analytics operates on a distributed computing architecture where your streaming jobs run across multiple compute nodes for high availability and fault tolerance. The service automatically handles job placement, scaling, and recovery without requiring manual intervention. 
+
+Within a region, Stream Analytics jobs are automatically distributed across fault domains to provide resilience against hardware failures.
+
+The service continuously monitors job health and automatically relocates jobs from failed nodes to healthy ones. This architecture ensures that transient infrastructure issues don't interrupt your streaming data processing.
 
 **Sources:**
 - [Stream Analytics job reliability](../stream-analytics/stream-analytics-job-reliability.md)
 - [Achieve exactly once delivery with Azure Stream Analytics](../stream-analytics/stream-analytics-exactly-once-delivery.md)
 - [Azure Stream Analytics job states](../stream-analytics/job-states.md)
-
 
 ## Transient faults
 
@@ -58,7 +68,7 @@ Azure Stream Analytics automatically handles many transient faults through built
 
 For *input operations*, the service implements exponential backoff strategies when encountering temporary failures from input sources like Event Hubs or IoT Hub, automatically retrying failed read operations without manual intervention.
 
-For *output operations*, Stream Analytics provides configurable retry policies that determine how the service responds to temporary failures when writing to destinations like Azure SQL Database or Cosmos DB.
+For *output operations*, Stream Analytics provides configurable retry policies that determine how the service responds to temporary failures when writing to destinations like Azure SQL Database or Cosmos DB. <!-- TODO verify this. Seems like retry policy is only for conversion errors, not transient faults? -->
 
 In addition to the built-in retry mechanisms, you can take the following steps to enhance transient fault handling in your Stream Analytics jobs:
 
@@ -238,10 +248,9 @@ We recommended that you deploy identical jobs to both paired regions. You should
 
 ## Service-level agreement
 
-The service-level agreement (SLA) for Azure Stream Analytics guarantees 99.95% availability for streaming jobs. This SLA applies to jobs running in any Azure region, including those with availability zone support. The SLA requires that your job is in the Running state and has valid input and output configurations. For complete details about SLA conditions and exclusions, see [SLA for Azure Stream Analytics](https://azure.microsoft.com/support/legal/sla/stream-analytics/).
+[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-**Sources:**
-- [SLA for Azure Stream Analytics](https://azure.microsoft.com/support/legal/sla/stream-analytics/)
+Stream Analytics provides separate availability SLAs for API calls to manage jobs, and for the operations of the jobs.
 
 ### Related content
 
