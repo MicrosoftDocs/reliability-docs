@@ -168,7 +168,7 @@ The following table lists some common criticality tiers:
 | Tier 2 - Business Operational | Business-operational systems support internal teams and processes. While not directly customer-facing, they're essential for productivity and operational continuity. | Reporting platforms, internal dashboards, and administrative tools. |
 | Tier 3 -  Administrative | Administrative systems are non-critical workloads that support background operations or serve low-urgency use cases. | Archival platforms, sandbox environments, training portals, or batch-processing tools where availability isn't time-sensitive. |
 
-For detailed guidance on the WAF criticality tiers, how classify your workload and optimize recovery costs, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
+For detailed guidance on the WAF criticality tiers, how to classify your workload and optimize recovery costs, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
 
 
 
