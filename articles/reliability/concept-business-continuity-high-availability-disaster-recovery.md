@@ -83,7 +83,7 @@ Here are some examples:
  
 Business continuity plans must address both common and uncommon risks.
 
-- *Common risks* are planned and expected. For example, in a cloud environment it's common for there to be *transient failures* including brief network outages, equipment restarts due to patches, timeouts when a service is busy, and so forth. Because these events happen regularly, workloads need to be resilient to them.
+- *Common risks* are planned and expected. For example, in a cloud environment it's common for there to be *transient failures* or *blips*,including brief network outages, equipment restarts due to patches, timeouts when a service is busy, and so forth. Because these events happen regularly, workloads need to be resilient to them.
 
   A high availability strategy must consider and control for each risk of this type.
 
