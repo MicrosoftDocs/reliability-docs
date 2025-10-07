@@ -79,7 +79,7 @@ Application Gateway provides two types of availability zone support when you dep
 
   The following diagram shows a zone-redundant gateway with three instances that are distributed across three availability zones:
 
-    :::image type="content" source="media/reliability-gateway-gateway-v2/zone-redundant.png" alt-text="Diagram that shows Azure Application Gateway with three instances, each in a separate availability zone." border="false":::
+    :::image type="content" source="media/reliability-application-gateway-v2/zone-redundant.png" alt-text="Diagram that shows Azure Application Gateway with three instances, each in a separate availability zone." border="false":::
 
 - *Zonal:* Azure deploys all of the Application Gateway instances into a single zone that you select within your chosen Azure region.
 
