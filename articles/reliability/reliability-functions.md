@@ -126,7 +126,7 @@ There are currently multiple ways to deploy a zone-redundant Flex Consumption ap
 
 #### [Azure portal](#tab/azure-portal)
 
-1. Create or ensure you have an existing [zone-redundant storage account](../azure-functions/storage-considerations.md#storage-account-requirements).
+1. To create a function app in a zone-redundant plan, you must have an existing [zone-redundant storage account](../azure-functions/storage-considerations.md#storage-account-requirements). If you don't already have a zone-redundant storage account, create one before you proceed. 
 
 1. In the Azure portal, go to the **Create Function App** page. For more information about creating a function app in the portal, see [Create a function app](../azure-functions/functions-create-function-app-portal.md#create-a-function-app).
 
