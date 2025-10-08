@@ -254,7 +254,7 @@ After the storage accounts used by your app are updated, you can update the Flex
 
 #### [Azure CLI](#tab/azure-cli)
 
-Update the Flex Consumption app by using the [az functionapp plan update](/cli/azure/functionapp#az-functionapp-plan-update) command and setting the `--zone-redundant` to `true` or `false` parameter. For example, to enable zone redundancy for an existing app:
+Update the app by using the `--zone-redundant` parameter of the [az functionapp plan update](/cli/azure/functionapp/plan#az-functionapp-plan-update) command. Use a value of `true` to enable zone redundancy and `false` disable the feature. This example enables zone redundancy for an existing app in a Flex Consumption plan:
 
 ```azurecli
 PLAN_RESOURCE_ID=$(az functionapp show --resource-group <RESOURCE_GROUP> --name <APP_NAME> --query "properties.serverFarmId"  -o tsv) 
