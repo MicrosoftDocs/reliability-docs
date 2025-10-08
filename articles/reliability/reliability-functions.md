@@ -242,7 +242,13 @@ After the storage accounts used by your app are updated, you can update the Flex
 
 #### [Azure portal](#tab/azure-portal)
 
-Not currently supported.
+1. In the Azure portal, search for the function app you wish to update and open it.
+
+1. Select **Scale and Concurrency**.
+
+1. On the **Zone redundancy** tab, change the `Add zone redundancy tickbox` to enable or disable the feature.
+
+:::image type="content" source="../azure-functions/media/functions-az-redundancy/azure-functions-flex-update-az.png" alt-text="Screenshot of the Scale and Concurrency tab of a Flex Consumption function app.":::
 
 #### [Azure CLI](#tab/azure-cli)
 
