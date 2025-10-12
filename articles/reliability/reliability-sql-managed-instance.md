@@ -329,7 +329,7 @@ For more information, see [Maintenance window in SQL Managed Instance](/azure/az
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-For SQL Managed Instance, the availabilty SLA only applies when your Azure virtual network is correctly configured to allow management traffic. This configuration includes network security groups (NSGs) and user-defined routes (UDRs). For more information about the required networking configuration for SQL Managed Instance, see [Connectivity architecture for Azure SQL Managed Instance](/azure/azure-sql/managed-instance/connectivity-architecture-overview).
+For SQL Managed Instance, the availability SLA only applies when your Azure virtual network is correctly configured so that it doesn't impede management traffic. This configuration includes subnet size, network security groups (NSGs), user-defined routes (UDRs), DNS configuration, and other resources that affect the management and use of network resources. For more information about the required networking configuration for SQL Managed Instance, see [Network requirements](/azure/azure-sql/managed-instance/connectivity-architecture-overview#network-requirements).
 
 ## Related content
 
