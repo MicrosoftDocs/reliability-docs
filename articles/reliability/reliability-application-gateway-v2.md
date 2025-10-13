@@ -10,7 +10,7 @@ ms.custom:
   - ai-gen-description
   - ai-seo-date:07/09/2025
 ms.service: azure-application-gateway
-ms.date: 10/08/2025
+ms.date: 10/14/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Application Gateway v2 works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---
 
@@ -43,7 +43,7 @@ Application Gateway is a managed service. It's important to understand some key 
 
   The following diagram shows a gateway with two instances:
 
-  :::image type="content" source="media/reliability-application-gateway-v2/gateway-instances.png" alt-text="Diagram that shows Azure Application Gateway with two instances." border="false":::
+  :::image type="content" source="media/reliability-application-gateway-v2/gateway-instances.svg" alt-text="Diagram that shows Azure Application Gateway with two instances." border="false":::
 
   To increase redundancy and availability during datacenter failures, you can enable zone redundancy to distribute instances across multiple availability zones.
 
@@ -79,13 +79,13 @@ Application Gateway provides two types of availability zone support when you dep
 
   The following diagram shows a zone-redundant gateway with three instances that are distributed across three availability zones:
 
-    :::image type="content" source="media/reliability-application-gateway-v2/zone-redundant.png" alt-text="Diagram that shows Azure Application Gateway with three instances, each in a separate availability zone." border="false":::
+    :::image type="content" source="media/reliability-application-gateway-v2/zone-redundant.svg" alt-text="Diagram that shows Azure Application Gateway with three instances, each in a separate availability zone." border="false":::
 
 - *Zonal:* Azure deploys all of the Application Gateway instances into a single zone that you select within your chosen Azure region.
 
   The following diagram shows a zonal gateway with three instances that are deployed into the same availability zone:
 
-  :::image type="content" source="media/reliability-application-gateway-v2/zonal.png" alt-text="Diagram that shows Azure Application Gateway with three instances, all in the same availability zone." border="false":::
+  :::image type="content" source="media/reliability-application-gateway-v2/zonal.svg" alt-text="Diagram that shows Azure Application Gateway with three instances, all in the same availability zone." border="false":::
 
     > [!IMPORTANT]
     > Pinning to a single availability zone is only recommended when [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and when you verify that the latency doesn't meet your requirements. By itself, a zonal gateway doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal Application Gateway deployment, you need to explicitly deploy separate gateways into multiple availability zones and configure traffic routing and failover.
