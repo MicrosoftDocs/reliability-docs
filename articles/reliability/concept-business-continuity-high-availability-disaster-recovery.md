@@ -157,6 +157,25 @@ The higher the uptime requirement, the less tolerance you have for outages, and 
 To achieve HA requirements, a workload can include a number of design elements. Some of the common elements are listed and described below in this section.
 
 
+<<<<<<< HEAD
+=======
+#### Criticality tiers
+
+Workloads can be classified into different *criticality tiers* based on their importance to the business. Each tier has different requirements for availability, and therefore different requirements for HA design. Once you have defined your SLOs and recovery metrics, you can use them to determine which criticality tier your workload falls into and guide your design decisions.
+
+The following table lists some common criticality tiers:
+
+| Criticality Tier | Description | Example Workloads |
+|-------------------|-------------|----------|
+| Tier 0 - Mission Critical | The mission-critical tier includes entire workloads or specific components where downtime isn't an option and cost saving is secondary to continuity. These systems are fundamental to the organization, directly driving revenue, safeguarding customer trust, or impacting lives.| Financial platforms, healthcare systems, and security infrastructure. |
+| Tier 1 - Business Critical | Business-critical systems are essential for day-to-day operations and customer experience, but unlike mission-critical systems, they can tolerate brief periods of disruption, as long as recovery is fast and data loss is minimal. These systems are often driven by revenue incentive. | E-commerce platforms, customer-facing applications, and partner portals. |
+| Tier 2 - Business Operational | Business-operational systems support internal teams and processes. While not directly customer-facing, they're essential for productivity and operational continuity. | Reporting platforms, internal dashboards, and administrative tools. |
+| Tier 3 -  Administrative | Administrative systems are non-critical workloads that support background operations or serve low-urgency use cases. | Archival platforms, sandbox environments, training portals, or batch-processing tools where availability isn't time-sensitive. |
+
+For detailed guidance on the WAF criticality tiers, how to classify your workload and optimize recovery costs, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
+
+
+>>>>>>> 7e08273db53ac42613c421a2b93edc24c6bc2bee
 
 #### Azure services and tiers that support high availability
 
