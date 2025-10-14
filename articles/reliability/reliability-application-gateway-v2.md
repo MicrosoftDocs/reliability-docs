@@ -37,7 +37,9 @@ Application Gateway is a managed service. It's important to understand some key 
 
 - **Instances:** An *instance* is a virtual machine (VM)-level unit of the gateway. Each instance represents a dedicated VM that handles traffic. One instance is equal to one VM.
 
-  All gateways have a minimum of two instances for high availability. Even if the Azure portal indicates that your gateway has a single instance, internally it's always created with a minimum of two instances.
+  
+    >[!IMPORTANT]
+    For high availability, each gateway is always created with a minimum of two instances.  However, the Azure portal may indicate that your gateway has a single instance, even though it actually has two.
 
   You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy instances. It also manages the graceful removal of instances during scale-in events. This process is known as *connection draining*.
 
@@ -45,7 +47,7 @@ Application Gateway is a managed service. It's important to understand some key 
 
   :::image type="content" source="media/reliability-application-gateway-v2/gateway-instances.svg" alt-text="Diagram that shows Azure Application Gateway with two instances." border="false":::
 
-  To increase redundancy and availability during datacenter failures, you can enable zone redundancy to distribute instances across multiple availability zones.
+ To distribute instances across multiple availability zones and so increase redundancy and availability during datacenter failures, you can enable zone redundancy.
 
 - **Scaling:** An important aspect of a gateway's reliability is how it scales to meet traffic demand. If a gateway isn't scaled appropriately, traffic can't flow and your application can experience downtime. You can configure Application Gateway to use one of the following scaling modes.
 
