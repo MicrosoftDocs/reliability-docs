@@ -28,7 +28,7 @@ To ensure high reliability in production environments with Azure Stream Analytic
 - Deploy your streaming jobs and other resources in regions that support availability zones.
 - Set your streaming units based on expected throughput with additional capacity for handling peak loads and potential zone failures, with a buffer above your baseline requirements in case of sudden increases.
 - Implement comprehensive monitoring using Azure Monitor metrics and diagnostic logs to track job health, input/output events, and resource utilization. Configure alerts for critical metrics like watermark delay and runtime errors to detect issues before they impact data processing. For more information, see [Monitor Azure Stream Analytics](../stream-analytics/monitor-azure-stream-analytics.md).
-- For *mission-critical streaming workloads*, consider implementing a multi-region deployment strategy with synchronized job configurations across regions. While Stream Analytics doesn't provide native multi-region replication, you can achieve regional redundancy by deploying identical jobs in multiple regions with appropriate data routing mechanisms.
+- For *mission-critical streaming workloads*, consider implementing a multi-region deployment strategy with synchronized job configurations across regions. While Stream Analytics doesn't provide native multi-region replication, you can achieve regional redundancy by deploying identical jobs in multiple regions with appropriate data routing mechanisms. For more information, see [Multi-region support](#multi-region-support).
 
 ## Reliability architecture overview
 
