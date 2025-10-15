@@ -33,7 +33,7 @@ To ensure high reliability in production environments with Stream Analytics, we 
 
 ## Reliability architecture overview
 
-[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introdution-include.md)]
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
 
 ### Logical architecture
 
