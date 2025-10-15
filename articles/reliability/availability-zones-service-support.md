@@ -21,7 +21,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
 > [!IMPORTANT]
-> Some services might support availability zones but require specific configurations to enable them on your resources. For example, some services might only support availability zones for specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
+> Some services might support availability zones but require specific configurations to enable them on your resources. For example, some services might support availability zones for only specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
 
 
 | **Product** | **Zone-redundant** | **Zonal** | 
