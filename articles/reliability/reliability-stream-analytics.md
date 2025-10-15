@@ -37,9 +37,9 @@ This section describes some of the important aspects of how Stream Analytics wor
 ### Logical architecture
 
 Each Stream Analytics *job* consists of:
-- *Inputs* that read streaming data.
-- A *query* that transforms the data.
-- *Outputs* that write results to various destinations.
+- *Inputs* that read streaming data from other data sources, such as Azure Event Hubs, Azure IoT Hub, or Azure Storage.
+- A *query* that processes and transforms the data.
+- *Outputs* that continuously write results to various destinations, such as Azure SQL Database, Azure Data Lake Storage, Azure Cosmos DB, Power BI, and more.
 
 For more information, see [Azure Stream Analytics resource model](../stream-analytics/stream-analytics-resource-model.md).
 
@@ -71,6 +71,8 @@ It's a good practice to configure [output error policies](../stream-analytics/st
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
 Azure Stream Analytics is automatically zone-redundant in regions that support availability zones. When you create a Stream Analytics job in a zone-enabled region, the service distributes your job's compute resources across multiple availability zones. This zone-redundant deployment model ensures that your streaming jobs continue to process data even if an entire availability zone becomes unavailable.
+
+![Diagram that shows a zone-redundant Stream Analytics job.](./media/reliability-stream-analytics/availability-zones.png)
 
 The zone-redundant architecture applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near zero downtime during zone failures.
 
@@ -136,7 +138,7 @@ The Azure Stream Analytics platform manages traffic routing, failover, and zone 
 
 ## Multi-region support
 
-Azure Stream Analytics resources are deployed into a single Azure region. If the region becomes unavailable, your jobs and dedicated cluster are also unavailable.
+Azure Stream Analytics resources are deployed into a single Azure region. If the region becomes unavailable, your jobs (and dedicated clusters, if applicable) are also unavailable.
 
 ### Alternative multi-region approaches
 
@@ -144,11 +146,9 @@ To achieve multi-region resilience for your streaming workloads, consider deploy
 
 ## Backups
 
-Stream Analytics doesn't have a built-in backup and restore feature. Jobs don't contain state that needs to be backed up.
+Stream Analytics doesn't have a built-in backup and restore feature. Running jobs don't contain state that needs to be backed up.
 
-However if you want to move, copy or back up the definition and configuration of your Azure Stream Analytics jobs, the Azure Stream Analytics extension for Visual Studio Code allows you to export an existing job in the Azure cloud to your local computer. All the configuration of your Stream Analytics job can be saved locally, and you can deploy it to the same or another Azure region.
-
-To learn how to copy, back up, and move your Stream Analytics jobs, see [Copy, back up and move your Azure Stream Analytics jobs](../stream-analytics/copy-job.md).
+However if you want to move, copy or back up the definition and configuration of your Azure Stream Analytics jobs, the Azure Stream Analytics extension for Visual Studio Code allows you to export an existing job in the Azure cloud to your local computer. All the configuration of your Stream Analytics job can be saved locally, and you can deploy it to the same or another Azure region. To learn how to copy, back up, and move your Stream Analytics jobs, see [Copy, back up and move your Azure Stream Analytics jobs](../stream-analytics/copy-job.md).
 
 ## Reliability during service maintenance
 
