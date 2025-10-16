@@ -110,10 +110,6 @@ Some Azure services are *nonregional*, which means that you don't deploy the ser
 | [Power BI Embedded](/power-bi/admin/service-admin-failover#what-does-high-availability) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [SQL Server on Virtual Machines](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 
-## Next step
-
-- [Azure Well-Architected Framework: Overview of the Reliability pillar](/azure/well-architected/reliability)
-
 ## Related resources
 
 - [Nonregional Azure services](./regions-nonregional-services.md)
@@ -123,4 +119,6 @@ Some Azure services are *nonregional*, which means that you don't deploy the ser
 - [Availability zone migration guidance overview](availability-zones-migration-overview.md)
 
 - [Availability of service by category](availability-service-by-category.md)
+
+- [Azure Well-Architected Framework: Overview of the Reliability pillar](/azure/well-architected/reliability)
 
