@@ -2,7 +2,7 @@
 title: Reliability in Azure Stream Analytics
 description: Learn how to improve reliability in Azure Stream Analytics by using availability zones, geo-redundancy, and operational best practices for streaming data processing.
 author: anaharris-ms
-ms.author: anaharris
+ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
