@@ -222,9 +222,9 @@ There's no extra cost for a gateway deployed across multiple availability zones.
 
 This section explains how to configure zone redundancy for your virtual network gateways.
 
-- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above.
-
 ::: zone pivot="expressroute"
+
+- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above.
 
     For detailed deployment instructions, see TODO.
 
@@ -232,19 +232,23 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone pivot="vpn"
 
+- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above.
+
     For detailed configuration steps, see [Create a zone-redundant VNet gateway](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
 
 ::: zone-end
 
-- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime.
-
 ::: zone pivot="expressroute"
+
+- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime.
 
     For more information, see [Migrate ExpressRoute gateways to availability zone-enabled SKUs](../expressroute/gateway-migration.md).
 
 ::: zone-end
 
 ::: zone pivot="vpn"
+
+- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime.
 
     For more information, see [About SKU consolidation & migration](../vpn-gateway/gateway-sku-consolidation.md).
 
@@ -300,15 +304,17 @@ The following section describes what to expect when your virtual network gateway
 
 - **Notification**: ExpressRoute doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your gateway. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure ExpressRoute service, including any zone failures.
 
+    Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
+
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **Notification**: Azure VPN Gateway doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your gateway. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure VPN Gateway service, including any zone failures.
-
-::: zone-end
+- **Notification**: Azure VPN Gateway doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your gateway. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure VPN Gateway services, including any zone failures.
 
     Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
+
+::: zone-end
 
 - **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Clients should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
 
