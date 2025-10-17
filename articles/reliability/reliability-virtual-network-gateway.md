@@ -116,12 +116,9 @@ A VPN gateway contains two *instances*, which represent virtual machines (VMs) t
 
 A site-to-site VPN configuration requires a *local network gateway*, which represents the remote VPN device. The local network gateway is a mandatory component to define a connection. It has two mutually exclusive configurations: static routing (doesn't require dynamic protocol in VPN Gateway and remote devices) and dynamic routing (requires BGP in Azure and remote devices).
 
-<!-- TODO find a home for this --> During scaling operations, which take 5 to 7 minutes to complete, existing connections are preserved while new gateway instances are added to handle increased load.
-
 ::: zone-end
 
 ## Transient faults
-<!-- TODO check this whole section -->
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
@@ -288,15 +285,15 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone-end
 
-- **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Clients should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
+- **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
 
 - **Expected data loss:** Zone failures aren't expected to cause data loss because virtual network gateways don't store persistent customer data.
 
-- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Clients should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
+- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
 
 ::: zone pivot="expressroute"
 
-- **Traffic rerouting:** The platform automatically distributes traffic to healthy zones for zone-redundant deployments, with BGP route convergence typically completing within 1-3 minutes.
+- **Traffic rerouting:** The platform automatically distributes traffic to instances in healthy zones.
 
     FastPath-enabled circuits maintain optimized routing throughout the failover process, ensuring minimal effect on application performance. <!-- PG: If you use FastPath, does a gateway outage affect you at all? If not, we should clarify throughout the section. -->
 
@@ -304,7 +301,7 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="vpn"
 
-- **Traffic rerouting:** Traffic automatically reroutes to healthy availability zones. If needed, the platform creates new gateway instances in healthy zones. <!-- TODO verify whether capacity is actually replaced - it isn't for ExR -->
+- **Traffic rerouting:** Traffic automatically reroutes to the other instance, which is in a different availability zone.
 
 ::: zone-end
 
@@ -349,7 +346,7 @@ For detailed guidance, see [Designing for disaster recovery with ExpressRoute pr
 
 ::: zone pivot="vpn"
 
-You can deploy separate VPN Gateways in two or more different regions. However, each gateway is attached to a different virtual network, and the gateways operate independently. There's no interaction, or replication of configuration or state between them. You're also responsible for configuring clients to connect to the correct VPN, or to switch between VPNs as required.
+You can deploy separate VPN Gateways in two or more different regions. However, each gateway is attached to a different virtual network, and the gateways operate independently. There's no interaction, or replication of configuration or state between them. You're also responsible for configuring your clients and remote devices to connect to the correct VPN, or to switch between VPNs as required.
 
 ::: zone-end
 
@@ -357,7 +354,7 @@ You can deploy separate VPN Gateways in two or more different regions. However, 
 
 Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize effect on your connectivity. 
 
-During planned maintenance operations on virtual network gateways, the process is executed on gateway instances sequentially, never simultaneously. This process ensures that there's always one gateway instance active during maintenance, minimizing the impact on your active connections. <!-- TODO verify whether this is true for all VNet gateways or just VPN -->
+During planned maintenance operations on virtual network gateways, the process is executed on gateway instances sequentially, never simultaneously. This process ensures that there's always one gateway instance active during maintenance, minimizing the impact on your active connections.
 
 You can configure gateway maintenance windows to align with your operational requirements, reducing the likelihood of unexpected disruptions.
 
@@ -377,13 +374,15 @@ For more information, see [Configure maintenance windows for your VNet gateways]
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-For Virtual Network Gateway, the availability SLA increases when you use a gateway that is deployed with any SKU other than Basic.
-
 ::: zone pivot="expressroute"
+
+The availability SLA for your virtual network gateway increases when you use a gateway that is deployed with any SKU other than Basic.
 
 Additionally, Azure ExpressRoute offers a strong availability SLA that guarantees high uptime for your connections. Different availability SLAs apply if you deploy across multiple peering locations (sites), if you use ExpressRoute Metro, or if you have a single-site configuration.
 
 ::: zone-end
+
+For VPN Gateway, the Basic SKU provides a lower availability SLA and limited capabilities, and should only be used for testing and development. To increase your gateway's availability SLA, use any other SKU. For more information, see [Gateway SKUs - Production vs. Dev-Test workloads](../vpn-gateway/about-gateway-skus.md#workloads)
 
 ## Related content
 
