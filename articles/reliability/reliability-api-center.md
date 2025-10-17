@@ -6,7 +6,7 @@ ms.author: danlep
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
-ms.date: 04/15/2024
+ms.date: 10/17/2025
 ---
 
 # Reliability in Azure API Center
