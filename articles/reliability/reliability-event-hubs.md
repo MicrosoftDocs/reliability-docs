@@ -248,7 +248,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
         No writes are accepted in the primary region during the entire promotion process.
 
-- **Traffic rerouting**: After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honour the time-to-live (TTL) of the namespace DNS records.
+- **Traffic rerouting**: After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honor the time-to-live (TTL) of the namespace DNS records.
 
     In some situations, consumer applications need to be configured to behave consistently after region promotion occurs. For more information, see [Consuming data](../event-hubs/geo-replication.md#consuming-data).
 
