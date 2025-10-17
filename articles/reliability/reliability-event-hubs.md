@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
-ms.date: 10/15/2025
+ms.date: 10/17/2025
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Event Hubs works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -175,15 +175,9 @@ To understand how pricing works for geo-replication, see [Pricing](../event-hubs
 
 - **Enable geo-replication on a new or existing namespace.** To set up active-active replication for a newly created namespace, see [Enable Geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable Geo-replication on a existing namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-an-existing-namespace).
 
-    When you configure geo-replication, you select how you want your data to be replicated. You can select synchronous or asynchronous replication. If you configure asynchronous replication, you also must specify the maximum replication lag you're prepared to accept. See [Normal operations](#normal-operations-1) for a summary of how these replication modes work and their tradeoffs.
-
 - **Change replication approach.** To change between synchronous and asynchronous replication modes, see [Switch replication mode](../event-hubs/use-geo-replication.md#switch-replication-mode).
 
 - **Disable geo-replication.** To disable geo-replication to a secondary region, see [Remove a secondary](../event-hubs/use-geo-replication.md#remove-a-secondary).
-
-#### Capacity planning and management
-
-When planning for a geo-replicated deployment, ensure that both regions have sufficient capacity to handle the full load if one region fails plus overhead for replication traffic. Monitor metrics like incoming messages, throughput unit utilization, and replication lag to ensure the namespace has adequate capacity in each region.
 
 #### Normal operations
 
@@ -283,7 +277,7 @@ Metadata geo-disaster recovery, available in the Standard tier and above, is a s
 Metadata geo-disaster recovery is most useful for applications that don't have a strict need to maintain every event and that can tolerate some loss of data during a disaster scenario. For example, if your events represent sensor readings that you later aggregate, it might be acceptable to lose some events from a lost region as long as you can quickly start to process new events in another region.
 
 > [!IMPORTANT]
-> Geo-disaster recovery enables continuity of operations with the same configuration, but **doesn't replicate the event data**. If you need to replicate event data, or if you need to operate multiple regional namespaces in active-active configurations for resiliency purposes, consider using [geo-replication](#geo-replication) or an [alternative multi-region approach](#alternative-multi-region-approaches).
+> Geo-disaster recovery enables continuity of operations with the same configuration, but **doesn't replicate the event data**. If you need to replicate event data, consider using [geo-replication](#geo-replication).
 
 When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is an FQDN (fully qualified domain name). By default, the alias directs all traffic to the primary namespace.
 
@@ -315,7 +309,7 @@ You can select any Azure region where Event Hubs is available for your primary o
 
 #### Cost
 
-When you enable metadata geo-disaster recovery, you pay for both the primary and secondary namespaces, plus inter-region data transfer charges for replication traffic.
+When you enable metadata geo-disaster recovery, you pay for both the primary and secondary namespaces.
 
 #### Configure multi-region support
 
