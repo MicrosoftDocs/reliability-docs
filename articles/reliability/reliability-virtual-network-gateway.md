@@ -27,9 +27,9 @@ A virtual network gateway is the component you deploy into your Azure virtual ne
 ::: zone pivot="vpn"
 
 > [!IMPORTANT]
-> This article covers the reliability of VPN gateways, which are the Azure-based parts of VPNs.
+> This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
 >
-> When you use VPNs, it's critical that you design your whole network architecture to meet your resiliency requirements. <!-- TODO more -->
+> When you use VPNs, it's critical that you design your whole network architecture to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. For guidance about configuring your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
@@ -116,20 +116,7 @@ A VPN gateway contains two *instances*, which represent virtual machines (VMs) t
 
 A site-to-site VPN configuration requires a *local network gateway*, which represents the remote VPN device. The local network gateway is a mandatory component to define a connection. It has two mutually exclusive configurations: static routing (doesn't require dynamic protocol in VPN Gateway and remote devices) and dynamic routing (requires BGP in Azure and remote devices).
 
-::: zone-end
-
-::: zone pivot="vpn"
-
-## Reliability of on-premises components
-
-You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. You can improve the resiliency of your VPN by deploying multiple on-premises VPN devices in an active-active or active-passive configuration. 
-
-For site-to-site VPN, we recommend a configuration in active-active mode. However, there are some cases where active-active isn't possible due to the asymmetric nature of flows in site-to-site connections. For more information, see:
-
-- [How does Azure VPN Gateway handle traffic flow in active-active mode and what should I consider if my on-premises setup requires symmetric routing?](../vpn-gateway/vpn-gateway-vpn-faq.md#how-does-azure-vpn-gateway-handle-traffic-flow-in-active-active-mode-and-what-should-i-consider-if-my-on-premises-setup-requires-symmetric-routing)
-- [Does Azure guarantee symmetric routing for a given flow in active-active VPN mode?](../vpn-gateway/vpn-gateway-vpn-faq.md#does-azure-guarantee-symmetric-routing-for-a-given-flow-in-active-active-vpn-mode)
-
-For guidance about configuring your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+<!-- TODO find a home for this --> During scaling operations, which take 5 to 7 minutes to complete, existing connections are preserved while new gateway instances are added to handle increased load.
 
 ::: zone-end
 
@@ -138,7 +125,9 @@ For guidance about configuring your infrastructure for high availability, see [D
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-Additionally, in a distributed networking environment, transient faults can occur at multiple layers, including:
+For applications that connect through a virtual network gateway, implement retry logic with exponential backoff to handle potential transient connection problems. The stateful nature of virtual network gateways ensures that legitimate connections are maintained during brief network interruptions.
+
+In a distributed networking environment, transient faults can occur at multiple layers, including:
 
 - In your on-premises environment.
 
@@ -148,21 +137,23 @@ Additionally, in a distributed networking environment, transient faults can occu
 
 ::: zone-end
 
+::: zone pivot="vpn"
+
+- In the internet.
+
+::: zone-end
+
 - Within Azure.
 
 ::: zone pivot="expressroute"
 
-ExpressRoute reduces the effect of transient faults by using redundant connection paths, fast fault detection, and automated failover. However, it's important that your on-premises components are configured correctly to be resilient to a variety of issues. For comprehensive fault handling strategies, see [Designing for high availability with ExpressRoute](../expressroute/designing-for-high-availability-with-expressroute.md).
+ExpressRoute reduces the effect of transient faults by using redundant connection paths, fast fault detection, and automated failover. However, it's important that your applications and on-premises components are configured correctly to be resilient to a variety of issues. For comprehensive fault handling strategies, see [Designing for high availability with ExpressRoute](../expressroute/designing-for-high-availability-with-expressroute.md).
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-For applications that connect through Azure VPN Gateway, implement retry logic with exponential backoff to handle potential transient connection problems. Azure VPN Gateway's stateful nature ensures that legitimate connections are maintained during brief network interruptions.
-
-VPN Gateway connections may experience transient faults due to network interruptions or service updates. Transient faults can occur in the Azure backbone before traffic reaches the internet, in the internet itself, or on-premises. Data traffic, such as TCP flows, transits through IPsec tunnels. Transient faults can impact IPsec tunnels and/or TCP data flows. In the event of a disconnection, IKE (Internet Key Exchange) renegotiates the Security Associations (SAs) for both Phase 1 and Phase 2 to re-establish the IPsec tunnel.
-
-During scaling operations, which take 5 to 7 minutes to complete, existing connections are preserved while new gateway instances are added to handle increased load.
+Data traffic, such as TCP flows, transits through IPsec tunnels. Transient faults can impact IPsec tunnels or TCP data flows. In the event of a disconnection, IKE (Internet Key Exchange) renegotiates the Security Associations (SAs) for both Phase 1 and Phase 2 to re-establish the IPsec tunnel.
 
 ::: zone-end
 
@@ -174,7 +165,7 @@ Virtual network gateways are automatically *zone-redundant* when they meet the r
 
 All newly created gateways are zone-redundant, and zone redundancy is recommended for all production workloads.
 
-The following diagram shows a zone-redundant virtual network gateway with two instances that are distributed across availability zones: <!-- TODO confirm how instance counts work for both VPN and ExR -->
+The following diagram shows a zone-redundant virtual network gateway with two instances that are distributed across availability zones:
 
 :::image type="content" source="media/reliability-virtual-network-gateway/zone-redundant.png" alt-text="Diagram that shows a virtual network gateway with two instances distributed across availability zones." border="false":::
 
@@ -191,23 +182,21 @@ Zone-redundant virtual network gateways are available in [all regions that suppo
 
 ### Requirements
 
-To deploy zone-redundant virtual network gateways, you must meet all of the following requirements:
+For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy.
 
 ::: zone pivot="expressroute"
 
-- **SKU:** Use a zone-enabled gateway SKU. The following table shows which SKUs support zone redundancy:
+The following table shows which SKUs support zone redundancy:
 
-  [!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
-
-- **Subnet size:** Ensure your gateway subnet is sized appropriately for the selected SKU and deployment requirements. <!-- TODO link --> <!-- TODO is this true for VPN too? -->
+[!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **SKU:** All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments.
+All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments.
 
-- **Public IP address:** Use standard public IP addresses and configure them to be zone-redundant.
+You must also use standard public IP addresses and configure them to be zone-redundant.
 
 ::: zone-end
 
@@ -255,10 +244,6 @@ This section explains how to configure zone redundancy for your virtual network 
 
 - **Verify the zone redundancy status of an existing virtual network gateway.** TODO
 
-### Capacity planning and management
-
-TODO
-
 ### Normal operations
 
 The following section describes what to expect when your virtual network gateway is configured for zone redundancy and all availability zones are operational.
@@ -267,7 +252,7 @@ The following section describes what to expect when your virtual network gateway
 
 - **Traffic routing between zones:** Traffic from your on-premises environment is distributed among instances in all of the zones that your gateway uses. This active-active configuration ensures optimal performance and load distribution under normal operating conditions.
 
-    However, if you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see TODO.
+    However, if you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see [About ExpressRoute FastPath](../expressroute/about-fastpath.md).
 
 ::: zone-end
 
@@ -372,7 +357,7 @@ You can deploy separate VPN Gateways in two or more different regions. However, 
 
 Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize effect on your connectivity. 
 
-During planned maintenance operations on virtual netwowork gateways, the process is executed on gateway instances sequentially, never simultaneously. This process ensures that there's always one gateway instance active during maintenance, minimizing the impact on your active connections. <!-- TODO verify whether this is true for all VNet gateways or just VPN -->
+During planned maintenance operations on virtual network gateways, the process is executed on gateway instances sequentially, never simultaneously. This process ensures that there's always one gateway instance active during maintenance, minimizing the impact on your active connections. <!-- TODO verify whether this is true for all VNet gateways or just VPN -->
 
 You can configure gateway maintenance windows to align with your operational requirements, reducing the likelihood of unexpected disruptions.
 
