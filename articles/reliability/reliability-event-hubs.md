@@ -25,7 +25,7 @@ To learn how to deploy Event Hubs to support your solution's reliability require
 
 ## Reliability architecture overview
 
-This section describes some of the important aspects of how Event Hubs works that are most relevant from a reliability perspective. The section introduces the logical architecture, which include the resources and features that you deploy and use. It also discusses the physical architecture, which provides details on how the service works under the covers.
+This section describes some of the important aspects of how Event Hubs works that are most relevant from a reliability perspective. The section introduces the logical architecture, which includes the resources and features that you deploy and use. It also discusses the physical architecture, which provides details on how the service works under the covers.
 
 ### Logical architecture
 
@@ -87,7 +87,7 @@ There's no extra cost for zone redundancy with Event Hubs.
 
 ### Configure availability zone support
 
-Event Hubs namespaces automatically support zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
+Event Hubs namespaces automatically supports zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
 
 ### Normal operations
 
@@ -137,7 +137,7 @@ Both geo-replication and metadata geo-disaster recovery require you to manually 
 
 ### Geo-replication
 
-Geo-replication, which is available in the Premium and Dedicated tiers, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace. Geo-replication lets you configure the replication approach for your namespace's configuration and event data. Geo-replication ensures that your events are always available in another region, and that you can switch to use the secondary region when you need to. Schema registry metadata and data is also replicated.
+Geo-replication, which is available in the Premium and Dedicated tiers, provides replication of both metadata (entities, configuration and properties) and data (event payloads) for the namespace. Geo-replication lets you configure the replication approach for your namespace's configuration and event data. Geo-replication ensures that your events are always available in another region, and that you can switch to use the secondary region when you need to. Schema registry metadata and data are also replicated.
 
 Geo-replication is useful for most scenarios where you need to be resilient to region outages and when you have a low tolerance for the loss of event data.
 
