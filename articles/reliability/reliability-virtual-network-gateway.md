@@ -101,7 +101,7 @@ A VPN requires components to be deployed in both the on-premises environment and
 
 :::image type="content" source="media/reliability-virtual-network-gateway/vpn-reliability-architecture.png" alt-text="Diagram that shows Azure VPN Gateway, on-premises site-to-site, and point-to-site networks." border="false":::
 
-- **On-premises components**: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](/azure/vpn-gateway/design).
+- **On-premises components**: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
    - Site-to-site configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
    - Point-to-site configurations require you to deploy a VPN client application in a remote desktop and associate the configuration to each client that connects to the VPN. You're responsible for deploying and configuring the client devices.
@@ -114,7 +114,7 @@ A VPN requires components to be deployed in both the on-premises environment and
    
 All public IP addresses must be deployed as separate resources that meet specific requirements for zone redundancy.
 
-A VPN gateway contains two *instances*, which represent virtual machines (VMs) that your gateway uses to process VPN traffic. To learn more about the redundancy that's built into VPN Gateway, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](/azure/vpn-gateway/vpn-gateway-highlyavailable).
+A VPN gateway contains two *instances*, which represent virtual machines (VMs) that your gateway uses to process VPN traffic. To learn more about the redundancy that's built into VPN Gateway, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 A site-to-site VPN configuration requires a *local network gateway*, which represents the remote VPN device. The local network gateway is a mandatory component to define a connection. It has two mutually exclusive configurations: static routing (doesn't require dynamic protocol in VPN Gateway and remote devices) and dynamic routing (requires BGP in Azure and remote devices).
 
@@ -128,10 +128,10 @@ You're responsible for managing the reliability of your side of the VPN connecti
 
 For site-to-site VPN, we recommend a configuration in active-active mode. However, there are some cases where active-active isn't possible due to the asymmetric nature of flows in site-to-site connections. For more information, see:
 
-- [How does Azure VPN Gateway handle traffic flow in active-active mode and what should I consider if my on-premises setup requires symmetric routing?](/azure/vpn-gateway/vpn-gateway-vpn-faq#how-does-azure-vpn-gateway-handle-traffic-flow-in-active-active-mode-and-what-should-i-consider-if-my-on-premises-setup-requires-symmetric-routing)
-- [Does Azure guarantee symmetric routing for a given flow in active-active VPN mode?](/azure/vpn-gateway/vpn-gateway-vpn-faq#does-azure-guarantee-symmetric-routing-for-a-given-flow-in-active-active-vpn-mode)
+- [How does Azure VPN Gateway handle traffic flow in active-active mode and what should I consider if my on-premises setup requires symmetric routing?](../vpn-gateway/vpn-gateway-vpn-faq.md#how-does-azure-vpn-gateway-handle-traffic-flow-in-active-active-mode-and-what-should-i-consider-if-my-on-premises-setup-requires-symmetric-routing)
+- [Does Azure guarantee symmetric routing for a given flow in active-active VPN mode?](../vpn-gateway/vpn-gateway-vpn-faq.md#does-azure-guarantee-symmetric-routing-for-a-given-flow-in-active-active-vpn-mode)
 
-For guidance about configuring your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](/azure/vpn-gateway/vpn-gateway-highlyavailable).
+For guidance about configuring your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
@@ -366,7 +366,8 @@ A virtual network gateway is a single-region resource. If the region becomes una
 
 ::: zone pivot="expressroute"
 
-If you have Azure resources that are spread across multiple regions, you can use the ExpressRoute Premium SKU to connect across regions. Each ExpressRoute SKU enables connectivity with a different set of regions. For more information, see [What is Azure ExpressRoute?](../expressroute/expressroute-introduction.md). <!-- TODO mention this is helpful but not relared to resiliency of the gateway -->
+> [!NOTE]
+> Each ExpressRoute SKU enables connectivity with a different set of regions. If you have Azure resources that are spread across multiple regions, you can use the ExpressRoute Premium SKU. However, your gateway is still deployed into one region. The Premium SKU doesn't affect how your virtual network gateway is configured. For more information, see [What is Azure ExpressRoute?](../expressroute/expressroute-introduction.md).
 
 ::: zone-end
 
@@ -406,7 +407,7 @@ For more information, see [Configure customer-controlled maintenance for Express
 
 ::: zone pivot="vpn"
 
-For more information, see [Configure maintenance windows for your VNet gateways](/azure/vpn-gateway/customer-controlled-gateway-maintenance).
+For more information, see [Configure maintenance windows for your VNet gateways](../vpn-gateway/customer-controlled-gateway-maintenance.md).
 
 ::: zone-end
 
@@ -423,7 +424,7 @@ Azure ExpressRoute offers a strong availability SLA that guarantees high uptime 
 ::: zone pivot="vpn"
 
 <!-- TODO rewrite -->
-VPN Gateway is provided with an SLA. The Basic SKU is the only Gateway SKU without SLA, with limited capabilities and support, and it can be used only for test and development environments. For more information, see [About Gateway SKUs](/azure/vpn-gateway/about-gateway-skus#workloads).
+VPN Gateway is provided with an SLA. The Basic SKU is the only Gateway SKU without SLA, with limited capabilities and support, and it can be used only for test and development environments. For more information, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads).
 
 ::: zone-end
 
@@ -440,6 +441,9 @@ VPN Gateway is provided with an SLA. The Basic SKU is the only Gateway SKU witho
 
 ::: zone pivot="vpn"
 
-TODO
+- [About zone-redundant VNet gateway in Azure availability zones](../vpn-gateway/about-zone-redundant-vnet-gateways.md)
+- [Create a zone-redundant VNet gateway](../vpn-gateway/create-zone-redundant-vnet-gateway.md)
+- [Monitor VNet gateway](../vpn-gateway/monitor-vpn-gateway.md)
+- [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md)
 
 ::: zone-end
