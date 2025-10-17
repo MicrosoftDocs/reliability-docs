@@ -45,7 +45,7 @@ To learn about how to deploy Azure ExpressRoute to support your solution's relia
 
 ::: zone pivot="vpn"
 
-For production deployments, you should consider the following recommendations:
+To ensure high reliability for your production virtual network gateways, we recommend that you:
 
 > [!div class="checklist"]
 > - **Enable zone redundancy** if your Azure VPN Gateway resources are in a supported region. Deploy VPN Gateway using supported SKUs (VpnGw1AZ or higher) to ensure access to zone redundancy features.
@@ -138,7 +138,17 @@ For guidance about configuring your infrastructure for high availability, see [D
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-Additionally, in a distributed networking environment, transient faults can occur at multiple layers. A transient fault in Azure, an edge site or device, or in your environment can temporarily disrupt connectivity.
+Additionally, in a distributed networking environment, transient faults can occur at multiple layers, including:
+
+- In your on-premises environment.
+
+::: zone pivot="expressroute"
+
+- In an edge site.
+
+::: zone-end
+
+- Within Azure.
 
 ::: zone pivot="expressroute"
 
@@ -160,7 +170,7 @@ During scaling operations, which take 5 to 7 minutes to complete, existing conne
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Virtual network gateways are automatically zone-redundant when they meet the requirements. Zone redundancy means that the gateway's instances distributed across three availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
+Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances distributed across three availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
 
 All newly created gateways are zone-redundant, and zone redundancy is recommended for all production workloads.
 
@@ -180,13 +190,12 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 Zone-redundant virtual network gateways are available in [all regions that support availability zones](../reliability/availability-zones-region-support.md).
 
 ### Requirements
-<!-- TODO try to normalise -->
 
 To deploy zone-redundant virtual network gateways, you must meet all of the following requirements:
 
 ::: zone pivot="expressroute"
 
-- **SKU:** Use a zone-enabled gateway SKU. The following SKUs support availability zones:
+- **SKU:** Use a zone-enabled gateway SKU. The following table shows which SKUs support zone redundancy:
 
   [!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
 
@@ -196,7 +205,7 @@ To deploy zone-redundant virtual network gateways, you must meet all of the foll
 
 ::: zone pivot="vpn"
 
-- **SKU:** All tiers of Azure VPN Gateway support availability zones, except the Basic SKU, which is only for development environments.
+- **SKU:** All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments.
 
 - **Public IP address:** Use standard public IP addresses and configure them to be zone-redundant.
 
@@ -212,7 +221,7 @@ Zone-redundant gateways for ExpressRoute require specific SKUs, which have highe
 
 ::: zone pivot="vpn"
 
-There's no extra cost for a gateway deployed across multiple availability zones. You're billed for the gateway instances and public IP addresses. For pricing information, see [VPN Gateway pricing](https://azure.microsoft.com/pricing/details/vpn-gateway/).
+There's no extra cost for a gateway deployed across multiple availability zones, as long as you use a supported SKU. For pricing information, see [VPN Gateway pricing](https://azure.microsoft.com/pricing/details/vpn-gateway/).
 
 ::: zone-end
 
@@ -222,33 +231,25 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone pivot="expressroute"
 
-- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above.
-
-    For detailed deployment instructions, see TODO.
+- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above. For detailed configuration steps, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md?toc=%2Fazure%2Fexpressroute%2Ftoc.json).
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above.
-
-    For detailed configuration steps, see [Create a zone-redundant VNet gateway](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
+- **Create a new virtual network gateway with availability zone support.** Any new virtual network gateways you create are automatically zone-redundant, if they meet the requirements listed above. For detailed configuration steps, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
 
 ::: zone-end
 
 ::: zone pivot="expressroute"
 
-- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime.
-
-    For more information, see [Migrate ExpressRoute gateways to availability zone-enabled SKUs](../expressroute/gateway-migration.md).
+- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime. For more information, see [Migrate ExpressRoute gateways to availability zone-enabled SKUs](../expressroute/gateway-migration.md).
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime.
-
-    For more information, see [About SKU consolidation & migration](../vpn-gateway/gateway-sku-consolidation.md).
+- **Change the availability zone configuration of an existing virtual network gateway.** Virtual network gateways that you already created might not be zone-redundant. You can migrate a nonzonal gateway to a zone-redundant gateway with minimal downtime. For more information, see [About SKU consolidation & migration](../vpn-gateway/gateway-sku-consolidation.md).
 
 ::: zone-end
 
@@ -272,25 +273,13 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="vpn"
 
-- **Traffic routing between zones:** VPN connections are routed to one primary VPN gateway instance, which is selected by Azure. The traffic routing behavior depends on whether you have configured active-standby or active-active mode, not on the zonal, or zone-redundant deployment type.
+- **Traffic routing between zones:** VPN connections are routed to a primary VPN gateway instance in one zone, which is selected by Azure. The traffic routing behavior depends on whether you have configured active-standby or active-active mode, and doesn't depend on availability zone configuration.
 
 ::: zone-end
 
 - **Data replication between zones:** No data replication occurs between zones because the virtual network gateway doesn't store persistent customer data.
 
-<!-- TODO verify instance counts and try to normalise the instance management bullet -->
-
-::: zone pivot="expressroute"
-
-- **Instance management:** The platform automatically manages instance placement across the zones that your gateway uses. It replaces failed instances and maintains the configured instance count. Health monitoring ensures that only healthy instances receive traffic.
-
-::: zone-end
-
-::: zone pivot="vpn"
-
-- **Instance management**: The platform automatically manages instance placement across the zones your VPN gateway uses, replacing failed instances and maintaining the configured instance count of two gateway instances. Health monitoring ensures that only healthy instances receive traffic.
-
-::: zone-end
+- **Instance management:** The platform automatically manages instance placement across the zones that your gateway uses. It replaces failed instances and maintains the specified capacity. Health monitoring ensures that only healthy instances receive traffic.
 
 ### Zone-down experience
 
@@ -348,16 +337,6 @@ When the affected availability zone recovers, Azure automatically takes the foll
 
 The Azure platform manages traffic routing, failover, and failback for zone-redundant virtual network gateways. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
-::: zone pivot="expressroute"
-
-<!-- TODO PG to review this section -->
-
-However, you can test your application's resiliency to ExpressRoute problems, and verify that your ExpressRoute configuration properly handles zone outage scenarios and meets your availability requirements.
-
-Test route convergence by withdrawing BGP advertisements from specific paths to simulate circuit or peering location failures. Since zone-redundant gateways automatically handle zone failures, focus testing on end-to-end application connectivity and monitoring the automatic failover process rather than manual intervention procedures.
-
-::: zone-end
-
 ## Multi-region support
 
 A virtual network gateway is a single-region resource. If the region becomes unavailable, your gateway is also unavailable.
@@ -365,7 +344,7 @@ A virtual network gateway is a single-region resource. If the region becomes una
 ::: zone pivot="expressroute"
 
 > [!NOTE]
-> Each ExpressRoute SKU enables connectivity with a different set of regions. If you have Azure resources that are spread across multiple regions, you can use the ExpressRoute Premium SKU. However, your gateway is still deployed into one region. The Premium SKU doesn't affect how your virtual network gateway is configured. For more information, see [What is Azure ExpressRoute?](../expressroute/expressroute-introduction.md).
+> You can use the Premium ExpressRoute SKU when you have Azure resources that are spread across multiple regions. However, the Premium SKU doesn't affect how your gateway is configured, and it's still deployed into one region. For more information, see [What is Azure ExpressRoute?](../expressroute/expressroute-introduction.md).
 
 ::: zone-end
 
@@ -385,7 +364,7 @@ For detailed guidance, see [Designing for disaster recovery with ExpressRoute pr
 
 ::: zone pivot="vpn"
 
-You can deploy separate VPN Gateways in two or more different regions. However, each gateway is attached to a different virtual network, and the gateways operate independently with no interaction or configuration/state replication between them. You're also responsible for configuring clients to connect to the correct VPN, or to switch between VPNs as required.
+You can deploy separate VPN Gateways in two or more different regions. However, each gateway is attached to a different virtual network, and the gateways operate independently. There's no interaction, or replication of configuration or state between them. You're also responsible for configuring clients to connect to the correct VPN, or to switch between VPNs as required.
 
 ::: zone-end
 
@@ -413,16 +392,11 @@ For more information, see [Configure maintenance windows for your VNet gateways]
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
+For Virtual Network Gateway, the availability SLA increases when you use a gateway that is deployed with any SKU other than Basic.
+
 ::: zone pivot="expressroute"
 
-Azure ExpressRoute offers a strong availability SLA that guarantees high uptime for your connections. Different availability SLAs apply if you deploy across multiple peering locations (sites), if you use ExpressRoute Metro, or if you have a single-site configuration.
-
-::: zone-end
-
-::: zone pivot="vpn"
-
-<!-- TODO rewrite -->
-VPN Gateway is provided with an SLA. The Basic SKU is the only Gateway SKU without SLA, with limited capabilities and support, and it can be used only for test and development environments. For more information, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads).
+Additionally, Azure ExpressRoute offers a strong availability SLA that guarantees high uptime for your connections. Different availability SLAs apply if you deploy across multiple peering locations (sites), if you use ExpressRoute Metro, or if you have a single-site configuration.
 
 ::: zone-end
 
