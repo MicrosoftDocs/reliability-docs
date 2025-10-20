@@ -244,7 +244,7 @@ After the storage accounts used by your app are updated, you can update the Flex
 
 1. In the Azure portal, search for and select the function app to update.
 
-1. Under **Settings** select **Scale and Concurrency**.
+1. Under **Settings**, select **Scale and Concurrency**.
 
 1. On the **Zone redundancy** tab, check **Add zone redundancy** to enable the feature. If already checked, you can uncheck this box to disable the feature.
 
