@@ -17,14 +17,7 @@ This article describes reliability and availability zones support in Azure Datab
 
 ## Production deployment recommendations
 
-> [!WARNING]
-> **Product team:** Please verify that these recommendations are reasonable.
-
-To improve resilience in production Azure Databricks deployments, it's best to deploy clusters across multiple availability zones. Although Azure Databricks automatically distributes compute nodes across zones, you still need to verify that sufficient capacity exists in each of the zones you plan to use. Consider using instance pools to reduce cluster startup times during recovery scenarios.
-
-For workspace storage accounts, use zone-redundant storage (ZRS) or geo-zone-redundant storage (GZRS) instead of the default geo-redundant storage (GRS). A ZRS or GZRS configuration provides better protection against zone-level failures within a region.
-
-For critical workloads that require protection against region outages, implement a multi-region topology with separate Azure Databricks workspaces in multiple regions.
+To learn about how to deploy Azure Databricks to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Databricks](/azure/well-architected/service-guides/azure-databricks).
 
 ## Reliability architecture overview
 
