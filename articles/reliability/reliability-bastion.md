@@ -76,7 +76,7 @@ There's no additional cost to use availability zone support for Azure Bastion. C
 
 ### Configure availability zone support
 
-- **Deploy a new bastion host with availability zone support:** When you deploy a new bastion host in a [region that supports availability zones](#regions-supported), you select the specific zones that you want to deploy to.
+- **Deploy a new bastion host with availability zone support:** When you deploy a new bastion host in a [region that supports availability zones](#requirements), you select the specific zones that you want to deploy to.
 
     For zone redundancy, you must select multiple zones.
 
