@@ -28,7 +28,7 @@ For most production deployments of SQL Database, we recommend that you consider 
 
    - In the [vCore-based purchasing model](/azure/azure-sql/database/service-tiers-sql-database-vcore), the General Purpose, Business Critical, and Hyperscale service tiers support zone redundancy.
 
-- Configure [automated backups](/azure/azure-sql/database/automated-backups-overview) and use a minimum of zone-redundant storage (ZRS). Regularly test both your backup and restore processes.
+- Configure [automated backups](/azure/azure-sql/database/automated-backups-overview) and use a minimum of zone-redundant storage (ZRS). Test your backups and your restore process regularly.
 
 ## Reliability architecture overview
 
@@ -330,8 +330,6 @@ This section provides an overview of two related but separate features that can 
 
 - Use connection endpoints that automatically direct connections to the primary.
 
-::: zone-end
-
 ### Region support
 
 ### [Active geo-replication](#tab/active-geo)
@@ -406,16 +404,14 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 ### Configure multi-region support
 
-### [Active geo-replication](#tab/active-geo)
-
+### [Active geo-replication](#tab/active-geo-config)
 - **Enable active geo-replication:** For more information about how to enable active geo-replication in the Azure portal, see [Configure active geo-replication for SQL Database](/azure/azure-sql/database/active-geo-replication-configure-portal) or [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview).
 
     After you enable active geo-replication, there's an initial seeding step that can take some time.
 
 - **Disable active geo-replication:** For more information about how to disable active geo-replication on a database, see [Remove secondary database](/azure/azure-sql/database/active-geo-replication-configure-portal).
 
-### [Failover groups](#tab/failover-groups)
-
+### [Failover groups](#tab/failover-groups-config)
 - **Enable failover groups:** You configure a failover group on a logical server. You can add all the databases in the logical server to the failover group, or you can select a subset of databases to add.
 
     When you create a failover group, you select the [failover policy](/azure/azure-sql/database/failover-group-sql-db#failover-policy), which specifies who is responsible for detecting an outage and performing a failover. You can configure customer-managed failover, which is recommended, or Microsoft-managed failover.
@@ -429,8 +425,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 ### Normal operations
 
-### [Active geo-replication](#tab/active-geo)
-
+### [Active geo-replication](#tab/active-geo-ops)
 This section describes what to expect when a database is configured to use active geo-replication and all regions are operational.
 
 - **Traffic routing between regions:** Your application must be configured to send read-write requests to the primary database. You can optionally send read-only requests to a secondary database, which helps reduce the impact of read-only workloads on your primary database.
@@ -439,8 +434,7 @@ This section describes what to expect when a database is configured to use activ
 
     When you perform a failover, you decide how to handle the possibility of data loss.
 
-### [Failover groups](#tab/failover-groups)
-
+### [Failover groups](#tab/failover-groups-ops)
 This section describes what to expect when a database is configured within a failover group and all regions are operational.
 
 - **Traffic routing between regions:** Failover groups provide two listener endpoints for you to connect your applications to, for read-write and read-only workloads. You should use the failover group listener endpoints to minimize downtime during failovers. During normal operations, the following routing behavior occurs:
@@ -455,8 +449,7 @@ This section describes what to expect when a database is configured within a fai
 
 ### Region-down experience
 
-### [Active geo-replication](#tab/active-geo)
-
+### [Active geo-replication](#tab/active-geo-region-down)
 This section describes what to expect when a database is configured to use active geo-replication and there's an outage in your primary region:
 
 - **Detection and response:** You're responsible both for detecting the outage of a database or region and triggering failover.
@@ -471,8 +464,7 @@ This section describes what to expect when a database is configured to use activ
 
 - **Traffic rerouting:** You're responsible for reconfiguring your application to send requests to the new primary database. If you need to have transparent failover, consider using failover groups.
 
-### [Failover groups](#tab/failover-groups)
-
+### [Failover groups](#tab/failover-groups-region-down)
 This section describes what to expect when a database is configured within a failover group and there's an outage in your primary region:
 
 - **Detection and response** depends on the failover policy that you use.
@@ -503,12 +495,10 @@ This section describes what to expect when a database is configured within a fai
 
 ### Region recovery
 
-### [Active geo-replication](#tab/active-geo)
-
+### [Active geo-replication](#tab/active-geo-recovery)
 After the primary region recovers, you can manually perform a failback to the primary region by performing another failover.
 
-### [Failover groups](#tab/failover-groups)
-
+### [Failover groups](#tab/failover-groups-recovery)
 You're responsible for failing back to the primary region if you need to do so. You can manually perform a failback to the primary region by performing a customer-managed failover.
 
 Even if Microsoft initiated the original failover, you're still responsible for failing back to the previous region, if you choose to.
