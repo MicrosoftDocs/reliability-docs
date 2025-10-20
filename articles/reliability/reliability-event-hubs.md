@@ -69,6 +69,8 @@ Azure Event Hubs supports zone-redundant deployments in all service tiers. Howev
 
 The service transparently replicates your configuration, metadata, and event data across three availability zones in the region, providing automatic failover capability without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications.
 
+![Diagram that shows a zone-redundant Event Hubs namespace.](./media/reliability-event-hubs/availability-zones.svg)
+
 ### Region support
 
 Zone-redundant Event Hubs namespaces can be deployed in [any Azure region that supports availability zones](./regions-list.md).
@@ -139,6 +141,8 @@ Geo-replication, which is available in the Premium and Dedicated tiers, provides
 Geo-replication is useful for most scenarios where you need to be resilient to region outages and when you have a low tolerance for the loss of event data.
 
 The namespace can be thought of as being extended across regions, with one region being the primary and the others being secondaries. You see a single namespace in your Azure subscription, no matter how many secondary regions you configure for geo-replication.
+
+![Diagram that shows an Event Hubs namespace that's configured for geo-replication.](./media/reliability-event-hubs/geo-replication.svg)
     
 At any time, you can *promote* the secondary region to become a primary region. When you promote a secondary, Event Hubs repoints the namespace's FQDN (fully qualified domain name) to the selected secondary region, and the previous primary region is demoted to a secondary region. When you promote a secondary region to primary, you decide whether to perform a *planned promotion*, which means you wait for data to finish being replicated, or to perform a *forced promotion* that might result in data loss in some situations.
 
@@ -276,6 +280,8 @@ Metadata geo-disaster recovery is most useful for applications that don't have a
 > Geo-disaster recovery enables continuity of operations with the same configuration, but **doesn't replicate the event data**. If you need to replicate event data, consider using [geo-replication](#geo-replication).
 
 When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is an FQDN (fully qualified domain name). By default, the alias directs all traffic to the primary namespace.
+
+![Diagram that shows two Event Hubs namespaces that are configured for metadata geo-disaster recovery.](./media/reliability-event-hubs/geo-disaster-recovery.svg)
 
 If the primary region fails or there's another type of disaster, you can manually initiate a single-time, one-way failover move from the primary to the secondary at any time. The failover is nearly instantaneous once initiated. During the failover process, the geo-disaster recovery alias is repointed to the secondary namespace. After the move, the pairing is then removed.
 
