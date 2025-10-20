@@ -316,11 +316,11 @@ This section provides an overview of two related but separate features that can 
 
 - [Failover groups](/azure/azure-sql/database/failover-group-sql-db) build on top of active geo-replication and allow you to fail over a group of databases.
 
-### [Active geo-replication](#tab/csharp)
+### [Active geo-replication](#tab/csharp-1)
 
 [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) creates a continuously synchronized readable secondary database (which is sometimes known as *geo-secondary* or *geo-replica*) in any region for a single primary database. Active geo-replication can create secondary databases in the same region, but this configuration doesn't provide protection against a region outage. When you use active geo-replication to achieve geo-redundancy, you locate the secondary database in a different region to the primary database.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-1)
 
 [Failover groups](/azure/azure-sql/database/failover-group-sql-db) build on top of active geo-replication. With failover groups, you can perform the following operations:
 
@@ -332,14 +332,14 @@ This section provides an overview of two related but separate features that can 
 
 ### Region support
 
-### [Active geo-replication](#tab/csharp)
+### [Active geo-replication](#tab/csharp-2)
 
 [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) can be enabled in all Azure regions and don't require you to use Azure region pairs.
 
 > [!TIP]
 > SQL Database follows a safe deployment practice where Azure strives not to deploy updates to paired regions at the same time. If you configure active geo-replication with nonpaired regions, set different maintenance windows for the servers in each region. This approach helps reduce the chance that both regions experience connectivity problems caused by maintenance occurring at the same time.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-2)
 
 Failover groups can be created across all Azure regions and don't require you to use Azure region pairs.
 
@@ -348,7 +348,7 @@ Failover groups can be created across all Azure regions and don't require you to
 
 ### Requirements
 
-### [Active geo-replication](#tab/csharp)
+### [Active geo-replication](#tab/csharp-3)
 
 When you use active geo-replication, consider the following requirements:
 
@@ -358,7 +358,7 @@ When you use active geo-replication, consider the following requirements:
 
 Active geo-replication is supported for databases across different Azure subscriptions.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-3)
 
 When you use failover groups, consider the following requirements:
 
@@ -366,7 +366,7 @@ When you use failover groups, consider the following requirements:
 
 ### Considerations
 
-### [Active geo-replication](#tab/csharp)
+### [Active geo-replication](#tab/csharp-4)
 
 - Active geo-replication is designed to provide failover of a single database. If you need to fail over multiple databases, consider using failover groups instead.
 
@@ -374,7 +374,7 @@ When you use failover groups, consider the following requirements:
 
 - Review [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) to understand how this capability works in more detail.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-4)
 
 :::zone pivot="hyperscale"
 
@@ -404,7 +404,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 ### Configure multi-region support
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/dotnet-1)
 
 - **Enable active geo-replication:** For more information about how to enable active geo-replication in the Azure portal, see [Configure active geo-replication for SQL Database](/azure/azure-sql/database/active-geo-replication-configure-portal) or [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview).
 
@@ -412,7 +412,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 - **Disable active geo-replication:** For more information about how to disable active geo-replication on a database, see [Remove secondary database](/azure/azure-sql/database/active-geo-replication-configure-portal).
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-5)
 - **Enable failover groups:** You configure a failover group on a logical server. You can add all the databases in the logical server to the failover group, or you can select a subset of databases to add.
 
     When you create a failover group, you select the [failover policy](/azure/azure-sql/database/failover-group-sql-db#failover-policy), which specifies who is responsible for detecting an outage and performing a failover. You can configure customer-managed failover, which is recommended, or Microsoft-managed failover.
@@ -426,7 +426,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 ### Normal operations
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/dotnet-2)
 
 This section describes what to expect when a database is configured to use active geo-replication and all regions are operational.
 
@@ -436,7 +436,7 @@ This section describes what to expect when a database is configured to use activ
 
     When you perform a failover, you decide how to handle the possibility of data loss.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-6)
 
 This section describes what to expect when a database is configured within a failover group and all regions are operational.
 
@@ -452,7 +452,7 @@ This section describes what to expect when a database is configured within a fai
 
 ### Region-down experience
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/dotnet-3)
 
 This section describes what to expect when a database is configured to use active geo-replication and there's an outage in your primary region:
 
@@ -468,7 +468,7 @@ This section describes what to expect when a database is configured to use activ
 
 - **Traffic rerouting:** You're responsible for reconfiguring your application to send requests to the new primary database. If you need to have transparent failover, consider using failover groups.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-7)
 
 This section describes what to expect when a database is configured within a failover group and there's an outage in your primary region:
 
@@ -500,11 +500,11 @@ This section describes what to expect when a database is configured within a fai
 
 ### Region recovery
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/dotnet-4)
 
 After the primary region recovers, you can manually perform a failback to the primary region by performing another failover.
 
-### [Failover groups](#tab/azure-cli)
+### [Failover groups](#tab/azure-cli-8)
 
 You're responsible for failing back to the primary region if you need to do so. You can manually perform a failback to the primary region by performing a customer-managed failover.
 
