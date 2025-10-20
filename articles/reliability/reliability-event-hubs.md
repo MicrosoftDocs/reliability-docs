@@ -86,13 +86,13 @@ There's no extra cost for zone redundancy with Event Hubs.
 
 ### Configure availability zone support
 
-Event Hubs namespaces automatically supports zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
+Event Hubs namespaces automatically support zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
 
 ### Normal operations
 
 This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and all availability zones are operational.
 
-- **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in three availability zones simultaneously process incoming events.
+- **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in three availability zones simultaneously processes incoming events.
 
 - **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to replicas in multiple zones before the write operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
 
