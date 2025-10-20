@@ -316,7 +316,7 @@ This section provides an overview of two related but separate features that can 
 
 - [Failover groups](/azure/azure-sql/database/failover-group-sql-db) build on top of active geo-replication and allow you to fail over a group of databases.
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/csharp)
 
 [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) creates a continuously synchronized readable secondary database (which is sometimes known as *geo-secondary* or *geo-replica*) in any region for a single primary database. Active geo-replication can create secondary databases in the same region, but this configuration doesn't provide protection against a region outage. When you use active geo-replication to achieve geo-redundancy, you locate the secondary database in a different region to the primary database.
 
@@ -332,7 +332,7 @@ This section provides an overview of two related but separate features that can 
 
 ### Region support
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/csharp)
 
 [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) can be enabled in all Azure regions and don't require you to use Azure region pairs.
 
@@ -348,7 +348,7 @@ Failover groups can be created across all Azure regions and don't require you to
 
 ### Requirements
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/csharp)
 
 When you use active geo-replication, consider the following requirements:
 
@@ -366,7 +366,7 @@ When you use failover groups, consider the following requirements:
 
 ### Considerations
 
-### [Active geo-replication](#tab/dotnet)
+### [Active geo-replication](#tab/csharp)
 
 - Active geo-replication is designed to provide failover of a single database. If you need to fail over multiple databases, consider using failover groups instead.
 
