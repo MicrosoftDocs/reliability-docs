@@ -445,7 +445,6 @@ This section describes what to expect when a database is configured to use activ
 
     When you perform a failover, you decide how to handle the possibility of data loss.
 
----
 
 ### [Failover groups](#tab/failover-groups)
 
