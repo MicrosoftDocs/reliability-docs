@@ -337,7 +337,7 @@ This section provides an overview of two related but separate features that can 
 [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) can be enabled in all Azure regions and doesn't require you to use Azure region pairs.
 
 > [!TIP]
-> SQL Database follows a safe deployment practice where Azure strives not to deploy updates to paired regions at the same time. If you configure active geo-replication with nonpaired regions, set different maintenance windows for the servers in each region. This approach helps reduce the chance that both regions experience connectivity problems caused by maintenance occurring at the same time.
+> SQL Database follows a safe deployment practice where Azure strives not to deploy updates to paired regions at the same time. If you configure active geo-replication to use nonpaired regions, set different maintenance windows for the servers in each region. This approach helps reduce the chance that both regions experience connectivity problems caused by maintenance occurring at the same time.
 
 ### [Failover groups](#tab/azure-cli-2)
 
