@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Functions
-description: Find out about reliability support in Azure Functions, including intra-regional resiliency and cross-region recovery and business continuity.
+description: Learn how to ensure serverless reliability with Azure Functions by using Azure availability zones, SKUs, and cross-region disaster recovery strategies.
 author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
@@ -489,8 +489,6 @@ When you run the same function code in multiple regions, there are two patterns 
 With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](../frontdoor/front-door-overview.md) for your critical HTTP triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Front door can also periodically check the health of each endpoint. When a function in one region stops responding to health checks, Azure Front Door takes it out of rotation, and only forwards traffic to the remaining healthy functions.  
 
 ![Architecture for Azure Front Door and Function](../azure-functions/media/functions-geo-dr/front-door.png)  
-
-For an example, see the sample on how to [implement the geode pattern by deploying the API to geodes in distributed Azure regions.](https://github.com/mspnp/geode-pattern-accelerator).
 
 ### Active-passive pattern for non-HTTPS trigger functions
 
