@@ -69,15 +69,15 @@ For more information about how to change or disable retry policies for your data
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Data Factory supports zone redundancy, which provides resiliency to failures in [availability zones](availability-zones-overview.md). This section describes how each part of the Data Factory service supports zone redundancy.
+Data Factory supports zone redundancy, which provides resiliency to failures in [availability zones](availability-zones-overview.md).
 
-### Regions supported
-
-Zone-redundant Data Factory resources can be deployed in [any region that supports availability zones](./availability-zones-region-support.md).
-
-### Considerations
+Each part of Data Factory supports zone redundancy:
 
 - **Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
+
+    The following diagram shows a pipeline, which is managed by the core service, that's spread across multiple availability zones:
+
+    ![Diagram that shows three pipelines that are each zone-redundant.](./media/reliability-data-factory/zone-redundancy-pipeline.png)
 
     However, after a zone failure, Microsoft doesn't guarantee the state of tumbling window triggers.
 
@@ -85,9 +85,19 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
     - *An Azure IR* supports zone redundancy, and Microsoft manages this capability.
 
+        ![Diagram that shows a pipeline and an Azure IR integration runtime, each of which are zone-redundant.](./media/reliability-data-factory/zone-redundancy-pipeline-azure-integration-runtime.png)
+
     - *An Azure-SSIS IR* requires you to deploy at least two nodes. These nodes are allocated into different availability zones automatically.
 
+        The following diagram shows a zone-redundnt pipeline, and an Azure-SSIS integration runtime with two nodes that are deployed in different zones:
+
+        ![Diagram that shows a zone-redundant pipeline, and an Azure SSIR integration runtime with two nodes that are deployed into different zones.](./media/reliability-data-factory/zone-redundancy-pipeline-azure-ssis-integration-runtime.png)
+
     - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
+
+### Regions supported
+
+Zone-redundant Data Factory resources can be deployed in [any region that supports availability zones](./availability-zones-region-support.md).
 
 ### Cost
 
