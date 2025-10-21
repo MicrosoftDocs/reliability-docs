@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure SQL Database
-description: Find out about reliability in Azure SQL Database, including availability zones and multiregion deployments.
+description: Find out about reliability in Azure SQL Database, including availability zones and multi-region deployments.
 author: WilliamDAssafMSFT
 ms.author: wiassaf
 ms.topic: reliability-article
@@ -12,7 +12,7 @@ zone_pivot_groups: sql-database-tiers
 
 # Reliability in Azure SQL Database
 
-This article describes reliability support in Azure SQL Database, covering intra-regional resiliency via [availability zones](#availability-zone-support) and [multiregion deployments](#multiregion-support).
+This article describes reliability support in Azure SQL Database, covering intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region deployments](#multi-region-support).
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -308,9 +308,9 @@ The SQL Database platform manages traffic routing, failover, and zone recovery p
 
 :::zone-end
 
-## Multiregion support
+## Multi-region support
 
-This section provides an overview of two related but separate features that can be used for multiregion geo-replication of SQL Database:
+This section provides an overview of two related but separate features that can be used for multi-region geo-replication of SQL Database:
 
 - [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) replicates a single database to a synchronized secondary database.
 
@@ -408,7 +408,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 :::zone-end
 
-### Configure multiregion support
+### Configure multi-region support
 
 ### [Active geo-replication](#tab/active-geo)
 
