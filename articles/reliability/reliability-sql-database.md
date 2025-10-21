@@ -445,7 +445,6 @@ This section describes what to expect when a database is configured to use activ
 
     When you perform a failover, you decide how to handle the possibility of data loss.
 
-
 ### [Failover groups](#tab/failover-groups)
 
 This section describes what to expect when a database is configured within a failover group and all regions are operational.
@@ -459,6 +458,8 @@ This section describes what to expect when a database is configured within a fai
 - **Data replication between regions:** Geo-replication between the primary and secondary databases occurs asynchronously. This latency means that there can be a delay between a change being applied to the primary database and when it's replicated to the secondary database.
 
     When you perform a failover, you decide how to handle the possibility of data loss.
+  
+---
 
 ### Region-down experience
 
