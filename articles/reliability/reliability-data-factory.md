@@ -220,7 +220,14 @@ Data Factory supports CI/CD through source control integration, so that you can 
 
 ## Service-level agreement
 
-The service-level agreement (SLA) for Azure Data Factory describes the expected availability of the service. This agreement also describes the conditions to meet for achieving this expectation. To understand these conditions, make sure that you review the [Service Level Agreements (SLA) for Online Services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
+[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
+
+Data Factory provides separate availability SLAs for:
+
+- The success rate of API calls that you make, such as those to manage your data factory.
+- The number of activity runs that begin to execute.
+
+Activity runs are permitted to be briefly delayed, and require that all dependencies to execute the job have been satisfied.
 
 ## Related content
 
