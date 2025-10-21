@@ -6,7 +6,7 @@ ms.author: jburchel
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-data-factory
-ms.date: 08/27/2025
+ms.date: 10/21/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Data Factory works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
 ---
 
@@ -77,53 +77,53 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
 ### Considerations
 
-**Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
+- **Core service:** Microsoft manages the components in the core Data Factory service and spreads them across availability zones.
 
     However, after a zone failure, Microsoft doesn't guarantee the state of tumbling window triggers.
 
-**IRs:** Zone redundancy support depends on the type of IR that you use.
+- **IRs:** Zone redundancy support depends on the type of IR that you use.
 
-- *An Azure IR* supports zone redundancy, and Microsoft manages this capability.
+    - *An Azure IR* supports zone redundancy, and Microsoft manages this capability.
 
-- *An Azure-SSIS IR* requires you to deploy at least two nodes. These nodes are allocated into different availability zones automatically.
+    - *An Azure-SSIS IR* requires you to deploy at least two nodes. These nodes are allocated into different availability zones automatically.
 
-- *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
+    - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
 
 ### Cost
 
-**Core service:** No extra cost applies for zone redundancy.
+- **Core service:** No extra cost applies for zone redundancy.
 
-**IRs:** The cost of zone redundancy varies depending on the type of IR that you use.
+- **IRs:** The cost of zone redundancy varies depending on the type of IR that you use.
 
-- *An Azure IR* includes zone redundancy at no extra cost.
+    - *An Azure IR* includes zone redundancy at no extra cost.
 
-- *An Azure-SSIS IR* requires you to deploy at least two nodes to achieve zone redundancy. For more information about how each node is billed, see [Pricing example: Run SSIS packages on an Azure-SSIS IR](../data-factory/pricing-examples-ssis-on-azure-ssis-integration-runtime.md#pricing-model-for-azure-ssis-integration-runtime).
+    - *An Azure-SSIS IR* requires you to deploy at least two nodes to achieve zone redundancy. For more information about how each node is billed, see [Pricing example: Run SSIS packages on an Azure-SSIS IR](../data-factory/pricing-examples-ssis-on-azure-ssis-integration-runtime.md#pricing-model-for-azure-ssis-integration-runtime).
 
-- *A SHIR* requires you to deploy and manage the compute infrastructure. To achieve zone resiliency, you need to spread your compute resources across multiple zones. Depending on the number of nodes that you deploy and how you configure them, you might incur extra costs from the underlying compute services and other supporting services. There's no extra charge to run the SHIR on multiple nodes.
+    - *A SHIR* requires you to deploy and manage the compute infrastructure. To achieve zone resiliency, you need to spread your compute resources across multiple zones. Depending on the number of nodes that you deploy and how you configure them, you might incur extra costs from the underlying compute services and other supporting services. There's no extra charge to run the SHIR on multiple nodes.
 
 ### Configure availability zone support
 
-**Core service:** No configuration required. The Data Factory core service automatically supports zone redundancy.
+- **Core service:** No configuration required. The Data Factory core service automatically supports zone redundancy.
 
-**IRs:**
+- **IRs:**
 
-- *An Azure IR:* No configuration required. The Azure IR automatically enables zone redundancy.
+    - *An Azure IR:* No configuration required. The Azure IR automatically enables zone redundancy.
 
-- *An Azure-SSIS IR:* No configuration required. An Azure-SSIS IR automatically enables zone redundancy when it's deployed with two or more nodes.
+    - *An Azure-SSIS IR:* No configuration required. An Azure-SSIS IR automatically enables zone redundancy when it's deployed with two or more nodes.
 
-- *A SHIR* requires you to configure your own resiliency, which includes spreading your nodes across multiple availability zones.
+    - *A SHIR* requires you to configure your own resiliency, which includes spreading your nodes across multiple availability zones.
 
 ### Capacity planning and management
 
-**Core service:** The Data Factory core service scales automatically based on demand, and you don't need to plan or manage capacity.
+- **Core service:** The Data Factory core service scales automatically based on demand, and you don't need to plan or manage capacity.
 
-**IRs:** 
+- **IRs:** 
 
-- *An Azure IR* scales automatically based on demand, and you don't need to plan or manage capacity.
+    - *An Azure IR* scales automatically based on demand, and you don't need to plan or manage capacity.
 
-- *An Azure-SSIS IR* requires you to specifically configure the number of nodes that you use. To prepare for availability zone failure, consider over-provisioning the capacity of your IR. Over-provisioning allows the solution to tolerate some degree of capacity loss and still continue to function without degraded performance. For more information, see [Manage capacity by over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
+    - *An Azure-SSIS IR* requires you to specifically configure the number of nodes that you use. To prepare for availability zone failure, consider over-provisioning the capacity of your IR. Over-provisioning allows the solution to tolerate some degree of capacity loss and still continue to function without degraded performance. For more information, see [Manage capacity by over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
 
-- *A SHIR* requires you to configure your own capacity and scaling. Consider over-provisioning when you deploy a SHIR.
+    - *A SHIR* requires you to configure your own capacity and scaling. Consider over-provisioning when you deploy a SHIR.
 
 ### Normal operations
 
