@@ -38,7 +38,7 @@ Zone-redundant isn't supported for:
 
 - **Zonal**. Choose a zonal deployment when you want to achieve the highest level of availability within a single availability zone, but with the lowest network latency. You can choose the region and the availability zone to deploy both your primary database server. A standby replica server is *automatically* provisioned and managed in the *same* availability zone - with similar compute, storage, and network configuration - as the primary server. A zonal configuration protects your databases from node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. Data from the primary server is replicated to the standby replica in synchronous mode. if any disruption to the primary server, the server automatically fails over to the standby replica.
 
-  :::image type="content" source="./media/reliability-azure-database-postgresql/same-zone-high-availability-architecture.png" alt-text="Pictures illustrating zonal high availability architecture." lightbox="./media/reliability-azure-database-postgresql/-same-zone-high-availability-architecture.png":::
+  :::image type="content" source="./media/reliability-azure-database-postgresql/same-zone-high-availability-architecture.png" alt-text="Pictures illustrating zonal high availability architecture." lightbox="./media/reliability-azure-database-postgresql/same-zone-high-availability-architecture.png":::
 
 The **zonal** deployment option is available in all [Azure regions](/azure/postgresql/flexible-server/overview#azure-regions) where you can deploy Flexible Server.
 
@@ -288,7 +288,7 @@ Although it's not recommended, you can configure your flexible server without hi
 
 The following picture shows the transition between VM and storage failure.
 
-:::image type="content" source="./media/reliability-azure-database-postgresql/availability-without-zone-redundant-ha-architecture.png" alt-text="Diagram that shows availability without zone redundant high availability (HA) in steady state." border="false" lightbox="./media/reliability-azure-database-postgresql/-availability-without-zone-redundant-ha-architecture.png":::
+:::image type="content" source="./media/reliability-azure-database-postgresql/availability-without-zone-redundant-ha-architecture.png" alt-text="Diagram that shows availability without zone redundant high availability (HA) in steady state." border="false" lightbox="./media/reliability-azure-database-postgresql/availability-without-zone-redundant-ha-architecture.png":::
 
 ## Cross-region disaster recovery and business continuity
 
