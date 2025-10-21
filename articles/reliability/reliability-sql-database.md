@@ -32,21 +32,21 @@ For most production deployments of SQL Database, we recommend that you consider 
 
 ## Reliability architecture overview
 
-SQL Database runs on the latest stable SQL Server Database Engine of the Windows operating system, including all applicable patches.
+SQL Database runs on the latest stable SQL Server Database engine of the Windows operating system, including all applicable patches.
 
-SQL Database achieves redundancy by storing three copies of your data in a single datacenter in the primary region by default. This approach protects your data if a localized failure occurs, such as a small-scale network or power failure, and also during the following events:
+SQL Database achieves redundancy by storing three copies of your data in a single datacenter in the primary region by default. This approach protects your data if a localized failure occurs, such as a small-scale network failure or power failure, and also during the following events:
 
 - Customer initiated management operations that result in a brief downtime
 
 - Service maintenance operations
 
-- Problems and datacenter outages with the following components:
+- Problems and datacenter outages, where the datacenter has the following components:
 
     - Racks, where the machines that power your service are running
 
-    - Physical machines that host the virtual machine (VM) that runs the SQL Database Engine
+    - Physical machines that host the virtual machine (VM) that runs the SQL Database engine
 
-- Other problems with the SQL Database Engine
+- Other problems with the SQL Database engine
 
 - Other potential unplanned localized outages
 
@@ -58,7 +58,7 @@ Redundancy is implemented in different ways for different service tiers of SQL D
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-SQL Database automatically handles critical servicing tasks, such as patching, backups, Windows, and SQL Database Engine upgrades. It also automatically handles unplanned events such as underlying hardware, software, or network failures. SQL Database is designed to recover quickly from critical failures, which ensures that your data is always available. Most users don't notice that upgrades are performed continuously.
+SQL Database automatically handles critical servicing tasks, such as patching, backups, Windows, and SQL Database engine upgrades. It also automatically handles unplanned events such as underlying hardware, software, or network failures. SQL Database is designed to recover quickly from critical failures, which ensures that your data is always available. Most users don't notice that upgrades are performed continuously.
 
 When a database is patched or fails over, the downtime isn't disruptive if you [employ retry logic](/azure/azure-sql/database/develop-overview#resiliency) in your application.
 
@@ -82,7 +82,7 @@ For the General Purpose service tier, zone redundancy ensures that both the stat
 
 :::zone pivot="premium,business-critical,hyperscale"
 
-For the Premium, Business Critical, and Hyperscale service tiers, zone redundancy places replicas of your SQL Database across multiple Azure availability zones in your primary region. To eliminate a single point of failure (SPOF), the control ring is also duplicated across multiple availability zones.
+For the Premium, Business Critical, and Hyperscale service tiers, zone redundancy places replicas of your SQL database across multiple Azure availability zones in your primary region. To eliminate a single point of failure (SPOF), the control ring is also duplicated across multiple availability zones.
 
 :::zone-end
 
@@ -102,9 +102,9 @@ Zone redundancy is available to databases in the Business Critical, General Purp
 
 For the General Purpose service tier:
 
-- Zone-redundant configuration is only available when standard-series (Gen5) hardware is selected.
+- Zone-redundant configuration is available only when standard-series (Gen5) hardware is selected.
 
-- When you use a zone-redundant SQL Database, only specific regions support custom maintenance windows. For more information, see [SQL Database region support for maintenance windows](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
+- When you use a zone-redundant SQL database, only specific regions support custom maintenance windows. For more information, see [SQL Database region support for maintenance windows](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
 
 :::zone-end
 
@@ -112,7 +112,7 @@ For the General Purpose service tier:
 
 For the Premium and Business Critical service tiers:
 
-- When you use a zone-redundant SQL Database, only specific regions support custom maintenance windows. For more information, see [Maintenance window availability for zone-redundant databases](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
+- When you use a zone-redundant SQL database, only specific regions support custom maintenance windows. For more information, see [Maintenance window availability for zone-redundant databases](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
 
 :::zone-end
 
@@ -120,7 +120,7 @@ For the Premium and Business Critical service tiers:
 
 For the Hyperscale service tier:
 
-- When you use a zone-redundant SQL Database, only specific regions support custom maintenance windows. For more information, see [Maintenance window availability for zone-redundant databases](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
+- When you use a zone-redundant SQL database, only specific regions support custom maintenance windows. For more information, see [Maintenance window availability for zone-redundant databases](/azure/azure-sql/database/region-availability#ZR-maintenance-window-availability).
 
 - You must enable zone-redundant or geo-zone-redundant backup storage.
 
@@ -150,7 +150,7 @@ To view information about availability zone support for other service tiers, be 
 
 ### Considerations
 
-- **Latency:** Zone-redundant databases have replicas in different datacenters separated by some distance. This added network latency can increase transaction commit time and potentially affect the performance of certain online transaction processing (OLTP) workloads. Most applications aren't sensitive to this extra latency.
+- **Latency:** Zone-redundant databases have replicas in distant datacenters. The added network latency can increase transaction commit time and potentially affect the performance of certain online transaction processing (OLTP) workloads. Most applications aren't sensitive to this extra latency.
 
 - **`master` database:** When a database with a zone-redundant configuration is created on a logical server, the `master` database associated with the server is also automatically made zone-redundant. For more information about how to check whether your `master` database is zone-redundant, see [Database zone redundant availability](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#zone-redundant-availability).
 
@@ -168,13 +168,13 @@ For the General Purpose service tier, there's an extra charge to enable zone red
 
 :::zone pivot="premium,business-critical"
 
-The Premium and Business Critical service tiers provide multiple replicas of your database. When you enable zone redundancy, the replicas are distributed between availability zones. This distribution means that there's no extra cost associated with enabling zone redundancy on your SQL Database when it's in the Premium or Business Critical service tier.
+The Premium and Business Critical service tiers provide multiple replicas of your database. When you enable zone redundancy, the replicas are distributed between availability zones. This distribution means that there's no extra cost associated with enabling zone redundancy on your SQL database when it's in the Premium or Business Critical service tier.
 
 :::zone-end
 
 :::zone pivot="hyperscale"
 
-If you enable multiple replicas of your Hyperscale service tier database, you can enable zone redundancy. When you enable zone redundancy, the replicas are distributed between availability zones. This distribution means that there's no extra cost associated with enabling zone redundancy on your SQL Database when it's in the Hyperscale service tier, assuming that you have multiple replicas.
+If you enable multiple replicas of your Hyperscale service tier database, you can enable zone redundancy. When you enable zone redundancy, the replicas are distributed between availability zones. This distribution means that there's no extra cost associated with enabling zone redundancy on your SQL database when it's in the Hyperscale service tier, assuming that you have multiple replicas.
 
 :::zone-end
 
@@ -238,7 +238,7 @@ For the Premium and Business Critical service tiers:
 
 - **Traffic routing between zones:** Replicas are distributed across availability zones, and one of those replicas is designated as the *primary* replica. Requests are routed to your database's primary replica.
 
-- **Data replication between zones:** The primary replica constantly pushes changes to the secondary replicas sequentially to ensure that data is persisted on a sufficient number of secondary replicas before committing each transaction. This process guarantees that, if the primary replica or a readable secondary replica become unavailable for any reason, a fully synchronized replica is always available for failover. When zone redundancy is enabled, those replicas are located in different availability zones. However, it might result in slightly higher write latency because of the network latency in traversing zones.
+- **Data replication between zones:** The primary replica constantly pushes changes to the secondary replicas sequentially to ensure that data is persisted on a sufficient number of secondary replicas before committing each transaction. This process guarantees that if the primary replica or a readable secondary replica become unavailable for any reason, a fully synchronized replica is always available for failover. When zone redundancy is enabled, those replicas are located in different availability zones. However, the process might result in slightly higher write latency because of the network latency in traversing zones.
 
 :::zone-end
 
@@ -248,7 +248,7 @@ For the Hyperscale service tier:
 
 - **Traffic routing between zones:** Database replicas are distributed across availability zones, and one of those replicas is designated as the *primary* replica. Requests are routed to your database's primary replica.
 
-- **Data replication between zones:** The primary database replica pushes changes through a zone-redundant log service, which replicates all changes synchronously across availability zones. Page servers are located in each availability zone and store the database's state. This process guarantees that, if the primary replica or a readable secondary replica become unavailable for any reason, a fully synchronized replica is always available for failover. However, it might result in slightly higher write latency compared to LRS.
+- **Data replication between zones:** The primary database replica pushes changes through a zone-redundant log service, which replicates all changes synchronously across availability zones. Page servers are located in each availability zone and store the database's state. This process guarantees that if the primary replica or a readable secondary replica becomes unavailable for any reason, a fully synchronized replica is always available for failover. However, the process might result in slightly higher write latency compared to LRS.
 
 :::zone-end
 
@@ -268,7 +268,7 @@ This section describes what to expect when databases are configured for zone red
 
 :::zone pivot="general-purpose"
 
-- **Traffic rerouting:** For the General Purpose service tier, SQL Database moves the database engine to another stateless compute node that's in a different availability zone and has sufficient free capacity. After failover completes, new connections are automatically redirected to the new primary compute node.
+- **Traffic rerouting:** For the General Purpose service tier, SQL Database moves the database engine to another stateless compute node that's in a different availability zone and has sufficient free capacity. After failover finishes, new connections are automatically redirected to the new primary compute node.
 
     For more information, see [General Purpose service tier](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#general-purpose-service-tier-zone-redundant-availability).
 
@@ -276,7 +276,7 @@ This section describes what to expect when databases are configured for zone red
 
 :::zone pivot="premium,business-critical"
 
-- **Traffic rerouting:** For the Premium and Business Critical service tiers, SQL Database selects a replica in another availability zone to become the primary replica. After a secondary replica becomes the new primary replica, another secondary replica is created to ensure that the cluster has a sufficient number of replicas to maintain quorum. After failover completes, new connections are automatically redirected to the new primary replica (or readable secondary replica based on the connection string).
+- **Traffic rerouting:** For the Premium and Business Critical service tiers, SQL Database selects a replica in another availability zone to become the primary replica. After a secondary replica becomes the new primary replica, another secondary replica is created to ensure that the cluster has a sufficient number of replicas to maintain a quorum. After failover finishes, new connections are automatically redirected to the new primary replica (or readable secondary replica based on the connection string).
 
     For more information, see [Premium and Business Critical service tiers](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#premium-and-business-critical-service-tier-zone-redundant-availability).
 
@@ -284,7 +284,7 @@ This section describes what to expect when databases are configured for zone red
 
 :::zone pivot="hyperscale"
 
-- **Traffic rerouting:** For the Hyperscale service tier, if the primary replica was lost because of the zone outage, SQL Database promotes one of the HA replicas in another zone to be the new primary.
+- **Traffic rerouting:** For the Hyperscale service tier, if the primary replica was lost because of the zone outage, SQL Database promotes one of the high-availability replicas in another zone to be the new primary.
 
     For more information, see [Hyperscale service tier](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#hyperscale-service-tier-zone-redundant-availability).
 
@@ -304,7 +304,7 @@ When the availability zone recovers, Azure Service Fabric automatically creates 
 
 ### Testing for zone failures
 
-SQL Database platform manages traffic routing, failover, and zone recovery procedures for zone-redundant databases. Because this feature is fully managed, you don't need to initiate or validate availability zone failure processes. However, you can validate your application's handling of failures and failovers by following the process described in [Test application fault resiliency](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#testing-application-fault-resiliency).
+The SQL Database platform manages traffic routing, failover, and zone recovery procedures for zone-redundant databases. Because this feature is fully managed, you don't need to initiate or validate availability zone failure processes. However, you can validate your application's handling of failures and failovers by following the process described in [Test application fault resiliency](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#testing-application-fault-resiliency).
 
 :::zone-end
 
@@ -334,7 +334,7 @@ This section provides an overview of two related but separate features that can 
 
 ### [Active geo-replication](#tab/csharp-2)
 
-[Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) can be enabled in all Azure regions and don't require you to use Azure region pairs.
+[Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) can be enabled in all Azure regions and doesn't require you to use Azure region pairs.
 
 > [!TIP]
 > SQL Database follows a safe deployment practice where Azure strives not to deploy updates to paired regions at the same time. If you configure active geo-replication with nonpaired regions, set different maintenance windows for the servers in each region. This approach helps reduce the chance that both regions experience connectivity problems caused by maintenance occurring at the same time.
@@ -352,9 +352,9 @@ Failover groups can be created across all Azure regions and don't require you to
 
 When you use active geo-replication, consider the following requirements:
 
-- Both the primary and geo-secondary must have the same service tier and should have the same compute tier, compute size, and backup storage redundancy.
+- Both the primary and the geo-secondary must have the same service tier and should have the same compute tier, compute size, and backup storage redundancy.
 
-- Both the primary and geo-secondary should have the same IP address firewall rules.
+- Both the primary and the geo-secondary should have the same IP address firewall rules.
 
 Active geo-replication is supported for databases across different Azure subscriptions.
 
@@ -370,9 +370,9 @@ When you use failover groups, consider the following requirements:
 
 - Active geo-replication is designed to provide failover of a single database. If you need to fail over multiple databases, consider using failover groups instead.
 
-- Because geo-replication is asynchronous, it's possible to experience data loss when a failover occurs. If you need to eliminate data loss from asynchronous replication during failovers, you can configure your application to block the calling thread until the last committed transaction is transmitted and hardened in the transaction log of the secondary database. This approach requires custom development and it reduces the performance of your application. For more information, see [Prevent loss of critical data](/azure/azure-sql/database/active-geo-replication-overview#prevent-loss-of-critical-data).
+- Because geo-replication is asynchronous, data loss is possible when a failover occurs. If you need to eliminate data loss from asynchronous replication during failovers, configure your application to block the calling thread until the last committed transaction is transmitted and hardened in the transaction log of the secondary database. This approach requires custom development and reduces the performance of your application. For more information, see [Prevent loss of critical data](/azure/azure-sql/database/active-geo-replication-overview#prevent-loss-of-critical-data).
 
-- Review [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) to understand how this capability works in more detail.
+- For more information, see [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview).
 
 ### [Failover groups](#tab/azure-cli-4)
 
@@ -390,7 +390,7 @@ When you use failover groups, consider the following requirements:
 
 - Because geo-replication is asynchronous, it's possible to have data loss when a failover occurs. If you need to eliminate data loss from asynchronous replication during failovers, you can configure your application to block the calling thread until the last committed transaction is transmitted and hardened in the transaction log of the secondary database. This approach requires custom development and it reduces the performance of your application. For more information, see [Prevent loss of critical data](/azure/azure-sql/database/active-geo-replication-overview#prevent-loss-of-critical-data).
 
-- Review [Failover groups](/azure/azure-sql/database/failover-group-sql-db) to understand other limitations and considerations.
+- For more information about limitations and considerations, see [Failover groups](/azure/azure-sql/database/failover-group-sql-db).
 
 ### Cost
 
@@ -408,7 +408,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 - **Enable active geo-replication:** For more information about how to enable active geo-replication in the Azure portal, see [Configure active geo-replication for SQL Database](/azure/azure-sql/database/active-geo-replication-configure-portal) or [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview).
 
-    After you enable active geo-replication, there's an initial seeding step that can take some time.
+    After you enable active geo-replication, an initial seeding step can take some time.
 
 - **Disable active geo-replication:** For more information about how to disable active geo-replication on a database, see [Remove secondary database](/azure/azure-sql/database/active-geo-replication-configure-portal).
 
@@ -418,9 +418,9 @@ If you don't use a secondary database for any read or write workloads, consider 
     When you create a failover group, you select the [failover policy](/azure/azure-sql/database/failover-group-sql-db#failover-policy), which specifies who is responsible for detecting an outage and performing a failover. You can configure customer-managed failover, which is recommended, or Microsoft-managed failover.
 
     > [!IMPORTANT]
-    > Microsoft triggers Microsoft-initiated failover. It's likely to occur after a significant delay and is done on a best-effort basis. Failover of databases might occur at a different time to any failover of other Azure services. For more information, see [Configure a failover group for SQL Database](/azure/azure-sql/database/failover-group-configure-sql-db).
+    > A Microsoft-initiated failover is likely to occur after a significant delay and is done on a best-effort basis. Failover of databases might occur at a different time to any failover of other Azure services. For more information, see [Configure a failover group for SQL Database](/azure/azure-sql/database/failover-group-configure-sql-db).
 
-    After you configure the failover group, there's an initial seeding step that can take some time.
+    After you configure the failover group, an initial seeding step can take some time.
 
 - **Disable failover groups:** You can remove an individual database from a failover group, remove an entire failover group, or move a database into a different failover group.
 
@@ -432,7 +432,7 @@ This section describes what to expect when a database is configured to use activ
 
 - **Traffic routing between regions:** Your application must be configured to send read-write requests to the primary database. You can optionally send read-only requests to a secondary database, which helps reduce the impact of read-only workloads on your primary database.
 
-- **Data replication between regions:** Replication between the primary and secondary databases occurs asynchronously, which means that there can be a delay between a change being applied to the primary database and when it's replicated to the secondary database.
+- **Data replication between regions:** Replication between the primary and secondary databases occurs asynchronously, which means that there can be a delay between the moment when a change is applied to the primary database and when it's replicated to the secondary database.
 
     When you perform a failover, you decide how to handle the possibility of data loss.
 
@@ -440,7 +440,7 @@ This section describes what to expect when a database is configured to use activ
 
 This section describes what to expect when a database is configured within a failover group and all regions are operational.
 
-- **Traffic routing between regions:** Failover groups provide two listener endpoints for you to connect your applications to, for read-write and read-only workloads. You should use the failover group listener endpoints to minimize downtime during failovers. During normal operations, the following routing behavior occurs:
+- **Traffic routing between regions:** For read-write and read-only workloads, failover groups provide two listener endpoints where you can connect your applications. Use the failover group listener endpoints to minimize downtime during failovers. During normal operations, the following routing behavior occurs:
 
     - The read-write listener endpoint routes all requests to the primary databases.
 
@@ -476,23 +476,23 @@ This section describes what to expect when a database is configured within a fai
 
     - *Customer-initiated failover:* You're responsible for detecting the outage of a database or region and triggering failover.
 
-    - *Microsoft-initiated failover:* Microsoft triggers failover for all failover groups in the affected region. We only expect to perform this type of failover in exceptional situations. You shouldn't rely on Microsoft-managed failover for most solutions. For more information, see [Failover policy - Microsoft managed](/azure/azure-sql/database/failover-group-sql-db#microsoft-managed).
+    - *Microsoft-initiated failover:* Microsoft triggers failover for all failover groups in the affected region. Microsoft expects to perform this type of failover only in exceptional situations. Don't rely on Microsoft-managed failover for most solutions. For more information, see [Failover policy - Microsoft managed](/azure/azure-sql/database/failover-group-sql-db#microsoft-managed).
 
 - **Active requests:** Any active requests during the failover are terminated and must be retried.
 
-- **Expected data loss** depends on the failover policy that you use.
+- **Expected data loss:** Data loss depends on the failover policy that you use.
 
     - *Customer-initiated failover:* If your primary database is available, you can optionally perform a failover with no data loss. The failover process synchronizes data between the primary and secondary databases before switching roles.
     
         If your primary database isn't available, you might need to perform a *forced failover*, which results in data loss. You can estimate the amount of data loss by monitoring the replication lag. For more information, see [Monitor SQL Database with metrics and alerts](/azure/azure-sql/database/monitoring-metrics-alerts#use-metrics-to-monitor-databases-and-elastic-pools).
 
-    - *Microsoft-initiated failover:* A Microsoft-managed failover is only triggered in exceptional situations. Microsoft-managed failovers are forced failovers, which means that some data loss is expected. You can't control the amount of data loss that you might experience.
+    - *Microsoft-initiated failover:* A Microsoft-managed failover is triggered only in exceptional situations. Microsoft-managed failovers are forced failovers, which means that some data loss is expected. You can't control the amount of data loss that you might experience.
 
-- **Expected downtime** depends on the failover policy that you use.
+- **Expected downtime:** Downtime depends on the failover policy that you use.
 
     - *Customer-initiated failover:* There's typically up to 60 seconds of downtime during a failover. Ensure that your application [handles transient faults](#transient-faults) so that it can recover from short periods of downtime.
 
-    - *Microsoft-initiated failover:* You can specify a *grace period* that specifies how long Microsoft should wait before initiating the failover. The minimum grace period is one hour. However, it's likely to be at least several hours before Microsoft initiates failover.
+    - *Microsoft-initiated failover:* You can specify a *grace period* that determines how long Microsoft should wait before initiating the failover. The minimum grace period is one hour. However, the Microsoft response time will likely be several hours at least.
 
 - **Traffic rerouting:** During failover, SQL Database updates the read-write and read-only listener endpoints to direct traffic to the new primary and secondary databases as required.
 
@@ -516,7 +516,7 @@ You can simulate a region outage by triggering a manual failover at any time. Yo
 
 ## Backups
 
-Take backups of your databases to protect against various risks, including loss of data. Backups can be restored to recover from accidental data loss, corruption, or other problems. Backups are separate to zone redundancy, active geo-replication, or failover groups, and they have different purposes. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
+Take backups of your databases to protect against various risks, including loss of data. Backups can be restored to recover from accidental data loss, corruption, or other problems. Backups differ from zone redundancy, active geo-replication, or failover groups, and they have different purposes. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 SQL Database provides automatic backups of your databases. For more information about the backup frequency, which can affect the amount of data loss if you need to restore from a backup, see [Automated backups in SQL Database](/azure/azure-sql/database/automated-backups-overview).
 
@@ -538,7 +538,7 @@ For more information, see [Maintenance window in SQL Database](/azure/azure-sql/
 
 ## Service-level agreement
 
-The service-level agreement (SLA) for SQL Database describes the expected availability of the service, and the expected recovery point and recovery time for active geo-replication. It also describes the conditions that must be met to achieve those expectations. To understand those conditions, it's important that you review the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
+The service-level agreement (SLA) for SQL Database describes the expected availability of the service and the expected recovery point and recovery time for active geo-replication. It also describes the conditions that must be met to achieve those expectations. To understand those conditions, it's important that you review the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 When you deploy a zone-redundant database or elastic pool and use a supported service tier, the uptime SLA is higher.
 
