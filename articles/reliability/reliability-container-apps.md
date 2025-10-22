@@ -6,7 +6,7 @@ author: craigshoemaker
 ms.topic: reliability-article
 ms.custom: subject-reliability, devx-track-azurepowershell, devx-track-azurecli
 ms.service: azure-container-apps
-ms.date: 10/14/2025
+ms.date: 10/23/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Container Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
@@ -54,7 +54,7 @@ Container Apps automatically handles many transient faults through its platform-
 
     For other dependencies, your application must handle transient faults. Use exponential backoff strategies and circuit breaker patterns when calling external services to prevent cascading failures during downstream service disruptions. Container Apps' built-in service discovery and load balancing automatically route traffic away from failing instances, but your application-level retry policies ensure graceful handling of transient issues before the platform-level health checks trigger container restarts.
 
-- **Design jobs to be resilient to transient faults**, including failures of the job itself or of its dependencies. Design your jobs to resume work if they're restarted, or design for idempotence so that they can be rerun safely.
+- **Design jobs to be resilient to transient faults**, including failures of the job execution or of its dependencies. Design your jobs to resume work if they're restarted, or design for idempotence so that they can be rerun safely.
 
 ## Availability zone support
 
@@ -86,7 +86,10 @@ However, to use availability zones with Azure Container Apps you must meet the f
 
 - **Deploy a Container Apps environment within a virtual network.** The virtual network must be in a region that supports availability zones. Ensure that the virtual network has an adequately sized subnet. Consumption-only environments need a subnet with a `/23` CIDR range or larger, while workload profiles environments require `/27` or larger.
 
-- **Configure your minimum replica count to at least two** to ensure distribution across multiple availability zones, but consider setting higher minimums based on your expected peak load.
+- **Configure your minimum replica count to at least two** to ensure distribution across multiple availability zones. Consider setting a higher minimum replica count if any of these conditions apply:
+    - Your expected peak load needs more than two replicas.
+    - You need to be resilient to multiple simultaneous zone outages.
+    - You want to minimise the time you wait for new replicas to be created in other zones during a zone outage.
 
 ### Configure availability zone support
 
@@ -136,15 +139,19 @@ This section describes what to expect when Azure Logic Apps resources are config
 
     You can also monitor the health of your apps through Container Apps metrics in Azure Monitor. Configure alerts on replica count drops and request failure rates to receive immediate notification when zone-related issues occur.
 
-- **Active requests**: In-flight requests to replicas in the failed zone may be dropped, or experience timeouts or connection errors.
+- **Active requests**: In-flight requests to replicas in the failed zone may be dropped, or experience timeouts or connection errors. Any job executions running in the affected zone are aborted and marked as failed.
 
 - **Expected data loss**: No data loss occurs at the Container Apps platform level since the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is terminated, and ephemeral storage should only be used for temporary data.
 
 - **Expected downtime**: Applications experience minimal to no downtime during zone failures. The actual impact depends on your application's health probe settings and the number of replicas in healthy zones. Ensure clients follow [transient fault handling guidance](#transient-faults) to minimize any impact.
 
+    Any job executions running in the affected zone are aborted and marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs copies of the same execution. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
+
 - **Traffic rerouting**: The ingress controller's health probes quickly detect unreachable replicas and remove them from the load balancing pool. Depending on your app's health probe configuration, this typically happens within about 30 seconds. Subsequent incoming traffic is distributed across the remaining healthy replicas. This happens transparently to clients, who continue using the same application URL.
 
     If you have enabled [session affinity](../container-apps/sticky-sessions.md), and a zone goes down, clients who were previously routed to replicas in that zone are routed to new replicas because the previous replicas are no longer available. Any state associated with the previous replicas is lost.
+
+    Any new job executions won't be scheduled in the faulty zone.
 
 - **Instance management:** New replica instances may be created in healthy zones if your autoscaling rules trigger based on increased load.
 
