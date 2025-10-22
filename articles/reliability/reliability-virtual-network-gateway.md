@@ -57,29 +57,17 @@ To ensure high reliability for your production virtual network gateways, we reco
 
 ## Reliability architecture overview
 
-<!-- TODO rewrite this whole section -->
-
 ::: zone pivot="expressroute"
 
-When you use ExpressRoute, you deploy and configure several components:
+ExpressRoute requires components to be deployed in the on-premises environment, peering locations, and within Azure:
 
 - *Circuits and connections*: An ExpressRoute *circuit* consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. By using two connections, you can achieve active-active connectivity. However, this configuration doesn't protect against site-level failures.
 
 - *Customer premises equipment* (CPE) includes your edge routers and client devices. You need to ensure that your CPE is designed to be resilient to problems, and that it can quickly recover when problems happen in other parts of your ExpressRoute infrastructure. For more information, see [Design and architect Azure ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
 
-- *Sites:* Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers, but because they represent a single physical location, there is a possibility of sites having problems.
+- *Sites:* Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers, but because they represent a single physical location, there is a possibility of sites having problems. To mitigate the risk of site outages, ExpressRoute offers different site resiliency options that vary in their level of protection. For more information, see [Design and architect Azure ExpressRoute for resiliency - Site resiliency for ExpressRoute](../expressroute/design-architecture-for-resiliency.md#site-resiliency-for-expressroute).
 
-  To mitigate the risk of site outages, ExpressRoute offers three site resiliency options that vary in their level of protection:
-    
-    - Standard resiliency provides a single circuit at a single site and represents the least resilient configuration.
-    - High resiliency, also known as ExpressRoute Metro, enables a single circuit across two sites within the same metropolitan area.
-    - Maximum resiliency offers two circuits across different peering locations and is recommended for business-critical workloads.
-
-  For more information, see [Design and architect Azure ExpressRoute for resiliency - Site resiliency for ExpressRoute](../expressroute/design-architecture-for-resiliency.md#site-resiliency-for-expressroute).
-
-- *Gateways:* In Azure, you create an *ExpressRoute virtual network gateway*. You deploy the gateway within your virtual network, so it's also sometimes called a *virtual network gateway*. Each gateway acts as the termination point for one or more ExpressRoute circuits.
-
-    An ExpressRoute gateway contains two or more *instances*, which represent virtual machines (VMs) that your gateway uses to process ExpressRoute traffic. You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
+- *Azure virtual network gateway:* In Azure, you create a gateway that acts as the termination point for one or more ExpressRoute circuits. You deploy a gateway within your virtual network, so it's sometimes called a *virtual network gateway*.
 
 This diagram shows two different ExpressRoute configurations, each with a single virtual network gateway, configured for different levels of resiliency across sites:
 
@@ -89,34 +77,53 @@ This diagram shows two different ExpressRoute configurations, each with a single
 
 ::: zone pivot="vpn"
 
-An *instance* refers to a virtual machine (VM)-level unit of the VPN gateway. Each instance represents the infrastructure that handles VPN traffic and performs security checks.
+A VPN requires components to be deployed in both the on-premises environment and within Azure:
 
-To achieve high availability, Azure VPN Gateway automatically provides two instances without requiring your intervention or configuration. The gateway automatically scales out when average throughput, CPU consumption, and connection usage reach predefined thresholds. The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances.
-
-To achieve protection against server and server rack failures, Azure VPN Gateway automatically distributes instances across multiple fault domains within a region.
-
-A VPN requires components to be deployed in both the on-premises environment and within Azure. The following diagram illustrates some key components in a VPN that connects from an on-premises environment to Azure:
-
-:::image type="content" source="media/reliability-virtual-network-gateway/vpn-reliability-architecture.png" alt-text="Diagram that shows Azure VPN Gateway, on-premises site-to-site, and point-to-site networks." border="false":::
-
-- **On-premises components**: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
+- *On-premises components*: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
    - Site-to-site configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
    - Point-to-site configurations require you to deploy a VPN client application in a remote desktop and associate the configuration to each client that connects to the VPN. You're responsible for deploying and configuring the client devices.
 
-- **Azure components**: In Azure, you create a *VPN gateway*, which is sometimes also called a *VNet gateway*. The public IP address requirements depend on your configuration:
+- *Azure virtual network gateway*: In Azure, you create a *VPN gateway*, also called a *virtual network gateway*, which acts as the termination point for VPN connections.
 
-   - **Active-standby mode**: Requires one public IP address.
-   - **Active-active mode (site-to-site only)**: Requires two public IP addresses.  
-   - **Active-active mode with both site-to-site and point-to-site**: Requires three static public IP addresses (deployed with Standard SKU).
-   
-All public IP addresses must be deployed as separate resources that meet specific requirements for zone redundancy.
+- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. Microsoft manages the resiliency of a local network gateway.
 
-A VPN gateway contains two *instances*, which represent virtual machines (VMs) that your gateway uses to process VPN traffic. To learn more about the redundancy that's built into VPN Gateway, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+The following diagram illustrates some key components in a VPN that connects from an on-premises environment to Azure:
 
-A site-to-site VPN configuration requires a *local network gateway*, which represents the remote VPN device. The local network gateway is a mandatory component to define a connection. It has two mutually exclusive configurations: static routing (doesn't require dynamic protocol in VPN Gateway and remote devices) and dynamic routing (requires BGP in Azure and remote devices).
+:::image type="content" source="media/reliability-virtual-network-gateway/vpn-reliability-architecture.png" alt-text="Diagram that shows Azure VPN Gateway, on-premises site-to-site, and point-to-site networks." border="false":::
 
 ::: zone-end
+
+### Virtual network gateway
+
+::: zone pivot="expressroute"
+
+An ExpressRoute gateway contains two or more *instances*, which represent virtual machines (VMs) that your gateway uses to process ExpressRoute traffic.
+
+<!-- TODO scaling -->
+
+::: zone-end
+
+::: zone pivot="vpn"
+
+A VPN virtual network gateway contains exactly two *instances*, which represent virtual machines (VMs) that your gateway uses to process VPN traffic.
+
+::: zone-end
+
+You don't see or manage the VMs directly.  The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region.
+
+::: zone pivot="expressroute"
+::: zone-end
+
+::: zone pivot="vpn"
+
+You can decide whether you want configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+
+You must also deploy public IP address resources for your gateway to use. There are specific requirements for the public IP addresses based on the gateway's configuration. <!-- TODO link -->
+
+::: zone-end
+
+You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Availability zone support](#availability-zone-support).
 
 ## Transient faults
 
@@ -239,7 +246,7 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone-end
 
-- **Verify the zone redundancy status of an existing virtual network gateway.** TODO
+- **Verify the zone redundancy status of an existing virtual network gateway.** <!-- PG: Please confirm whether a customer can confirm whether an existing gateway is ZR, zonal, or nonzonal -->
 
 ### Normal operations
 
