@@ -2,7 +2,7 @@
 title: Reliability in Azure Stream Analytics
 description: Learn how to improve reliability in Azure Stream Analytics by using availability zones, geo-redundancy, and operational best practices for streaming data processing.
 author: anaharris-ms
-ms.author: anaharris
+ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
@@ -37,26 +37,26 @@ To ensure high reliability in production environments with Stream Analytics, we 
 
 ### Logical architecture
 
-A Stream Analytics *streaming job*, often simply called a *job*, is the fundamental unit in Stream Analytics that allows you to define and run your stream processing logic. A job consists of the following major components:
+A *streaming job*, or simply *job*, is the fundamental unit in Stream Analytics that allows you to define and run your stream processing logic. A job consists of the following major components:
 
 - *Inputs* that read streaming data from data sources, such as Azure Event Hubs, Azure IoT Hub, or Azure Storage.
 - A *query* that processes and transforms the data.
 - *Outputs* that continuously write results to various destinations, such as Azure SQL Database, Azure Data Lake Storage, Azure Cosmos DB, Power BI, and more.
 
-For more information, see [Azure Stream Analytics resource model](../stream-analytics/stream-analytics-resource-model.md).
+For more information on Stream Analytics jobs and the resource model, see [Azure Stream Analytics resource model](../stream-analytics/stream-analytics-resource-model.md).
 
 ### Physical architecture
 
-Your jobs run on *worker nodes*, which are virtual machines (VMs) that run within a *cluster*. When you use the Standard or StandardV2 SKUs, your jobs run on shared clusters. Stream Analytics also provides a [Dedicated SKU](../stream-analytics/cluster-overview.md) where you can provision an entire Stream Analytics cluster that is assigned solely to your jobs.
+- **Worker nodes**. Stream Analytics jobs on virtual machines (VMs) called *worker nodes* that run within a *cluster*. When you use the Standard or StandardV2 SKUs, your jobs run on shared clusters. When you use the [Dedicated SKU](../stream-analytics/cluster-overview.md) your jobs run on their own dedicated cluster.
 
-You don't see or manage the VMs directly. The platform automatically manages worker node creation, health monitoring, and the replacement of unhealthy worker nodes. It also handles job placement across worker nodes.
+   Because the platform automatically manages worker node creation, job placement across worker nodes, health monitoring, and the replacement of unhealthy worker nodes, you don't need to see or manage the VMs directly. 
 
-You allocate *streaming units* to jobs, which represent the computing resources that are allocated to execute a Stream Analytics job. The streaming units you deploy determine how many worker nodes are used for the job. For more information, see [Understand and adjust Stream Analytics streaming units](../stream-analytics/stream-analytics-streaming-unit-consumption.md).
+- **Streaming units**. While the platform manages worker nodes and job distribution across worker nodes, you're responsible for allocating *streaming units (SUs)* to jobs. SUs represent the compute resources that are allocated to execute a job. The higher the number of SUs, the more compute resources are allocated for the job. For more information, see [Understand and adjust Stream Analytics streaming units](../stream-analytics/stream-analytics-streaming-unit-consumption.md).
 
-Stream Analytics maintains job state through regular *checkpointing* of state, enabling quick recovery with minimal data reprocessing in case of failures. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint, reprocessing any events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job, though achieving end-to-end exactly-once delivery depends on your output destination's capabilities. For more information, see [Checkpoint and replay concepts in Azure Stream Analytics jobs](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md).
+Stream Analytics maintains job state through regular *checkpointing* of state, enabling quick recovery with minimal data reprocessing in case of failures. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint and reprocesses events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job. However, achieving end-to-end exactly-once delivery depends on your output destination's capabilities. For more information, see [Checkpoint and replay concepts in Azure Stream Analytics jobs](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md).
 
 > [!NOTE]
-> [Azure Stream Analytics on IoT Edge](../stream-analytics/stream-analytics-edge.md) enables you to run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for configuring it to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
+> With [Azure Stream Analytics on IoT Edge](../stream-analytics/stream-analytics-edge.md) you can run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for configuring it to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
 
 ## Transient faults
 
@@ -156,9 +156,9 @@ To achieve multi-region resilience for your streaming workloads, consider deploy
 
 ## Backups
 
-Stream Analytics doesn't have a built-in backup and restore feature. Running jobs don't contain state that needs to be backed up.
+Because running jobs don't contain state, Stream Analytics doesn't have a built-in backup and restore feature.
 
-However if you want to move, copy or back up the definition and configuration of your jobs, the Stream Analytics extension for Visual Studio Code allows you to export an existing job in the Azure cloud to your local computer. All the configuration of your Stream Analytics job can be saved locally, and you can deploy it to the same or another Azure region. To learn how to copy, back up, and move your Stream Analytics jobs, see [Copy, back up and move your Azure Stream Analytics jobs](../stream-analytics/copy-job.md).
+However if you want to move, copy or back up the definition and configuration of your jobs, you can use the Stream Analytics extension for Visual Studio Code to export an existing job in the Azure cloud to your local computer. Once you save the entire configuration of your Stream Analytics jobs locally, you can then deploy it to the same or another Azure region. To learn how to copy, back up, and move your Stream Analytics jobs, see [Copy, back up and move your Azure Stream Analytics jobs](../stream-analytics/copy-job.md).
 
 ## Reliability during service maintenance
 
