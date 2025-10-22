@@ -93,9 +93,9 @@ For more information on failover and failback, see [What is failover and failbac
 
 ### Shared responsibility
 
-Resiliency defines a workload's ability to automatically self-correct and recover from various forms of failures or outages. Azure services are built to be resilient to many common failures, and each product provides a service level agreement (SLA) that describes the uptime you can expect. However, the overall resiliency of your workload depends on how you have designed your solution to meet your business needs. Some business continuity plans may consider certain failure risks to be unimportant, while others may consider them critical.
+Azure services are built to be resilient to many common failures, and each product provides a service level agreement (SLA) that describes the uptime you can expect. However, the overall reliability of your workload depends on how you have designed your solution to meet your business needs. Some business continuity plans may consider certain failure risks to be unimportant, while others may consider them critical.
 
-In the Azure public cloud platform, resiliency is a shared responsibility between Microsoft and you. Because there are different levels of resiliency in each workload that you design and deploy, it's important that you understand who has primary responsibility for each one of those levels from a resiliency perspective. To better understand how shared responsibility works, especially when confronting an outage or disaster, see [Shared responsibility for resiliency](concept-shared-responsibility.md).
+In the Azure public cloud platform, reliability is a shared responsibility between Microsoft and you. Because there are different levels of reliability in each workload that you design and deploy, it's important that you understand who has primary responsibility for each one of those levels from a reliability perspective. To better understand how shared responsibility works, especially when confronting an outage or disaster, see [Shared responsibility for reliability](concept-shared-responsibility.md).
 
 ## Related content
 
