@@ -1,12 +1,12 @@
 ---
- title: Azure Bastion availability support regions
- description: Azure regions that support availability zones for Azure Bastion.
- author: anaharris-ms
- ms.service: azure
- ms.topic: include
- ms.date: 10/21/2025
- ms.author: isamorris
- ms.custom: include file
+title: Azure Bastion availability support regions
+description: Azure regions that support availability zones for Azure Bastion.
+author: isamorris99
+ms.service: azure
+ms.topic: include
+ms.date: 10/21/2025
+ms.author: isamorris
+ms.custom: include file
 ---
 
 | Americas | Europe | Middle East | Africa | Asia Pacific |
