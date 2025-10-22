@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
-ms.date: 10/15/2025
+ms.date: 10/22/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Stream Analytics works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -74,6 +74,9 @@ It's a good practice to configure [output error policies](../stream-analytics/st
 
 Stream Analytics is automatically zone-redundant in regions that support availability zones. When you create a Stream Analytics job in a zone-enabled region, the service distributes your job's compute resources across multiple availability zones. This zone-redundant deployment model ensures that your streaming jobs continue to process data even if an entire availability zone becomes unavailable.
 
+> [!WARNING]
+> **Note to product group:** Please advise how many zones you guarantee to use.
+
 ![Diagram that shows a zone-redundant Stream Analytics job.](./media/reliability-stream-analytics/availability-zones.png)
 
 The zone-redundant architecture applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near-zero downtime during zone failures.
@@ -98,7 +101,10 @@ Zone redundancy on Stream Analytics doesn't incur additional charges. You pay th
 
 - **Enable zone redundancy.** For the Standard and StandardV2 SKUs, all jobs in regions with availability zones are automatically zone-redundant. You don't need to enable zone redundancy.
 
-    For dedicated clusters, any clusters created after **PG TO CONFIRM DATE** are zone-redundant in supported regions. Dedicated clusters created before this date need to be recreated to achieve zone redundancy. <!-- PG: please confirm the date -->
+    For dedicated clusters, any clusters created after **PG TO CONFIRM DATE** are zone-redundant in supported regions. Dedicated clusters created before this date need to be recreated to achieve zone redundancy.
+
+    > [!WARNING]
+    > **Note to product group:** Please advise how customers can tell if their jobs/clusters are zone-redundant, such as a cutoff creation date.
 
 - **Disable zone redundancy.** Zone redundancy can't be disabled.
 
