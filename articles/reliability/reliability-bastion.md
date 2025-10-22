@@ -60,11 +60,13 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
+### Regions supported
+
+Zonal and zone-redundant bastion hosts can be deployed into the following regions:
+
+[!INCLUDE [Azure Bastion availability zone region support](../bastion/includes/availability-zone-regions-include.md)]
+
 ### Requirements
-
-- **Regions supported:** Zonal and zone-redundant bastion hosts can be deployed into the following regions:
-
-    [!INCLUDE [Azure Bastion availability zone region support](../bastion/includes/availability-zone-regions-include.md)]
 
 - **SKU:** To configure bastion hosts to be zonal or zone redundant, you must deploy with the Basic, Standard, or Premium SKUs.
 
@@ -76,7 +78,7 @@ There's no additional cost to use availability zone support for Azure Bastion. C
 
 ### Configure availability zone support
 
-- **Deploy a new bastion host with availability zone support:** When you deploy a new bastion host in a [region that supports availability zones](#requirements), you select the specific zones that you want to deploy to.
+- **Deploy a new bastion host with availability zone support:** When you deploy a new bastion host in a [region that supports availability zones](#regions-supported), you select the specific zones that you want to deploy to.
 
     For zone redundancy, you must select multiple zones.
 
