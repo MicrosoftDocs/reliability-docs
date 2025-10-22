@@ -364,7 +364,7 @@ Active geo-replication is supported for databases across different Azure subscri
 
 ### [Failover groups](#tab/failover-groups)
 
-When you use failover groups, it's important to be aware of specific requirements. Secondary databases in a failover group should have the same service tier, compute tier, compute size, IP address firewall rules, and backup storage redundancy as the primary database.
+Secondary databases in a failover group should have the same service tier, compute tier, compute size, IP address firewall rules, and backup storage redundancy as the primary database.
 
 ---
 
@@ -427,7 +427,7 @@ If you don't use a secondary database for any read or write workloads, consider 
     > [!IMPORTANT]
     > A Microsoft-initiated failover is likely to occur after a significant delay and is done on a best-effort basis. Failover of databases might occur at a different time to any failover of other Azure services. For more information, see [Configure a failover group for SQL Database](/azure/azure-sql/database/failover-group-configure-sql-db).
 
-    After you configure the failover group, an initial seeding step can take some time.
+    After you configure the failover group, the initial seeding step can take some time.
 
 - **Disable failover groups:** You can remove an individual database from a failover group, remove an entire failover group, or move a database into a different failover group.
 
@@ -537,7 +537,7 @@ SQL Database provides automatic backups of your databases. For more information 
 
 ### Backup storage
 
-You can choose to store your automated backups in LRS or ZRS. If you use a paired region, you can choose to replicate your automated backups to the paired region by using geo-redundant storage. This capability enables geo-restore of your backups into the paired region. For more information, see [Automated backups in SQL Database](/azure/azure-sql/database/automated-backups-overview).
+You can choose to store your automated backups in LRS or ZRS. If you use a region that's paired, you can choose to replicate your automated backups to the paired region by using geo-redundant storage. This capability enables geo-restore of your backups into the paired region. For more information, see [Automated backups in SQL Database](/azure/azure-sql/database/automated-backups-overview).
 
 If you use a nonpaired region, or if you need to replicate backups to a region other than the paired region, consider exporting the database and storing the exported file in a storage account that uses [blob object replication](/azure/storage/blobs/object-replication-overview) to replicate to a storage account in another region. For more information, see [Export a database](/azure/azure-sql/database/automated-backups-overview#export-a-database).
 
