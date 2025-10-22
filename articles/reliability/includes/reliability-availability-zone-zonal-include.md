@@ -1,12 +1,12 @@
 ---
- title: include file
- description: include file
- author: anaharris-ms
- ms.service: azure
- ms.topic: include
- ms.date: 10/21/2025
- ms.author: anaharris
- ms.custom: include file
+title: Availability zone - note about zonal resources
+description: Include file that describes when to use zonal resources, and important information about their resiliency.
+author: anaharris-ms
+ms.service: azure
+ms.topic: include
+ms.date: 10/21/2025
+ms.author: anaharris
+ms.custom: include file
 ---
 
 > [!IMPORTANT]
