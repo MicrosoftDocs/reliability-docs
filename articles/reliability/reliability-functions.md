@@ -363,7 +363,7 @@ There are currently two ways to deploy a zone-redundant Premium plan and functio
 1. When creating the Premium plan, add the `--zone-redundant true` parameter:
 
     ```azurecli
-    az functionapp create --resource-group <RESOURCE_GROUP> --name <APP_NAME> --storage-account <STORAGE_NAME> --SKU EP1 --zone-redundant true 
+    az functionapp plan create --resource-group <RESOURCE_GROUP> --name <APP_NAME> --storage-account <STORAGE_NAME> --SKU EP1 --zone-redundant true 
     ```
 
 #### [Bicep template](#tab/bicep)
@@ -378,7 +378,7 @@ The only properties to be aware of while creating a zone-redundant hosting plan 
 Following is a Bicep template snippet for a zone-redundant, Premium plan. It shows the `zoneRedundant` field and the `capacity` specification.
 
 ```bicep
-resource flexFuncPlan 'Microsoft.Web/serverfarms@2021-01-15' = {
+resource EPFuncPlan 'Microsoft.Web/serverfarms@2021-01-15' = {
     name: '<YOUR_PLAN_NAME>'
     location: '<YOUR_REGION_NAME>'
     sku: {
