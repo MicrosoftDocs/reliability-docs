@@ -82,11 +82,14 @@ A VPN requires components to be deployed in both the on-premises environment and
 - *On-premises components*: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
    - Site-to-site configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
-   - Point-to-site configurations require you to deploy a VPN client application in a remote desktop and associate the configuration to each client that connects to the VPN. You're responsible for deploying and configuring the client devices.
+   - Point-to-site configurations require you to deploy a VPN client application in a remote device like a laptop or desktop, and import the user profile into the VPN client. You're responsible for deploying and configuring the client devices.
 
 - *Azure virtual network gateway*: In Azure, you create a *VPN gateway*, also called a *virtual network gateway*, which acts as the termination point for VPN connections.
 
-- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. Microsoft manages the resiliency of a local network gateway.
+- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. The local network gateway stores the following information:
+    - The public IP address of the on-premises VPN device to establish the IKE phase 1 and phase 2 connections
+    - The on-premises IP networks, for static routing
+    - The BGP IP address of the remote peer, for dynamic routing
 
 The following diagram illustrates some key components in a VPN that connects from an on-premises environment to Azure:
 
@@ -108,7 +111,7 @@ A VPN virtual network gateway contains exactly two *instances*, which represent 
 
 ::: zone-end
 
-You don't see or manage the VMs directly.  The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region.
+You don't see or manage the VMs directly.  The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region. If a server rack fails, the gateway is automatically migrated to another cluster.
 
 ::: zone pivot="expressroute"
 
@@ -162,7 +165,9 @@ ExpressRoute reduces the effect of transient faults by using redundant connectio
 
 ::: zone pivot="vpn"
 
-Data traffic, such as TCP flows, transits through IPsec tunnels. Transient faults can impact IPsec tunnels or TCP data flows. In the event of a disconnection, IKE (Internet Key Exchange) renegotiates the Security Associations (SAs) for both Phase 1 and Phase 2 to re-establish the IPsec tunnel.
+If the IP routing on the on-premises device is configured correctly, data traffic like TCP flows automatically transits through active IPsec tunnels in the event of a disconnection.
+
+Transient faults can impact IPsec tunnels and/or TCP data flows. In the event of a disconnection, IKE (Internet Key Exchange) renegotiates the Security Associations (SAs) for both Phase 1 and Phase 2 to re-establish the IPsec tunnel.
 
 ::: zone-end
 
@@ -170,9 +175,9 @@ Data traffic, such as TCP flows, transits through IPsec tunnels. Transient fault
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances distributed across three availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
+Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
 
-All newly created gateways are zone-redundant, and zone redundancy is recommended for all production workloads.
+When you use a supported SKU, any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
 
 The following diagram shows a zone-redundant virtual network gateway with two instances that are distributed across availability zones:
 
@@ -182,6 +187,14 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 > [!NOTE]
 > There's no availability zone configuration for circuits or connections. These resources are located in network edge facilities, which aren't designed to use availability zones.
+
+::: zone-end
+
+::: zone pivot="vpn"
+
+> [!NOTE]
+> There's no availability zone configuration for local network gateways, because they're automatically zone-resilient.
+<!-- PG: Please confirm the above statement. -->
 
 ::: zone-end
 
@@ -205,7 +218,7 @@ The following table shows which SKUs support zone redundancy:
 
 All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
 
-You must also use standard public IP addresses and configure them to be zone-redundant.
+You must also use standard SKU public IP addresses and configure them to be zone-redundant.
 
 ::: zone-end
 
@@ -263,17 +276,19 @@ The following section describes what to expect when your virtual network gateway
 
     However, if you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see [About ExpressRoute FastPath](../expressroute/about-fastpath.md).
 
+- **Data replication between zones:** No data replication occurs between zones because the virtual network gateway doesn't store persistent customer data.
+
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **Traffic routing between zones:** VPN connections are routed to a primary VPN gateway instance in one zone, which is selected by Azure. The traffic routing behavior depends on whether you have configured active-standby or active-active mode, and doesn't depend on availability zone configuration.
+- **Traffic routing between zones:** Zone redundancy doesn't affect how traffic is routed. Traffic is routed between the instances of your gateway based on the configuration of your clients. If your gateway uses active-active configuration and uses two public IP addresses, both gateway instances might receive traffic, and for active-standby configuration, traffic is routed to a single primary instance selected by Azure.
+
+- **Data replication between zones:** Azure VPN Gateway doesn't need to synchronize connection state across availability zones. In active-active mode, the instance that processes the VPN connection is responsible for managing and the connection's state.
 
 ::: zone-end
 
-- **Data replication between zones:** No data replication occurs between zones because the virtual network gateway doesn't store persistent customer data.
-
-- **Instance management:** The platform automatically manages instance placement across the zones that your gateway uses. Health monitoring ensures that only healthy instances receive traffic.
+- **Instance management:** The platform automatically selects the zones for your gateway instances, and manages instance placement across the zones. Health monitoring ensures that only healthy instances receive traffic.
 
 ### Zone-down experience
 
