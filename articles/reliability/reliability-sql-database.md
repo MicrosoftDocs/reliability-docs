@@ -18,7 +18,7 @@ This article describes reliability support in Azure SQL Database, covering intra
 
 ## Production deployment recommendations
 
-To learn about how to deploy Azure SQL Database to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure SQL Database in the Azure Well-Architected Framework.](/azure/well-architected/service-guides/azure-sql-database).
+To learn about how to deploy Azure SQL Database to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure SQL Database in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-sql-database).
 
 ## Reliability architecture overview
 
