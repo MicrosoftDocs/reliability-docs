@@ -18,17 +18,7 @@ This article describes reliability support in Azure SQL Database, covering intra
 
 ## Production deployment recommendations
 
-For most production deployments of SQL Database, we recommend that you consider the following minimum configuration:
-
-- Follow the guidance in [High availability and disaster recovery checklist - SQL Database](/azure/azure-sql/database/high-availability-disaster-recovery-checklist).
-
-- Enable zone redundancy. The following service tiers support zone redundancy: 
-
-   - In the [DTU-based purchasing model](/azure/azure-sql/database/service-tiers-dtu), the Premium service tier supports zone redundancy.
-
-   - In the [vCore-based purchasing model](/azure/azure-sql/database/service-tiers-sql-database-vcore), the General Purpose, Business Critical, and Hyperscale service tiers support zone redundancy.
-
-- Configure [automated backups](/azure/azure-sql/database/automated-backups-overview) and use a minimum of zone-redundant storage (ZRS). Test your backups and your restore process regularly.
+To learn about how to deploy Azure SQL Database to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure SQL Database in the Azure Well-Architected Framework.](/azure/well-architected/service-guides/azure-sql-database).
 
 ## Reliability architecture overview
 
