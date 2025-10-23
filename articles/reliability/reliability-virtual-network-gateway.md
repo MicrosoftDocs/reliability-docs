@@ -71,7 +71,7 @@ ExpressRoute requires components to be deployed in the on-premises environment, 
 
 This diagram shows two different ExpressRoute configurations, each with a single virtual network gateway, configured for different levels of resiliency across sites:
 
-:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels.":::
+:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels." border="false":::
 
 ::: zone-end
 
@@ -100,8 +100,6 @@ The following diagram illustrates some key components in a VPN that connects fro
 
 An ExpressRoute gateway contains two or more *instances*, which represent virtual machines (VMs) that your gateway uses to process ExpressRoute traffic.
 
-<!-- TODO scaling -->
-
 ::: zone-end
 
 ::: zone pivot="vpn"
@@ -113,13 +111,18 @@ A VPN virtual network gateway contains exactly two *instances*, which represent 
 You don't see or manage the VMs directly.  The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region.
 
 ::: zone pivot="expressroute"
+
+You configure the gateway SKU. Each SKU supports a different level of throughput, and different numbers of circuits. For more information, see [About ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
+
+A gateway runs in *active-active* mode default, which supports high availability of your connection. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-You can decide whether you want configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+You configure the gateway SKU. Each SKU supports a different level of throughput, and different numbers of VPN connections. For more information, see [About gateway SKUs](../vpn-gateway/about-gateway-skus.md).
 
-You must also deploy public IP address resources for your gateway to use. There are specific requirements for the public IP addresses based on the gateway's configuration. <!-- TODO link -->
+Depending on your high availability requirements, you can configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
