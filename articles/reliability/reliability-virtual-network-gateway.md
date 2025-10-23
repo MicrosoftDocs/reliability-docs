@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-vpn-gateway
-ms.date: 10/16/2025
+ms.date: 10/23/2025
 zone_pivot_groups: virtual-network-gateway-types
 ai-usage: ai-assisted
 ---
@@ -50,7 +50,7 @@ To ensure high reliability for your production virtual network gateways, we reco
 > [!div class="checklist"]
 > - **Enable zone redundancy** if your Azure VPN Gateway resources are in a supported region. Deploy VPN Gateway using supported SKUs (VpnGw1AZ or higher) to ensure access to zone redundancy features.
 > - **Use Standard SKU public IP addresses.**
-> - **Configure active-active mode** for higher availability when supported by your remote VPN devices.
+> - **Configure active-active mode** for higher availability, when supported by your remote VPN devices.
 > - **Implement proper monitoring** using [Azure Monitor VPN Gateway metrics](../vpn-gateway/monitor-vpn-gateway.md).
 
 ::: zone-end
@@ -114,7 +114,9 @@ You don't see or manage the VMs directly.  The platform automatically manages in
 
 You configure the gateway SKU. Each SKU supports a different level of throughput, and different numbers of circuits. For more information, see [About ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
 
-A gateway runs in *active-active* mode default, which supports high availability of your connection. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+A gateway runs in *active-active* mode by default, which supports high availability of your connection. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+
+Ordinarily, traffic is routed through your virtual network gateway. However, if you use [FastPath](../expressroute/about-fastpath.md), traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency.
 
 ::: zone-end
 
@@ -122,7 +124,7 @@ A gateway runs in *active-active* mode default, which supports high availability
 
 You configure the gateway SKU. Each SKU supports a different level of throughput, and different numbers of VPN connections. For more information, see [About gateway SKUs](../vpn-gateway/about-gateway-skus.md).
 
-Depending on your high availability requirements, you can configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+Depending on your high availability requirements, you can configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. Active-active isn't always possible due to the asymmetric nature of connection flows. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
@@ -201,7 +203,7 @@ The following table shows which SKUs support zone redundancy:
 
 ::: zone pivot="vpn"
 
-All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments.
+All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
 
 You must also use standard public IP addresses and configure them to be zone-redundant.
 
@@ -271,7 +273,7 @@ The following section describes what to expect when your virtual network gateway
 
 - **Data replication between zones:** No data replication occurs between zones because the virtual network gateway doesn't store persistent customer data.
 
-- **Instance management:** The platform automatically manages instance placement across the zones that your gateway uses. It replaces failed instances and maintains the specified capacity. Health monitoring ensures that only healthy instances receive traffic.
+- **Instance management:** The platform automatically manages instance placement across the zones that your gateway uses. Health monitoring ensures that only healthy instances receive traffic.
 
 ### Zone-down experience
 
@@ -299,13 +301,13 @@ The following section describes what to expect when your virtual network gateway
 
 - **Expected data loss:** Zone failures aren't expected to cause data loss because virtual network gateways don't store persistent customer data.
 
-- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
+- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults). <!-- PG: Please confirm -->
 
 ::: zone pivot="expressroute"
 
 - **Traffic rerouting:** The platform automatically distributes traffic to instances in healthy zones.
 
-    FastPath-enabled circuits maintain optimized routing throughout the failover process, ensuring minimal effect on application performance. <!-- PG: If you use FastPath, does a gateway outage affect you at all? If not, we should clarify throughout the section. -->
+    FastPath-enabled circuits maintain optimized routing throughout the failover process, ensuring minimal effect on application performance.
 
 ::: zone-end
 
