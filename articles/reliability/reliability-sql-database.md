@@ -140,7 +140,7 @@ To view information about availability zone support for other service tiers, be 
 
 ### Considerations
 
-- **Latency:** Zone-redundant databases have replicas in geographically separate datacenters. The added network latency can increase transaction commit time and potentially affect the performance of certain online transaction processing (OLTP) workloads. Most applications aren't sensitive to this extra latency.
+- **Latency:** Zone-redundant databases have replicas in separate datacenters. The added network latency can increase transaction commit time and potentially affect the performance of certain online transaction processing (OLTP) workloads. Most applications aren't sensitive to this extra latency.
 
 - **`master` database:** When a database with a zone-redundant configuration is created on a logical server, the `master` database associated with the server is also automatically made zone redundant. For more information about how to check whether your `master` database is zone redundant, see [Database zone-redundant availability](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy#zone-redundant-availability).
 
