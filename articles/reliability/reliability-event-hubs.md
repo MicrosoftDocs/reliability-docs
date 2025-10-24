@@ -7,82 +7,84 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
 ms.date: 10/17/2025
+#Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Event Hubs works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Event Hubs works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Event Hubs
 
-Azure Event Hubs is a native data-streaming service in the cloud that can stream millions of events per second, with low latency, from any source to any destination. You can use Event Hubs to ingest and store streaming data, and you can work with client applications that are designed for Apache Kafka or that use the Azure Event Hubs client SDKs.
-
-This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region support options](#multi-region-support).
+This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md), covering intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region deployments](#multi-region-support).
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
+Event Hubs is a native data-streaming service in the cloud that can stream millions of events per second with low latency, from any source to any destination. You can use Event Hubs to ingest and store streaming data, and you can integrate with client applications built for Apache Kafka or applications that use the Event Hubs client SDKs.
+
 ## Production deployment recommendations
 
-To learn how to deploy Event Hubs to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/event-hubs).
+To learn how to deploy Event Hubs to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Event Hubs in the Azure Well-Architected Framework](/azure/well-architected/service-guides/event-hubs).
 
 ## Reliability architecture overview
 
-This section describes some of the important aspects of how Event Hubs works that are most relevant from a reliability perspective. The section introduces the logical architecture, which includes the resources and features that you deploy and use. It also discusses the physical architecture, which provides details on how the service works under the covers.
+This section describes important aspects of how Event Hubs works from a reliability perspective. The section introduces the logical architecture, which includes the resources and features that you deploy and use. It also explains the physical architecture, which provides details about how the service manages operations internally.
 
 ### Logical architecture
 
-An Event Hubs [**namespace**](../event-hubs/event-hubs-features.md#namespace) is the management container for one or more event hubs. Management tasks such as allocating streaming capacity, configuring network security, and enabling geo-resilency and geo-disaster recovery are handled at the namespace level.
+An Event Hubs [**namespace**](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. Management tasks such as allocating streaming capacity, configuring network security, and enabling geo-resilency and geo-disaster recovery are handled at the namespace level.
 
-Within a namespace, you can organize events into an **event hub**, or **topic** in the Apache® Kafka ecosystem. The event hub or topic is an append-only distributed log of your events.
+Within a namespace, you can organize events into an **event hub**. In the Apache® Kafka ecosystem, this type of grouping is called a **topic**. The event hub or topic is an append-only distributed log of your events.
 
-Each event hub contains one or more [**partitions**](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning is an important aspect of your application's reliability design. When you design your application, you need to make a tradeoff between maximizing availability and consistency. For most applications, to maximize uptime, you should avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
+Each event hub contains one or more [**partitions**](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning is an important aspect of your application's reliability design. When you design your application, you need to make a trade-off between maximizing availability and consistency. To maximize uptime for most applications, avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
 
-Consumers that read from the event hub can read their events sequentially by maintaining their own **checkpoint**, which is the identifier of the last event they received.
+Consumers that read from the event hub can read their events sequentially by maintaining their own **checkpoint**, which is the identifier of the last event that they receive.
 
-To learn more about partitions and other fundamental concepts in Event Hubs, see [Features and terminology in Azure Event Hubs](../event-hubs/event-hubs-features.md).
+For more information about partitions and other fundamental concepts in Event Hubs, see [Features and terminology in Event Hubs](../event-hubs/event-hubs-features.md).
 
 ### Physical architecture
 
-In the physical architecture, an Event Hubs namespace runs within a **cluster**. A cluster provides the underlying compute and storage resources. Most namespaces run on clusters that are shared with other Azure customers. When you use the Premium tier, the namespace is allocated dedicated resources within a shared cluster. When you use the Dedicated tier, you have a cluster dedicated to your namespaces. To learn more about dedicated clusters, see [Azure Event Hubs Dedicated tier overview](../event-hubs/event-hubs-dedicated-overview.md). Whichever tier and cluster type you use, Microsoft manages the clusters and their underlying virtual machines and storage.
+In the physical architecture, an Event Hubs namespace runs within a **cluster**. A cluster provides the underlying compute and storage resources. Most namespaces run on clusters that are shared with other Azure customers. When you use the Premium tier, the namespace is allocated dedicated resources within a shared cluster. When you use the Dedicated tier, a cluster is dedicated to your namespaces. For more information about dedicated clusters, see [Event Hubs Dedicated tier overview](../event-hubs/event-hubs-dedicated-overview.md). Regardless of tier and cluster type, Microsoft manages the clusters and their underlying virtual machines and storage.
 
 To achieve redundancy, each cluster has multiple replicas that process read and write requests. For high availability and performance optimization, all data is stored on three storage replicas. You can scale your namespace's compute resources by deploying throughput units, processing units, or capacity units, depending on the tier. For more information, see [Scaling with Event Hubs](../event-hubs/event-hubs-scalability.md).
 
-Clusters span multiple physical machines and racks, which reduces the risk of catastrophic failures affecting your namespace. In regions with availability zones, clusters are spread across separate physical datacenters. The [Availability zone support](#availability-zone-support) section of this document describes this support in more detail.
+Clusters span multiple physical machines and racks, which reduces the risk of catastrophic failures affecting your namespace. In regions that have availability zones, clusters are spread across separate physical datacenters. For more information, see [Availability zone support](#availability-zone-support).
 
 ## Transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-Azure Event Hubs service implements transparent failure detection and failover mechanisms so that the service continues to operate within the assured service-levels and typically without noticeable interruptions when failures occur.
+Event Hubs implements transparent failure detection and failover mechanisms so that the service continues to operate within the assured service levels, typically without noticeable interruptions when failures occur.
 
-When you're designing client applications to work with Event Hubs, follow this guidance:
+When you design client applications to work with Event Hubs, follow this guidance:
 
 - **Use the built-in retry policies.** The Event Hubs and Apache Kafka SDKs automatically retry operations for retryable errors like network timeouts, throttling responses, or when the server is busy. To avoid unnecessarily overloading the service, they implement exponential backoff by default.
-- **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust this based on your scenario.
+
+- **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust it based on your scenario.
 - **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
-- **Use batching for send operations** to improve throughput and reduce the impact of transient network issues on individual messages.
-- **Use Apache Kafka SDKs** if you're using the Kafka protocol. The Kafka SDKs also implement retry policies and other best practices for working with transient faults.
+- **Use batching for send operations** to improve throughput and reduce the impact of transient network problems on individual messages.
+- **Use Apache Kafka SDKs** if you work with the Kafka protocol. The Kafka SDKs also implement retry policies and other best practices that help handle transient faults.
 
 ## Availability zone support
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Event Hubs supports zone-redundant deployments in all service tiers. However, with Dedicated tier, availability zones are supported only with a minimum of three Capacity Units (CUs). When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no additional cost. The zone-redundant deployment model applies to all Event Hubs features including Capture, Schema Registry, and Kafka protocol support.
+Event Hubs supports zone-redundant deployments in all service tiers. In the Dedicated tier, availability zones require a minimum of three capacity units (CUs). When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no extra cost. The zone-redundant deployment model applies to all Event Hubs features, including Capture, Schema Registry, and Kafka protocol support.
 
-The service transparently replicates your configuration, metadata, and event data across three availability zones in the region, providing automatic failover capability without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. The service has enough capacity reserves to instantly cope with the complete, catastrophic loss of a zone. This ensures that even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to your streaming applications.
+Event Hubs transparently replicates your configuration, metadata, and event data across three availability zones in the region. This replication provides automatic failover without any customer intervention required. All Event Hubs components including compute, networking, and storage are replicated across zones. Event Hubs has enough capacity reserves to instantly handle the complete loss of a zone. Even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to streaming applications.
 
-![Diagram that shows a zone-redundant Event Hubs namespace.](./media/reliability-event-hubs/availability-zones.svg)
+:::image type="content" source="./media/reliability-event-hubs/availability-zones.svg" alt-text="Diagram that shows a zone-redundant Event Hubs namespace." lightbox="./media/reliability-event-hubs/availability-zones.svg":::
 
 ### Region support
 
-Zone-redundant Event Hubs namespaces can be deployed in [any Azure region that supports availability zones](./regions-list.md).
+Zone-redundant Event Hubs namespaces can be deployed into any [Azure region that supports availability zones](./regions-list.md).
 
 ### Requirements
 
-- Standard and Premium tiers support availability zones with no additional configuration required.
-- For the Dedicated tier, availability zones are supported only when you use a minimum of three Capacity Units (CUs).
+- Standard and Premium tiers support availability zones with no extra configuration required.
+
+- For the Dedicated tier, availability zones require a minimum of three CUs.
 
 ### Cost
 
-There's no extra cost for zone redundancy with Event Hubs.
+Zone redundancy in Event Hubs doesn't add extra cost.
 
 ### Configure availability zone support
 
@@ -90,47 +92,47 @@ Event Hubs namespaces automatically support zone redundancy when deployed in [su
 
 ### Normal operations
 
-This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and all availability zones are operational.
+When Event Hubs namespaces use zone redundancy and all availability zones operate normally, expect the following behavior:
 
-- **Traffic routing between zones**. Event Hubs operates in an active/active model where infrastructure in three availability zones simultaneously processes incoming events.
+- **Traffic routing between zones:** Event Hubs operates in an active-active model where infrastructure in three availability zones simultaneously processes incoming events.
 
-- **Data replication between zones**. Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to replicas in multiple zones before the write operation is acknowledged to the client. This ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
+- **Data replication between zones:** Event Hubs uses synchronous replication across availability zones. When an event is sent to Event Hubs, it's written to replicas in multiple zones before the write operation is acknowledged to the client. This approach ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
 
 ### Zone-down experience
 
-This section describes what to expect when Event Hubs namespaces are configured for zone redundancy and there's an availability zone outage.
+When Event Hubs namespaces use zone redundancy and an availability zone outage occurs, expect the following behavior:
 
-- **Detection and response**: The Event Hubs service is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
+- **Detection and response:** Event Hubs automatically detects failures in an availability zone. You don't need to do anything to initiate a zone failover.
 
-- **Notification**: Event Hubs doesn't notify you when a zone is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any zone failures.
+- **Notification:** Event Hubs doesn't notify you when a zone is down. But you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any zone failures.
 
   Set up alerts to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
-- **Active requests**: During a zone failure, active requests might be dropped. If your clients handle [transient faults](#transient-faults) appropriately by retrying after a short period of time, it's unlikely they'll be substantially affected.
+- **Active requests:** During a zone failure, active requests might be dropped. If your clients handle [transient faults](#transient-faults) appropriately by retrying after a short period of time, they're unlikely to experience significant impact.
 
-- **Expected data loss**: No data loss occurs during a zone failure because events are synchronously replicated across zones before acknowledgment.
+- **Expected data loss:** No data loss occurs during a zone failure because events are synchronously replicated across zones before acknowledgment.
 
-- **Expected downtime**: A zone failure might cause a few seconds of downtime. If your clients handle [transient faults](#transient-faults) appropriately by retrying after a short period of time, it's unlikely they'll be substantially affected.
+- **Expected downtime:** A zone failure might cause a few seconds of downtime. If your clients handle [transient faults](#transient-faults) appropriately by retrying after a short period of time, they're unlikely to experience significant impact.
 
-- **Traffic rerouting**: Event Hubs detects the loss of the zone. Then, any new requests are automatically redirected to another replica in one of the healthy availability zones.
+- **Traffic rerouting:** Event Hubs detects the loss of the zone and automatically redirects new requests to another replica in one of the healthy availability zones.
     
     Event Hubs client SDKs typically handle connection management and retry logic transparently.
 
 ### Zone recovery
 
-When an availability zone recovers, Event Hubs automatically reintegrates the zone into the active service topology. The recovered zone begins accepting new connections and processing events alongside the other zones. Data that was replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. No customer action is required for zone recovery and reintegration.
+When an availability zone recovers, Event Hubs automatically reintegrates the zone into the active service topology. The recovered zone begins accepting new connections and processing events alongside the other zones. Data that's replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. You don't need to take any action for zone recovery and reintegration.
 
 ### Testing for zone failures
 
-Because Event Hubs fully manages traffic routing, failover, and zone recovery for zone failures, you don't need to validate availability zone failure processes or provide any further input.
+Event Hubs manages traffic routing, failover, and zone recovery for zone failures, so you don't need to validate availability zone failure processes or provide any further input.
 
 ## Multi-region support
 
-Azure Event Hubs provides two types of multi-region support:
+Event Hubs provides two types of multi-region support:
 
-- **[Geo-replication (Premium and Dedicated tiers)](#geo-replication)** provides active-active replication of both metadata and event data between a primary and one or more secondary regions. Geo-replication is the preferred approach for most applications that need to be resilient to region outages, including those that have a low tolerance for the loss of event data.
+- **[Geo-replication (Premium and Dedicated tiers)](#geo-replication)** provides active-active replication of both metadata and event data between a primary and one or more secondary regions. Use geo-replication for most applications that need to remain resilient to region outages and can't tolerate event data loss.
 
-- **[Metadata geo-disaster recovery (Standard tier and above)](#metadata-geo-disaster-recovery)** provides active-passive replication of configuration and metadata between a primary and a secondary region, but it doesn't replicate event data. Geo-disaster recovery is intended for applications that can tolerate some loss of event data during a disaster scenario, and that need to quickly resume operations in another region.
+- **[Metadata geo-disaster recovery (Standard tier and above)](#metadata-geo-disaster-recovery)** provides active-passive replication of configuration and metadata between a primary and a secondary region, but it doesn't replicate event data. Use geo-disaster recovery for applications that can tolerate some loss of event data during a disaster scenario, and that need to quickly resume operations in another region.
 
 Both geo-replication and metadata geo-disaster recovery require you to manually initiate failover or promotion of a secondary region to become the new primary region. Microsoft doesn't automatically perform failover or promotion for you, even if your primary region is down.
 
@@ -149,7 +151,7 @@ At any time, you can *promote* the secondary region to become a primary region. 
 > [!NOTE]
 > Event Hubs geo-replication uses the term *promotion* because it best represents the process of promoting a secondary to primary (and subsequently demoting a secondary to primary). You might also see the term *failover* used to describe the general process.
 
-This section provides a summary of some of the important aspects of geo-replication, but it's important you review the full documentation to understand exactly how it works. For more information, see [Azure Event Hubs Geo-replication](../event-hubs/geo-replication.md).
+This section provides a summary of some of the important aspects of geo-replication, but it's important you review the full documentation to understand exactly how it works. For more information, see [Event Hubs Geo-replication](../event-hubs/geo-replication.md).
 
 #### Region support
 
@@ -207,7 +209,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 This section describes what to expect when an Event Hubs namespace is configured for geo-replication and there's an outage in the primary or a secondary region.
 
-- **Detection and response**: You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage.
+- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage.
 
     To learn how to promote a secondary region to be the new primary, see [Promote secondary](../event-hubs/use-geo-replication.md#promote-secondary).
     
@@ -215,11 +217,11 @@ This section describes what to expect when an Event Hubs namespace is configured
     
     During an outage in the primary region, you typically need to perform a forced promotion. If the primary region is still available and you choose to trigger a promotion for another reason, you might choose to perform a planned promotion.
 
-- **Notification**: Event Hubs doesn't notify you when a region is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any region failures. You can use the information, alongside other metrics, to decide when to promote a secondary region to primary.
+- **Notification:** Event Hubs doesn't notify you when a region is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any region failures. You can use the information, alongside other metrics, to decide when to promote a secondary region to primary.
 
     Set up alerts to receive notifications of region-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
-- **Active requests**: The behavior depends on whether the region outage is in the primary or a secondary region:
+- **Active requests:** The behavior depends on whether the region outage is in the primary or a secondary region:
 
     - *Primary region outage:* If the primary region is unavailable, all active requests are terminated. Client applications should retry operations once the promotion is complete.
 
@@ -230,7 +232,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
         To continue using the namespace in the primary region, you can remove the secondary namespace from your geo-replication configuration.
 
-- **Expected data loss**: The amount of data loss you can expect depends on the type of promotion you perform (planned or forced) and the replication mode (synchronous or asynchronous):
+- **Expected data loss:** The amount of data loss you can expect depends on the type of promotion you perform (planned or forced) and the replication mode (synchronous or asynchronous):
 
     - *Planned promotion:* No data loss is expected.
     
@@ -240,7 +242,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
     - *Forced promotion, asynchronous replication:* You might experience some data loss for recent events that haven't yet been replicated to the secondary region. The amount depends on the replication lag. At any time, you can verify the current replication lag [by using Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
 
-- **Expected downtime**: The amount of downtime you can expect depends on the type of promotion you perform (planned or forced):
+- **Expected downtime:** The amount of downtime you can expect depends on the type of promotion you perform (planned or forced):
 
     - *Planned promotion:* The first step in a planned promotion is for the data to finish replicating to the secondary region. Usually that completes quickly, but in some situations it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes approximately 5 to 10 minutes, although it can sometimes take longer for DNS entries to be fully replicated and updated by clients.
     
@@ -252,7 +254,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
         No writes are accepted in the primary region during the entire promotion process.
 
-- **Traffic rerouting**: After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honor the time-to-live (TTL) of the namespace DNS records.
+- **Traffic rerouting:** After the promotion completes, the namespace's FQDN points to the new primary region. However, this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honor the time-to-live (TTL) of the namespace DNS records.
 
     In some situations, consumer applications need to be configured to behave consistently after region promotion occurs. For more information, see [Consuming data](../event-hubs/geo-replication.md#consuming-data).
 
@@ -285,7 +287,7 @@ When you configure metadata geo-disaster recovery, you create an *alias* that cl
 
 If the primary region fails or there's another type of disaster, you can manually initiate a single-time, one-way failover move from the primary to the secondary at any time. The failover is nearly instantaneous once initiated. During the failover process, the geo-disaster recovery alias is repointed to the secondary namespace. After the move, the pairing is then removed.
 
-This section provides a summary of some of the important aspects of geo-disaster recovery, but it's important you review the full documentation to understand exactly how it works. For more information, see [Azure Event Hubs - Geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md).
+This section provides a summary of some of the important aspects of geo-disaster recovery, but it's important you review the full documentation to understand exactly how it works. For more information, see [Event Hubs - Geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md).
 
 #### Region support
 
@@ -343,7 +345,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
     Remember that failover is a one-way operation, so you need to reestablish the geo-disaster recovery pairing later. For more information, see [Region recovery](#region-recovery-1).
 
-- **Notification**: Event Hubs doesn't notify you when a region is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any region failures. You can use the information, alongside other metrics, to decide when to initiate a failover.
+- **Notification:** Event Hubs doesn't notify you when a region is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including any region failures. You can use the information, alongside other metrics, to decide when to initiate a failover.
 
     Set up alerts to receive notifications of region-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 

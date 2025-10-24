@@ -16,15 +16,14 @@ Azure continually increases the number of services that support [availability zo
 
 ## Azure services that provide availability zone support
 
-The following table lists zonal and zone-redundant Azure services. Some services support both types of deployments. To learn more about zonal and zone-redundant services and how they work, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
+The following table lists zonal and zone-redundant Azure services. Some services support both types of deployments. For more information about zonal and zone-redundant services and how they work, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
 
-Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. To learn more, see [Nonregional Azure services](./regions-nonregional-services.md).
+Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
 > [!IMPORTANT]
 > Even though some services might support availability zones, they might have specific requirements to use them on your resources. For example, some services might only support availability zones for specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
 
-
-| **Product**   | **Zone-redundant**  | **Zonal** | 
+| Product | Zone-redundant  | Zonal | 
 | --- | --- |---|
 | [Azure AI Search](reliability-ai-search.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure API Center](../api-center/frequently-asked-questions.yml)|:::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::  | |
@@ -110,14 +109,10 @@ Some Azure services are *nonregional*, which means that you don't deploy the ser
 | [Power BI Embedded](/power-bi/admin/service-admin-failover#what-does-high-availability) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [SQL Server on Virtual Machines](/azure/azure-sql/database/high-availability-sla-local-zone-redundancy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 
-## Next steps
+## Related content
 
 - [Nonregional Azure services](./regions-nonregional-services.md)
-
 - [List of Azure regions](regions-list.md)
-
 - [Availability zone migration guidance overview](availability-zones-migration-overview.md)
-
 - [Availability of service by category](availability-service-by-category.md)
-
 - [Azure Well-Architected Framework: Overview of the Reliability pillar](/azure/well-architected/reliability)
