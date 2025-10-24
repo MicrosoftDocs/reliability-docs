@@ -1,6 +1,6 @@
 ---
-title: Reliability in Azure Virtual Network Gateway
-description: Find out about reliability in Azure Virtual Network Gateway, including availability zones and multi-region deployments.
+title: Reliability in Azure virtual network gateways
+description: Find out about reliability in Azure virtual network gateways, including availability zones and multi-region deployments for ExpressRoute and VPN gateways.
 ms.author: anaharris
 author: anaharris-ms
 ms.topic: reliability-article
@@ -11,25 +11,25 @@ zone_pivot_groups: virtual-network-gateway-types
 ai-usage: ai-assisted
 ---
 
-# Reliability in Azure virtual network gateway
+# Reliability in Azure virtual network gateways
 
-A virtual network gateway is the component you deploy into your Azure virtual network to enable private connectivity to Microsoft resources through ExpressRoute or a VPN. This article describes reliability support in virtual network gateways, including transient fault handling, availability zone support, and multi-region deployments.
+An Azure virtual network gateway is a component that provides encrypted connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two main types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. This article describes reliability support in virtual network gateways, including transient fault handling, availability zone support, and multi-region deployments.
 
 ::: zone pivot="expressroute"
 
-> [!IMPORTANT]
-> This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based parts of the ExpressRoute system.
+>[!IMPORTANT]
+This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based parts of the ExpressRoute system.
 >
-> When you use ExpressRoute, it's critical that you design your whole ExpressRoute deployment to meet your resiliency requirements. Typically, this requires that you use multiple sites (peering locations) and that your on-premises components are configured to enable high availability and fast failover. For more information, see [Design and architect Azure ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
+>However, when using ExpressRoute, it's critical that you design your *entire network architecture* - not just the gateway - to meet your resiliency requirements. Typically, you must use multiple sites (peering locations), as well as enable high availability and fast failover for your on-premise components. For more information, see [Design and architect Azure ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
 
 ::: zone-end
 
-::: zone pivot="vpn"
+:::zone pivot="vpn"
 
-> [!IMPORTANT]
-> This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
+>[!IMPORTANT]
+>This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
 >
-> When you use VPNs, it's critical that you design your whole network architecture to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. For guidance about configuring your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+>When you use VPNs, it's critical that you design your *entire network architecture* - not just the gateway - to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations.  For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
@@ -45,6 +45,7 @@ To learn about how to deploy Azure ExpressRoute to support your solution's relia
 
 ::: zone pivot="vpn"
 
+
 To ensure high reliability for your production virtual network gateways, we recommend that you:
 
 > [!div class="checklist"]
@@ -59,7 +60,7 @@ To ensure high reliability for your production virtual network gateways, we reco
 
 ::: zone pivot="expressroute"
 
-ExpressRoute requires components to be deployed in the on-premises environment, peering locations, and within Azure:
+With ExpressRoute, you must deploy components in the on-premises environment, peering locations, and within Azure. These components include:
 
 - *Circuits and connections*: An ExpressRoute *circuit* consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. By using two connections, you can achieve active-active connectivity. However, this configuration doesn't protect against site-level failures.
 
@@ -81,8 +82,8 @@ A VPN requires components to be deployed in both the on-premises environment and
 
 - *On-premises components*: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration. To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
-   - Site-to-site configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
-   - Point-to-site configurations require you to deploy a VPN client application in a remote device like a laptop or desktop, and import the user profile into the VPN client. You're responsible for deploying and configuring the client devices.
+   - *Site-to-site* configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
+   - *Point-to-site* configurations require you to deploy a VPN client application in a remote device like a laptop or desktop, and import the user profile into the VPN client. You're responsible for deploying and configuring the client devices.
 
 - *Azure virtual network gateway*: In Azure, you create a *VPN gateway*, also called a *virtual network gateway*, which acts as the termination point for VPN connections.
 
@@ -177,7 +178,7 @@ Transient faults can impact IPsec tunnels and/or TCP data flows. In the event of
 
 Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintaining connectivity during zone maintenance or outages.
 
-When you use a supported SKU, any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
+When you use a [supported SKU](#requirements), any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
 
 The following diagram shows a zone-redundant virtual network gateway with two instances that are distributed across availability zones:
 
@@ -200,7 +201,7 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 ### Region support
 
-Zone-redundant virtual network gateways are available in [all regions that support availability zones](../reliability/availability-zones-region-support.md).
+Zone-redundant virtual network gateways are available in [all regions that support availability zones](./regions-list.md).
 
 ### Requirements
 
@@ -337,12 +338,10 @@ The following section describes what to expect when your virtual network gateway
 When the affected availability zone recovers, Azure automatically takes the following actions:
 
 - Restores instances in the recovered zone
-
 - Removes any temporary instances that were created in other zones during the outage
-
 - Returns to normal traffic distribution across all available zones
 
-### Testing
+### Test for zone redundancy
 
 The Azure platform manages traffic routing, failover, and failback for zone-redundant virtual network gateways. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
