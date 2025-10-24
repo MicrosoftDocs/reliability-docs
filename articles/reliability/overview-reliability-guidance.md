@@ -24,7 +24,7 @@ This article provides links to reliability guidance for many Azure services. Mos
 
 Some guides also contain information about the following capabilities:
 
-- *Backup support*, such as who controls backups, where they're stored and replicated to, how to recover them, and whether they can be accessed only within a region or across regions.
+- *Backup support*, such as who controls backups, where they're stored and replicated, how to recover them, and whether they can be accessed only within a region or across regions.
 
 - *Service-level agreements (SLAs)* for availability, including how the expected uptime changes based on the configuration that you use.
 
