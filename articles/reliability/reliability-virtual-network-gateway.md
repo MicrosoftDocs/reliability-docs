@@ -341,7 +341,7 @@ When the affected availability zone recovers, Azure automatically takes the foll
 - Removes any temporary instances that were created in other zones during the outage
 - Returns to normal traffic distribution across all available zones
 
-### Test for zone redundancy
+### Test for zone failures
 
 The Azure platform manages traffic routing, failover, and failback for zone-redundant virtual network gateways. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
