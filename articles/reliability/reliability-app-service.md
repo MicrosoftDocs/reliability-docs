@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-app-service
-ms.date: 07/17/2025
+ms.date: 10/27/2025
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure App Service works from a reliability perspective and plan resiliency strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -64,6 +64,9 @@ To enable zone-redundancy, you must meet the following requirements:
 - Use a scale unit that supports availability zones. When you create an App Service plan, the plan is assigned to a scale unit based on the resource group where the plan resides. If your scale unit doesn't support availability zones, you need to create a new plan in a new resource group.
 
   To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
+
+> [!NOTE]
+> Apps can only move between App Service plans that are in the same deployment unit (webspace). If your current App Service plan is in a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on that plan. When you create a new App Service plan with zone redundancy enabled in a different resource group, it's deployed to a different webspace. Because apps can't move between different webspaces, you can't move your app to the zone-redundant plan. You must redeploy your app to the new plan. For more information about moving App Service resources, see [Move App Service resources to a new resource group or subscription](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#moving-apps-between-plans-and-zone-redundancy).
 
 ### Instance distribution across zones
 
