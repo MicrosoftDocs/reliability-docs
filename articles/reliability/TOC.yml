@@ -320,7 +320,7 @@ items:
   items:
   - name: What are Azure availability zones?
     href: availability-zones-overview.md
-  - name: Services with availability zone support
+  - name: Products and services with availability zone support
     href: availability-zones-service-support.md
   - name: Enable zone resiliency
     items:
