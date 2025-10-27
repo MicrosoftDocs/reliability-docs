@@ -60,7 +60,7 @@ To enable zone-redundancy, you must meet the following requirements:
 
 - **Minimum number of instances:** Deploy a minimum of two instances in your plan.
 
-- **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit assignment. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the resource group where the plan resides. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
+- **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your plan uses. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the plan's resource group. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
 
   If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to:
 
