@@ -52,21 +52,20 @@ For **Premium v2 to v4 tiers**, you can configure App Service as *zone redundant
    1. [Confirm that your desired region supports v4 plans](/azure/app-service/app-service-configure-premium-v4-tier#regions).
    2. [Determine if that region supports availability zones](./regions-list.md).
 
-
 ### Requirements
 
 To enable zone-redundancy, you must meet the following requirements:
 
-- Use [Premium v2 to v4 plan types](/azure/app-service/overview-hosting-plans). 
+- **Plan type:** Use [Premium v2 to v4 plan types](/azure/app-service/overview-hosting-plans). 
 
-- Deploy a minimum of two instances in your plan.
+- **Minimum number of instances:** Deploy a minimum of two instances in your plan.
 
-- Use a scale unit that supports availability zones. When you create an App Service plan, the plan is assigned to a scale unit based on the resource group where the plan resides. If your scale unit doesn't support availability zones, you need to create a new plan in a new resource group.
+- **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit assignment. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the resource group where the plan resides. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
 
-  To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
+  If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to:
 
-> [!NOTE]
-> Apps can only move between App Service plans that are in the same deployment unit (webspace). If your current App Service plan is in a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on that plan. When you create a new App Service plan with zone redundancy enabled in a different resource group, it's deployed to a different webspace. Because apps can't move between different webspaces, you can't move your app to the zone-redundant plan. You must redeploy your app to the new plan. For more information about moving App Service resources, see [Move App Service resources to a new resource group or subscription](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#moving-apps-between-plans-and-zone-redundancy).
+  1. Create a new App Service plan in a new resource group. When you create a new App Service plan with zone redundancy enabled in a different resource group, it's deployed to a different scale unit.
+  1. Redeploy your apps to the new plan. When you create a new plan that's on a different scale unit, you need to redeploy your apps. You can't move apps between plans that are on different scale units.
 
 ### Instance distribution across zones
 
