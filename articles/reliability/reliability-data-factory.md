@@ -81,13 +81,13 @@ Each part of Data Factory supports zone redundancy:
 
     - *An Azure IR* supports zone redundancy, and Microsoft manages this capability.
 
-        ![Diagram that shows the core service and an Azure IR integration runtime, each of which are zone-redundant.](./media/reliability-data-factory/zone-redundancy-core-service-azure-integration-runtime.png)
+        :::image type="content" source="./media/reliability-data-factory/zone-redundancy-core-service-azure-integration-runtime.svg" alt-text="Diagram that shows the core service and an Azure IR integration runtime, each of which are zone-redundant." border="false" :::
 
     - *An Azure-SSIS IR* requires you to deploy at least two nodes. These nodes are allocated into different availability zones automatically.
 
         The following diagram shows a zone-redundant pipeline, and an Azure-SSIS integration runtime with two nodes that are deployed in different zones:
 
-        ![Diagram that shows the zone-redundant core service, and an Azure SSIR integration runtime with two nodes that are deployed into different zones.](./media/reliability-data-factory/zone-redundancy-core-service-azure-ssis-integration-runtime.png)
+        :::image type="content" source="./media/reliability-data-factory/zone-redundancy-core-service-azure-ssis-integration-runtime.svg" alt-text="Diagram that shows the zone-redundant core service, and an Azure SSIR integration runtime with two nodes that are deployed into different zones." border="false" :::
 
     - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
 
