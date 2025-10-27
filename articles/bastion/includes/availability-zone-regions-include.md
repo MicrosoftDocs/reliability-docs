@@ -6,7 +6,7 @@ ms.service: azure
 ms.topic: include
 ms.date: 10/21/2025
 ms.author: isamorris
-ms.custom: include file
+ms.custom: include file, references_regions
 ---
 
 | Americas | Europe | Middle East | Africa | Asia Pacific |
