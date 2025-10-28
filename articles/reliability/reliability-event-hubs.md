@@ -29,7 +29,7 @@ This section describes important aspects about how Event Hubs works from a relia
 
 ### Logical architecture
 
-An Event Hubs [*namespace*](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. You manage tasks such as allocating streaming capacity, configuring network security, and enabling geo-resilency and geo-disaster recovery at the namespace level.
+An Event Hubs [*namespace*](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. You manage tasks such as allocating streaming capacity, configuring network security, and enabling geo-resiliency and geo-disaster recovery at the namespace level.
 
 Within a namespace, you can organize events into an *event hub*. The Apache® Kafka ecosystem refers to this type of grouping as a *topic*. The event hub or topic is an append-only distributed log of your events.
 
@@ -43,7 +43,7 @@ For more information about partitions and other fundamental concepts in Event Hu
 
 In the physical architecture, an Event Hubs namespace runs within a *cluster*. A cluster provides the underlying compute and storage resources. Most namespaces run on clusters that other Azure customers share. When you use the Premium tier, the namespace is allocated dedicated resources within a shared cluster. When you use the Dedicated tier, a cluster is dedicated to your namespaces. For more information about dedicated clusters, see [Event Hubs Dedicated tier overview](../event-hubs/event-hubs-dedicated-overview.md). Regardless of tier and cluster type, Microsoft manages the clusters and their underlying virtual machines and storage.
 
-To achieve redundancy, each cluster has multiple replicas that process read and write requests. For high availability and performance optimization, all data is stored on three storage replicas. To scale your namespace's compute resources, deploy throughput units, processing units, or capacity units, depending on the tier. For more information, see [Scaling with Event Hubs](../event-hubs/event-hubs-scalability.md).
+To achieve redundancy, each cluster has multiple replicas that process read and write requests. For high availability and performance optimization, all data is stored on three storage replicas. To scale your namespace's compute resources, deploy throughput units (TUs), processing units (PUs), or capacity units (CUs), depending on the tier. For more information, see [Scaling with Event Hubs](../event-hubs/event-hubs-scalability.md).
 
 Clusters span multiple physical machines and racks, which reduces the risk of catastrophic failures affecting your namespace. In regions that have availability zones, clusters extend across separate physical datacenters. For more information, see [Availability zone support](#availability-zone-support).
 
@@ -66,7 +66,7 @@ When you design client applications to work with Event Hubs, follow this guidanc
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Event Hubs supports zone-redundant deployments in all service tiers. In the Dedicated tier, availability zones require a minimum of three capacity units (CUs). When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no extra cost. The zone-redundant deployment model applies to all Event Hubs features, including Capture, Schema Registry, and Kafka protocol support.
+Event Hubs supports zone-redundant deployments in all service tiers. In the Dedicated tier, availability zones require a minimum of three CUs. When you create an Event Hubs namespace in a supported region, zone redundancy is automatically enabled at no extra cost. The zone-redundant deployment model applies to all Event Hubs features, including Capture, Schema Registry, and Kafka protocol support.
 
 Event Hubs transparently replicates your configuration, metadata, and event data across three availability zones in the region. This replication provides automatic failover without any intervention required from you. All Event Hubs components including compute, networking, and storage are replicated across zones. Event Hubs has enough capacity reserves to instantly handle the complete loss of a zone. Even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to streaming applications.
 
@@ -96,7 +96,7 @@ When Event Hubs namespaces use zone redundancy and all availability zones operat
 
 - **Traffic routing between zones:** Event Hubs operates in an active-active model where infrastructure in three availability zones simultaneously processes incoming events.
 
-- **Data replication between zones:** Event Hubs uses synchronous replication across availability zones. When an event producer or client sends an event, Event Hubs writes it to replicas in multiple zones before confirming the write operation to the client. This approach ensures zero data loss even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
+- **Data replication between zones:** Event Hubs uses synchronous replication across availability zones. When an event producer or client sends an event, Event Hubs writes it to replicas in multiple zones before confirming the write operation to the client. This approach ensures zero data loss, even if an entire zone becomes unavailable. The synchronous replication approach provides strong consistency guarantees while maintaining low latency through optimized replication protocols.
 
 ### Zone-down experience
 
@@ -165,7 +165,7 @@ To enable geo-replication, your namespace must use the Premium or Dedicated tier
 
 When you enable geo-replication, consider the following factors:
 
-- **Checkpoint format:**  The format of checkpoints changes. For more information, see [Consume data](../event-hubs/geo-replication.md#consuming-data).
+- **Checkpoint format:** The format of checkpoints changes. For more information, see [Consume data](../event-hubs/geo-replication.md#consuming-data).
 
 - **Private endpoints:** If you use private endpoints to connect to your namespace, you also need to configure networking in your primary and secondary regions. For more information, see [Private endpoints](../event-hubs/geo-replication.md#private-endpoints).
 
@@ -217,7 +217,7 @@ When an Event Hubs namespace uses geo-replication and an outage occurs in the pr
     
     During an outage in the primary region, you typically need to perform a forced promotion. If the primary region is available and you trigger a promotion for another reason, you might choose a planned promotion.
 
-- **Notification:** Event Hubs doesn't notify you when a region is down. But you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of Event Hubs, including region failures. Use that information and other metrics to decide when to promote a secondary region to a primary region.
+- **Notification:** Event Hubs doesn't notify you when a region is down. But you can use [Service Health](/azure/service-health/overview) to understand the overall health of Event Hubs, including region failures. Use that information and other metrics to decide when to promote a secondary region to a primary region.
 
     Set up alerts to receive notifications about region-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
@@ -245,7 +245,7 @@ When an Event Hubs namespace uses geo-replication and an outage occurs in the pr
 
 - **Expected downtime:** The amount of expected downtime depends on whether you perform a planned or forced promotion:
 
-    - *Planned promotion:* The first step in a planned promotion replicates data to the secondary region. That process usually completes quickly, but in some situations it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for clients to fully replicate and update Domain Name System (DNS) entries.
+    - *Planned promotion:* The first step in a planned promotion replicates data to the secondary region. That process usually completes quickly, but in some situations, it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for clients to fully replicate and update Domain Name System (DNS) entries.
     
         The primary region doesn't accept write operations during the entire promotion process.
 
@@ -394,7 +394,7 @@ If you need to retain a copy of your events, consider using [Event Hubs Capture]
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-Your namespace's availability service-level agreement (SLA) is higher when it uses the Premium or Dedicated tiers.
+Your namespace's availability SLA is higher when it uses the Premium or Dedicated tiers.
 
 ### Related content
 

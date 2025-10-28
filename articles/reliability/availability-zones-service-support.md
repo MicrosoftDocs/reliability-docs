@@ -1,6 +1,6 @@
 ---
 title: Azure Products and Services That Support Availability Zones
-description: Learn about which Azure products and services provide availability zone support, including zonal and zone-redundant options, and the requirements that some offerings have.
+description: Learn about which Azure products provide availability zone support, including zonal and zone-redundant options, and the requirements that some offerings have.
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual

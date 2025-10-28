@@ -14,7 +14,7 @@ ms.custom: subject-reliability
 
 To help safeguard your applications against hardware failures, network disruptions, and natural disasters, design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 
-You should address zone resiliency during the initial planning and deployment of workloads. But at this stage,  many existing workloads might not yet support this level of protection. In most cases, enabling zone resiliency for deployed workloads is straightforward, and Microsoft continues to simplify the process. But any change to your workload can introduce risk, so plan carefully. Assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
+You should address zone resiliency during the initial planning and deployment of workloads. But at this stage, many existing workloads might not yet support this level of protection. In most cases, enabling zone resiliency for deployed workloads is straightforward, and Microsoft continues to simplify the process. But any change to your workload can introduce risk, so plan carefully. Assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
 
 This article outlines key considerations to enable zone resiliency in your Azure workloads. It also helps you plan and implement a successful transition to a more resilient architecture.
 
@@ -68,7 +68,7 @@ After you determine which workload flows are most critical to your business, you
 
 Use the following guidance to prioritize Azure service groups based on their criticality to your workloads. Consider your specific application architecture and business requirements when you determine the priority of services for zone resiliency.
 
-1. **Start with networking services.** Workloads tend to share networking services, so an increase in their resiliency can improve the resiliency of multiple workloads at once.
+1. **Start with networking services.** Workloads tend to share networking services, so an increase in the resiliency of these services can improve the resiliency of multiple workloads at once.
 
    Many core networking services are zone redundant automatically, but you should focus on components like Azure ExpressRoute gateways, Azure VPN Gateway, Azure Application Gateway, Azure Load Balancer, and Azure Firewall.
 
@@ -106,7 +106,7 @@ Each Azure service supports a specific type of availability zone support, which 
 This section provides an overview of the different types of zone configuration approaches and which approach each service supports.
 
 > [!IMPORTANT]
-> When you enable *zone redundancy* on a resource, that resource becomes automatically resilient to zone failures. When you use a *zonal* configuration to pin the resource to a specific availability zone, the resource isn't automatically zone redundant. You must make it resilient to a zone failure. For zonal services, this article reflects the complexity and cost of pinning to a zone. For more information about extra steps to achieve zone resiliency, see [the service's reliability guide](overview-reliability-guidance.md).
+> When you enable *zone redundancy* on a resource, that resource becomes automatically resilient to zone failures. When you use a *zonal* configuration to pin the resource to a specific availability zone, the resource isn't automatically zone redundant. You must make it resilient to a zone failure. For zonal services, this article reflects the complexity and cost of pinning to a zone. For more information about extra steps to achieve zone resiliency, see the [service's reliability guide](overview-reliability-guidance.md).
 
 The [zone configuration table](#azure-services-by-zone-configuration-approach) lists the supported zone configuration approach for many Azure services and contains a link to each reliability guide for that service. The reliability guide provides information about how to configure nonzonal service resources to enable availability zone support.
 
