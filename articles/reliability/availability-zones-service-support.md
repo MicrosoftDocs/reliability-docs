@@ -111,7 +111,7 @@ The following table lists zonal and zone-redundant Azure offerings. Some offerin
 
 - [Nonregional Azure services](./regions-nonregional-services.md)
 - [List of Azure regions](regions-list.md)
-- [Availability zone migration guidance overview](availability-zones-migration-overview.md)
+- [Enable zone resiliency for Azure workloads](availability-zones-enable-zone-resiliency.md)
 - [Availability of service by category](availability-service-by-category.md)
 - [Azure Well-Architected Framework: Overview of the Reliability pillar](/azure/well-architected/reliability)
 
