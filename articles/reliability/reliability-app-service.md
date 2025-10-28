@@ -62,7 +62,7 @@ To enable zone-redundancy, you must meet the following requirements:
 
 - **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your plan uses. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the plan's resource group. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
 
- If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to [redeploy your apps to a new plan on a different scale unit](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#scale-units-and-zone-redundancy).
+    If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to [redeploy your apps to a new plan on a different scale unit](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#scale-units-and-zone-redundancy).
 
 
 ### Instance distribution across zones
