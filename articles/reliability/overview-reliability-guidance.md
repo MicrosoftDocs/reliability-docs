@@ -33,7 +33,7 @@ Some guides also contain information about the following capabilities:
 The following table provides links to reliability guidance for Azure services. Each guide contains information about how the service supports reliability features. 
 
 > [!NOTE]
-> Some documents don't follow a single reliability guide format. These offerings might list more than one article that references reliability guidance.
+> Some documents don't follow a single reliability guide format. These services might list more than one article that references reliability guidance.
 
 | Product | Reliability guide | Other reliability documentation |
 |----------|---------|---------|
