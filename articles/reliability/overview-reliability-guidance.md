@@ -1,5 +1,5 @@
 ---
-title: Reliability Guides for Azure Products and Services
+title: Reliability Guides for Azure Services
 description: See a list of reliability guides for Azure products and services. Learn about transient fault handling, availability zones, and multi-region support.
 author: anaharris-ms
 ms.service: azure
@@ -10,13 +10,13 @@ ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---
 
-# Reliability guides for Azure products and services
+# Reliability guides for Azure services
 
-This article provides links to reliability guidance for many Azure offerings. Most reliability guides contain the following information:
+This article provides links to reliability guidance for many Azure services. Most reliability guides contain the following information:
 
-- The *reliability architecture overview* provides a synopsis about how a product supports reliability. It includes information about which components Microsoft manages and which components you manage, built-in redundancy features, and how to provision and manage multiple resources, if applicable.
+- The *reliability architecture overview* provides a synopsis about how a service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-in redundancy features, and how to provision and manage multiple resources, if applicable.
 
-- *Transient fault handling* describes how a product handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in an application, including information about retry policies, timeouts, and other best practices.
+- *Transient fault handling* describes how a service handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in an application, including information about retry policies, timeouts, and other best practices.
 
 - *Availability zones* describe zonal and zone-redundant deployment options, traffic routing and data replication between zones, zone-outage scenarios, failback processes, and how to configure resources for availability zone support.
 
@@ -28,14 +28,14 @@ Some guides also contain information about the following capabilities:
 
 - *Service-level agreements (SLAs)* for availability describe how expected uptime changes based on the configuration that you use.
 
-## Reliability guides by product or service
+## Reliability guides by service
 
-The following table provides links to reliability guidance for Azure offerings. Each guide contains information about how the offering supports reliability features. 
+The following table provides links to reliability guidance for Azure services. Each guide contains information about how the service supports reliability features. 
 
 > [!NOTE]
 > Some documents don't follow a single reliability guide format. These offerings might list more than one article that references reliability guidance.
 
-| Product or service | Reliability guide | Other reliability documentation |
+| Product | Reliability guide | Other reliability documentation |
 |----------|---------|---------|
 |Azure AI Health Insights| [Reliability in AI Health Insights](reliability-health-insights.md)||
 |Azure AI Search| [Reliability in AI Search](reliability-ai-search.md) ||
@@ -129,6 +129,6 @@ The following table provides links to reliability guidance for Azure offerings. 
 
 ## Related content
 
-- [Azure products and services that support availability zones](availability-zones-service-support.md)
+- [Azure services that support availability zones](availability-zones-service-support.md)
 - [List of Azure regions](regions-list.md)
 - [Build solutions for high availability by using availability zones](/azure/well-architected/reliability/regions-availability-zones)

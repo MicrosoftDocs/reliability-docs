@@ -1,6 +1,6 @@
 ---
-title: Azure Products and Services That Support Availability Zones
-description: Learn about which Azure products provide availability zone support, including zonal and zone-redundant options, and the requirements that some offerings have.
+title: Azure Services That Support Availability Zones
+description: Learn about which Azure services provide availability zone support, including zonal and zone-redundant options, and the requirements that some services have.
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
@@ -10,18 +10,18 @@ author: anaharris-ms
 ms.custom: subject-reliability
 ---
 
-# Azure products and services that support availability zones
+# Azure services that support availability zones
 
-Azure continually increases the number of zonal and zone-redundant offerings that support [availability zones](./availability-zones-overview.md). This article lists which products and services support availability zones and the type of offerings that they support.
+Azure continually increases the number of zonal and zone-redundant services that support [availability zones](./availability-zones-overview.md). This article lists which services support availability zones and the type of offerings that they support.
 
 Some Azure offerings are *nonregional*, which means that you don't deploy the offering into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
 > [!IMPORTANT]
-> Some products might support availability zones but require specific configurations to enable them on your resources. For example, some products might support availability zones for only specific tiers or regions. For more information about an offering's requirements for availability zone support, select that offering in the following table.
+> Some services might support availability zones but require specific configurations to enable them on your resources. For example, some services might support availability zones for only specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
 
 The following table lists zonal and zone-redundant Azure offerings. Some offerings support both types of deployments. For more information about zonal and zone-redundant products and how they work, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
 
-| Product or service | Zone-redundant  | Zonal | 
+| Product | Zone-redundant  | Zonal | 
 | --- | --- |---|
 | [Azure AI Search](reliability-ai-search.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure API Center](../api-center/frequently-asked-questions.yml)|:::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
