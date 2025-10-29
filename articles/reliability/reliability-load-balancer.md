@@ -60,7 +60,7 @@ When you use Load Balancer, consider the following best practices to minimize th
 
 [!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
 
-Load Balancer provides two types of availability zone support: *zonal* and *zone-redundant*. You set the availability zone configuration of your choice on each frontend IP configuration that you create.
+Load Balancer provides two types of availability zone support: *zonal* and *zone-redundant*. We recommend you create a zone-redundant load balancer. You set the availability zone configuration of your choice on each frontend IP configuration that you create.
 
 - *Zone-redundant:* A zone-redundant frontend IP configuration is served simultaneously from independent infrastructure in multiple zones. This configuration ensures that zone failures don't impact the load balancer's ability to receive and distribute traffic.
 
@@ -89,9 +89,7 @@ If you don't configure a load balancer to be zone-redundant or zonal, it's consi
 <!-- PG: When will nonzonal public IP addresses be retired (per https://azure.microsoft.com/en-us/blog/azure-public-ips-are-now-zone-redundant-by-default/)? I can still create one as of September 2025. -->
 
 > [!TIP]
-> Use zone-redundant frontend IP configurations wherever possible.
->
-> Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone. Avoid using nonzonal frontend IP configurations, because they don't provide resiliency to zone failures.
+> **Use zone-redundant frontend IP configurations wherever possible.** Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone. Avoid using nonzonal frontend IP configurations, because they don't provide resiliency to zone failures.
 
 #### Backend instances and availability zones
 
@@ -124,7 +122,7 @@ When designing your architecture:
 
 ### Considerations
 
-- **Zone failure:** An availability zone can fail and the data path survives as long as the remaining zones in the region remain healthy. <!-- PG: please verify that two simultaneous zone failures are not handled. --> 
+- **Zone failure:** An availability zone can fail and the data path survives as long as the remaining zones in the region remain healthy.
 
 - **Region upgrades:** Even if a region is upgraded to include availability zone support, any existing IPs and load balancers remain as nonzonal. You need to explicitly migrate them to be zone-redundant or zonal. <!-- PG: please verify this is accurate. -->
 
