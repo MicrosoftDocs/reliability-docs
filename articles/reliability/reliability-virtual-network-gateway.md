@@ -13,7 +13,7 @@ ai-usage: ai-assisted
 
 # Reliability in Azure virtual network gateways
 
-An Azure virtual network gateway is a component that provides encrypted connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. As an Azure service, a virtual network gateway provides a range of capabilities to support your reliability requirements.
+An Azure virtual network gateway is a component that provides secure connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. As an Azure service, a virtual network gateway provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
