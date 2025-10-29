@@ -139,7 +139,7 @@ Depending on your high availability requirements, you can configure your gateway
 
 ::: zone-end
 
-You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Availability zone support](#availability-zone-support).
+You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
 ## Resilience to transient faults
 
@@ -202,7 +202,9 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 > [!NOTE]
 > There's no availability zone configuration for local network gateways, because they're automatically zone-resilient.
-<!-- PG: Please confirm the above statement. -->
+
+> [!WARNING]
+> **Note to PG:** Please confirm the preceding statement about local network gateways is accurate.
 
 ::: zone-end
 
@@ -210,11 +212,9 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 - **Region support:** Zone-redundant virtual network gateways are available in [all regions that support availability zones](./regions-list.md).
 
-- **SKU:** For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy.
-
 ::: zone pivot="expressroute"
 
-    The following table shows which SKUs support zone redundancy:
+- **SKU:** For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy. The following table shows which SKUs support zone redundancy:
 
     [!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
 
@@ -222,7 +222,7 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 ::: zone pivot="vpn"
 
-    All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
+- **SKU:** For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy. All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
 
 - **Public IP addresses:** You must also use standard SKU public IP addresses and configure them to be zone-redundant.
 
@@ -270,7 +270,10 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone-end
 
-- **Verify the zone redundancy status of an existing virtual network gateway.** <!-- PG: Please confirm whether a customer can confirm whether an existing gateway is ZR, zonal, or nonzonal -->
+- **Verify the zone redundancy status of an existing virtual network gateway.** TODO.
+
+    > [!WARNING]
+    > **Note to PG:** Please confirm whether a customer can confirm whether an existing gateway is ZR, zonal, or nonzonal. Or, are all gateways now ZR?
 
 ### Behavior when all zones are healthy
 
@@ -304,11 +307,14 @@ The following section describes what to expect when your virtual network gateway
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
+- **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#resilience-to-transient-faults).
 
 - **Expected data loss:** Zone failures aren't expected to cause data loss because virtual network gateways don't store persistent customer data.
 
-- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults). <!-- PG: Please confirm -->
+- **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#resilience-to-transient-faults).
+    
+    > [!WARNING]
+    > **Note to PG:** Please confirm the 'Expected downtime' statement is accurate.
 
 ::: zone pivot="expressroute"
 
