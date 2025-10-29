@@ -42,7 +42,7 @@ Each load balancer consists of multiple components, including:
 
 To learn more about how Load Balancer works, see [Load Balancer components](../load-balancer/components.md).
 
-For globally deployed solutions, you can deploy a *global load balancer*, which is a special type of public load balancer designed to route traffic among different regional deployments of your solution. A global load balancer provides a single anycast IP address. It routes traffic to the closest healthy regional load balancer based on client proximity and regional health status. For more information, see [Multi-region support](#multi-region-support).
+For globally deployed solutions, you can deploy a *global load balancer*, which is a special type of public load balancer designed to route traffic among different regional deployments of your solution. A global load balancer provides a single anycast IP address. It routes traffic to the closest healthy regional load balancer based on client proximity and regional health status. For more information, see [Resilience to region-wide failures](#resilience-to-region-wide-failures).
 
 ## Resilience to transient faults
 
@@ -199,7 +199,7 @@ This section describes what to expect when a load balancer's frontend IP configu
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests**: Any existing TCP/UDP flows within the failed zone are reset and need to be retried by the client. Your clients should have sufficient [transient fault handling](#transient-faults) implemented, including automated retries.
+- **Active requests**: Any existing TCP/UDP flows within the failed zone are reset and need to be retried by the client. Your clients should have sufficient [transient fault handling](#resilience-to-transient-faults) implemented, including automated retries.
 
 - **Expected data loss**: As a stateless network service, Load Balancer doesn't store application data, so no data loss occurs at the load balancer layer.
 
@@ -308,7 +308,7 @@ This section describes what to expect when you use a global load balancer and th
 
     <!-- PG: Please confirm whether Azure Resource Health would also indiate the loss of a regional load balancer. -->
 
-- **Active requests**: Any existing TCP/UDP flows within the failed region are reset and need to be retried by the client. Your clients should have sufficient [transient fault handling](#transient-faults) implemented, including automated retries.
+- **Active requests**: Any existing TCP/UDP flows within the failed region are reset and need to be retried by the client. Your clients should have sufficient [transient fault handling](#resilience-to-transient-faults) implemented, including automated retries.
 
 - **Expected data loss**: As a stateless network service, Global Load Balancer doesn't store application data, so no data loss occurs at the load balancer layer.
 
