@@ -85,7 +85,7 @@ Load Balancer provides two types of availability zone support: *zonal* and *zone
 
     :::image type="content" source="./media/reliability-load-balancer/zonal-internal-load-balancer.svg" alt-text="Diagram showing a zonal internal load balancer in zone 1, directing traffic to two different VMs in zone 1." border="false" :::
 
-If you don't configure a load balancer to be zone-redundant or zonal, it's considered *nonzonal* or *regional*. Nonzonal load balancers can be placed in any availability zone within the region. If an availability zone in the region experiences an outage, nonzonal load balancers might be in the affected zone and could experience downtime.
+In regions with no availability zones, load balancers can also be created in a *nonzonal* or *regional* configuration by using of a frontend configuration with no zone configured. If the region experiences an outage, nonzonal load balancers could experience downtime.
 <!-- PG: When will nonzonal public IP addresses be retired (per https://azure.microsoft.com/en-us/blog/azure-public-ips-are-now-zone-redundant-by-default/)? I can still create one as of September 2025. -->
 
 > [!TIP]
