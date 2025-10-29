@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure Load Balancer
-description: Learn how Azure Load Balancer provides high availability and disaster recovery by using zone redundancy, global load balancing, and multi-region failover for resilient applications.
+description: Learn how to make Azure Load Balancer resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. Also, learn about backup and the App Service service-level agreement.
 author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
-ms.date: 09/22/2025
+ms.date: 10/30/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Load Balancer works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -16,9 +16,9 @@ ai-usage: ai-assisted
 
 Azure Load Balancer is a layer-4 (TCP/UDP) load balancing service that distributes incoming traffic among healthy instances of services. Load Balancer provides high availability and network performance to your applications with ultra-low latency.
 
-This article describes reliability support in [Azure Load Balancer](../load-balancer/load-balancer-overview.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [cross-region load balancing](#multi-region-support).
-
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
+
+This article describes how to make Load Balancer resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Load Balancer service level agreement (SLA).
 
 > [!IMPORTANT]
 > The reliability of your overall solution depends on the configuration of the backend instances (servers) that your load balancer routes traffic to, such as Azure virtual machines (VMs) or Azure virtual machine scale sets.
@@ -27,7 +27,7 @@ This article describes reliability support in [Azure Load Balancer](../load-bala
 
 ## Production deployment recommendations
 
-To learn about how to deploy Load Balancer to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Load Balancer in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-load-balancer).
+The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable Load Balancer solution, see [Architecture best practices for Load Balancer in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-load-balancer).
 
 ## Reliability architecture overview
 
@@ -44,7 +44,7 @@ To learn more about how Load Balancer works, see [Load Balancer components](../l
 
 For globally deployed solutions, you can deploy a *global load balancer*, which is a special type of public load balancer designed to route traffic among different regional deployments of your solution. A global load balancer provides a single anycast IP address. It routes traffic to the closest healthy regional load balancer based on client proximity and regional health status. For more information, see [Multi-region support](#multi-region-support).
 
-## Transient faults
+## Resilience to transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
@@ -56,9 +56,9 @@ When you use Load Balancer, consider the following best practices to minimize th
 
 - **Monitor SNAT port allocation.** For outbound connections, monitor SNAT port allocation and configure outbound rules to prevent transient connection failures due to port exhaustion.
 
-## Availability zone support
+## Resilience to availability zone failures
 
-[!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
 Load Balancer provides two types of availability zone support: *zonal* and *zone-redundant*. We recommend you create a zone-redundant load balancer. You set the availability zone configuration of your choice on each frontend IP configuration that you create.
 
@@ -74,8 +74,7 @@ Load Balancer provides two types of availability zone support: *zonal* and *zone
 
 - *Zonal:* A zonal frontend IP configuration is deployed into a single availability zone. The inbound and outbound flows are served within that one zone. If the availability zone has a problem, the load balancer is unavailable. You should only use a zonal frontend IP configuration if you deploy your backend instances within the same zone *and* you need all your traffic to remain within the zone, which is uncommon.
 
-    > [!IMPORTANT]
-    > Pinning to a single availability zone is only recommended when [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and when you verify that the latency doesn't meet your requirements. By itself, a zonal load balancer doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal load balancer, you need to explicitly deploy separate load balancers and backend instances into multiple availability zones and configure traffic routing and failover.
+    [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
     The following diagram shows a zonal internal load balancer in availability zone 1, which is configured by creating a zonal public IP address in that zone:
     
@@ -126,7 +125,7 @@ When designing your architecture:
 
 - **Region upgrades:** Even if a region is upgraded to include availability zone support, any existing IPs and load balancers remain as nonzonal. You need to explicitly migrate them to be zone-redundant or zonal. <!-- PG: please verify this is accurate. -->
 
-### Region support
+### Requirements
 
 Zone-redundant and zonal load balancers can be deployed into [any region that supports availability zones](regions-list.md).
 
@@ -170,7 +169,7 @@ When you work with Load Balancer, you set the availability zone support type - z
 
         You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
 
-### Normal operations
+### Behavior when all zones are healthy
 
 This section describes what to expect when a load balancer's frontend IP configuration is configured with availability zone support and all availability zones are operational.
 
@@ -186,7 +185,7 @@ This section describes what to expect when a load balancer's frontend IP configu
 
     The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones. <!-- PG: Please verify. -->
 
-### Zone-down experience
+### Behavior during a zone failure
 
 This section describes what to expect when a load balancer's frontend IP configuration is configured with availability zone support and there's an availability zone outage.
 
@@ -198,9 +197,7 @@ This section describes what to expect when a load balancer's frontend IP configu
     
         You might choose to initiate a failover to a secondary frontend IP configuration, another load balancer, or other infrastructure that you create in another availability zone or region. You're responsible for any of these failover activities.
 
-- **Notification**: Azure Load Balancer doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your load balancer. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure Load Balancer service, including any zone failures.
-    
-    Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests**: Any existing TCP/UDP flows within the failed zone are reset and need to be retried by the client. Your clients should have sufficient [transient fault handling](#transient-faults) implemented, including automated retries.
 
@@ -230,7 +227,7 @@ When an availability zone recovers, Load Balancer automatically resumes normal o
 
 If the zone failure also affected your compute services in the zone, then as backend instances in the recovered zone pass health checks, they're automatically added back to the healthy backend pool. Traffic distribution rebalances across all available zones based on the load balancing algorithm and backend instances' health status.
 
-### Testing for zone failures
+### Test for zone failures
 
 The options for testing for zone failures depend on the availability zone configuration that your frontend IP configuration uses.
 
@@ -242,9 +239,11 @@ The options for testing for zone failures depend on the availability zone config
     
     You can also test your recovery processes by reconfiguring clients or upstream services to simulate the load balancer being unavailable. 
 
-## Multi-region support
+## Resilience to region-wide failures
 
 Azure Load Balancer provides native multi-region support through [Global Load Balancer](../load-balancer/cross-region-overview.md), which enables load balancing across Azure regions. Global Load Balancer provides a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global Load Balancer can help to improve your application's reliability and performance.
+
+### Global load balancers
 
 With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If a region has a problem, traffic fails over to healthy regions automatically and without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
@@ -254,7 +253,7 @@ The following diagram shows a global load balancer that routes traffic among thr
 
 Global Load Balancer operates at layer 4 and doesn't provide application-layer features like SSL/TLS termination, cookie-based session affinity, or URL path-based routing. For these capabilities, consider using Azure Front Door. You can also consider using Azure Traffic Manager for layer 7 HTTP load balancing across regions.
 
-### Region support
+#### Requirements
 
 Your regional load balancers can be deployed into any Azure region.
 
@@ -262,11 +261,11 @@ A global load balancer, and its global public IP address, are deployed into a si
 
 Azure also has a number of [*participating regions*](/azure/load-balancer/cross-region-overview?branch=pr-en-us-304657#participating-regions-in-azure), which are the locations where the global public IP address of the load balancer is advertised from. You don't need to configure the participating regions for your global load balancer because Azure preselects the participating regions. When a client initiates a request, the traffic is routed to the closest participating region to the client. Then, the traffic travels from the participating region, through the Microsoft core network, until it reaches the closest regional load balancer.
 
-### Cost
+#### Cost
 
 Global Load Balancer incurs charges for the global load balancer resource in addition to the regional load balancers. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 This section explains how to configure a global load balancer.
 
@@ -274,7 +273,7 @@ This section explains how to configure a global load balancer.
 
 - **Disable global load balancer.** To disable cross-region functionality, remove the global load balancer resource. Regional load balancers continue operating independently, but clients need to be updated to send traffic to the correct regional IP address.
 
-### Normal operations
+#### Behavior when all regions are healthy
 
 This section describes what to expect when you use a global load balancer and all regions are operational.
 
@@ -284,7 +283,7 @@ This section describes what to expect when you use a global load balancer and al
 
     Configuration changes to your global load balancer are globally replicated with strong consistency. Regional load balancer configurations remain independent and must be managed separately in each region. <!-- PG: Please verify. -->
 
-### Region-down experience
+#### Behavior during a region failure
 
 This section describes what to expect when you use a global load balancer and there's a region outage.
 
@@ -317,15 +316,15 @@ This section describes what to expect when you use a global load balancer and th
 
 - **Traffic rerouting**: The anycast IP remains constant and is served by healthy participating regions. When clients reestablish a connection to the same IP address, their traffic is directed to a healthy region. DNS updates aren't required.
 
-### Region recovery
+#### Region recovery
 
 When the region recovers from failure, the global load balancer health probes automatically detect when the regional load balancer becomes healthy again. The global load balancer resumes routing traffic to the regional load balancer. The anycast IP address remains unchanged throughout the failback process, requiring no client or DNS updates.
 
-### Testing for region failures
+#### Test for region failures
 
 You can simulate a region failure by temporarily making the virtual machines within the region unavailable. Use this approach to verify that the global load balancer correctly redirects traffic to remaining healthy regions, and to validate your other failover procedures. For more information, see [Test cross-region failover](../load-balancer/tutorial-cross-region-portal.md#test-the-load-balancer)
 
-### Alternative multi-region approaches
+### Custom multi-region solutions for resiliency
 
 For HTTP/HTTPS workloads requiring application-layer features, use [Azure Front Door](../frontdoor/front-door-overview.md) as a global entry point with regional load balancers or Application Gateways as origins. This provides SSL termination, WAF capabilities, and URL-based routing alongside global load balancing.
 
