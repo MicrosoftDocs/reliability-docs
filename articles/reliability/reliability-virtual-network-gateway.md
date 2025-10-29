@@ -27,7 +27,7 @@ An Azure virtual network gateway is a component that provides encrypted connecti
 :::zone pivot="vpn"
 
 > [!IMPORTANT]
-> this article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
+> This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
 >
 > However, when you use VPNs, it's critical that you design your *entire network architecture* - not just the gateway - to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations.  For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
