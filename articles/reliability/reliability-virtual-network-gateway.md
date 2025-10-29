@@ -45,7 +45,7 @@ To view information about ExpressRoute gateways, be sure to select the appropria
 
 ::: zone pivot="expressroute"
 
-To learn about how to deploy Azure ExpressRoute to support your solution's reliability requirements and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure ExpressRoute in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-expressroute).
+The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable ExpressRoute solution, see [Architecture best practices for Azure ExpressRoute in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-expressroute).
 
 ::: zone-end
 
