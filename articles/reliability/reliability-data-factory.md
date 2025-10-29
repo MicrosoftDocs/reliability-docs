@@ -1,28 +1,28 @@
 ---
 title: Reliability in Azure Data Factory
-description: Learn how to ensure high availability for Azure Data Factory by using availability zones, multi-region deployments, and resilient pipeline practices for maximum uptime.
+description: Learn how to make Azure Data Factory resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. Also, learn about backup and the Data Factory service-level agreement.
 author: jonburchel
 ms.author: jburchel
 ms.topic: reliability-article
-ms.custom: subject-reliability, references_regions
+ms.custom: subject-reliability
 ms.service: azure-data-factory
-ms.date: 10/21/2025
+ms.date: 10/30/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Data Factory works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
 ---
 
 # Reliability in Azure Data Factory
 
-This article describes reliability support in [Azure Data Factory](../data-factory/introduction.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region deployments](#multi-region-support).
+Azure Data Factory enables you to create flexible and powerful data pipelines for serverless data integration and data transformation. As an Azure service, Data Factory provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
-You can use Data Factory to create flexible and powerful data pipelines for serverless data integration and data transformation. As a result, when you define your [business continuity plan](concept-business-continuity-high-availability-disaster-recovery.md) for reliability, you need to consider the reliability requirements and guidance for:
+This article describes how to make Data Factory resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Data Factory service level agreement (SLA).
 
-- *Data Factory pipelines*.
-
-- *Integration runtimes (IRs)*, which connect to data stores and perform activities defined in your pipeline.
-
-- *Data stores that connect to the data factory.* To help ensure that data stores meet your business continuity requirements, consult their product reliability documentation and guidance.
+> [!NOTE]
+> When you define your reliability strategy for Data Factory, you need to consider the reliability requirements and guidance for:
+> - *Data Factory pipelines*.
+> - *Integration runtimes (IRs)*, which connect to data stores and perform activities defined in your pipeline.
+> - *Data stores that connect to the data factory.* To help ensure that data stores meet your business continuity requirements, consult their product reliability documentation and guidance.
 
 ## Reliability architecture overview
 
@@ -38,7 +38,7 @@ The components of Data Factory include:
     
     - *Self-hosted integration runtimes (SHIRs)*. Microsoft provides software that you can run on your own compute infrastructure to perform some parts of your Data Factory pipelines. You're responsible for the deployment and management of compute resources, and for the resiliency of those compute resources.
 
-## Transient faults
+## Resilience to transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
@@ -65,11 +65,11 @@ You can use retry policies to configure parts of your pipeline to retry if there
 
 For more information about how to change or disable retry policies for your data factory triggers and activities, see [Pipeline runs and triggers](../data-factory/concepts-pipeline-execution-triggers.md).
 
-## Availability zone support
+## Resilience to availability zone failures
 
-[!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-Data Factory supports zone redundancy, which provides resiliency to failures in [availability zones](availability-zones-overview.md).
+Data Factory supports *zone redundancy*, which provides resiliency to failures in [availability zones](availability-zones-overview.md).
 
 Each part of Data Factory supports zone redundancy:
 
@@ -91,7 +91,7 @@ Each part of Data Factory supports zone redundancy:
 
     - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
 
-### Regions supported
+### Requirements
 
 Zone-redundant Data Factory resources can be deployed in [any region that supports availability zones](./availability-zones-region-support.md).
 
@@ -131,7 +131,7 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
     - *A SHIR* requires you to configure your own capacity and scaling. Consider over-provisioning when you deploy a SHIR.
 
-### Normal operations
+### Behavior when all zones are healthy
 
 This section describes what to expect when Data Factory resources are configured for zone redundancy and all availability zones are operational.
 
@@ -141,15 +141,13 @@ This section describes what to expect when Data Factory resources are configured
 
     However, tumbling window triggers contain state, which might not be fully replicated between zones.
 
-### Zone-down experience
+### Behavior during a zone failure
 
 This section describes what to expect when Data Factory resources are configured for zone redundancy and there's an availability zone outage.
 
 - **Detection and response:** The Data Factory platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover in your pipelines or other components.
 
-- **Notification**: Azure Data Factory doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your data factory. If a zone is down, the data factory in that zone will show as unavailable. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure Data Factory service, including any zone failures.
-  
-  Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:** Any pipelines and triggers in progress continue to run, and you don't experience any immediate disruption from a zone failure. However, activities in progress during a zone failure might fail and be restarted. It's important to design activities to be idempotent, which helps them recover from zone failures and other faults. For more information, see [Transient faults](#transient-faults).
 
@@ -165,13 +163,13 @@ When the availability zone recovers, Data Factory automatically fails back to th
 
 However, if you use a SHIR, you might need to restart your compute resources if they've been stopped.
 
-### Testing for zone failures
+### Test for zone failures
 
 For the core service, and for Azure and Azure-SSIS IRs, Data Factory manages traffic routing, failover, and failback for zone-redundant resources. Because this feature is fully managed, you don't need to initiate or validate availability zone failure processes.
 
 For SHIRs, you can use [Azure Chaos Studio](/azure/chaos-studio/chaos-studio-overview) to simulate an availability zone failure on an Azure VM.
 
-## Multi-region support
+## Resilience to region-wide failures
 
 Data Factory resources are deployed into a single Azure region. If the region becomes unavailable, your data factory is also unavailable. However, there are approaches that you can use to help ensure resilience to region outages. These approaches depend on whether the data factory is in a paired or nonpaired region and on your specific requirements and configuration.
 
@@ -202,7 +200,7 @@ To prepare for a failover, there might be some extra considerations, depending o
 
 After a Microsoft-managed failover is complete, you can access your Data Factory pipeline in the paired region. However, after the failover completes, you might need to perform some reconfiguration for IRs or other components. This process includes re-establishing the networking configuration.
 
-### Alternative multi-region approaches
+### Custom multi-region solutions for resiliency
 
 If you need your pipelines to be resilient to regional outages and you need control over the failover process, consider using a metadata-driven pipeline.
 
