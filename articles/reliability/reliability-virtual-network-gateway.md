@@ -21,6 +21,8 @@ This article describes how to make a virtual network gateway resilient to a vari
 
 ::: zone pivot="expressroute"
 
+To view information about VPN Gateway, be sure to select the appropriate virtual network gateway type at the beginning of this page.
+
 > [!IMPORTANT]
 > This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based parts of the ExpressRoute system.
 >
@@ -29,6 +31,8 @@ This article describes how to make a virtual network gateway resilient to a vari
 ::: zone-end
 
 :::zone pivot="vpn"
+
+To view information about ExpressRoute gateways, be sure to select the appropriate virtual network gateway type at the beginning of this page.
 
 > [!IMPORTANT]
 > This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
