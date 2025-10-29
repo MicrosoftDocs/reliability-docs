@@ -1,19 +1,23 @@
 ---
 title: Reliability in Azure virtual network gateways
-description: Find out about reliability in Azure virtual network gateways, including availability zones and multi-region deployments for ExpressRoute and VPN gateways.
+description: Learn how to make Azure virtual network gateways resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. Also, learn about the virtual network gateway service-level agreement.
 ms.author: anaharris
 author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-vpn-gateway
-ms.date: 10/28/2025
+ms.date: 10/30/2025
 zone_pivot_groups: virtual-network-gateway-types
 ai-usage: ai-assisted
 ---
 
 # Reliability in Azure virtual network gateways
 
-An Azure virtual network gateway is a component that provides encrypted connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. This article describes reliability support in virtual network gateways, including transient fault handling, availability zone support, and multi-region deployments.
+An Azure virtual network gateway is a component that provides encrypted connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. As an Azure service, a virtual network gateway provides a range of capabilities to support your reliability requirements.
+
+[!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
+
+This article describes how to make a virtual network gateway resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights some key information about the virtual network gateway service level agreement (SLA).
 
 ::: zone pivot="expressroute"
 
@@ -32,8 +36,6 @@ An Azure virtual network gateway is a component that provides encrypted connecti
 > However, when you use VPNs, it's critical that you design your *entire network architecture* - not just the gateway - to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations.  For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
-
-[!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
 ## Production deployment recommendations
 
@@ -135,7 +137,7 @@ Depending on your high availability requirements, you can configure your gateway
 
 You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Availability zone support](#availability-zone-support).
 
-## Transient faults
+## Resilience to transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
@@ -173,9 +175,9 @@ Transient faults can sometimes affect IPsec tunnels or TCP data flows. In the ev
 
 ::: zone-end
 
-## Availability zone support
+## Resilience to availability zone failures
 
-[!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
 Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances are automatically distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintain connectivity during zone maintenance or outages.
 
@@ -200,27 +202,25 @@ The following diagram shows a zone-redundant virtual network gateway with two in
 
 ::: zone-end
 
-### Region support
-
-Zone-redundant virtual network gateways are available in [all regions that support availability zones](./regions-list.md).
-
 ### Requirements
 
-For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy.
+- **Region support:** Zone-redundant virtual network gateways are available in [all regions that support availability zones](./regions-list.md).
+
+- **SKU:** For a virtual network gateway to be zone-redundant, it must use a SKU that supports zone redundancy.
 
 ::: zone pivot="expressroute"
 
-The following table shows which SKUs support zone redundancy:
+    The following table shows which SKUs support zone redundancy:
 
-[!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
+    [!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
+    All tiers of Azure VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [About Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
 
-You must also use standard SKU public IP addresses and configure them to be zone-redundant.
+- **Public IP addresses:** You must also use standard SKU public IP addresses and configure them to be zone-redundant.
 
 ::: zone-end
 
@@ -268,7 +268,7 @@ This section explains how to configure zone redundancy for your virtual network 
 
 - **Verify the zone redundancy status of an existing virtual network gateway.** <!-- PG: Please confirm whether a customer can confirm whether an existing gateway is ZR, zonal, or nonzonal -->
 
-### Normal operations
+### Behavior when all zones are healthy
 
 The following section describes what to expect when your virtual network gateway is configured for zone redundancy and all availability zones are operational.
 
@@ -292,27 +292,13 @@ The following section describes what to expect when your virtual network gateway
 
 - **Instance management:** The platform automatically selects the zones for your gateway instances, and manages instance placement across the zones. Health monitoring ensures that only healthy instances receive traffic.
 
-### Zone-down experience
+### Behavior during a zone failure
 
 The following section describes what to expect when your virtual network gateway is configured for zone redundancy and there's an availability zone outage.
 
 - **Detection and response:** The Azure platform detects and responds to a failure in an availability zone. You don't need to initiate a zone failover.
 
-::: zone pivot="expressroute"
-
-- **Notification**: ExpressRoute doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your gateway. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure ExpressRoute service, including any zone failures.
-
-    Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
-
-::: zone-end
-
-::: zone pivot="vpn"
-
-- **Notification**: Azure VPN Gateway doesn't notify you when a zone is down. However, you can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of your gateway. You can also use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Azure VPN Gateway services, including any zone failures.
-
-    Set up alerts on these services to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal) and [Create and configure Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide).
-
-::: zone-end
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#transient-faults).
 
@@ -342,7 +328,7 @@ When the affected availability zone recovers, Azure automatically restores any g
 
 The Azure platform manages traffic routing, failover, and failback for zone-redundant virtual network gateways. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
-## Multi-region support
+## Resilience to region-wide failures
 
 A virtual network gateway is a single-region resource. If the region becomes unavailable, your gateway is also unavailable.
 
@@ -353,7 +339,7 @@ A virtual network gateway is a single-region resource. If the region becomes una
 
 ::: zone-end
 
-### Alternative multi-region approaches
+### Custom multi-region solutions for resiliency
 
 ::: zone pivot="expressroute"
 
@@ -373,7 +359,7 @@ You can deploy separate VPN Gateways in two or more different regions. However, 
 
 ::: zone-end
 
-## Reliability during service maintenance
+## Resilience to service maintenance
 
 Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize effect on your connectivity. 
 
