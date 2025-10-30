@@ -14,7 +14,7 @@ ms.custom: subject-reliability
 
 To help safeguard your applications against hardware failures, network disruptions, and natural disasters, design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 
-You should address zone resiliency during the initial planning and deployment of workloads. But at this stage, many existing workloads might not yet support this level of protection. In most cases, enabling zone resiliency for deployed workloads is straightforward, and Microsoft continues to simplify the process. But any change to your workload can introduce risk, so plan carefully. Assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
+When possible, you should address zone resiliency during the initial planning and deployment of workloads. But many existing workloads might not yet support this level of protection. In most cases, enabling zone resiliency for deployed workloads is straightforward, and Microsoft continues to simplify the process. But any change to your workload can introduce risk, so plan carefully. Assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
 
 This article outlines key considerations to enable zone resiliency in your Azure workloads. It also helps you plan and implement a successful transition to a more resilient architecture.
 
@@ -72,7 +72,7 @@ Use the following guidance to prioritize Azure service groups based on their cri
 
    Many core networking services are zone redundant automatically, but you should focus on components like Azure ExpressRoute gateways, Azure VPN Gateway, Azure Application Gateway, Azure Load Balancer, and Azure Firewall.
 
-1. **Improve operational data storage resiliency.** Operational data storage contains valuable data that multiple workloads often use, so improving the availability of those data stores can help many workloads.
+1. **Improve operational data storage resiliency.** Operational data stores contain valuable data that multiple workloads often use, so improving the availability of those data stores can help many workloads.
 
    For operational data storage resiliency, focus on services like Azure SQL Database, Azure SQL Managed Instance, Azure Storage, Azure Data Lake Storage, Azure Cosmos DB, Azure PostgreSQL Flexible Server, Azure MySQL Flexible Server, and Azure Cache for Redis.
 
@@ -86,14 +86,14 @@ Use the following guidance to prioritize Azure service groups based on their cri
 
 ### Step 2: Assess zone configuration approaches
 
-After you prioritize your workloads and Azure services, identify the approach required to enable availability zone support for each service and configure zone resiliency. 
+After you prioritize your workloads and Azure services, identify the approach required to enable availability zone support for each service, and understand what you need to do to configure zone resiliency. 
 
 Each Azure reliability service guide provides a section that describes how to enable zone resiliency for that service. This section helps you understand the effort required to make each service zone resilient so that you can plan your strategy accordingly. For more information about a specific service, see [Azure reliability service guides](./overview-reliability-guidance.md).
 
 Use the [zone configuration table](#azure-services-by-zone-configuration-approach) to quickly understand approaches for common Azure services.
 
 > [!IMPORTANT]
-> If your workload includes components deployed in a zonal (or single-zone) configuration, plan to make these components resilient to zone outages. Common approaches include deploying separate instances into another availability zone and switching between them if necessary.
+> If your workload includes components deployed in a zonal (or single-zone) configuration, plan to make these components resilient to zone outages. A common approach is to deploy separate instances into another availability zone and switch between them if necessary.
 
 ### Step 3: Test for latency
 
@@ -148,11 +148,11 @@ The following table summarizes the availability zone support for many Azure serv
 | [Azure Cosmos DB for NoSQL](./reliability-cosmos-db-nosql.md#migrate-to-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Modification | None if using autoscale or multi-region writes |
 | [Azure Data Factory](./reliability-data-factory.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
 | [Azure Data Lake Storage](reliability-storage-blob.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Moderate cost increase |
-| [Azure Database for MySQL - Flexible Server](migrate-database-mysql-flex.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Requires primary and high availability instance |
-| [Azure Database for PostgreSQL - Flexible Server](./reliability-postgresql-flexible-server.md#availability-zone-redeployment-and-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Requires primary and high availability instance |
+| [Azure Database for MySQL - Flexible Server](migrate-database-mysql-flex.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Requires primary and high availability (HA) instance |
+| [Azure Database for PostgreSQL - Flexible Server](./reliability-postgresql-flexible-server.md#availability-zone-redeployment-and-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Requires primary and HA instance |
 | [Azure Disk Storage (managed disks)](migrate-vm.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Enablement | Moderate cost increase |
 | [Azure Elastic SAN](reliability-elastic-san.md#availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Moderate cost increase |
-| [Azure Event Hubs: Dedicated tier](./reliability-event-hubs.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | Minimum capacity units required |
+| [Azure Event Hubs: Dedicated tier](./reliability-event-hubs.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | Minimum capacity units (CUs) required |
 | [Azure Event Hubs: all other tiers](./reliability-event-hubs.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
 | [Azure ExpressRoute](/azure/expressroute/expressroute-howto-gateway-migration-portal) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | Depends on tier |
 | [Azure Files](./reliability-storage-files.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Moderate cost increase |

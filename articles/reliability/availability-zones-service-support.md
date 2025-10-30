@@ -12,9 +12,9 @@ ms.custom: subject-reliability
 
 # Azure services that support availability zones
 
-Azure continually increases the number of zonal and zone-redundant services that support [availability zones](./availability-zones-overview.md). This article lists which services support availability zones and the type of offerings that they support.
+Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), either by being zonal or zone-redundant. This article lists which services support availability zones and the type of offerings that they support.
 
-Some Azure offerings are *nonregional*, which means that you don't deploy the offering into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
+Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
 > [!IMPORTANT]
 > Some services might support availability zones but require specific configurations to enable them on your resources. For example, some services might support availability zones for only specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
@@ -97,8 +97,8 @@ The following table lists zonal and zone-redundant Azure offerings. Some offerin
 | [Azure Virtual Machines](./reliability-virtual-machines.md#availability-zone-support) || :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Virtual Network](./reliability-virtual-network.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Virtual WAN: ExpressRoute](../virtual-wan/virtual-wan-faq.md#how-are-availability-zones-and-resiliency-handled-in-virtual-wan) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
-| [Azure Virtual WAN: Point-to-site VPN gateways](../virtual-wan/point-to-site-concepts.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
-| [Azure Virtual WAN: Site-to-site VPN gateways](../virtual-wan/virtual-wan-site-to-site-portal.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
+| [Azure Virtual WAN: Point-to-site VPN gateways](../vpn-gateway/about-zone-redundant-vnet-gateways.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
+| [Azure Virtual WAN: Site-to-site VPN gateways](../vpn-gateway/about-zone-redundant-vnet-gateways.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure VMware Solution](../azure-vmware/architecture-private-clouds.md) || :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure VPN Gateway](../vpn-gateway/about-zone-redundant-vnet-gateways.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Web PubSub](../azure-web-pubsub/concept-availability-zones.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
