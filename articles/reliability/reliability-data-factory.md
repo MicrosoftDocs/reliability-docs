@@ -19,10 +19,7 @@ Azure Data Factory enables you to create flexible and powerful data pipelines fo
 This article describes how to make Data Factory resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Data Factory service level agreement (SLA).
 
 > [!NOTE]
-> When you define your reliability strategy for Data Factory, you need to consider the reliability requirements and guidance for:
-> - *Data Factory pipelines*.
-> - *Integration runtimes (IRs)*, which connect to data stores and perform activities defined in your pipeline.
-> - *Data stores that connect to the data factory.* To help ensure that data stores meet your business continuity requirements, consult their product reliability documentation and guidance.
+> When you consider the reliability of your data factory, you also need to consider the reliability of the data stores that it connects to. Improving the resiliency of the data factory alone might have limited impact if the data stores aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas. To help ensure that data stores meet your business continuity requirements, consult their product reliability documentation and guidance.
 
 ## Reliability architecture overview
 
@@ -32,7 +29,7 @@ The components of Data Factory include:
 
 - **The core Data Factory service**, which manages pipeline triggers and oversees the coordination of pipeline activities. The core service also manages metadata for each component in the data factory. Microsoft manages the core service.
 
-- **[Integration runtimes (IRs)](../data-factory/concepts-integration-runtime.md#integration-runtime-types)**, which perform specific activities within a pipeline. There are different types of IRs.
+- **[Integration runtimes (IRs)](../data-factory/concepts-integration-runtime.md#integration-runtime-types)**, which connect to data stores and perform activities defined in your pipeline. There are different types of IRs.
 
     - *Microsoft-managed IRs*, which include the Azure IR and the Azure-SQL Server Integration Services (Azure-SSIS) IR. Microsoft manages the components that make up these runtimes. In some scenarios, you configure settings that affect the resiliency of your IRs.
     
