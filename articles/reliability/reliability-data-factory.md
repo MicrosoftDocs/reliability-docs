@@ -85,7 +85,7 @@ Each part of Data Factory supports zone redundancy:
 
     - *An Azure-SSIS IR* requires you to deploy at least two nodes. These nodes are allocated into different availability zones automatically.
 
-        The following diagram shows a zone-redundant pipeline, and an Azure-SSIS integration runtime with two nodes that are deployed in different zones:
+        The following diagram shows a zone-redundant pipeline and an Azure-SSIS integration runtime with two nodes that are deployed in different zones:
 
         :::image type="content" source="./media/reliability-data-factory/zone-redundancy-core-service-sql-integration-runtime.svg" alt-text="Diagram that shows the zone-redundant core service, and an Azure SSIR integration runtime with two nodes that are deployed into different zones." border="false" :::
 
