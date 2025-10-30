@@ -246,9 +246,7 @@ For more information, see [Global Load Balancer](../load-balancer/cross-region-o
 
 ### Custom multi-region solutions for resiliency
 
-For HTTP/HTTPS workloads requiring application-layer features, use [Azure Front Door](../frontdoor/front-door-overview.md) as a global entry point with regional load balancers or Application Gateways as origins. This provides SSL termination, WAF capabilities, and URL-based routing alongside global load balancing.
-
-For DNS-based global load balancing across regions, use [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md). Traffic Manager provides geographic routing, priority routing, and weighted routing methods, though it requires DNS TTL considerations for failover timing. For an example architecture that combines Azure Traffic Manager and Azure Application Gateway, see [Multi-region load balancing with Traffic Manager and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
+Azure provides a range of load balancing services that suit different requirements. You can select a load balancer that meets your resiliency requirements and that suits your application type. For more information, see [Load balancing options](/azure/architecture/guide/technology-choices/load-balancing-overview).
 
 ## Service-level agreement
 
