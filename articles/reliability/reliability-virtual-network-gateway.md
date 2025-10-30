@@ -125,7 +125,7 @@ You don't see or manage the VMs directly.  The platform automatically manages in
 
 You configure the gateway SKU. Each SKU supports a different level of throughput, and a different number of circuits. When you use the ErGwScale SKU (preview), ExpressRoute automatically scales the gateway by adding more instances. For more information, see [About ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
 
-A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Active-active connections](../expressroute/designing-for-high-availability-with-expressroute.md#active-active-connections).
 
 Ordinarily, traffic is routed through your virtual network gateway. However, if you use [FastPath](../expressroute/about-fastpath.md), traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. The gateway is still important, because it's used to configure routing for your traffic.
 
