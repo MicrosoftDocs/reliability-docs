@@ -13,11 +13,11 @@ ai-usage: ai-assisted
 
 # Reliability in Azure virtual network gateways
 
-An Azure virtual network gateway is a component that provides encrypted connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. As an Azure service, a virtual network gateway provides a range of capabilities to support your reliability requirements.
+An Azure virtual network gateway is a component that provides secure connectivity between your Azure Virtual Network (VNet) and other networks—either your on-premises network or another VNet in Azure. There are two types of virtual network gateways: [Azure ExpressRoute gateway](/azure/expressroute/expressroute-about-virtual-network-gateways), which uses private connections that don't traverse the public internet, and [Azure VPN gateway](/azure/vpn-gateway/vpn-gateway-about-vpngateways), which uses encrypted tunnels over the internet. As an Azure service, a virtual network gateway provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make a virtual network gateway resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights some key information about the virtual network gateway service level agreement (SLA).
+This article describes how to make a virtual network gateway resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and planned service maintenance. It also highlights some key information about the virtual network gateway service level agreement (SLA).
 
 ::: zone pivot="expressroute"
 
@@ -69,9 +69,9 @@ With ExpressRoute, you must deploy components in the on-premises environment, pe
 
 - *Circuits and connections*: An ExpressRoute *circuit* consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. By using two connections, you can achieve active-active connectivity. However, this configuration doesn't protect against site-level failures.
 
-- *Customer premises equipment* (CPE) includes your edge routers and client devices. You need to ensure that your CPE is designed to be resilient to problems, and that it can quickly recover when problems happen in other parts of your ExpressRoute infrastructure. For more information, see [Design and architect Azure ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
+- *Customer premises equipment* (CPE) includes your edge routers and client devices. You need to ensure that your CPE is designed to be resilient to problems, and that it can quickly recover when problems happen in other parts of your ExpressRoute infrastructure.
 
-- *Sites:* Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers, but because they represent a single physical location, there is a possibility of sites having problems. To mitigate the risk of site outages, ExpressRoute offers different site resiliency options that vary in their level of protection. For more information, see [Design and architect Azure ExpressRoute for resiliency - Site resiliency for ExpressRoute](../expressroute/design-architecture-for-resiliency.md#site-resiliency-for-expressroute).
+- *Sites:* Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers, but because they represent a single physical location, there is a possibility of sites having problems. To mitigate the risk of site outages, ExpressRoute offers different site resiliency options that vary in their level of protection.
 
 - *Azure virtual network gateway:* In Azure, you create a *virtual network gateway* that acts as the termination point for one or more ExpressRoute circuits within your Azure virtual network.
 
@@ -320,7 +320,7 @@ The following section describes what to expect when your virtual network gateway
 
 - **Traffic rerouting:** The platform automatically distributes traffic to instances in healthy zones.
 
-    FastPath-enabled circuits maintain optimized routing throughout the failover process, ensuring minimal effect on application performance.
+    FastPath-enabled connections maintain optimized routing throughout the failover process, ensuring minimal effect on application performance.
 
 ::: zone-end
 
