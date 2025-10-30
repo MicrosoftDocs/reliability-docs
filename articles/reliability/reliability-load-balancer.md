@@ -84,11 +84,10 @@ Load Balancer provides two types of availability zone support: *zonal* and *zone
 
     :::image type="content" source="./media/reliability-load-balancer/zonal-internal-load-balancer.svg" alt-text="Diagram showing a zonal internal load balancer in zone 1, directing traffic to two different VMs in zone 1." border="false" :::
 
-In regions with no availability zones, load balancers can also be created in a *nonzonal* or *regional* configuration by using of a frontend configuration with no zone configured. If the region experiences an outage, nonzonal load balancers could experience downtime.
-<!-- PG: When will nonzonal public IP addresses be retired (per https://azure.microsoft.com/en-us/blog/azure-public-ips-are-now-zone-redundant-by-default/)? I can still create one as of September 2025. -->
+In regions with no availability zones, load balancers are created in a *nonzonal* or *regional* configuration by using a frontend configuration with no zone configured. If the region experiences an outage, nonzonal load balancers could experience downtime.
 
 > [!TIP]
-> **Use zone-redundant frontend IP configurations wherever possible.** Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone. Avoid using nonzonal frontend IP configurations, because they don't provide resiliency to zone failures.
+> **Use zone-redundant frontend IP configurations wherever possible.** Only use zonal frontend IP configurations when you require a load balancer to exist within a single zone.
 
 #### Backend instances and availability zones
 
@@ -109,7 +108,7 @@ However, if you choose to deploy your VMs into the same availability zone, you c
 
 Using multiple frontends allow you to load balance traffic on more than one port or IP address.
 
-Because each load balancer can have multiple frontend IP configurations, it's possible to have one load balancer that includes a combination of zone-redundant, zonal, and nonzonal frontend IP configurations. However, in practice, you typically only have one type of availability zone configuration for your load balancer. <!-- PG: please verify that this is indeed the most common (and recommended) configuration. -->
+We recommend you only use zone-redundant frontend IP configurations on your load balancer. However, because each load balancer can have multiple frontend IP configurations, it's possible to have one load balancer that includes a combination of zone-redundant and zonal frontend IP configurations.
 
 When designing your architecture:
 
@@ -119,15 +118,9 @@ When designing your architecture:
 
     If you need to use multiple zonal deployments, each in different zones, you don't need to deploy a load balancer in each zone. Instead, you can deploy a single load balancer with a zonal frontend in each zone. Configure the load balancing rules to route traffic from the zonal frontends to the virtual machines in the backend pool that are part of the same availability zone.
 
-### Considerations
-
-- **Zone failure:** An availability zone can fail and the data path survives as long as the remaining zones in the region remain healthy.
-
-- **Region upgrades:** Even if a region is upgraded to include availability zone support, any existing IPs and load balancers remain as nonzonal. You need to explicitly migrate them to be zone-redundant or zonal. <!-- PG: please verify this is accurate. -->
-
 ### Requirements
 
-Zone-redundant and zonal load balancers can be deployed into [any region that supports availability zones](regions-list.md).
+**Region support:** Zone-redundant and zonal load balancers can be deployed into [any region that supports availability zones](regions-list.md).
 
 ### Cost
 
@@ -141,7 +134,7 @@ When you work with Load Balancer, you set the availability zone support type - z
 
     - For *public load balancers*, the frontend IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it.
         
-        To make the frontend IP configuration *zone-redundant*, create or select a zone-redundant public IP address.
+        To make the frontend IP configuration *zone-redundant*, create or select a zone-redundant public IP address. Public IP addresses are zone-redundant by default.
         
         To make the frontend IP configuration *zonal*, create or select a zonal public IP address. Azure then places the load balancer in the same zone as the zonal public IP address.
     
@@ -152,7 +145,6 @@ When you work with Load Balancer, you set the availability zone support type - z
         For detailed steps, see [Create an internal load balancer to load balance VMs using the Azure portal](../load-balancer/quickstart-load-balancer-standard-internal-portal.md).
 
 - **Change the availability zone configuration of an existing load balancer.** To change the availability zone configuration of an existing load balancer, you need to replace the frontend IP configuration. The high-level approach is:
-
 
     1. Create a new frontend IP configuration with the desired availability zone configuration.
     
@@ -167,7 +159,7 @@ When you work with Load Balancer, you set the availability zone support type - z
     
     1. Remove the old frontend IP configuration.
 
-        You can use this approach to move from a nonzonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
+        You can use this approach to move from a zonal to a zone-redundant frontend IP configuration, or between other availability zone support types.
 
 ### Behavior when all zones are healthy
 
@@ -183,7 +175,7 @@ This section describes what to expect when a load balancer's frontend IP configu
 
 - **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data. Even if you enable [session persistence](../load-balancer/distribution-mode-concepts.md#session-persistence) on the load balancer, no state is stored on the load balancer. Session persistence adjusts the hashing process to route requests to the same backend instance. However, session persistence isn't guaranteed. When the backend pool changes, the distribution of client requests is recomputed. This process is done without storing or synchronizing state.
 
-    The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones. <!-- PG: Please verify. -->
+    The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones.
 
 ### Behavior during a zone failure
 
