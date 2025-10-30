@@ -70,7 +70,7 @@ Event Hubs supports zone-redundant deployments in all service tiers. When you cr
 
 Event Hubs transparently replicates your configuration, metadata, and event data across three availability zones in the region. Zone redundancy provides automatic failover without any intervention required from you. All Event Hubs components including compute, networking, and storage are replicated across zones. Event Hubs has enough capacity reserves to instantly handle the complete loss of a zone. Even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to streaming applications.
 
-:::image type="content" source="./media/reliability-event-hubs/availability-zones.svg" alt-text="Diagram that shows a zone-redundant Event Hubs namespace." lightbox="./media/reliability-event-hubs/availability-zones.svg" border="false":::
+:::image type="content" source="./media/reliability-event-hubs/availability-zones.svg" alt-text="Diagram that shows a zone-redundant Event Hubs namespace." border="false":::
 
 ### Region support
 
@@ -144,7 +144,7 @@ Use geo-replication for scenarios that require resiliency to region outages and 
 
 The namespace essentially extends across regions. One region serves as the primary, and the other regions serve as secondaries. Your Azure subscription shows a single namespace, no matter how many secondary regions you configure for geo-replication.
 
-:::image type="content" source="./media/reliability-event-hubs/geo-replication.svg" alt-text="Diagram that shows an Event Hubs namespace configured for geo-replication." lightbox="./media/reliability-event-hubs/geo-replication.svg" border="false":::
+:::image type="content" source="./media/reliability-event-hubs/geo-replication.svg" alt-text="Diagram that shows an Event Hubs namespace configured for geo-replication." border="false":::
     
 At any time, you can *promote* a secondary region to a primary region. When you promote a secondary region, Event Hubs repoints the namespace's fully qualified domain name (FQDN) to the selected secondary region and demotes the previous primary region to a secondary region. You decide whether to perform a *planned promotion*, which means that you wait for data replication to complete, or a *forced promotion*, which might result in data loss.
 
@@ -286,7 +286,7 @@ Metadata geo-disaster recovery works best for applications that don't strictly n
 
 When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is an FQDN that directs all traffic to the primary namespace by default.
 
-:::image type="content" source="./media/reliability-event-hubs/geo-disaster-recovery.svg" alt-text="Diagram that shows two Event Hubs namespaces that are configured for metadata geo-disaster recovery." lightbox="./media/reliability-event-hubs/geo-disaster-recovery.svg" border="false":::
+:::image type="content" source="./media/reliability-event-hubs/geo-disaster-recovery.svg" alt-text="Diagram that shows two Event Hubs namespaces that are configured for metadata geo-disaster recovery." border="false":::
 
 If the primary region fails or another type of disaster occurs, you can manually initiate a single-time, one-way failover move from the primary region to the secondary region at any time. The failover completes almost instantly. During the failover process, the geo-disaster recovery alias repoints to the secondary namespace and the pairing is removed.
 
