@@ -1,21 +1,24 @@
 ---
 title: Reliability in Azure Managed Redis
-description: Learn about reliability in Azure Managed Redis, including availability zones and multi-region deployments.
+description: Learn about resiliency in Azure Managed Redis, including availability zones and multi-region deployments.
 ms.author: anaharris
 author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis
-ms.date: 10/17/2025
-ms.update-cycle: 180-days
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Redis works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
+ms.date: 10/30/2025
+ai-usage: ai-assisted
+
+#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Redis works from a reliability perspective and plan both resiliency and recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Managed Redis
 
 Azure Managed Redis provides fully integrated and managed Redis Enterprise on Azure, offering high-performance in-memory data storage for applications. This service is built for enterprise workloads requiring ultra-low latency, high throughput, and advanced data structures. 
 
-This article describes reliability in Azure Managed Redis, including availability zone support, multi-region deployments using active geo-replication, transient fault handling, backup strategies, and the service-level agreement (SLA).
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
+
+This article describes reliability in [Azure Managed Redis](/azure/redis/overview), including resilience to transient faults, availability zone failures, and region-wide failures. The article also describes backup strategies and the service-level agreement (SLA).
 
 ## Production deployment recommendations
 
@@ -65,9 +68,9 @@ The service handles network-level transient faults through automatic reconnectio
 - [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover) - Transient fault handling details
 - [Best practices for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/best-practices-performance) - Client-side fault handling recommendations
 
-## Availability zone support
+## Resilience to availability zone failures
 
-[!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
 <!-- John: The source link below contains a reference to zone redundancy in its feature comparison table. It links to the information in Azure Cache for Redis documentation, which was why I assumed that the feature would be similar in the Managed Redis. If it isn't similar, however, we should update that link. Clearly, the service supports zone redundancy, so we need to get clear on how that works. -->
 
@@ -82,16 +85,9 @@ The service supports only zone-redundant deployments in regions with availabilit
 **Sources:**
 - [Azure Managed Redis overview](https://learn.microsoft.com/en-us/azure/redis/overview) - Availability zone feature confirmation
 
-### Region support
-
-<!-- John: Assumed true but needs verification. -->
-
-Zone-redundant Azure Managed Redis resources can be deployed into any region that supports availability zones. 
-
-For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
-
-
 ### Requirements
+
+- **Region support.** Zone-redundant Azure Managed Redis resources can be deployed into any region that supports availability zones. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
 
 All Azure Managed Redis tiers (Memory Optimized, Balanced, Compute Optimized, and Flash Optimized) support availability zones without additional requirements. There are no specific SKU restrictions for enabling zone redundancy.
 
@@ -121,13 +117,13 @@ Enabling availability zones for Azure Managed Redis does not incur additional ch
 <!-- John: No information available -->
 
 
-### Normal operations
+### Behavior when all zones are healthy
 <!-- John: No information available -->
 
-### Zone-down experience
+### Behavior during a zone failure
 
 <!-- John: No information available -->
-### Zone Recovery
+### Zone recovery
 
 <!-- John: No information available -->
 
@@ -135,7 +131,7 @@ Enabling availability zones for Azure Managed Redis does not incur additional ch
 
 <!-- John: No information available -->
 
-## Multi-region support
+## Resilience to region-wide failures
 
 Azure Managed Redis provides native multi-region support through active geo-replication, enabling you to create globally distributed Redis deployments with automatic conflict resolution and eventual consistency across regions.
 
@@ -148,21 +144,13 @@ Unlike passive geo-replication solutions, Azure Managed Redis active geo-replica
 **Sources:**
 - [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Multi-region capabilities overview
 
-### Region support
-
-Azure Managed Redis active geo-replication can be configured between any Azure regions where the service is available. You can create replication groups that span multiple continents, though performance is optimized when regions are geographically closer due to network latency considerations.
-
-For optimal performance, select regions with low inter-region latency. The service supports replication across any combination of supported regions, allowing for flexible disaster recovery and global distribution strategies.
-
-**Sources:**
-- [Azure Managed Redis planning FAQs](https://learn.microsoft.com/en-us/azure/redis/planning-faq) - Regional placement recommendations
-- [Products available by region](https://azure.microsoft.com/global-infrastructure/services/?products=redis-cache&regions=all) - Regional availability
-
 ### Requirements
 
-Active geo-replication requires Azure Managed Redis instances of the same tier and size across all participating regions. All cache instances in a replication group must be configured with identical settings including persistence options, modules, and clustering policies.
+- **Region support** Azure Managed Redis active geo-replication can be configured between any Azure regions where the service is available. You can create replication groups that span multiple continents, though performance is optimized when regions are geographically closer due to network latency considerations. For optimal performance, select regions with low inter-region latency. The service supports replication across any combination of supported regions, allowing for flexible disaster recovery and global distribution strategies. For regional availability, see [Products available by region](https://azure.microsoft.com/global-infrastructure/services/?products=redis-cache&regions=all).
 
-The clustering policy cannot be changed after creating a cache instance, so all caches in a geo-replication group must be created with compatible clustering configurations from the beginning.
+ - **Tier:** Active geo-replication requires Azure Managed Redis instances of the same tier and size across all participating regions. All cache instances in a replication group must be configured with identical settings including persistence options, modules, and clustering policies.
+
+- **Clustering policy:** The clustering policy cannot be changed after creating a cache instance, so all caches in a geo-replication group must be created with compatible clustering configurations from the beginning.
 
 **Sources:**
 - [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Configuration requirements
@@ -205,7 +193,7 @@ Consider the cumulative resource requirements across all regions when planning c
 **Sources:**
 - [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Capacity planning guidance
 
-### Normal operations
+### Behavior when all regions are healthy
 
 During normal operations when all regions in the geo-replication group are healthy, Azure Managed Redis maintains active-active replication across all instances.
 
@@ -216,13 +204,15 @@ During normal operations when all regions in the geo-replication group are healt
 **Sources:**
 - [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Normal operations details
 
-### Region-down experience
+### Behavior during a region failure
 
 When a region becomes unavailable, Azure Managed Redis continues operating in the remaining healthy regions with automatic conflict resolution and data synchronization resuming once connectivity is restored.
 
 - **Detection and response**: Regional failures are automatically detected through Azure's monitoring infrastructure. The service continues operating in healthy regions without requiring customer intervention. Applications should be configured to route traffic away from the failed region to available regions.
 
-- **Notification**: Regional failures can be monitored through Azure Service Health and Resource Health. Configure alerts on these services to receive notifications when regional issues affect your replication group.
+- **Notification**: 
+
+  [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
 - **Active requests**: Requests to the failed region are terminated and must be handled by your application's failover logic. Applications should implement retry policies that can redirect traffic to healthy regions in the replication group.
 
@@ -271,16 +261,7 @@ Backup recovery is performed by creating a new Azure Managed Redis instance from
 
 ## Service-level agreement
 
-The service-level agreement (SLA) for Azure Managed Redis describes the expected availability of the service, and the conditions that must be met to achieve that availability expectation.
-
-Azure Managed Redis provides a 99.9% uptime SLA for all tiers when properly configured with availability zones. The SLA covers the availability of the Redis service itself, including automatic failover capabilities within availability zones. For instances deployed across multiple availability zones, the service maintains this SLA even during single zone failures.
-
-The SLA does not cover scenarios involving customer-initiated configuration changes, network connectivity issues outside of Azure's control, or application-level problems. For active geo-replication configurations, each regional instance maintains its individual SLA commitment, providing cumulative reliability across the replication group.
-
-For the most current SLA information, see [SLA for Azure Managed Redis](https://azure.microsoft.com/support/legal/sla/managed-redis/).
-
-**Sources:**
-- [SLA for Azure Managed Redis](https://azure.microsoft.com/support/legal/sla/managed-redis/) - Current SLA details
+[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
 ### Related content
 
@@ -290,7 +271,3 @@ For the most current SLA information, see [SLA for Azure Managed Redis](https://
 - [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication)
 - [How to configure data persistence for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/how-to-persistence)
 - [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover)
-
-**Sources:**
-- [Azure reliability overview](/azure/reliability/overview) - General reliability framework
-- [Availability zones overview](/azure/reliability/availability-zones-overview) - Zone concepts and implementation
