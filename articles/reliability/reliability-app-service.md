@@ -19,7 +19,8 @@ ms.date: 10/31/2025
 
 This article describes how to make App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the App Service service level agreement (SLA).
 
-If you are looking for information about reliability support in App Service Environment, see [Reliability in App Service Environment](./reliability-app-service-environment.md).
+>[!NOTE]
+>If you are looking for information about reliability support in App Service Environment, see [Reliability in App Service Environment](./reliability-app-service-environment.md).
 
 
 ## Production deployment recommendations
