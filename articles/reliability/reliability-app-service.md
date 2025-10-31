@@ -38,9 +38,10 @@ When you create an App Service web app, you specify the [App Service plan](../ap
 
 ## Resilience to transient faults
 
-[!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md.md)]
 
-[!INCLUDE [Transient fault handling app service](includes/app-service/reliability-transient-fault-handling-include.md)]
+
+[!INCLUDE [Transient fault handling app service](includes/app-service/reliability-transient-fault-include.md)]
 
 ## Resilience to availability zone failures
 
@@ -105,11 +106,11 @@ If you enable availability zones but specify a capacity of less than two, the pl
 
 ### Zone recovery
 
-[!INCLUDE [Failback description](includes/app-service/reliability-failback-include.md)]
+[!INCLUDE [Zone recovery](includes/app-service/reliability-zone-recovery-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Test for zone failures description](includes/app-service/reliability-testing-for-zone-failures-include.md)]
+[!INCLUDE [Test for zone failures description](includes/app-service/reliability-test-for-zone-failures-include.md)]
 
 ## Resilience to region-wide failures
 
