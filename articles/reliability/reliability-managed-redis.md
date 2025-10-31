@@ -70,7 +70,7 @@ To make a cache zone-redundant, you must deploy it into a supported region and e
 
 ### Requirements
 
-- **Region support.** Zone-redundant Azure Managed Redis caches can be deployed into any region that supports availability zones. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
+- **Region support.** Zone-redundant Azure Managed Redis caches can be deployed into any region that supports availability zones and where the service is available. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md). For the list of regions that support Azure Managed Redis, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
 - **High availability configuration.** You must enable high availability configuration on your cache for it to be zone-redundant.
 
@@ -123,118 +123,77 @@ When the affected availability zone recovers, Azure Managed Redis automatically 
 Because Azure Managed Redis fully manages traffic routing, failover, and failback for zone failures, you don't need to validate availability zone failure processes or provide any further input.
 
 ## Resilience to region-wide failures
-<!-- TODO -->
 
-Azure Managed Redis provides native multi-region support through active geo-replication, enabling you to create globally distributed Redis deployments with automatic conflict resolution and eventual consistency across regions.
+Azure Managed Redis provides native multi-region support through *active geo-replication*, which enables you to link multiple Azure Managed Redis instances across different Azure regions into a single replication group. You can then configure your own failover approach between the instances.
 
-Active geo-replication allows you to link multiple Azure Managed Redis instances across different Azure regions into a single replication group. This creates a multi-master configuration where applications can read from and write to any cache instance in the group, with changes automatically synchronized across all regions using conflict-free replicated data types (CRDTs).
+### Active geo-replication
 
-The service supports active-active replication patterns where each region can handle both read and write operations simultaneously. When conflicts occur due to concurrent writes in different regions, the service automatically resolves them using predetermined conflict resolution algorithms without requiring manual intervention. This approach provides both high availability and disaster recovery capabilities while maintaining low-latency access for globally distributed applications.
+When you use [active geo-replication](../redis/how-to-active-geo-replication.md), applications can read from and write to any cache instance in the group, with changes automatically synchronized across all regions. The service supports active-active replication patterns where each region can handle both read and write operations simultaneously. When conflicts occur due to concurrent writes in different regions, the service automatically resolves them using predetermined conflict resolution algorithms without requiring manual intervention. This approach provides resiliency to region failures while maintaining low-latency access for globally distributed applications.
 
-Unlike passive geo-replication solutions, Azure Managed Redis active geo-replication does not require manual failover procedures. Applications can seamlessly switch between regions during outages, and the service maintains data consistency across all healthy regions in the replication group.
+You're responsible for configuring your client applications so that, if any regional instance fails, they can redirect their requests to a healthy instance. 
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Multi-region capabilities overview
+#### Requirements
 
-### Requirements
+- **Region support** Azure Managed Redis active geo-replication can be configured between any Azure regions where the service is available.
 
-- **Region support** Azure Managed Redis active geo-replication can be configured between any Azure regions where the service is available. You can create replication groups that span multiple continents, though performance is optimized when regions are geographically closer due to network latency considerations. For optimal performance, select regions with low inter-region latency. The service supports replication across any combination of supported regions, allowing for flexible disaster recovery and global distribution strategies. For regional availability, see [Products available by region](https://azure.microsoft.com/global-infrastructure/services/?products=redis-cache&regions=all).
+- **Instance configuration:** Active geo-replication requires Azure Managed Redis instances of the same tier and size across all participating regions. All cache instances in a replication group must be configured with identical settings including persistence options, modules, and clustering policies.
 
- - **Tier:** Active geo-replication requires Azure Managed Redis instances of the same tier and size across all participating regions. All cache instances in a replication group must be configured with identical settings including persistence options, modules, and clustering policies.
+- **Other requirements:** Your cache instances must meet other requirements. For more information, see [Active geo-replication prerequisites](../redis/how-to-active-geo-replication.md#active-geo-replication-prerequisites).
 
-- **Clustering policy:** The clustering policy cannot be changed after creating a cache instance, so all caches in a geo-replication group must be created with compatible clustering configurations from the beginning.
+#### Considerations
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Configuration requirements
+- **Failover responsibility:** When you use active geo-replication, **you're responsible for failover between cache instances**. You should prepare and configuring your application to handle failover. Failover involves preparation and might require you complete multiple steps. For more information, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
 
-### Considerations
+- **Eventual consistency:** Applications should be designed to handle eventual consistency scenarios, because changes can take time to propagate across all regions depending on network conditions and geographic distance. During region outages, you may experience more data inconsistencies until connectivity is restored and synchronization completes.
 
-When using active geo-replication, network latency between regions affects replication performance and potential conflict resolution timing. Write-heavy workloads may experience higher resource utilization due to cross-region synchronization overhead.
+#### Cost
 
-Applications should be designed to handle eventual consistency scenarios, as changes may take time to propagate across all regions depending on network conditions and geographic distance. During regional outages, you may experience temporary data inconsistencies until connectivity is restored and synchronization completes.
+When you enable active geo-replication, you are billed for each Azure Managed Redis instance in every region within the replication group. Additionally, you might incur data transfer charges for cross-region replication traffic between regions. For more information about pricing, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) and [Bandwidth pricing details](https://azure.microsoft.com/pricing/details/bandwidth/).
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Design considerations
+#### Configure multi-region support
 
-### Cost
+- **Create a new geo-replicated cache instance**: Configure active geo-replication during cache provisioning by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](../redis/how-to-active-geo-replication.md#create-or-join-an-active-geo-replication-group).
 
-When you enable active geo-replication, you are billed for each Azure Managed Redis instance in every region within the replication group. Additionally, you incur data transfer charges for cross-region replication traffic between regions.
+- **Enable an existing cache instance for geo-replication**: You can add an existing cache instance to an active geo-replication group. For more information, see [Add an existing instance to an active geo-replication group](../redis/how-to-active-geo-replication.md#add-an-existing-instance-to-an-active-geo-replication-group)
 
-For more information about pricing, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) and [Bandwidth pricing details](https://azure.microsoft.com/pricing/details/bandwidth/).
+- **Disable geo-replication on a cache instance**: Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
 
-**Sources:**
-- [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) - Multi-region pricing details
+#### Behavior when all regions are healthy
 
-### Configure multi-region support
+This section describes what to expect when instances are configured to use active geo-replication and all regions are operational.
 
-Active geo-replication must be configured during the creation of your Azure Managed Redis instances. You cannot add existing cache instances to a geo-replication group after they have been created.
+- **Traffic routing between regions**: Applications can connect to any cache instance in the replication group and perform both read and write operations. Traffic routing is handled by the application, allowing you to direct clients to the nearest region for optimal latency. Azure Managed Redis doesn't provide automatic traffic routing between regions.
 
-- **Create**: Configure active geo-replication during cache provisioning by specifying a replication group and linking multiple instances. See [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication).
-- **Disable**: Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
-- **Migrate**: Existing single-region caches cannot be migrated to use geo-replication. You must create new geo-replicated caches and migrate your data.
+- **Data replication between regions**: The service uses asynchronous replication between regions to maintain eventual consistency. Write operations are immediately committed in the local region and then propagated to other regions in the background. Conflict-free replicated data types (CRDTs) ensure that concurrent writes in different regions are automatically merged.
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Configuration procedures
+#### Behavior during a region failure
 
-### Capacity planning and management
+This section describes what to expect when instances are configured to use active geo-replication and there's an outage in one region:
 
-Azure Managed Redis with active geo-replication automatically manages capacity across regions without requiring customer intervention. The service handles load balancing and resource allocation across all instances in the replication group.
+- **Detection and response**: You're responsible for detecting the failure of a cache instance, and deciding when to fail over. You can monitor the health of a geo-replicated cluster, which can help you to decide when to begin failover. For more information, see [Geo-replication metric](../redis/how-to-active-geo-replication.md#geo-replication-metric)
 
-Consider the cumulative resource requirements across all regions when planning capacity, as each region maintains a full copy of your data. Monitor resource utilization across all regions to ensure optimal performance during normal operations and regional failover scenarios.
+  Failover requires that you perform multiple steps. For more detail, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Capacity planning guidance
+[!INCLUDE [Region down notification (Service Health)](./includes/reliability-region-down-notification-service-include.md)]
 
-### Behavior when all regions are healthy
+- **Active requests**: Requests to the failed region are terminated and must be handled by your application's failover logic. Applications should implement retry policies that can redirect traffic to healthy caches.
 
-During normal operations when all regions in the geo-replication group are healthy, Azure Managed Redis maintains active-active replication across all instances.
-
-**Traffic routing between regions**: Applications can connect to any cache instance in the replication group and perform both read and write operations. Traffic routing is typically handled at the application level, allowing you to direct clients to the nearest region for optimal latency. The service does not provide automatic traffic routing between regions.
-
-**Data replication between regions**: The service uses asynchronous replication between regions to maintain eventual consistency. Write operations are immediately committed in the local region and then propagated to other regions in the background. Conflict-free replicated data types (CRDTs) ensure that concurrent writes in different regions are automatically merged without data loss.
-
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Normal operations details
-
-### Behavior during a region failure
-
-When a region becomes unavailable, Azure Managed Redis continues operating in the remaining healthy regions with automatic conflict resolution and data synchronization resuming once connectivity is restored.
-
-- **Detection and response**: Regional failures are automatically detected through Azure's monitoring infrastructure. The service continues operating in healthy regions without requiring customer intervention. Applications should be configured to route traffic away from the failed region to available regions.
-
-[!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
-
-- **Active requests**: Requests to the failed region are terminated and must be handled by your application's failover logic. Applications should implement retry policies that can redirect traffic to healthy regions in the replication group.
-
-- **Expected data loss**: Due to asynchronous replication between regions, some recent writes to the failed region may be lost if they had not yet been replicated to other regions. The amount of potential data loss depends on replication lag at the time of failure.
+- **Expected data loss**: Due to asynchronous replication between regions, some recent writes to the failed region may be lost if they had not yet been replicated to other regions. The amount of potential data loss depends on replication lag at the time of failure. <!-- PG: Can we give a rough idea? -->
 
 - **Expected downtime**: Applications experience downtime only for the duration needed to detect the failure and redirect traffic to healthy regions. This typically ranges from seconds to a few minutes depending on your application's health check and failover configuration.
 
-- **Traffic rerouting**: Applications must implement their own logic to detect regional failures and route traffic to healthy regions. This can be accomplished through health checks, circuit breaker patterns, or external load balancing solutions.
+- **Traffic rerouting**: You're responsible for implementiing logic in your applications to detect region failures and route traffic to healthy regions. This can be accomplished through health checks, circuit breaker patterns, or external load balancing solutions.
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Regional failure handling
+#### Region recovery
 
-### Region recovery
+When a failed region recovers, Azure Managed Redis automatically reintegrates instances in that region into the active geo-replication group without requiring your intervention. The service automatically begins synchronizing data from healthy instances. During this process, the recovered instance gradually catches up with changes that occurred during the outage. Once synchronization is complete, the recovered instances becomes fully active and can handle both read and write operations.
 
-When a failed region recovers, Azure Managed Redis automatically reintegrates it into the active geo-replication group without requiring customer intervention.
+You're responsible for reconfiguring your application to route traffic back to the recovered region instance.
 
-The service automatically detects when the previously failed region becomes available and begins synchronizing data from healthy regions. During this process, the recovered region gradually catches up with changes that occurred during the outage. Once synchronization is complete, the region becomes fully active and can handle both read and write operations.
+#### Test for region failures
 
-Applications can begin routing traffic back to the recovered region once they detect its availability through health checks. The failback process is designed to be seamless and does not disrupt operations in other regions.
+You should regularly test your appliation's failover procedures. It's important that your application can fail over between instances, and that it stays within your business requirements for downtime while doing so. It's also important that you test your overall response processes, including any reconfiguration of firewalls and other infrastructure, and your recovery process.
 
-**Sources:**
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication) - Failback procedures
-
-### Test for region failures
-
-<!-- After punishing AI for lying, it printed this. May want to inquire further. -->
-The official Azure Managed Redis documentation does not provide specific guidance on how to test regional failure scenarios. Documentation is not available for customer-initiated testing procedures or Microsoft-managed testing capabilities for regional failover scenarios.
-
-For application-level preparation guidance, see the region-down experience section above which covers operational preparation strategies for regional outages.
-
-**Sources:**
-- No official Microsoft documentation found for Azure Managed Redis regional failure testing procedures
 
 ## Backup and recovery
 
