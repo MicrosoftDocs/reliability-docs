@@ -42,33 +42,21 @@ Azure Managed Redis is built on Redis Enterprise and provides reliability throug
 
 **High-Performance Proxy**: Each node runs a high-performance proxy process that manages the shards, handles connection management, and triggers self-healing actions. The proxy provides intelligent routing of client requests to the appropriate shards based on key hash slots and manages the complexity of distributed operations.
 
+<!-- mention cluster policies -->
+
 **Sources:**
 - [Azure Managed Redis architecture](https://learn.microsoft.com/en-us/azure/redis/architecture) - Detailed architecture components including VMs, nodes, shards, and clustering
 - [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover) - Shard-level architecture and failover mechanisms
 
 ## Resilience to transient faults
-<!-- TODO -->
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-Azure Managed Redis is designed to handle transient faults through several built-in mechanisms that ensure robust operation during temporary service disruptions. The service automatically implements connection pooling, retry logic, and circuit breaker patterns to maintain application resilience.
+Follow these recommendations for managing transient faults when using Azure Managed Redis:
 
-Here are key recommendations for managing transient faults when using Azure Managed Redis:
-
-- **Implement exponential backoff retry policies** with jitter to prevent overwhelming the service during recovery. Configure retry attempts with increasing delays between 1-10 seconds for optimal recovery patterns.
-- **Use connection multiplexing** through libraries like StackExchange.Redis to maintain persistent connections and reduce the impact of temporary connection losses.
-- **Configure appropriate timeouts** for Redis operations, typically setting command timeouts between 1-5 seconds to balance responsiveness with fault tolerance.
-- **Implement circuit breaker patterns** in your application code to temporarily stop making requests to a failing Redis instance and allow it time to recover.
-- **Monitor connection health** using built-in health checks and implement automatic connection recovery mechanisms in your client applications.
+- **Use SDK configurations** that automatically retry when transient faults occur, and that use appropriate backoff and timeout periods. Consider using the [Retry pattern](/azure/architecture/patterns/retry) and [Circuit Breaker pattern](/azure/architecture/patterns/circuit-breaker) in your applications.
+- **Use connection multiplexing** to maintain persistent connections and reduce the impact of temporary connection losses.
 - **Design for cache-aside patterns** where your application can continue operating with degraded performance when Redis is temporarily unavailable by falling back to the primary data store.
-
-<!-- mentin cluster policies -->
-
-The service handles network-level transient faults through automatic reconnection mechanisms and maintains data consistency during brief interruptions. For applications using active geo-replication, temporary network partitions between regions are automatically resolved once connectivity is restored.
-
-**Sources:**
-- [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover) - Transient fault handling details
-- [Best practices for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/best-practices-performance) - Client-side fault handling recommendations
 
 ## Resilience to availability zone failures
 
@@ -268,7 +256,7 @@ To be eligible for availability SLAs for Azure Managed Redis:
 
 Higher availability SLAs apply when your instance is zone-redundant. In some tiers, you can be eligible for a higher availability SLA when you have deployed zone-redundant instances into at least three regions using active geo-replication.
 
-### Related content
+## Related content
 
 - [What are availability zones?](/azure/reliability/availability-zones-overview)
 - [Azure reliability](/azure/reliability/overview)  
