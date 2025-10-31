@@ -48,7 +48,7 @@ To use an App Service Environment, your plans must use the [Isolated v2 pricing 
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 [!INCLUDE [Resilience to transient faults](includes/app-service/reliability-transient-fault-include.md)]
 

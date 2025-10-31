@@ -38,7 +38,7 @@ When you create an App Service web app, you specify the [App Service plan](../ap
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 
 [!INCLUDE [Transient fault handling app service](includes/app-service/reliability-transient-fault-include.md)]
