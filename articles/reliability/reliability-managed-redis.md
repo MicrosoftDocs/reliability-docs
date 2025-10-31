@@ -106,11 +106,11 @@ This section describes what to expect when a managed Redis cache is zone-redunda
 
 [!INCLUDE [Availability zone down notification (Service Health)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
-- **Active requests:** In-flight requests might be dropped and should be retried. Applications should [implement retry logic](#transient-faults) to handle these temporary interruptions.
+- **Active requests:** In-flight requests might be dropped and should be retried. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
 - **Expected data loss:** <!-- PG: Please advise -->
 
-- **Expected downtime:** A small amount of downtime, typically, a few seconds, might occur while shards fail over to nodes in healthy zones. When you design applications, follow practices for [transient fault handling](#transient-faults).
+- **Expected downtime:** A small amount of downtime, typically, a few seconds, might occur while shards fail over to nodes in healthy zones. When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
 
 - **Traffic rerouting:** Azure Managed Redis automatically redirects traffic to nodes in healthy zones.
 
@@ -217,7 +217,5 @@ Higher availability SLAs apply when your instance is zone-redundant. In some tie
 
 ## Related content
 
-- [What are availability zones?](/azure/reliability/availability-zones-overview)
 - [Azure reliability](/azure/reliability/overview)  
-- [Resiliency in Azure](/azure/architecture/framework/resiliency/overview)
 - [Failover and patching for Azure Managed Redis](../redis/failover.md)
