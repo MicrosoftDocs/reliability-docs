@@ -40,15 +40,15 @@ When you implement an [App Service Environment](/azure/app-service/environment/o
 
 After you create your environment, you can create one or more App Service plans.
 
-[!INCLUDE [App Service reliability architecture - plan description](includes/app-service/reliability-architecture-plans.md)]
+[!INCLUDE [App Service reliability architecture - plan description](includes/app-service/reliability-architecture-plans-include.md)]
 
 To use an App Service Environment, your plans must use the [Isolated v2 pricing tier](/azure/app-service/overview-hosting-plans). This tier supports zone redundancy and high-scale, mission-critical applications.
 
-[!INCLUDE [App Service reliability architecture overview](includes/app-service/reliability-architecture-overview.md)]
+[!INCLUDE [App Service reliability architecture overview](includes/app-service/reliability-architecture-overview-include.md)]
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-resilience-transient-fault-include.md)]
 
 [!INCLUDE [Transient fault handling app service description](includes/app-service/reliability-transient-fault-handling-include.md)]
 
@@ -112,19 +112,19 @@ To learn how to create, enable, or disable a new zone-redundant App Service Envi
 
 ### Behavior when all zones are healthy
 
-[!INCLUDE [Normal operations description](includes/app-service/reliability-normal-operations-include.md)]
+[!INCLUDE [Behavior when all zones are healthy](includes/app-service/reliability-behavior-zones-healthy-include.md)]
 
 ### Behavior during a zone failure
 
-[!INCLUDE [Zone-down experience description](includes/app-service/reliability-zone-down-experience-include.md)]
+[!INCLUDE [Behavior during a zone failure](includes/app-service/reliability-behavior-zone-down-failure-include.md)]
 
 ### Zone recovery
 
-[!INCLUDE [Failback description](includes/app-service/reliability-failback-include.md)]
+[!INCLUDE [Zone recovery description](includes/app-service/reliability-zone-recovery-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Testing for zone failures description](includes/app-service/reliability-testing-for-zone-failures-include.md)]
+[!INCLUDE [Test for zone failures description](includes/app-service/reliability-test-for-zone-failures-include.md)]
 
 ## Resilience to region-wide outages
 
