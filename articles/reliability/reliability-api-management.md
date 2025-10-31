@@ -287,8 +287,6 @@ This section describes what to expect when API Management instances are configur
 
 - **Active requests:** Any active requests that are being processed in the faulty region might be dropped and should be retried by the client.
 
-[!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
-
 - **Expected data loss:** API Management doesn't store data, except for configuration, a cache, and rate limit counters.
 
     Configuration changes are replicated to each region within approximately 10 seconds. If an outage of your primary region occurs, you might lose configuration changes that aren't replicated.
