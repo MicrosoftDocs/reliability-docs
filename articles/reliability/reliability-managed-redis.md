@@ -248,31 +248,29 @@ For application-level preparation guidance, see the region-down experience secti
 **Sources:**
 - No official Microsoft documentation found for Azure Managed Redis regional failure testing procedures
 
-## Backups
-<!-- TODO -->
+## Backup and recovery
 
-Azure Managed Redis provides comprehensive backup capabilities to protect against data loss scenarios that other reliability features may not address. The service supports both automated and customer-controlled backup mechanisms to ensure your data remains recoverable across various failure modes.
+Azure Managed Redis provides backup capabilities to protect against data loss scenarios that other reliability features may not address. Backups provide protection against scenarios such as data corruption, accidental deletion, or configuration errors.
 
-The service offers Redis Database (RDB) persistence options that can be configured during cache creation or enabled on existing instances. RDB persistence creates point-in-time snapshots of your Redis data at configurable intervals (1 hour, 6 hours, 12 hours, or 24 hours) and stores them durably within the region. These backups are fully managed by Microsoft and provide protection against scenarios such as data corruption, accidental deletion, or configuration errors.
+Azure Managed Redis supports backup of your data by using the [import and export functionality](../redis/how-to-import-export-data.md), which saves backup files to Azure Blob Storage. You can configure geo-redundant storage on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
 
-For cross-region backup protection, you can configure RDB backups to use geo-redundant storage, ensuring that your backup data remains available even during regional outages. The backup files are stored in Azure Storage with the redundancy option you specify, providing an additional layer of protection beyond the live cache instances.
+There's no built-in backup scheduler, but you can develop your own automation processes that use the Azure CLI or Azure PowerShell to initiate export operations.
 
-Backup recovery is performed by creating a new Azure Managed Redis instance from a backup file. The recovery process restores the full dataset to the state captured in the selected backup, making it suitable for disaster recovery scenarios where you need to recover to a known good state.
-
-**Sources:**
-- [How to configure data persistence for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/how-to-persistence) - Backup configuration and management
+Backup recovery is performed by importing a backup file to an Azure Managed Redis instance.
 
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-<!-- TODO -->
+To be eligible for availability SLAs for Azure Managed Redis:
+- You must enable high availability configuration.
+- You must not initiate any product features or management actions that are documented to produce temporary unavailability.
+
+Higher availability SLAs apply when your instance is zone-redundant. In some tiers, you can be eligible for a higher availability SLA when you have deployed zone-redundant instances into at least three regions using active geo-replication.
 
 ### Related content
 
 - [What are availability zones?](/azure/reliability/availability-zones-overview)
 - [Azure reliability](/azure/reliability/overview)  
 - [Resiliency in Azure](/azure/architecture/framework/resiliency/overview)
-- [Configure active geo-replication for Azure Managed Redis instances](https://learn.microsoft.com/en-us/azure/redis/how-to-active-geo-replication)
-- [How to configure data persistence for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/how-to-persistence)
-- [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover)
+- [Failover and patching for Azure Managed Redis](../redis/failover.md)
