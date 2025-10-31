@@ -28,7 +28,7 @@ Within a single environment, you can deploy multiple *apps*, each of which runs 
 
 Each app has one or more *replicas*, which represents the running instances of the app. You can control how your app scales, including the minimum and maximum number of replicas, and how the app dynamically adds and removes replicas. The platform's scheduler ensures optimal distribution across physical hosts while respecting your minimum replica count requirements. For more information, see [Set scaling rules in Azure Container Apps](/azure/container-apps/scale-app).
 
-:::image type="content" source="./media/reliability-container-apps/reliability-architecture.png" alt-text="Diagram that shows a Container Apps environment that runs an app with three replicas." border="false" :::
+:::image type="content" source="./media/reliability-container-apps/reliability-architecture.svg" alt-text="Diagram that shows a Container Apps environment that runs an app with three replicas." border="false" :::
 
 Container Apps is designed to support the reliability of your applications using a variety of capabilities, including:
 
@@ -66,7 +66,7 @@ Zone redundancy enhances your application's resilience to zone-level failures by
 
 The following diagram shows an example zone-redundant container app that has three replicas, each running in a separate availability zone:
 
-:::image type="content" source="./media/reliability-container-apps/zone-redundant.png" alt-text="Diagram that shows a zone-redundant app with three replicas, each running in a separate availability zone." border="false" :::
+:::image type="content" source="./media/reliability-container-apps/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant app with three replicas, each running in a separate availability zone." border="false" :::
 
 ### Region support
 
