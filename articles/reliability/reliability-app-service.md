@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure App Service
-description: Learn how to make Azure App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. Also, learn about backup and the App Service service-level agreement.
+description: Learn how to make Azure App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 author: anaharris-ms 
 ms.author: anaharris
 ms.topic: reliability-article
@@ -32,9 +32,9 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 When you create an App Service web app, you specify the [App Service plan](../app-service/overview-hosting-plans.md) that runs the app.
 
-[!INCLUDE [App Service reliability architecture - plan description](includes/app-service/reliability-architecture-plans.md)]
+[!INCLUDE [App Service reliability architecture - plan description](includes/app-service/reliability-architecture-plans-include.md)]
 
-[!INCLUDE [App Service reliability architecture overview](includes/app-service/reliability-architecture-overview.md)]
+[!INCLUDE [App Service reliability architecture overview](includes/app-service/reliability-architecture-overview-include.md)]
 
 ## Resilience to transient faults
 
@@ -75,7 +75,7 @@ To enable zone-redundancy, you must meet the following requirements:
 
 For **Premium v2 to v4** plans, an availability zone outage might affect some aspects of Azure App Service, even though the application continues to serve traffic. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
 
-When you enable zone redundancy on your App Service **Premium v2 to v4** plan, you also improve resiliency during platform updates. For more information, see [Reliability during service maintenance](#reliability-during-service-maintenance).
+When you enable zone redundancy on your App Service **Premium v2 to v4** plan, you also improve resiliency during platform updates. For more information, see [Resilience to service maintenance](#resilience-to-service-maintenance).
 
 For App Service plans that aren't configured as zone redundant, the underlying virtual machine (VM) instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
 
