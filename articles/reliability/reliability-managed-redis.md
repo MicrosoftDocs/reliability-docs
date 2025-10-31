@@ -22,18 +22,17 @@ This article describes reliability in [Azure Managed Redis](/azure/redis/overvie
 
 ## Production deployment recommendations
 
-To learn about how to deploy Azure Managed Redis to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Managed Redis in the Azure Well-Architected Framework](../redis/architecture).
+To ensure high reliability for your production managed Redis caches, we recommend that you:
 
-For production environments, we recommend using the Balanced tier or higher to ensure adequate performance and redundancy capabilities. Enable availability zones in regions that support them to protect against datacenter-level failures. Consider implementing active geo-replication for mission-critical workloads that require cross-region disaster recovery. For more information on selecting the appropriate tier and configuration, see [Choose the right tier](/azure/redis/overview#choosing-the-right-tier).
-
-**Sources:**
-- [Architecture best practices for Azure Managed Redis](../redis/architecture) - Production deployment guidance
-- [Choose the right tier](https://learn.microsoft.com/en-us/azure/redis/overview#choosing-the-right-tier) - Tier selection guidance
+> [!div class="checklist"]
+> - **Enable high availability**, which deploys multiple nodes for your cache.
+> - **Enable zone redundancy** by deploying a highly available cache into a region with availability zones.
+> - **Consider implementing active geo-replication** for mission-critical workloads that require cross-region failover.
 
 ## Reliability architecture overview
+<!-- TODO -->
 
 Azure Managed Redis is built on Redis Enterprise and provides reliability through high availability configurations and replication capabilities. Understanding the architectural components helps you design for optimal reliability.
-
 
 **Virtual Machines (Nodes)**: An Azure Managed Redis instance is constructed using multiple virtual machines (VMs), also called "nodes," with separate and private IP addresses. Each VM serves as an independent compute unit in the cluster. Some SKUs use two nodes, while larger SKUs use more nodes to maximize vCPUs and memory capacity. The service abstracts the specific number of nodes used in each configuration to avoid complexity and ensure optimal configurations.
 
@@ -48,6 +47,7 @@ Azure Managed Redis is built on Redis Enterprise and provides reliability throug
 - [Failover and patching for Azure Managed Redis](https://learn.microsoft.com/en-us/azure/redis/failover) - Shard-level architecture and failover mechanisms
 
 ## Resilience to transient faults
+<!-- TODO -->
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
@@ -62,6 +62,8 @@ Here are key recommendations for managing transient faults when using Azure Mana
 - **Monitor connection health** using built-in health checks and implement automatic connection recovery mechanisms in your client applications.
 - **Design for cache-aside patterns** where your application can continue operating with degraded performance when Redis is temporarily unavailable by falling back to the primary data store.
 
+<!-- mentin cluster policies -->
+
 The service handles network-level transient faults through automatic reconnection mechanisms and maintains data consistency during brief interruptions. For applications using active geo-replication, temporary network partitions between regions are automatically resolved once connectivity is restored.
 
 **Sources:**
@@ -72,66 +74,68 @@ The service handles network-level transient faults through automatic reconnectio
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-<!-- John: The source link below contains a reference to zone redundancy in its feature comparison table. It links to the information in Azure Cache for Redis documentation, which was why I assumed that the feature would be similar in the Managed Redis. If it isn't similar, however, we should update that link. Clearly, the service supports zone redundancy, so we need to get clear on how that works. -->
+Azure Managed Redis caches can be made *zone-redundant*, which automatically distributes the cache nodes across multiple availability zones within a region. Zone redundancy reduces the risk of data center or availability zone outages causing your cache to be unavailable.
 
+<!-- TODO diagram -->
 
-
-Azure Managed Redis provides availability zone support through zone-redundant deployments that automatically distribute cache nodes across multiple availability zones within a region. Based on the Redis Enterprise architecture used by Azure Managed Redis, zone-redundant caches place their nodes across different Azure Availability Zones in the same region, eliminating data center or availability zone outage as a single point of failure and increasing overall availability.
-
-Azure Managed Redis runs on a Redis Enterprise cluster architecture that always uses at least three nodes. The cluster includes data nodes (which hold your data) and uses a quorum-based model for high availability. When configured for zone redundancy, these nodes are distributed evenly across three availability zones to minimize the potential for quorum loss during zone failures.
-
-The service supports only zone-redundant deployments in regions with availability zones. Azure Managed Redis does not support zonal (single-zone pinning) deployments. All availability zone configurations use automatic zone allocation, where Azure selects the optimal zones based on region capacity and load distribution to ensure the best possible reliability and performance.
-
-**Sources:**
-- [Azure Managed Redis overview](https://learn.microsoft.com/en-us/azure/redis/overview) - Availability zone feature confirmation
+To make a cache zone-redundant, you must deploy it into a supported region and enable high availability configuration. In regions without availability zones, the high availability configuration still creates at least two nodes but they aren't in separate zones.
 
 ### Requirements
 
-- **Region support.** Zone-redundant Azure Managed Redis resources can be deployed into any region that supports availability zones. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
+- **Region support.** Zone-redundant Azure Managed Redis caches can be deployed into any region that supports availability zones. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md).
 
-All Azure Managed Redis tiers (Memory Optimized, Balanced, Compute Optimized, and Flash Optimized) support availability zones without additional requirements. There are no specific SKU restrictions for enabling zone redundancy.
+- **High availability configuration.** You must enable high availability configuration on your cache for it to be zone-redundant.
 
-**Sources:**
-- [Quickstart: Create an Azure Managed Redis Instance](https://learn.microsoft.com/en-us/azure/redis/quickstart-create-managed-redis) - Tier availability information
-- [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) - Base service pricing
-
-
-
-### Considerations
-<!-- John: No information available -->
-
+- **Tiers.** All Azure Managed Redis tiers support availability zones.
 
 ### Cost
 
-<!-- John: Zone redundancy is mentioned in the source page. -->
-
-Enabling availability zones for Azure Managed Redis does not incur additional charges for the zone redundancy feature itself beyond the base service pricing. However, data replication across availability zones generates network egress costs for data moving between zones.
-
-
-**Sources:**
-- [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) - Base service pricing
-
+Zone redundancy requires that your cache is configured for high availability, which provides two nodes for your cache. You're billed for both nodes. For more information, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/)
 
 ### Configure availability zone support
 
-<!-- John: No information available -->
+- **New instances:** When you create a new Azure Managed Redis instance, enable high availability configuration and deploy it into a region with availability zones. Then, it automatically includes zone redundancy by default. There's no need for you to perform any more configuration.
 
+  For detailed steps, see [Quickstart: Create an Azure Managed Redis Instance](../redis/quickstart-create-managed-redis.md).
+
+- **Existing instances:** To configure an existing Azure Managed Redis instance to be zone-redundant, ensure it's deployed in a region that supports availability zones, and enable high availability on the cache.
+
+- **Disable:** Zone redundancy can't be disabled on existing instances.
 
 ### Behavior when all zones are healthy
-<!-- John: No information available -->
+
+This section describes what to expect when a managed Redis cache is zone-redundant and all availability zones are operational:
+
+- **Traffic routing between zones:** Shards are distributed across nodes based on your cluster policy. Your cluster policy also determines how traffic is routed to each node. Zone redundancy doesn't change how traffic is routed.
+
+- **Data replication between zones:** Shards are replicated across nodes automatically, and use asynchronous replication. <!-- PG: Can we give an idea of the replication frequency/lag? -->
 
 ### Behavior during a zone failure
 
-<!-- John: No information available -->
+This section describes what to expect when a managed Redis cache is zone-redundant and one or more availability zones are unavailable:
+
+- **Detection and response:** Azure Managed Redis is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
+
+[!INCLUDE [Availability zone down notification (Service Health)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+
+- **Active requests:** In-flight requests might be dropped and should be retried. Applications should [implement retry logic](#transient-faults) to handle these temporary interruptions.
+
+- **Expected data loss:** <!-- PG: Please advise -->
+
+- **Expected downtime:** A small amount of downtime, typically, a few seconds, might occur while shards fail over to nodes in healthy zones. When you design applications, follow practices for [transient fault handling](#transient-faults).
+
+- **Traffic rerouting:** Azure Managed Redis automatically redirects traffic to nodes in healthy zones.
+
 ### Zone recovery
 
-<!-- John: No information available -->
+When the affected availability zone recovers, Azure Managed Redis automatically restores operations to that zone. The Azure platform fully manages this process and doesn't require any customer intervention.
 
 ### Test for zone failures
 
-<!-- John: No information available -->
+Because Azure Managed Redis fully manages traffic routing, failover, and failback for zone failures, you don't need to validate availability zone failure processes or provide any further input.
 
 ## Resilience to region-wide failures
+<!-- TODO -->
 
 Azure Managed Redis provides native multi-region support through active geo-replication, enabling you to create globally distributed Redis deployments with automatic conflict resolution and eventual consistency across regions.
 
@@ -210,9 +214,7 @@ When a region becomes unavailable, Azure Managed Redis continues operating in th
 
 - **Detection and response**: Regional failures are automatically detected through Azure's monitoring infrastructure. The service continues operating in healthy regions without requiring customer intervention. Applications should be configured to route traffic away from the failed region to available regions.
 
-- **Notification**: 
-
-  [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
+[!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
 - **Active requests**: Requests to the failed region are terminated and must be handled by your application's failover logic. Applications should implement retry policies that can redirect traffic to healthy regions in the replication group.
 
@@ -247,6 +249,7 @@ For application-level preparation guidance, see the region-down experience secti
 - No official Microsoft documentation found for Azure Managed Redis regional failure testing procedures
 
 ## Backups
+<!-- TODO -->
 
 Azure Managed Redis provides comprehensive backup capabilities to protect against data loss scenarios that other reliability features may not address. The service supports both automated and customer-controlled backup mechanisms to ensure your data remains recoverable across various failure modes.
 
@@ -262,6 +265,8 @@ Backup recovery is performed by creating a new Azure Managed Redis instance from
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
+
+<!-- TODO -->
 
 ### Related content
 
