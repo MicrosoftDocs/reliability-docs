@@ -133,7 +133,7 @@ This section describes what to expect when Container Apps resources are configur
 
 This section describes what to expect when Azure Logic Apps resources are configured for zone redundancy and there's an availability zone outage.
 
-- **Detection and response**: Azure automatically detect zone failures. Container Apps immediately stops scheduling new replicas to the failed zone and begins redistributing traffic to healthy replicas in the remaining zones. The platform handles all failover operations automatically without requiring your intervention.
+- **Detection and response**: Azure automatically detects zone failures. Container Apps immediately stops scheduling new replicas to the failed zone and begins redistributing traffic to healthy replicas in the remaining zones. The platform handles all failover operations automatically without requiring your intervention.
 
 - **Notification**: Container Apps doesn't notify you when a zone is down. However, you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Container Apps service, including any zone failures. Set up alerts to receive notifications of zone-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
