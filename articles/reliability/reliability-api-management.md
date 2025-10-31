@@ -6,6 +6,7 @@ ms.author: danlep
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-api-management
+ai-usage: ai-assist
 ms.date: 10/31/2025
 ---
 
