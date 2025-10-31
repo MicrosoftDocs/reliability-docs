@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure App Service
-description: Learn how to make Azure App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
+description: Learn how to make Azure App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. Also, learn about backup and the App Service service-level agreement.
 author: anaharris-ms 
 ms.author: anaharris
 ms.topic: reliability-article
@@ -51,7 +51,7 @@ For **Premium v2 to v4 tiers**, you can configure App Service as *zone redundant
 
 To enable zone-redundancy, you must meet the following requirements:
 
-- **Region support:** Confirm that your selected region supports availability zones. To see which regions support availability zones, see [List of Azure Regions](./regions-list.md).
+- **Region support:** For App Service **Premium v2 and v3** plans, zone redundancy is supported in [any region that supports availability zones](./regions-list.md).
 
 - **Plan type:** Use [Premium v2 to v4 plan types](/azure/app-service/overview-hosting-plans). 
 
@@ -109,7 +109,7 @@ If you enable availability zones but specify a capacity of less than two, the pl
 
 [!INCLUDE [Test for zone failures description](includes/app-service/reliability-testing-for-zone-failures-include.md)]
 
-## Resilience to region-wide outages
+## Resilience to region-wide failures
 
 App Service is a single-region service. If the region becomes unavailable, your application is also unavailable.
 
