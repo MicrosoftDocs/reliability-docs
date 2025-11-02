@@ -35,7 +35,7 @@ Azure Managed Redis is built on Redis Enterprise and provides reliability throug
 
 - **Instances:** An *instance* of Azure Managed Redis is also called a *cache instance* or a *cache*. You deploy and configure instances.
 
-- **Nodes:** Each cache instance consists of *nodes*, which are virtual machines (VMs). Each VM serves as an independent compute unit in the cluster. You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy instances.
+- **Nodes:** Each cache instance consists of *nodes*, which are virtual machines (VMs). Each VM serves as an independent compute unit in the cluster. You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy instances. The set of VMs, taken together, is also called a *cluster*.
 
   You can configure your instance for high availability. When you do so, Azure Managed Redis ensures that there are at least two nodes, and it replicates data between the nodes automatically. In regions with availability zones, the nodes are placed into different availability zones. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
@@ -199,15 +199,27 @@ You're responsible for reconfiguring your application to route traffic back to t
 
 You should regularly test your appliation's failover procedures. It's important that your application can fail over between instances, and that it stays within your business requirements for downtime while doing so. It's also important that you test your overall response processes, including any reconfiguration of firewalls and other infrastructure, and your recovery process.
 
+## Resilience to service maintenance
+
+Azure Managed Redis performs regular service upgrades and other maintenance tasks.
+
+When maintenance is underway, Azure Managed Redis automatically performs creates new nodes and performs failover automatically. Client applications might see connection interruptions and other transient faults. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
+
+To learn more about the maintenance processes for Azure Managed Redis, see [Failover and patching for Azure Managed Redis](../redis/failover.md).
+
 ## Backup and restore
 
-Azure Managed Redis provides backup capabilities to protect against data loss scenarios that other reliability features may not address. Backups provide protection against scenarios such as data corruption, accidental deletion, or configuration errors.
+Azure Managed Redis provides both data persistence and backup capabilities to protect against data loss scenarios that other reliability features may not address. Backups can provide protection against scenarios such as data corruption, accidental deletion, or configuration errors.
 
-Azure Managed Redis supports backup of your data by using the [import and export functionality](../redis/how-to-import-export-data.md), which saves backup files to Azure Blob Storage. You can configure geo-redundant storage on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
+- **Data persistence:** By default, Azure Managed Redis stores all cache data in memory. It can optionally write snapshots of your data to disk by using [data persistence](../redis/how-to-persistence.md). If there's a hardware failure that affects the node, Azure Managed Redis automatically restores the data. There are different types of data persistence you can select from, which provide different tradeoffs between snapshot frequency and the performance effects on your cache.
 
-There's no built-in backup scheduler, but you can develop your own automation processes that use the Azure CLI or Azure PowerShell to initiate export operations.
+  However, data files can't be restored to another instance, and you can't access the files. Data persistence doesn't protect you against data corruption or accidental deletion.
 
-Restoration  is performed by importing a backup file to an Azure Managed Redis instance.
+- **Import and export:** Azure Managed Redis supports backup of your data by using the [import and export functionality](../redis/how-to-import-export-data.md), which saves backup files to Azure Blob Storage. You can configure geo-redundant storage on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
+
+  Exported files can be restored to the same cache instance or a different cache instance.
+
+  There's no built-in import or export scheduler, but you can develop your own automation processes that use the Azure CLI or Azure PowerShell to initiate export operations.
 
 ## Service-level agreement
 
@@ -220,8 +232,3 @@ To be eligible for availability SLAs for Azure Managed Redis:
 - You must not initiate any product features or management actions that are documented to produce temporary unavailability.
 
 Higher availability SLAs apply when your instance is zone-redundant. In some tiers, you can be eligible for a higher availability SLA when you have deployed zone-redundant instances into at least three regions using active geo-replication.
-
-## Related content
-
-- [Azure reliability](/azure/reliability/overview)  
-- [Failover and patching for Azure Managed Redis](../redis/failover.md)
