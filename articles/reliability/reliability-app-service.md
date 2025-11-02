@@ -22,11 +22,9 @@ This article describes how to make App Service resilient to a variety of potenti
 >[!NOTE]
 >If you are looking for information about reliability support in App Service Environment, see [Reliability in App Service Environment](./reliability-app-service-environment.md).
 
-
 ## Production deployment recommendations
 
 The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable App Service solution, see [Architecture best practices for App Service (Web Apps) in the Azure Well-Architected Framework](/azure/well-architected/service-guides/app-service-web-apps).
-
 
 ## Reliability architecture overview
 
@@ -40,8 +38,7 @@ When you create an App Service web app, you specify the [App Service plan](../ap
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-
-[!INCLUDE [Transient fault handling app service](includes/app-service/reliability-transient-fault-include.md)]
+[!INCLUDE [Resilience to transient faults - App Service](includes/app-service/reliability-transient-fault-include.md)]
 
 ## Resilience to availability zone failures
 
@@ -49,10 +46,9 @@ When you create an App Service web app, you specify the [App Service plan](../ap
 
 For **Premium v2 to v4 tiers**, you can configure App Service as *zone redundant*, which means that your resources are distributed across multiple availability zones. Distribution across multiple zones helps your production workloads achieve resiliency and reliability. When you configure zone redundancy on App Service plans, all apps that use the plan become zone redundant.
 
-
 ### Requirements
 
-To enable zone-redundancy, you must meet the following requirements:
+To enable zone redundancy, you must meet the following requirements:
 
 - **Region support:** For App Service **Premium v2 and v3** plans, zone redundancy is supported in [any region that supports availability zones](./regions-list.md).
 
@@ -66,7 +62,6 @@ To enable zone-redundancy, you must meet the following requirements:
 - **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your plan uses. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the plan's resource group. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
 
     If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to [redeploy your apps to a new plan on a different scale unit](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#scale-units-and-zone-redundancy).
-
 
 ### Instance distribution across zones
 
