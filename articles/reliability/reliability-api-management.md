@@ -12,12 +12,11 @@ ms.date: 10/31/2025
 
 # Reliability in Azure API Management
 
-[Azure API Management](/azure/api-management/api-management-key-concepts). is a fully managed service that helps organizations publish, secure, transform, maintain, and monitor APIs. 
+[Azure API Management](/azure/api-management/api-management-key-concepts). is a fully managed service that helps organizations publish, secure, transform, maintain, and monitor APIs. As an Azure service, API Management provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 This article describes how to make API Management resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the API Management service level agreement (SLA).
-
 
 ## Reliability architecture overview
 
@@ -225,6 +224,8 @@ The options for testing for zone failures depend on the availability zone config
 
 With a multi-region deployment, you can add regional API gateways to an existing API Management instance in one or more supported Azure regions. Multi-region deployment helps to reduce any request latency that's perceived by geographically distributed API consumers. A multi-region deployment also improves service availability if one region goes offline.
 
+### Microsoft-managed multi-region deployment
+
 API Management only supports multi-region deployments in the Premium (classic) tier. It doesn't support multi-region deployments in the Consumption, Developer, Basic, Basic v2, Standard, Standard v2, and Premium v2 (preview) tiers. For more information, see [Requirements](#requirements).
 
 When you add a region, you configure:
@@ -235,7 +236,7 @@ When you add a region, you configure:
 
 - [Virtual network settings](/azure/api-management/virtual-network-concepts) in the added region, if networking is configured in the existing region or regions.
 
-### Requirements
+#### Requirements
 
 - **Region support:** You can create multi-region deployments in the Premium (classic) tier with any Azure region that supports API Management. To see which regions support multi-region deployments, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
@@ -244,7 +245,7 @@ When you add a region, you configure:
 > [!NOTE]
 > **The Premium v2 tier** with enterprise capabilities is in preview. To determine whether your design should rely on early access features or generally available capabilities, evaluate your design and implementation timelines in relation to the available information about Premium v2's release and migration paths.
 
-### Considerations
+#### Considerations
 
 - **Gateway only:** Only the gateway component of your API Management instance is replicated to multiple regions. The instance's management plane and developer portal remain hosted only in the primary region where you originally deployed the service.
 
@@ -252,23 +253,23 @@ When you add a region, you configure:
 
 - **Domain Name System (DNS) names:** The gateway in each region, including the primary region, has a regional DNS name that follows the URL pattern of `https://<service-name>-<region>-01.regional.azure-api.net`, for example `https://contoso-westus2-01.regional.azure-api.net`.
 
-### Cost
+#### Cost
 
 Adding regions incurs costs. For information, see [API Management pricing](https://azure.microsoft.com/pricing/details/api-management/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 To configure multi-region support on an API Management instance, see [Deploy an API Management instance to multiple Azure regions](/azure/api-management/api-management-howto-deploy-multi-region#deploy-api-management-service-to-an-additional-region).
 
 To remove a region from an API Management instance, see [Remove an API Management service region](/azure/api-management/api-management-howto-deploy-multi-region#remove-an-api-management-service-region).
 
-### Capacity planning and management
+#### Capacity planning and management
 
 In a region-down scenario, there's no guarantee that requests for more capacity in another region will succeed. If you need guaranteed capacity when a region fails, you should create and configure your API Management instance to account for losing a region. You can do that by over-provisioning the capacity of your API Management instance. To learn more about the principle of over-provisioning, see [Manage capacity with over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
 
 In multi-region deployments, autoscaling applies only to the primary region. Secondary regions require manual scaling adjustments or custom tools that you control.
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 This section describes what to expect when API Management instances are configured with multi-region support and all regions are operational.
 
@@ -280,7 +281,7 @@ This section describes what to expect when API Management instances are configur
 
     Rate limit counters and data in the internal cache are region-specific, so they aren't replicated between regions.
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 This section describes what to expect when API Management instances are configured with multi-region support and there's an outage in one of the regions that you use.
 
@@ -300,11 +301,11 @@ This section describes what to expect when API Management instances are configur
 
 - **Traffic rerouting:** If a region goes offline, API requests are automatically routed around the failed region to the next closest gateway.
 
-### Region recovery
+#### Region recovery
 
 When the primary region recovers, API Management automatically restores units in the region and reroutes traffic between your units.
 
-### Test for region failures
+#### Test for region failures
 
 To be ready for unexpected region outages, we recommend that you regularly test your responses to region failures. You can simulate some aspects of a region failure by [disabling routing to a regional gateway](../api-management/api-management-howto-deploy-multi-region.md#disable-routing-to-a-regional-gateway).
 

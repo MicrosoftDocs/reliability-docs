@@ -13,7 +13,7 @@ ai-usage: ai-assist
 
 # Reliability in Azure AI Search
 
-[Azure AI Search](/azure/search/search-what-is-azure-search) is a scalable search infrastructure that indexes heterogeneous content and enables retrieval through APIs, applications, and AI agents. It's suitable for enterprise search scenarios and AI-powered customer experiences that require dynamic content generation through chat completion models.
+[Azure AI Search](/azure/search/search-what-is-azure-search) is a scalable search infrastructure that indexes heterogeneous content and enables retrieval through APIs, applications, and AI agents. It's suitable for enterprise search scenarios and AI-powered customer experiences that require dynamic content generation through chat completion models. As an Azure service, AI Search provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -80,13 +80,14 @@ The following diagram illustrates how an example search service with four replic
 
 ### Requirements
 
+Zone redundancy is automatically enabled when your search service meets all of the following criteria:
+
 - **Region support:** Support for availability zones depends on infrastructure and storage. For a list of supported regions, see [Choose a region for AI Search](/azure/search/region-support).
-- Zone redundancy is automatically enabled when your search service meets all of the following criteria:
-  - Is on the [Basic tier or higher](/azure/search/search-sku-tier)
-  - Has [at least two replicas](/azure/search/search-capacity-planning#add-or-remove-partitions-and-replicas)
+- **Tier:** Your service must be on the [Basic tier or higher](/azure/search/search-sku-tier)
+- **Number of replicas:** Your service must have [at least two replicas](/azure/search/search-capacity-planning#add-or-remove-partitions-and-replicas)
   
-> [!NOTE]
-> AI Search attempts to distribute replicas across multiple zones when you have two or more replicas. However, for read-write workloads, you should use three or more replicas so that you receive the highest possible availability SLA.
+  > [!NOTE]
+  > AI Search attempts to distribute replicas across multiple zones when you have two or more replicas. However, for read-write workloads, you should use three or more replicas so that you receive the highest possible availability SLA.
 
 ### Instance distribution across zones
 
@@ -159,7 +160,6 @@ To optimize the performance of your overall solution, look for opportunities to 
 For more information, see [Multi-region deployments in Azure AI Search](/azure/search/search-multi-region).
 
 ## Backups
-
 
 Because AI Search isn't a primary data storage solution, it doesn't provide self-service backup and restore options. However, you can use the `index-backup-restore` sample for [.NET](https://github.com/Azure-Samples/azure-search-dotnet-utilities/tree/main/index-backup-restore) or [Python](https://github.com/Azure/azure-search-vector-samples/tree/main/demo-python/code/utilities/index-backup-restore) to back up your index definition and its documents to a series of JSON files, which are then used to restore the index.
 
