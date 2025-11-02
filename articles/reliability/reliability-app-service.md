@@ -125,7 +125,7 @@ Consider the following related resources:
 - [Approaches to consider](/azure/architecture/web-apps/guides/multi-region-app-service/multi-region-app-service?tabs=paired-regions#approaches-to-consider)
 - [Tutorial: Create a highly available multiple-region app in App Service](/azure/app-service/tutorial-multi-region-app)
 
-## Backups
+## Backup and restore
 
 When you use the Basic tier or higher, you can back up your App Service apps to a file by using the App Service backup and restore capabilities.
 

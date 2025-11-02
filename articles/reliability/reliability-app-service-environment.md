@@ -126,7 +126,7 @@ To learn how to create, enable, or disable a new zone-redundant App Service Envi
 
 [!INCLUDE [Test for zone failures description](includes/app-service/reliability-test-for-zone-failures-include.md)]
 
-## Resilience to region-wide outages
+## Resilience to region-wide failures
 
 App Service is a single-region service. If the region becomes unavailable, your environment and its plans and apps also become unavailable.
 
@@ -140,7 +140,7 @@ To reduce the risk of a single-region failure affecting your application, deploy
 
 For an example approach that illustrates this architecture, see [High availability enterprise deployment by using App Service Environment](/azure/architecture/web-apps/app-service-environment/architectures/ase-high-availability-deployment).
 
-## Backups
+## Backup and restore
 
 To back up your App Service apps to a file, use App Service backup and restore capabilities.
 
