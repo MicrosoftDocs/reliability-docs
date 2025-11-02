@@ -4,9 +4,9 @@ description: Learn about resiliency features in Azure API Management, including 
 author: dlepow
 ms.author: danlep
 ms.topic: reliability-article
-ms.custom: subject-reliability, references_regions
+ms.custom: subject-reliability
 ms.service: azure-api-management
-ai-usage: ai-assist
+ai-usage: ai-assisted
 ms.date: 10/31/2025
 ---
 
@@ -309,7 +309,7 @@ When the primary region recovers, API Management automatically restores units in
 
 To be ready for unexpected region outages, we recommend that you regularly test your responses to region failures. You can simulate some aspects of a region failure by [disabling routing to a regional gateway](../api-management/api-management-howto-deploy-multi-region.md#disable-routing-to-a-regional-gateway).
 
-## Backups
+## Backup and restore
 
 API Management doesn't store most runtime data. However, you can back up your API Management service configuration. You can also use backup and restore operations to replicate API Management service configurations between operational environments, for example, development and staging.
 

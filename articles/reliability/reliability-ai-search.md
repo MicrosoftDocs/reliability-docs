@@ -8,7 +8,7 @@ ms.service: azure-ai-search
 ms.topic: reliability-article
 ms.date: 10/31/2025
 ms.custom: subject-reliability
-ai-usage: ai-assist
+ai-usage: ai-assisted
 ---
 
 # Reliability in Azure AI Search
@@ -21,8 +21,10 @@ This article describes how to make Azure AI Search resilient to a variety of pot
 
 ## Production deployment recommendations for reliability
 
+For production workloads, we recommend that you:
+
 > [!div class="checklist"]
-> - For production workloads, use a [billable tier](/azure/search/search-sku-tier) that has at least [two replicas](/azure/search/search-capacity-planning#add-or-remove-partitions-and-replicas). This configuration makes your search service more resilient to transient faults and maintenance operations. It also meets the [service-level agreement (SLA)](#service-level-agreement) for AI Search. The SLA requires two replicas for read-only workloads and three or more replicas for read-write workloads.
+> - Use a [billable tier](/azure/search/search-sku-tier) that has at least [two replicas](/azure/search/search-capacity-planning#add-or-remove-partitions-and-replicas). This configuration makes your search service more resilient to transient faults and maintenance operations. It also meets the [service-level agreement (SLA)](#service-level-agreement) for AI Search. The SLA requires two replicas for read-only workloads and three or more replicas for read-write workloads.
 > - Don't use the Free tier for production use. AI Search doesn't provide an SLA for the Free tier, which is limited to one replica.
 
 ## Reliability architecture overview
@@ -82,7 +84,7 @@ The following diagram illustrates how an example search service with four replic
 
 Zone redundancy is automatically enabled when your search service meets all of the following criteria:
 
-- **Region support:** Support for availability zones depends on infrastructure and storage. For a list of supported regions, see [Choose a region for AI Search](/azure/search/region-support).
+- **Region support:** Support for availability zones depends on infrastructure and storage. For a list of supported regions, see [Choose a region for AI Search](/azure/search/search-region-support).
 - **Tier:** Your service must be on the [Basic tier or higher](/azure/search/search-sku-tier)
 - **Number of replicas:** Your service must have [at least two replicas](/azure/search/search-capacity-planning#add-or-remove-partitions-and-replicas)
   
@@ -159,7 +161,7 @@ To optimize the performance of your overall solution, look for opportunities to 
 
 For more information, see [Multi-region deployments in Azure AI Search](/azure/search/search-multi-region).
 
-## Backups
+## Backup and restore
 
 Because AI Search isn't a primary data storage solution, it doesn't provide self-service backup and restore options. However, you can use the `index-backup-restore` sample for [.NET](https://github.com/Azure-Samples/azure-search-dotnet-utilities/tree/main/index-backup-restore) or [Python](https://github.com/Azure/azure-search-vector-samples/tree/main/demo-python/code/utilities/index-backup-restore) to back up your index definition and its documents to a series of JSON files, which are then used to restore the index.
 
