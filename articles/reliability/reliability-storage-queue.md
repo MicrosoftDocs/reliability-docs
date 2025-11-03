@@ -152,7 +152,7 @@ For detailed pricing information, see [Queue Storage pricing](https://azure.micr
 
 [!INCLUDE [Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
 
-### Region-down experience
+### Behavior during a region failure
 
 [!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
