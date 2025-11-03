@@ -84,7 +84,7 @@ Some Azure services are *nonregional*, which means that you don't deploy the ser
 | [Azure Notification Hubs](reliability-notification-hubs.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Private Link](../private-link/private-link-overview.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::||
 | [Azure public IP addresses](../virtual-network/ip-services/public-ip-addresses.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
-| [Azure Queue Storage](./reliability-storage-queue.md#availability-zone-support)| :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
+| [Azure Queue Storage](./reliability-storage-queue.md#resilience-to-availability-zone-failures)| :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Red Hat OpenShift](/azure/openshift/openshift-faq#can-a-cluster-be-deployed-across-multiple-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Route Server](../route-server/route-server-faq.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Service Bus](../service-bus-messaging/service-bus-outages-disasters.md#availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
