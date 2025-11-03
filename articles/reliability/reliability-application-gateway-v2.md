@@ -11,7 +11,7 @@ ms.custom:
   - ai-seo-date:07/09/2025
 ms.service: azure-application-gateway
 ms.date: 11/03/2025
-ai-usage: ai-assist
+ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Application Gateway v2 works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---

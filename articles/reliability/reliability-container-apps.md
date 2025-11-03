@@ -7,6 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability, devx-track-azurepowershell, devx-track-azurecli
 ms.service: azure-container-apps
 ms.date: 10/23/2025
+ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Container Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 

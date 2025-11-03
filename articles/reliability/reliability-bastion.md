@@ -7,6 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-bastion
 ms.date: 11/3/2025
+ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Bastion
