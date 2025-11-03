@@ -109,7 +109,7 @@ This section describes what to expect when a managed Redis cache is zone-redunda
 
 - **Expected data loss:** <!-- PG: Please advise -->
 
-- **Expected downtime:** A small amount of downtime, typically a few seconds, might occur while shards fail over to nodes in healthy zones. When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
+- **Expected downtime:** A small amount of downtime, typically 10-15 seconds, might occur while shards fail over to nodes in healthy zones. For information about the unplanned failover process, see [Explanation of a failover](../redis/failover.md#explanation-of-a-failover) When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
 
 - **Traffic rerouting:** Azure Managed Redis automatically redirects traffic to nodes in healthy zones.
 
