@@ -46,10 +46,12 @@ Azure services can provide two types of availability zone support: *zone-redunda
     :::image type="content" source="media/availability-zones-overview/zone-redundant.svg" alt-text="Diagram of a zone-redundant resource deployed across three zones." border="false":::
 
 - **Zonal deployments**: A zonal resource is deployed to a single, self-selected availability zone. This approach doesn't provide a resiliency benefit, but it helps you to achieve more stringent latency or performance requirements. For example, virtual machines, managed disks, and standard IP addresses can be deployed zonally to the same zone.
+
+   :::image type="content" source="media/availability-zones-overview/zonal-single.png" alt-text="Diagram of a zonal resources deployed into a single zone." border="false":::
    
    To improve the resiliency of zonal resources, you need to design an architecture with separate resources in multiple availability zones within the region, but Microsoft doesn't manage the process for you. If an outage occurs in an availability zone, you're responsible for failover to another zone.
 
-    :::image type="content" source="media/availability-zones-overview/zonal.svg" alt-text="Diagram of three zonal resources deployed into three separate zones." border="false":::
+    :::image type="content" source="media/availability-zones-overview/zonal-multiple.svg" alt-text="Diagram of three zonal resources deployed into three separate zones." border="false":::
 
 When you use configure a resource to be zone redundant, or if you use multiple instances of a zonal resource in different availability zones, then your resource is considered to be *zone-resilient*: that is, it's resilient to the outage of a single availability zone.
 
