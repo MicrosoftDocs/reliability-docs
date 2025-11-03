@@ -39,9 +39,8 @@ Application Gateway is a managed service. It's important to understand some key 
 
 - **Instances:** An *instance* is a virtual machine (VM)-level unit of the gateway. Each instance represents a dedicated VM that handles traffic. One instance is equal to one VM.
 
-  
-    >[!IMPORTANT]
-    For high availability, each gateway is always created with a minimum of two instances.  However, the Azure portal may indicate that your gateway has a single instance, even though it actually has two.
+  >[!IMPORTANT]
+  > For high availability, each gateway is always created with a minimum of two instances.  However, the Azure portal may indicate that your gateway has a single instance, even though it actually has two.
 
   You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy instances. It also manages the graceful removal of instances during scale-in events. This process is known as *connection draining*.
 
