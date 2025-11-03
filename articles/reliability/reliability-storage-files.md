@@ -122,7 +122,7 @@ This section describes what to expect when a file storage account is configured 
 
 [!INCLUDE [Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
-- **Standard file shares only:** Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. Premium (SSD) file shares must use LRS or ZRS. If you have premium file shares and you want to replicate the data across regions for higher resiliency, see [Alternative multi-region approaches](#alternative-multi-region-approaches).
+- **Standard file shares only:** Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. Premium (SSD) file shares must use LRS or ZRS. If you have premium file shares and you want to replicate the data across regions for higher resiliency, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
 - **GRS and GZRS only:** Files doesn't support read-access geo-redundant storage (RA-GRS) or read-access geo-zone-redundant storage (RA-GZRS). If a storage account is configured to use RA-GRS or RA-GZRS, the standard (HDD) file shares are configured and billed as GRS or GZRS.
 
