@@ -172,7 +172,7 @@ To prepare for availability zone failure, consider *over-provisioning* the capac
 
 ::: zone-end
 
-### Normal operations during zone-wide outages
+### Behavior when all zones are healthy
 
 This section describes what to expect when Logic Apps resources are configured for zone redundancy and all availability zones are operational.
 
@@ -188,7 +188,7 @@ This section describes what to expect when Logic Apps resources are configured f
 
 ::: zone-end
 
-### Zone-down experience during zone-wide outages
+### Behavior during a zone failure
 
 This section describes what to expect when Logic Apps resources are configured for zone redundancy and there's an availability zone outage.
 
@@ -196,11 +196,11 @@ This section describes what to expect when Logic Apps resources are configured f
 
 - **Active requests:** If an availability zone becomes unavailable, any in-progress workflow executions that run on a VM in the faulty availability zone are terminated. The Logic Apps platform automatically resumes the workflow on another VM in a different availability zone. Due to this behavior, active workflows might experience some [transient faults](#resilience-to-transient-faults) or higher latency as new VMs are added to the remaining availability zones.
 
-### Zone recovery during zone-wide outages
+### Zone recovery
 
 When the availability zone recovers, Logic Apps automatically restores instances in the availability zone, removes any temporary instances created in the other availability zones, and reroutes traffic between your instances as normal.
 
-### Testing for zone failures during zone-wide outages
+### Test for zone failures
 
 The Logic Apps platform manages traffic routing, failover, and failback for zone-redundant logic app resources. You don't need to initiate anything. This feature is fully managed, so you don't need to validate availability zone failure processes.
 
