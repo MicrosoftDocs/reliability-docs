@@ -78,7 +78,7 @@ The following diagram shows an example zone-redundant container app that has thr
 
     To see which regions support Container Apps, see [Product Availability by Region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
-- **Plan:** Zone redundancy is available to all Container Apps plans including both Consumption and Dedicated workload profiles.
+- **Workload profiles:** Zone redundancy is available to all Container Apps plans including both Consumption and Dedicated workload profiles.
 
 - **Enable zone redundancy during environment creation.** This setting cannot be changed after the environment is created.
 
@@ -177,7 +177,7 @@ To reduce the risk of a single-region failure affecting your application, you ca
 - Configure load balancing and failover policies by using a service like Azure Front Door or Azure Traffic Manager.
 - Replicate your data across regions so that you can recover your last application state.
 
-## Backups
+## Backup and restore
 
 Container Apps doesn't provide built-in backup capabilities for your applications or data. As a stateless container hosting platform, Container Apps expects applications to manage their own data persistence and recovery strategies through external services. Your application containers and their local file systems are ephemeral, and any data stored locally is lost when replicas restart or move.
 
