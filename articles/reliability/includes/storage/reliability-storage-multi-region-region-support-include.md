@@ -11,4 +11,4 @@
 
 - **Region support:** Azure Storage geo-redundant configurations use [Azure paired regions](../../regions-paired.md) for secondary region replication. The secondary region is automatically determined based on your primary region selection and can't be customized. For a complete list of Azure paired regions, see [Azure regions list](../../regions-list.md).
 
-   If your storage account's region isn't paired, consider using the [alternative multi-region approaches](#custom-multi-region-solutions-for-resiliency).
+   If your storage account's region isn't paired, consider using the [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
