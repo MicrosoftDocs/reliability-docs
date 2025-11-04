@@ -4,7 +4,7 @@ description: Understand business continuity, high availability, and disaster rec
 author: anaharris-ms
 ms.service: azure
 ms.topic: conceptual
-ms.date: 10/14/2025
+ms.date: 11/04/2025
 ms.author: anaharris
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
