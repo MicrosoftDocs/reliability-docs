@@ -133,7 +133,7 @@ This section describes what to expect when Container Apps resources are configur
 
 - **Detection and response**: Azure automatically detects zone failures. Container Apps immediately stops scheduling new replicas to the failed zone and begins redistributing traffic to healthy replicas in the remaining zones. The platform handles all failover operations automatically without requiring your intervention.
 
-[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+- **Notification:** [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./includes/reliability-availability-zone-down-notification-service-partial-include.md)]
 
     You can also monitor the health of your apps through Container Apps metrics in Azure Monitor. Configure alerts on replica count drops and request failure rates to receive immediate notification when zone-related issues occur.
 
