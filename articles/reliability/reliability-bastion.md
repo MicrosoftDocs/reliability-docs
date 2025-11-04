@@ -24,11 +24,11 @@ This article describes how to make Azure Bastion resilient to a variety of poten
 
 ## Production deployment recommendations
 
-For production deployments, you should:
+For production workloads, we recommend that you:
 
-TODO DIV
-- Use the Basic SKU or higher.
-- [Enable zone redundancy](#resilience-to-availability-zone-failures) if your bastion host is in a supported region.
+> [!div class="checklist"]
+> - Use the Basic SKU or higher.
+> - [Enable zone redundancy](#resilience-to-availability-zone-failures) if your bastion host is in a supported region.
 
 ## Reliability architecture overview
 
@@ -92,7 +92,7 @@ This section describes what to expect when bastion hosts are configured for avai
 
 - **Traffic routing between zones:** When you initiate an SSH or RDP session, it can be routed to an Azure Bastion instance in any of the availability zones you selected.
 
-    If you configure zone redundancy on your bastion host, a session might be sent to a bastion instance in an availability zone that's different from the virtual machine you're connecting to. In the following diagram, a request from the user is sent to a Azure Bastion instance in zone 2, although the virtual machine is in zone 1:
+    If you configure zone redundancy on your bastion host, a session might be sent to a bastion instance in an availability zone that's different from the virtual machine you're connecting to. In the following diagram, a request from the user is sent to an Azure Bastion instance in zone 2, although the virtual machine is in zone 1:
 
     <!-- Art Library Source# ConceptArt-0-000-015- -->
     :::image type="content" source="./media/reliability-bastion/instance-zone-traffic.svg" alt-text="Diagram that shows Azure Bastion with three instances. A user request goes to an Azure Bastion instance in zone 2 and is sent to a VM in zone 1." border="false":::
@@ -112,7 +112,7 @@ This section describes what to expect when bastion hosts are configured for avai
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** When an availability zone is unavailable, any RDP or SSH connections in progress that use a Azure Bastion instance in the faulty availability zone are terminated and need to be retried.
+- **Active requests:** When an availability zone is unavailable, any RDP or SSH connections in progress that use an Azure Bastion instance in the faulty availability zone are terminated and need to be retried.
 
     If the VM you're connecting to isn't in the affected availability zone, it continues to run.  For more information on the VM zone-down experience, see [Reliability in VMs - Zone down experience](./reliability-virtual-machines.md#zone-down-experience).
 
