@@ -236,7 +236,7 @@ To achieve multi-region resilience by using Application Gateway v2, you need to 
 
 For an example approach, see [Use Application Gateway with Traffic Manager](/azure/traffic-manager/traffic-manager-use-with-application-gateway).
 
-## Backups
+## Backup and restore
 
 Application Gateway v2 is a stateless service that doesn't require traditional backup and restore operations. All configuration data is stored in Resource Manager and can be redeployed by using IaC approaches, such as Bicep files or ARM templates.
 
