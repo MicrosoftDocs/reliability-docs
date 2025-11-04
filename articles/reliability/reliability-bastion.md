@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-bastion
-ms.date: 11/3/2025
+ms.date: 10/09/2025
 ai-usage: ai-assisted
 ---
 
