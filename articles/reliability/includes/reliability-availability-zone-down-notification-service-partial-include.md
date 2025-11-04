@@ -1,5 +1,5 @@
 ---
-title: Availability zone - zone-down notifications (Service Health only)
+title: Azure availability zones - zone-down notifications (Service Health only)
 description: Include file for the zone-down behavior section's *Notification* bullet that describes how Service Health can be used.
 author: anaharris-ms
 ms.service: azure
