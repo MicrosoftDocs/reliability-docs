@@ -42,7 +42,7 @@ A business continuity plan doesn't only take into consideration the resiliency f
 
 Business continuity planning should include the following sequential steps:
 
-1. **Identify criticality tier**. Workloads can be classified into different *criticality tiers* based on their importance to the business. Each tier has different requirements for availability, and therefore different requirements for business continuity planning. To determine your workload's critical tier, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
+1. **Criticality tier classification**. Workloads can be classified into different *criticality tiers* based on their importance to the business. Each tier has different requirements for availability, and therefore different requirements for business continuity planning. To determine your workload's critical tier, see [Well-Architected Framework - Select your criticality tier](/azure/well-architected/design-guides/disaster-recovery#select-your-criticality-tier).
 
 1. **Risk identification**. Identify risks to a workload's availability or functionality. Possible risks could be network issues, hardware failures, human error, region outage, etc. Understand the impact of each risk.
  
@@ -156,7 +156,8 @@ The higher the uptime requirement, the less tolerance you have for outages, and 
 
 To achieve HA requirements, a workload can include a number of design elements. Some of the common elements are listed and described below in this section.
 
-
+> [!NOTE]
+> Some workloads are *mission-critical*, which means any downtime can have severe consequences to human life and safety, or major financial losses. If you're designing a mission-critical workload, there are specific things you need to think about when you design your solution and manage your business continuity. For more information, see the [Azure Well-Architected Framework: Mission-critical workloads](/azure/well-architected/mission-critical/mission-critical-overview).
 
 #### Azure services and tiers that support high availability
 
@@ -285,7 +286,7 @@ Regardless of the cause of the disaster, it's important that you create a well-d
 
 DR isn't an automatic feature of Azure. However, many services do provide features and capabilities that you can use to support your DR strategies. You should review the [reliability guides for each Azure service](./overview-reliability-guidance.md) to understand how the service works and its capabilities, and then map those capabilities to your DR plan.
 
-A strong Disaster Recovery (DR) plan turns strategy into decisive action. It provides a clear roadmap for responding to disasters, minimizing downtime, and ensuring business continuity.
+A strong DR plan turns strategy into decisive action. It provides a clear roadmap for responding to disasters, minimizing downtime, and ensuring business continuity.
 
 To make this possible, every DR plan should be documented to include a clear runbook, a well-defined communication plan, and a structured escalation path. To learn more about these DR plan elements, see [Well-Architected Framework - Document your DR plan](/azure/well-architected/design-guides/disaster-recovery#document-your-dr-plan).
 
