@@ -7,9 +7,9 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 services: logic-apps
 ms.service: azure-logic-apps
-ms.date: 11/03/2025
+ms.date: 04/04/2025
 zone_pivot_groups: logic-app-hosting-types
-ai-usage: ai-assist
+ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Logic Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
 ---
 
@@ -225,11 +225,10 @@ For more information on multi-region deployments for your logic app workflows, s
 
 ## Service-level agreement
 
-[!INCLUDE [SLA description](includes/reliability-sla-description-include.md)]
+[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-To understand the SLA conditions for Logic Apps, see [Service Level Agreements (SLA) for Online Services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ## Related content
 
-- [Reliability in Azure](../reliability/overview.md)
+- [Reliability in Azure](./overview.md)
 - [Handle errors and exceptions in Logic Apps](/azure/logic-apps/error-exception-handling)
