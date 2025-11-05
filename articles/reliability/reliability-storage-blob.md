@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Blob Storage
-description: Learn about resiliency in Azure Blob Storage, including resilience to transient faults, availability zone failures, region failures, and service maintenance.
+description: Learn about resiliency in Azure Blob Storage, including resilience to transient faults, availability zone failures, and region failures.
 ms.author: anaharris
 author: anaharris-ms
 ms.topic: reliability-article
