@@ -10,23 +10,29 @@ ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---
 
+
 # Reliability guides by service
 
 This article provides links to reliability guidance for many Azure services. Most reliability guides contain the following information:
 
-- *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-in redundancy features, and how to provision and manage multiple resources, if applicable.
+- *Resilience to transient faults* describes how the service handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in your application, including information about retry policies, timeouts, and other best practices.
 
-- *Transient fault handling* describes how the service handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in your application, including information about retry policies, timeouts, and other best practices.
+- *Production deployment recommendations* provides guidance on how to deploy the service in production environments, including best practices for configuration, monitoring, and scaling.
 
-- *Availability zones* describe zonal and zone-redundant deployment options, traffic routing and data replication between zones, what happens when a zone experiences an outage, failback, and how to configure your resources for availability zone support.
+- *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-hin redundancy features, and ow to provision and manage multiple resources, if applicable.
 
-- *Multi-region support* describes how to configure multi-region or geo-disaster support, traffic routing and data replication between regions, region-down experience, failover and failback support, and alternative multi-region support.
+- *Resilience to availability zone failures* describes the zone-redundant deployment options for the service, requirements, traffic routing and data replication between zones, what happens when a zone experiences an outage, zone recovery, and how to configure your resources for availability zone support.
+
+- *Resilience to region-wide failures* describes how to configure multi-region or geo-disaster support, requirements, traffic routing and data replication between regions, region-down experience, failover and failback support, and custom multi-region solutions.
+
+- *Resilience to service maintenance* describes how the service handles planned maintenance events, including how to minimize downtime and data loss during these events. It also shows you how to configure the service to improve resilience during maintenance times.
+
+- *Service-level agreements (SLAs)* for availability, including how the expected uptime changes based on the configuration that you use.
 
 Some guides also contain information about:
 
-- *Backup support*, such as who controls backups, where they're stored and replicated to, how they can be recovered, and whether they're accessible only within a region or across regions.
+- *Backup and recovery* shows you who controls and manages backups, where they're stored and replicated to, how they can be recovered, and whether they're accessible only within a region or across regions.
 
-- *Service-level agreements (SLAs)* for availability, including how the expected uptime changes based on the configuration that you use.
 
 ## Reliability guides by service
 
