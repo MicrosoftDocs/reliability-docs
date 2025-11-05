@@ -1,10 +1,10 @@
 ---
 title: Azure Service Reliability Guides
-description: See a list of reliability guides for Azure products and services. Learn about transient fault handling, availability zones, and multi-region support.
+description: See a list of reliability guides for Azure products and services. Learn about resiliency and recovery, including resilience to transient faults, zone failures, and region-wide failures, and backup and restore.
 author: anaharris-ms
 ms.service: azure
 ms.topic: reliability-article
-ms.date: 08/08/2025
+ms.date: 11/05/2025
 ms.author: anaharris
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
