@@ -146,8 +146,6 @@ items:
     items:
     - name: Microsoft Community Training
       href: reliability-community-training.md
-    - name: Sustainability data solutions in Fabric
-      href: reliability-sustainability-data-solutions-fabric.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -349,7 +347,7 @@ items:
       - name: Azure Cache for Redis
         href: migrate-cache-redis.md
       - name: Azure Container Apps
-        href: reliability-container-apps.md#availability-zone-support
+        href: reliability-container-apps.md#resilience-to-availability-zone-failures
       - name: Azure Container Instances
         href: migrate-container-instances.md#configure-availability-zone-support
       - name: Azure Container Registry
