@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-blob-storage
-ms.date: 11/03/2025
+ms.date: 08/12/2025
 ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Blob Storage works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -17,7 +17,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Blob Storage resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Blob Storage service level agreement (SLA).
+This article describes how to make Blob Storage resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Blob Storage service level agreement (SLA).
 
 > [!NOTE]
 > Blob Storage is part of the Azure Storage platform. Some of the capabilities of Blob Storage are common across many Azure Storage services. In this article, we use *Azure Storage* to refer to these features.
@@ -96,17 +96,20 @@ This section describes what to expect when a blob storage account is configured 
 
 [!INCLUDE [Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
 
+
+### Geo-redundant storage
+
 [!INCLUDE [Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
 
 [!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
-### Requirements
+#### Requirements
 
 [!INCLUDE [Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
 [!INCLUDE [Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
 
-### Considerations
+#### Considerations
 
 When you implement multi-region Blob Storage, consider the following key factors:
 
@@ -116,31 +119,31 @@ When you implement multi-region Blob Storage, consider the following key factors
 
 [!INCLUDE [Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
 
-### Cost
+#### Cost
 
 [!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For more information, see [Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 [!INCLUDE [Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
 [!INCLUDE [Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 [!INCLUDE [Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 [!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
-### Region recovery
+#### Region recovery
 
 [!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
-### Test for region failures
+#### Test for region failures
 
 [!INCLUDE [Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
@@ -160,7 +163,7 @@ Object replication isn't compatible with all storage accounts. For example, it d
 
 For more information, see [Object replication for block blobs](/azure/storage/blobs/object-replication-overview) and [Configure object replication](/azure/storage/blobs/object-replication-configure).
 
-## Backups
+## Backup amd recovery
 
 Blob Storage provides multiple data protection mechanisms that complement redundancy for comprehensive backup strategies. The service's built-in redundancy protects against infrastructure failures, and extra backup capabilities protect against accidental deletion, corruption, and malicious activities.
 
