@@ -204,7 +204,7 @@ Consider the following common high-level approaches:
 
   - Access and modify files on the server endpoint, and not in Azure, to ensure that changes replicate quickly to the secondary region.
 
-## Backups
+## Backup and restore
 
 [Azure Files backup](/azure/backup/azure-file-share-backup-overview) is a native integration between Azure Files and Azure Backup that's designed to safeguard data against accidental deletion, corruption, and ransomware attacks.
 

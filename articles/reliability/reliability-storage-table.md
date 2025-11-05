@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-table-storage
-ms.date: 11/03/2025
+ms.date: 08/18/2025
 ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Table Storage works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -112,17 +112,19 @@ When an availability zone becomes unavailable, Table Storage automatically handl
 
 [!INCLUDE [Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
 
+### Geo-redundant storage
+
 [!INCLUDE [Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
 
 [!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
-### Requirements
+#### Requirements
 
 [!INCLUDE [Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
 [!INCLUDE [Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
 
-### Considerations
+#### Considerations
 
 When you implement multi-region Table Storage, consider the following important factors:
 
@@ -132,31 +134,31 @@ When you implement multi-region Table Storage, consider the following important 
 
 [!INCLUDE [Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
 
-### Cost
+#### Cost
 
 [!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For detailed pricing information, see [Table Storage pricing](https://azure.microsoft.com/pricing/details/storage/tables/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 [!INCLUDE [Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
 [!INCLUDE [Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 [!INCLUDE [Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 [!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
-### Region recovery
+#### Region recovery
 
 [!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
-### Test for region failures
+#### Test for region failures
 
 [!INCLUDE [Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
@@ -173,7 +175,7 @@ For detailed pricing information, see [Table Storage pricing](https://azure.micr
 
 For Table Storage, a multiple-account approach requires you to manage data distribution, handle synchronization between tables across regions including conflict resolution, and implement custom failover logic.
 
-## Backups
+## Backup and restore
 
 Table Storage doesn't provide traditional backup capabilities like point-in-time restore (PITR). However, you can implement custom backup strategies for table data. For most solutions, you shouldn't rely exclusively on backups. Instead, use the other capabilities described in this guide to support your resiliency requirements. However, backups protect against some risks that other approaches don't. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 

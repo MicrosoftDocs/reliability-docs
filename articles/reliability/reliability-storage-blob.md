@@ -147,7 +147,7 @@ For more information, see [Blob Storage pricing](https://azure.microsoft.com/pri
 
 [!INCLUDE [Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
-## Custom multi-region solutions for resiliency
+### Custom multi-region solutions for resiliency
 
 [!INCLUDE [Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
