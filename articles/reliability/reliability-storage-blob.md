@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Blob Storage
-description: Learn about resiliency in Azure Blob Storage, including resilience to transient faults, availability zone failures, region failures, and service maintenance.
+description: Learn about resiliency in Azure Blob Storage, including resilience to transient faults, availability zone failures, and region failures.
 ms.author: anaharris
 author: anaharris-ms
 ms.topic: reliability-article
@@ -17,7 +17,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Blob Storage resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Blob Storage service level agreement (SLA).
+This article describes how to make Blob Storage resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Blob Storage service level agreement (SLA).
 
 > [!NOTE]
 > Blob Storage is part of the Azure Storage platform. Some of the capabilities of Blob Storage are common across many Azure Storage services. In this article, we use *Azure Storage* to refer to these features.
