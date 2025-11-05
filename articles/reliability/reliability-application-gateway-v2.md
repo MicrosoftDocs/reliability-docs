@@ -39,7 +39,7 @@ Application Gateway is a managed service. It's important to understand some key 
 
 - **Gateway:** When you deploy Application Gateway, you deploy a *gateway*, which is the Azure resource you work with.
 
-- **Instances:** An *instance* is a single internal unit of the gateway that provides the compute resources necessary to run your gateway. A gateway has multiple instances.
+- **Instances:** An *instance* is a single unit of the gateway. A gateway has multiple instances. Each instance has its own private IP address, handles traffic, and routes requests.
 
   >[!IMPORTANT]
   > For high availability, each gateway is always created with a minimum of two instances.  However, the Azure portal may indicate that your gateway has a single instance, even though it actually has two.
