@@ -49,7 +49,7 @@ items:
     - name: Azure Batch
       href: reliability-batch.md
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Container Instances
       href: reliability-container-instances.md
     - name: Azure Data Factory
@@ -64,8 +64,6 @@ items:
         href: /azure/service-fabric/service-fabric-cross-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/service-fabric/service-fabric-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability-of-the-service-fabric-cluster
-    - name: Azure Spring Apps
-      href: reliability-spring-apps.md
     - name: Azure Virtual Machines
       href: reliability-virtual-machines.md
     - name: Azure Virtual Machine Image Builder
@@ -83,7 +81,7 @@ items:
       - name: Disaster recovery
         href: ../azure-app-configuration/concept-disaster-recovery.md?tabs=core2x?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Container Instances
       href: reliability-container-instances.md
     - name: Azure Container Registry
@@ -122,8 +120,8 @@ items:
         href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
-    - name: Azure Database for PostgreSQL - Flexible Server
-      href: reliability-postgresql-flexible-server.md
+    - name: Azure Database for PostgreSQL
+      href: reliability-azure-database-postgresql.md
     - name: Azure SQL Database
       href: reliability-sql-database.md
     - name: Azure SQL Managed Instance
@@ -148,8 +146,6 @@ items:
     items:
     - name: Microsoft Community Training
       href: reliability-community-training.md
-    - name: Sustainability data solutions in Fabric
-      href: reliability-sustainability-data-solutions-fabric.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -160,6 +156,8 @@ items:
       href: reliability-energy-data-services.md
     - name: Azure Event Grid
       href: ./reliability-event-grid.md
+    - name: Azure Event Hubs
+      href: ./reliability-event-hubs.md
     - name: Azure Functions 
       href: reliability-functions.md
     - name: Azure Health Data Services
@@ -299,7 +297,7 @@ items:
     - name: Azure App Service
       href: reliability-app-service.md
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Notification Hubs
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
@@ -349,7 +347,7 @@ items:
       - name: Azure Cache for Redis
         href: migrate-cache-redis.md
       - name: Azure Container Apps
-        href: reliability-azure-container-apps.md#availability-zone-migration
+        href: reliability-container-apps.md#resilience-to-availability-zone-failures
       - name: Azure Container Instances
         href: migrate-container-instances.md#configure-availability-zone-support
       - name: Azure Container Registry

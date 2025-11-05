@@ -54,7 +54,7 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Azure Cache for Redis||[Enable zone redundancy for Azure Cache for Redis](../azure-cache-for-redis/cache-how-to-zone-redundancy.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) </p> [Configure passive geo-replication for Premium Azure Cache for Redis instances](../azure-cache-for-redis/cache-how-to-geo-replication.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) |
 |Azure Chaos Studio| [Reliability in Chaos Studio](reliability-chaos-studio.md)||
 |Azure Communications Gateway | | [Reliability in Azure Communications Gateway](../communications-gateway/reliability-communications-gateway.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json)|
-|Azure Container Apps| [Reliability in Container Apps](reliability-azure-container-apps.md)||
+|Azure Container Apps| [Reliability in Container Apps](reliability-container-apps.md)||
 |Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 |Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
 |Azure Cosmos DB for MongoDB vCore| [Reliability in Azure Cosmos DB for MongoDB vCore](reliability-cosmos-mongodb.md)||
@@ -76,7 +76,7 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
 |Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 |Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
-|Azure Event Hubs||[Best practices for insulating Azure Event Hubs applications against outages and disasters](/azure/event-hubs/event-hubs-business-continuity-outages-disasters)|
+|Azure Event Hubs| [Reliability in Azure Event Hubs](./reliability-event-hubs.md) ||
 |Azure ExpressRoute|| [Design for high availability with ExpressRoute](../expressroute/designing-for-high-availability-with-expressroute.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) </p>[Design for disaster recovery with ExpressRoute private peering](../expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json)|
 |Azure Files| [Reliability in Azure Files](reliability-storage-files.md)||
 |Azure Firewall| [Reliability in Azure Firewall](./reliability-firewall.md) ||
@@ -107,7 +107,6 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Azure Service Fabric|| [Deploy a Service Fabric cluster across availability zones](/azure/service-fabric/service-fabric-cross-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) </p> [Disaster recovery in Service Fabric](/azure/service-fabric/service-fabric-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) |
 |Azure SignalR Service|| [Resiliency and disaster recovery in Azure SignalR Service](../azure-signalr/signalr-concept-disaster-recovery.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json)|
 |Azure Site Recovery|| [Set up disaster recovery for Azure virtual machines](../site-recovery/azure-to-azure-tutorial-enable-replication.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json)|
-|Azure Spring Apps| [Reliability in Azure Spring Apps](reliability-spring-apps.md)||
 |Azure SQL Database|[Reliability in Azure SQL Database](reliability-sql-database.md) |
 |Azure SQL Managed Instance| [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md) ||
 |Azure Storage Actions| [Reliability in Storage Actions](reliability-storage-actions.md)||
@@ -126,7 +125,6 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Community Training| [Reliability in Community Training](reliability-community-training.md) ||
 |Microsoft Fabric| [Reliability in Fabric](reliability-fabric.md)||
 |Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
-|Sustainability data solutions in Fabric | [Reliability in sustainability data solutions in Fabric](reliability-sustainability-data-solutions-fabric.md) ||
 
 ## Related content
 
