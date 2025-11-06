@@ -187,21 +187,21 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Traffic routing between regions:** Client applications connect through the FQDN for your namespace, and their traffic routes to the primary region.
 
-    Only the primary region actively processes events from clients during normal operations. The secondary region receives replicated events but otherwise remains passive in standby mode.
+  Only the primary region actively processes events from clients during normal operations. The secondary region receives replicated events but otherwise remains passive in standby mode.
 
 - **Data replication between regions:** Data replication behavior between the primary and secondary regions depends on whether you configure your replication pairing to use synchronous or asynchronous replication.
 
-    - *Synchronous:* Events are replicated to the secondary region before the write operation completes.
+  - *Synchronous:* Events are replicated to the secondary region before the write operation completes.
     
-        This mode provides the greatest assurance that your event data is safe because it must be committed in the primary and secondary region. However, synchronous replication substantially increases the write latency for incoming events. It also requires that the secondary region be available to accept the write operation, so an outage in any secondary region causes the write operation to fail.
+    This mode provides the greatest assurance that your event data is safe because it must be committed in the primary and secondary region. However, synchronous replication substantially increases the write latency for incoming events. It also requires that the secondary region be available to accept the write operation, so an outage in any secondary region causes the write operation to fail.
 
     - *Asynchronous:* Events are written to the primary region and then the write operation completes.  A short time later, it replicates the events to the secondary region.
     
-This mode provides a higher write throughput than synchronous replication because there's no inter-region replication latency during write operations. Also, the asynchronous replication mode can tolerate the loss of a secondary region while still allowing write operations in the primary region. However, if the primary region has an outage, any data that hasn't yet been replicated to the secondary region might be unavailable or lost.
+    This mode provides a higher write throughput than synchronous replication because there's no inter-region replication latency during write operations. Also, the asynchronous replication mode can tolerate the loss of a secondary region while still allowing write operations in the primary region. However, if the primary region has an outage, any data that hasn't yet been replicated to the secondary region might be unavailable or lost.
 
-  When you configure asynchronous replication, you configure the maximum acceptable lag time for replication to take. At any time, you can verify the current replication lag [by using Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
+    When you configure asynchronous replication, you configure the maximum acceptable lag time for replication to take. At any time, you can verify the current replication lag [by using Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
         
-If the asynchronous replication lag increases beyond the maximum you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, it's important to select secondary regions that aren't too geographically distant, and to ensure that your capacity is sufficient for the throughput.
+    If the asynchronous replication lag increases beyond the maximum you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, it's important to select secondary regions that aren't too geographically distant, and to ensure that your capacity is sufficient for the throughput.
 
     For more information, see [Replication modes](../event-hubs/geo-replication.md#replication-modes).
 
@@ -209,13 +209,11 @@ If the asynchronous replication lag increases beyond the maximum you specify, th
 
 This section describes what to expect when an Event Hubs namespace is configured for geo-replication and there's an outage in the primary or a secondary region.
 
-You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage.
-
-    For more information about how to promote a secondary region to the new primary, see [Promote secondary](../event-hubs/use-geo-replication.md#promote-secondary).
+You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For more information about how to promote a secondary region to the new primary, see [Promote secondary](../event-hubs/use-geo-replication.md#promote-secondary).
     
-    When you promote a secondary region, choose whether to perform a *planned promotion* or a *forced promotion*. A planned promotion waits for the secondary region to catch up before accepting new traffic. This approach eliminates data loss but introduces downtime.
+When you promote a secondary region, choose whether to perform a *planned promotion* or a *forced promotion*. A planned promotion waits for the secondary region to catch up before accepting new traffic. This approach eliminates data loss but introduces downtime.
     
-    During an outage in the primary region, you typically need to perform a forced promotion. If the primary region is available and you trigger a promotion for another reason, you might choose a planned promotion.
+During an outage in the primary region, you typically need to perform a forced promotion. If the primary region is available and you trigger a promotion for another reason, you might choose a planned promotion.
 
 - **Notification:** Event Hubs doesn't notify you when a region is down. But you can use [Service Health](/azure/service-health/overview) to understand the overall health of Event Hubs, including region failures. Use that information and other metrics to decide when to promote a secondary region to a primary region.
 
