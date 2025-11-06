@@ -47,7 +47,7 @@ Azure services can provide two types of availability zone support: *zone-redunda
 
 - **Zonal deployments**: A zonal resource is deployed to a single, self-selected availability zone.
 
-   :::image type="content" source="media/availability-zones-overview/zonal-single.svg" alt-text="Diagram of a zonal resources deployed into a single zone." border="false":::
+   :::image type="content" source="media/availability-zones-overview/zonal-single.svg" alt-text="Diagram of a zonal resource deployed into a single zone." border="false":::
 
    Zonal deployments don't automatically provide resiliency to availability zone outages. However, they can help you achieve unusually stringent latency or performance requirements. For example, for a chatty workload built using virtual machines, you might choose to deploy multiple virtual machines to the same zone to reduce the latency between them.
 	   
@@ -74,7 +74,7 @@ For example, subscription A may have physical zone 1 mapped to logical zone 2, w
 
 :::image type="content" source="media/availability-zones-overview/availability-zones-logical-physical.svg" alt-text="Diagram of logical to physical availability zone mapping." border="false":::
 
-To understand the mapping between logical and physical zones for your subscription, use the [List Locations Azure Resource Manager API](/rest/api/resources/subscriptions/list-locations). You can use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell) to retrieve the information from the API.
+To understand the mapping between logical and physical zones for your subscription, use the [List Locations Azure Resource Manager (ARM) API](/rest/api/resources/subscriptions/list-locations). You can use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell) to retrieve the information from the API.
 
 To compare zone mapping for resilient solutions that span multiple subscriptions, use the dedicated ARM API [checkZonePeers](/rest/api/resources/subscriptions/check-zone-peers). To use the `checkZonePeers` API, the feature "Microsoft.Resources/AvailabilityZonePeering" needs to be enabled. For more information about how to enable features, see [Register features in Azure subscription](/azure/azure-resource-manager/management/preview-features).
 
