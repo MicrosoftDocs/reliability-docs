@@ -54,7 +54,7 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Azure Cache for Redis||[Enable zone redundancy for Azure Cache for Redis](../azure-cache-for-redis/cache-how-to-zone-redundancy.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) </p> [Configure passive geo-replication for Premium Azure Cache for Redis instances](../azure-cache-for-redis/cache-how-to-geo-replication.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json) |
 |Azure Chaos Studio| [Reliability in Chaos Studio](reliability-chaos-studio.md)||
 |Azure Communications Gateway | | [Reliability in Azure Communications Gateway](../communications-gateway/reliability-communications-gateway.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json)|
-|Azure Container Apps| [Reliability in Container Apps](reliability-azure-container-apps.md)||
+|Azure Container Apps| [Reliability in Container Apps](reliability-container-apps.md)||
 |Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 |Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
 |Azure Cosmos DB for MongoDB vCore| [Reliability in Azure Cosmos DB for MongoDB vCore](reliability-cosmos-mongodb.md)||
@@ -125,7 +125,6 @@ This section provides links to reliability guidance for many Azure services. Eac
 |Community Training| [Reliability in Community Training](reliability-community-training.md) ||
 |Microsoft Fabric| [Reliability in Fabric](reliability-fabric.md)||
 |Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
-|Sustainability data solutions in Fabric | [Reliability in sustainability data solutions in Fabric](reliability-sustainability-data-solutions-fabric.md) ||
 
 ## Related content
 
