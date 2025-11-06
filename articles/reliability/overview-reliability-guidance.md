@@ -26,7 +26,7 @@ Some guides also contain information about the following capabilities:
 
 - *Backup support* explains who controls backups, where they're stored and replicated, how to recover them, and whether they can be accessed only within a region or across regions.
 
-- *Service-level agreements (SLAs)* for availability describe how expected uptime changes based on the configuration that you use.
+- *Service-level agreements (SLAs)*, which define and describe the expected uptime, and how the expected uptime changes based on the configuration that you use.
 
 ## Reliability guides by service
 
@@ -35,7 +35,7 @@ The following table provides links to reliability guidance for Azure services. E
 > [!NOTE]
 > Some documents don't follow a single reliability guide format. These services might list more than one article that references reliability guidance.
 
-| Product | Reliability guide | Other reliability documentation |
+| Service | Reliability guide | Other reliability documentation |
 |----------|---------|---------|
 |Azure AI Health Insights| [Reliability in AI Health Insights](reliability-health-insights.md)||
 |Azure AI Search| [Reliability in AI Search](reliability-ai-search.md) ||

@@ -12,16 +12,16 @@ ms.custom: subject-reliability
 
 # Azure services that support availability zones
 
-Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), either by being zonal or zone-redundant. This article lists which services support availability zones and the type of offerings that they support.
+Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the type of offerings that they support.
 
 Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
 > [!IMPORTANT]
 > Some services might support availability zones but require specific configurations to enable them on your resources. For example, some services might support availability zones for only specific tiers or regions. For more information about a service's requirements for availability zone support, select that service in the following table.
 
-The following table lists zonal and zone-redundant Azure offerings. Some offerings support both types of deployments. For more information about zonal and zone-redundant products and how they work, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
+The following table lists zonal and zone-redundant Azure services. Some services support both types of deployments. For more information about zonal and zone-redundant services and how they work, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
 
-| Product | Zone-redundant  | Zonal | 
+| Service | Zone-redundant  | Zonal | 
 | --- | --- |---|
 | [Azure AI Search](reliability-ai-search.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure API Center](../api-center/frequently-asked-questions.yml)|:::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
