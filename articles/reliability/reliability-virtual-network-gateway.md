@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-vpn-gateway
-ms.date: 10/30/2025
+ms.date: 11/07/2025
 zone_pivot_groups: virtual-network-gateway-types
 ai-usage: ai-assisted
 ---
@@ -88,13 +88,14 @@ A VPN requires components to be deployed in both the on-premises environment and
 - *On-premises components*: The components you deploy depend on whether you deploy a point-to-site or site-to-site configuration.
 
    - *Site-to-site* configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
-   - *Point-to-site* configurations require you to deploy a VPN client application in a remote device like a laptop or desktop, and import the user profile into the VPN client. You're responsible for deploying and configuring the client devices.
+   - *Point-to-site* configurations require you to deploy a VPN client application in a remote device like a laptop or desktop, and import the user profile into the VPN client. Each point-to-site connection has its own user profile. You're responsible for deploying and configuring the client devices.
 
    To learn more about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
 - *Azure virtual network gateway*: In Azure, you create a *virtual network gateway*, also called a *VPN gateway*, which acts as the termination point for VPN connections.
 
-- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. The local network gateway stores the following information:
+- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. The local network gateway stores the public IP address associated with the VPN device to establish the IKE phase 1 and phase2, the on-premises IP networks (for static routing), BGP IP address of the remote peer (in case of dynamic routing).
+
     - The public IP address of the on-premises VPN device to establish the IKE phase 1 and phase 2 connections
     - The on-premises IP networks, for static routing
     - The BGP IP address of the remote peer, for dynamic routing
@@ -119,7 +120,7 @@ A VPN virtual network gateway contains exactly two *instances*, which represent 
 
 ::: zone-end
 
-You don't see or manage the VMs directly.  The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region. If a server rack fails, the gateway is automatically migrated to another cluster.
+You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region. If a server rack fails, the gateway instance is automatically migrated to another cluster by the Azure platform.
 
 ::: zone pivot="expressroute"
 
