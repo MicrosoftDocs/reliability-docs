@@ -12,24 +12,24 @@ ms.custom: subject-reliability
 
 # Enable zone resiliency for Azure workloads
 
-To help safeguard your applications against hardware failures, network disruptions, and natural disasters, design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
+To make your applications more resilient to zone-related hardware failures, network disruptions, and natural disasters, it's important that design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 
-When possible, you should address zone resiliency during the initial planning and deployment of workloads. But many existing workloads might not yet support this level of protection. In most cases, enabling zone resiliency for deployed workloads is straightforward, and Microsoft continues to simplify the process. But any change to your workload can introduce risk, so plan carefully. Assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
+Although it's a best practice to address zone resiliency during the initial planning and deployment of workloads, it's common to want to convert existing non-resilient workloads to zone resiliency. In general, the processing of enabling zone resiliency for existing workloads is straightforward, and Microsoft continues to simplify the process. However, any change to your workload can introduce an amount of risk.  Once you understand the risks that are involved, you'll then be able to assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
 
-This article outlines key considerations to enable zone resiliency in your Azure workloads. It also helps you plan and implement a successful transition to a more resilient architecture.
+This article outlines key considerations for enabling zone resiliency in your Azure workloads. It also helps you plan and implement a successful transition to a more resilient architecture.
 
 > [!TIP]
-> If you design new workloads or review the design of existing workloads, follow the [recommendations for designing for redundancy in the Azure Well-Architected Framework](/azure/well-architected/reliability/redundancy). This guidance can help you design workload redundancy across multiple levels, with a focus on critical workflows. To support availability zone adoption, it also outlines strategies like multi-region deployments and deployment stamps.
+> If you're currently in the process of designing your workloads or plan to do a design review of your current workloads, it's important that you follow the [recommendations for designing for redundancy in the Azure Well-Architected Framework (WAF)](/azure/well-architected/reliability/redundancy). The WAF recommendations guide helps you design workload redundancy across multiple levels, with a focus on critical workflows. To support availability zone adoption, it also outlines strategies like multi-region deployments and deployment stamps.
 
 ## What is zone resiliency?
 
-Azure services support resiliency to availability zone outages in two primary ways:
+Azure services can be made resilient to availability zone outages in two primary ways
 
 - **Zone-redundant services:** Many Azure services support zone redundancy. These services automatically replicate data between availability zones, distribute incoming requests, and fail over to different zones during a zone failure. Each service supports these capabilities in a way that makes sense for that specific service. Some services are zone redundant by default, while other services might need you to configure zone redundancy.
 
-- **Zonal services:** Some Azure services are zonal, which means that you can pin them to a specific availability zone. To achieve zone resiliency by using a zonal service, deploy separate instances of the service in multiple availability zones. You might also need to manage traffic distribution, replication of data, and failover between the instances.
+- **Zonal services:** Some Azure services are zonal, which means that they can be pinned to a specific availability zone. To achieve zone resiliency by using a zonal service, deploy separate instances of the service in multiple availability zones. You might also need to manage traffic distribution, replication of data, and failover between the instances.
 
-You can deploy some services in either zone-redundant or zonal configurations. For most cases, deploy zone-redundant services when available.
+Some services can be deployed in either a zone-redundant or zonal configuration. For most cases, it's best to deploy zone-redundant services when you can.
 
 For more information, see [Types of availability zone support](./availability-zones-overview.md#types-of-availability-zone-support).
 
@@ -97,7 +97,7 @@ Use the [zone configuration table](#azure-services-by-zone-configuration-approac
 
 ### Step 3: Test for latency
 
-When you make workloads zone resilient, consider latency between availability zones. Some legacy systems can't tolerate the small amount of extra latency that cross-zone traffic introduces, especially when you enable synchronous replication within the data tier. If you suspect that cross-zone latency might affect your workload, run tests before and after you enable zone resiliency.
+When you make workloads zone resilient, consider latency between availability zones. Occasionally, some legacy systems can't tolerate the small amount of extra latency that cross-zone traffic introduces, especially when you enable synchronous replication within the data tier. If you suspect that cross-zone latency might affect your workload, run tests before and after you enable zone resiliency.
 
 ## Zone configuration approaches for Azure services
 
