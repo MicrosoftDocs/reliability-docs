@@ -204,9 +204,6 @@ The following diagram shows a zone-redundant virtual network gateway with two ga
 > [!NOTE]
 > There's no availability zone configuration for local network gateways, because they're automatically zone-resilient.
 
-> [!WARNING]
-> **Note to PG:** Please confirm the preceding statement about local network gateways is accurate.
-
 ::: zone-end
 
 ### Requirements
@@ -271,11 +268,6 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone-end
 
-- **Verify the zone redundancy status of an existing virtual network gateway.** TODO.
-
-    > [!WARNING]
-    > **Note to PG:** Please confirm whether a customer can confirm whether an existing gateway is ZR, zonal, or nonzonal. Or, are all gateways now ZR?
-
 ### Behavior when all zones are healthy
 
 The following section describes what to expect when your virtual network gateway is configured for zone redundancy and all availability zones are operational.
@@ -313,9 +305,6 @@ The following section describes what to expect when your virtual network gateway
 - **Expected data loss:** Zone failures aren't expected to cause data loss because virtual network gateways don't store persistent customer data.
 
 - **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last up to one minute as traffic is redistributed. Client applications should retry the requests by following the guidance for how to [handle transient faults](#resilience-to-transient-faults).
-    
-    > [!WARNING]
-    > **Note to PG:** Please confirm the 'Expected downtime' statement is accurate.
 
 ::: zone pivot="expressroute"
 
