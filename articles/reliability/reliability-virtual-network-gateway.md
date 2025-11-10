@@ -184,15 +184,15 @@ Transient faults can sometimes affect IPsec tunnels or TCP data flows. In the ev
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway VMs are automatically distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintain connectivity during zone maintenance or outages.
-
-When you use a [supported SKU](#requirements), any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
-
-The following diagram shows a zone-redundant virtual network gateway with two gateway VMs that are distributed across different availability zones:
-
-:::image type="content" source="media/reliability-virtual-network-gateway/zone-redundant.png" alt-text="Diagram that shows a virtual network gateway with two gateway VMs distributed across availability zones." border="false":::
+Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintain connectivity during zone maintenance or outages.
 
 ::: zone pivot="expressroute"
+
+Zone-redundant ExpressRoute gateway VMs are automatically distributed across at least three availability zones.
+
+The following diagram shows a zone-redundant virtual network gateway with three gateway VMs that are distributed across different availability zones:
+
+:::image type="content" source="media/reliability-virtual-network-gateway/expressroute-zone-redundant.png" alt-text="Diagram that shows an ExpressRoute virtual network gateway with three gateway VMs distributed across availability zones." border="false":::
 
 > [!NOTE]
 > There's no availability zone configuration for circuits or connections. These resources are located in network edge facilities, which aren't designed to use availability zones.
@@ -201,10 +201,18 @@ The following diagram shows a zone-redundant virtual network gateway with two ga
 
 ::: zone pivot="vpn"
 
+In Azure VPN Gateway, zone redundancy means that the gateway VMs are automatically distributed across multiple availability zones.
+
+The following diagram shows a zone-redundant virtual network gateway with two gateway VMs that are distributed across different availability zones:
+
+:::image type="content" source="media/reliability-virtual-network-gateway/vpn-zone-redundant.png" alt-text="Diagram that shows a VPN virtual network gateway with two gateway VMs distributed across availability zones." border="false":::
+
 > [!NOTE]
 > There's no availability zone configuration for local network gateways, because they're automatically zone-resilient.
 
 ::: zone-end
+
+When you use a [supported SKU](#requirements), any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
 
 ### Requirements
 
@@ -230,7 +238,7 @@ The following diagram shows a zone-redundant virtual network gateway with two ga
 
 ::: zone pivot="expressroute"
 
-Zone-redundant gateways for ExpressRoute require specific SKUs, which have higher hourly rates compared to standard gateway SKUs due to their enhanced capabilities and performance characteristics. For pricing information, see [Azure ExpressRoute pricing](https://azure.microsoft.com/pricing/details/expressroute/).
+Zone-redundant gateways for ExpressRoute require specific SKUs, which can have higher hourly rates compared to standard gateway SKUs due to their enhanced capabilities and performance characteristics. For pricing information, see [Azure ExpressRoute pricing](https://azure.microsoft.com/pricing/details/expressroute/).
 
 ::: zone-end
 
