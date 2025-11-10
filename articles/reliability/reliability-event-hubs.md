@@ -70,7 +70,9 @@ Event Hubs supports zone-redundant deployments in all service tiers. When you cr
 
 Event Hubs transparently replicates your configuration, metadata, and event data across three availability zones in the region. Zone redundancy provides automatic failover without any intervention required from you. All Event Hubs components including compute, networking, and storage are replicated across zones. Event Hubs has enough capacity reserves to instantly handle the complete loss of a zone. Even if an entire availability zone becomes unavailable, Event Hubs continues to operate without data loss or interruption to streaming applications.
 
-:::image type="content" source="./media/reliability-event-hubs/availability-zones.svg" alt-text="Diagram that shows a zone-redundant Event Hubs namespace." border="false":::
+:::image type="complex" source="./media/reliability-event-hubs/availability-zones.svg" alt-text="Diagram that shows a zone-redundant Event Hubs namespace." border="false":::
+The diagram shows an Event Hubs cluster distributed across three availability zones. Each zone contains a shared namespace, and the cluster spans all zones to provide high availability.
+:::image-end:::
 
 ### Region support
 
