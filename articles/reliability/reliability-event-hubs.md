@@ -29,9 +29,9 @@ This section describes important aspects about how Event Hubs works from a relia
 
 ### Logical architecture
 
-An Event Hubs [*namespace*](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. You manage tasks such as allocating streaming capacity, configuring network security, and enabling geo-resiliency and geo-disaster recovery at the namespace level.
+An Event Hubs [*namespace*](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. You configure the service, such as allocating streaming capacity, configuring network security, and enabling geo-resiliency and geo-disaster recovery, at the namespace level.
 
-Within a namespace, you can organize events into an *event hub*. The Apache® Kafka ecosystem refers to this type of grouping as a *topic*. The event hub or topic is an append-only distributed log of your events.
+Within a namespace, you can organize events into an *event hub*. The Apache® Kafka ecosystem refers to this type of entity as a *topic*. The event hub or topic is an append-only distributed log of your events.
 
 Each event hub contains one or more [*partitions*](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning plays a key role in your application's reliability design. When you design your application, make a trade-off between maximizing availability and consistency. To maximize uptime for most applications, avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
 
@@ -102,7 +102,7 @@ When Event Hubs namespaces use zone redundancy and all availability zones operat
 
 When Event Hubs namespaces use zone redundancy and an availability zone outage occurs, expect the following behavior:
 
-- **Detection and response:** Event Hubs automatically detects failures in an availability zone. You don't need to initiate a zone failover.
+- **Detection and response:** Event Hubs is responsible for automatically detecting a failure in an availability zone. You don't need to initiate a zone failover.
 
 - **Notification:** Event Hubs doesn't notify you when a zone is down. But you can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the Event Hubs service, including zone failures.
 
@@ -138,7 +138,7 @@ Both geo-replication and metadata geo-disaster recovery require you to manually 
 
 ### Geo-replication
 
-The Premium and Dedicated tiers support geo-replication. This feature replicates both metadata (such as entities, configuration, and properties) and data (such as event payloads) for the namespace. Use geo-replication to configure the replication approach for your namespace's configuration and event data. This feature ensures that your events remain available in another region and allows you to switch to the secondary region when needed. It also replicates schema registry metadata and data.
+The Premium and Dedicated tiers support geo-replication. This feature replicates both metadata (such as entities, configuration, and properties) and data (such as event payloads) for the namespace. You configure the replication approach for your namespace's configuration and event data. This feature ensures that your events remain available in another region and allows you to switch to the secondary region when needed. It also replicates schema registry metadata and data.
 
 Use geo-replication for scenarios that require resiliency to region outages and have a low tolerance for event data loss.
 
@@ -245,13 +245,13 @@ During an outage in the primary region, you typically need to perform a forced p
 
 - **Expected downtime:** The amount of expected downtime depends on whether you perform a planned or forced promotion:
 
-    - *Planned promotion:* The first step in a planned promotion replicates data to the secondary region. That process usually completes quickly, but in some situations, it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for clients to fully replicate and update Domain Name System (DNS) entries.
+    - *Planned promotion:* The first step in a planned promotion replicates data to the secondary region. That process usually completes quickly, but in some situations, it might take up to the length of the replication lag. After the replication completes, the promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for Domain Name System (DNS) servers to update entries and fully replicate their records to clients.
     
         The primary region doesn't accept write operations during the entire promotion process.
 
         This option might not be possible during a region outage because it requires all primary and secondary regions to be available.
 
-    - *Forced promotion:* During a forced promotion, Event Hubs doesn't wait for data replication to complete, and it initiates the promotion immediately. The promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for clients to fully replicate and update DNS entries.
+    - *Forced promotion:* During a forced promotion, Event Hubs doesn't wait for data replication to complete, and it initiates the promotion immediately. The promotion process typically takes about 5 to 10 minutes. It can sometimes take longer for DNS entries to be fully replicated and updated across clients.
 
         The primary region doesn't accept write operations during the entire promotion process.
 
@@ -261,9 +261,9 @@ During an outage in the primary region, you typically need to perform a forced p
 
 #### Region recovery
 
-After the original primary region recovers, to return the namespace to its original primary region, follow the same region promotion process.
+After the original primary region recovers, if you want to return the namespace to its original primary region, follow the same region promotion process.
 
-If you perform a forced promotion, you can't recover lost data, even after the primary region becomes available.
+If you performed a forced promotion during the region outage, you can't recover lost data, even after the primary region becomes available.
 
 #### Testing for region failures
 
@@ -322,7 +322,7 @@ When you enable metadata geo-disaster recovery, you pay for both the primary and
 
 #### Capacity planning and management
 
-When you plan for multi-region deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
+When you plan for multi-region deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, you might choose to scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
 
 #### Normal operations
 
@@ -362,7 +362,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Expected downtime:** Failover typically occurs within 5 to 10 minutes. It can take longer for clients to fully replicate and update DNS entries.
 
-- **Traffic rerouting:** Clients that use the geo-disaster recovery alias to connect to the namespace automatically redirect to the secondary namespace after failover. But this redirection depends on client applications updating their DNS records and honoring the TTL of the namespace DNS records.
+- **Traffic rerouting:** Clients that use the geo-disaster recovery alias to connect to the namespace automatically redirect to the secondary namespace after failover. But this redirection depends on DNS servers honoring the TTL of the namespace DNS records and clients receiving those updated DNS records.
 
 #### Region recovery
 

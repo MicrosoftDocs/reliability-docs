@@ -14,7 +14,7 @@ ms.custom: subject-reliability
 
 To make your applications more resilient to zone-related hardware failures, network disruptions, and natural disasters, it's important that design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 
-Although it's a best practice to address zone resiliency during the initial planning and deployment of workloads, it's common to want to convert existing non-resilient workloads to zone resiliency. In general, the processing of enabling zone resiliency for existing workloads is straightforward, and Microsoft continues to simplify the process. However, any change to your workload can introduce an amount of risk.  Once you understand the risks that are involved, you'll then be able to assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
+Although it's a best practice to address zone resiliency during the initial planning and deployment of workloads, it's common to want to convert existing non-resilient workloads to zone resilient configurations. In general, the processing of enabling zone resiliency for existing workloads is straightforward, and Microsoft continues to simplify the process. However, any change to your workload can introduce an amount of risk. Once you understand the risks that are involved, you'll then be able to assess and prioritize which workloads and services within those workloads are most vital to your business, then apply zone resiliency to the most impactful resources first.
 
 This article outlines key considerations for enabling zone resiliency in your Azure workloads. It also helps you plan and implement a successful transition to a more resilient architecture.
 
@@ -23,7 +23,7 @@ This article outlines key considerations for enabling zone resiliency in your Az
 
 ## What is zone resiliency?
 
-Azure services can be made resilient to availability zone outages in two primary ways
+Azure services can be made resilient to availability zone outages in two primary ways:
 
 - **Zone-redundant services:** Many Azure services support zone redundancy. These services automatically replicate data between availability zones, distribute incoming requests, and fail over to different zones during a zone failure. Each service supports these capabilities in a way that makes sense for that specific service. Some services are zone redundant by default, while other services might need you to configure zone redundancy.
 
@@ -130,8 +130,8 @@ The following table summarizes the availability zone support for many Azure serv
 
 | Service | Can be zone redundant | Can be zonal | Typical zone configuration approach | Typical cost impact |
 |-|-|-|-|-|
-| [Azure AI Search](./reliability-ai-search.md#configure-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
-| [Azure API Management](./reliability-api-management.md#configure-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | Minimum tier required |
+| [Azure AI Search](./reliability-ai-search.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
+| [Azure API Management](./reliability-api-management.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | Minimum tier required |
 | [Azure App Configuration](migrate-app-configuration.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A|
 | [Azure App Service](reliability-app-service.md#configure-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Minimum tier and instance count required |
 | [Azure App Service - App Service Environment](reliability-app-service-environment.md#configure-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Minimum instance count required |
