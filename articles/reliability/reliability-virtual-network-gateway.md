@@ -110,21 +110,21 @@ The following diagram illustrates some key components in a VPN that connects fro
 
 ::: zone pivot="expressroute"
 
-An ExpressRoute gateway contains two or more *instances*, which represent virtual machines (VMs) that your gateway uses to process ExpressRoute traffic.
+An ExpressRoute gateway contains two or more *gateway virtual machines (VMs)*, which are the underlying VMs that your gateway uses to process ExpressRoute traffic.
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-A VPN virtual network gateway contains exactly two *instances*, which represent virtual machines (VMs) that your gateway uses to process VPN traffic.
+A VPN virtual network gateway contains exactly two *gateway virtual machines (VMs)*, which are the underlying VMs that your gateway uses to process VPN traffic.
 
 ::: zone-end
 
-You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and the replacement of unhealthy instances. To achieve protection against server and server rack failures, Azure automatically distributes gateway instances across multiple fault domains within a region. If a server rack fails, the gateway instance is automatically migrated to another cluster by the Azure platform.
+You don't see or manage the gateway VMs directly. The platform automatically manages gateway VM creation, health monitoring, and the replacement of unhealthy gateway VMs. To achieve protection against server and server rack failures, Azure automatically distributes gateway VMs across multiple fault domains within a region. If a server rack fails, any gateway VM on that cluster is automatically migrated to another cluster by the Azure platform.
 
 ::: zone pivot="expressroute"
 
-You configure the gateway SKU. Each SKU supports a different level of throughput, and a different number of circuits. When you use the ErGwScale SKU (preview), ExpressRoute automatically scales the gateway by adding more instances. For more information, see [About ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
+You configure the gateway SKU. Each SKU supports a different level of throughput, and a different number of circuits. When you use the ErGwScale SKU (preview), ExpressRoute automatically scales the gateway by adding more gateway VMs. For more information, see [About ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
 
 A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Active-active connections](../expressroute/designing-for-high-availability-with-expressroute.md#active-active-connections).
 
@@ -136,11 +136,11 @@ Ordinarily, traffic is routed through your virtual network gateway. However, if 
 
 You configure the gateway SKU. Each SKU supports a different level of throughput, and a different number of VPN connections. For more information, see [About gateway SKUs](../vpn-gateway/about-gateway-skus.md).
 
-Depending on your high availability requirements, you can configure your gateway as *active-standby*, which means that one instance processes traffic and the other is a standby instance, or as *active-active*, which means that both instances process traffic. Active-active isn't always possible due to the asymmetric nature of connection flows. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+Depending on your high availability requirements, you can configure your gateway as *active-standby*, which means that one gateway VM processes traffic and the other is a standby gateway VM, or as *active-active*, which means that both gateway VMs process traffic. Active-active isn't always possible due to the asymmetric nature of connection flows. For more information, see [Design highly available gateway connectivity for cross-premises and VNet-to-VNet connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
-You can protect against availability zone failures by distributing gateway instances across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
+You can protect against availability zone failures by distributing gateway VMs across multiple zones, providing automatic failover within the region, and maintaining connectivity during zone maintenance or outages. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
 ## Resilience to transient faults
 
@@ -184,13 +184,13 @@ Transient faults can sometimes affect IPsec tunnels or TCP data flows. In the ev
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway's instances are automatically distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintain connectivity during zone maintenance or outages.
+Virtual network gateways are automatically *zone-redundant* when they meet the requirements. Zone redundancy means that the gateway VMs are automatically distributed across multiple availability zones. This configuration eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region, and maintain connectivity during zone maintenance or outages.
 
 When you use a [supported SKU](#requirements), any newly created gateway is automatically zone-redundant. Zone redundancy is recommended for all production workloads.
 
-The following diagram shows a zone-redundant virtual network gateway with two instances that are distributed across different availability zones:
+The following diagram shows a zone-redundant virtual network gateway with two gateway VMs that are distributed across different availability zones:
 
-:::image type="content" source="media/reliability-virtual-network-gateway/zone-redundant.png" alt-text="Diagram that shows a virtual network gateway with two instances distributed across availability zones." border="false":::
+:::image type="content" source="media/reliability-virtual-network-gateway/zone-redundant.png" alt-text="Diagram that shows a virtual network gateway with two gateway VMs distributed across availability zones." border="false":::
 
 ::: zone pivot="expressroute"
 
@@ -282,7 +282,7 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="expressroute"
 
-- **Traffic routing between zones:** Traffic from your on-premises environment is distributed among instances in all of the zones that your gateway uses. This active-active configuration ensures optimal performance and load distribution under normal operating conditions.
+- **Traffic routing between zones:** Traffic from your on-premises environment is distributed among gateway VMs in all of the zones that your gateway uses. This active-active configuration ensures optimal performance and load distribution under normal operating conditions.
 
     However, if you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see [About ExpressRoute FastPath](../expressroute/about-fastpath.md).
 
@@ -292,13 +292,13 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="vpn"
 
-- **Traffic routing between zones:** Zone redundancy doesn't affect how traffic is routed. Traffic is routed between the instances of your gateway based on the configuration of your clients. If your gateway uses active-active configuration and uses two public IP addresses, both gateway instances might receive traffic, and for active-standby configuration, traffic is routed to a single primary instance selected by Azure.
+- **Traffic routing between zones:** Zone redundancy doesn't affect how traffic is routed. Traffic is routed between the gateway VMs of your gateway based on the configuration of your clients. If your gateway uses active-active configuration and uses two public IP addresses, both gateway VMs might receive traffic, and for active-standby configuration, traffic is routed to a single primary gateway VM selected by Azure.
 
-- **Data replication between zones:** Azure VPN Gateway doesn't need to synchronize connection state across availability zones. In active-active mode, the instance that processes the VPN connection is responsible for managing the connection's state.
+- **Data replication between zones:** Azure VPN Gateway doesn't need to synchronize connection state across availability zones. In active-active mode, the gateway VM that processes the VPN connection is responsible for managing the connection's state.
 
 ::: zone-end
 
-- **Instance management:** The platform automatically selects the zones for your gateway instances, and manages instance placement across the zones. Health monitoring ensures that only healthy instances receive traffic.
+- **Gateway VM management:** The platform automatically selects the zones for your gateway VMs, and manages placement across the zones. Health monitoring ensures that only healthy gateway VMs receive traffic.
 
 ### Behavior during a zone failure
 
@@ -308,7 +308,7 @@ The following section describes what to expect when your virtual network gateway
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** Any active requests connected through gateway instances in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#resilience-to-transient-faults).
+- **Active requests:** Any active requests connected through gateway VMs in the failing zone are terminated. Client applications should retry the requests by following the guidance for how to [handle transient faults](#resilience-to-transient-faults).
 
 - **Expected data loss:** Zone failures aren't expected to cause data loss because virtual network gateways don't store persistent customer data.
 
@@ -319,7 +319,7 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="expressroute"
 
-- **Traffic rerouting:** The platform automatically distributes traffic to instances in healthy zones.
+- **Traffic rerouting:** The platform automatically distributes traffic to gateway VMs in healthy zones.
 
     FastPath-enabled connections maintain optimized routing throughout the failover process, ensuring minimal effect on application performance.
 
@@ -327,13 +327,13 @@ The following section describes what to expect when your virtual network gateway
 
 ::: zone pivot="vpn"
 
-- **Traffic rerouting:** Traffic automatically reroutes to the other instance, which is in a different availability zone.
+- **Traffic rerouting:** Traffic automatically reroutes to the other gateway VM, which is in a different availability zone.
 
 ::: zone-end
 
 ### Zone recovery
 
-When the affected availability zone recovers, Azure automatically restores any gateway instances in the recovered zone, and returns to normal traffic distribution across all zones that the gateway uses.
+When the affected availability zone recovers, Azure automatically restores any gateway VMs in the recovered zone, and returns to normal traffic distribution across all zones that the gateway uses.
 
 ### Test for zone failures
 
@@ -374,7 +374,7 @@ You can deploy separate VPN Gateways in two or more different regions. However, 
 
 Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize effect on your connectivity. 
 
-During planned maintenance operations on virtual network gateways, the process is executed on gateway instances sequentially, never simultaneously. This process ensures that there's always one gateway instance active during maintenance, minimizing the impact on your active connections.
+During planned maintenance operations on virtual network gateways, the process is executed on gateway VMs sequentially, never simultaneously. This process ensures that there's always one gateway VM active during maintenance, minimizing the impact on your active connections.
 
 You can configure gateway maintenance windows to align with your operational requirements, reducing the likelihood of unexpected disruptions.
 
