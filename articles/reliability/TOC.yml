@@ -245,7 +245,7 @@ items:
       - name: Disaster recovery
         href: ../expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure VPN Gateway
-      href: reliability-network-gateway.md?pivot=vpn
+      href: reliability-virtual-network-gateway.md?pivot=vpn
   - name: Security
     items:
     - name: Azure Disk Encryption 
