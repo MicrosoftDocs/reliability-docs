@@ -67,7 +67,7 @@ To ensure high reliability for your production virtual network gateways, we reco
 
 With ExpressRoute, you must deploy components in the on-premises environment, peering locations, and within Azure. These components include:
 
-- *Circuits and connections*: An ExpressRoute *circuit* consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. By using two connections, you can achieve active-active connectivity. However, this configuration doesn't protect against site-level failures.
+- *Circuits and connections*: An [ExpressRoute *circuit*](/azure/expressroute/expressroute-circuit-peerings#circuits) consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. By using two connections, you can achieve active-active connectivity. However, this configuration doesn't protect against site-level failures.
 
 - *Customer premises equipment* (CPE) includes your edge routers and client devices. You need to ensure that your CPE is designed to be resilient to problems, and that it can quickly recover when problems happen in other parts of your ExpressRoute infrastructure.
 
