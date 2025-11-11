@@ -40,7 +40,7 @@ This section describes what to expect when a storage account is configured for g
 
     - **Detection and response:** You're responsible for deciding to fail over. You typically make this decision if you need to fail over between regions, even though your storage account is healthy. For example, you might trigger a failover when there's a major outage of another application component that you can't recover from in the primary region.
 
-    [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+    [!INCLUDE [Region down notification (Service Health and Resource Health)](../reliability-region-down-notification-service-resource-include.md)]
 
     - **Active requests:** During the failover process, both the primary and secondary storage account endpoints become temporarily unavailable for both reads and writes. Any active requests might be dropped, and client applications need to retry after the failover completes.
 
@@ -56,7 +56,7 @@ This section describes what to expect when a storage account is configured for g
 
 - **Microsoft-managed failover:** In the rare event of a major disaster where Microsoft determines that the primary region is permanently unrecoverable, an automatic failover to the secondary region might be initiated. Microsoft handles the entire process and no customer action is required. The amount of time that elapses before failover occurs depends on the severity of the disaster and the time required to assess the situation.
 
-  [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+  [!INCLUDE [Region down notification (Service Health and Resource Health)](../reliability-region-down-notification-service-resource-include.md)]
 
   > [!IMPORTANT]
   > Use customer-managed failover options to develop, test, and implement your DR plans. **Don't rely on Microsoft-managed failover**, which might only be used in extreme circumstances. A Microsoft-managed failover is likely initiated for an entire region. It can't be initiated for individual storage accounts, subscriptions, or customers. Failover might occur at different times for different Azure services. We recommend that you use customer-managed failover.
