@@ -144,7 +144,7 @@ You can protect against availability zone failures by distributing gateway VMs a
 
 ## Resilience to transient faults
 
-[!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 For applications that connect through a virtual network gateway, implement retry logic with exponential backoff to handle potential transient connection problems. The stateful nature of virtual network gateways ensures that legitimate connections are maintained during brief network interruptions.
 
@@ -399,7 +399,7 @@ ExpressRoute provides a strong availability SLA that guarantees high uptime for 
 
 ::: zone pivot="vpn"
 
-For VPN Gateway, when you use any SKU other than Basic, you're eligible for a higher availability SLA. The Basic SKU provides a lower availability SLA and limited capabilities, and should only be used for testing and development. For more information, see [Gateway SKUs - Production vs. Dev-Test workloads](../vpn-gateway/about-gateway-skus.md#workloads)
+All VPN Gateway SKUs other than Basic are eligible for a higher availability SLA. The Basic SKU provides a lower availability SLA and limited capabilities and should only be used for testing and development. For more information, see [Gateway SKUs - Production vs. Dev-Test workloads](../vpn-gateway/about-gateway-skus.md#workloads)
 
 ::: zone-end
 
