@@ -22,7 +22,7 @@ This section describes what to expect when a storage account is configured for g
       > [!WARNING]
       > An unplanned failover can [result in data loss](/azure/storage/common/storage-disaster-recovery-guidance#anticipate-data-loss-and-inconsistencies). Before you initiate a customer-managed failover, decide whether the restoration of service justifies the risk of data loss.
     
-    [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+    [!INCLUDE [Region down notification (Service Health and Resource Health)](../reliability-region-down-notification-service-resource-include.md)]
     
     - **Active requests:** During the failover process, both the primary and secondary storage account endpoints become temporarily unavailable for both reads and writes. Any active requests might be dropped, and client applications need to retry after the failover completes.
 
@@ -40,7 +40,7 @@ This section describes what to expect when a storage account is configured for g
 
     - **Detection and response:** You're responsible for deciding to fail over. You typically make this decision if you need to fail over between regions, even though your storage account is healthy. For example, you might trigger a failover when there's a major outage of another application component that you can't recover from in the primary region.
 
-    [!INCLUDE [Region down notification (Service Health and Resource Health)](../reliability-region-down-notification-service-resource-include.md)]
+      [!INCLUDE [Region down notification (Service Health and Resource Health)](../reliability-region-down-notification-service-resource-include.md)]
 
     - **Active requests:** During the failover process, both the primary and secondary storage account endpoints become temporarily unavailable for both reads and writes. Any active requests might be dropped, and client applications need to retry after the failover completes.
 
