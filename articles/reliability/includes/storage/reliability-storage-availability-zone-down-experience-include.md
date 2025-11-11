@@ -13,7 +13,7 @@
 
     If a zone becomes unavailable, Azure undertakes networking updates such as Domain Name System (DNS) repointing.
 
-[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:** In-flight requests might be dropped during the recovery process and should be retried. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
