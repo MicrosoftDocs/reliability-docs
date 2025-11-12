@@ -21,7 +21,7 @@ This article describes how to make Container Apps resilient to various potential
 
 ## Production deployment recommendations
 
-To learn how to deploy Container Apps to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Container Apps in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-container-apps).
+To learn how to deploy Container Apps to support your solution's reliability requirements and how reliability affects other aspects of your architecture, see [Architecture best practices for Container Apps in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-container-apps).
 
 ## Reliability architecture overview
 
@@ -29,33 +29,33 @@ When you use Container Apps, you deploy an *environment* that serves as the foun
 
 You can deploy multiple *apps* in a single environment. Each app runs one or more *containers*. An environment can also run one or more *jobs*, which represent noninteractive tasks. For more information, see [Containers in Container Apps](/azure/container-apps/containers) and [Jobs in Container Apps](/azure/container-apps/jobs).
 
-Each app has one or more *replicas*, which represent the running instances of the app. You can control how your app scales, including the minimum and maximum number of replicas, and how the app dynamically adds and removes replicas. The platform scheduler ensures optimal distribution across physical hosts while meeting your minimum replica count requirements. For more information, see [Set scaling rules in Container Apps](/azure/container-apps/scale-app).
+Each app has one or more *replicas*, which represent the running instances of the app. You can control how your app scales, including the minimum and maximum number of replicas and how the app dynamically adds and removes replicas. The platform scheduler ensures optimal distribution across physical hosts while meeting your minimum replica count requirements. For more information, see [Set scaling rules in Container Apps](/azure/container-apps/scale-app).
 
 :::image type="content" source="./media/reliability-container-apps/reliability-architecture.svg" alt-text="Diagram that shows a Container Apps environment that runs an app with three replicas." border="false":::
 
 Container Apps supports the reliability of your applications by using different capabilities:
 
-- **Automatic health monitoring:** The built-in ingress controller automatically load balances traffic across healthy replicas. If a replica fails health checks or its underlying infrastructure becomes unavailable for a prolonged time, the service automatically restarts failed containers or creates replacement replicas, redistributes traffic away from unhealthy replicas, and manages network retries in the cluster. This automatic recovery process requires no customer intervention and maintains your specified replica count. For more information, see [Health probes](../container-apps/health-probes.md).
+- **Automatic health monitoring:** The built-in ingress controller automatically load balances traffic across healthy replicas. If a replica fails health checks or its underlying infrastructure becomes unavailable for a prolonged time, the service automatically restarts failed containers or creates replacement replicas. It also redistributes traffic away from unhealthy replicas and manages network retries in the cluster. This automatic recovery process requires no customer intervention and maintains your specified replica count. For more information, see [Health probes](../container-apps/health-probes.md).
 
 - **Application resiliency through Dapr:** Container Apps provides tight integration with Dapr, which is a framework that supports production-grade microservices and containerized applications. Dapr includes features that help improve resiliency, including handling failures in other services. For more information, see [Microservices with Container Apps](/azure/container-apps/microservices).
 
 - **Infrastructure resiliency for system components:** This resiliency includes the control plane, ingress controllers, and container runtime. In regions that have availability zones, Container Apps provides zone redundancy. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
-## Resilience to transient faults
+## Transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 Container Apps automatically handles many transient faults through its platform-level retry mechanisms and health monitoring. To ensure that your applications are resilient to transient faults, take the following actions:
 
-- **Configure health probes** that let the platform detect and respond to application-specific failure conditions. Set appropriate failure thresholds and timeout values based on your application's startup characteristics. For example, use a failure threshold of 3 with a period of 10 seconds for liveness probes to avoid premature container restarts during temporary problems. For more information, see [Health probes](../container-apps/health-probes.md).
+- **Configure health probes** that let the platform detect and respond to application-specific failure conditions. Set appropriate failure thresholds and timeout values based on your application's startup characteristics. For example, to avoid premature container restarts during temporary problems, use a failure threshold of 3 with a period of 10 seconds for liveness probes. For more information, see [Health probes](../container-apps/health-probes.md).
 
-- **Use service discovery resiliency policies (preview)** to proactively prevent, detect, and recover from service request failures by using simple resiliency policies. For example, when you use a resiliency policy, each incoming request to the app can automatically be retried if there's a transient fault that prevents the app from responding. For more information, see [Service discovery resiliency (preview)](/azure/container-apps/service-discovery-resiliency).
+- **Use service discovery resiliency policies (preview)** to proactively prevent, detect, and recover from service request failures. For example, when you use a resiliency policy, each incoming request to the app can automatically be retried if there's a transient fault that prevents the app from responding. For more information, see [Service discovery resiliency (preview)](/azure/container-apps/service-discovery-resiliency).
 
 - **Implement retry logic** in your applications for external service calls, database connections, and API requests.
     
     If your application uses Dapr to integrate with cloud services, use [Dapr component resiliency (preview)](/azure/container-apps/dapr-component-resiliency) to configure retries, timeouts, and circuit breakers.
 
-    For other dependencies, your application must handle transient faults. Use exponential backoff strategies and circuit breaker patterns when calling external services to prevent cascading failures during downstream service disruptions. Container Apps built-in service discovery and load balancing automatically route traffic away from failing instances, but your application-level retry policies ensure resilient handling of transient problems before platform-level health checks trigger container restarts.
+    For other dependencies, your application must handle transient faults. Use exponential backoff strategies and circuit breaker patterns when calling external services to prevent cascading failures during downstream service disruptions. Container Apps built-in service discovery and load balancing features automatically route traffic away from failing instances, but your application-level retry policies ensure resilient handling of transient problems before platform-level health checks trigger container restarts.
 
 - **Design jobs to be resilient to transient faults**, including failures during job processing or in their dependencies. Design your jobs to resume work if they're restarted, or design for idempotence so that they can be rerun safely.
 
@@ -95,9 +95,9 @@ The following diagram shows a zone-redundant container app with three replicas. 
 
 ### Configure availability zone support
 
-- **Create a zone-redundant Container Apps environment.** For deployment instructions that cover the Azure portal, the Azure CLI, and PowerShell, see [Create a zone-redundant container app](../container-apps/how-to-zone-redundancy.md).
+- **Create a zone-redundant Container Apps environment.** For deployment instructions that cover the Azure portal, the Azure CLI, and Azure PowerShell, see [Create a zone-redundant container app](../container-apps/how-to-zone-redundancy.md).
 
-- **Migrate to a zone-redundant deployment.** You can't enable zone redundancy on an existing Container Apps environment. To upgrade existing environments that aren't zone-redundant, create a new environment with zone redundancy enabled in a supported region. Then redeploy your container apps.
+- **Migrate to a zone-redundant deployment.** You can't enable zone redundancy on an existing Container Apps environment. To upgrade existing environments that aren't zone redundant, create a new environment with zone redundancy enabled in a supported region. Then redeploy your container apps.
 
 - **Disable zone redundancy.** Zone redundancy can't be disabled after its enabled during environment creation. If you require a non-zone-redundant deployment, you must create a new environment without enabling the zone redundancy option or deploy to a region that doesn't support availability zones.
 
@@ -117,9 +117,9 @@ To configure your scale rules properly, follow these principles:
 
 - **Set resource requests and limits** to help the Container Apps scheduler make optimal placement decisions across zones. Underspecified resource requirements can lead to uneven distribution or placement failures during high load.
 
-For more information, see [Set scaling rules](../container-apps/scale-app.md) for configuration options.
+For more information about configuration options, see [Set scaling rules](../container-apps/scale-app.md).
 
-### Behavior when all zones are healthy
+### Normal operations
 
 This section describes what to expect when Container Apps resources are configured for zone redundancy and all availability zones are operational.
 
@@ -141,7 +141,7 @@ This section describes what to expect when Container Apps resources are configur
 
     You can also monitor the health of your apps through Container Apps metrics in Azure Monitor. Configure alerts on replica count drops and request failure rates to receive immediate notification when zone-related problems occur.
 
-- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any jobs that run in the affected zone won't complete successfully and are marked as failed.
+- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any jobs that run in the affected zone don't complete successfully and are marked as failed.
 
 - **Expected data loss:** No data loss occurs at the Container Apps platform level because the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is ended, and ephemeral storage should only be used for temporary data.
 
@@ -163,7 +163,7 @@ When an availability zone recovers from failure, Container Apps automatically re
 
 Container Apps gradually rebalances replica distribution across all available zones as part of normal scaling operations. This automatic rebalancing occurs when replicas are created because of scaling events or when unhealthy replicas are replaced. The platform doesn't force immediate redistribution of existing healthy replicas, which prevents unnecessary container restarts and maintains application stability during recovery.
 
-### Test for zone failures
+### Testing for zone failures
 
 The Container Apps platform manages traffic routing, failover, and failback for zone-redundant container apps. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
@@ -177,7 +177,7 @@ Container Apps is a single-region service. If the region becomes unavailable, yo
 
 To reduce the risk of a single-region failure affecting your application, you can deploy environments across multiple regions. The following steps help strengthen resilience:
 
-- Deploy your applications to environments in each region. Each environment requires its own virtual network configuration, and subnet requirements apply independently to each regional deployment. Your container images must be accessible from all regions, which you can achieve by using Azure Container Registry with geo-replication enabled.
+- Deploy your applications to environments in each region. Each environment requires its own virtual network configuration, and subnet requirements apply independently to each regional deployment. Your container images must be available from all regions, which you can achieve by using Azure Container Registry with geo-replication enabled.
 
 - Configure load balancing and failover policies by using a service like Azure Front Door or Azure Traffic Manager.
 
