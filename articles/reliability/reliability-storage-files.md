@@ -40,9 +40,6 @@ For more information, see [Plan to deploy Azure Files - Storage tiers](/azure/st
 
 Azure Files implements redundancy at the storage account level, and file shares inherit that redundancy configuration automatically. The service supports multiple redundancy models that differ in their approach to data protection.
 
-> [!NOTE]
-> Azure Files is part of the Azure Storage platform. Some of the capabilities of Azure Files are common across many Azure Storage services. In this article, we use *Azure Storage* to refer to these common capabilities.
-
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -55,19 +52,17 @@ To ensure that only secure connections are established to your NFS share, we rec
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-Files provides robust availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
+Azure Files provides robust availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
 [!INCLUDE [Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
 ### Requirements
 
-- **ZRS** is supported in:
+ZRS is supported in:
 
-    - *HDD (standard) file shares* in all regions with availability zones.
+- *HDD (standard) file shares* in [all regions with availability zones](./regions-list.md).
 
-    - *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
-
-    - *All file share types*
+- *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
 
 ### Cost
 
@@ -116,14 +111,15 @@ This section describes what to expect when a file storage account is configured 
 
 [!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
-### Requirements
+#### Requirements
 
+[!INCLUDE [Storage - Multi-region support region support](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
 - **Standard file shares only:** Azure Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. Premium (SSD) file shares must use LRS or ZRS. If you have premium file shares and you want to replicate the data across regions for higher resiliency, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
 - **GRS and GZRS only:** Azure Files doesn't support read-access geo-redundant storage (RA-GRS) or read-access geo-zone-redundant storage (RA-GZRS). If a storage account is configured to use RA-GRS or RA-GZRS, the standard (HDD) file shares are configured and billed as GRS or GZRS.
 
-### Considerations
+#### Considerations
 
 When you implement multi-region Azure Files, consider the following important factors:
 
@@ -137,13 +133,13 @@ When you implement multi-region Azure Files, consider the following important fa
 
 - **Feature limitations:** Some Azure Files features aren't supported or have limitations when you use GRS or customer-managed failover. These limitations include specific file share types, access tiers, and management tools and operations. Review [feature compatibility documentation](/azure/storage/common/storage-disaster-recovery-guidance#unsupported-features-and-services) before you implement geo-redundancy.
 
-### Cost
+#### Cost
 
 [!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For detailed pricing information, see [Azure Files pricing](https://azure.microsoft.com/pricing/details/storage/files/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 [!INCLUDE [Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
@@ -156,7 +152,7 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
 - **Disable geo-redundancy.** Convert GRS accounts back to single-region configurations (LRS or ZRS) through the same redundancy configuration change process.
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 This section describes what to expect when a storage account is configured for geo-redundancy and all regions are operational.
 
@@ -166,15 +162,15 @@ This section describes what to expect when a storage account is configured for g
 
   [!INCLUDE [Behavior when all regions are healthy - lag](includes/storage/reliability-storage-multi-region-normal-operations-lag-include.md)]
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 [!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
-### Region recovery
+#### Region recovery
 
 [!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
-### Test for region failures
+#### Test for region failures
 
 For GRS accounts, you can perform planned failover operations during maintenance windows to test the complete failover and failback process. Planned failover doesn't require data loss, but it does require downtime during both failover and failback.
 
