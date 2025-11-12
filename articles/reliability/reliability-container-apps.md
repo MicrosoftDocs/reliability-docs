@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Container Apps
-description: Learn about resiliency in Azure Container Apps, including resilience to transient faults, availability zone failures, region failures, and service maintenance.
+description: Find out about reliability in Azure Container Apps, including availability zones and multi-region deployments.
 ms.author: cshoe
 author: craigshoemaker
 ms.topic: reliability-article
@@ -73,25 +73,29 @@ The following diagram shows a zone-redundant container app with three replicas. 
 
 ### Requirements
 
-- **Region support:** Zone redundancy is available in all regions that support Container Apps and availability zones.
+- **Check region support.** Zone redundancy is available in all regions that support Container Apps and availability zones.
 
     To see which regions support availability zones, see [Azure regions with availability zone support](./regions-list.md).
 
     To see which regions support Container Apps, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
-- **Workload profiles:** Zone redundancy is available to all Container Apps plans, including both Consumption and Dedicated workload profiles.
+- **Use workload profiles.** Zone redundancy is available to all Container Apps plans, including both Consumption and Dedicated workload profiles.
 
 - **Enable zone redundancy during environment creation.** This setting can't be changed after the environment is created.
 
-- **Deploy a Container Apps environment in a virtual network.** The virtual network must be in a region that supports availability zones. Ensure that the virtual network has an adequately sized subnet. Consumption-only environments need a subnet with a `/23` CIDR range or larger, while workload profiles environments require a `/27` CIDR range or larger.
+- **Deploy a Container Apps environment in a virtual network.** The virtual network must be in a region that supports availability zones. Ensure that the virtual network has an adequately sized subnet. Consumption-only environments need a subnet with a `/23` Classless Inter-Domain Routing (CIDR) range or larger, while workload profiles environments require a `/27` CIDR range or larger.
 
-- **Configure your minimum replica count to at least two** to ensure distribution across multiple availability zones. Consider setting a higher minimum replica count if any of the following conditions apply:
+- **Set your minimum replica count to at least two to ensure distribution across multiple availability zones.** Consider setting a higher minimum replica count if any of the following conditions apply:
 
   - Your expected peak load needs more than two replicas.
 
   - You must be resilient to multiple simultaneous zone outages.
 
   - You want to minimize the time that you wait for new replicas to be created in other zones during a zone outage.
+
+### Cost
+
+You don't incur extra charges beyond standard Container Apps pricing when you enable zone redundancy. You pay the same rates for compute resources, requests, and vCore seconds whether zone redundancy is enabled or not. For more information, see [Container Apps pricing](https://azure.microsoft.com/pricing/details/container-apps/) and [Container Apps billing](../container-apps/billing.md).
 
 ### Configure availability zone support
 
@@ -102,10 +106,6 @@ The following diagram shows a zone-redundant container app with three replicas. 
 - **Disable zone redundancy.** Zone redundancy can't be disabled after its enabled during environment creation. If you require a non-zone-redundant deployment, you must create a new environment without enabling the zone redundancy option or deploy to a region that doesn't support availability zones.
 
 - **Verify zone redundancy.** You can use the Azure portal, the Azure CLI, and Azure PowerShell to [verify the zone redundancy status](../container-apps/how-to-zone-redundancy.md#verify-zone-redundancy) of your environment.
-
-### Cost
-
-You don't incur extra charges beyond standard Container Apps pricing when you enable zone redundancy. You pay the same rates for compute resources, requests, and vCore seconds whether zone redundancy is enabled or not. For more information, see [Container Apps pricing](https://azure.microsoft.com/pricing/details/container-apps/) and [Container Apps billing](../container-apps/billing.md).
 
 ### Capacity planning and management
 
@@ -131,7 +131,7 @@ This section describes what to expect when Container Apps resources are configur
 
     The platform replicates only the control plane metadata including your app configurations, scaling rules, and secrets across zones for high availability. Container images are pulled from your container register into each zone as needed when replicas are created.
 
-### Behavior during a zone failure
+### Zone-down experience
 
 This section describes what to expect when Container Apps resources are configured for zone redundancy and there's an availability zone outage.
 
@@ -183,11 +183,11 @@ To reduce the risk of a single-region failure affecting your application, you ca
 
 - Replicate your data across regions so that you can recover your last application state.
 
-## Backup and restore
+## Backups
 
 Container Apps doesn't provide built-in backup capabilities for your applications or data. As a stateless container hosting platform, Container Apps expects applications to manage their own data persistence and recovery strategies through external services. Your application containers and their local file systems are ephemeral, and any data stored locally is lost when replicas restart or move.
 
-## Resilience during application updates
+## Reliability during service maintenance
 
 Use revision management to deploy updates to your application without downtime. You can create new revisions with updated container images and perform a cutover by using a [blue-green deployment strategy](../container-apps/blue-green-deployment.md), or gradually shift traffic by using [traffic splitting rules](../container-apps/traffic-splitting.md). During application updates, the platform maintains minimum replica counts by creating new containers before decommissioning old ones, which helps prevent service disruptions.
 
@@ -205,10 +205,6 @@ You can specify your own maintenance windows, which are periods of time that you
 
 The availability SLA for Container Apps is based on the scale rules that you set on your apps.
 
-## Next step
-
-- [Well-Architected Framework reliability guidance](/azure/well-architected/reliability/)
-
 ## Related content
 
 - [Container Apps overview](../container-apps/overview.md)
@@ -216,4 +212,5 @@ The availability SLA for Container Apps is based on the scale rules that you set
 - [Autoscaling in Container Apps](../container-apps/scale-app.md)
 - [Observability in Container Apps](../container-apps/observability.md)
 - [Azure reliability documentation](./overview.md)
+- [Well-Architected Framework reliability guidance](/azure/well-architected/reliability/)
 
