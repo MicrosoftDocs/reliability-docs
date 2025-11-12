@@ -36,7 +36,7 @@ For advanced messaging requirements, consider using Azure Service Bus. To learn 
 
 Queue Storage operates as a distributed messaging service within the Azure Storage platform infrastructure. The service provides redundancy through multiple copies of your queue and message data. The specific redundancy model depends on your storage account configuration.
 
-[!INCLUDE [Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
+[!INCLUDE [Storage - Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
 
 ## Resilience to transient faults
 
@@ -66,17 +66,17 @@ Azure Queue Storage is zone-redundant when deployed with ZRS configuration. Unli
 
 Zone redundancy is enabled at the storage account level and applies to all Queue Storage resources within that account. You can't configure individual queues for different redundancy levels. The setting applies to the entire storage account. When an availability zone experiences an outage, Azure Storage automatically routes requests to healthy zones without requiring any intervention from your application.
 
-[!INCLUDE [Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
 ### Requirements
 
-[!INCLUDE [Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
 
 - **Storage account types:** You must use a Standard general-purpose v2 storage account to enable ZRS for Queue Storage. Premium storage accounts don't support Queue Storage.
 
 ### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
 
 For detailed pricing information, see [Queue Storage pricing](https://azure.microsoft.com/pricing/details/storage/queues/).
 
@@ -88,94 +88,94 @@ For detailed pricing information, see [Queue Storage pricing](https://azure.micr
 
     1. [Create a queue](/azure/storage/queues/storage-quickstart-queues-portal).
 
-[!INCLUDE [Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
+[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when a queue storage account is configured for zone redundancy and all availability zones are operational.
 
-[!INCLUDE [Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
 
 ### Behavior during a zone failure
 
 When an availability zone becomes unavailable, Queue Storage automatically handles the failover process by taking the following actions.
 
-[!INCLUDE [Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
 
 - **Traffic rerouting.** If a zone becomes unavailable, Azure undertakes networking updates such as Domain Name System (DNS) repointing, so that requests are directed to the remaining healthy availability zones. The service maintains full functionality using the surviving zones with no customer intervention required.
 
 ### Zone recovery
 
-[!INCLUDE [Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
 
 ## Resilience to region-wide failures
 
-[!INCLUDE [Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
 
 ### Geo-redundant storage
 
-[!INCLUDE [Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
 
-[!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
 #### Requirements
 
-[!INCLUDE [Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
-[!INCLUDE [Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
+[!INCLUDE [Storage - Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
 
 #### Considerations
 
 When you implement multi-region Queue Storage, consider the following important factors.
 
-[!INCLUDE [Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
+[!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
-[!INCLUDE [Considerations - Secondary region access (read access)](includes/storage/reliability-storage-multi-region-considerations-secondary-read-access-include.md)]
+[!INCLUDE [Storage - Considerations - Secondary region access (read access)](includes/storage/reliability-storage-multi-region-considerations-secondary-read-access-include.md)]
 
-[!INCLUDE [Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
+[!INCLUDE [Storage - Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
 
 #### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For detailed pricing information, see [Queue Storage pricing](https://azure.microsoft.com/pricing/details/storage/queues/).
 
 #### Configure multi-region support
 
-[!INCLUDE [Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
-[!INCLUDE [Configure multi-region support - enable-disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
+[!INCLUDE [Storage - Configure multi-region support - enable-disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
 #### Behavior when all regions are healthy
 
-[!INCLUDE [Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
 
 #### Behavior during a region failure
 
-[!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
 #### Region recovery
 
-[!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
+[!INCLUDE [Storage - Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
 #### Test for region failures
 
-[!INCLUDE [Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
+[!INCLUDE [Storage - Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
 ### Custom multi-region solutions for resiliency
 
-[!INCLUDE [Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
-[!INCLUDE [Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
 > [!NOTE]
 > For advanced multi-region requirements, consider using Service Bus instead, which includes support for nonpaired regions.
 
-[!INCLUDE [Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
 
 This approach requires you to manage message distribution, handle data synchronization between queues in the different storage accounts, and implement custom failover logic.
 
@@ -187,7 +187,7 @@ For scenarios that require message durability beyond the built-in redundancy opt
 
 ## Service-level agreement
 
-[!INCLUDE [Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
+[!INCLUDE [Storage - Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
 
 ## Related content
 
