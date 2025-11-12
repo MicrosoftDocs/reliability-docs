@@ -77,7 +77,7 @@ With ExpressRoute, you must deploy components in the on-premises environment, pe
 
 The following diagram shows two different ExpressRoute configurations, each with a single virtual network gateway, configured for different levels of resiliency across sites:
 
-:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels." border="false":::
+:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.svg" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels." border="false":::
 
 ::: zone-end
 
@@ -102,7 +102,7 @@ A VPN requires components to be deployed in both the on-premises environment and
 
 The following diagram illustrates some key components in a VPN that connects from an on-premises environment to Azure:
 
-:::image type="content" source="media/reliability-virtual-network-gateway/vpn-reliability-architecture.png" alt-text="Diagram that shows Azure VPN Gateway, on-premises site-to-site, and point-to-site networks." border="false":::
+:::image type="content" source="media/reliability-virtual-network-gateway/vpn-reliability-architecture.svg" alt-text="Diagram that shows Azure VPN Gateway, on-premises site-to-site, and point-to-site networks." border="false":::
 
 ::: zone-end
 
@@ -192,7 +192,7 @@ Zone-redundant ExpressRoute gateway VMs are automatically distributed across at 
 
 The following diagram shows a zone-redundant virtual network gateway with three gateway VMs that are distributed across different availability zones:
 
-:::image type="content" source="media/reliability-virtual-network-gateway/expressroute-zone-redundant.png" alt-text="Diagram that shows an ExpressRoute virtual network gateway with three gateway VMs distributed across availability zones." border="false":::
+:::image type="content" source="media/reliability-virtual-network-gateway/expressroute-zone-redundant.svg" alt-text="Diagram that shows an ExpressRoute virtual network gateway with three gateway VMs distributed across availability zones." border="false":::
 
 > [!NOTE]
 > There's no availability zone configuration for circuits or connections. These resources are located in network edge facilities, which aren't designed to use availability zones.
@@ -205,7 +205,7 @@ In Azure VPN Gateway, zone redundancy means that the gateway VMs are automatical
 
 The following diagram shows a zone-redundant virtual network gateway with two gateway VMs that are distributed across different availability zones:
 
-:::image type="content" source="media/reliability-virtual-network-gateway/vpn-zone-redundant.png" alt-text="Diagram that shows a VPN virtual network gateway with two gateway VMs distributed across availability zones." border="false":::
+:::image type="content" source="media/reliability-virtual-network-gateway/vpn-zone-redundant.svg" alt-text="Diagram that shows a VPN virtual network gateway with two gateway VMs distributed across availability zones." border="false":::
 
 > [!NOTE]
 > There's no availability zone configuration for local network gateways, because they're automatically zone-resilient.
