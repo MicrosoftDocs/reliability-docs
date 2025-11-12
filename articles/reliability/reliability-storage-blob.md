@@ -163,7 +163,7 @@ Object replication isn't compatible with all storage accounts. For example, it d
 
 For more information, see [Object replication for block blobs](/azure/storage/blobs/object-replication-overview) and [Configure object replication](/azure/storage/blobs/object-replication-configure).
 
-## Backup amd recovery
+## Backup and recovery
 
 Blob Storage provides multiple data protection mechanisms that complement redundancy for comprehensive backup strategies. The service's built-in redundancy protects against infrastructure failures, and extra backup capabilities protect against accidental deletion, corruption, and malicious activities.
 
