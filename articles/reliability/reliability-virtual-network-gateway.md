@@ -77,7 +77,7 @@ With ExpressRoute, you must deploy components in the on-premises environment, pe
 
 The following diagram shows two different ExpressRoute configurations, each with a single virtual network gateway, configured for different levels of resiliency across sites:
 
-:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.svg" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels." border="false":::
+:::image type="content" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram illustrating ExpressRoute connection options between on-premises network and Azure, showing different resiliency levels." border="false":::
 
 ::: zone-end
 
