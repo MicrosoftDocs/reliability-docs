@@ -56,19 +56,25 @@ To ensure that only secure connections are established to your NFS share, we rec
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Files provides robust availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
+- **Zone redundancy with ZRS:** Azure Files provides robust availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
-[!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+    [!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+
+- **Zonal Placement with LRS:** For premium storage accounts (SSD media tier), you can use zonal placement to select the specific availability zone in which your Azure Files storage account resides. This choice is optimal if you need to place virtual machines (VMs) in the same zone to reduce latency between compute and storage.
 
 ### Region support
 
-ZRS is supported in HDD (standard) file shares in [all regions with availability zones](./regions-list.md).
-
-ZRS is supported for SSD (premium) file shares through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
+- ZRS is supported in HDD (standard) file shares in [all regions with availability zones](./regions-list.md).
+    
+    ZRS is supported for SSD (premium) file shares through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
+    
+- LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
 
 ### Requirements
 
-ZRS is supported by all file share types.
+- ZRS is supported by all file share types.
+
+- LRS with zonal placement applies to classic Azure file shares only (Microsoft.Storage). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
 
 ### Cost
 
@@ -78,11 +84,23 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
 ### Configure availability zone support
 
+# [Zone redundancy](#tab/zrs)
+
 - **Create a file share with zone redundancy.** To create a new file share with ZRS, see [Create an Azure file share](/azure/storage/files/create-classic-file-share) and select **ZRS** or **GZRS** as the redundancy option during account creation.
 
 - **Change replication type.** To convert an existing storage account to ZRS and learn about migration options and requirements, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
 - **Disable zone redundancy.** Convert ZRS accounts back to a nonzonal configuration, such as LRS, through the same redundancy configuration change process.
+
+# [Zonal placement](#tab/lrs)
+
+- **Create a premium storage account with zonal placement.** To create a new file storage account with zonal placement, see [Create a new zonal storage account](/azure/storage/files/zonal-placement?tabs=azure-portal#create-a-new-zonal-storage-account).
+
+- **Change zonal placement.** To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement?tabs=azure-portal#pin-an-existing-storage-account-to-an-azure-selected-zone).
+
+- **Remove zonal placement.** To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement?tabs=azure-portal#pin-an-existing-storage-account-to-an-azure-selected-zone).
+
+---
 
 ### Normal operations
 

@@ -57,7 +57,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Event Grid](reliability-event-grid.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Event Hubs](./reliability-event-hubs.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure ExpressRoute](../expressroute/designing-for-high-availability-with-expressroute.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Files](./reliability-storage-files.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Files](./reliability-storage-files.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall](reliability-firewall.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall Manager](../firewall-manager/quick-firewall-policy.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Functions](./reliability-functions.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
