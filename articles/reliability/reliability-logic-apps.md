@@ -21,25 +21,6 @@ ai-usage: ai-assisted
 
 This article describes how to make Logic Apps resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Logic Apps service level agreement (SLA).
 
-> [!NOTE]
-> When you plan for resiliency, make sure that you consider not just your logic apps, but also these Azure resources that you use with your logic apps:
-> 
-> - [Connections](../connectors/introduction.md) that you create from logic app workflows to other apps, services, and systems. For more information, see [Connections to resources](/azure/logic-apps/business-continuity-disaster-recovery-guidance#connections-to-resources) later in this topic.
-> - [On-premises data gateways](../logic-apps/connect-on-premises-data-sources.md), which are Azure resources that you create and use in your logic apps to access data in on-premises systems. Each gateway resource represents a separate [data gateway installation](../logic-apps/install-on-premises-data-gateway-workflows.md) on a local computer. You can configure an on-premises data gateway for high availability by using multiple computers. For more information, see [High availability support](../logic-apps/install-on-premises-data-gateway-workflows.md#high-availability-support).
-> - [Integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account) where you define and store the artifacts that logic app workflows use for [business-to-business (B2B) enterprise integration](/azure/logic-apps/logic-apps-enterprise-integration-overview) scenarios. For example, you can [set up cross-region disaster recovery for integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-b2b-business-continuity).
-
-::: zone pivot="consumption"
-
-Multitenant Azure Logic Apps automatically manages the compute infrastructure and resources for Consumption workflows. You don't need to configure or manage any virtual machines (VMs). Consumption workflows share compute infrastructure between many customers.
-
-::: zone-end
-
-::: zone pivot="standard-workflow-service-plan,standard-app-service-environment"
-
-Single-tenant Azure Logic Apps runs Standard workflows on dedicated compute resources, which are dedicated to you and are called *plans*. Each plan can have multiple instances, and those instances can optionally be spread across multiple availability zones. Your workflows run on instances of your plan.
-
-::: zone-end
-
 ## Production deployment recommendations for reliability
 
 ::: zone pivot="consumption"
@@ -53,6 +34,29 @@ Single-tenant Azure Logic Apps runs Standard workflows on dedicated compute reso
 
 > [!div class="checklist"]
 > - For production deployments with single-tenant Logic Apps, [enable zone redundancy](#resilience-to-availability-zone-failures) to spread your logic app resources across multiple availability zones.
+
+::: zone-end
+
+## Reliability architecture overview
+<!-- TODO -->
+
+When you plan your reliability strategy, make sure that you consider not just your logic apps, but also these Azure resources that you use with your logic apps:
+
+- [Connections](../connectors/introduction.md) that you create from logic app workflows to other apps, services, and systems. For more information, see [Connections to resources](/azure/logic-apps/business-continuity-disaster-recovery-guidance#connections-to-resources) later in this topic.
+- [On-premises data gateways](../logic-apps/connect-on-premises-data-sources.md), which are Azure resources that you create and use in your logic apps to access data in on-premises systems. Each gateway resource represents a separate [data gateway installation](../logic-apps/install-on-premises-data-gateway-workflows.md) on a local computer. You can configure an on-premises data gateway for high availability by using multiple computers. For more information, see [High availability support](../logic-apps/install-on-premises-data-gateway-workflows.md#high-availability-support).
+- [Integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account) where you define and store the artifacts that logic app workflows use for [business-to-business (B2B) enterprise integration](/azure/logic-apps/logic-apps-enterprise-integration-overview) scenarios. For example, you can [set up cross-region disaster recovery for integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-b2b-business-continuity).
+
+::: zone pivot="consumption"
+
+Multitenant Azure Logic Apps automatically manages the compute infrastructure and resources for Consumption workflows. You don't need to configure or manage any virtual machines (VMs). Consumption workflows share compute infrastructure between many customers.
+
+::: zone-end
+
+::: zone pivot="standard-workflow-service-plan,standard-app-service-environment"
+
+Single-tenant Azure Logic Apps runs Standard workflows on dedicated compute resources, which are dedicated to you and are called *plans*. Each plan can have multiple instances, and those instances can optionally be spread across multiple availability zones. Your workflows run on instances of your plan.
+
+<!-- TODO mention runs on Azure Functions, which in turn runs on App Service -->
 
 ::: zone-end
 
@@ -70,11 +74,17 @@ For more information on fault handling in Logic Apps, see [Handle errors and exc
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Logic Apps supports *zone redundancy*, which spreads compute resources across multiple [availability zones](../reliability/availability-zones-overview.md). When you distribute logic app workload resources across availability zones, you improve resiliency and reliability for your production logic app workloads.
-
 ::: zone pivot="consumption"
 
+Logic Apps supports *zone redundancy*, which spreads compute resources and state across multiple [availability zones](../reliability/availability-zones-overview.md). When you distribute logic app workload resources across availability zones, you improve resiliency and reliability for your production logic app workloads.
+
 New and existing Consumption logic app workflows in multitenant Logic Apps automatically have zone redundancy enabled.
+
+::: zone-end
+
+::: zone pivot="standard-workflow-service-plan,standard-app-service-environment"
+
+Logic Apps supports *zone redundancy*, which spreads compute resources across multiple [availability zones](../reliability/availability-zones-overview.md). You can optionally configure zone redundancy for the state your logic apps store. When you distribute logic app workload resources across availability zones, you improve resiliency and reliability for your production logic app workloads.
 
 ::: zone-end
 
@@ -86,7 +96,7 @@ For Standard workflows with the Workflow Service Plan hosting option in single-t
 
 ::: zone pivot="standard-app-service-environment"
 
-For Standard workflows with the App Service Environment v3 hosting option, you can optionally enable zone redundancy. For more information on how App Service Environments v3 supports availability zones, see [Reliability in App Service Environment](./reliability-app-service-environment.md).
+For Standard workflows with the App Service Environment v3 hosting option, you can optionally enable zone redundancy. For more information on how App Service Environment v3 supports availability zones, see [Reliability in App Service Environment](./reliability-app-service-environment.md).
 
 ::: zone-end
 
@@ -101,14 +111,18 @@ For Standard workflows with the App Service Environment v3 hosting option, you c
 ::: zone pivot="standard-workflow-service-plan"
 
 - **Region support:** Zone-redundant Standard logic apps with Workflow Service Plans can be deployed in any region that supports availability zones for Azure App Service. Japan West is the exception, which currently doesn't support zone-redundant logic apps. For more information, see [Reliability in Azure App Service](./reliability-app-service.md).
-- **Instance count:** You must deploy at least two instances of your Workflow Service Plan. Each instance roughly corresponds to one VM. To distribute these instances (VMs) across availability zones, you must have a minimum of two instances.
 
 ::: zone-end
 
 ::: zone pivot="standard-app-service-environment"
 
 - **Region support:** To see which regions support availability zones for App Service Environment v3, see [Regions](../app-service/environment/overview.md#regions).
-- **Instance count:** You must deploy at least two instances of your Workflow Service Plan. Each instance roughly corresponds to one VM. To distribute these instances (VMs) across availability zones, you must have a minimum of two instances.
+
+::: zone-end
+
+::: zone pivot="standard-workflow-service-plan, standard-app-service-environment"
+
+- **Instance count:** You must deploy at least two instances of your Workflow Service Plan. Each instance roughly corresponds to one VM, so to distribute these instances (VMs) across multiple availability zones, you must have a minimum of two instances.
 
 ::: zone-end
 
@@ -154,21 +168,15 @@ Consumption logic app workflows automatically support zone redundancy, so no con
 
 ::: zone pivot="standard-workflow-service-plan,standard-app-service-environment"
 
-- **Create a new workflow with zone redundancy.**
+- **Create a new zone-redundant workflow:** To enable zone redundancy for Standard logic app workflows, see [Enable zone redundancy for your logic app](../logic-apps/set-up-zone-redundancy-availability-zones.md).
 
-  To enable zone redundancy for Standard logic app workflows, see [Enable zone redundancy for your logic app](../logic-apps/set-up-zone-redundancy-availability-zones.md).
+- **Enable zone redundancy on an existing workflow:** You can't enable zone redundancy after you create a service plan. Instead, you need to create a new plan with zone redundancy enabled and delete the old one. <!-- TODO confirm -->
 
-- **Migration**
-
-  You can't enable zone redundancy after you create a service plan. Instead, you need to create a new plan with zone redundancy enabled and delete the old one.
-
-- **Disable zone redundancy.**
-
-  You can't disable zone redundancy after you create a Workflow Service Plan. Instead, you need to create a new plan with zone redundancy disabled and delete the old one.
+- **Disable zone redundancy:** You can't disable zone redundancy after you create a Workflow Service Plan. Instead, you need to create a new plan with zone redundancy disabled and delete the old one.
 
 ### Capacity planning and management
 
-To prepare for availability zone failure, consider *over-provisioning* the capacity of your integration runtime. Over-provisioning allows the solution to tolerate some degree of capacity loss and still continue to function without degraded performance. To learn more about over-provisioning, see [Manage capacity with over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
+To prepare for availability zone failure, consider *over-provisioning* the capacity of your plan. Over-provisioning allows the solution to tolerate some degree of capacity loss and still continue to function without degraded performance. To learn more about over-provisioning, see [Manage capacity with over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
 
 ::: zone-end
 
@@ -178,13 +186,17 @@ This section describes what to expect when Logic Apps resources are configured f
 
 ::: zone pivot="consumption"
 
-**Traffic routing between zones:**  During normal operations, workflow invocations can use compute resources in any of the availability zones within the region.
+- **Traffic routing between zones:**  During normal operations, workflow invocations can use compute resources in any of the availability zones within the region.
+
+- **Data replication between zones:** TODO
 
 ::: zone-end
 
 ::: zone pivot="standard-workflow-service-plan,standard-app-service-environment"
 
-**Traffic routing between zones:**  During normal operations, workflow invocations are spread among all your available plan instances across all availability zones.
+- **Traffic routing between zones:**  During normal operations, workflow invocations are spread among all your available plan instances across all availability zones.
+
+- **Data replication between zones:** TODO
 
 ::: zone-end
 
@@ -194,7 +206,15 @@ This section describes what to expect when Logic Apps resources are configured f
 
 - **Detection and response:** The Logic Apps platform is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
 
+[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+
 - **Active requests:** If an availability zone becomes unavailable, any in-progress workflow executions that run on a VM in the faulty availability zone are terminated. The Logic Apps platform automatically resumes the workflow on another VM in a different availability zone. Due to this behavior, active workflows might experience some [transient faults](#resilience-to-transient-faults) or higher latency as new VMs are added to the remaining availability zones.
+
+- **Traffic rerouting:** TODO
+
+- **Expected downtime:** TODO
+
+- **Expected data loss:** TODO
 
 ### Zone recovery
 
@@ -226,7 +246,6 @@ For more information on multi-region deployments for your logic app workflows, s
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
-
 
 ## Related content
 
