@@ -20,8 +20,6 @@ ai-usage: ai-assisted
 
 This article describes how to make Stream Analytics resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights some key information about the Stream Analytics service level agreement (SLA).
 
-This article describes reliability support in [Stream Analytics](../stream-analytics/stream-analytics-introduction.md). It covers intra-regional resiliency via [availability zones](#availability-zone-support) and [multi-region deployment approaches](#multi-region-support).
-
 > [!IMPORTANT]
 > When you consider the reliability of Stream Analytics, you also need to consider the reliability of your data sources, including inputs and outputs. Improving the resiliency of Stream Analytics alone might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas.
 
@@ -119,7 +117,7 @@ This section describes what to expect when Stream Analytics jobs are configured 
 
 - **Detection and response**: The Stream Analytics platform is responsible for detecting a failure in an availability zone and responding. Jobs that are running on workers in the failed zone are marked as unhealthy, and processing workload is redistributed to workers in the remaining healthy zones. You don't need to do anything to initiate a zone failover.
 
-[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./reliability-availability-zone-down-notification-service-resource-include.md)]
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests**: Running jobs are shifted to another worker in a healthy availability zone.
 
