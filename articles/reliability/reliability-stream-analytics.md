@@ -14,7 +14,7 @@ ai-usage: ai-assisted
 
 # Reliability in Azure Stream Analytics
 
-[Azure Stream Analytics](../stream-analytics/stream-analytics-introduction.md) is a fully managed real-time analytics service designed to process and analyze streaming data from multiple sources simultaneously. Stream Analytics lets you build complex event processing pipelines with SQL-like queries while providing built-in reliability features to ensure continuous data processing.
+[Azure Stream Analytics](../stream-analytics/stream-analytics-introduction.md) is a fully managed real-time analytics service designed to process and analyze streaming data from multiple sources simultaneously, and lets you build complex event processing pipelines with SQL-like queries. Stream Analytics is a highly resilient service, with extensive redundancy and resiliency built in.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -31,7 +31,7 @@ To ensure high reliability in production environments with Stream Analytics, we 
 
 > [!div class="checklist"]
 > - **Use availability zones:** Deploy your streaming jobs and other resources in regions that support availability zones.
-> - **Deploy sufficient capacity:** Set your streaming units based on your expected throughput, with additional capacity for handling peak loads and potential zone failures, and with a buffer above your baseline requirements in case of sudden increases.
+> - **Deploy sufficient capacity:** Set your streaming units based on your expected throughput, with additional capacity for handling peak loads, and with a buffer above your baseline requirements in case of sudden increases.
 > - **Monitor health:** Implement comprehensive monitoring using Azure Monitor metrics and diagnostic logs to track job health, input/output events, and resource utilization. Configure alerts for critical metrics like watermark delay and runtime errors to detect issues before they impact data processing. For more information, see [Monitor Azure Stream Analytics](../stream-analytics/monitor-azure-stream-analytics.md).
 > - **For mission-critical streaming workloads:** Consider implementing a multi-region deployment strategy with synchronized job configurations across regions. While Stream Analytics doesn't provide native multi-region replication, you can achieve regional redundancy by deploying identical jobs in multiple regions with appropriate data routing mechanisms. For more information, see [Multi-region support](#multi-region-support).
 
@@ -57,7 +57,7 @@ For more information on Stream Analytics jobs and the resource model, see [Azure
 
 - **Streaming units**. While the platform manages worker nodes and job distribution across worker nodes, you're responsible for allocating *streaming units (SUs)* to jobs. SUs represent the compute resources that are allocated to execute a job. The higher the number of SUs, the more compute resources are allocated for the job. For more information, see [Understand and adjust Stream Analytics streaming units](../stream-analytics/stream-analytics-streaming-unit-consumption.md).
 
-Stream Analytics maintains job state through regular *checkpointing* of state, enabling quick recovery with minimal data reprocessing in case of failures. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint and reprocesses events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job. However, achieving end-to-end exactly-once delivery depends on your output destination's capabilities. For more information, see [Checkpoint and replay concepts in Azure Stream Analytics jobs](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md).
+- **Checkpoints**. Stream Analytics maintains job state through regular *checkpointing* of state, enabling quick recovery with minimal data reprocessing in case of failures. When processing failures occur, Stream Analytics automatically restarts from the last checkpoint and reprocesses events that weren't fully processed. This guarantee applies to all built-in functions and user-defined functions within the job. However, achieving end-to-end exactly-once delivery depends on your output destination's capabilities. For more information, see [Checkpoint and replay concepts in Azure Stream Analytics jobs](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md).
 
 > [!NOTE]
 > With [Azure Stream Analytics on IoT Edge](../stream-analytics/stream-analytics-edge.md) you can run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for configuring it to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
@@ -68,7 +68,7 @@ Stream Analytics maintains job state through regular *checkpointing* of state, e
 
 Stream Analytics automatically handles many transient faults for both ingesting data from inputs and writing data to outputs through built-in retry mechanisms.
 
-When a worker node running your job restarts, or if the job is moved between worker nodes, the job might replay some of the processing work. It's important to deploy sufficient streaming units for the job to handle these temporary increases in load.
+When a worker node running your job restarts, or if the job is moved between worker nodes, the job might replay some of the processing work.
 
 It's a good practice to configure [output error policies](../stream-analytics/stream-analytics-output-error-policy.md). However, these policies only apply to data conversion errors, and they don't influence the behavior for handling transient faults.
 
@@ -76,9 +76,13 @@ It's a good practice to configure [output error policies](../stream-analytics/st
 
 [!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
 
-Stream Analytics is automatically zone-redundant in regions that support availability zones. When you create a Stream Analytics job in a zone-enabled region, the service distributes your job's compute resources across multiple availability zones. This zone-redundant deployment model ensures that your streaming jobs continue to process data even if an entire availability zone becomes unavailable.
+Stream Analytics is automatically zone-redundant in regions that support availability zones. When you create a Stream Analytics job in a zone-enabled region, the service distributes your job's compute resources across multiple availability zones:
 
 ![Diagram that shows a zone-redundant Stream Analytics job.](./media/reliability-stream-analytics/availability-zones.png)
+
+This zone-redundant deployment model ensures that your streaming jobs continue to process data even if an entire availability zone becomes unavailable. For example, the following diagram shows how jobs continue to run if zone 3 experiences an outage:
+
+![Diagram that shows a zone-redundant Stream Analytics job continuing to run when a zone is down.](./media/reliability-stream-analytics/zone-down.png)
 
 The zone-redundant architecture applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near-zero downtime during zone failures.
 
@@ -117,13 +121,13 @@ This section describes what to expect when Stream Analytics jobs are configured 
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests**: Running jobs pause for a few seconds while they shift to another worker in a healthy availability zone. They automatically resume after the platform moves them.
+- **Active requests**: Running jobs are shifted to another worker in a healthy availability zone.
 
     Stream Analytics uses checkpointing to maintain processing state. During a zone failure, in-flight events being processed by workers in the failed zone are automatically reprocessed from the last checkpoint by workers in healthy zones.
 
-- **Expected data loss**: The job checkpointing system ensures no data loss. Some events might be reprocessed if they were already processed but not yet checkpointed.
+- **Expected data loss**: The job checkpointing system ensures no data loss.
 
-- **Expected downtime**: Running jobs might pause for a few seconds while they shift to another worker in a healthy availability zone. They automatically resume after the platform moves them.
+- **Expected downtime**: Running jobs automatically resume after the platform moves them to a healthy worker.
 
 - **Traffic rerouting**: The service automatically redirects all new input data to workers in healthy zones. Existing connections from input sources are re-established with workers in operational zones. Output connections are similarly re-established, ensuring continuous data flow through your streaming pipeline.
 
@@ -147,7 +151,7 @@ To achieve multi-region resilience for your streaming workloads, consider deploy
 
 ## Backup and restore
 
-Because running jobs don't contain state, Stream Analytics doesn't have a built-in backup and restore feature.
+Stream Analytics doesn't have a built-in backup and restore feature.
 
 However if you want to move, copy or back up the definition and configuration of your jobs, you can use the Stream Analytics extension for Visual Studio Code to export an existing job in the Azure cloud to your local computer. Once you save the entire configuration of your Stream Analytics jobs locally, you can then deploy it to the same or another Azure region. To learn how to copy, back up, and move your Stream Analytics jobs, see [Copy, back up and move your Azure Stream Analytics jobs](../stream-analytics/copy-job.md).
 
@@ -155,18 +159,14 @@ However if you want to move, copy or back up the definition and configuration of
 
 Stream Analytics performs automatic platform maintenance to apply security updates, deploy new features, and improve service reliability. As a result, Stream Analytics can have service updates deployed on a weekly (or more frequent) basis. The Stream Analytics service ensures any new update passes rigorous internal rings to have the highest quality.
 
-Consider the following points to ensure your jobs are resilient to service maintenance activities:
+The service proactively looks for many signals after deploying to each batch to get more confidence that there are no bugs introduced. However, no matter how much testing is done, there's still a risk that an existing, running job may break due to the introduction of a problem introduced by maintenance. If you are running mission-critical jobs, these risks need to be avoided.
 
-- **Configure jobs to be resilient to replays:** Checkpoints are usually used to restore data after service maintenance. However, occasionally a replay technique needs to be used instead of a checkpoint. It's important that your jobs are configured so that replays don't cause incorrect or partial results in your output. For more information, see [Job recovery from a service upgrade](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md#job-recovery-from-a-service-upgrade).
+You can reduce the risk of a bug affecting your workload by deploying identical jobs to two Azure regions. You should then [monitor these jobs](../stream-analytics/monitor-azure-stream-analytics.md) to get notified when something unexpected happens. If one of these jobs ends up in a [Failed state](../stream-analytics/job-states.md) after a Stream Analytics service update, you should:
 
-- **Consider mitigating the risk of bugs by deploying identical jobs:** The service proactively looks for many signals after deploying to each batch to get more confidence that there are no bugs introduced. However, no matter how much testing is done, there's still a risk that an existing, running job may break due to the introduction of a problem introduced by maintenance. If you are running mission-critical jobs, these risks need to be avoided.
+- [Contact Azure support](https://azure.microsoft.com/support) to help identify the cause and resolve the problem.
+- Fail over any downstream consumers to use the healthy job output.
 
-    You can reduce the risk of a bug affecting your workload by deploying identical jobs to two Azure regions. You should then [monitor these jobs](../stream-analytics/monitor-azure-stream-analytics.md) to get notified when something unexpected happens. If one of these jobs ends up in a [Failed state](../stream-analytics/job-states.md) after a Stream Analytics service update, you should:
-
-    - [Contact Azure support](https://azure.microsoft.com/support) to help identify the cause and resolve the problem.
-    - Fail over any downstream consumers to use the healthy job output.
-
-    When you select Azure regions to use for your secondary job, consider whether your region has a [paired region](./regions-paired.md). The [Azure regions list](./regions-list.md) has the most up-to-date information on which regions are paired. Stream Analytics guarantees that infrastructure in paired regions are updated at different times. The deployment of an update to Stream Analytics doesn't occur at the same time in a set of paired regions. As a result there is a sufficient time gap between the updates to identify potential issues and remediate them.
+When you select Azure regions to use for your secondary job, consider whether your region has a [paired region](./regions-paired.md). The [Azure regions list](./regions-list.md) has the most up-to-date information on which regions are paired. Stream Analytics guarantees that infrastructure in paired regions are updated at different times. The deployment of an update to Stream Analytics doesn't occur at the same time in a set of paired regions. As a result there is a sufficient time gap between the updates to identify potential issues and remediate them.
 
 ## Service-level agreement
 
