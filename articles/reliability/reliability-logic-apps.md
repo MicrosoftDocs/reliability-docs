@@ -38,6 +38,11 @@ This article describes how to make Logic Apps resilient to a variety of potentia
 ::: zone-end
 
 ## Reliability architecture overview
+
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
+
+### Logical architecture
+
 <!-- TODO -->
 
 When you plan your reliability strategy, make sure that you consider not just your logic apps, but also these Azure resources that you use with your logic apps:
@@ -45,6 +50,10 @@ When you plan your reliability strategy, make sure that you consider not just yo
 - [Connections](../connectors/introduction.md) that you create from logic app workflows to other apps, services, and systems. For more information, see [Connections to resources](/azure/logic-apps/business-continuity-disaster-recovery-guidance#connections-to-resources) later in this topic.
 - [On-premises data gateways](../logic-apps/connect-on-premises-data-sources.md), which are Azure resources that you create and use in your logic apps to access data in on-premises systems. Each gateway resource represents a separate [data gateway installation](../logic-apps/install-on-premises-data-gateway-workflows.md) on a local computer. You can configure an on-premises data gateway for high availability by using multiple computers. For more information, see [High availability support](../logic-apps/install-on-premises-data-gateway-workflows.md#high-availability-support).
 - [Integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account) where you define and store the artifacts that logic app workflows use for [business-to-business (B2B) enterprise integration](/azure/logic-apps/logic-apps-enterprise-integration-overview) scenarios. For example, you can [set up cross-region disaster recovery for integration accounts](/azure/logic-apps/logic-apps-enterprise-integration-b2b-business-continuity).
+
+### Physical architecture
+
+<!-- TODO -->
 
 ::: zone pivot="consumption"
 
