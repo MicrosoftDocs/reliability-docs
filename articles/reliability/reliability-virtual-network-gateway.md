@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-vpn-gateway
-ms.date: 11/11/2025
+ms.date: 11/18/2025
 zone_pivot_groups: virtual-network-gateway-types
 ai-usage: ai-assisted
 ---
