@@ -91,7 +91,7 @@ The zone-redundant architecture applies to all Stream Analytics features includi
 ### Requirements
 
 - **Region support:** Zone redundancy for Stream Analytics resources is supported in any region that supports availability zones. For the complete list of regions that support availability zones, see [Azure regions with availability zones](./regions-list.md).
-- **SKUs:** Zone redundancy is available in all SKUs of the Stream Analytics service.
+- **SKUs:** Zone redundancy is available in all Stream Analytics SKUs.
 
 ### Cost
 
