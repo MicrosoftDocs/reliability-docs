@@ -86,7 +86,7 @@ This zone-redundant deployment model ensures that your streaming jobs continue t
 
 ![Diagram that shows a zone-redundant Stream Analytics job continuing to run when a zone is down.](./media/reliability-stream-analytics/zone-down.png)
 
-The zone-redundant architecture applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near-zero downtime during zone failures.
+Zone redundancy applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near-zero downtime during zone failures.
 
 ### Requirements
 
