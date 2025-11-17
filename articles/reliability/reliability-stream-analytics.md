@@ -18,7 +18,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Stream Analytics resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights some key information about the Stream Analytics service level agreement (SLA).
+This article describes Stream Analytics is resilient to a variety of potential outages and problems, including transient faults and availability zone outages. It also provides guidance about how to protect mission-critical jobs against region outages and service maintenance, and highlights some key information about the Stream Analytics service level agreement (SLA).
 
 > [!IMPORTANT]
 > When you consider the reliability of Stream Analytics, you also need to consider the reliability of your data sources, including inputs and outputs. Improving the resiliency of Stream Analytics alone might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas.
