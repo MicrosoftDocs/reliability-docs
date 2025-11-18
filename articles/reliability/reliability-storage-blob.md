@@ -30,7 +30,7 @@ To learn about how to deploy Blob Storage to support your solution's reliability
 
 Azure Storage provides several redundancy options to help you protect your data against different types of failures. Each option provides a specific level of data redundancy, so you can choose the level that best matches your application's requirements.
 
-[!INCLUDE [Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
+[!INCLUDE [Storage - Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
 
 ## Resilience to transient faults
 
@@ -50,17 +50,17 @@ Blob Storage provides robust availability zone support through ZRS configuration
 
 Zone redundancy is enabled at the storage account level and applies to all blob containers within that account. You can't set different redundancy levels for individual containers. The redundancy configuration is applied to the entire storage account. When an availability zone experiences an outage, Azure Storage automatically routes requests to healthy zones without requiring intervention from you or your application.
 
-[!INCLUDE [Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
 ### Requirements
 
-[!INCLUDE [Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
 
 - **Storage account types:** Zone redundancy is available for both Standard general-purpose v2 and Premium Block Blob storage account types. Block blobs, append blobs, and page blobs all support zone-redundant configurations, but the type of storage account that you use determines which capabilities are available. For more information, see [Supported storage account types](/azure/storage/common/storage-redundancy#supported-storage-account-types).
 
 ### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
 
 For more information, see [Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
@@ -68,89 +68,92 @@ For more information, see [Blob Storage pricing](https://azure.microsoft.com/pri
 
 - **Create a blob storage account with zone redundancy.** To create a new storage account with ZRS, see [Create a storage account](/azure/storage/common/storage-account-create) and select **ZRS**, **geo-zone-redundant storage (GZRS)**, or **read-access geo-redundant storage (RA-GZRS)** as the redundancy option during account creation.
 
-[!INCLUDE [Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
+[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when a blob storage account is configured for zone redundancy and all availability zones are operational.
 
-[!INCLUDE [Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
 
 ### Behavior during a zone failure
 
 This section describes what to expect when a blob storage account is configured for ZRS and there's an availability zone outage.
 
-[!INCLUDE [Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
 
 - **Traffic rerouting:** If an availability zone goes offline, Azure initiates networking changes like Domain Name System (DNS) repointing. These updates ensure that traffic is rerouted to the remaining healthy availability zones. The service maintains full functionality by using the surviving zones and doesn't require customer intervention.
 
 ### Zone recovery
 
-[!INCLUDE [Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
 
 ## Resilience to region-wide failures
 
-[!INCLUDE [Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
 
-[!INCLUDE [Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
 
-[!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
+### Geo-redundant storage
+
+[!INCLUDE [Storage - Resilience to region-wide failures - RA-GRS addendum](includes/storage/reliability-storage-multi-region-support-read-access-include.md)]
+
+[!INCLUDE [Storage - Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
 #### Requirements
 
-[!INCLUDE [Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
-[!INCLUDE [Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
+[!INCLUDE [Storage - Requirements](includes/storage/reliability-storage-multi-region-requirements-include.md)]
 
 #### Considerations
 
 When you implement multi-region Blob Storage, consider the following key factors:
 
-[!INCLUDE [Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
+[!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
-[!INCLUDE [Considerations - Secondary region access](includes/storage/reliability-storage-multi-region-considerations-secondary-read-access-include.md)]
+[!INCLUDE [Storage - Considerations - Secondary region access](includes/storage/reliability-storage-multi-region-considerations-secondary-read-access-include.md)]
 
-[!INCLUDE [Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
+[!INCLUDE [Storage - Considerations - Feature limitations](includes/storage/reliability-storage-multi-region-considerations-feature-limitations-include.md)]
 
 #### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For more information, see [Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
 #### Configure multi-region support
 
-[!INCLUDE [Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
-[!INCLUDE [Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
+[!INCLUDE [Storage - Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
 #### Behavior when all regions are healthy
 
-[!INCLUDE [Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all regions are healthy](includes/storage/reliability-storage-multi-region-normal-operations-include.md)]
 
 #### Behavior during a region failure
 
-[!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
 #### Region recovery
 
-[!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
+[!INCLUDE [Storage - Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
 #### Test for region failures
 
-[!INCLUDE [Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
+[!INCLUDE [Storage - Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
 ### Custom multi-region solutions for resiliency
 
-[!INCLUDE [Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
-[!INCLUDE [Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
-[!INCLUDE [Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
 
 **Object replication** provides an extra option for cross-region data replication that provides asynchronous copying of block blobs between storage accounts. Unlike the built-in geo-redundant storage options that use fixed paired regions, object replication allows you to replicate data between storage accounts in any Azure region, including nonpaired regions. This approach gives you full control over source and destination regions, replication policies, and the specific containers and blob prefixes to replicate.
 
@@ -178,7 +181,7 @@ For most solutions, you shouldn't rely exclusively on backups. Instead, use the 
 
 ## Service-level agreement
 
-[!INCLUDE [Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
+[!INCLUDE [Storage - Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
 
 ## Related content
 

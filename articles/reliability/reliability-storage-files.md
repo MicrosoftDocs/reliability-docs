@@ -28,7 +28,7 @@ To learn how to deploy Azure Files to support your solution's reliability requir
 
 ## Reliability architecture overview
 
-[!INCLUDE [Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
+[!INCLUDE [Storage - Reliability architecture overview](includes/storage/reliability-storage-architecture-include.md)]
 
 Azure Files is available in two media tiers: 
 
@@ -54,7 +54,7 @@ To ensure that only secure connections are established to your NFS share, we rec
 
 Azure Files provides robust availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
-[!INCLUDE [Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+[!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
 ### Requirements
 
@@ -66,7 +66,7 @@ ZRS is supported in:
 
 ### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
 
 For detailed pricing information, see [Azure Files pricing](https://azure.microsoft.com/pricing/details/storage/files/).
 
@@ -82,34 +82,34 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
 This section describes what to expect when a file storage account is configured for zone redundancy and all availability zones are operational.
 
-[!INCLUDE [Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
 
 ### Behavior during a zone failure
 
 This section describes what to expect when a file storage account is configured for zone redundancy and there's an availability zone outage.
 
-[!INCLUDE [Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
 
 - **Traffic rerouting:** Azure automatically reroutes traffic to the remaining healthy availability zones. The service maintains full functionality by using the surviving zones with no customer intervention required. No remounting of Azure file shares from the connected clients is required.
 
 ### Zone recovery
 
-[!INCLUDE [Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
 
 ## Resilience to region-wide failures
 
-[!INCLUDE [Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures](includes/storage/reliability-storage-multi-region-support-include.md)]
 
 > [!IMPORTANT]
 > Azure Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. 
 >
 > Azure Files doesn't support read-access geo-redundant storage (RA-GRS) or read-access geo-zone-redundant storage (RA-GZRS). If a storage account is configured to use RA-GRS or RA-GZRS, the standard (HDD) file shares are configured and billed as GRS or GZRS.
 
-[!INCLUDE [Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
+[!INCLUDE [Storage - Resilience to region-wide failures - failover types](includes/storage/reliability-storage-multi-region-support-failover-types-include.md)]
 
 #### Requirements
 
@@ -123,7 +123,7 @@ This section describes what to expect when a file storage account is configured 
 
 When you implement multi-region Azure Files, consider the following important factors:
 
-[!INCLUDE [Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
+[!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
 - **Last Sync Time:** For Azure Files, the Last Sync Time is based on the latest system snapshot in the secondary region.
 
@@ -135,13 +135,13 @@ When you implement multi-region Azure Files, consider the following important fa
 
 #### Cost
 
-[!INCLUDE [Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-multi-region-cost-include.md)]
 
 For detailed pricing information, see [Azure Files pricing](https://azure.microsoft.com/pricing/details/storage/files/).
 
 #### Configure multi-region support
 
-[!INCLUDE [Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
 - **Enable geo-redundancy on an existing file storage account.** To convert an existing file storage account to GRS, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
@@ -160,15 +160,15 @@ This section describes what to expect when a storage account is configured for g
 
 - **Data replication between regions:** Write operations are first committed to the primary region by using the configured redundancy type (LRS for GRS, or ZRS for GZRS). After successful completion in the primary region, data is asynchronously replicated to the secondary region, where it's stored by using LRS.
 
-  [!INCLUDE [Behavior when all regions are healthy - lag](includes/storage/reliability-storage-multi-region-normal-operations-lag-include.md)]
+  [!INCLUDE [Storage - Behavior when all regions are healthy - lag](includes/storage/reliability-storage-multi-region-normal-operations-lag-include.md)]
 
 #### Behavior during a region failure
 
-[!INCLUDE [Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a region failure](includes/storage/reliability-storage-multi-region-down-experience-include.md)]
 
 #### Region recovery
 
-[!INCLUDE [Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
+[!INCLUDE [Storage - Region recovery](includes/storage/reliability-storage-multi-region-failback-include.md)]
 
 #### Test for region failures
 
@@ -176,11 +176,11 @@ For GRS accounts, you can perform planned failover operations during maintenance
 
 ### Custom multi-region solutions for resiliency
 
-[!INCLUDE [Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
 - You use file share types that don't support geo-redundancy.
 
-[!INCLUDE [Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
 Consider the following common high-level approaches:
 
@@ -216,7 +216,7 @@ You can create your snapshots and store them in two different ways:
 
 ## Service-level agreement
 
-[!INCLUDE [Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
+[!INCLUDE [Storage - Service-level agreement](includes/storage/reliability-storage-sla-include.md)]
 
 ## Related content
 
