@@ -41,7 +41,7 @@ Container Apps supports the reliability of your applications by using different 
 
 - **Infrastructure resiliency for system components:** This resiliency includes the control plane, ingress controllers, and container runtime. In regions that have availability zones, Container Apps provides zone redundancy. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
-## Transient faults
+## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
@@ -119,7 +119,7 @@ To configure your scale rules properly, follow these principles:
 
 For more information about configuration options, see [Set scaling rules](../container-apps/scale-app.md).
 
-### Normal operations
+### Behavior when all zones are healthy
 
 This section describes what to expect when Container Apps resources are configured for zone redundancy and all availability zones are operational.
 
@@ -131,7 +131,7 @@ This section describes what to expect when Container Apps resources are configur
 
     The platform replicates only the control plane metadata including your app configurations, scaling rules, and secrets across zones for high availability. Container images are pulled from your container register into each zone as needed when replicas are created.
 
-### Zone-down experience
+### Behavior during a zone failure
 
 This section describes what to expect when Container Apps resources are configured for zone redundancy and there's an availability zone outage.
 
@@ -163,7 +163,7 @@ When an availability zone recovers from failure, Container Apps automatically re
 
 Container Apps gradually rebalances replica distribution across all available zones as part of normal scaling operations. This automatic rebalancing occurs when replicas are created because of scaling events or when unhealthy replicas are replaced. The platform doesn't force immediate redistribution of existing healthy replicas, which prevents unnecessary container restarts and maintains application stability during recovery.
 
-### Testing for zone failures
+### Test for zone failures
 
 The Container Apps platform manages traffic routing, failover, and failback for zone-redundant container apps. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
@@ -183,11 +183,11 @@ To reduce the risk of a single-region failure affecting your application, you ca
 
 - Replicate your data across regions so that you can recover your last application state.
 
-## Backups
+## Backup and restore
 
 Container Apps doesn't provide built-in backup capabilities for your applications or data. As a stateless container hosting platform, Container Apps expects applications to manage their own data persistence and recovery strategies through external services. Your application containers and their local file systems are ephemeral, and any data stored locally is lost when replicas restart or move.
 
-## Reliability during service maintenance
+## Resilience during service maintenance
 
 Use revision management to deploy updates to your application without downtime. You can create new revisions with updated container images and perform a cutover by using a [blue-green deployment strategy](../container-apps/blue-green-deployment.md), or gradually shift traffic by using [traffic splitting rules](../container-apps/traffic-splitting.md). During application updates, the platform maintains minimum replica counts by creating new containers before decommissioning old ones, which helps prevent service disruptions.
 
