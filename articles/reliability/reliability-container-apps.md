@@ -145,7 +145,7 @@ This section describes what to expect when Container Apps resources are configur
 
 - **Expected data loss:** No data loss occurs at the Container Apps platform level because the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is ended, and ephemeral storage should only be used for temporary data.
 
-- **Expected downtime:** Applications experience minimal to no downtime during zone failures. The actual impact depends on your application's health probe settings and the number of replicas in healthy zones. Ensure that clients follow [transient fault handling guidance](#transient-faults) to minimize any effects.
+- **Expected downtime:** Applications experience minimal to no downtime during zone failures. The actual impact depends on your application's health probe settings and the number of replicas in healthy zones. Ensure that clients follow [transient fault handling guidance](#resilience-to-transient-faults) to minimize any effects.
 
     Any jobs that run in the affected zone might not complete and are marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs multiple copies of the same job instance. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
 
