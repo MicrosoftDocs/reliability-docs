@@ -6,7 +6,7 @@ ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
-ms.date: 11/17/2025
+ms.date: 11/21/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Stream Analytics works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -80,11 +80,11 @@ Stream Analytics is automatically zone-redundant in regions that support availab
 
 When you create a Stream Analytics job in a zone-enabled region, the service distributes your job's compute resources across multiple availability zones, as illustrated in the following diagram:
 
-![Diagram that shows a zone-redundant Stream Analytics job.](./media/reliability-stream-analytics/availability-zones.png)
+![Diagram that shows a zone-redundant Stream Analytics job.](./media/reliability-stream-analytics/availability-zones.svg)
 
 This zone-redundant deployment model ensures that your streaming jobs continue to process data even if an entire availability zone becomes unavailable. For example, the following diagram shows how jobs continue to run if zone 3 experiences an outage:
 
-![Diagram that shows a zone-redundant Stream Analytics job continuing to run when a zone is down.](./media/reliability-stream-analytics/zone-down.png)
+![Diagram that shows a zone-redundant Stream Analytics job continuing to run when a zone is down.](./media/reliability-stream-analytics/zone-down.svg)
 
 Zone redundancy applies to all Stream Analytics features including query processing, checkpointing, and job management operations. Your job's state and checkpoint data are automatically replicated across zones, ensuring no data loss and near-zero downtime during zone failures.
 
