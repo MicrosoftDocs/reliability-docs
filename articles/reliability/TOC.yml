@@ -55,7 +55,7 @@ items:
     - name: Azure Batch
       href: reliability-batch.md
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Container Instances
       href: reliability-container-instances.md
     - name: Azure Data Factory
@@ -87,7 +87,7 @@ items:
       - name: Disaster recovery
         href: ../azure-app-configuration/concept-disaster-recovery.md?tabs=core2x?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Container Instances
       href: reliability-container-instances.md
     - name: Azure Container Registry
@@ -126,8 +126,8 @@ items:
         href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
-    - name: Azure Database for PostgreSQL - Flexible Server
-      href: reliability-postgresql-flexible-server.md
+    - name: Azure Database for PostgreSQL
+      href: reliability-azure-database-postgresql.md
     - name: Azure SQL Database
       href: reliability-sql-database.md
     - name: Azure SQL Managed Instance
@@ -152,8 +152,6 @@ items:
     items:
     - name: Microsoft Community Training
       href: reliability-community-training.md
-    - name: Sustainability data solutions in Fabric
-      href: reliability-sustainability-data-solutions-fabric.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -228,12 +226,8 @@ items:
       href: reliability-dns.md
     - name: Azure DDoS Protection
       href: reliability-ddos.md
-    - name: Azure ExpressRoute
-      items:
-      - name: Availability zones
-        href: ../expressroute/designing-for-high-availability-with-expressroute.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: ../expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+    - name: Azure ExpressRoute gateway
+      href: reliability-virtual-network-gateway.md?pivot=expressroute
     - name: Azure Firewall
       href: reliability-firewall.md
     - name: Azure Load Balancer
@@ -257,11 +251,7 @@ items:
       - name: Disaster recovery
         href: ../expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure VPN Gateway
-      items:
-      - name: Availability zones
-        href: ../vpn-gateway/about-zone-redundant-vnet-gateways.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json   
-      - name: Disaster recovery
-        href: ../vpn-gateway/vpn-gateway-highlyavailable.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json    
+      href: reliability-virtual-network-gateway.md?pivot=vpn
   - name: Security
     items:
     - name: Azure Disk Encryption 
@@ -305,7 +295,7 @@ items:
     - name: Azure App Service
       href: reliability-app-service.md
     - name: Azure Container Apps
-      href: reliability-azure-container-apps.md
+      href: reliability-container-apps.md
     - name: Azure Notification Hubs
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
@@ -328,6 +318,8 @@ items:
     href: availability-zones-overview.md
   - name: Services with availability zone support
     href: availability-zones-service-support.md
+  - name: Single zone (zonal) resources
+    href: availability-zones-zonal-resource-resiliency.md
   - name: Enable zone resiliency
     items:
     - name: Overview
@@ -355,7 +347,7 @@ items:
       - name: Azure Cache for Redis
         href: migrate-cache-redis.md
       - name: Azure Container Apps
-        href: reliability-azure-container-apps.md#availability-zone-migration
+        href: reliability-container-apps.md#resilience-to-availability-zone-failures
       - name: Azure Container Instances
         href: migrate-container-instances.md#configure-availability-zone-support
       - name: Azure Container Registry
