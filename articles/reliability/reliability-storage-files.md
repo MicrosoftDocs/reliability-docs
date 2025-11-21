@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-file-storage
 ai-usage: ai-assisted
-ms.date: 09/18/2025
+ms.date: 11/21/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Files works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---
 
@@ -102,7 +102,7 @@ Azure Files provides two types of availability zone support:
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-<!-- TODO -->
+Zonal placement with LRS is charged at the same rate as LRS.
 
 ---
 
@@ -120,11 +120,11 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-- **Create a premium storage account with zonal placement.** To create a new file storage account with zonal placement, see [Create a new zonal storage account](/azure/storage/files/zonal-placement?tabs=azure-portal#create-a-new-zonal-storage-account).
+- **Create a file share that uses zonal placement.** To create a new file storage account with zonal placement, see [Create a new zonal storage account](/azure/storage/files/zonal-placement#create-a-new-zonal-storage-account).
 
-- **Change zonal placement.** To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement?tabs=azure-portal#pin-an-existing-storage-account-to-an-azure-selected-zone).
+- **Enable zonal placement for an existing file share.** To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
-- **Remove zonal placement.** To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement?tabs=azure-portal#pin-an-existing-storage-account-to-an-azure-selected-zone).
+- **Remove zonal placement.** To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
 ---
 
@@ -138,7 +138,9 @@ This section describes what to expect when a file storage account is configured 
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-<!-- TODO -->
+- **Traffic routing between zones:** Azure Storage with locally redundant storage (LRS) automatically distributes requests across storage clusters in the availability zone you selected. Traffic distribution is transparent to applications and requires no client-side configuration.
+
+- **Data replication between zones:** All write operations to LRS are replicated synchronously across multiple storage replicas within the zone. When you upload or modify data, the operation isn't considered complete until the data has been successfully replicated across all of the replicas.
 
 ---
 
@@ -154,7 +156,17 @@ This section describes what to expect when a file storage account is configured 
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-<!-- TODO -->
+- **Detection and response:** You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
+
+[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+
+- **Active requests:** In-flight requests might be dropped during the recovery process and should be retried when the zone recovers.
+
+- **Expected data loss:** Data on file shares in the affected zone is unavailable until the zone recovers.
+
+- **Expected downtime:** File shares in the affected zone remain down until the availability zone recovers.
+
+- **Traffic rerouting:** You're responsible for swiching to other file storage accounts in healthy zones, if required.
 
 ---
 
@@ -166,7 +178,7 @@ This section describes what to expect when a file storage account is configured 
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-<!-- TODO -->
+After the zone is healthy, file shares in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
 ---
 
@@ -178,7 +190,7 @@ This section describes what to expect when a file storage account is configured 
 
 #### [Zonal placement with LRS](#tab/zonal-lrs)
 
-<!-- TODO -->
+there's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
 
 ---
 
