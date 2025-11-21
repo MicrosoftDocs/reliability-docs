@@ -58,41 +58,31 @@ Azure Files provides two types of availability zone support:
 
     [!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
-- **Zonal placement with LRS:** For premium storage accounts (SSD media tier), you can use zonal placement to select the specific availability zone in which your Azure Files storage account resides. This choice is optimal if you need to place virtual machines (VMs) in the same zone to reduce latency between compute and storage.
+- **Zonal placement with LRS:** For premium storage accounts (SSD media tier), you can use zonal placement to select the specific availability zone in which your Azure Files storage account resides. You can use zonal placement if you need to place virtual machines (VMs) in the same zone to reduce latency between compute and storage.
 
   [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
 ### Requirements
 
-- **File share types:**
+#### [Zone-redundant storage](#tab/zrs)
 
-  #### [Zone-redundant storage](#tab/zrs)
-
-  ZRS is supported by all file share types.
-
-  #### [Zonal placement with LRS](#tab/zonal-lrs)
-
-  LRS with zonal placement is available for storage accounts that meet the following requirements:
-    - Must use the premium storage tier (SSD media tier).
-    - Classic Azure file shares only (using the Microsoft.Storage resource provider). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
-
-  ---
-
-- **Region support:**
-
-  #### [Zone-redundant storage](#tab/zrs)
-
-  ZRS is supported in:
+- **Region support:** ZRS is supported in:
 
     - *HDD (standard) file shares* in [all regions with availability zones](./regions-list.md).
 
     - *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
 
-  #### [Zonal placement with LRS](#tab/zonal-lrs)
+- **File share types:** ZRS is supported by all file share types.
 
-  - LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
+#### [Zonal placement with LRS](#tab/zonal-lrs)
 
-  ---
+- **Region support:** LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
+
+- **File share types:** LRS with zonal placement is available for storage accounts that meet the following requirements:
+  - Must use the premium storage tier (SSD media tier).
+  - Classic Azure file shares only (using the Microsoft.Storage resource provider). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
+
+---
 
 ### Cost
 
@@ -130,7 +120,7 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when a file storage account is configured for availablity zone support and all availability zones are operational.
+This section describes what to expect when a file storage account is configured for availability zone support and all availability zones are operational.
 
 #### [Zone-redundant storage](#tab/zrs)
 
@@ -166,7 +156,7 @@ This section describes what to expect when a file storage account is configured 
 
 - **Expected downtime:** File shares in the affected zone remain down until the availability zone recovers.
 
-- **Traffic rerouting:** You're responsible for swiching to other file storage accounts in healthy zones, if required.
+- **Traffic rerouting:** You're responsible for switching to other file storage accounts in healthy zones, if required.
 
 ---
 
