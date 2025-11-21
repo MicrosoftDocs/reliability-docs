@@ -21,7 +21,7 @@ Azure provides two types of virtual network gateways:
 
 - [Azure virtual private network (VPN) gateways](/azure/vpn-gateway/vpn-gateway-about-vpngateways) use encrypted tunnels over the internet. 
 
-As an Azure component, a virtual network gateway provides several capabilities to support your reliability requirements.
+As an Azure component, a virtual network gateway provides diverse capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -32,9 +32,9 @@ This article describes how to make a virtual network gateway resilient to variou
 To view information about Azure VPN Gateway, select the appropriate virtual network gateway type at the beginning of this page.
 
 > [!IMPORTANT]
-> This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based parts of the ExpressRoute system.
+> This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based components of the ExpressRoute system.
 >
-> But when you use ExpressRoute, you must design your *entire network architecture*—not just the gateway—to meet your resiliency requirements. Typically, you must use multiple sites, also known as *peering locations*, and enable high availability and fast failover for your on-premises components. For more information, see [Design and architect ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
+> But when you use ExpressRoute, you must design your *entire network architecture*—not just the gateway—to meet your resiliency requirements. Typically, you use multiple sites, also known as *peering locations*, and enable high availability and fast failover for your on-premises components. For more information, see [Design and architect ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
 
 ::: zone-end
 
@@ -43,7 +43,7 @@ To view information about Azure VPN Gateway, select the appropriate virtual netw
 To view information about ExpressRoute gateways, select the appropriate virtual network gateway type at the beginning of this page.
 
 > [!IMPORTANT]
-> This article covers the reliability of virtual network gateways, which are the Azure-based parts of the Azure VPN Gateway service.
+> This article covers the reliability of virtual network gateways, which are the Azure-based components of the Azure VPN Gateway service.
 >
 > But when you use VPNs, you must design your *entire network architecture*—not just the gateway—to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and virtual network-to-virtual network connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
@@ -63,6 +63,7 @@ To ensure high reliability for your production virtual network gateways, apply t
 
 > [!div class="checklist"]
 > - **Enable zone redundancy** if your VPN Gateway resources reside in a supported region. Deploy VPN Gateway by using supported SKUs (VpnGw1AZ or higher) to ensure access to zone redundancy features.
+>
 > - **Use Standard SKU public IP addresses.**
 > - **Configure active-active mode** for higher availability when your remote VPN devices support this mode.
 > - **Implement proper monitoring** by using [Azure Monitor to collect and view VPN Gateway metrics](../vpn-gateway/monitor-vpn-gateway.md).
@@ -75,17 +76,17 @@ To ensure high reliability for your production virtual network gateways, apply t
 
 With ExpressRoute, you must deploy components in the on-premises environment, peering locations, and within Azure. These components include the following items:
 
-- *Circuits and connections:* An [ExpressRoute *circuit*](/azure/expressroute/expressroute-circuit-peerings#circuits) consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. When you use two connections, you can achieve active-active connectivity. But this configuration doesn't protect against site-level failures.
+- **Circuits and connections:** An [ExpressRoute *circuit*](/azure/expressroute/expressroute-circuit-peerings#circuits) consists of two *connections* through a single peering location to the Microsoft Enterprise Edge. When you use two connections, you can achieve active-active connectivity. But this configuration doesn't protect against site-level failures.
 
-- *Customer premises equipment (CPE)* includes your edge routers and client devices. Ensure that your CPE is designed to be resilient to problems and that it can quickly recover when problems occur in other parts of your ExpressRoute infrastructure.
+- **Customer premises equipment (CPE):** This equipment includes edge routers and client devices. Ensure that your CPE is designed to be resilient and can recover quickly when other parts of your ExpressRoute infrastructure experience problems.
 
-- *Sites:* Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers. But sites represent a single physical location, so problems can occur. To mitigate the risk of site outages, ExpressRoute offers site resiliency options that provide different levels of protection.
+- **Sites:** Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers. But sites represent a single physical location, so problems can occur. To mitigate the risk of site outages, ExpressRoute offers site resiliency options that provide different levels of protection.
 
-- *Azure virtual network gateway:* In Azure, you create a *virtual network gateway* that acts as the termination point for one or more ExpressRoute circuits within your Azure virtual network.
+- **Azure virtual network gateway:** In Azure, you create a *virtual network gateway* that acts as the termination point for one or more ExpressRoute circuits within your Azure virtual network.
 
 The following diagram shows two different ExpressRoute configurations, each with a single virtual network gateway, configured for different levels of resiliency across sites.
 
-:::image type="complex" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram that shows ExpressRoute connection options between an on-premises network and Azure. The configurations show different resiliency levels." border="false":::
+:::image type="complex" source="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" alt-text="Diagram that shows ExpressRoute connection options between an on-premises network and Azure. The configurations show different resiliency levels." lightbox="../expressroute/media/design-architecture-for-resiliency/standard-vs-maximum-resiliency.png" border="false":::
 The diagram shows two sections: a standard resiliency ExpressRoute circuit and maximum resiliency ExpressRoute circuits. Both sections contain an ExpressRoute virtual network gateway inside a customer virtual network. In the standard resiliency section, the gateway connects to peering location 1, which includes routers and an ExpressRoute circuit. The peering location connects to an on-premises environment. In the maximum resiliency section, the gateway connects to peering location 1 and peering location 2. Both peering locations include routers and an ExpressRoute circuit. The peering locations connect to an on-premises environment.
 :::image-end:::
 
@@ -95,17 +96,17 @@ The diagram shows two sections: a standard resiliency ExpressRoute circuit and m
 
 A VPN requires that you deploy components in both the on-premises environment and within Azure:
 
-- *On-premises components:* The components that you deploy depend on whether you use a point-to-site or site-to-site configuration.
+- **On-premises components:** The components that you deploy depend on whether you use a point-to-site or site-to-site configuration.
 
-   - *Site-to-site* configurations require an on-premises VPN device, which you're responsible for deploying, configuring, and managing.
+   - *Site-to-site* configurations require an on-premises VPN device that you're responsible for deploying, configuring, and managing.
 
-   - *Point-to-site* configurations require you to deploy a VPN client application in a remote device like a laptop or desktop and import the user profile into the VPN client. Each point-to-site connection has its own user profile. You're responsible for deploying and configuring the client devices.
+   - *Point-to-site* configurations require you to deploy a VPN client application in a remote device, like a laptop or desktop, and import the user profile into the VPN client. Each point-to-site connection has its own user profile. You're responsible for deploying and configuring the client devices.
 
    For more information about the differences, see [VPN Gateway topology and design](../vpn-gateway/design.md).
 
-- *Azure virtual network gateway:* In Azure, you create a *virtual network gateway*, also called a *VPN gateway*, which acts as the termination point for VPN connections.
+- **Azure virtual network gateway:** In Azure, you create a virtual network gateway, also called a *VPN gateway*, which acts as the termination point for VPN connections.
 
-- *Local network gateway:* A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. The local network gateway stores the following information:
+- **Local network gateway:** A site-to-site VPN configuration also requires a local network gateway, which represents the remote VPN device. The local network gateway stores the following information:
 
     - The public IP address of the on-premises VPN device to establish the Internet Key Exchange (IKE) phase 1 and phase 2 connections
 
@@ -140,7 +141,7 @@ You don't see or manage the gateway VMs directly. The platform automatically man
 
 You configure the gateway SKU. Each SKU supports a different level of throughput and a different number of circuits. When you use the ErGwScale SKU (preview), ExpressRoute automatically scales the gateway by adding more gateway VMs. For more information, see [ExpressRoute virtual network gateways](../expressroute/expressroute-about-virtual-network-gateways.md).
 
-A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to use *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Active-active connections](../expressroute/designing-for-high-availability-with-expressroute.md#active-active-connections).
+A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Active-active connections](../expressroute/designing-for-high-availability-with-expressroute.md#active-active-connections).
 
 Typically, traffic routes through your virtual network gateway. But if you use [FastPath](../expressroute/about-fastpath.md), traffic from your on-premises environment bypasses the gateway. This approach improves throughput and reduces latency. The gateway remains essential because it configures routing for your traffic.
 
@@ -196,7 +197,7 @@ ExpressRoute reduces the effect of transient faults by using redundant connectio
 
 If you configure the IP address routing on the on-premises device correctly, data traffic like Transmission Control Protocol (TCP) flows automatically transits through active IPsec tunnels when a disconnection occurs.
 
-Transient faults can sometimes affect IPsec tunnels or TCP data flows. When a disconnection occurs, IKE renegotiates the security associations (SAs) for both Phase 1 and Phase 2 to reestablish the IPsec tunnel.
+Transient faults can sometimes affect IPsec tunnels or TCP data flows. When a disconnection occurs, IKE renegotiates the security associations (SAs) for both phase 1 and phase 2 to reestablish the IPsec tunnel.
 
 ::: zone-end
 
@@ -215,7 +216,7 @@ The following diagram shows a zone-redundant virtual network gateway with three 
 :::image type="content" source="media/reliability-virtual-network-gateway/expressroute-zone-redundant.svg" alt-text="Diagram that shows an ExpressRoute virtual network gateway with three gateway VMs distributed across three availability zones." border="false":::
 
 > [!NOTE]
-> Circuits or connections don't have availability zone configuration. These resources reside in network edge facilities, which aren't designed to use availability zones.
+> Circuits or connections don't include availability zone configuration. These resources reside in network edge facilities, which aren't designed to use availability zones.
 
 ::: zone-end
 
@@ -248,7 +249,7 @@ When you use a [supported SKU](#requirements), newly created gateways are automa
 
 ::: zone pivot="vpn"
 
-- **SKU:** For a virtual network gateway to be zone redundant, it must use a SKU that supports zone redundancy. All tiers of VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads)
+- **SKU:** For a virtual network gateway to be zone redundant, it must use a SKU that supports zone redundancy. All tiers of VPN Gateway support zone redundancy except the Basic SKU, which is only for development environments. For more information about SKU options, see [Gateway SKUs](../vpn-gateway/about-gateway-skus.md#workloads).
 
 - **Public IP addresses:** You must use standard SKU public IP addresses and configure them to be zone redundant.
 
@@ -304,7 +305,7 @@ The following section describes what to expect when your virtual network gateway
 
 - **Traffic routing between zones:** Traffic from your on-premises environment is distributed among gateway VMs in all zones that your gateway uses. This active-active configuration ensures optimal performance and load distribution under normal operating conditions.
 
-    But if you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see [ExpressRoute FastPath](../expressroute/about-fastpath.md).
+    If you use FastPath for optimized performance, traffic from your on-premises environment bypasses the gateway, which improves throughput and reduces latency. For more information, see [ExpressRoute FastPath](../expressroute/about-fastpath.md).
 
 - **Data replication between zones:** No data replication occurs between zones because the virtual network gateway doesn't store persistent customer data.
 
@@ -350,7 +351,7 @@ The following section describes what to expect when your virtual network gateway
 
 ### Zone recovery
 
-When the affected availability zone recovers, Azure automatically restores any gateway VMs in the recovered zone and returns to normal traffic distribution across all zones that the gateway uses.
+When the affected availability zone recovers, Azure automatically restores gateway VMs in the recovered zone and returns to normal traffic distribution across all zones that the gateway uses.
 
 ### Test for zone failures
 
@@ -384,13 +385,13 @@ For more information, see [Design for disaster recovery by using ExpressRoute pr
 
 ::: zone pivot="vpn"
 
-You can deploy separate VPN Gateways in two or more different regions. But each gateway is attached to a different virtual network, and the gateways operate independently. There's no interaction or replication of configuration or state between them. You're also responsible for configuring your clients and remote devices to connect to the correct VPN or to switch between VPNs when required.
+You can deploy separate VPN gateways in two or more different regions. Each gateway is attached to a different virtual network, and the gateways operate independently. There's no interaction or replication of configuration or state between them. You're also responsible for configuring your clients and remote devices to connect to the correct VPN or switch between VPNs when required.
 
 ::: zone-end
 
 ## Resilience to service maintenance
 
-Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize effect on connectivity. 
+Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize the effect on connectivity. 
 
 During planned maintenance operations on virtual network gateways, the process runs on gateway VMs sequentially, not simultaneously. This process ensures that one gateway VM always remains active during maintenance, which minimizes the impact on your active connections.
 
@@ -408,7 +409,7 @@ For more information, see [Configure maintenance windows for your virtual networ
 
 ::: zone-end
 
-## Service level agreement
+## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
@@ -420,7 +421,7 @@ ExpressRoute provides a strong availability SLA that guarantees high uptime for 
 
 ::: zone pivot="vpn"
 
-All VPN Gateway SKUs other than Basic are eligible for a higher availability SLA. The Basic SKU provides a lower availability SLA and limited capabilities, and you should only use it for testing and development. For more information, see [Gateway SKUs: Production versus dev-test workloads](../vpn-gateway/about-gateway-skus.md#workloads)
+All VPN Gateway SKUs other than the Basic SKU are eligible for a higher availability SLA. The Basic SKU provides a lower availability SLA and limited capabilities, and you should only use it for testing and development. For more information, see [Gateway SKUs: Production versus dev-test workloads](../vpn-gateway/about-gateway-skus.md#workloads)
 
 ::: zone-end
 
