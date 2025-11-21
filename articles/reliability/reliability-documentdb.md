@@ -66,6 +66,6 @@ Synchronous replication between the primary and secondary shards guarantees no d
 
 ## Next steps
 
-- Read more about [feature compatibility with MongoDB](/azure/documentdb/compatibility).
+- Read more about [feature compatibility with MongoDB](/azure/documentdb/compatibility-features).
 - Review options for [migrating from MongoDB to Azure DocumentDB](/azure/documentdb/migration-options)
 - Get started by [creating an account](/azure/documentdb/quickstart-portal).
