@@ -9,7 +9,7 @@ ms.author: anaharris
 ms.custom: include file
 ---
 
-- **Notification**: Microsoft doesn't automatically notify you when a zone is down, but you can take the following actions:
+- **Notification:** Microsoft doesn't automatically notify you when a zone is down, but you can take the following actions:
 
     - Use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of an individual resource and set up [Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
     

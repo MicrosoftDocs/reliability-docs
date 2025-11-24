@@ -34,7 +34,7 @@ To view information about Azure VPN Gateway, select the appropriate virtual netw
 > [!IMPORTANT]
 > This article covers the reliability of ExpressRoute virtual network gateways, which are the Azure-based components of the ExpressRoute system.
 >
-> But when you use ExpressRoute, you must design your *entire network architecture*—not just the gateway—to meet your resiliency requirements. Typically, you use multiple sites, also known as *peering locations*, and enable high availability and fast failover for your on-premises components. For more information, see [Design and architect ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
+> But when you use ExpressRoute, you must design your *entire network architecture*—not only the gateway—to meet your resiliency requirements. Typically, you use multiple sites, also known as *peering locations*, and enable high availability and fast failover for your on-premises components. For more information, see [Design and architect ExpressRoute for resiliency](../expressroute/design-architecture-for-resiliency.md).
 
 ::: zone-end
 
@@ -45,7 +45,7 @@ To view information about ExpressRoute gateways, select the appropriate virtual 
 > [!IMPORTANT]
 > This article covers the reliability of virtual network gateways, which are the Azure-based components of the Azure VPN Gateway service.
 >
-> But when you use VPNs, you must design your *entire network architecture*—not just the gateway—to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and virtual network-to-virtual network connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
+> But when you use VPNs, you must design your *entire network architecture*—not only the gateway—to meet your resiliency requirements. You're responsible for managing the reliability of your side of the VPN connection, including client devices for point-to-site configurations and remote VPN devices for site-to-site configurations. For more information about how to configure your infrastructure for high availability, see [Design highly available gateway connectivity for cross-premises and virtual network-to-virtual network connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
 ::: zone-end
 
@@ -80,7 +80,7 @@ With ExpressRoute, you must deploy components in the on-premises environment, pe
 
 - **Customer premises equipment (CPE):** This equipment includes edge routers and client devices. Ensure that your CPE is designed to be resilient and can recover quickly when other parts of your ExpressRoute infrastructure experience problems.
 
-- **Sites:** Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers. But sites represent a single physical location, so problems can occur. To mitigate the risk of site outages, ExpressRoute offers site resiliency options that provide different levels of protection.
+- **Sites:** Circuits are established through a *site*, which is a physical peering location. Sites are designed to be highly available and have built-in redundancy across all layers. But sites represent a single physical location, so problems can occur. To mitigate the risk of site outages, ExpressRoute provides site resiliency options that have different levels of protection.
 
 - **Azure virtual network gateway:** In Azure, you create a *virtual network gateway* that acts as the termination point for one or more ExpressRoute circuits within your Azure virtual network.
 
@@ -94,7 +94,7 @@ The diagram shows two sections: a standard resiliency ExpressRoute circuit and m
 
 ::: zone pivot="vpn"
 
-A VPN requires that you deploy components in both the on-premises environment and within Azure:
+A VPN requires you to deploy components in both the on-premises environment and within Azure:
 
 - **On-premises components:** The components that you deploy depend on whether you use a point-to-site or site-to-site configuration.
 
@@ -161,7 +161,7 @@ For more information, see [Design highly available gateway connectivity for cros
 
 ::: zone-end
 
-You can protect against availability zone failures by distributing gateway VMs across multiple zones, which provides automatic failover within the region and maintains connectivity during zone maintenance or outages. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
+You can protect against availability zone failures by distributing gateway VMs across multiple zones. This distribution provides automatic failover within the region and maintains connectivity during zone maintenance or outages. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
 ## Resilience to transient faults
 
@@ -195,7 +195,7 @@ ExpressRoute reduces the effect of transient faults by using redundant connectio
 
 ::: zone pivot="vpn"
 
-If you configure the IP address routing on the on-premises device correctly, data traffic like Transmission Control Protocol (TCP) flows automatically transits through active IPsec tunnels when a disconnection occurs.
+If you configure the IP address routing on the on-premises device correctly, data traffic like Transmission Control Protocol (TCP) flows automatically transits through active Internet Protocol Security (IPsec) tunnels when a disconnection occurs.
 
 Transient faults can sometimes affect IPsec tunnels or TCP data flows. When a disconnection occurs, IKE renegotiates the security associations (SAs) for both phase 1 and phase 2 to reestablish the IPsec tunnel.
 
@@ -275,13 +275,13 @@ This section explains how to configure zone redundancy for your virtual network 
 
 ::: zone pivot="expressroute"
 
-- **Create a new virtual network gateway that supports availability zones.** New virtual network gateways are automatically zone redundant if they meet the requirements listed earlier. For detailed configuration steps, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md?toc=%2Fazure%2Fexpressroute%2Ftoc.json).
+- **Create a new virtual network gateway that supports availability zones.** New virtual network gateways are automatically zone redundant if they meet the requirements listed earlier. For more information, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
 
 ::: zone-end
 
 ::: zone pivot="vpn"
 
-- **Create a new virtual network gateway that supports availability zones.** New virtual network gateways are automatically zone redundant if they meet the requirements listed earlier. For detailed configuration steps, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
+- **Create a new virtual network gateway that supports availability zones.** New virtual network gateways are automatically zone redundant if they meet the requirements listed earlier. For more information, see [Create a zone-redundant virtual network gateway in availability zones](../vpn-gateway/create-zone-redundant-vnet-gateway.md).
 
 ::: zone-end
 
@@ -391,7 +391,7 @@ You can deploy separate VPN gateways in two or more different regions. Each gate
 
 ## Resilience to service maintenance
 
-Azure performs regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize the effect on connectivity. 
+Azure does regular maintenance on virtual network gateways to ensure optimal performance and security. During these maintenance windows, some service disruptions can occur, but Azure designs these activities to minimize the effect on connectivity. 
 
 During planned maintenance operations on virtual network gateways, the process runs on gateway VMs sequentially, not simultaneously. This process ensures that one gateway VM always remains active during maintenance, which minimizes the impact on your active connections.
 
