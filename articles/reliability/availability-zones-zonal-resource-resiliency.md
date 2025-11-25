@@ -3,7 +3,7 @@ title: Zonal Resources and Zone Resiliency
 description: Learn about zonal deployment scenarios, when to use them, and your responsibilities for making them resilient to availability zone outages in Azure.
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: article
 ms.date: 11/20/2025
 ms.author: anaharris
 author: anaharris-ms
@@ -52,7 +52,7 @@ A small number of Azure services only support zonal deployments and don't provid
 [VMs](./reliability-virtual-machines.md#availability-zone-support) are a zonal resource. You can use virtual machine scale sets to create sets of VMs. Scale sets can be made zone-redundant, which means that the VMs in the set are spread across multiple zones. Scale sets are a good way to achieve zone resiliency for many VM-based workloads.
     
 > [!TIP]
-> If you deploy multiple VMs that do similar functions, we recommend that you use zone-redundant scale sets instead of single-instance VMs that you deploy individually. 
+> If you deploy multiple VMs that do similar functions, we recommend that you use zone-redundant scale sets instead of single-instance VMs that you deploy individually.
 
 Another example is [Azure NetApp Files](./reliability-netapp-files.md#availability-zone-support), which supports the deployment of volumes into a single zone. The service also provides a way for you to replicate between multiple zonal volumes.
 
@@ -64,7 +64,7 @@ Some services provide options that are available only in specific zones. For exa
 
 If the VM type that you need is only available in a single zone within the region that you use, you might need to consider a zonal deployment for that VM and then find other ways to make the VM resilient to zone outages. But you should continue to ensure that the other parts of your solution are zone-resilient.
 
-For more information, see [Azure services with availability zone support](./availability-zones-service-support.md).
+For more information, see [Azure services that support availability zones](./availability-zones-service-support.md).
 
 ### Inter-zone latency
 
@@ -104,13 +104,13 @@ If you suspect that inter-zone latency is affecting your workload, test its impa
     >
     > - If there's another Azure region that meets your overall needs for data residency and other factors, try using multiple zones in that region.
     >
-    > - Consider whether you can redesign your application to minimize the required inter-zone communication. For example, consolidating multiple small database operations into a single operation can reduce latency impact on your workload.
+    > - Consider whether you can redesign your application to minimize the inter-zone communication required. For example, you might be able to consolidate multiple small database operations into a single operation. This approach can reduce the latency impact on your workload.
 
     If none of these actions help, consider running the specific workload or components within a single availability zone by using zonal VMs and other supported Azure services. You then take responsibility for making the zonal components resilient to zone outages. Review the rest of this article to understand your responsibilities and some approaches to consider.
  
 ## Your responsibilities for a zonal deployment
 
-A zonal resource is at risk of downtime when its availability zone experiences an outage. When you deploy zonal resources, you're responsible for making your workload resilient to zone-level failures.
+A zonal resource is at risk of downtime when its availability zone experiences an outage. When you deploy a zonal resource, you're responsible for making your workload resilient to zone-level failures.
 
 > [!IMPORTANT]
 > Zonal resources are **not** inherently resilient to zone failures. You must design ways to mitigate the risk of a zone failure by developing a plan that includes zone-down scenarios.
@@ -177,4 +177,6 @@ The following disaster recovery approaches can help when you plan a zonal deploy
 
     [Azure Backup](/azure/backup/backup-overview) is a widely used managed backup service. It supports zone-redundant backups and geo-replicated backups across paired Azure regions. Some applications, like [SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/backup-restore), include built-in backup features.
 
-For more information about other approaches, see [Recommendations for using availability zones and regions in the Azure Well-Architected Framework](/azure/well-architected/reliability/regions-availability-zones).
+## Next step
+
+- [Recommendations for using availability zones and regions in the Azure Well-Architected Framework](/azure/well-architected/reliability/regions-availability-zones)
