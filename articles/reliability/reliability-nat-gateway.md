@@ -44,7 +44,7 @@ For production workloads, we recommend that you:
 
 The resource you deploy is a *NAT gateway*. You configure one or more subnets in a virtual network to use the NAT gateway for outbound traffic. When you do, the NAT gateway becomes the default route for outbound internet traffic without requiring additional routing configurations.
 
-Internally, an NAT gateway is comprised of one or more *instances*, which represent the underlying infrastructure required to operate the service. Azure NAT Gateway implements a distributed architecture using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains, enabling it to survive multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
+Internally, an NAT gateway consists of one or more *instances*, which represent the underlying infrastructure required to operate the service. Azure NAT Gateway implements a distributed architecture using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains, enabling it to survive multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
 
 For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resource](../nat-gateway/nat-gateway-resource.md#nat-gateway-architecture).
 
@@ -52,7 +52,7 @@ For more information about Azure NAT Gateway architecture and redundancy, see [A
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-*SNAT port exhaustion* is a situation where appliations make multiple independent connections to the same IP address and port, which exhausts the SNAT ports available for the outbound IP address. SNAT port exhaustion can manifest as a transient fault in your application. To reduce the likelihood of transient faults related to network address translation, you should:
+*SNAT port exhaustion* is a situation where applications make multiple independent connections to the same IP address and port, exhausting the SNAT ports available for the outbound IP address. SNAT port exhaustion can manifest as a transient fault in your application. To reduce the likelihood of transient faults related to network address translation, you should:
 
 - **Minimize the likelihood of SNAT port exhaustion.** Configure your applications to handle SNAT gracefully by implementing connection pooling and proper connection lifecycle management.
 
@@ -86,7 +86,7 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
     > [!WARNING]
     > **Note to PG:** After StandardV2 gets to GA, are there any situations where it might still make sense to deploy a zonal NAT Gateway?
 
-    If you have virtual machines deployed into several availability zones, you can crate *zonal stacks* in each availability zone. Deploy subnets for each availability zone, with a dedicated NAT gateway in each subnet that's in the same zone. You need to manually assign virtual machines to the relevant availability zone and subnet. 
+    If you have virtual machines deployed into several availability zones, you can create *zonal stacks* in each availability zone. Deploy subnets for each availability zone, with a dedicated NAT gateway in each subnet that's in the same zone. You need to manually assign virtual machines to the relevant availability zone and subnet. 
     
     <!-- Allen: If we retain this image, then we need to move it into reliability hub. -->
     :::image type="content" source="../nat-gateway/media/nat-availability-zones/multiple-zonal-nat-gateways.png" alt-text="Diagram of zonal isolation by creating zonal stacks.":::
@@ -95,7 +95,7 @@ If you deploy a StandardV1 NAT gateway and don't specify an availability zone, t
 
 ### Requirements
 
-- **Region suport:** Zone-redundant and zonal NAT gateways can be deployed into [any region that supports availability zones](./regions-list.md).
+- **Region support:** Zone-redundant and zonal NAT gateways can be deployed into [any region that supports availability zones](./regions-list.md).
 
 - **SKU:** To deploy a zone-redundant NAT gateway, you must use the StandardV2 SKU. To deploy a zonal NAT gateway, you must use the Standard SKU. We recommend using the StandardV2 SKU.
 
@@ -203,7 +203,7 @@ If you design a networking approach with multiple regions, you should deploy ind
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-Azure NAT Gateway is covered by the *Azure VNet NAT* SLA. The availabilty SLA only applies when you have two or more healthy VMs, and it excludes SNAT port exhaustion from downtime calculations.
+Azure NAT Gateway is covered by the *Azure VNet NAT* SLA. The availability SLA only applies when you have two or more healthy VMs, and it excludes SNAT port exhaustion from downtime calculations.
 
 ### Related content
 
