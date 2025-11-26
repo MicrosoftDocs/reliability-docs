@@ -60,12 +60,12 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
 
 - *Zone-redundant:* When you use the StandardV2 SKU of Azure NAT Gateway, zone redundancy is enabled automatically. Zone redundancy for a NAT gateway spreads instances across multiple [availability zones](../reliability/availability-zones-overview.md). When you use a zone-redundant configuration, you can achieve resiliency and reliability for your production workloads.
 
-    :::image type="content" source="../nat-gateway/nat-availability-zones/single-nat-gw-zone-spanning-subnet.png" alt-text="Diagram of zone-redundant deployment of NAT gateway.":::
+    :::image type="content" source="../nat-gateway/media/nat-availability-zones/single-nat-gw-zone-spanning-subnet.png" alt-text="Diagram of zone-redundant deployment of NAT gateway.":::
 
 - *Zonal:* When you use the Standard (v1) SKU, you can optionally create a zonal configuration by selecting a single availability zone for the NAT gateway. All traffic from connected subnets is routed through the NAT gateway, even if that's in a different availability zone.
 
      <!-- Allen: If we retain this image, then we need to move it into reliability hub. -->
-    :::image type="content" source="../nat-gateway/nat-availability-zones/zonal-nat-gateway.png" alt-text="Diagram of zonal deployment of NAT gateway.":::
+    :::image type="content" source="../nat-gateway/media/nat-availability-zones/zonal-nat-gateway.png" alt-text="Diagram of zonal deployment of NAT gateway.":::
 
     If a NAT gateway within an availability zone experiences an outage, all virtual machines in the connected subnets fail to connect to the internet.
 
