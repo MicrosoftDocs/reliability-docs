@@ -189,9 +189,9 @@ When an availability zone recovers, NAT gateway instances in that zone automatic
 
 The options for testing for zone failures depend on the availability zone configuration that your instance uses.
 
-- **Zone-redundant:** The Azure NAT Gateway platform manages traffic routing, failover, and failback for zone-redundant NAT gateways. Because this feature is fully managed, you don't need to initiate anything or validate availability zone failure processes.
+- *Zone-redundant:* The Azure NAT Gateway platform manages traffic routing, failover, and failback for zone-redundant NAT gateways. Because this feature is fully managed, you don't need to initiate anything or validate availability zone failure processes.
 
-- **Zonal:** You're responsible for preparing and testing failover plans in case a zone failure occurs.
+- *Zonal** You're responsible for preparing and testing failover plans in case a zone failure occurs.
 
 ## Resilience to region-wide failures
 
