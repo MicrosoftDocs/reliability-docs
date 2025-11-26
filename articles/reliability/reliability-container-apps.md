@@ -55,9 +55,9 @@ Container Apps automatically handles many transient faults through its platform-
     
     If your application uses Dapr to integrate with cloud services, use [Dapr component resiliency (preview)](/azure/container-apps/dapr-component-resiliency) to configure retries, timeouts, and circuit breakers.
 
-    For other dependencies, your application must handle transient faults. Use exponential backoff strategies and circuit breaker patterns when calling external services to prevent cascading failures during downstream service disruptions. Container Apps built-in service discovery and load balancing features automatically route traffic away from failing instances, but your application-level retry policies ensure resilient handling of transient problems before platform-level health checks trigger container restarts.
+    For other dependencies, your application must handle transient faults. Use exponential backoff strategies and circuit breaker patterns when calling external services to prevent cascading failures during downstream service disruptions. Container Apps built-in service discovery and load balancing features automatically route traffic away from failing instances, but your application-level retry policies ensure graceful handling of transient problems before platform-level health checks trigger container restarts.
 
-- **Design jobs to be resilient to transient faults**, including failures during job processing or in their dependencies. Design your jobs to resume work if they're restarted, or design for idempotence so that they can be rerun safely.
+- **Design jobs to be resilient to transient faults**, including failures during job execution or in their dependencies. Design your jobs to resume work if they're restarted, or design for idempotence so that they can be rerun safely.
 
 ## Resilience to availability zone failures
 
@@ -113,7 +113,7 @@ If an availability zone becomes unavailable, the Container Apps platform uses yo
 
 To configure your scale rules properly, follow these principles:
 
-- **Set a minimum number of replicas** that your application can tolerate. It might take some time for lost replicas to be replaced because the platform must detect that the old replicas are gone. Then new replicas must start and return a healthy readiness probe status before they can receive incoming requests. If you can't tolerate any period with fewer than the minimum number of replicas that you've specified, consider [over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning) to keep your application performant even if a zone becomes unavailable.
+- **Set a minimum number of replicas** that your application can tolerate. It might take a short period of time for lost replicas to be replaced because the platform must detect that the old replicas are gone. Then new replicas must start and return a healthy readiness probe status before they can receive incoming requests. If you can't tolerate any period with fewer than the minimum number of replicas that you've specified, consider [over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning) to keep your application performant even if a zone becomes unavailable.
 
 - **Set resource requests and limits** to help the Container Apps scheduler make optimal placement decisions across zones. Underspecified resource requirements can lead to uneven distribution or placement failures during high load.
 
@@ -141,13 +141,13 @@ This section describes what to expect when Container Apps resources are configur
 
     You can also monitor the health of your apps through Container Apps metrics in Azure Monitor. Configure alerts on replica count drops and request failure rates to receive immediate notification when zone-related problems occur.
 
-- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any jobs that run in the affected zone don't complete successfully and are marked as failed.
+- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any jobs that run in the affected zone are aborted and are marked as failed.
 
 - **Expected data loss:** No data loss occurs at the Container Apps platform level because the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is ended, and ephemeral storage should only be used for temporary data.
 
 - **Expected downtime:** Applications experience minimal to no downtime during zone failures. The actual impact depends on your application's health probe settings and the number of replicas in healthy zones. Ensure that clients follow [transient fault handling guidance](#resilience-to-transient-faults) to minimize any effects.
 
-    Any jobs that run in the affected zone might not complete and are marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs multiple copies of the same job instance. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
+    Any jobs that run in the affected zone are aborted and are marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs multiple copies of the same job instance. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
 
 - **Traffic rerouting:** The ingress controller's health probes quickly detect unreachable replicas and remove them from the load balancing pool. Depending on your app's health probe configuration, this failover process typically occurs in about 30 seconds. Subsequent incoming traffic is distributed across the remaining healthy replicas. This traffic redirection occurs transparently to clients, who continue to use the same application URL.
 
@@ -159,7 +159,7 @@ This section describes what to expect when Container Apps resources are configur
 
 ### Zone recovery 
 
-When an availability zone recovers from failure, Container Apps automatically reintegrates the zone into active service without requiring your intervention. The platform's health probes detect when infrastructure in the recovered zone becomes available and begin scheduling new replicas to that zone based on your scaling configuration. Existing replicas in healthy zones continue to serve traffic during the reintegration process, which helps prevent service disruption.
+When an availability zone recovers from failure, Container Apps automatically reintegrates the zone into active service without requiring your intervention. The platform's health probes detect when infrastructure in the recovered zone becomes available and Container Apps begins scheduling new replicas to that zone based on your scaling configuration. Existing replicas in healthy zones continue to serve traffic during the reintegration process, which helps prevent service disruption.
 
 Container Apps gradually rebalances replica distribution across all available zones as part of normal scaling operations. This automatic rebalancing occurs when replicas are created because of scaling events or when unhealthy replicas are replaced. The platform doesn't force immediate redistribution of existing healthy replicas, which prevents unnecessary container restarts and maintains application stability during recovery.
 
@@ -187,7 +187,7 @@ To reduce the risk of a single-region failure affecting your application, you ca
 
 Container Apps doesn't provide built-in backup capabilities for your applications or data. As a stateless container hosting platform, Container Apps expects applications to manage their own data persistence and recovery strategies through external services. Your application containers and their local file systems are ephemeral, and any data stored locally is lost when replicas restart or move.
 
-## Resilience during service maintenance
+## Resilience during application updates
 
 Use revision management to deploy updates to your application without downtime. You can create new revisions with updated container images and perform a cutover by using a [blue-green deployment strategy](../container-apps/blue-green-deployment.md), or gradually shift traffic by using [traffic splitting rules](../container-apps/traffic-splitting.md). During application updates, the platform maintains minimum replica counts by creating new containers before decommissioning old ones, which helps prevent service disruptions.
 
