@@ -1,19 +1,19 @@
 ---
 title: Reliability in Azure Databricks
-description: Find out about reliability in Azure Databricks
+description: Learn about resiliency features in Azure Databricks, including transient fault handling and availability zone support.
 author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-databricks
-ms.date: 07/9/2025
+ms.date: 11/27/2025
 ---
 
 # Reliability in Azure Databricks
 
 [Azure Databricks](/azure/databricks/introduction/) is a data analytics platform optimized for the Microsoft Azure cloud services platform. Azure Databricks provides a unified environment for data engineering, data science, machine learning, and analytics workloads. The service is designed to handle large-scale data processing with built-in resilience features that help ensure your analytics workloads remain available and performant.
 
-This article describes reliability and availability zones support in Azure Databricks. For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/reliability/overview).
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 ## Production deployment recommendations
 
@@ -31,15 +31,15 @@ It's important that you understand the reliability of each primary component in 
 
     Workspace availability depends on the availability of the control plane, but compute clusters can continue processing jobs even if the control plane experiences brief interruptions.
 
-## Transient faults
+## Resilience to transient faults
 
-[!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 For applications running on Azure Databricks, implement retry logic with exponential backoff when connecting to external services, or Azure services like Azure Storage, Azure SQL Database, or Azure Event Hubs. The Databricks runtime includes built-in resilience for many Azure services, but your application code should handle service-specific transient failures.
 
-## Availability zone support
+## Resilience to availability zone failures
 
-[!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
 Azure Databricks supports *zone redundancy* for each component:
 
@@ -54,15 +54,11 @@ Azure Databricks supports *zone redundancy* for each component:
 
 - *Compute plane:* Databricks supports *automatic zone distribution* for compute resources, which means that your resources are distributed across multiple availability zones. Distribution across multiple zones helps your production workloads achieve resiliency to zone outages.
 
-### Region support
-
-Azure Databricks availability zone support is available in all Azure regions that support Azure Databricks and that also provide availability zones. For a list of regions that support Azure Databricks, see [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region). For a complete list of regions with availability zone support, see [Azure regions with availability zones](/azure/reliability/availability-zones-service-support).
-
 ### Requirements
 
 To use availability zone support in Azure Databricks:
 
-- Deploy workspaces [in Azure regions that support availability zones](./regions-list.md).
+- **Region support:** Azure Databricks availability zone support is available in all Azure regions that support Azure Databricks and that also provide availability zones. For a list of regions that support Azure Databricks, see [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region). For a complete list of regions with availability zone support, see [Azure regions with availability zones](/azure/reliability/availability-zones-service-support).
 
 - Configure workspace storage accounts with zone-redundant storage (ZRS) or geo-zone-redundant storage (GZRS).
 
@@ -95,7 +91,7 @@ The default redundancy for the managed storage account (DBFS Root) is geo-redund
     
 - **Compute plane:** Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution.
 
-### Normal operations
+### Behavior when all zones are healthy
 
 This section describes what to expect when a workspace is configured for with availability zone support and all availability zones are operational.
 
@@ -103,7 +99,7 @@ This section describes what to expect when a workspace is configured for with av
 
 - **Traffic routing between zones:** Azure Databricks distributes cluster nodes across zones automatically during cluster creation. The service balances compute load across zones while maintaining data locality for optimal performance.
 
-### Zone-down experience
+### Behavior during a zone failure
 
 This section describes what to expect when a workspace is configured with availability zone support and there's an availability zone outage.
 
@@ -151,7 +147,7 @@ This section describes what to expect when a workspace is configured with availa
         > [!WARNING]
         > **Product team:** Please confirm how this works. I assume the cluster manager begins routing work to nodes in healthy zones as they are created?
 
-### Failback
+### Zone recovery
 
 > [!WARNING]
 > **Product team:** Please verify this information.
@@ -160,13 +156,13 @@ When the failed availability zone recovers, Azure Databricks automatically resum
 
 No customer action is required for failback operations. Normal zone distribution resumes for new cluster deployments.
 
-### Testing for zone failures
+### Test for zone failures
 
 Azure Databricks is a fully managed service where zone failover is handled automatically by Microsoft. You don't need to test zone failure scenarios for the service itself.
 
 For your applications running on Azure Databricks, test job resilience by simulating driver node failures and monitoring cluster restart behavior. Validate that your data processing jobs can handle cluster restarts and resume from appropriate checkpoints.
 
-## Multi-region support
+## Resilience to region-wide failures
 
 Azure Databricks is a single-region service. If the region is unavailable, your workspace is also unavailable.
 
@@ -175,7 +171,7 @@ However, in [regions that are paired](./regions-list.md), DBFS Root workspace st
 > [!WARNING]
 > **Product team:** I assume that simply having geo-replicated storage doesn't help a lot if there's a region outage - you still need to recover the control plane and compute plane into another region. Is it worth mentioning this at all?
 
-### Alternative multi-region approaches
+### Custom multi-region solutions for resiliency
 
 Azure Databricks does not provide built-in multi-region capabilities. For comprehensive multi-region protection of your analytics workloads, you must implement your own approach.
 
@@ -183,7 +179,7 @@ Typical multi-region solutions involve two (or possibly more) workspaces. You ca
 
 For workloads requiring multi-region protection, see [Azure Databricks - Disaster recovery](/azure/databricks/admin/disaster-recovery).
 
-## Backups
+## Backup and restore
 
 Azure Databricks workspace metadata is automatically backed up as part of the service's managed operations. This includes notebook content, job definitions, cluster configurations, and access control settings.
 
@@ -193,7 +189,7 @@ Workspace-level backup and restore capabilities are not directly available. Plan
 
 ## Service-level agreement
 
-The service-level agreement (SLA) for Azure Databricks describes the expected availability of the service and the conditions that must be met to achieve that availability expectation. To understand those conditions, it's important that you review the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
+[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
 ## Related content
 
