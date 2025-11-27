@@ -11,7 +11,7 @@ ms.date: 11/27/2025
 
 # Reliability in Azure Databricks
 
-[Azure Databricks](/azure/databricks/introduction/) is a data analytics platform optimized for the Microsoft Azure cloud services platform. Azure Databricks provides a unified environment for data engineering, data science, machine learning, and analytics workloads. The service is designed to handle large-scale data processing with built-in resilience features that help ensure your analytics workloads remain available and performant.
+[Azure Databricks](/azure/databricks/introduction/) is a fast, easy, and collaborative Apache Spark-based data and AI platform optimized for Microsoft Azure. It provides a unified environment for big data and AI workloads, combining the best of Databricks and Azure to simplify data engineering, data science, and machine learning.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -23,17 +23,21 @@ To learn about how to deploy Azure Databricks to support your solution's reliabi
 
 It's important that you understand the reliability of each primary component in Azure Databricks:
 
-- **Control plane**: A stateless service that manages workspace metadata, user access, job scheduling, and cluster management.
+- **Control plane**: A collection of stateless services that manages workspace metadata, user access, job scheduling, and cluster management, backed by databases that are replicated across availability zones in supported regions.
 
-- **DBFS Root:** A storage account that's automatically provisioned when you create an Azure Databricks workspace in your cloud account.
+- **DBFS Root:** A storage account that's automatically provisioned when you create an Azure Databricks workspace in your cloud account. We recommend you don't store data on DBFS, and disable it if possible.
 
-- **Compute plane**: Runs data processing workloads using clusters of virtual machines (VMs). The compute plane is designed to handle transient faults and automatically replace failed nodes without user intervention. 
+- **Unity Catalog storage:** One or more storage accounts that store your Unity Catalog data in your cloud account. For more information, see [What is Unity Catalog?](/azure/databricks/data-governance/unity-catalog/).
+
+- **Compute plane**: Runs data processing workloads using clusters of virtual machines (VMs). The compute plane is designed to handle transient faults and automatically replace failed nodes without user intervention. There are multiple types of compute resources available. For more information, see [Compute](/azure/databricks/compute/).
 
     Workspace availability depends on the availability of the control plane, but compute clusters can continue processing jobs even if the control plane experiences brief interruptions.
 
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
+
+You can [control retries for tasks within Lakeflow Jobs](/azure/databricks/jobs/control-flow), which helps to recover from transient errors.
 
 For applications running on Azure Databricks, implement retry logic with exponential backoff when connecting to external services, or Azure services like Azure Storage, Azure SQL Database, or Azure Event Hubs. The Databricks runtime includes built-in resilience for many Azure services, but your application code should handle service-specific transient failures.
 
@@ -45,14 +49,13 @@ Azure Databricks supports *zone redundancy* for each component:
 
 - *Control plane:* In regions that support availability zones, the control plane runs in multiple availability zones. The control plane is designed to handle zone failures automatically, with minimal impact and no user intervention required.
 
-    Control plane workspace data, including Databricks Runtime Images, are stored in databases. In regions that support availability zones, the databases are configured to use zone-redundant storage (ZRS). Storage accounts used to serve Databricks Runtime images are also redundant inside the region, and all regions have secondary storage accounts that are used when the primary is down.
+    Control plane workspace data are stored in databases. In regions that support availability zones, the databases are replicated across multiple zones in the region. Storage accounts used to serve Databricks Runtime images are also redundant inside the region, and all regions have secondary storage accounts that are used when the primary is down.
 
-- *DBFS Root:* In regions that support availability zones, you can configure the storage account for DBFS Root with zone-redundant storage (ZRS). In regions that support availability zones and are paired, you can optionally use geo-zone-redundant storage (GZRS).
-    
-    > [!WARNING]
-    > **Product team:** [The DR doc](/azure/databricks/admin/disaster-recovery) says GRS is default for DBFS Root, but what about in Mexico Central and Qatar Central? These regions don't support GRS.
+- *DBFS Root:* In regions that support availability zones, you can configure the storage account for DBFS Root to use zone-redundant storage (ZRS). In regions that support availability zones and are paired, you can optionally use geo-zone-redundant storage (GZRS).
 
 - *Compute plane:* Databricks supports *automatic zone distribution* for compute resources, which means that your resources are distributed across multiple availability zones. Distribution across multiple zones helps your production workloads achieve resiliency to zone outages.
+
+    When using serverless compute, you don't explicitly select zones for your compute. Databricks manages zone selection of VMs, as well as replacement of VMs that may be lost due to zone outages.
 
 ### Requirements
 
@@ -66,7 +69,7 @@ To use availability zone support in Azure Databricks:
 
 ### Considerations
 
-Azure Databricks automatically distributes cluster nodes across availability zones. The distribution depends on available capacity in each zone. During high-demand periods, a cluster's nodes might be concentrated in fewer zones.
+Azure Databricks automatically distributes cluster nodes across availability zones. The distribution depends on available capacity in each zone. During high-demand periods, a cluster's nodes might be concentrated in fewer zones. When using serverless compute, Azure Databricks manages zone selection of VMs, as well as replacement of VMs that may be lost due to zone outages.
 
 ### Cost
 
@@ -74,13 +77,7 @@ Zone distribution doesn't affect compute costs, as you pay for the same number o
 
 The default redundancy for the managed storage account (DBFS Root) is geo-redundant storage (GRS). Changing to ZRS or GZRS might affect your storage costs. For more information, see [Azure Storage pricing](https://azure.microsoft.com/pricing/details/storage/).
 
-> [!WARNING]
-> **Product team:** As per note above, please verify the behavior in non-paired regions - they won't have GRS storage accounts, so what's the default?
-
 ### Configure availability zone support
-
-> [!WARNING]
-> **Product team:** Please verify this information.
 
 - **Control plane:** The control plane automatically supports zone redundancy in regions with availability zones. No customer configuration is required.
 
@@ -105,23 +102,17 @@ This section describes what to expect when a workspace is configured with availa
 
 - **Detection**: Microsoft automatically detects zone failures. No customer action is required for zone-level failover.
 
-- **Notification:** *Content pending.*
-    
-    > [!WARNING]
-    > **Product team:** Is there any way for customers to know when a zone is out - either entirely or just for Databricks? For example, would Azure Service Health show this information?
+- **Notification:** Microsoft doesn't automatically notify you when a zone is down. However, you can use the [Azure Databricks status page](/azure/databricks/resources/status) to see an overview of all core Azure Databricks services. You can also subscribe to status updates on individual service components and receive an alert whenever the status of the service you are subscribed to changes.
 
 - **Active requests:** Running clusters may lose nodes in the affected zone. The cluster manager automatically requests replacement nodes from remaining zones. If the driver node is lost, the cluster and job restart completely.
 
 - **Expected data loss:**
 
-    - **Control plane:** The control plane is stateless, so no data loss is expected when a zone is down.
+    - **Control plane:** No data loss is expected during a zone outage.
 
-    - **DBFS Root:** Workspace data remains available if it uses ZRS or GZRS storage configurations. 
+    - **DBFS Root:** Workspace data remains available if it uses ZRS or GZRS storage configurations.
     
-    - **Compute plane:** *Content pending.*
-    
-        > [!WARNING]
-        > **Product team:** Please clarify whether any data on VMs in the affected zone could be lost. I assume they're stateless so this wouldn't be an issue?
+    - **Compute plane:** Data cached on VMs is ephemeral. Any data lost from VMs during a zone failure is recovered from storage, or if the driver node is lost, the job restarts and recompute the results.
 
 - **Expected downtime**:
 
@@ -129,12 +120,11 @@ This section describes what to expect when a workspace is configured with availa
 
     - **DBFS Root:** No downtime is expected for storage accounts that are configured to use ZRS or GZRS storage.
 
-    - **Compute plane:** If nodes are lost because their VMs are in the affected availability zone, the Azure cluster manager requests replacement nodes from the Azure compute provider. If there is sufficient capacity in the remaining healthy zones to fulfill the request, the compute provider pulls nodes from the healthy zones to replace the nodes that were lost. 
-        
-        > [!WARNING]
-        > **Product team:** Can we give any indication of how long it takes for the VMs to be reinstated - even if it's a ballpark?
+    - **Compute plane:** If nodes are lost because their VMs are in the affected availability zone, the Azure cluster manager requests replacement nodes from the Azure compute provider. If there is sufficient capacity in the remaining healthy zones to fulfill the request, the compute provider pulls nodes from the healthy zones to replace the nodes that were lost. This process can take several minutes.
 
         If the driver node is lost due to the zone failure, the entire cluster restarts, which may cause longer recovery times compared to losing worker nodes. Plan for this behavior in your job scheduling and monitoring strategies.
+
+        You can use serverless or instance pools to reduce this time.
 
 - **Traffic rerouting:**
 
@@ -142,15 +132,9 @@ This section describes what to expect when a workspace is configured with availa
 
     - **DBFS Root:** Azure Storage automatically redirects requests to storage clusters in healthy zones. 
 
-    - **Compute plane:** *Content pending*
-        
-        > [!WARNING]
-        > **Product team:** Please confirm how this works. I assume the cluster manager begins routing work to nodes in healthy zones as they are created?
+    - **Compute plane:** The cluster manager automatically switches to using nodes in healthy zones.
 
 ### Zone recovery
-
-> [!WARNING]
-> **Product team:** Please verify this information.
 
 When the failed availability zone recovers, Azure Databricks automatically resumes normal operations across all zones. The cluster manager may rebalance node distribution during subsequent node creations, but existing nodes continue running in their current zones until terminated.
 
@@ -158,34 +142,36 @@ No customer action is required for failback operations. Normal zone distribution
 
 ### Test for zone failures
 
-Azure Databricks is a fully managed service where zone failover is handled automatically by Microsoft. You don't need to test zone failure scenarios for the service itself.
+Azure Databricks is a fully managed service where zone failover is handled automatically by Microsoft, and we perform regular zone-down tests. You don't need to test zone failure scenarios for the service itself.
 
 For your applications running on Azure Databricks, test job resilience by simulating driver node failures and monitoring cluster restart behavior. Validate that your data processing jobs can handle cluster restarts and resume from appropriate checkpoints.
 
 ## Resilience to region-wide failures
 
-Azure Databricks is a single-region service. If the region is unavailable, your workspace is also unavailable.
-
-However, in [regions that are paired](./regions-list.md), DBFS Root workspace storage accounts can be configured with geo-zone-redundant storage (GZRS) or geo-redundant storage (GRS) for automatic cross-region data replication.
-
-> [!WARNING]
-> **Product team:** I assume that simply having geo-replicated storage doesn't help a lot if there's a region outage - you still need to recover the control plane and compute plane into another region. Is it worth mentioning this at all?
+Azure Databricks is a single-region service. If the region is unavailable, your workspace is also unavailable. If you require multi-region deployments, see [Azure Databricks - Disaster recovery](/azure/databricks/admin/disaster-recovery).
 
 ### Custom multi-region solutions for resiliency
 
-Azure Databricks does not provide built-in multi-region capabilities. For comprehensive multi-region protection of your analytics workloads, you must implement your own approach.
+Azure Databricks does not currently provide built-in multi-region capabilities. For comprehensive multi-region protection of your analytics workloads, you must implement your own approach.
 
-Typical multi-region solutions involve two (or possibly more) workspaces. You can choose from several strategies, including active-passive and active-active architectures. Consider the business criticality of the work done by the Databricks cluster, the otential length of the disruption (hours or maybe even a day), the effort to ensure that the workspace is fully operational, and the effort to restore (fail back) to the primary region.
+Typical multi-region solutions involve two (or possibly more) workspaces. You can choose from several strategies, including active-passive and active-active architectures. Consider the business criticality of the work done by the Databricks workload(s), the potential length of the disruption (hours or maybe even a day), the effort to ensure that the workspace is fully operational, and the effort to restore (fail back) to the primary region.
 
 For workloads requiring multi-region protection, see [Azure Databricks - Disaster recovery](/azure/databricks/admin/disaster-recovery).
 
 ## Backup and restore
 
-Azure Databricks workspace metadata is automatically backed up as part of the service's managed operations. This includes notebook content, job definitions, cluster configurations, and access control settings.
+Azure Databricks databases are automatically backed up as part of the service's managed operations. This includes notebook content, job definitions, cluster configurations, and access control settings.
 
-For data stored in DBFS Root or external storage services, implement backup strategies appropriate to your data protection requirements. For example, you can implement scheduled backup processes using Azure Data Factory or similar services.
+> [!NOTE]
+> In the event of a zone failure, Azure Databricks expects no data loss.
+
+Your data should be stored on Unity Catalog storage. You can replicate data through storage replication or delta cloning.
 
 Workspace-level backup and restore capabilities are not directly available. Plan for workspace recreation procedures that include restoring configurations, users, and access controls from your synchronization processes.
+
+## Resilience to service maintenance
+
+Azure Databricks performs automatic platform maintenance to apply security updates, deploy new features, and improve service reliability. You can configure the maintenance windows for your cluster to reduce the likelihood of maintenance affecting your production workloads. For more information, see [Automatic cluster update](/azure/databricks/admin/clusters/automatic-cluster-update).
 
 ## Service-level agreement
 
