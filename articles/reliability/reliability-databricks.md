@@ -15,6 +15,8 @@ ms.date: 11/27/2025
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
+This article describes Azure Databricks is resilient to a variety of potential outages and problems, and how you can configure resiliency to meet your requirements. It includes information about transient faults, availability zone outages, region outages, and service maintenance.  It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Azure Databricks service level agreement (SLA).
+
 ## Production deployment recommendations
 
 To learn about how to deploy Azure Databricks to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Databricks](/azure/well-architected/service-guides/azure-databricks).
@@ -63,9 +65,9 @@ To use availability zone support in Azure Databricks:
 
 - **Region support:** Azure Databricks availability zone support is available in all Azure regions that support Azure Databricks and that also provide availability zones. For a list of regions that support Azure Databricks, see [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region). For a complete list of regions with availability zone support, see [Azure regions with availability zones](/azure/reliability/availability-zones-service-support).
 
-- Configure workspace storage accounts with zone-redundant storage (ZRS) or geo-zone-redundant storage (GZRS).
+- **Storage replication:** Configure workspace storage accounts with zone-redundant storage (ZRS) or geo-zone-redundant storage (GZRS).
 
-- Ensure sufficient compute capacity exists across multiple zones in your target region. Azure Databricks automatically distributes cluster nodes across zones, but you should verify that your selected instance types are available in all target zones.
+- **Compute capacity:** Ensure sufficient compute capacity exists across multiple zones in your target region. Azure Databricks automatically distributes cluster nodes across zones, but you should verify that your selected instance types are available in all target zones.
 
 ### Considerations
 
@@ -82,6 +84,7 @@ The default redundancy for the managed storage account (DBFS Root) is geo-redund
 - **Control plane:** The control plane automatically supports zone redundancy in regions with availability zones. No customer configuration is required.
 
 - **DBFS Root:**
+
     - **Create new workspace with zone-redundant DBFS Root storage**: When you create a new Azure Databricks workspace, you can optionally configure the associated storage account to use ZRS or GZRS instead of the default GRS. To learn how to change workspace storage redundancy options, see [Change workspace storage redundancy options](/azure/databricks/admin/workspace/workspace-storage-redundancy).
     
     - **Enable zone redundancy on DBFS Root storage**: For existing workspaces, you can change the redundancy configuration of the workspace storage account to ZRS or GZRS. To learn how to enable zone redundancy, see [Change how a storage account is replicated](/azure/storage/common/redundancy-migration).

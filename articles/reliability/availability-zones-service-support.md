@@ -45,6 +45,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Data Explorer](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Data Factory](./reliability-data-factory.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Data Lake Storage Gen2](./reliability-storage-blob.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
+| [Azure Databricks](./reliability-databricks.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Database for MySQL flexible server](/azure/mysql/flexible-server/concepts-high-availability) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Database for PostgreSQL flexible server](./reliability-postgresql-flexible-server.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Databricks](/azure/databricks/admin/disaster-recovery) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||

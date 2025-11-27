@@ -30,8 +30,6 @@ items:
       href: reliability-data-factory.md
     - name: Azure Data Share
       href: ../data-share/disaster-recovery.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Chaos Studio
-      href: reliability-chaos-studio.md
     - name: Azure Databricks
       href: reliability-databricks.md
     - name: Azure Event Hubs
