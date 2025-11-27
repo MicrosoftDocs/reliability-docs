@@ -4,7 +4,7 @@ description: Learn about resiliency features in Azure Databricks, including tran
 author: anaharris-ms
 ms.author: anaharris
 ms.topic: reliability-article
-ms.custom: subject-reliability, references_regions
+ms.custom: subject-reliability
 ms.service: azure-databricks
 ms.date: 11/27/2025
 ---

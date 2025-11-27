@@ -4,7 +4,7 @@ description: Learn how to enable zone resilience for Azure workloads. Understand
 author: anaharris-ms
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: article
 ms.date: 10/29/2025
 ms.author: anaharris
 ms.custom: subject-reliability
