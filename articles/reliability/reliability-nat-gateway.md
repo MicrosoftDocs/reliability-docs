@@ -80,12 +80,12 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
 
 - *Zone-redundant:* When you use the StandardV2 SKU of Azure NAT Gateway, zone redundancy is enabled automatically. Zone redundancy spreads NAT gateway's instances across multiple [availability zones](../reliability/availability-zones-overview.md). When you use a zone-redundant configuration, you can improve the resiliency and reliability of your production workloads.
 
-    :::image type="content" source="../nat-gateway/media/nat-overview/zone-redundant-standard-2.png" alt-text="Diagram of zone-redundant deployment of NAT gateway.":::
+    :::image type="content" source="../nat-gateway/media/nat-overview/zone-redundant-standard-2.png" alt-text="Diagram of zone-redundant deployment of NAT gateway." border="false":::
 
 - *Zonal:* A zonal NAT gateway is deployed into a single availability zone that you select. When NAT gateway is deployed to a specific zone, it provides outbound connectivity to the internet explicitly from that zone. Zonal public IP addresses from a different availability zone aren't allowed. All traffic from connected subnets is routed through the NAT gateway, even if that's in a different availability zone. When you use the Standard (v1) SKU, you can optionally create a zonal configuration.
 
      <!-- Allen: If we retain this image, then we need to move it into reliability hub. -->
-    :::image type="content" source="../nat-gateway/media/nat-availability-zones/zonal-nat-gateway.png" alt-text="Diagram of zonal deployment of NAT gateway.":::
+    :::image type="content" source="../nat-gateway/media/nat-availability-zones/zonal-nat-gateway.png" alt-text="Diagram of zonal deployment of NAT gateway." border="false":::
     
     If a NAT gateway within an availability zone experiences an outage, all virtual machines in the connected subnets fail to connect to the internet, even if those VMs are in healthy availability zones.
 
@@ -100,7 +100,7 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
     - Manual VM assignment: You explicitly place each virtual machine in both the correct availability zone and its corresponding subnet.
 
     <!-- Allen: If we retain this image, then we need to move it into reliability hub. -->
-    :::image type="content" source="../nat-gateway/media/nat-availability-zones/multiple-zonal-nat-gateways.png" alt-text="Diagram of zonal isolation by creating zonal stacks.":::
+    :::image type="content" source="../nat-gateway/media/nat-availability-zones/multiple-zonal-nat-gateways.png" alt-text="Diagram of zonal isolation by creating zonal stacks." border="false":::
     
 If you deploy a StandardV1 NAT gateway and don't specify an availability zone, the NAT gateway is then *nonzonal*, which means Azure selects the availability zone. If any availability zone in the region has an outage, your NAT gateway might be affected. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
 
