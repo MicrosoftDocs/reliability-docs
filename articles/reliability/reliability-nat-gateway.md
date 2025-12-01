@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-nat-gateway
-ms.date: 11/27/2025
+ms.date: 12/02/2025
 ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure NAT Gateway works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
@@ -39,12 +39,20 @@ For production workloads, we recommend that you:
 
 ## Reliability architecture overview
 
-> [!WARNING]
-> **Note to PG:** We've made some assumptions here about how things work - especially how a single logical NAT gateway can be mapped to multiple AZs. If we've misunderstood something or used incorrect terminology, we can adjust.
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
+
+### Logical architecture
 
 The resource you deploy is a *NAT gateway*. You configure one or more subnets in a virtual network to use the NAT gateway for outbound traffic. When you do, the NAT gateway becomes the default route for outbound internet traffic without requiring additional routing configurations.
 
-Internally, an NAT gateway consists of one or more *instances*, which represent the underlying infrastructure required to operate the service. Azure NAT Gateway implements a distributed architecture using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains, enabling it to survive multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
+### Physical architecture
+
+> [!WARNING]
+> **Note to PG:** We've made some assumptions here about how things work - especially how a single logical NAT gateway has multiple instances spread across AZs. If we've misunderstood something or used incorrect terminology, we can adjust.
+
+Internally, an NAT gateway consists of one or more *instances*, which represent the underlying infrastructure required to operate the service.
+
+Azure NAT Gateway implements a distributed architecture using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains, enabling it to survive multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
 
 For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resource](../nat-gateway/nat-gateway-resource.md#nat-gateway-architecture).
 
@@ -84,7 +92,7 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
     > [!WARNING]
-    > **Note to PG:** After StandardV2 gets to GA, are there any situations where it might still make sense to deploy a zonal NAT Gateway?
+    > **Note to PG:** After StandardV2 gets to GA, are there any situations where we might advise customers should deploy a zonal NAT Gateway?
 
     If you have virtual machines deployed into several availability zones, you can create *zonal stacks* in each availability zone. Deploy subnets for each availability zone, with a dedicated NAT gateway in each subnet that's in the same zone. You need to manually assign virtual machines to the relevant availability zone and subnet. 
     
@@ -132,7 +140,7 @@ This section describes what to expect when NAT gateways are configured for avail
     - *Zone-redundant:* Traffic can be routed through a NAT gateway instance within any availability zone.
 
         > [!WARNING]
-        > **Note to PG:** Please confirm.
+        > **Note to PG:** Please confirm the above statement is accurate.
 
     - *Zonal:* Each NAT gateway instance operates independently within its assigned availability zone. Outbound traffic from subnet resources is routed through the NAT gateway's zone, even if the VM is in a different zone.
 
