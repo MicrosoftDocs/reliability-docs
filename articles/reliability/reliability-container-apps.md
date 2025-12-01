@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Container Apps
-description: Find out about reliability in Azure Container Apps, including availability zones and multi-region deployments.
+description: Learn how to make Azure Container Apps resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 ms.author: cshoe
 author: craigshoemaker
 ms.topic: reliability-article
