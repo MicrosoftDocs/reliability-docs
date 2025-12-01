@@ -15,7 +15,7 @@ ms.date: 12/01/2025
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes Azure Databricks is resilient to a variety of potential outages and problems, and how you can configure resiliency to meet your requirements. It includes information about transient faults, availability zone outages, region outages, and service maintenance.  It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Azure Databricks service level agreement (SLA).
+This article describes how Azure Databricks is resilient to a variety of potential outages and problems, and how you can configure resiliency to meet your requirements. It includes information about transient faults, availability zone outages, region outages, and service maintenance.  It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Azure Databricks service level agreement (SLA).
 
 ## Production deployment recommendations
 
