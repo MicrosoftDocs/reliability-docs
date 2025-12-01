@@ -6,7 +6,7 @@ ms.author: anaharris
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-databricks
-ms.date: 11/27/2025
+ms.date: 12/01/2025
 ---
 
 # Reliability in Azure Databricks
