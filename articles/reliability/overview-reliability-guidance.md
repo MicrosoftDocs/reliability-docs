@@ -21,7 +21,7 @@ This article provides links to reliability guidance for many Azure services. Mos
 
 - *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-hin redundancy features, and ow to provision and manage multiple resources, if applicable.
 
-- *Resilience to availability zone failures* describes the zone-redundant deployment options for the service, requirements, traffic routing and data replication between zones, what happens when a zone experiences an outage, zone recovery, and how to configure your resources for availability zone support.
+- *Resilience to availability zone failures* describes how the service supports availability zones, requirements you need to meet to use availability zones, how traffic is routed and data is replicated between zones, what happens when a zone experiences an outage, zone recovery, and how to configure your resources for availability zone support.
 
 - *Resilience to region-wide failures* describes how to configure multi-region or geo-disaster support, requirements, traffic routing and data replication between regions, region-down experience, failover and failback support, and custom multi-region solutions.
 
