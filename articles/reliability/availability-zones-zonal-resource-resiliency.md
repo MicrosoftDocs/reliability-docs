@@ -34,7 +34,9 @@ For more information about availability zones and resource deployments, see [Ava
 
 Many workloads combine zone-redundant and zonal resources. For example, your workload might include a set of zonal virtual machines (VMs) for your database tier, a zone-redundant web server hosted on Azure App Service, and a zone-redundant load balancer to send traffic to your database VMs.
 
-:::image type="content" border="false" source="./media/availability-zones-zonal-reliability/zonal-zone-redundant.svg" alt-text="Diagram that shows a solution that includes both zonal VMs and zone-redundant components.":::
+:::image type="complex" source="./media/availability-zones-zonal-reliability/zonal-zone-redundant.svg" border="false" lightbox="./media/availability-zones-zonal-reliability/zonal-zone-redundant.svg" alt-text="Diagram that shows a solution that includes both zonal VMs and zone-redundant components.":::
+   The image shows three availability zones. A zone-redundant web application and a zone-redundant load balancer span all three zones. Each zone contains a database replica and a zonal virtual machine (VM). A dotted arrow labeled customer-configured replication and failover connects all three replicas.
+:::image-end:::
 
 When you combine zonal and zone-redundant resources in a workload, consider how each resource and the overall solution behave if an availability zone has a problem. Typically, zone-redundant services automatically recover from zone outages with minimal or no data loss, and Microsoft manages the entire process. For zonal resources, you're responsible for configuring automated failover or doing manual recovery activities. To learn how each service behaves during zone-down scenarios, understand your responsibilities versus Microsoft responsibilities, and monitor the health of services during zone-down events, see your service's reliability guide.
 
