@@ -14,13 +14,13 @@ ms.custom: subject-reliability
 
 In Azure, a *zonal* resource is a resource that's pinned to a single zone. Because a zonal resource is in a single availability zone, it isn't zone resilient. If the zone that contains the resource has a problem, the resource is likely to experience downtime.
 
-Some Azure services either require or allow you to deploy zonal resources. You might choose to deploy a resource zonally because of latency considerations or specific service requirements. Or you might choose to pin groups of resources to a single zone.
+Some Azure services either require or allow you to deploy zonal resources. You might choose to deploy a resource zonally because of latency considerations or specific service requirements. You might pin individual resources or sets of related resources to a single zone.
 
 This article outlines scenarios where you might choose to deploy zonal resources instead of zone-redundant resources. It also highlights the considerations and responsibilities required to ensure that your solution remains resilient to zone outages.
 
 ## Resource deployment types
 
-In Azure, only some deployment types provide zone resiliency. The following table compares three resource deployment types and describes zone resiliency, zone distribution, configuration options, and recommendations.
+In Azure, only some deployment types provide zone resiliency. The following table compares three resource deployment types and describes their zone resiliency, zone distribution, configuration options, and recommendations.
 
 | Resource deployment type | Zone resiliency support | Zone distribution | How to configure | Recommendation |
 |---|---|---|---|---|
@@ -51,10 +51,10 @@ Use zonal resources only when there's a clear need. Typical reasons for a single
 
 A few Azure services only support zonal deployments and don't provide zone-redundant deployments.
 
-[VMs](./reliability-virtual-machines.md#availability-zone-support) are a zonal resource. You can use virtual machine scale sets to create sets of VMs. Scale sets can be made zone-redundant, which means that the VMs in the set are spread across multiple zones. Scale sets are a good way to achieve zone resiliency for many VM-based workloads.
+[VMs](./reliability-virtual-machines.md#availability-zone-support) are a zonal resource. You can use virtual machine scale sets to create sets of VMs. Virtual Machine Scale Sets can be made zone-spanning, which means that the VMs in the set are spread across multiple zones. Scale sets are a good way to achieve zone resiliency for many VM-based workloads.
     
 > [!TIP]
-> If you deploy multiple VMs that do similar functions, we recommend that you use zone-redundant scale sets instead of single-instance VMs that you deploy individually.
+> If you deploy multiple VMs that do similar functions, we recommend that you use zone-spanning scale sets instead of single-instance VMs that you deploy individually.
 
 Another example is [Azure NetApp Files](./reliability-netapp-files.md#availability-zone-support), which supports the deployment of volumes into a single zone. The service also provides a way for you to replicate between multiple zonal volumes.
 
@@ -70,7 +70,7 @@ For more information, see [Azure services that support availability zones](./ava
 
 ### Inter-zone latency
 
-If you have a workload that's highly latency-sensitive, you might use zonal resources instead of zone-redundant resources, even if a service supports zone-redundant deployments.
+If you have a workload that's unusually latency-sensitive, you might use zonal resources instead of zone-redundant resources, even if a service supports zone-redundant deployments.
 
 A low-latency network connects availability zones, with inter-zone round-trip latency typically under two milliseconds. For most workloads, inter-zone latency isn't a concern. The resiliency benefits of spreading resources across availability zones are more important than the minimal performance impact of sending traffic between zones. But a few workloads are highly sensitive to inter-zone latency. These workloads might include the following scenarios:
 
@@ -117,7 +117,7 @@ A zonal resource is at risk of downtime when its availability zone experiences a
 > [!IMPORTANT]
 > Zonal resources are **not** inherently resilient to zone failures. You must design ways to mitigate the risk of a zone failure by developing a plan that includes zone-down scenarios.
 
-To make zonal resources zone-resilient when you deploy them, consider the following responsibilities:
+To make zonal resources zone-resilient, consider the following responsibilities:
 
 - **Deployment and configuration of multiple resources:** Deploy separate zonal resources manually into different zones or regions. Determine how to keep configuration consistent across each resource. Using infrastructure as code (IaC) is a best practice because it enables rapid deployment of multiple identical resources.
 
@@ -177,7 +177,7 @@ The following disaster recovery approaches can help when you plan a zonal deploy
 
     In a zonal architecture, you're often responsible for storing and replicating those backups.
 
-    [Azure Backup](/azure/backup/backup-overview) is a widely used managed backup service. It supports zone-redundant backups and geo-replicated backups across paired Azure regions. Some applications, like [SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/backup-restore), include built-in backup features.
+    [Azure Backup](/azure/backup/backup-overview) is a widely used managed backup service. It supports zone-redundant backups and geo-replicated backups across paired Azure regions. Some applications, like [SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/backup-restore), also include built-in application-specific backup features.
 
 ## Next step
 
