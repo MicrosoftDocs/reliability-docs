@@ -29,7 +29,7 @@ This article provides links to reliability guidance for many Azure services. Mos
 
 - *Service-level agreements (SLAs)* for availability, including how the expected uptime changes based on the configuration that you use.
 
-- *Backup and recovery*. For services that support backup and data recovery, this section shows you who controls and manages backups, where they're stored and replicated to, how they can be recovered, and whether they're accessible only within a region or across regions.
+- *Backup and recovery* for supported services, including who controls and manages backups, where they're stored and replicated to, how they can be recovered, and whether they're accessible only within a region or across regions.
 
 
 ## Reliability guides by service
