@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 services: logic-apps
 ms.service: azure-logic-apps
-ms.date: 04/04/2025
+ms.date: 12/03/2025
 zone_pivot_groups: logic-app-hosting-types
 ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Logic Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
@@ -113,13 +113,13 @@ For Standard workflows with the App Service Environment v3 hosting option, you c
 
 ::: zone pivot="consumption"
 
-- **Region support:** Consumption logic apps deployed in [any region that supports availability zones](./regions-list.md) are automatically zone redundant. Japan West is the exception, which currently doesn't support zone-redundant logic apps because some dependency services don't yet support zone redundancy.
+- **Region support:** Consumption logic apps deployed in [any region that supports availability zones](./regions-list.md) are automatically zone redundant. Japan West is the exception, which currently doesn't support zone-redundant logic apps because some dependent services don't yet support zone redundancy.
 
 ::: zone-end
 
 ::: zone pivot="standard-workflow-service-plan"
 
-- **Region support:** Zone-redundant Standard logic apps with Workflow Service Plans can be deployed in any region that supports availability zones for Azure App Service. Japan West is the exception, which currently doesn't support zone-redundant logic apps. For more information, see [Reliability in Azure App Service](./reliability-app-service.md).
+- **Region support:** Zone-redundant Standard logic apps with Workflow Service Plans can be deployed in any region that supports availability zones for Azure App Service. Japan West is the exception, which currently doesn't support zone-redundant logic apps because some dependent services don't yet support zone redundancy. For more information, see [Reliability in Azure App Service](./reliability-app-service.md).
 
 ::: zone-end
 
@@ -179,7 +179,7 @@ Consumption logic app workflows automatically support zone redundancy, so no con
 
 - **Create a new zone-redundant workflow:** To enable zone redundancy for Standard logic app workflows, see [Enable zone redundancy for your logic app](../logic-apps/set-up-zone-redundancy-availability-zones.md).
 
-- **Enable zone redundancy on an existing workflow:** You can't enable zone redundancy after you create a service plan. Instead, you need to create a new plan with zone redundancy enabled and delete the old one.
+- **Enable zone redundancy on an existing workflow:** You can't enable zone redundancy after you create a service plan. Instead, you need to create a new plan with zone redundancy enabled and delete the old one. <!-- TODO -->
 
 - **Disable zone redundancy:** You can't disable zone redundancy after you create a Workflow Service Plan. Instead, you need to create a new plan with zone redundancy disabled and delete the old one.
 
@@ -197,7 +197,7 @@ This section describes what to expect when Logic Apps resources are configured f
 
 - **Traffic routing between zones:** During normal operations, workflow invocations can use compute resources in any of the availability zones within the region.
 
-- **Data replication between zones:** For stateful workflows, workflow state is synchronously replicated between availability zones.
+- **Data replication between zones:** For stateful workflows, workflow state is synchronously replicated between availability zones by using zone-redundant storage (ZRS).
 
 ::: zone-end
 
@@ -219,11 +219,33 @@ This section describes what to expect when Logic Apps resources are configured f
 
 - **Active requests:** If an availability zone becomes unavailable, any in-progress workflow executions that run on a VM in the faulty availability zone are terminated. The Logic Apps platform automatically resumes the workflow on another VM in a different availability zone. Due to this behavior, active workflows might experience some [transient faults](#resilience-to-transient-faults) or higher latency as new VMs are added to the remaining availability zones.
 
-- **Traffic rerouting:** TODO
+- **Expected downtime:** No downtime is expected in the Logic Apps service. However, if the app has dependencies on other services that experience downtime, your logic app might also be affected. 
 
-- **Expected downtime:** TODO
+- **Expected data loss:** No data loss is expected.
 
-- **Expected data loss:** TODO
+::: zone pivot="consumption"
+
+- **Traffic rerouting:** Incoming traffic is automatically distributed to infrastructure in healthy zones.
+
+::: zone-end
+
+::: zone pivot="standard-workflow-service-plan"
+
+- **Traffic rerouting:** Incoming traffic is automatically distributed to new plan instances in healthy zones when they're available. For more information, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
+
+::: zone-end
+
+::: zone pivot="standard-workflow-service-plan"
+
+- **Nonruntime behaviors:** Logic apps in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
+
+::: zone-end
+
+::: zone pivot="standard-app-service-environment"
+
+- **Nonruntime behaviors:** Logic apps in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service Environment - Behavior during a zone failure](./reliability-app-service-environment.md#behavior-during-a-zone-failure).
+
+::: zone-end
 
 ### Zone recovery
 
