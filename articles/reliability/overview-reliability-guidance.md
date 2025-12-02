@@ -19,7 +19,7 @@ This article provides links to reliability guidance for many Azure services. Mos
 
 - *Production deployment recommendations* provides guidance on how to deploy the service to meet your reliability requirements in production environments.
 
-- *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-hin redundancy features, and ow to provision and manage multiple resources, if applicable.
+- *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-in redundancy features, and how to provision and manage multiple resources, if applicable.
 
 - *Resilience to availability zone failures* describes how the service supports availability zones, requirements you need to meet to use availability zones, how traffic is routed and data is replicated between zones, what happens when a zone experiences an outage, zone recovery, and how to configure your resources for availability zone support.
 
