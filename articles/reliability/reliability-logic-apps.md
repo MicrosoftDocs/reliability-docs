@@ -21,7 +21,9 @@ ai-usage: ai-assisted
 
 This article describes how to make Logic Apps resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Logic Apps service level agreement (SLA).
 
-## Production deployment recommendations for reliability
+## Production deployment recommendations
+
+For production workloads, we recommend that you:
 
 ::: zone pivot="consumption"
 
