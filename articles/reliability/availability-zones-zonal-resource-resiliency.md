@@ -3,7 +3,7 @@ title: Zonal Resources and Zone Resiliency
 description: Learn about zonal deployment scenarios, when to use them, and your responsibilities for making them resilient to availability zone outages in Azure.
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: article
+ms.topic: concept-article
 ms.date: 11/20/2025
 ms.author: anaharris
 author: anaharris-ms
@@ -24,7 +24,7 @@ In Azure, only some deployment types provide zone resiliency. The following tabl
 
 | Resource deployment type | Zone resiliency support | Zone distribution | How to configure | Recommendation |
 |---|---|---|---|---|
-| **Zone-redundant** | Always zone-resilient | Zone-redundant resources are spread across multiple zones and are resilient to zone failures. If a failure occurs in one zone, the service can continue to operate in other zones. | Some zone-redundant resources provide automatic zone redundancy across availability zones, while other zones require you to manually enable zone redundancy. Check your service's [reliability guidance](./overview-reliability-guidance.md) to see what your service requires to enable resiliency. | Always use zone-redundant resources where possible, especially in production deployments. |
+| **Zone-redundant** | Always zone-resilient | Zone-redundant resources are spread across multiple zones and are resilient to zone failures. If a failure occurs in one zone, the service can continue to operate in other zones. | Some zone-redundant resources provide automatic zone redundancy across availability zones, while other resources require you to manually enable zone redundancy. Check your service's [reliability guidance](./overview-reliability-guidance.md) to see what your service requires to enable resiliency. | Always use zone-redundant resources where possible, especially in production deployments. |
 | **Zonal** | Not automatic. It's your responsibility to enable zone resiliency if you choose. <br> Zonal resources are isolated from faults in other zones, but a failure of their own zone can cause downtime. | You select the zone for the resource. | If you have multiple resources that need to be *zone-aligned* (placed in the same zone), you must configure the same zone on *each* resource. | Only use zonal resources when there's a [clear need](#when-to-use-a-zonal-deployment). To make your solution zone-resilient, it's your responsibility to design and implement a multiple-zone solution. |
 | **Nonzonal (regional)** | None | If the region provides availability zone support, Azure might use any zone in the region. | There's no zone configuration available for nonzonal resources. | Because nonzonal resources can't be made zone resilient, avoid nonzonal deployments for all production workloads in regions that have availability zones. |
 
@@ -32,11 +32,11 @@ For more information about availability zones and resource deployments, see [Ava
 
 ## Workloads that combine zone-redundant and zonal resources
 
-Many workloads combine zonal and zone-redundant resources. For example, your workload might include a set of zonal virtual machines (VMs) for your database tier, a zone-redundant web server hosted on Azure App Service, and a zone-redundant load balancer to send traffic to your database VMs.
+Many workloads combine zone-redundant and zonal resources. For example, your workload might include a set of zonal virtual machines (VMs) for your database tier, a zone-redundant web server hosted on Azure App Service, and a zone-redundant load balancer to send traffic to your database VMs.
 
 :::image type="content" border="false" source="./media/availability-zones-zonal-reliability/zonal-zone-redundant.svg" alt-text="Diagram that shows a solution that includes both zonal VMs and zone-redundant components.":::
 
-When you combine zonal and zone-redundant resources in a workload, consider how each resource and the overall solution behave if an availability zone has a problem. Typically, zone-redundant services automatically recover from zone outages with minimal or no data loss, and Microsoft manages the entire process. For zonal resources, you're responsible for configuring automated failover or doing manual recovery activities. To learn how each service behaves during zone-down scenarios, understand your responsibilities versus Microsoft's, and monitor the health of services during zone-down events, see your service's reliability guide.
+When you combine zonal and zone-redundant resources in a workload, consider how each resource and the overall solution behave if an availability zone has a problem. Typically, zone-redundant services automatically recover from zone outages with minimal or no data loss, and Microsoft manages the entire process. For zonal resources, you're responsible for configuring automated failover or doing manual recovery activities. To learn how each service behaves during zone-down scenarios, understand your responsibilities versus Microsoft responsibilities, and monitor the health of services during zone-down events, see your service's reliability guide.
 
 ## When to use a zonal deployment
 
@@ -47,7 +47,7 @@ Use zonal resources only when there's a clear need. Typical reasons for a single
 
 ### Resources that require zonal deployments
 
-A small number of Azure services only support zonal deployments and don't provide zone-redundant deployments.
+A few Azure services only support zonal deployments and don't provide zone-redundant deployments.
 
 [VMs](./reliability-virtual-machines.md#availability-zone-support) are a zonal resource. You can use virtual machine scale sets to create sets of VMs. Scale sets can be made zone-redundant, which means that the VMs in the set are spread across multiple zones. Scale sets are a good way to achieve zone resiliency for many VM-based workloads.
     
@@ -62,15 +62,15 @@ Some services provide options that are available only in specific zones. For exa
 
 - To check the supported VM types and sizes within each zone of a specific region, see [Check VM SKU availability](/azure/virtual-machines/linux/create-cli-availability-zone#check-vm-sku-availability).
 
-If the VM type that you need is only available in a single zone within the region that you use, you might need to consider a zonal deployment for that VM and then find other ways to make the VM resilient to zone outages. But you should continue to ensure that the other parts of your solution are zone-resilient.
+If the VM type that you need is only available in a single zone within the region that you use, you might consider a zonal deployment for that VM and then find other ways to make the VM resilient to zone outages. But you should continue to ensure that the other parts of your solution are zone-resilient.
 
 For more information, see [Azure services that support availability zones](./availability-zones-service-support.md).
 
 ### Inter-zone latency
 
-If you have a workload that's highly latency-sensitive, you might choose to use zonal resources instead of zone-redundant resources, even if a service supports zone-redundant deployments.
+If you have a workload that's highly latency-sensitive, you might use zonal resources instead of zone-redundant resources, even if a service supports zone-redundant deployments.
 
-A low-latency network connects availability zones, with inter-zone round-trip latency typically under two milliseconds. For most workloads, inter-zone latency isn't a concern. The resiliency benefits of spreading resources across availability zones are more important than the minimal performance impact of sending traffic between zones. But a small number of workloads are highly sensitive to inter-zone latency. These workloads might include the following scenarios:
+A low-latency network connects availability zones, with inter-zone round-trip latency typically under two milliseconds. For most workloads, inter-zone latency isn't a concern. The resiliency benefits of spreading resources across availability zones are more important than the minimal performance impact of sending traffic between zones. But a few workloads are highly sensitive to inter-zone latency. These workloads might include the following scenarios:
 
 - **Legacy on-premises applications:** Some legacy workloads can contain applications that were originally designed for an on-premises environment. These workloads assume that components, like databases and other applications and services, are colocated on the same host or in close physical proximity.
 
@@ -81,7 +81,7 @@ A low-latency network connects availability zones, with inter-zone round-trip la
 
 If you suspect that inter-zone latency is affecting your workload, test its impact in a realistic environment by following these steps for your specific workload:
 
-1. **Define acceptable performance requirements.** Inter-zone traffic adds a small amount of latency, but it's generally negligible for most workloads. Define what acceptable performance looks like for *your* workload.
+1. **Define acceptable performance requirements.** Inter-zone traffic adds a small amount of latency, but it's negligible for most workloads. Define what acceptable performance looks like for *your* workload.
 
 1. **Run a performance test within a single availability zone.** Establish a set of baseline performance metrics.
 
@@ -92,7 +92,7 @@ If you suspect that inter-zone latency is affecting your workload, test its impa
 
 1. **Rerun performance tests.** Collect the same metrics that you collected earlier.
 
-1. **Compare the performance impact against your requirements.** Use your requirements and the performance data to make an informed decision about the tradeoff between latency and resiliency to zone outages.
+1. **Compare the performance impact against your requirements.** Use your requirements and the performance data to make an informed decision about the trade-off between latency and resiliency to zone outages.
 
     If the test demonstrates that the latency is unacceptably high for your workload, consider taking the following actions:
 
@@ -131,17 +131,17 @@ To make zonal resources zone-resilient when you deploy them, consider the follow
 
 To make informed decisions about achieving zone resiliency for your zonal resources, consider the following factors:
 
-- **Review your whole workload.** Understand how each component behaves during zone-down events, including zone-redundant, zonal, and [nonregional resources](./regions-nonregional-services.md). Use the reliability guide for each service to learn how each service works during zone-down scenarios, and how to monitor the health of services for zone-down events.
+- **Review your whole workload.** Understand how each component behaves during zone-down events, including zone-redundant, zonal, and [nonregional resources](./regions-nonregional-services.md). Use the reliability guide for each service to learn how the service works during zone-down scenarios, and how to monitor the health of services for zone-down events.
 
 - **Understand the allowable data loss during a zone failure.** Your RPO specifies how much data loss you can accept.
 
-    Many of Azure's zone-redundant resources provide an RPO of zero for zone failures, which means that no data loss occurs. They typically achieve this RPO by synchronously replicating all changes across zones.
+    Many Azure zone-redundant resources provide an RPO of zero for zone failures, which means that no data loss occurs. They typically achieve this RPO by synchronously replicating all changes across zones.
     
     When you plan a zonal deployment, you must ensure that you can meet your workload's RPO requirements when a zone fails.
 
 - **Understand the allowable downtime during a zone failure.** Your RTO specifies how much downtime you can accept.
 
-    Azure's zone-redundant resources typically provide a very low RTO for zone failures, and usually require only a few seconds of downtime.
+    Azure zone-redundant resources typically provide a very low RTO for zone failures and usually require only a few seconds of downtime.
     
     When you plan a zonal deployment, you must ensure that you can meet your workload's RTO requirements. If you have a low RTO, you might need to rely on automated detection and recovery processes. A higher RTO provides more flexibility for your response processes.
 
@@ -157,7 +157,7 @@ If you have a low RTO and low RPO requirement, you need to treat availability zo
 
 Consider deploying your own highly available architecture across multiple zones. A highly available architecture requires automated and frequent data replication across components that are deployed across multiple zones, and automatic failover between those components if a zone failure occurs.
 
-Some applications that you deploy on zonal VMs provide built-in high availability support, like by being replica-aware. For example, if you use SQL Server on Azure VMs, *availability groups* provide traffic routing and failover capabilities. You can select whether you want to use synchronous or asynchronous replication. For more information, see [Business continuity and high availability and disaster recovery (HADR) for SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/business-continuity-high-availability-disaster-recovery-hadr-overview).
+Some applications that you deploy on zonal VMs provide built-in high availability support, like by being replica-aware. For example, if you use SQL Server on Azure VMs, *availability groups* provide traffic routing and failover capabilities. You can select whether you want to use synchronous or asynchronous replication. For more information, see [Business continuity, high availability, and disaster recovery for SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/business-continuity-high-availability-disaster-recovery-hadr-overview).
 
 #### Design for disaster recovery
 
