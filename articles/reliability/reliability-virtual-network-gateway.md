@@ -155,7 +155,7 @@ Depending on your high availability requirements, you can configure your gateway
 
 - *Active-standby:* One gateway VM processes traffic, and the other gateway VM stays on standby.
 
-- *Active-active:* Both gateway VMs process traffic. This mode isn't always possible because connection flows can be asymmetric.
+- *Active-active:* Both gateway VMs process traffic at the same time. This mode isn't always possible because connection flows can be asymmetric.
 
 For more information, see [Design highly available gateway connectivity for cross-premises and virtual network-to-virtual network connections](../vpn-gateway/vpn-gateway-highlyavailable.md).
 
@@ -415,7 +415,7 @@ For more information, see [Configure maintenance windows for your virtual networ
 
 ::: zone pivot="expressroute"
 
-ExpressRoute provides a strong availability SLA that guarantees high uptime for your connections. Different availability SLAs apply if you deploy across multiple peering locations, if you use ExpressRoute Metro, or if you have a single-site configuration.
+ExpressRoute provides a strong availability SLA that guarantees high uptime for your connections. Different availability SLAs apply if you deploy across multiple peering locations (sites), if you use ExpressRoute Metro, or if you have a single-site configuration.
 
 ::: zone-end
 
