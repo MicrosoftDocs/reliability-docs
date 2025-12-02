@@ -15,9 +15,11 @@ ms.subservice: azure-reliability
 
 This article provides links to reliability guidance for many Azure services. Most reliability guides contain the following information:
 
-- *Resilience to transient faults* describes how the service handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in your application, including information about retry policies, timeouts, and other best practices.
 
 - *Production deployment recommendations* provides guidance on how to deploy the service to meet your reliability requirements in production environments.
+
+- *Resilience to transient faults* describes how the service handles day-to-day transient faults that can occur in the cloud. It also describes how to handle these faults in your application, including information about retry policies, timeouts, and other best practices.
+
 
 - *Reliability architecture overview* is a synopsis of how the service supports reliability. It includes information about which components Microsoft manages and which components you manage, built-in redundancy features, and how to provision and manage multiple resources, if applicable.
 
