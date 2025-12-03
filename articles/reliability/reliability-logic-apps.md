@@ -239,13 +239,13 @@ This section describes what to expect when an availability zone outage occurs wh
 
 ::: zone pivot="standard-workflow-service-plan"
 
-- **Nonruntime behaviors:** Logic apps in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
+- **Nonruntime behaviors**: Logic app workflows in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
 
 ::: zone-end
 
 ::: zone pivot="standard-app-service-environment"
 
-- **Nonruntime behaviors:** Logic apps in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service Environment - Behavior during a zone failure](./reliability-app-service-environment.md#behavior-during-a-zone-failure).
+- **Nonruntime behaviors**: Logic app workflows in a zone-redundant plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. For details and a list of these behaviors, see [Reliability in Azure App Service Environment - Behavior during a zone failure](./reliability-app-service-environment.md#behavior-during-a-zone-failure).
 
 ::: zone-end
 
