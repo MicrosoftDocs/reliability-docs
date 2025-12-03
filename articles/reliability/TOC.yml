@@ -16,6 +16,8 @@ items:
       href: reliability-ai-search.md
     - name: Azure Bot Service 
       href: reliability-bot.md
+    - name: Azure Databricks
+      href: reliability-databricks.md
     - name: Azure Machine Learning Service
       href: /azure/machine-learning/how-to-high-availability-machine-learning?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json   
   - name: Analytics
@@ -28,6 +30,8 @@ items:
       href: reliability-data-factory.md
     - name: Azure Data Share
       href: ../data-share/disaster-recovery.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+    - name: Azure Databricks
+      href: reliability-databricks.md
     - name: Azure Event Hubs
       href: /azure/event-hubs/event-hubs-business-continuity-outages-disasters?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure HDInsight
@@ -372,8 +376,10 @@ items:
         href: reliability-sql-database.md
       - name: Azure SQL Managed Instance
         href: reliability-sql-managed-instance.md#configure-availability-zone-support
-      - name: Azure Virtual Machines and Virtual Machine Scale Sets
-        href: migrate-vm.md
+      - name: Azure Virtual Machine Scale Sets
+        href: reliability-virtual-machine-scale-sets.md#migrate-to-availability-zone-support
+      - name: Azure Virtual Machines
+        href: reliability-virtual-machines.md#configure-availability-zone-support
 - name: Reliability concepts
   items:
   - name: Business continuity, high availability, and disaster recovery
