@@ -209,7 +209,7 @@ You're responsible for reconfiguring your application to route traffic back to t
 
 #### Test for region failures
 
-You should regularly test your appliation's failover procedures. It's important that your application can fail over between instances, and that it stays within your business requirements for downtime while doing so. It's also important that you test your overall response processes, including any reconfiguration of firewalls and other infrastructure, and your recovery process.
+You should regularly test your application's failover procedures. It's important that your application can fail over between instances, and that it stays within your business requirements for downtime while doing so. It's also important that you test your overall response processes, including any reconfiguration of firewalls and other infrastructure, and your recovery process.
 
 ## Resilience to service maintenance
 
