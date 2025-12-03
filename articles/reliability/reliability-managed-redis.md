@@ -77,11 +77,11 @@ The following diagram shows a zone-redundant cache with two nodes, each in a sep
 
 ### Requirements
 
-- **Region support.** Zone-redundant Azure Managed Redis caches can be deployed into any region that supports availability zones and where the service is available. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md). For the list of regions that support Azure Managed Redis, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
+- **Region support:** Zone-redundant Azure Managed Redis caches can be deployed into any region that supports availability zones and where the service is available. For the most current list of regions that support availability zones, see [Azure regions with availability zones](regions-list.md). For the list of regions that support Azure Managed Redis, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
-- **High availability configuration.** You must enable high availability configuration on your cache for it to be zone-redundant.
+- **High availability configuration:** You must enable high availability configuration on your cache for it to be zone-redundant.
 
-- **Tiers.** All Azure Managed Redis tiers support availability zones.
+- **Tiers:** All Azure Managed Redis tiers support availability zones.
 
 ### Cost
 
@@ -89,13 +89,13 @@ Zone redundancy requires that your cache is configured for high availability, wh
 
 ### Configure availability zone support
 
-- **New instances:** When you create a new Azure Managed Redis instance, enable high availability configuration and deploy it into a region with availability zones. Then, it automatically includes zone redundancy by default. There's no need for you to perform any more configuration.
+- **Create a new zone-redundant instance:** When you create a new Azure Managed Redis instance, enable high availability configuration and deploy it into a region with availability zones. Then, it automatically includes zone redundancy by default. There's no need for you to perform any more configuration.
 
   For detailed steps, see [Quickstart: Create an Azure Managed Redis Instance](../redis/quickstart-create-managed-redis.md).
 
-- **Existing instances:** To configure an existing Azure Managed Redis instance to be zone-redundant, ensure it's deployed in a region that supports availability zones, and enable high availability on the cache.
+- **Enable zone redundancy on an existing instance:** To configure an existing Azure Managed Redis instance to be zone-redundant, ensure it's deployed in a region that supports availability zones, and enable high availability on the cache.
 
-- **Disable:** Zone redundancy can't be disabled on existing instances, because you can't disable high availability once it's enabled on a cache instance.
+- **Disable zone redundancy:** Zone redundancy can't be disabled on existing instances, because you can't disable high availability once it's enabled on a cache instance.
 
 ### Behavior when all zones are healthy
 
@@ -170,6 +170,14 @@ When you enable active geo-replication, you are billed for each Azure Managed Re
 - **Enable an existing cache instance for geo-replication**: You can add an existing cache instance to an active geo-replication group. For more information, see [Add an existing instance to an active geo-replication group](../redis/how-to-active-geo-replication.md#add-an-existing-instance-to-an-active-geo-replication-group).
 
 - **Disable geo-replication on a cache instance**: Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
+
+### Capacity planning and management
+
+During a zone-down event, your instance might fewer resources available to serve your workload. If your instance is often under resource pressure and you need to prepare for availability zone failure, consider one of the following approaches:
+
+- **Overprovision your instance:** Overprovisioning involves selecting a higher performance tier than you might require. It allows your instance to tolerate some capacity loss and continue to function without degraded performance. For more information about the principle of overprovisioning, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale your instance, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
+
+- **Use active geo-replication:** You can deploy multiple instances in different regions, and configure [active geo-replication](#active-geo-replication) to spread your load across those separate instances.
 
 #### Behavior when all regions are healthy
 
