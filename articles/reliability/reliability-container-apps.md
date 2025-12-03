@@ -141,13 +141,13 @@ This section describes what to expect when Container Apps resources are configur
 
     You can also monitor the health of your apps through Container Apps metrics in Azure Monitor. Configure alerts on replica count drops and request failure rates to receive immediate notification when zone-related problems occur.
 
-- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any jobs that run in the affected zone are aborted and are marked as failed.
+- **Active requests:** In-flight requests to replicas in the failed zone might be dropped, or experience timeouts or connection errors. Any job executions that run in the affected zone are aborted and are marked as failed.
 
-- **Expected data loss:** No data loss occurs at the Container Apps platform level because the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is ended, and ephemeral storage should only be used for temporary data.
+- **Expected data loss:** No data loss occurs at the Container Apps platform level because the service is designed for stateless workloads. Any data stored in [ephemeral storage](/azure/container-apps/storage-mounts#ephemeral-storage) within the availability zone is lost when the replica is terminated, and ephemeral storage should only be used for temporary data.
 
 - **Expected downtime:** Applications experience minimal to no downtime during zone failures. The actual impact depends on your application's health probe settings and the number of replicas in healthy zones. Ensure that clients follow [transient fault handling guidance](#resilience-to-transient-faults) to minimize any effects.
 
-    Any jobs that run in the affected zone are aborted and are marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs multiple copies of the same job instance. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
+    Any jobs that run in the affected zone are aborted and are marked as failed. If you need a job to be resilient to a zone failure, configure retries, or configure parallelism so that the job runs multiple copies of the same execution. For more information, see [Advanced job configuration](/azure/container-apps/jobs#advanced-job-configuration).
 
 - **Traffic rerouting:** The ingress controller's health probes quickly detect unreachable replicas and remove them from the load balancing pool. Depending on your app's health probe configuration, this failover process typically occurs in about 30 seconds. Subsequent incoming traffic is distributed across the remaining healthy replicas. This traffic redirection occurs transparently to clients, who continue to use the same application URL.
 
