@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure Managed Redis
-description: Learn about resiliency in Azure Managed Redis, including availability zones and multi-region deployments.
-ms.author: anaharris
+description: Learn how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
+ms.author: anaharris # Anastasia - should this be Francis?
 author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis
-ms.date: 11/03/2025
+ms.date: 12/04/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Redis works from a reliability perspective and plan both resiliency and recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -22,7 +22,7 @@ This article describes reliability in Azure Managed Redis, including resilience 
 
 ## Production deployment recommendations
 
-To ensure high reliability for your production managed Redis caches, we recommend that you:
+To ensure high reliability for your production Azure Managed Redis instances, we recommend that you:
 
 > [!div class="checklist"]
 > - **Enable high availability**, which deploys multiple nodes for your cache.
@@ -31,9 +31,17 @@ To ensure high reliability for your production managed Redis caches, we recommen
 
 ## Reliability architecture overview
 
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
+
+### Logical architecture
+
 Azure Managed Redis is built on Redis Enterprise and provides reliability through high availability configurations and replication capabilities.
 
-- **Instances:** An *instance* of Azure Managed Redis is also called a *cache instance* or a *cache*. You deploy and configure instances.
+You deploy an *instance* of Azure Managed Redis, which is also called a *cache instance* or a *cache*. Your client applications store and interact with data within the cache by using Redis APIs.
+
+### Physical architecture
+
+There are two key concepts that you need to understand when planning resiliency for Azure Managed Redis: nodes and shards.
 
 - **Nodes:** Each cache instance consists of *nodes*, which are virtual machines (VMs). Each VM serves as an independent compute unit in the cluster. You don't see or manage the VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy instances. The set of VMs, taken together, is also called a *cluster*.
 
@@ -95,7 +103,7 @@ This section describes what to expect when a managed Redis cache is zone-redunda
 
 - **Traffic routing between zones:** Shards are distributed across nodes based on your cluster policy. Your cluster policy also determines how traffic is routed to each node. Zone redundancy doesn't change how traffic is routed.
 
-- **Data replication between zones:** Shards are replicated across nodes automatically, and use asynchronous replication. <!-- PG: Can we give an idea of the replication frequency/lag? -->
+- **Data replication between zones:** Shards are replicated across nodes automatically, and use asynchronous replication. Typically the replication lag between shards is measured in seconds, but that can vary depending on the cache's workload, with write-heavy and network-heavy scenarios typically seeing higher replication lag.
 
 ### Behavior during a zone failure
 
@@ -107,7 +115,7 @@ This section describes what to expect when a managed Redis cache is zone-redunda
 
 - **Active requests:** In-flight requests might be dropped and should be retried. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
-- **Expected data loss:** <!-- PG: Please advise -->
+- **Expected data loss:** Any data that hasn't been replicated to shards in another zone might be lost during a zone failure. Typically the amount of data loss is measured in seconds, but it depends on the replication lag.
 
 - **Expected downtime:** A small amount of downtime, typically 10-15 seconds, might occur while shards fail over to nodes in healthy zones. For information about the unplanned failover process, see [Explanation of a failover](../redis/failover.md#explanation-of-a-failover) When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
 
@@ -179,11 +187,15 @@ This section describes what to expect when instances are configured to use activ
 
   Failover requires that you perform multiple steps. For more detail, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
 
-[!INCLUDE [Region down notification (Service Health)](./includes/reliability-region-down-notification-service-include.md)]
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./reliability-region-down-notification-service-partial-include.md)]
+
+  You can also monitor the health of each instance. For more information, see [Monitor Azure Cache for Redis](../redis/monitor-cache.md). <!-- TODO Waiting for Francis to confirm that this article is applicable to Azure Managed Redis -->
+
+  To monitor the health of the geo-replication relationship, you can use the *Geo-replication healthy* metric. The metric always has a value of `1` (healthy) or `0` (unhealthy). You can configure Azure Monitor alerts on this metric to understand when the instances might be out of sync.
 
 - **Active requests**: Requests to the failed region are terminated and must be handled by your application's failover logic. Applications should implement retry policies that can redirect traffic to healthy caches.
 
-- **Expected data loss**: Due to asynchronous replication between regions, some recent writes to the failed region may be lost if they had not yet been replicated to other regions. The amount of potential data loss depends on the replication lag at the time of failure. <!-- PG: Can we give a rough idea? -->
+- **Expected data loss**: Due to asynchronous replication between regions, some recent writes to the failed region may be lost if they had not yet been replicated to other regions. The amount of potential data loss depends on the replication lag at the time of failure. For more information, see [Active-Active geo-distributed Redis](https://redis.io/docs/latest/operate/rs/databases/active-active/#strong-eventual-consistency) and [Considerations about Consistency and Data Loss in a CRDB Regional Failure](https://redis.io/kb/doc/21rbquorvb/considerations-about-consistency-and-data-loss-in-a-crdb-regional-failure).
 
 - **Expected downtime**: Applications experience downtime only for the duration needed to detect the failure and redirect traffic to healthy regions. This typically ranges from seconds to a few minutes, depending on how you've configured your application's health check and failover configuration.
 
@@ -225,7 +237,7 @@ Azure Managed Redis provides both data persistence and backup capabilities to pr
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-The SLA only covers connectivity to the cache endpoints. The SLA doesn't cover protection from data loss.
+The SLA for Azure Managed Redis covers connectivity to the cache endpoints. The SLA doesn't cover protection from data loss.
 
 To be eligible for availability SLAs for Azure Managed Redis:
 - You must enable high availability configuration.
