@@ -11,6 +11,6 @@ ms.custom: include file
 
 - **Notification**: Microsoft doesn't automatically notify you when a zone is down. However:
 
-- You can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of an individual resource, and you can set up [Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
+    - You can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of an individual resource, and you can set up [Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
     
-- You can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the service, including any zone failures, and you can set up [Service Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
+    - You can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the service, including any zone failures, and you can set up [Service Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
