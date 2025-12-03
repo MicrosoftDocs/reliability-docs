@@ -187,7 +187,7 @@ This section describes what to expect when instances are configured to use activ
 
   Failover requires that you perform multiple steps. For more detail, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
 
-- **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./reliability-region-down-notification-service-partial-include.md)]
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
   You can also monitor the health of each instance. For more information, see [Monitor Azure Cache for Redis](../redis/monitor-cache.md). <!-- TODO Waiting for Francis to confirm that this article is applicable to Azure Managed Redis -->
 
