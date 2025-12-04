@@ -197,7 +197,7 @@ This section describes what to expect when instances are configured to use activ
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
-  You can also monitor the health of each instance. For more information, see [Monitor Azure Cache for Redis](../redis/monitor-cache.md). <!-- TODO Waiting for Francis to confirm that this article is applicable to Azure Managed Redis -->
+  You can also monitor the health of each instance.
 
   To monitor the health of the geo-replication relationship, you can use the *Geo-replication healthy* metric. The metric always has a value of `1` (healthy) or `0` (unhealthy). You can configure Azure Monitor alerts on this metric to understand when the instances might be out of sync.
 
