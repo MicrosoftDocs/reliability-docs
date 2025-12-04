@@ -134,11 +134,11 @@ This section describes what to expect when a file storage account is configured 
 
 - **Detection and response:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Detection and response](./reliability-storage-availability-zone-down-experience-detection-response-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Detection and response](./includes/storage/reliability-storage-availability-zone-down-experience-detection-response-include.md)]
 
   - *LRS with zonal placement:* You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
 
-[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
+[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../includes/storage/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:**
 
@@ -148,13 +148,13 @@ This section describes what to expect when a file storage account is configured 
 
 - **Expected data loss:**
 
-  - *ZRS*: [!INCLUDE [Storage - Behavior when a zone is down - Expected data loss](./reliability-storage-availability-zone-down-experience-expected-data-loss-include.md)]
+  - *ZRS*: [!INCLUDE [Storage - Behavior when a zone is down - Expected data loss](./includes/storage/reliability-storage-availability-zone-down-experience-expected-data-loss-include.md)]
 
   - *LRS with zonal placement:* Data on file shares in the affected zone is unavailable until the zone recovers.
 
 - **Expected downtime:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Expected downtime](./reliability-storage-availability-zone-down-experience-expected-downtime-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Expected downtime](./includes/storage/reliability-storage-availability-zone-down-experience-expected-downtime-include.md)]
 
   - *LRS with zonal placement:* File shares in the affected zone remain down until the availability zone recovers.
 
