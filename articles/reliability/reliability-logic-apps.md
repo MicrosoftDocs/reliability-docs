@@ -159,7 +159,7 @@ No additional cost applies to use zone redundancy, which is automatically enable
 
 ::: zone pivot="standard-workflow-service-plan"
 
-When you have Standard logic apps with the Workflow Service Plan in single-tenant Azure Logic Apps, no additional cost applies to enabling availability zones if you have two or more plan instances. You are charged based on your plan SKU, the specified capacity, and any instances that you scale up or down, based on your autoscale criteria. If you enable availability zones but specify fewer than two instances, the platform enforces the minimum two instances and charges you for these two instances.
+When you have Standard logic apps with the Workflow Service Plan in single-tenant Azure Logic Apps, no additional cost applies to enabling availability zones if you have two or more plan instances. You're charged based on your plan SKU, the specified capacity, and any instances that you scale up or down, based on your autoscale criteria. If you enable availability zones but specify fewer than two instances, the platform enforces the minimum two instances and charges you for these two instances.
 
 ::: zone-end
 
@@ -233,7 +233,7 @@ This section describes what to expect when an availability zone outage occurs wh
 
 ::: zone pivot="standard-workflow-service-plan"
 
-- **Traffic rerouting:** Incoming traffic is automatically distributed to new plan instances in healthy zones when they're available. For more information, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
+- **Traffic rerouting**: Incoming traffic is automatically distributed to new plan instances in healthy zones when they're available. For more information, see [Reliability in Azure App Service - Behavior during a zone failure](./reliability-app-service.md#behavior-during-a-zone-failure).
 
 ::: zone-end
 
