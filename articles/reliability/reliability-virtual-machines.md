@@ -144,7 +144,7 @@ You can consider using [Azure Site Recovery zone-to-zone disaster recovery (DR)]
 
 ## Resilience to region-wide failures
 
-Virtual Machines are single-region resources. If the region becomes unavailable, your VM is also unavailable.
+VMs are single-region resources. If the region becomes unavailable, your VM is also unavailable.
 
 ### Custom multi-region solutions for resiliency
 

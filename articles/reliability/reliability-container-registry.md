@@ -18,7 +18,7 @@ ms.date: 08/22/2025
 
 This article describes how to make Container Registry resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Container Registry service level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 For production workloads, we recommend that you take the following actions:
 

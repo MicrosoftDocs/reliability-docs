@@ -18,7 +18,7 @@ ms.date: 08/22/2025
 
 This article describes Key Vault is resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, recovery features to prevent accidental deletion, and highlights some key information about the Key Vault service level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 For production workloads, we recommend that you:
 
