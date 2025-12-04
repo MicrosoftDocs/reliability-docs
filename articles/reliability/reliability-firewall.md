@@ -17,7 +17,7 @@ ms.date: 08/27/2025
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Firewall resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes resilience during service maintenance, and highlights some key information about the Firewall service level agreement (SLA).
+This article describes how to make Azure Firewall resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes resilience during service maintenance, and highlights some key information about the Firewall service level agreement (SLA).
 
 ## Production deployment recommendations
 
@@ -139,9 +139,9 @@ This section describes what to expect when Azure Firewall is configured with ava
 
     - *Zonal:* For firewalls configured to be zonal, you need to detect the loss of an availability zone and initiate a failover to a secondary firewall that you create in another availability zone.
 
-- **Active connections:** When an availability zone is unavailable, requests in progress connected to a firewall instance in the faulty availability zone might terminate and require retries.
-
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+
+- **Active connections:** When an availability zone is unavailable, requests in progress connected to a firewall instance in the faulty availability zone might terminate and require retries.
 
 - **Expected data loss:** No data loss is expected during zone failover because Azure Firewall doesn't store persistent customer data.
 
@@ -175,11 +175,11 @@ The options for zone failure testing depend on your firewall's availability zone
 
 ## Resilience to region-wide failures
 
-Firewall is a single-region service. If the region is unavailable, your Firewall resource is also unavailable.
+Azure Firewall is a single-region service. If the region is unavailable, your Firewall resource is also unavailable.
 
 ### Custom multi-region solutions for resiliency
 
-To implement a multi-region architecture, use separate firewalls. This approach requires you to deploy an independent Firewall into each region, route traffic to the appropriate regional firewall, and implement custom failover logic. Consider the following points:
+To implement a multi-region architecture, use separate firewalls. This approach requires you to deploy an independent firewall into each region, route traffic to the appropriate regional firewall, and implement custom failover logic. Consider the following points:
 
 - **Use Azure Firewall Manager** for centralized policy management across multiple firewalls. Use the [Firewall Policy](/azure/firewall-manager/policy-overview) method for centralized rule management across multiple firewall instances.
 
@@ -189,7 +189,7 @@ For an example architecture that illustrates multi-region network security archi
 
 ## Resilience to service maintenance
 
-Firewall performs regular service upgrades and other forms of maintenance.
+Azure Firewall performs regular service upgrades and other forms of maintenance.
 
 You can configure daily maintenance windows to align upgrade schedules with your operational needs. For more information, see [Configure customer-controlled maintenance for Azure Firewall](/azure/firewall/customer-controlled-maintenance).
 
@@ -197,7 +197,7 @@ You can configure daily maintenance windows to align upgrade schedules with your
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-Firewall provides a higher availability SLA for firewalls deployed across two or more availability zones.
+Azure Firewall provides a higher availability SLA for firewalls deployed across two or more availability zones.
 
 ## Related content
 
