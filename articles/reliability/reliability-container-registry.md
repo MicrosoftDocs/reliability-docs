@@ -124,11 +124,11 @@ When a zone becomes unavailable, Container Registry automatically handles the fa
 
 - **Detection and response:** The Container Registry platform automatically detects failures in an availability zone and initiates a response. The service automatically routes traffic to the remaining healthy zones. No manual intervention is required to initiate a zone failover.
 
-- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to resources in the faulty availability zone are terminated. They need to be retried.
-
-[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+- **Notifications:** [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./reliability-availability-zone-down-notification-service-partial-include.md)]
 
     You can also monitor registry availability metrics in Azure Monitor.
+
+- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to resources in the faulty availability zone are terminated. They need to be retried.
 
 - **Expected data loss:** Any recent writes made in the faulty zone might not be replicated to other regions, which means that they might be lost until the zone recovers. The data loss is typically expected to be less than 15 minutes, but that's not guaranteed.
 
@@ -210,11 +210,11 @@ When a region becomes unavailable, container operations can continue to use alte
 
 - **Detection and response:** Container Registry monitors the health of each regional replica and is responsible for redirecting traffic to another region.
 
+- **Notifications:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
+
+    You can also monitor registry availability metrics for each regional endpoint in Azure Monitor.
+
 - **Active requests:** Any active requests currently in flight to an unavailable region will fail and must be retried so that they can be directed to a healthy region.
-
-[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
-
-You can also monitor registry availability metrics for each regional endpoint in Azure Monitor.
 
 - **Expected data loss:** Any recent writes made in the faulty region might not be replicated to other regions. This failure means that they might be lost until the region recovers. Typically, the data loss is expected to be less than 15 minutes, but that's not guaranteed.
 
@@ -243,8 +243,6 @@ Container Registry supports exporting container images and artifacts from your r
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
-
-For more information, see [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ### Related content
 
