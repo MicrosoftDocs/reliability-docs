@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Container Registry
 description: Learn about resiliency in Azure Container Registry, including resilience to transient faults, availability zone failures, and region-wide failures. Understand backup and restore options and SLA details.
-ms.author: doveychase
-author: chasedmicrosoft
+ms.author: anaharris
+author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-container-registry
@@ -124,7 +124,7 @@ When a zone becomes unavailable, Container Registry automatically handles the fa
 
 - **Detection and response:** The Container Registry platform automatically detects failures in an availability zone and initiates a response. The service automatically routes traffic to the remaining healthy zones. No manual intervention is required to initiate a zone failover.
 
-- **Notifications:** [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./reliability-availability-zone-down-notification-service-partial-include.md)]
+- **Notifications:** [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./includes/reliability-availability-zone-down-notification-service-partial-include.md)]
 
     You can also monitor registry availability metrics in Azure Monitor.
 
