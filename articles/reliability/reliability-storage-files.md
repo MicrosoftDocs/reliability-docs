@@ -138,7 +138,7 @@ This section describes what to expect when a file storage account is configured 
 
   - *LRS with zonal placement:* You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
 
-[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../includes/storage/reliability-availability-zone-down-notification-service-resource-include.md)]
+[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:**
 
