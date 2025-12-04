@@ -19,8 +19,10 @@ ms.date: 05/20/2025
 
 This article describes how to make Virtual Network resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Virtual Network service level agreement (SLA).
 
-> [!NOTE]
-> A virtual network enables direct private IP communication between the resources that it hosts. To enable hybrid cloud scenarios and securely extend your datacenter into Azure, you can link a virtual network to an on-premises network through Azure VPN Gateway or Azure ExpressRoute. 
+> [!IMPORTANT]
+> This guide focuses on Azure virtual networks, which are only one component in your network architecture.
+>
+> From a reliability perspective, it's important that you consider each component in your solution individually and how they operate together. Many core Azure networking services provide high resiliency by default. However, you might need to consider how other network appliances, VMs, and other components can support your reliability needs. For more information about how other services support reliability, see [Azure service reliability guides](./overview-reliability-guidance.md).
 
 ## Production deployment recommendations
 
@@ -52,14 +54,11 @@ A virtual network is one of several core networking components in Azure. When yo
 
 - Private endpoints, which provide private connectivity to Azure services and to resources outside of your virtual network
 
+A virtual network enables direct private IP communication between the resources that it hosts. To enable hybrid cloud scenarios and securely extend your datacenter into Azure, you can link a virtual network to an on-premises network through Azure VPN Gateway or Azure ExpressRoute.
+
 You might also deploy *appliances*, such as ExpressRoute gateways, VPN gateways, and firewalls. Appliances provide services to support your networking requirements, such as connecting to on-premises environments or providing sophisticated controls on traffic flow.
 
 Finally, you deploy your own components, like VMs that run applications or databases, and other Azure services that provide virtual network integration.
-
-> [!IMPORTANT]
-> This guide focuses on Azure virtual networks, which are only one component in your network architecture.
->
-> From a reliability perspective, it's important that you consider each component in your solution individually and how they operate together. Many core Azure networking services provide high resiliency by default. However, you might need to consider how other network appliances, VMs, and other components can support your reliability needs. For more information about how services support reliability, see [Azure service reliability guides](./overview-reliability-guidance.md).
 
 For more information about networking in Azure, see [Networking architecture design](/azure/architecture/networking/).
 
