@@ -12,24 +12,20 @@ ms.date: 08/22/2025
 
 # Reliability in Azure Key Vault
 
-[Azure Key Vault](/azure/key-vault/general/overview) is a cloud service that provides a secure store for secrets, such as keys, passwords, certificates, and other sensitive information.
+[Azure Key Vault](/azure/key-vault/general/overview) is a cloud service that provides a secure store for secrets, such as keys, passwords, certificates, and other sensitive information. Key Vault provides a range of built-in reliability features to help ensure that your secrets remain available.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Key Vault resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, recovery features to prevent accidental deletion, and highlights some key information about the Key Vault service level agreement (SLA).
-
-> [!NOTE]
-> Key Vault provides a range of built-in reliability features to help ensure that your secrets remain available. These features include automatic region replication, data redundancy, and the ability to back up and restore your secrets.
+This article describes Key Vault is resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, recovery features to prevent accidental deletion, and highlights some key information about the Key Vault service level agreement (SLA).
 
 ## Production deployment recommendations
 
-For production deployments of Key Vault, we recommend that you do the following steps:
+For production workloads, we recommend that you:
 
-- Use Standard or Premium tier key vaults.
-
-- [Enable soft delete and purge protection](/azure/key-vault/general/key-vault-recovery) to prevent accidental or malicious deletion.
-
-- For critical workloads, consider implementing multi-region strategies that are described in this guide.
+> [!div class="checklist"]
+> - Use Standard or Premium tier key vaults.
+> - [Enable soft delete and purge protection](/azure/key-vault/general/key-vault-recovery) to prevent accidental or malicious deletion.
+> - For critical workloads, consider implementing multi-region strategies that are described in this guide.
 
 ## Reliability architecture overview
 
@@ -106,9 +102,9 @@ The following section describes what to expect when key vaults are in a region t
 
 - **Detection and response:** The Key Vault service is responsible for detecting zone failures and automatically responding to them. You don't need to take any action during a zone failure.
 
-- **Active requests:** During a zone failure, the affected zone might fail to handle in-flight requests, which requires client applications to retry them. Client applications should follow [transient fault handling practices](#resilience-to-transient-faults) to ensure that they can retry requests if a zone failure occurs.
-
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
+
+- **Active requests:** During a zone failure, the affected zone might fail to handle in-flight requests, which requires client applications to retry them. Client applications should follow [transient fault handling practices](#resilience-to-transient-faults) to ensure that they can retry requests if a zone failure occurs.
 
 - **Expected data loss:** No data loss is expected during a zone failure because of the synchronous replication between zones.
 
@@ -182,9 +178,9 @@ The following section describes what to expect when a key vault is located in a 
 
 - **Detection and response:** Microsoft can decide to perform a failover if the primary region is lost. This process can take several hours after the loss of the primary region, or longer in some scenarios. Failover of key vaults might not occur at the same time as other Azure services.
 
-- **Active requests:** During a region failover, active requests might fail, and client applications need to retry them after the failover completes.
-
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
+
+- **Active requests:** During a region failover, active requests might fail, and client applications need to retry them after the failover completes.
 
 - **Expected data loss:** There might be some data loss if changes aren't replicated to the secondary region before the primary region fails.
 
@@ -243,8 +239,6 @@ We strongly recommend both features for production environments. For more inform
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
-
-For more information, see the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ## Related content
 
