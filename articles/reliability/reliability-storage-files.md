@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-file-storage
 ai-usage: ai-assisted
-ms.date: 11/21/2025
+ms.date: 12/05/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Files works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---
 
@@ -64,125 +64,121 @@ Azure Files provides two types of availability zone support:
 
 ### Requirements
 
-#### [Zone-redundant storage](#tab/zrs)
+- **Region support:**
 
-- **Region support:** ZRS is supported in:
+    - *ZRS:* ZRS is supported in:
 
-    - *HDD (standard) file shares* in [all regions with availability zones](./regions-list.md).
+      - *HDD (standard) file shares* in [all regions with availability zones](./regions-list.md).
 
-    - *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
+      - *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
 
-- **File share types:** ZRS is supported by all file share types.
+    - *LRS with zonal placement:* LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
+- **File share types:**
 
-- **Region support:** LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
+    - *ZRS:* ZRS is supported by all file share types.
 
-- **File share types:** LRS with zonal placement is available for storage accounts that meet the following requirements:
-  - Must use the premium storage tier (SSD media tier).
-  - Classic Azure file shares only (using the Microsoft.Storage resource provider). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
-
----
+    - *LRS with zonal placement:* LRS with zonal placement is available for storage accounts that meet the following requirements:
+      - Must use the premium storage tier (SSD media tier).
+      - Classic Azure file shares only (using the Microsoft.Storage resource provider). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
 
 ### Cost
 
-#### [Zone-redundant storage](#tab/zrs)
+The cost impact is different depending on the type of availabilty zone support you use:
 
-[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
-
-Zonal placement with LRS is charged at the same rate as LRS.
-
----
+- *LRS with zonal placement:* LRS with zonal placement is charged at the same rate as LRS.
 
 For detailed pricing information, see [Azure Files pricing](https://azure.microsoft.com/pricing/details/storage/files/).
 
 ### Configure availability zone support
 
-#### [Zone-redundant storage](#tab/zrs)
+- **Create a file share with availability zone support:**
 
-- **Create a file share with zone redundancy.** To create a new file share with ZRS, see [Create an Azure file share](/azure/storage/files/create-classic-file-share) and select **ZRS** or **GZRS** as the redundancy option during account creation.
+  - *ZRS:* To create a new file share with ZRS, see [Create an Azure file share](/azure/storage/files/create-classic-file-share) and select **ZRS** or **GZRS** as the redundancy option during account creation.
 
-- **Change replication type.** To convert an existing storage account to ZRS and learn about migration options and requirements, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
+  - *LRS with zonal placement:* To create a new file storage account with zonal placement, see [Create a new zonal storage account](/azure/storage/files/zonal-placement#create-a-new-zonal-storage-account).
 
-- **Disable zone redundancy.** Convert ZRS accounts back to a nonzonal configuration, such as LRS, through the same redundancy configuration change process.
+- **Change replication type:**
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
+  - *ZRS:* To convert an existing storage account to ZRS and learn about migration options and requirements, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
-- **Create a file share that uses zonal placement.** To create a new file storage account with zonal placement, see [Create a new zonal storage account](/azure/storage/files/zonal-placement#create-a-new-zonal-storage-account).
+  - *To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
-- **Enable zonal placement for an existing file share.** To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
+- **Disable availability zone support:**
 
-- **Remove zonal placement.** To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
+  - *ZRS:* Convert ZRS accounts back to a nonzonal configuration, such as LRS, through the same redundancy configuration change process.
 
----
+  - *LRS with zonal placement:* To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when a file storage account is configured for availability zone support and all availability zones are operational.
 
-#### [Zone-redundant storage](#tab/zrs)
+- **Traffic routing between zones:**
 
-[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Traffic routing](./includes/storage/reliability-storage-availability-zone-normal-operations-traffic-routing-include.md)]
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
+  - *LRS with zonal placement:* Azure Storage with locally redundant storage (LRS) automatically distributes requests across storage clusters in the availability zone you selected. Traffic distribution is transparent to applications and requires no client-side configuration.
 
-- **Traffic routing between zones:** Azure Storage with locally redundant storage (LRS) automatically distributes requests across storage clusters in the availability zone you selected. Traffic distribution is transparent to applications and requires no client-side configuration.
+- **Data replication between zones:**
+  
+  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Data replication](./includes/storage/reliability-storage-availability-zone-normal-operations-data-replication-include.md)]
 
-- **Data replication between zones:** All write operations to LRS are replicated synchronously across multiple storage replicas within the zone. When you upload or modify data, the operation isn't considered complete until the data has been successfully replicated across all of the replicas.
-
----
+  - *LRS with zonal placement:* All write operations to LRS are replicated synchronously across multiple storage replicas within the zone. When you upload or modify data, the operation isn't considered complete until the data has been successfully replicated across all of the replicas.
 
 ### Behavior during a zone failure
 
 This section describes what to expect when a file storage account is configured for availability zone support and there's an availability zone outage.
 
-#### [Zone-redundant storage](#tab/zrs)
+- **Detection and response:**
 
-[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Detection and response](./reliability-storage-availability-zone-down-experience-detection-response-include.md)]
 
-- **Traffic rerouting:** Azure automatically reroutes traffic to the remaining healthy availability zones. The service maintains full functionality by using the surviving zones with no customer intervention required. No remounting of Azure file shares from the connected clients is required.
+  - *LRS with zonal placement:* You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
+[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](../reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Detection and response:** You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
+- **Active requests:**
 
-[!INCLUDE [Resilience to availability zone failures (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Active requests](./includes/storage/reliability-storage-availability-zone-down-experience-active-requests-include.md)]
 
-- **Active requests:** In-flight requests might be dropped during the recovery process and should be retried when the zone recovers.
+  - *LRS with zonal placement:* In-flight requests might be dropped during the recovery process and should be retried when the zone recovers.
 
-- **Expected data loss:** Data on file shares in the affected zone is unavailable until the zone recovers.
+- **Expected data loss:**
 
-- **Expected downtime:** File shares in the affected zone remain down until the availability zone recovers.
+  - *ZRS*: [!INCLUDE [Storage - Behavior when a zone is down - Expected data loss](./reliability-storage-availability-zone-down-experience-expected-data-loss-include.md)]
 
-- **Traffic rerouting:** You're responsible for switching to other file storage accounts in healthy zones, if required.
+  - *LRS with zonal placement:* Data on file shares in the affected zone is unavailable until the zone recovers.
 
----
+- **Expected downtime:**
+
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Expected downtime](./reliability-storage-availability-zone-down-experience-expected-downtime-include.md)]
+
+  - *LRS with zonal placement:* File shares in the affected zone remain down until the availability zone recovers.
+
+- **Traffic rerouting:**
+
+  - *ZRS:* Azure automatically reroutes traffic to the remaining healthy availability zones. The service maintains full functionality by using the surviving zones with no customer intervention required. No remounting of Azure file shares from the connected clients is required.
+
+  - *LRS with zonal placement:* You're responsible for switching to other file storage accounts in healthy zones, if required.
 
 ### Zone recovery
 
-#### [Zone-redundant storage](#tab/zrs)
+Zone recovery behavior depends on the type of replication the file storage account uses:
 
-[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
-
-After the zone is healthy, file shares in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
-
----
+- *LRS with zonal placement:* After the zone is healthy, file shares in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
 ### Test for zone failures
 
-#### [Zone-redundant storage](#tab/zrs)
+Zone-down testing options depend on the type of replication the file storage account uses:
 
-[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
 
-#### [Zonal placement with LRS](#tab/zonal-lrs)
-
-There's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
-
----
+- *LRS with zonal plavement:* There's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
 
 ## Resilience to region-wide failures
 
