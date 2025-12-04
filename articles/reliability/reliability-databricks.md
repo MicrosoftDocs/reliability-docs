@@ -33,7 +33,7 @@ You must understand the reliability of each primary component in Azure Databrick
 
 - **The compute plane** runs data processing workloads by using clusters of virtual machines (VMs). The compute plane handles transient faults and automatically replaces failed nodes without user intervention. You can choose from multiple types of compute resources. For more information, see [Compute](/azure/databricks/compute/).
 
-  Workspace availability depends on the availability of the control plane, but compute clusters can continue to process jobs even if the control plane experiences brief interruptions.
+  Workspace availability depends on the availability of the control plane, but compute clusters can continue to process jobs even during control plane interruptions.
 
 ## Resilience to transient faults
 
@@ -75,7 +75,7 @@ Azure Databricks automatically distributes cluster nodes across availability zon
 
 ### Cost
 
-Zone distribution doesn't affect compute costs because you pay for the same number of VMs regardless of their availability zone placement. For detailed cost information, see [Azure Databricks compute pricing](https://azure.microsoft.com/pricing/details/databricks/).
+Zone distribution doesn't affect compute costs because you pay for the same number of VMs regardless of their availability zone placement. For more information, see [Azure Databricks compute pricing](https://azure.microsoft.com/pricing/details/databricks/).
 
 The default redundancy for the managed storage account, or DBFS root, is geo-redundant storage (GRS). Changing to ZRS or GZRS might affect your storage costs. For more information, see [Azure Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/).
 
@@ -93,7 +93,7 @@ The default redundancy for the managed storage account, or DBFS root, is geo-red
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when a workspace is configured for with availability zone support and all availability zones are operational.
+This section describes what to expect when a workspace is configured with availability zone support and all availability zones are operational.
 
 - **Data replication between zones:** Data replication for workspace storage occurs synchronously across zones when DBFS root uses a ZRS or GZRS account. This approach ensures strong consistency with minimal performance impact.
 
@@ -161,10 +161,10 @@ Typical multi-region solutions involve two or more workspaces. You can choose fr
 
 To choose an architecture, consider the following factors:
 
-- How critical the workload is to your business
-- How long a disruption might last (hours or maybe even a day)
-- How much effort you need to make the workspace fully operational
-- How much effort you need to restore, or fail back, to the primary region
+- The criticality of the workload to your business
+- The potential duration of a disruption (hours or possibly a full day)
+- The effort required to make the workspace fully operational
+- The effort required to restore or fail back to the primary region
 
 For workloads that require multi-region protection, see [Azure Databricks disaster recovery](/azure/databricks/admin/disaster-recovery).
 
@@ -173,9 +173,9 @@ For workloads that require multi-region protection, see [Azure Databricks disast
 Azure Databricks automatically backs up databases as part of the service's managed operations. This process includes notebook content, job definitions, cluster configurations, and access control settings.
 
 > [!NOTE]
-> No data loss occurs during a zone failure in Azure Databricks.
+> If a zone failure occurs, Azure Databricks expects no data loss.
 
-You should store your data on Unity Catalog storage. You can replicate data through storage replication or delta cloning.
+Store your data on Unity Catalog storage. You can replicate data through storage replication or delta cloning.
 
 Workspace-level backup and restore capabilities aren't directly available. Plan for workspace recreation procedures that include restoring configurations, users, and access controls from your synchronization processes.
 
