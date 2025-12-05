@@ -127,7 +127,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Virtual WAN||[Availability zones and resiliency in Virtual WAN](../virtual-wan/virtual-wan-faq.md#how-are-availability-zones-and-resiliency-handled-in-virtual-wan)</p> [Disaster recovery design](/azure/virtual-wan/disaster-recovery-design) |
 |Azure VMware Solution|| [Deploy disaster recovery by using VMware HCX](../azure-vmware/deploy-disaster-recovery-using-vmware-hcx.md)|
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
-|Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](../firewall/deploy-availability-zone-powershell.md) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](../application-gateway/application-gateway-faq.yml#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
+|Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](../firewall/deploy-availability-zone.md) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](../application-gateway/application-gateway-faq.yml#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
 |Community Training| [Reliability in Community Training](reliability-community-training.md) ||
 |Microsoft Fabric| [Reliability in Fabric](reliability-fabric.md)||
 |Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
