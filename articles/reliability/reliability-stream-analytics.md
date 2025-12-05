@@ -6,7 +6,7 @@ ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
-ms.date: 11/21/2025
+ms.date: 12/05/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Stream Analytics works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -28,7 +28,7 @@ This article describes Stream Analytics is resilient to a variety of potential o
 To ensure high reliability in production environments with Stream Analytics, we recommend that you:
 
 > [!div class="checklist"]
-> - **Use availability zones:** Deploy your streaming jobs and other resources in regions that support availability zones.
+> - **Use regions with availability zones:** Deploy your streaming jobs and other resources in regions that support availability zones.
 > - **Deploy sufficient capacity:** Set your streaming units based on your expected throughput, with additional capacity for handling peak loads, and with a buffer above your baseline requirements in case of sudden increases.
 > - **Monitor health:** Implement comprehensive monitoring using Azure Monitor metrics and diagnostic logs to track job health, input/output events, and resource utilization. Configure alerts for critical metrics like watermark delay and runtime errors to detect issues before they impact data processing. For more information, see [Monitor Azure Stream Analytics](../stream-analytics/monitor-azure-stream-analytics.md).
 > - **For mission-critical streaming workloads:** Consider implementing a multi-region deployment strategy with synchronized job configurations across regions. While Stream Analytics doesn't provide native multi-region replication, you can achieve regional redundancy by deploying identical jobs in multiple regions with appropriate data routing mechanisms. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
@@ -163,7 +163,7 @@ Stream Analytics performs automatic platform maintenance to apply security updat
 
 Consider the following points to ensure your jobs are resilient to service maintenance activities:
 
-- **Configure jobs to be resilient to replays:** Checkpoints are usually used to restore data after service maintenance. However, occasionally a replay technique needs to be used instead of a checkpoint. It's important that your input data sources are configured so that replays don't cause incorrect or partial results in your output. For more information, see [Job recovery from a service upgrade](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md#job-recovery-from-a-service-upgrade).
+- **Configure jobs to be resilient to replays:** Checkpoints are usually used to restore data after service maintenance. However, occasionally a replay technique needs to be used instead of a checkpoint. For more information and to learn how to configure your input data sources so that replays don't cause incorrect or partial results in your output, see [Job recovery from a service upgrade](../stream-analytics/stream-analytics-concepts-checkpoint-replay.md#job-recovery-from-a-service-upgrade).
 
 - **Consider mitigating the risk of bugs by deploying identical jobs:** The service proactively looks for many signals after deploying to each batch to get more confidence that there are no bugs introduced. However, no matter how much testing is done, there's still a risk that an existing, running job may break due to the introduction of a problem introduced by maintenance. If you are running mission-critical jobs, these risks need to be avoided.
 
