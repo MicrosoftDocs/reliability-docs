@@ -85,11 +85,11 @@ The default redundancy for the managed storage account, or DBFS root, is geo-red
 
 - **DBFS root:** You can configure zone redundancy for DBFS root storage when you create a new workspace or modify an existing workspace:
 
-    - **Create a new workspace that has zone-redundant DBFS root storage:** When you create a new Azure Databricks workspace, you can optionally configure the associated storage account to use ZRS or GZRS instead of the default GRS. For more information, see [Change workspace storage redundancy options](/azure/databricks/admin/workspace/workspace-storage-redundancy).
+    - **Create new workspace with zone-redundant DBFS Root storage:** When you create a new Azure Databricks workspace, you can optionally configure the associated storage account to use ZRS or GZRS instead of the default GRS. For more information, see [Change workspace storage redundancy options](/azure/databricks/admin/workspace/workspace-storage-redundancy).
     
     - **Enable zone redundancy on DBFS root storage:** For existing workspaces, you can change the redundancy configuration of the workspace storage account to ZRS or GZRS. For more information about how to enable zone redundancy, see [Change replication settings for a storage account](/azure/storage/common/redundancy-migration).
     
-- **Compute plane:** Cluster nodes are automatically distributed across availability zones. Zone distribution doesn't require you to configure anything.
+- **Compute plane:** Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution
 
 ### Behavior when all zones are healthy
 
