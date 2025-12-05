@@ -38,7 +38,7 @@ Single-tenant Azure Logic Apps runs Standard workflows on dedicated compute reso
 
 ::: zone-end
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 ::: zone pivot="consumption"
 

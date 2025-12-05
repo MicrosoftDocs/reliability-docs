@@ -18,7 +18,7 @@ This article describes reliability support in Azure Key Vault, covering intra-re
 
 Key Vault is a cloud service that provides a secure store for secrets, such as keys, passwords, certificates, and other sensitive information. Key Vault provides a range of built-in reliability features to help ensure that your secrets remain available. These features include automatic region replication, data redundancy, and the ability to back up and restore your secrets.
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 For production deployments of Key Vault, we recommend that you do the following steps:
 

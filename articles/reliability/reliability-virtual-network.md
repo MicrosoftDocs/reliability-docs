@@ -19,7 +19,7 @@ This article describes reliability support in Azure Virtual Network, covering in
 
 A virtual network is a logical representation of your network in the cloud. You can use a virtual network to define your own private IP address space and segment the network into subnets. Virtual networks serve as a trust boundary to host your compute resources such as Azure Virtual Machines and load balancers. A virtual network enables direct private IP communication between the resources that it hosts. To enable hybrid cloud scenarios and securely extend your datacenter into Azure, you can link a virtual network to an on-premises network through Azure VPN Gateway or Azure ExpressRoute. 
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 As you build your virtual network in Azure, it's important to improve the reliability of your solution by keeping in mind the following universal design principles:
 

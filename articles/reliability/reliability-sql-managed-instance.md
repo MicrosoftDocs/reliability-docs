@@ -19,7 +19,7 @@ This article describes reliability support in Azure SQL Managed Instance, coveri
 
 SQL Managed Instance is a fully managed platform as a service (PaaS) database engine. It handles most database management functions such as upgrading, patching, backups, and monitoring without user involvement. SQL Managed Instance is a scalable cloud database service that runs on the latest stable version of the SQL Server database engine and a patched operating system with built-in high availability. It provides almost 100% feature compatibility with SQL Server.
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 For most production deployments of SQL Managed Instance, consider the following recommendations:
 
