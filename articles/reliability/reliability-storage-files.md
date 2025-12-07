@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-file-storage
 ai-usage: ai-assisted
-ms.date: 12/05/2025
+ms.date: 12/08/2025
 #Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Files works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---
 
@@ -54,7 +54,7 @@ To ensure that only secure connections are established to your NFS share, we rec
 
 Azure Files provides two types of availability zone support:
 
-- **Zone redundant storage (ZRS):** Azure Files provides availability zone support through ZRS configurations that automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
+- **Zone redundant storage (ZRS):** ZRS configurations automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
     [!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
 
