@@ -215,7 +215,7 @@ When you promote a secondary region, choose whether to perform a *planned promot
 
 During an outage in the primary region, you typically need to perform a forced promotion. If the primary region is available and you trigger a promotion for another reason, you might choose a planned promotion.
 
-- **Notifications:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
     
     Use that information and other metrics to decide when to promote a secondary region to a primary region.
 
@@ -344,7 +344,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
     Failover is a one-way operation, so you need to reestablish the geo-disaster recovery pairing later. For more information, see [Region recovery](#region-recovery-1).
 
-- **Notifications:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
     
     Use that information and other metrics to decide when to fail over to the secondary region.
 
