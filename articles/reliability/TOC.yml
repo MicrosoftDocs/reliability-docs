@@ -108,8 +108,6 @@ items:
         href: ../azure-cache-for-redis/cache-how-to-geo-replication.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Cosmos DB for NoSQL
       href: reliability-cosmos-db-nosql.md
-    - name: Azure Cosmos DB for MongoDB vCore
-      href: reliability-cosmos-mongodb.md
     - name: Azure Cosmos DB for PostgreSQL
       items: 
       - name: Availability zones
@@ -126,6 +124,8 @@ items:
         href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
     - name: Azure Database for PostgreSQL
       href: reliability-azure-database-postgresql.md
+    - name: Azure DocumentDB
+      href: reliability-documentdb.md
     - name: Azure SQL Database
       href: reliability-sql-database.md
     - name: Azure SQL Managed Instance
@@ -173,7 +173,7 @@ items:
     - name: Azure Logic Apps
       href: reliability-logic-apps.md
     - name: Azure Service Bus
-      href: ../service-bus-messaging/service-bus-outages-disasters.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability-zones
+      href: reliability-service-bus.md
   - name: Internet of Things
     items:
     - name: Azure Device Registry
@@ -371,13 +371,15 @@ items:
       - name: Azure Service Fabric
         href: migrate-service-fabric.md
       - name: Azure Service Bus
-        href: /azure/service-bus-messaging/service-bus-outages-disasters#availability-zones?toc=/azure/reliability
+        href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database
         href: reliability-sql-database.md
       - name: Azure SQL Managed Instance
         href: reliability-sql-managed-instance.md#configure-availability-zone-support
-      - name: Azure Virtual Machines and Virtual Machine Scale Sets
-        href: migrate-vm.md
+      - name: Azure Virtual Machine Scale Sets
+        href: reliability-virtual-machine-scale-sets.md#migrate-to-availability-zone-support
+      - name: Azure Virtual Machines
+        href: reliability-virtual-machines.md#configure-availability-zone-support
 - name: Reliability concepts
   items:
   - name: Business continuity, high availability, and disaster recovery
