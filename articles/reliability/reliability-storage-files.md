@@ -22,7 +22,7 @@ This article describes how to make Azure Files resilient to a variety of potenti
 > [!NOTE]
 > Azure Files is part of the Azure Storage platform. Some of the capabilities of Azure Files are common across many Azure Storage services. In this article, we use *Azure Storage* to refer to these common capabilities.
 
-## Production deployment recommendations for reliability 
+## Production deployment recommendations
 
 To learn how to deploy Azure Files to support your solution's reliability requirements and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Files](/azure/well-architected/service-guides/azure-files) in the Azure Well-Architected Framework.
 
