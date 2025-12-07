@@ -14,9 +14,9 @@ ms.date: 08/26/2025
 
 This article describes reliability support in [Azure Container Instances](/azure/container-instances/container-instances-overview), which provides a straightforward way to run Linux or Windows containers in Azure, without the need to manage virtual machines (VMs) or adopt a more complex, higher-level service.
 
-For more information about service-specific reliability recommendations, see [Production deployment recommendations](#production-deployment-recommendations).
-
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
+
+This article describes how to make Azure Container Instances resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It highlights some key information about the Azure Container Instances service level agreement (SLA).
 
 ## Production deployment recommendations for reliability
 
@@ -203,9 +203,7 @@ This section describes what to expect when Container Instances resources are con
 
     - *Standby pools:* The Container Instances platform isn't guaranteed to respond to zone failures for standby pools. Standby pools shouldn't be used for workloads that require resilience to zone failures.
 
-- **Notification:**
-
-    [!INCLUDE [Notification description - Service Health and Resource Health](includes/reliability-notification-description-include.md)]
+[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
 - **Active requests:** If a zone fails, all containers running in that zone are likely to stop, including any active work that they're handling
 
@@ -238,8 +236,6 @@ Container Instances is a single-region service. If the region becomes unavailabl
 You can optionally deploy separate container groups in multiple regions. You're responsible for deploying and configuring the container groups in each region. You also need to configure load balancing by using a service like Azure Traffic Manager or Azure Front Door. You're responsible for any data synchronization, failover, and failback.
 
 ## Service-level agreement
-
-[!INCLUDE [SLA](includes/reliability-sla-include.md)]
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 

@@ -23,9 +23,6 @@ ms.date: 05/02/2025
 
 This article describes how to make IoT Hub resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the IoT Hub service level agreement (SLA).
 
-> [!NOTE]
-> When you evaluate reliability options, you also need to evaluate the trade-offs between the following items: level of resiliency that you require, implementation and maintenance complexity, and cost of implementing different options. For more information, see [Reliability trade-offs](/azure/well-architected/reliability/tradeoffs).
-
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -282,8 +279,6 @@ You can also export an existing IoT hub's Azure Resource Manager template (ARM t
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
-
-The service-level agreement (SLA) for IoT Hub describes the expected availability of the service and the conditions that must be met to achieve that availability expectation. To understand those conditions, it's important that you review the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ## Related content
 

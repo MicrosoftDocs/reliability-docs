@@ -15,9 +15,9 @@ ms.date: 10/17/2025
 
 This article describes reliability support in [Azure Event Hubs](../event-hubs/event-hubs-about.md), a native cloud service that can stream millions of events per second with low latency, from any source to any destination.
 
-For more information about service-specific reliability recommendations, see [Production deployment recommendations](#production-deployment-recommendations).
-
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
+
+This article describes how Event Hubs is resilient to a variety of potential outages and problems, and how you can configure it to be resilient to others, including transient faults, availability zone outages, and region outages. It also describes backup and recovery options, and highlights some key information about the Azure Event Hubs service level agreement (SLA).
 
 ## Production deployment recommendations
 
@@ -106,7 +106,7 @@ When Event Hubs namespaces use zone redundancy and an availability zone outage o
 
 - **Detection and response:** Event Hubs is responsible for automatically detecting a failure in an availability zone. You don't need to initiate a zone failover.
 
-[!INCLUDE [Notification description - Service Health and Resource Health](includes/reliability-notification-description-include.md)]
+[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
 - **Active requests:** During a zone failure, Event Hubs might drop active requests. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
@@ -220,7 +220,6 @@ During an outage in the primary region, you typically need to perform a forced p
 
     Set up alerts to receive notifications about region-level problems. For more information, see [Create Service Health alerts in the Azure portal](/azure/service-health/alerts-activity-log-service-notifications-portal).
 
-
 - **Active requests:** The behavior depends on whether the region outage occurs in the primary region or a secondary region:
 
     - *Primary region outage:* If the primary region is unavailable, all active requests are terminated. Client applications should retry operations after the promotion completes.
@@ -235,9 +234,7 @@ During an outage in the primary region, you typically need to perform a forced p
 
 - **Expected data loss:** The amount of data loss depends on the type of promotion that you perform (planned or forced) and the replication mode (synchronous or asynchronous):
 
-    - *Planned promotion:* No data loss is expected. However, during a region outage, a planned promotion might not be possible because it requires all of the primary and secondary regions to be available.
-    
-     
+    - *Planned promotion:* No data loss is expected. However, during a region outage, a planned promotion might not be possible because it requires all of the primary and secondary regions to be available.     
 
     - *Forced promotion, synchronous replication:* No data loss is expected.
 

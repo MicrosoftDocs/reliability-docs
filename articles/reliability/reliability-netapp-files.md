@@ -18,12 +18,13 @@ ms.date: 07/28/2025
 
 This article describes how to make NetApp Files resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the Azure NetApp Files service level agreement (SLA).
 
-> [!NOTE]
-> To use Azure NetApp Files, you must configure a NetApp account that contains *capacity pools* that host *volumes*. You can configure capacity and throughput independently and manage data protection options that fit various needs. You can enable replication between volumes, even if they're in different locations.
-
 ## Production deployment recommendations
 
 To learn about how to deploy Azure NetApp Files to support your solution's reliability requirements, and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure NetApp Files in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-netapp-files).
+
+## Reliability architecture overview
+
+To use Azure NetApp Files, you must configure a NetApp account that contains *capacity pools* that host *volumes*. You can configure capacity and throughput independently and manage data protection options that fit various needs. You can enable replication between volumes, even if they're in different locations.
 
 ## Resilience to transient faults
 
