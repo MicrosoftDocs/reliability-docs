@@ -21,17 +21,7 @@ A virtual network is a logical representation of your network in the cloud. You 
 
 ## Production deployment recommendations for reliability
 
-As you build your virtual network in Azure, it's important to improve the reliability of your solution by keeping in mind the following universal design principles:
-
-- **Avoid overlapping address spaces.** Ensure that your virtual network address space, defined as a Classless Inter-Domain Routing (CIDR) block, doesn't overlap with your organization's other network ranges.
-
-- **Reserve address space for future growth.** Your subnets shouldn't cover the entire address space of the virtual network. Plan ahead and reserve some address space for the future.
-
-- **Consolidate your networks.** To reduce management overhead, use a few large virtual networks instead of multiple small virtual networks.
-
-- **Secure your networks.** Secure your virtual networks by assigning network security groups (NSGs) to the subnets beneath them.
-
-For more information about how to design your Azure virtual network with reliability principles in mind, see [Architecture best practices for Virtual Network](/azure/well-architected/service-guides/virtual-network).
+For more information about how to deploy virtual networks to support your solution's reliability requirements and how reliability affects other aspects of your architecture, see [Architecture best practices for Azure Virtual Network in the Azure Well-Architected Framework](/azure/well-architected/service-guides/virtual-network).
 
 ## Reliability architecture overview
 
