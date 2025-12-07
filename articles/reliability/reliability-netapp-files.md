@@ -190,7 +190,7 @@ This section describes what to expect when Azure NetApp Files volumes are config
 - **Detection and response:** You're responsible for detecting the loss of a region and initiating a failover.
     Failover is a manual process. When you need to activate the destination volume, such as when you want to fail over to the destination region, you need to break the replication peering and then mount the destination volume. For more information, see [fail over to the destination volume](../azure-netapp-files/cross-region-replication-manage-disaster-recovery.md#fail-over-to-destination-volume).
 
-**Notification:** To monitor the health of your Azure NetApp Files volume, you can use Azure Monitor metrics. Azure Monitor detects any anomalies that indicate a region-down scenario via real-time metrics such as IOPS, latency, and capacity usage. You can configure alerts and notifications to send to administrators so that they can immediately respond by rebalancing file shares or initiating failover or other disaster recovery protocols.
+- **Notification:** To monitor the health of your Azure NetApp Files volume, you can use Azure Monitor metrics. Azure Monitor detects any anomalies that indicate a region-down scenario via real-time metrics such as IOPS, latency, and capacity usage. You can configure alerts and notifications to send to administrators so that they can immediately respond by rebalancing file shares or initiating failover or other disaster recovery protocols.
 
 - **Active requests:** During a region-down event, active requests can experience disruptions or increased latencies.
 
