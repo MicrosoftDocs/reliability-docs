@@ -104,7 +104,7 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
   - *ZRS:* To convert an existing storage account to ZRS and learn about migration options and requirements, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
-  - *To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
+  - *LRS with zonal placement:*: To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
 - **Disable availability zone support:**
 
