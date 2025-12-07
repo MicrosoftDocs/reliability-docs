@@ -42,6 +42,7 @@ To view information about ExpressRoute gateways, be sure to select the appropria
 ::: zone-end
 
 ::: zone pivot="expressroute"
+
 ## Production deployment recommendations
 
 The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable ExpressRoute solution, see [Architecture best practices for Azure ExpressRoute in the Azure Well-Architected Framework](/azure/well-architected/service-guides/azure-expressroute).
