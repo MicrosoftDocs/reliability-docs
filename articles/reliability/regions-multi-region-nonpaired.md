@@ -4,7 +4,7 @@ description: Learn about how to create multi-region solutions even when the regi
 author: anaharris-ms
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: article
 ms.date: 10/09/2025
 ms.author: anaharris
 ms.custom:
