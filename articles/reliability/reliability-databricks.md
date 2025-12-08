@@ -65,7 +65,7 @@ To use availability zone support in Azure Databricks, you need the following req
 
 - **Region support:** Azure Databricks availability zone support is available in all Azure regions that support Azure Databricks and provide availability zones. For a list of regions that support Azure Databricks, see [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region). For a complete list of regions that support availability zones, see [Azure regions that support availability zones](/azure/reliability/availability-zones-service-support).
 
-- **Storage replication:** Configure workspace storage accounts to use ZRS or GZRS.
+- **Storage replication:** Configure workspace storage accounts to use ZRS or GZRS (where available).
 
 - **Compute capacity:** Ensure that sufficient compute capacity exists across multiple zones in your target region. Azure Databricks automatically distributes cluster nodes across zones, but you should verify that your selected instance types are available in all target zones.
 
@@ -89,7 +89,7 @@ The default redundancy for the managed storage account, or DBFS root, is geo-red
     
     - **Enable zone redundancy on DBFS root storage:** For existing workspaces, you can change the redundancy configuration of the workspace storage account to ZRS or GZRS. For more information about how to enable zone redundancy, see [Change replication settings for a storage account](/azure/storage/common/redundancy-migration).
     
-- **Compute plane:** Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution
+- **Compute plane:** Cluster nodes are automatically distributed across availability zones. No customer configuration is required for zone distribution.
 
 ### Behavior when all zones are healthy
 
@@ -103,7 +103,7 @@ This section describes what to expect when a workspace is configured with availa
 
 This section describes what to expect when a workspace is configured with availability zone support and there's an availability zone outage.
 
-- **Detection:** Microsoft automatically detects zone failures. You don't need to take any action for zone-level failover.
+- **Detection and response:** Microsoft automatically detects zone failures and initiates response procedures. You don't need to take any action for zone-level failover.
 
 - **Notification:** Microsoft doesn't automatically notify you when a zone is down. But you can use the [Azure Databricks status page](/azure/databricks/resources/status) to see an overview of all core Azure Databricks services. You can also subscribe to status updates on individual service components and receive an alert when the status of the service that you subscribe to changes.
 
@@ -113,7 +113,7 @@ This section describes what to expect when a workspace is configured with availa
 
     - **Control plane:** Expect no data loss during a zone outage.
 
-    - **DBFS root:** Workspace data remains available if it uses ZRS or GZRS configurations.
+    - **DBFS root:** Workspace data remains available if it uses ZRS or GZRS storage configurations.
     
     - **Compute plane:** Data cached on VMs is ephemeral. Any data lost from VMs during a zone failure is recovered from storage. If the driver node is lost, the job restarts and recomputes the results.
 
@@ -175,7 +175,7 @@ Azure Databricks automatically backs up databases as part of the service's manag
 > [!NOTE]
 > If a zone failure occurs, Azure Databricks expects no data loss.
 
-Store your data on Unity Catalog storage. You can replicate data through storage replication or delta cloning.
+We recommend you store your data on Unity Catalog storage. You can replicate data through storage replication or delta cloning.
 
 Workspace-level backup and restore capabilities aren't directly available. Plan for workspace recreation procedures that include restoring configurations, users, and access controls from your synchronization processes.
 
