@@ -30,7 +30,7 @@ API Management service tiers provide different levels of reliability:
 
 - **Premium (classic) tier:** Supports multiple units that can be distributed across availability zones and regions for maximum resilience. In the Premium tier, each unit consists of two virtual machines (VMs) that provide the compute resources to handle API requests.
 
-- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multi-region deployments. Each unit consists of [...TBD...]
+- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multi-region deployments. Each unit consists of two VMs that provide the compute resources to handle API requests.
 
 - **Basic v2, Standard, and Standard v2 tiers:** All support multiple units within a single datacenter. They don't support availability zones or multi-region deployments.
 
@@ -127,7 +127,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 ### Requirements
 
-- **Region support:** API Management supports availability zones for the Premium (classic) and Premium v2 tiers in all of the [Azure regions that support availability zones](./regions-list.md).
+- **Region support:** API Management supports availability zones for the Premium (classic) and Premium v2 tiers in regions where the API Management tier is available and the region [supports availability zones](./regions-list.md).
 
 - **Tier requirement:** You must use the Premium (classic) or Premium v2 tier to configure availability zone support. API Management doesn't currently support availability zones in the classic Consumption, Developer, Basic, and Standard tiers or in the Basic v2 and Standard v2 tiers. For upgrade options, see [Upgrade and scale an API Management instance](../api-management/upgrade-and-scale.md).
 
@@ -151,7 +151,7 @@ With availability zone support, API Management replicates the gateway (scale uni
     
     To determine the number of units that provide your required gateway performance, use [capacity metrics](/azure/api-management/api-management-capacity) and your own testing. For more information about scaling and upgrading your service instance, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
-- **Autoscaling:** If you manually configure availability zones on an API Management instance that's configured with autoscaling, you might need to adjust your autoscale settings after configuration. In this case, the number of API Management units in autoscale rules and limits must be a multiple of the number of zones. In the Premium v2 tier, you don't need to adjust your autoscale settings when you enable availability zone support. 
+- **Autoscaling:** In the Premium v2 tier, you don't need to adjust your autoscale settings when you enable availability zone support. 
 ---
 
 ### Cost
@@ -372,7 +372,7 @@ This section describes what to expect when API Management instances are configur
 
 - **Detection and response:** API Management is responsible for detecting a failure in a region and automatically failing over to a gateway in one of the other regions that you configure.
 
-- **Active requests:** Any active requests that are bing processed in the faulty region processes might be dropped and the client should retry them.
+- **Active requests:** Any active requests that are being processed in the faulty region might be dropped and the client should retry them.
 
 - **Expected data loss:** API Management doesn't store data, except for configuration, a cache, and rate limit counters.
 
