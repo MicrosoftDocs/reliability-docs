@@ -1,10 +1,11 @@
 ---
-title: Availability zone - region-down notifications (Service Health only)
+
+title: Azure region - region-down notifications (Service Health only)
 description: Include file for the region-down behavior section's *Notification* bullet that describes how Service Health can be used.
 author: anaharris-ms
 ms.service: azure
 ms.topic: include
-ms.date: 10/21/2025
+ms.date: 11/04/2025
 ms.author: anaharris
 ms.custom: include file
 ---
