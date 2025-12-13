@@ -206,7 +206,7 @@ This section describes what to expect when a Service Bus namespace is configured
 
 This section describes what to expect when a Service Bus namespace is configured for Geo-Replication and there's an outage in the primary or a secondary region.
 
-- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For suggested criteria to consider when deciding whether to fail over, see [Criteria to trigger promotion](../service-bus-messaging/service-bus-geo-replication.md#criteria-to-trigger-promotion).
+- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For suggested criteria to consider when deciding whether to fail over, see [Recommended scenarios to trigger promotion](../service-bus-messaging/service-bus-geo-replication.md#recommended-scenarios-to-trigger-promotion).
 
     For more information about how to promote a secondary region to the new primary, see [Promotion flow](../service-bus-messaging/service-bus-geo-replication.md#promotion-flow).
 
