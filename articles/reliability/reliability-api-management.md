@@ -123,6 +123,7 @@ With availability zone support, API Management replicates the gateway (scale uni
     :::image type="complex" border="false" source="./media/reliability-api-management/automatic-single-unit.svg" alt-text="Diagram that shows a single API Management unit distributed across two availability zones for automatic availability zone support.":::
        The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
     :::image-end:::
+
 ---
 
 ### Requirements
@@ -152,6 +153,7 @@ With availability zone support, API Management replicates the gateway (scale uni
     To determine the number of units that provide your required gateway performance, use [capacity metrics](/azure/api-management/api-management-capacity) and your own testing. For more information about scaling and upgrading your service instance, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
 - **Autoscaling:** In the Premium v2 tier, you don't need to adjust your autoscale settings when you enable availability zone support. 
+
 ---
 
 ### Cost
@@ -177,7 +179,8 @@ This section explains how to configure availability zone support for your API Ma
 
 #### [Premium v2](#tab/premv2)
 
-In the Premium v2 tier, you can optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. API Management makes a best effort to enable zone redundancy when you select this option. You can't change the availability zone configuration after the instance is created.
+In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. API Management makes a best effort to enable zone redundancy when you select this option. You can't change the availability zone configuration after the instance is created.
+
 ---
 
 ### Capacity planning and management
@@ -200,7 +203,7 @@ This section describes what to expect when API Management instances are configur
 
 - **Data replication between zones:** API Management stores and replicates the following data.
 
-        - *Gateway configuration*, such as APIs and policy definitions, regularly synchronizes between the availability zones that you select for the instance. Propagation of updates between the availability zones normally takes less than 10 seconds.
+    - *Gateway configuration*, such as APIs and policy definitions, regularly synchronizes between the availability zones that you select for the instance. Propagation of updates between the availability zones normally takes less than 10 seconds.
 
     - *Data in the internal cache*, if you use the internal cache that API Management provides. Cache entries are distributed among availability zones. The internal cache is volatile and data isn't guaranteed to be persisted. Consider using an external cache if you need to persist cached data.
 
@@ -246,7 +249,7 @@ This section describes what to expect when API Management instances are configur
     
     - *Zonal:* For zonal instances, when a zone is unavailable, your instance is unavailable. If you have a secondary instance in another availability zone, you're responsible for rerouting traffic to that secondary instance.
     
-#### [Premium v2](#tab/prem)
+#### [Premium v2](#tab/premv2)
 
 - **Detection and response:** In the Premium v2 tier, the API Management platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
 
@@ -264,9 +267,10 @@ This section describes what to expect when API Management instances are configur
 
 - **Expected downtime:** You can expect instances to have no downtime during an availability zone outage. Units in the unaffected zone or zones continue to work.
         
-        You can also expect instances that have a single unit to have no downtime. In this case, API Management distributes the unit's underlying VMs to two zones. The VM in the unaffected zone continues to work.
+    You can also expect instances that have a single unit to have no downtime. In this case, API Management distributes the unit's underlying VMs to two zones. The VM in the unaffected zone continues to work.
 
 - **Traffic rerouting:** When a zone is unavailable, any units in the affected zone are also unavailable. You can scale your instance to add more units.
+
 ---
 
 ### Zone recovery
@@ -292,6 +296,8 @@ The options for testing for zone failures depend on the availability zone config
 
 In the Premium v2 tier, when the availability zone recovers, API Management automatically restores units in the availability zone and reroutes traffic between your units as normal.
 
+---
+
 ### Test for zone failures
 
 The options for testing for zone failures depend on the availability zone configuration that your instance uses.
@@ -302,7 +308,7 @@ The options for testing for zone failures depend on the availability zone config
 
 - **Zonal:** For zonal instances, you can't simulate an outage of the availability zone that contains your API Management instance. However, you can manually configure upstream gateways or load balancers to redirect traffic to a different instance in a different availability zone.
 
-#### [Premium v2](#tab/prem)
+#### [Premium v2](#tab/premv2)
 
 In the Premium v2 tier, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 ---
