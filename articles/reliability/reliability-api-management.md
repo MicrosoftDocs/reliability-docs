@@ -311,6 +311,7 @@ The options for testing for zone failures depend on the availability zone config
 #### [Premium v2](#tab/premv2)
 
 In the Premium v2 tier, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
+
 ---
 
 ## Resilience to region-wide failures 
