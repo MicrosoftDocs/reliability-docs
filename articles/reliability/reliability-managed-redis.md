@@ -60,7 +60,6 @@ For more information, see [Azure Managed Redis architecture](../redis/architectu
 Follow these recommendations for managing transient faults when using Azure Managed Redis:
 
 - **Use SDK configurations** that automatically retry when transient faults occur, and that use appropriate backoff and timeout periods. Consider using the [Retry pattern](/azure/architecture/patterns/retry) and [Circuit Breaker pattern](/azure/architecture/patterns/circuit-breaker) in your applications.
-- **Use connection multiplexing** to maintain persistent connections and reduce the impact of temporary connection losses. Many commonly used SDKs provide multiplexing automatically.
 - **Design for cache-aside patterns** where your application can continue operating with degraded performance when Redis is temporarily unavailable by falling back to the primary data store.
 
 ## Resilience to availability zone failures
