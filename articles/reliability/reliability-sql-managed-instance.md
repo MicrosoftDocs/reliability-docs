@@ -198,11 +198,15 @@ The SQL Managed Instance platform manages traffic routing, failover, and failbac
 
 ## Resilience to region-wide failures
 
-An individual SQL Managed Instance is deployed within a single region. However, you can deploy a secondary SQL managed instance in a separate Azure region and configure a *failover group*. Failover groups automatically geo-replicate your data and can automatically or manually fail over if a regional failure occurs, based on the failover policy.
+An individual SQL Managed Instance is deployed within a single region. However, you can deploy a secondary SQL managed instance in a separate Azure region and configure a *failover group*.
+
+### Failover groups
+
+Failover groups automatically geo-replicate your data and can automatically or manually fail over if a regional failure occurs, based on the failover policy.
 
 This section summarizes key information about failover groups, but it's important to review [Failover groups overview and best practices](/azure/azure-sql/managed-instance/failover-group-sql-mi) to learn more about how they work and how to configure them.
 
-### Failover policies
+#### Failover policies
 
 When you create a failover group, you select the [failover policy](/azure/azure-sql/managed-instance/failover-group-sql-mi#failover-policy), which specifies who is responsible for detecting an outage and performing a failover. You can configure two types of failover policies:
 
@@ -213,11 +217,11 @@ When you create a failover group, you select the [failover policy](/azure/azure-
 > [!IMPORTANT]
 > Use customer-managed failover options to develop, test, and implement your DR plans. **Don't rely on Microsoft-managed failover**, which might only be used in extreme circumstances. A Microsoft-managed failover is likely initiated for an entire region. It can't be initiated for individual failover groups, SQL managed instances, subscriptions, or customers. Failover might occur at different times for different Azure services. We recommend that you use customer-managed failover.
 
-### Region support
+#### Region support
 
 You can select any Azure region for the SQL managed instances within the failover group. Because of the high latency of wide area networks, geo-replication uses an asynchronous replication mechanism. To reduce network delays, select regions that have low latency connections. For more information about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency).
 
-### Cost
+#### Cost
 
 When you create multiple SQL managed instances in different regions, you're billed for each SQL managed instance.
 
@@ -225,17 +229,17 @@ However, if your secondary instance doesn't have any read workloads or applicati
 
 For more information about SQL Managed Instance pricing, see [Service pricing information](https://azure.microsoft.com/pricing/details/azure-sql-managed-instance/single/).
 
-### Configure multi-region support
+#### Configure multi-region support
 
 To learn how to configure a failover group, see [Configure a failover group for SQL Managed Instance](/azure/azure-sql/managed-instance/failover-group-configure-sql-mi).
 
-### Capacity planning and management
+#### Capacity planning and management
 
 During a failover, traffic is redirected to a secondary SQL managed instance. It's important that your secondary SQL managed instance is ready to receive traffic. Create a secondary SQL managed instance with the same service tier, hardware generation, and compute size as the primary instance.
 
 For more information about scaling SQL managed instances in a failover group, see [Scale instances](/azure/azure-sql/managed-instance/failover-group-sql-mi#scale-instances).
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 This section describes what to expect when SQL managed instances are configured to use multi-region failover groups and all regions are operational:
 
@@ -251,7 +255,7 @@ This section describes what to expect when SQL managed instances are configured 
 
   If you need to eliminate data loss from asynchronous replication during failovers, configure your application to block the calling thread until it confirms that the last committed transaction has been transmitted and hardened in the transaction log of the secondary database. This approach requires custom development and it degrades the performance of your application. For more information, see [Prevent loss of critical data](/azure/azure-sql/managed-instance/failover-group-sql-mi#prevent-loss-of-critical-data).
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 This section describes what to expect when SQL managed instances are configured to use multi-region failover groups and there's an outage in the primary region:
 
@@ -275,11 +279,11 @@ This section describes what to expect when SQL managed instances are configured 
 
 - **Traffic rerouting:** After the failover group completes the failover process, read-write traffic is routed to the new primary instance automatically. If your applications use the failover group's endpoints in their connection strings, they don't need to modify their connection strings after failover.
 
-### Region recovery
+#### Region recovery
 
 Failover groups don't automatically fail back to the primary region when it's restored, and so it's your responsibility to initiate a failback.
 
-### Test for region failures
+#### Test for region failures
 
 You can [test the failover of a failover group](/azure/azure-sql/managed-instance/failover-group-configure-sql-mi#test-failover).
 
@@ -307,7 +311,7 @@ For more information about different storage types and their capabilities, see [
 
 ### Geo-restore
 
-The geo-restore capability is a basic DR solution that allows you to restore backup copies to a different Azure region. Geo-backup typically requires a significant amount of downtime and data loss. To achieve higher levels of recoverability if a regional disruption occurs, you should [configure failover groups](#multi-region-support).
+The geo-restore capability is a basic DR solution that allows you to restore backup copies to a different Azure region. Geo-backup typically requires a significant amount of downtime and data loss. To achieve higher levels of recoverability if a regional disruption occurs, you should [configure failover groups](#resilience-to-region-wide-failures).
 
 If you use geo-restore, you need to consider how to make your backups available in your secondary region:
 
@@ -334,4 +338,3 @@ For SQL Managed Instance, the availability SLA only applies when your Azure virt
 - [Overview of business continuity with SQL Managed Instance](/azure/azure-sql/managed-instance/business-continuity-high-availability-disaster-recover-hadr-overview)
 - [High availability and disaster recovery checklist](/azure/azure-sql/managed-instance/high-availability-disaster-recovery-checklist)
 - [Reliability in Azure](./overview.md)
-
