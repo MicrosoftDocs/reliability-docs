@@ -269,9 +269,9 @@ This section describes what to expect when SQL managed instances are configured 
   
   - *Microsoft-managed failover policy:* Microsoft-managed failovers are performed under exceptional circumstances. When Microsoft triggers a failover, the failover group automatically performs a forced failover to the secondary instance in the failover group. However, we recommend using a customer-managed failover policy for production workloads so that you can control when the failover occurs.
 
-- **Active requests:** When a failover occurs, any requests that are being processed are terminated and must be retried. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults).
-
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
+
+- **Active requests:** When a failover occurs, any requests that are being processed are terminated and must be retried. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults).
 
 - **Expected data loss:** The amount of data loss depends on how you configure your application. For more information, see [Failover groups overview and best practices](/azure/azure-sql/managed-instance/failover-group-sql-mi).
 
