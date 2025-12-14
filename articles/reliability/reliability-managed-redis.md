@@ -6,7 +6,7 @@ author: anaharris-ms
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis
-ms.date: 12/04/2025
+ms.date: 12/15/2025
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Redis works from a reliability perspective and plan both resiliency and recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
