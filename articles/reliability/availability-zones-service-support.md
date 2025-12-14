@@ -90,7 +90,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure SignalR Service](../azure-signalr/availability-zones.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Site Recovery](migrate-recovery-services-vault.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure SQL Database](./reliability-sql-database.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure SQL Managed Instance](./reliability-sql-managed-instance.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure SQL Managed Instance](./reliability-sql-managed-instance.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Stream Analytics](../stream-analytics/stream-analytics-introduction.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Table Storage](./reliability-storage-table.md#resilience-to-availability-zone-failures)| :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Ultra Disk Storage](/azure/virtual-machines/disks-enable-ultra-ssd)| | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
