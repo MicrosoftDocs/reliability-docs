@@ -174,7 +174,11 @@ When you enable active geo-replication, you are billed for each Azure Managed Re
 
 - **Create a new geo-replicated cache instance**: Configure active geo-replication during cache provisioning by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](../redis/how-to-active-geo-replication.md#create-or-join-an-active-geo-replication-group).
 
-- **Enable an existing cache instance for geo-replication**: You can add an existing cache instance to an active geo-replication group. For more information, see [Add an existing instance to an active geo-replication group](../redis/how-to-active-geo-replication.md#add-an-existing-instance-to-an-active-geo-replication-group).
+- **Enable an existing cache instance for geo-replication**: You can add an existing cache instance to an active geo-replication group.
+
+  However, when an existing instance is added to an active geo-replication group, the data in the instance needs to be flushed, and there is a small amount of downtime. If possible, plan to enable active geo-replication when you create cache instances.
+
+  For more information, see [Add an existing instance to an active geo-replication group](../redis/how-to-active-geo-replication.md#add-an-existing-instance-to-an-active-geo-replication-group).
 
 - **Disable geo-replication on a cache instance**: Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
 
