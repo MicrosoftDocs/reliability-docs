@@ -184,7 +184,7 @@ When you enable active geo-replication, you are billed for each Azure Managed Re
 
 ### Capacity planning and management
 
-During a region-down event, each instance might have fewer resources available to serve your workload. If an instance is often under resource pressure and you need to prepare for a region failure, consider [overprovisioning one or more of your instances](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale your instances, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
+During a region-down event, the other instances might be under higher pressure. If an instance is often already under resource pressure and you need to prepare for the increased capacity requirements during a region failure, consider [overprovisioning the instance](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale an instances, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
 
 #### Behavior when all regions are healthy
 
