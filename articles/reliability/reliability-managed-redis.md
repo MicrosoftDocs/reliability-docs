@@ -73,7 +73,7 @@ To make a cache zone-redundant, you must deploy it into a supported region and e
 
 The following diagram shows a zone-redundant cache with two nodes, each in a separate zone:
 
-:::image type="content" source="./media/reliability-managed-redis/zone-redundant.png" alt-text="Diagram that shows a cache with two nodes distributed across separate availability zones for zone redundancy." border="false":::
+:::image type="content" source="./media/reliability-managed-redis/zone-redundant.svg" alt-text="Diagram that shows a cache with two nodes distributed across separate availability zones for zone redundancy." border="false":::
 
 ### Requirements
 
@@ -139,11 +139,11 @@ When you use [active geo-replication](../redis/how-to-active-geo-replication.md)
 
 The following diagram shows two cache instances in different regions within the same active geo-replication group, with client applications that connect to each cache instance:
 
-:::image type="content" source="./media/reliability-managed-redis/active-geo-replication.png" alt-text="Diagram that shows two caches in different regions, within the same active geo-replication group, and applications connecting to each instance." border="false":::
+:::image type="content" source="./media/reliability-managed-redis/active-geo-replication.svg" alt-text="Diagram that shows two caches in different regions, within the same active geo-replication group, and applications connecting to each instance." border="false":::
 
 You're responsible for configuring your client applications so that, if any regional instance fails, they can redirect their requests to a healthy instance. The following diagram shows how an application can redirect their requests to a healthy cache instance when the instance they ordinarily use fails:
 
-:::image type="content" source="./media/reliability-managed-redis/active-geo-replication-failover.png" alt-text="Diagram that shows two caches in different regions, one of which is failing, and applications connecting to the healthy instance." border="false":::
+:::image type="content" source="./media/reliability-managed-redis/active-geo-replication-failover.svg" alt-text="Diagram that shows two caches in different regions, one of which is failing, and applications connecting to the healthy instance." border="false":::
 
 #### Requirements
 
