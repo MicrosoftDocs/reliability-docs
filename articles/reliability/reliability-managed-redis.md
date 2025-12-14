@@ -183,7 +183,7 @@ During a zone-down event, your instance might fewer resources available to serve
 
 This section describes what to expect when instances are configured to use active geo-replication and all regions are operational.
 
-- **Traffic routing between regions**: You're responsible for configuring your applications to connect to a specific cache instance. Applications can connect to any cache instance in the replication group and perform both read and write operations. Traffic routing is handled by the application, allowing you to direct clients to the nearest region for optimal latency. Azure Managed Redis doesn't provide automatic traffic routing between regions.
+- **Traffic routing between regions**: You're responsible for configuring your applications to connect to a specific cache instance. Applications can connect to any cache instance in the replication group and perform both read and write operations. Traffic routing is handled by the application, allowing you to direct clients to the nearest region for minimal latency. Azure Managed Redis doesn't provide automatic traffic routing between regions.
 
 - **Data replication between regions**: The service uses asynchronous replication between regions to maintain eventual consistency. Write operations are immediately committed in the local region and then propagated to other regions in the background. Conflict-free replicated data types (CRDTs) ensure that concurrent writes in different regions are automatically merged.
 
