@@ -144,7 +144,7 @@ This section describes what to expect when a file storage account is configured 
 
   - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Active requests](./includes/storage/reliability-storage-availability-zone-down-experience-active-requests-include.md)]
 
-  - *LRS with zonal placement:* In-flight requests might be dropped during the recovery process and should be retried when the zone recovers.
+  - *LRS with zonal placement:* In-flight requests are dropped and should be retried when the zone recovers.
 
 - **Expected data loss:**
 
