@@ -64,7 +64,7 @@ This scenario is ideal for the use of Azure Traffic Manager that has inbuilt pro
 
 1. Create a new Azure Traffic Manager profile
     Create a new Azure Traffic manager profile with the name contoso123 and select the Routing method as Priority. 
-    If you have a pre-existing resource group that you want to associate with, then you can select an existing resource group, otherwise, create a new resource group.
+    If you have a preexisting resource group that you want to associate with, then you can select an existing resource group, otherwise, create a new resource group.
     
     ![Screenshot of creating Traffic Manager profile.](/azure/networking/media/disaster-recovery-dns-traffic-manager/create-traffic-manager-profile.png)
     

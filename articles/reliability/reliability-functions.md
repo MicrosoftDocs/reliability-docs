@@ -492,7 +492,7 @@ When you run the same function code in multiple regions, there are two patterns 
 
 With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](../frontdoor/front-door-overview.md) for your critical HTTP triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Front door can also periodically check the health of each endpoint. When a function in one region stops responding to health checks, Azure Front Door takes it out of rotation, and only forwards traffic to the remaining healthy functions.  
 
-![Architecture for Azure Front Door and Function](/azure/azure-functions/media/functions-geo-dr/front-door.png)  
+![Architecture for Azure Front Door and Functions.](/azure/azure-functions/media/functions-geo-dr/front-door.png)  
 
 ### Active-passive pattern for non-HTTPS trigger functions
 
@@ -508,7 +508,7 @@ Consider an example topology using an Azure Event Hubs trigger. In this case, th
 * Function app triggers on the *direct* (nonalias) connection string for its respective event hub. 
 * Publishers to the event hub should publish to the alias connection string. 
 
-![Active-passive example architecture](/azure/azure-functions/media/functions-geo-dr/active-passive.png)
+![Active-passive example architecture.](/azure/azure-functions/media/functions-geo-dr/active-passive.png)
 
 Before failover, publishers sending to the shared alias route to the primary event hub. The primary function app is listening exclusively to the primary event hub. The secondary function app is passive and idle. As soon as failover is initiated, publishers sending to the shared alias are routed to the secondary event hub. The secondary function app now becomes active and starts triggering automatically. Effective failover to a secondary region can be driven entirely from the event hub, with the functions becoming active only when the respective event hub is active.
 
