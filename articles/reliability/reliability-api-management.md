@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
 ai-usage: ai-assisted
-ms.date: 12/12/2025
+ms.date: 12/17/2025
 ---
 
 # Reliability in Azure API Management
@@ -21,24 +21,24 @@ This article describes how to make API Management resilient to a variety of pote
 ## Reliability architecture overview
 
 API Management uses a scale unit-based architecture to provide built-in redundancy and scalability. When you deploy an API Management instance, you configure one or more *scale units*, or *units*. Each unit is a logical representation of capacity that contains the necessary compute resources to handle API requests. 
+
+* Each unit consists of two compute resources (VMs or similar servers, depending on the service tier) that handle API requests together. If one compute resource fails, the unit continues operating but at reduced capacity, providing some built-in reliability protection.
  
-When you configure an instance with two or more units, the available units work together to process requests and provide automatic load balancing. If one of the units becomes unavailable, the remaining units continue to handle traffic, but with potentially reduced capacity.
+* When you configure an instance with two or more units, the available units work together to process requests and provide automatic load balancing. If one of the units becomes unavailable, the remaining units continue to handle traffic, but with potentially reduced capacity.
   
-To gain higher levels of reliability, API Management supports unit distribution across availability zones within a region and across multiple regions.
+* To gain higher levels of reliability, API Management supports unit distribution across availability zones within a region and across multiple regions.
 
 API Management service tiers provide different levels of reliability:
 
-- **Premium (classic) tier:** Supports multiple units that can be distributed across availability zones and regions for maximum resilience. In the Premium tier, each unit consists of two virtual machines (VMs) that provide the compute resources to handle API requests.
+- **Premium (classic) tier:** Supports multiple units that can be distributed across availability zones and regions for maximum resilience.
 
-- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multi-region deployments. Each unit consists of two VMs that provide the compute resources to handle API requests.
+- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multi-region deployments. 
 
 - **Basic v2, Standard, and Standard v2 tiers:** All support multiple units within a single datacenter. They don't support availability zones or multi-region deployments.
 
 - **Developer tier:** Supports only a single unit and provides no availability zone or multi-region support. This tier is designed for development and testing scenarios. It isn't suitable for production workloads.
 
 - **Consumption tier:** Has built-in resiliency capabilities and is resilient to a range of faults within a single Azure datacenter. However, the Consumption tier doesn't provide support for availability zones or multi-region deployments. To understand the expected uptime of a Consumption tier API Management instance, review the [service-level agreement (SLA)](#service-level-agreement).
-
-Units within an instance work together to process requests and automatically load balance between available units. If a unit becomes unavailable, remaining units continue to handle traffic, but with potentially reduced capacity.
 
 > [!NOTE]
 > The Developer and Premium tiers of API Management support [self-hosted gateways](../api-management/self-hosted-gateway-overview.md), which you can run on your own infrastructure. When you use self-hosted gateways, you're responsible for configuring them to meet your reliability requirements. Self-hosted gateways are outside the scope of this article.
@@ -61,7 +61,7 @@ When you use API Management in front of an API, you might need to retry requests
 
 API Management provides two types of availability zone support when you deploy a Premium (classic) API Management instance in a supported region:
 	
-- **Automatic:** API Management provides automatic availability zone support when you don't specify which availability zones to use. 
+- **Automatic** (Recommended): API Management provides automatic availability zone support when you don't specify which availability zones to use. 
     
 - **Manual:** API Management provides manual availability zone support when you explicitly specify which availability zones to use. 
 
@@ -76,13 +76,13 @@ You can use automatic availability zone support to choose either a single unit o
     The following diagram shows an API Management instance with three units that's configured for automatic availability zone support:
 
     :::image type="complex" border="false" source="./media/reliability-api-management/zone-redundant-automatic-multi-unit.svg" alt-text="Diagram that shows three API Management units distributed across availability zones for automatic availability zone support.":::
-       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
+       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
     :::image-end:::
 
-- **Single-unit configuration:** If your instance has a single unit, the unit's underlying VMs are distributed to two availability zones. You can't determine which availability zones the unit's VMs are placed into.
+- **Single-unit configuration:** If your instance has a single unit, the unit's underlying compute resources are distributed to two availability zones. You can't determine which availability zones the unit's compute resources are placed into.
 
     :::image type="complex" border="false" source="./media/reliability-api-management/automatic-single-unit.svg" alt-text="Diagram that shows a single API Management unit distributed across two availability zones for automatic availability zone support.":::
-       The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
+       The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
     :::image-end:::
 
 ### Manual availability zone support
@@ -92,13 +92,13 @@ If you want to explicitly select the availability zones to use, you can choose b
 - **Zone-redundant:** Manually configure zone redundancy for an API Management instance in a supported region to provide redundancy for service components. When you select two or more availability zones to use, Azure automatically replicates the service components across the selected zones.
 
     :::image type="complex" border="false" source="./media/reliability-api-management/zone-redundant-automatic-multi-unit.svg" alt-text="Diagram that shows three API Management units distributed across availability zones for manual zone redundancy.":::
-       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
+       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
     :::image-end:::
 
 - **Zonal:** The API Management service components are deployed in a single zone that you select within an Azure region. All of the units are placed into the same availability zone.
 
     :::image type="complex" border="false" source="./media/reliability-api-management/zonal.svg" alt-text="Diagram that shows a zonal API Management deployment that has two units, in a single availability zone.":::
-       The diagram shows two boxes labeled Unit 1 and Unit 2 deployed in an API Management instance. Each unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains both Unit 1 and Unit 2 boxes. Zone 2 and Zone 3 don't contain any units.
+       The diagram shows two boxes labeled Unit 1 and Unit 2 deployed in an API Management instance. Each unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains both Unit 1 and Unit 2 boxes. Zone 2 and Zone 3 don't contain any units.
     :::image-end:::
 
     > [!IMPORTANT]
@@ -106,24 +106,23 @@ If you want to explicitly select the availability zones to use, you can choose b
 
 #### [Premium v2](#tab/premv2)
 
-In the Premium v2 tier, you can enable zone redundancy for an API Management instance in a supported region:
+In the Premium v2 tier, you can enable zone redundancy for an API Management instance in a supported region.
 	
-With availability zone support, API Management replicates the gateway (scale units), management plane, and developer portal. You can use automatic availability zone support to choose either a single unit or multiunit instance configuration to achieve zone redundancy:
+With availability zone support, API Management replicates the gateway (scale units), management plane, and developer portal. You can choose either a single unit or multiunit instance configuration to achieve zone redundancy:
 
 - **Mult-unit configuration** (Recommended): If your instance has two or more units, API Management makes a best-effort attempt to spread your instance's units among the region's availability zones. You can't determine which availability zones your units are placed into. Deploy a minimum of two units, which can be distributed across two zones.
 
-    The following diagram shows an API Management instance with three units that's configured for automatic availability zone support:
+    The following diagram shows an API Management instance with three units that's configured for availability zone support:
 
-    :::image type="complex" border="false" source="./media/reliability-api-management/zone-redundant-automatic-multi-unit.svg" alt-text="Diagram that shows three API Management units distributed across availability zones for automatic availability zone support.":::
-       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
+    :::image type="complex" border="false" source="./media/reliability-api-management/zone-redundant-automatic-multi-unit.svg" alt-text="Diagram that shows three API Management units distributed across availability zones.":::
+       The diagram shows three boxes labeled Unit 1, Unit 2, and Unit 3 deployed in an API Management instance. Each unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. Zone 1 contains unit 1, zone 2 contains unit 2, and zone 3 contains unit 3.
     :::image-end:::
 
-- **Single-unit configuration:** If your instance has a single unit, the unit's underlying VMs are distributed to two availability zones. You can't determine which availability zones the unit's VMs are placed into.
+- **Single-unit configuration:** If your instance has a single unit, the unit's underlying compute resources are distributed to two availability zones. You can't determine which availability zones the unit's compute resources are placed into.
 
-    :::image type="complex" border="false" source="./media/reliability-api-management/automatic-single-unit.svg" alt-text="Diagram that shows a single API Management unit distributed across two availability zones for automatic availability zone support.":::
-       The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two icons that represent VMs. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
+    :::image type="complex" border="false" source="./media/reliability-api-management/automatic-single-unit.svg" alt-text="Diagram that shows a single API Management unit distributed across two availability zones.":::
+       The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
     :::image-end:::
-
 ---
 
 ### Requirements
@@ -138,7 +137,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 - **Number of units for zone-redundant instances:** If you manually configure zone redundancy for an instance, you also need to configure a number of API Management units that can be distributed evenly across all of your selected availability zones. For example, if you select two zones, you must configure at least two units. You can instead configure four units, or another multiple of two units. If you select three availability zones, you must configure three units, six units, or another multiple of three units.
 
-    If you use the automatic availability zone support, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to ensure that an availability zone outage doesn't affect your instance. 
+    If you use the automatic availability zone support, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units so that an availability zone outage doesn't affect your gateway performance. 
     
     To determine the number of units that provide your required gateway performance, use [capacity metrics](/azure/api-management/api-management-capacity) and your own testing. For more information about scaling and upgrading your service instance, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
@@ -148,7 +147,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 #### [Premium v2](#tab/premv2)
 
-- **Number of units for zone-redundant instances:** In the Premium v2 tier, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to ensure that an availability zone outage doesn't affect your instance. 
+- **Number of units for zone-redundant instances:** In the Premium v2 tier, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to provide sufficient capacity so that an availability zone outage doesn't affect your gateway performance. 
     
     To determine the number of units that provide your required gateway performance, use [capacity metrics](/azure/api-management/api-management-capacity) and your own testing. For more information about scaling and upgrading your service instance, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
@@ -179,7 +178,7 @@ This section explains how to configure availability zone support for your API Ma
 
 #### [Premium v2](#tab/premv2)
 
-In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. API Management makes a best effort to enable zone redundancy when you select this option. You can't change the availability zone configuration after the instance is created.
+In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. API Management makes a best-effort attempt to enable zone redundancy when you select this option. You can't change the availability zone configuration after the instance is created.
 
 ---
 
@@ -237,7 +236,7 @@ This section describes what to expect when API Management instances are configur
 
     - *Automatic:* You can expect instances that use automatic availability zone support to have no downtime during an availability zone outage. Units in the unaffected zone or zones continue to work.
         
-        You can also expect instances that use automatic availability zone support, but have a single unit, to have no downtime. In this case, API Management distributes the unit's underlying VMs to two zones. The VM in the unaffected zone continues to work.
+        You can also expect instances that use automatic availability zone support, but have a single unit, to have no downtime. In this case, API Management distributes the unit's underlying compute resources to two zones. The resource in the unaffected zone continues to work.
 
     - *Zone-redundant:* You can expect zone-redundant instances to have no downtime during an availability zone outage.
 
@@ -267,7 +266,7 @@ This section describes what to expect when API Management instances are configur
 
 - **Expected downtime:** You can expect instances to have no downtime during an availability zone outage. Units in the unaffected zone or zones continue to work.
         
-    You can also expect instances that have a single unit to have no downtime. In this case, API Management distributes the unit's underlying VMs to two zones. The VM in the unaffected zone continues to work.
+    You can also expect instances that have a single unit to have no downtime. In this case, API Management distributes the unit's underlying compute resources to two zones. The resource in the unaffected zone continues to work.
 
 - **Traffic rerouting:** When a zone is unavailable, any units in the affected zone are also unavailable. You can scale your instance to add more units.
 
