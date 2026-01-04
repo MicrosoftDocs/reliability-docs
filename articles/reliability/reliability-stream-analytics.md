@@ -6,7 +6,7 @@ ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-stream-analytics
-ms.date: 12/05/2025
+ms.date: 01/05/2026
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Stream Analytics works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -68,7 +68,7 @@ Stream Analytics is designed for high reliability, with multiple layers of resil
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-Stream Analytics automatically handles many transient faults for both ingesting data from inputs and writing data to outputs through built-in retry mechanisms. When a worker node running your job restarts, or if the job is moved between worker nodes, the job uses checkpoints to automaticall replays any processing work it needs to do to catch up.
+Stream Analytics automatically handles many transient faults for both ingesting data from inputs and writing data to outputs through built-in retry mechanisms. When a worker node running your job restarts, or if the job is moved between worker nodes, the job uses checkpoints to automatically replay any processing work it needs to do to catch up.
 
 It's a good practice to configure [output error policies](../stream-analytics/stream-analytics-output-error-policy.md). However, these policies only apply to data conversion errors, and they don't influence the behavior for handling transient faults.
 
