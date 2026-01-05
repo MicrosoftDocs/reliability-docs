@@ -8,6 +8,7 @@ ms.custom: subject-reliability
 ms.service: azure-api-management
 ai-usage: ai-assisted
 ms.date: 01/05/2026
+zone_pivot_groups: api-management-tiers
 ---
 
 # Reliability in Azure API Management
@@ -64,7 +65,7 @@ When you use API Management in front of an API, you might need to retry requests
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 API Management provides two types of availability zone support when you deploy a Premium (classic) API Management instance in a supported region:
 	
@@ -111,7 +112,9 @@ If you want to explicitly select the availability zones to use, you can choose b
     > [!IMPORTANT]
     > Pin to a single availability zone only if [cross-zone latency](./availability-zones-overview.md#inter-zone-latency) is too high for your needs and after you verify that the latency doesn't meet your requirements. By itself, a zonal instance doesn't provide resiliency to an availability zone outage. To improve the resiliency of a zonal API Management deployment, you need to explicitly deploy separate instances into multiple availability zones and configure traffic routing and failover.
 
-#### [Premium v2](#tab/premv2)
+:::zone-end
+
+:::zone pivot="premv2"
 
 In the Premium v2 tier, you can enable zone redundancy for an API Management instance in a supported region.
 	
@@ -130,7 +133,8 @@ With availability zone support, API Management replicates the gateway (scale uni
     :::image type="complex" border="false" source="./media/reliability-api-management/automatic-single-unit.svg" alt-text="Diagram that shows a single API Management unit distributed across two availability zones.":::
        The diagram shows one box that's labeled Unit 1 deployed in an API Management instance. The unit box contains two VM icons that represent compute resources. Three larger boxes are labeled Availability Zone 1, Availability Zone 2, and Availability Zone 3. The Unit 1 box spans zones 1 and 2. Zone 3 is empty.
     :::image-end:::
----
+
+:::zone-end
 
 ### Requirements
 
@@ -140,7 +144,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 ### Considerations
 
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 - **Number of units for zone-redundant instances:** If you manually configure zone redundancy for an instance, you also need to configure a number of API Management units that can be distributed evenly across all of your selected availability zones. For example, if you select two zones, you must configure at least two units. You can instead configure four units, or another multiple of two units. If you select three availability zones, you must configure three units, six units, or another multiple of three units.
 
@@ -152,7 +156,9 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 - **IP address requirements:** When you enable availability zone support on an API Management instance that's deployed in an external or internal virtual network, you must specify a public IP address resource for the instance to use. In an internal virtual network, the public IP address is used only for management operations, not for API requests. For more information, see [IP addresses in API Management](../api-management/api-management-howto-ip-addresses.md). 
 
-#### [Premium v2](#tab/premv2)
+:::zone-end
+
+:::zone pivot="premv2"
 
 - **Number of units for zone-redundant instances:** In the Premium v2 tier, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to provide sufficient capacity so that an availability zone outage doesn't affect your gateway performance. 
     
@@ -160,7 +166,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 - **Autoscaling:** In the Premium v2 tier, you don't need to adjust your autoscale settings when you enable availability zone support. 
 
----
+:::zone-end
 
 ### Cost
 
@@ -170,7 +176,7 @@ Regardless of your availability zone configuration, if you add more units, you i
 
 This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](../api-management/enable-availability-zone-support.md).
 
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 - **Create an API Management instance that supports availability zones:** When you create a Premium (classic) API Management instance in a region that supports availability zones, the instance supports availability zones by default. You can select automatic availability zone support or manually configure zonal or zone-redundant support.
 
@@ -183,13 +189,15 @@ This section explains how to configure availability zone support for your API Ma
 
     Changing the availability zone configuration triggers a public and private [IP address change](../api-management/api-management-howto-ip-addresses.md#changes-to-ip-addresses).
 
-#### [Premium v2](#tab/premv2)
+:::zone-end
+
+:::zone pivot="premv2"
 
 - **Create an API Management instance that supports availability zones:** In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. If zone redundancy can't be enabled because of capacity constraints or other issues, the service deployment fails.
 
 - **Enable or reconfigure availability zone support:** You can't change the availability zone configuration after the instance is created.
 
----
+:::zone-end
 
 ### Capacity planning and management
 
@@ -221,7 +229,7 @@ This section describes what to expect when API Management instances are configur
 
 This section describes what to expect when API Management instances are configured with availability zone support and there's an availability zone outage.
 
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 - **Detection and response:** Responsibility for detection and response depends on the availability zone configuration that your instance uses.
 
@@ -256,8 +264,10 @@ This section describes what to expect when API Management instances are configur
     - *Automatic and zone-redundant:*  For instances that are configured to use automatic availability zone support or are manually configured to use zone redundancy, when a zone is unavailable, any units in the affected zone are also unavailable. You can choose to scale your instance to add more units.
     
     - *Zonal:* For zonal instances, when a zone is unavailable, your instance is unavailable. If you have a secondary instance in another availability zone, you're responsible for rerouting traffic to that secondary instance.
-    
-#### [Premium v2](#tab/premv2)
+
+:::zone-end
+
+:::zone pivot="premv2"
 
 - **Detection and response:** In the Premium v2 tier, the API Management platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
 
@@ -279,39 +289,39 @@ This section describes what to expect when API Management instances are configur
 
 - **Traffic rerouting:** When a zone is unavailable, any units in the affected zone are also unavailable. You can scale your instance to add more units.
 
----
+:::zone-end
 
 ### Zone recovery
 
-The zone recovery behavior depends on the availability zone configuration that your instance uses.
-
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 - **Automatic and zone-redundant:** For instances that are configured to use automatic availability zone support or are manually configured to use zone redundancy, when the availability zone recovers, API Management automatically restores units in the availability zone and reroutes traffic between your units as normal.
 
 - **Zonal:** For zonal instances, you're responsible for rerouting traffic to the instance in the original availability zone after the availability zone recovers.
 
-#### [Premium v2](#tab/premv2)
+:::zone-end
+
+:::zone pivot="premv2"
 
 In the Premium v2 tier, when the availability zone recovers, API Management automatically restores units in the availability zone and reroutes traffic between your units as normal.
 
----
+:::zone-end
 
 ### Test for zone failures
 
-The options for testing for zone failures depend on the availability zone configuration that your instance uses.
-
-#### [Premium](#tab/prem)
+:::zone pivot="prem"
 
 - **Automatic and zone-redundant:** For instances that are configured to use automatic availability zone support or are manually configured to use zone redundancy, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
 - **Zonal:** For zonal instances, you can't simulate an outage of the availability zone that contains your API Management instance. However, you can manually configure upstream gateways or load balancers to redirect traffic to a different instance in a different availability zone.
 
-#### [Premium v2](#tab/premv2)
+:::zone-end
+
+:::zone pivot="premv2"
 
 In the Premium v2 tier, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
----
+:::zone-end
 
 ## Resilience to region-wide failures 
 
