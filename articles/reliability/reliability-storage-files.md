@@ -84,7 +84,7 @@ Azure Files provides two types of availability zone support:
 
 ### Cost
 
-The cost impact is different depending on the type of availabilty zone support you use:
+The cost impact is different depending on the type of availability zone support you use:
 
 - *ZRS:* [!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
 
@@ -178,7 +178,7 @@ Zone-down testing options depend on the type of replication the file storage acc
 
 - *ZRS:* [!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
 
-- *LRS with zonal plavement:* There's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
+- *LRS with zonal placement:* There's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
 
 ## Resilience to region-wide failures
 
