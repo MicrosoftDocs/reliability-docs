@@ -323,9 +323,9 @@ In the Premium v2 tier, the API Management platform manages traffic routing, fai
 
 :::zone-end
 
-## Resilience to region-wide failures 
-
 :::zone pivot="prem"
+
+## Resilience to region-wide failures 
 
 > [!IMPORTANT]
 > Multi-region deployments are supported only in the Premium (classic) tier of API Management. 
