@@ -79,7 +79,7 @@ With availability zone support, API Management replicates service components acr
 
 You can use automatic availability zone support to choose either a single unit or multiunit instance configuration to achieve zone redundancy:
 
-- **Mult-unit configuration** (Recommended): If your instance has two or more units, API Management makes a best-effort attempt to spread your instance's units among the region's availability zones. You can't determine which availability zones your units are placed into. Deploy a minimum of two units, which can be distributed across two zones.
+- **Multi-unit configuration** (Recommended): If your instance has two or more units, API Management makes a best-effort attempt to spread your instance's units among the region's availability zones. You can't determine which availability zones your units are placed into. Deploy a minimum of two units, which can be distributed across two zones.
 
     The following diagram shows an API Management instance with three units that's configured for automatic availability zone support:
 
@@ -325,6 +325,8 @@ In the Premium v2 tier, the API Management platform manages traffic routing, fai
 
 ## Resilience to region-wide failures 
 
+:::zone pivot="prem"
+
 > [!IMPORTANT]
 > Multi-region deployments are supported only in the Premium (classic) tier of API Management. 
 
@@ -410,6 +412,7 @@ When the primary region recovers, API Management automatically restores units in
 
 To be ready for unexpected region outages, regularly test your responses to region failures. You can simulate some aspects of a region failure by [disabling routing to a regional gateway](../api-management/api-management-howto-deploy-multi-region.md#disable-routing-to-a-regional-gateway).
 
+
 ## Backup and restore
 
 API Management doesn't store most runtime data. However, you can back up your API Management service configuration. You can also use backup and restore operations to replicate API Management service configurations between operational environments, such as development and staging.
@@ -430,6 +433,8 @@ API Management performs regular service upgrades and other forms of maintenance.
 In the Basic, Standard, and Premium (classic) tiers, you can customize when in the update process your instance receives an update. If you need to validate the effect of upgrades on your workload, consider configuring a test instance to receive updates early in an update cycle, and set your production instance to receive updates late in the cycle. You can also specify a maintenance window, which is the time of the day that you want the instance to apply service updates.
 
 For more information, see [Configure service update settings for your API Management instances](../api-management/configure-service-update-settings.md).
+
+:::zone-end
 
 ## Service-level agreement
 
