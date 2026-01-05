@@ -285,4 +285,4 @@ For more information about multi-region deployments for your logic app workflows
 - [Reliability in Azure](./overview.md)
 - [Handle errors and exceptions in Azure Logic Apps](../logic-apps/error-exception-handling.md)
 
-[!INCLUDE [security-reminder](../../includes/security-reminder.md)]
+[!INCLUDE [security-reminder](includes/security-reminder.md)]
