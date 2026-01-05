@@ -120,7 +120,7 @@ There is no additional cost to use availability zone support for Azure NAT Gatew
 
     - *Zone-redundant*: To deploy a new zone-redundant NAT gateway using the StandardV2 SKU, see [Create a Standard V2 Azure NAT Gateway](../nat-gateway/quickstart-create-nat-gateway-v2.md).
 
-    - *Zonal:* To deploy a new zonal NAT gateway using the Standard SKU, see [Create a NAT gateway](../nat-gateway/quickstart-create-nat-gateway.md). <!-- Allen: Need to update the create document to reflect AZ options? -->
+    - *Zonal:* To deploy a new zonal NAT gateway using the Standard SKU, see [Create a NAT gateway](../nat-gateway/quickstart-create-nat-gateway.md). When you create the NAT gateway, select its availability zone instead of selecting *No zone*.
 
 - **Enable availability zone support:** Azure NAT Gateway availability zone configuration can't be changed after deployment. To modify the availability zone configuration, you must deploy a new NAT gateway with the desired zone settings.
 
