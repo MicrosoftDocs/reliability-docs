@@ -185,8 +185,6 @@ This section explains how to configure availability zone support for your API Ma
 
 #### [Premium v2](#tab/premv2)
 
-In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. API Management makes a best-effort attempt to enable zone redundancy when you select this option. 
-
 - **Create an API Management instance that supports availability zones:** In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. If zone redundancy can't be enabled because of capacity constraints or other issues, the service deployment fails.
 
 - **Enable or reconfigure availability zone support:** You can't change the availability zone configuration after the instance is created.
