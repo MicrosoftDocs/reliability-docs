@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Logic Apps
-description: Learn how to make Azure Logic Apps resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
+description: Learn to make Azure Logic Apps resilient to potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: ecfan
 ms.author: estfan
 ms.topic: reliability-article
