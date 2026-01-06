@@ -187,7 +187,7 @@ items:
     - name: Azure Backup
       href: reliability-backup.md
     - name: Azure Guest Configuration
-      href: /azure/governance/machine-configuration/overview.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
+      href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
     - name: Azure Monitor - Log Analytics
       items:
       - name: Availability zones
