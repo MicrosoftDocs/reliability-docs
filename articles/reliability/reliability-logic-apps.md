@@ -10,7 +10,6 @@ ms.service: azure-logic-apps
 ms.date: 12/03/2025
 zone_pivot_groups: logic-app-hosting-types
 ai-usage: ai-assisted
-#Customer intent: As an engineer responsible for business continuity, I want to understand how Azure Logic Apps works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow in different situations.
 ---
 
 # Reliability in Azure Logic Apps
