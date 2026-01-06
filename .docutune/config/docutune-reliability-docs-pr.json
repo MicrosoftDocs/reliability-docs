@@ -1,13 +1,1 @@
-{
-  "Docsets": [
-    {
-      "DocsetName": "reliability",
-      "BuildSourceFolder": "."
-    }
-  ],
-  "MetadataDelimiter": "\"",
-  "Exclude": [],
-  "PreloadTOCFiles": [],
-  "TermFiles": [],
-  "ApplyPolicies": []
-}
+{"BaseConfigruation":null,"Docsets":[],"MetadataDelimiter":"\"","Exclude":[],"PreloadTOCFiles":[],"TermFiles":[],"ApplyPolicies":[]}
