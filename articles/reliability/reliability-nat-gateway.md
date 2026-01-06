@@ -87,10 +87,10 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
-    If you deploy virtual machines into several availability zones and need to use zonal NAT gateways, you can create *zonal stacks* in each availability zone. To do this, you deploy:
-    - Multiple subnets: You create separate subnets for each availability zone rather than using one subnet that spans zones.
-    - Zonal NAT gateways: Each subnet gets its own NAT gateway that's deployed in the same availability zone as the subnet itself.
-    - Manual VM assignment: You explicitly place each virtual machine in both the correct availability zone and its corresponding subnet.
+    If you deploy virtual machines into several availability zones and need to use zonal NAT gateways, you can create *zonal stacks* in each availability zone. To create zonal stacks, you need to deploy:
+    - *Multiple subnets*: You create separate subnets for each availability zone rather than using one subnet that spans zones.
+    - *Zonal NAT gateways*: Each subnet gets its own NAT gateway that's deployed in the same availability zone as the subnet itself.
+    - *Manual VM assignment*: You explicitly place each virtual machine in both the correct availability zone and its corresponding subnet.
 
     :::image type="content" source="media/reliability-nat-gateway/zonal-stacks.svg" alt-text="Diagram of zonal isolation by creating zonal stacks." border="false":::
     
