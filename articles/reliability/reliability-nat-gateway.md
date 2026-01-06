@@ -43,7 +43,7 @@ For production workloads, we recommend that you:
 
 ### Logical architecture
 
-The resource you deploy is a *NAT gateway*. You configure one or more subnets in a virtual network to use the NAT gateway for outbound traffic. When you do, the NAT gateway becomes the default route for outbound internet traffic without requiring additional routing configurations.
+A *NAT gateway* is a resource that you deploy. To use the NAT gateway as the default route for outbound internet traffic, you attach it to one or more subnets in your virtual network. You don't need to configure any custom routes or other routing configurations.
 
 ### Physical architecture
 
