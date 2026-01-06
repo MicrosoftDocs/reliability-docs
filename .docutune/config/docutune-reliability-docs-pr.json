@@ -1,5 +1,10 @@
 {
-  "Docsets": [],
+  "Docsets": [
+    {
+      "DocsetName": "reliability",
+      "BuildSourceFolder": "articles"
+    }
+  ],
   "MetadataDelimiter": "\"",
   "Exclude": [],
   "PreloadTOCFiles": [],
