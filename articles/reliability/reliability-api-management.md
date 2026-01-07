@@ -65,7 +65,7 @@ When you use API Management in front of an API, you might need to retry requests
 
 [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
-:::zone-pivot="other-tiers"
+:::zone pivot="other-tiers"
 
 To view information about availability zone support for the Premium and Premium v2 tiers, be sure to select the appropriate service tier at the beginning of this page.
 
@@ -354,7 +354,7 @@ By using a multi-region deployment, you can add regional API gateways to an exis
 > [!IMPORTANT]
 > Multi-region deployments are supported only in the Premium (classic) tier of API Management. 
 
-:::zone-pivot="other-tiers,premium-v2"
+:::zone pivot="other-tiers,premium-v2"
 
 To view information about multi-region support, be sure to select the Premium (classic) tier at the beginning of this page.
 
