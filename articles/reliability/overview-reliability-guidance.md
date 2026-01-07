@@ -42,7 +42,6 @@ The following table provides links to reliability guidance for Azure services. E
 
 | Service | Reliability guide | Other reliability documentation |
 |----------|---------|---------|
-|Azure AI Health Insights| [Reliability in AI Health Insights](reliability-health-insights.md)||
 |Azure AI Search| [Reliability in AI Search](reliability-ai-search.md) ||
 |Azure API Center| [Reliability in Azure API Center](reliability-api-center.md) ||
 |Azure API Management | [Reliability in API Management](reliability-api-management.md) ||
@@ -117,7 +116,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure SQL Managed Instance| [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md) ||
 |Azure Storage Actions| [Reliability in Storage Actions](reliability-storage-actions.md)||
 |Azure Storage Mover| [Reliability in Storage Mover](reliability-azure-storage-mover.md)||
-|Azure Stream Analytics|| [Achieve geo-redundancy for Stream Analytics jobs](../stream-analytics/geo-redundancy.md) |
+|Azure Stream Analytics| [Reliability in Azure Stream Analytics](./reliability-stream-analytics.md) ||
 |Azure Table Storage| [Reliability in Table Storage](reliability-storage-table.md)||
 |Azure Traffic Manager| [Reliability in Traffic Manager](reliability-traffic-manager.md)||
 |Azure Virtual Machines| [Reliability in Virtual Machines](reliability-virtual-machines.md)||
