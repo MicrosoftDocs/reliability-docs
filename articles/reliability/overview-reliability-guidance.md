@@ -49,7 +49,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure App Service| [Reliability in App Service](reliability-app-service.md)||
 |App Service Environment| [Reliability in App Service Environment](reliability-app-service-environment.md)||
 |Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md )    ||
-|Azure Application Gateway v2||[Autoscaling and high availability](../application-gateway/application-gateway-autoscaling-zone-redundant.md)|
+|Azure Application Gateway v2|[Reliability in Azure Application Gateway](./reliability-application-gateway-v2.md)||
 |Azure Backup| [Reliability in Backup](reliability-backup.md)||
 |Azure Bastion| [Reliability in Azure Bastion](reliability-bastion.md)||
 |Azure Batch| [Reliability in Batch](reliability-batch.md)||
@@ -102,7 +102,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Migrate | | [Azure Migrate and backup and disaster recovery](../migrate/resources-faq.md#does-azure-migrate-offer-backup-and-disaster-recovery)|
 |Azure Monitor Logs | | [Enhance data and service resilience in Azure Monitor Logs by using availability zones](/azure/azure-monitor/logs/availability-zones) </p> [Azure Monitor Logs workspace replication](/azure/azure-monitor/logs/workspace-replication) | 
 | Azure NAT Gateway | [Azure NAT Gateway](../nat-gateway/nat-availability-zones.md) ||
-|Azure NetApp Files|| [Reliability in Azure NetApp Files](reliability-netapp-files.md)|
+|Azure NetApp Files| [Reliability in Azure NetApp Files](reliability-netapp-files.md)||
 |Azure Network Watcher|| [Network Watcher service availability and redundancy](../network-watcher/frequently-asked-questions.yml#service-availability-and-redundancy)|
 |Azure Notification Hubs| [Reliability in Notification Hubs](reliability-notification-hubs.md)||
 |Azure Private Link|| [Private Link availability](../private-link/availability.md)   |

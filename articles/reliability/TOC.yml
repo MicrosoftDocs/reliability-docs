@@ -255,7 +255,7 @@ items:
     - name: Azure Disk Encryption 
       href: /azure/virtual-machines/disks-redundancy?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Firewall
-      href: ../firewall/deploy-availability-zone-powershell.md?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
     - name: Microsoft Defender for Cloud DevOps security
