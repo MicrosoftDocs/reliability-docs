@@ -96,7 +96,7 @@ However, if you choose to deploy your VMs into the same availability zone, you c
 
 ### Cost
 
-Availability zone configuration doesn't change the way a load balancer is billed. Billing is based on the number of rules configured and data processed, regardless of zone configuration. For more information, see [Azure Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/)
+Availability zone configuration doesn't change the way a load balancer is billed. Billing is based on the number of rules configured and data processed, regardless of zone configuration. For more information, see [Azure Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
 
 ### Configure availability zone support
 
@@ -145,11 +145,11 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
 - **Expected data loss**: As a stateless network service, Load Balancer doesn't store application data, so no data loss occurs at the load balancer layer.
 
-- **Expected downtime**: There's no downtime is expected for zone-redundant load balancers.
+- **Expected downtime**: There's no downtime is expected for zone-redundant load balancers, because the load balancer continues to work from healthy zones.
 
     However, if the failure affects compute services in the zone, then any VMs or other resources that are in the affected zone could be unavailable. The load balancer's health probes are designed to detect these failures and route traffic to alternative instances in another zone based on the load balancing algorithm and backend instances' health status.
 
-- **Traffic rerouting**: The load balancer continues to operate from the healthy zones. The Load Balancer service maintains the same frontend IP address during zone failures, eliminating the need for DNS updates or client reconfiguration. New connections are automatically established through remaining healthy zones.
+- **Traffic rerouting**: The load balancer continues to operate from the healthy zones. The Load Balancer service maintains the same frontend IP address during zone failures. This behavior means yuo don't need to apply DNS updates or reconfigure clients. New connections are automatically established through remaining healthy zones.
 
 ### Zone recovery
 
@@ -171,7 +171,7 @@ Public and internal load balancers are deployed into a single Azure region. If t
 
 Global Load Balancer provides a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global Load Balancer can help to improve your application's reliability and performance.
 
-With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If the backend servers in one region has a problem, traffic switches to healthy regions automatically and without DNS changes because the anycast IP address remains constant and routes traffic to another region.
+With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If the backend servers in one region have a problem, traffic switches to healthy regions automatically and without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
 For more information, see [Global Load Balancer](../load-balancer/cross-region-overview.md).
 
