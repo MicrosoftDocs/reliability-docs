@@ -470,8 +470,6 @@ In the Basic, Standard, and Premium (classic) tiers, you can customize when in t
 
 For more information, see [Configure service update settings for your API Management instances](../api-management/configure-service-update-settings.md).
 
-:::zone-end
-
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
