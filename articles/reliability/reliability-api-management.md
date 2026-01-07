@@ -213,6 +213,8 @@ This section explains how to configure availability zone support for your API Ma
 
 :::zone-end
 
+:::zone pivot="premium-classic, premium-v2"
+
 ### Capacity planning and management
 
 In a zone-down scenario, there's no guarantee that requests for more capacity in another availability zone succeed. The backfilling of lost units occurs on a best-effort basis. If you need guaranteed capacity when an availability zone fails, create and configure your API Management instance to account for losing a zone by taking all of the following actions:
@@ -238,6 +240,8 @@ This section describes what to expect when API Management instances are configur
     - *Data in the internal cache*, if you use the internal cache that API Management provides. Cache entries are distributed among availability zones. The internal cache is volatile and data isn't guaranteed to be persisted. Consider using an external cache if you need to persist cached data.
 
     - *Rate limit counters*, if you use the rate limiting capabilities that API Management provides. Rate limit counters are asynchronously replicated between the availability zones that you select for the instance.
+
+:::zone-end
 
 :::zone pivot="premium-classic"
 
