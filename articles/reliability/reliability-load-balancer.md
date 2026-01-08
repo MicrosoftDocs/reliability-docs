@@ -149,7 +149,7 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
     However, if the failure affects compute services in the zone, then any VMs or other resources that are in the affected zone could be unavailable. The load balancer's health probes are designed to detect these failures and route traffic to alternative instances in another zone based on the load balancing algorithm and backend instances' health status.
 
-- **Traffic rerouting**: The load balancer continues to operate from the healthy zones. The Load Balancer service maintains the same frontend IP address during zone failures. This behavior means yuo don't need to apply DNS updates or reconfigure clients. New connections are automatically established through remaining healthy zones.
+- **Traffic rerouting**: The load balancer continues to operate from the healthy zones. The Load Balancer service maintains the same frontend IP address during zone failures. This behavior means you don't need to apply DNS updates or reconfigure clients. New connections are automatically established through remaining healthy zones.
 
 ### Zone recovery
 
