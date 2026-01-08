@@ -74,7 +74,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Database for PostgreSQL| [Reliability in Azure Database for PostgreSQL](reliability-azure-database-postgresql.md)||
 |Azure Databricks | [Reliability in Azure Databricks](reliability-databricks.md)||
 |Azure DDoS Protection| [Reliability in DDoS Protection](reliability-ddos.md)||
-|Azure Deployment Environments| [Reliability in Deployment Environments](reliability-deployment-environments.md)||
 |Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||
 |Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 |Azure Disk Encryption|| [Redundancy options for managed disks](/azure/virtual-machines/disks-redundancy) |
