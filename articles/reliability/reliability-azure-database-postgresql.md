@@ -268,7 +268,7 @@ After a PostgreSQL failover, maintaining optimal database performance involves u
 
 In contrast, the `pg_stat_*` views, provide runtime activity statistics such as the number of scans, tuples read, and updates, are stored in memory and reset upon failover. An example is `pg_stat_user_tables`, which tracks activity for user-defined tables. This reset accurately reflects the new primary's operational state but also means the loss of historical activity metrics that could inform the autovacuum process and other operational efficiencies.
 
-Given this distinction, you may consider running `ANALYZE` after a PostgreSQL failover. This action updates the `pg_stat_*` data (e.g. `pg_stat_user_tables`) with fresh vacuum activity statistics, helping the autovacuum process, which in turn, ensures that the database performance remains optimal in its new role. This proactive step bridges the gap between preserving essential optimizer statistics and refreshing activity metrics to align with the database's current state.
+Given this distinction, you may consider running `ANALYZE` after a PostgreSQL failover. This action updates the `pg_stat_*` data (e.g., `pg_stat_user_tables`) with fresh vacuum activity statistics, helping the autovacuum process, which in turn, ensures that the database performance remains optimal in its new role. This proactive step bridges the gap between preserving essential optimizer statistics and refreshing activity metrics to align with the database's current state.
 
 ### Zone-down experience
 
