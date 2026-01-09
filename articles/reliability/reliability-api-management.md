@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
 ai-usage: ai-assisted
-ms.date: 01/07/2026
+ms.date: 01/09/2026
 zone_pivot_groups: api-management-tiers
 ---
 
@@ -177,9 +177,13 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 :::zone-end
 
+:::zone pivot="premium-classic,premium-v2"
+
 ### Cost
 
 Regardless of your availability zone configuration, if you add more units, you incur more costs. For information, see [API Management pricing](https://azure.microsoft.com/pricing/details/api-management/).
+
+::: zone-end
 
 :::zone pivot="premium-classic"
 
