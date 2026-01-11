@@ -98,7 +98,7 @@ Zone redundancy requires that your cache is configured for high availability, wh
 
 ### Capacity planning and management
 
-During a zone-down event, your instance might fewer resources available to serve your workload. If your instance is often under resource pressure and you need to prepare for availability zone failure, consider one of the following approaches:
+During a zone-down event, your instance might have fewer resources available to serve your workload. If your instance is often under resource pressure and you need to prepare for availability zone failure, consider one of the following approaches:
 
 - **Overprovision your instance:** Overprovisioning involves selecting a higher performance tier than you might require. It allows your instance to tolerate some capacity loss and continue to function without degraded performance. For more information about the principle of overprovisioning, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale your instance, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
 
@@ -184,7 +184,7 @@ When you enable active geo-replication, you are billed for each Azure Managed Re
 
 ### Capacity planning and management
 
-During a region-down event, the other instances might be under higher pressure. If an instance is often already under resource pressure and you need to prepare for the increased capacity requirements during a region failure, consider [overprovisioning the instance](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale an instances, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
+During a region-down event, the other instances might be under higher pressure. If an instance is often already under resource pressure and you need to prepare for the increased capacity requirements during a region failure, consider [overprovisioning the instance](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale an instance, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
 
 #### Behavior when all regions are healthy
 
