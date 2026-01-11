@@ -97,6 +97,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Logic Apps|[Reliability in Logic Apps](reliability-logic-apps.md) ||
 |Azure Machine Learning|| [Failover for business continuity and disaster recovery](/azure/machine-learning/how-to-high-availability-machine-learning)|
 |Azure managed disks|| [Best practices for achieving high availability by using Azure virtual machines and managed disks](/azure/virtual-machines/disks-high-availability)|
+|Azure Managed Redis|[Reliability in Azure Managed Redis](./reliability-managed-redis.md) ||
 |Azure Media Services|| [High availability by using Media Services and video on demand (VOD)](/azure/media-services/latest/architecture-high-availability-encoding-concept)|
 |Azure Migrate | | [Azure Migrate and backup and disaster recovery](../migrate/resources-faq.md#does-azure-migrate-offer-backup-and-disaster-recovery)|
 |Azure Monitor Logs | | [Enhance data and service resilience in Azure Monitor Logs by using availability zones](/azure/azure-monitor/logs/availability-zones) </p> [Azure Monitor Logs workspace replication](/azure/azure-monitor/logs/workspace-replication) | 
