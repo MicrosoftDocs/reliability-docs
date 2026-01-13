@@ -23,7 +23,7 @@ This article describes how Stream Analytics is resilient to potential problems l
 
 ## Production deployment recommendations
 
-To ensure high reliability in production environments that use Stream Analytics, we recommend that you:
+To ensure high reliability in production environments that use Stream Analytics, we recommend that you take the following actions:
 
 > [!div class="checklist"]
 > - **Use regions that support availability zones.** Deploy your streaming jobs and other resources in regions that support availability zones.
@@ -43,7 +43,7 @@ A *job* is the fundamental unit in Stream Analytics that lets you define and run
 - A *query* that processes and transforms the data.
 - *Outputs* that continuously write results to different destinations like Azure SQL Database, Azure Data Lake Storage, Azure Cosmos DB, and Power BI.
 
-For more information about Stream Analytics jobs and the resource model, see [Azure Stream Analytics resource model](../stream-analytics/stream-analytics-resource-model.md).
+For more information, see [Stream Analytics resource model](../stream-analytics/stream-analytics-resource-model.md).
 
 ### Physical architecture
 
@@ -62,13 +62,13 @@ Stream Analytics achieves high reliability by applying multiple layers of resili
 > [!NOTE]
 > By using [Stream Analytics on IoT Edge](../stream-analytics/stream-analytics-edge.md), you can run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for setting it up to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
 
-## Resilence to transient faults
+## Resilience to transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
 Stream Analytics automatically handles many transient faults for both ingesting data from inputs and writing data to outputs through built-in retry mechanisms. After a worker node restart or job reassignment, the job uses checkpoints to replay any events that weren't fully processed and continues processing until it reaches the current input stream.
 
-It's a good practice to set up [output error policies](../stream-analytics/stream-analytics-output-error-policy.md). But these policies only apply to data conversion errors, and they don't influence the behavior for handling transient faults.
+It's a good practice to set up [output error policies](../stream-analytics/stream-analytics-output-error-policy.md). But these policies only apply to data conversion errors, and they don't change how you handle transient faults.
 
 ## Resilience to availability zone failures
 
