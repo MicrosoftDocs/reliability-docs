@@ -4,7 +4,7 @@ description: See a list of reliability guides for Azure products and services. L
 author: anaharris-ms
 ms.service: azure
 ms.topic: reliability-article
-ms.date: 15/01/2026
+ms.date: 01/15/2026
 ms.author: anaharris
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
