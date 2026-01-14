@@ -22,10 +22,6 @@ This article describes how you can make Azure NAT Gateway resilient to a variety
 > [!IMPORTANT]
 > When you consider the reliability of a NAT gateway, you also need to consider the reliability of your virtual machines (VMs), disks, other network infrastructure, and applications that run on your VMs. Improving the resiliency of the NAT gateway alone might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas.
 
-> [!IMPORTANT]
-> Standard V2 SKU Azure NAT Gateway is currently in PREVIEW.
-> See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
-
 ## Production deployment recommendations
 
 For production workloads, we recommend that you:
