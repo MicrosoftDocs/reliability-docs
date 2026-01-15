@@ -49,11 +49,11 @@ For more information, see [Stream Analytics resource model](../stream-analytics/
 
 Stream Analytics achieves high reliability by applying multiple layers of resiliency to mitigate problems in the underlying infrastructure and input and output data sources. The following components help ensure that your jobs run robustly:
 
-- **Worker nodes**: Stream Analytics jobs run within a *cluster*. The virtual machines (VMs) within the cluster are known as *worker nodes*. When you use the Standard or Standard V2 SKUs, your jobs run on shared clusters. When you use the [Dedicated SKU](../stream-analytics/cluster-overview.md), your jobs run on their own dedicated cluster.
+- **Worker nodes:** Stream Analytics jobs run within a *cluster*. The virtual machines (VMs) within the cluster are known as *worker nodes*. When you use the Standard or Standard V2 SKUs, your jobs run on shared clusters. When you use the [Dedicated SKU](../stream-analytics/cluster-overview.md), your jobs run on their own dedicated cluster.
 
    The platform automatically manages worker node creation, job placement across worker nodes, health monitoring, and the replacement of unhealthy worker nodes, so you don't see or manage the VMs directly.
 
-- **SUs**: SUs represent the compute resources that run a job. The higher the number of SUs, the more compute resources are allocated for the job. The platform manages worker nodes and job distribution across worker nodes, but you're responsible for allocating SUs to jobs. For more information, see [Understand and adjust Stream Analytics SUs](../stream-analytics/stream-analytics-streaming-unit-consumption.md).
+- **SUs:** SUs represent the compute resources that run a job. The higher the number of SUs, the more compute resources are allocated for the job. The platform manages worker nodes and job distribution across worker nodes, but you're responsible for allocating SUs to jobs. For more information, see [Understand and adjust Stream Analytics SUs](../stream-analytics/stream-analytics-streaming-unit-consumption.md).
 
 - **Checkpoints:** Stream Analytics maintains job state through regular *checkpointing* of state. Checkpoints help failed jobs recover quickly with minimal data reprocessing, even for jobs that use stateful query logic.
 
@@ -133,7 +133,7 @@ This section describes what to expect when Stream Analytics jobs are zone-redund
 
 - **Expected downtime:** Jobs in progress automatically resume after the platform moves them to a healthy worker.
 
-- **Traffic rerouting**: The service automatically redirects all new input data to workers in healthy zones. Existing connections from input sources are reestablished with workers in operational zones. Output connections are similarly reestablished, which ensures continuous data flow through your streaming pipeline.
+- **Traffic rerouting:** The service automatically redirects all new input data to workers in healthy zones. Existing connections from input sources are reestablished with workers in operational zones. Output connections are similarly reestablished, which ensures continuous data flow through your streaming pipeline.
 
 ### Zone recovery
 
