@@ -107,7 +107,7 @@ Zone redundancy on Stream Analytics doesn't incur extra charges. You pay the sam
 
 - **Enable zone redundancy.** All jobs and dedicated clusters are automatically zone-redundant in regions that have availability zones. You don't need to enable zone redundancy.
 
-- **Disable zone redundancy.** You can't disable zone redundancy.
+- **Turn off zone redundancy.** You can't turn off zone redundancy.
 
 ### Behavior when all zones are healthy
 
