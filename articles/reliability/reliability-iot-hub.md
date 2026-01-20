@@ -27,7 +27,7 @@ This article describes how to make IoT Hub resilient to a variety of potential o
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-IoT Hub provides a reasonably high uptime guarantee, but transient failures can occur in any distributed computing platform. To handle transient failures, build the appropriate [retry patterns](../iot/concepts-manage-device-reconnections.md#retry-patterns) in components that interact with cloud applications.
+IoT Hub provides a reasonably high uptime guarantee, but transient failures can occur in any distributed computing platform. To handle transient failures, build the appropriate [retry patterns](/azure/iot/concepts-manage-device-reconnections#retry-patterns) in components that interact with cloud applications.
 
 ## Resilience to availability zone failures
 
@@ -91,7 +91,7 @@ This section describes what to expect when IoT Hub resources are configured for 
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** During a zone failure, active requests might be dropped. Your clients and devices should have sufficient [retry logic](../iot/concepts-manage-device-reconnections.md#retry-patterns) implemented to handle transient faults.
+- **Active requests:** During a zone failure, active requests might be dropped. Your clients and devices should have sufficient [retry logic](/azure/iot/concepts-manage-device-reconnections#retry-patterns) implemented to handle transient faults.
 
 - **Expected data loss:** When your IoT hub is deployed in a region that supports zone redundancy for data, a zone failure shouldn't cause any data loss.
 
@@ -145,7 +145,7 @@ If your IoT hub is in a nonpaired region, see [Custom multi-region solutions for
 
 By default, cross-region data replication is automatically configured when you create an IoT hub in a paired region. This process is a default option and requires no intervention from you. In regions except for Brazil South and Southeast Asia (Singapore), your customer data isn't stored or processed outside of the geography where you deploy the service instance.
 
-If your IoT hub is in the Brazil South or Southeast Asia (Singapore) regions, you can disable data replication and opt out of failover. For more information, see [Disable disaster recovery (DR)](../iot-hub/how-to-disable-dr.md).
+If your IoT hub is in the Brazil South or Southeast Asia (Singapore) regions, you can disable data replication and opt out of failover. For more information, see [Disable disaster recovery (DR)](/azure/iot-hub/how-to-disable-dr).
 
 If your IoT hub is in a nonpaired region, you need to plan your own cross-region replication and failover approach. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
@@ -163,7 +163,7 @@ This section describes what to expect when an IoT hub is configured for cross-re
 
 - **Detection and response:** Responsibility for detecting and responding to an outage in the primary region can vary.
 
-  - *Customer-initiated failover:* You're responsible for detecting a region loss and deciding when to fail over. For more information about how to perform customer-initiated failover between paired regions, see [Perform manual failover for an IoT hub](../iot-hub/tutorial-manual-failover.md).
+  - *Customer-initiated failover:* You're responsible for detecting a region loss and deciding when to fail over. For more information about how to perform customer-initiated failover between paired regions, see [Perform manual failover for an IoT hub](/azure/iot-hub/tutorial-manual-failover).
 
     There are limits on how frequently you can perform customer-initiated failover or failback:
 
@@ -215,17 +215,17 @@ Depending on where you route your IoT hub's messages, you might need to perform 
 
 - **Azure Event Hubs:** The Event Hubs-compatible name and endpoint of your IoT hub's built-in events endpoint change after failover. This change occurs because the Event Hubs client doesn't have visibility into IoT Hub events.
 
-  When you receive telemetry messages from the built-in endpoint by using either the Event Hubs client or event processor host, [use the IoT hub's connection string](../iot-hub/iot-hub-devguide-messages-read-builtin.md#connect-to-the-built-in-endpoint) to establish the connection. This approach ensures that your back-end applications continue to work without requiring manual intervention after failover.
+  When you receive telemetry messages from the built-in endpoint by using either the Event Hubs client or event processor host, [use the IoT hub's connection string](/azure/iot-hub/iot-hub-devguide-messages-read-builtin#connect-to-the-built-in-endpoint) to establish the connection. This approach ensures that your back-end applications continue to work without requiring manual intervention after failover.
 
-  If you use the Event Hubs-compatible name and endpoint in your application directly, you need to [fetch the new Event Hubs-compatible endpoint](../iot-hub/iot-hub-devguide-messages-read-builtin.md#connect-to-the-built-in-endpoint) after failover to continue operations. To retrieve the endpoint and name, you can use the Azure portal or the .NET SDK:
+  If you use the Event Hubs-compatible name and endpoint in your application directly, you need to [fetch the new Event Hubs-compatible endpoint](/azure/iot-hub/iot-hub-devguide-messages-read-builtin#connect-to-the-built-in-endpoint) after failover to continue operations. To retrieve the endpoint and name, you can use the Azure portal or the .NET SDK:
 
-  - *The Azure portal:* For more information about how to use the portal to retrieve the Event Hubs-compatible endpoint and the Event Hubs-compatible name, see [Connect to the built-in endpoint](../iot-hub/iot-hub-devguide-messages-read-builtin.md#connect-to-the-built-in-endpoint).
+  - *The Azure portal:* For more information about how to use the portal to retrieve the Event Hubs-compatible endpoint and the Event Hubs-compatible name, see [Connect to the built-in endpoint](/azure/iot-hub/iot-hub-devguide-messages-read-builtin#connect-to-the-built-in-endpoint).
 
   - *The .NET SDK:* To use the IoT hub connection string to recapture the Event Hubs-compatible endpoint, use the [sample code](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/iothub-connect-to-eventhubs). This code example uses the connection string to get the new Event Hubs endpoint and re-establish the connection. You must have Visual Studio installed.
 
 - **Azure Functions and Azure Stream Analytics:** If you use Azure Functions or Stream Analytics to connect to the built-in events endpoint, you must update the Event Hubs endpoint that the function or job connects to, following the same process outlined in the preceding bullet point. Then perform a **Restart** action because any event stream offsets become invalid after failover.
 
-- **Azure Storage:** When routing to Azure Storage, list the blobs or files first. Then iterate over them to ensure that all blobs or files are read without assuming partitioning. The partition range can potentially change during a Microsoft-initiated failover or customer-initiated failover. You can use the [List Blobs API](/rest/api/storageservices/list-blobs) to enumerate the list of blobs or the [List Azure Data Lake Storage API](/rest/api/storageservices/datalakestoragegen2/filesystem/list) for the list of files. For more information, see [Azure Storage as a routing endpoint](../iot-hub//iot-hub-devguide-endpoints.md#azure-storage-as-a-routing-endpoint).
+- **Azure Storage:** When routing to Azure Storage, list the blobs or files first. Then iterate over them to ensure that all blobs or files are read without assuming partitioning. The partition range can potentially change during a Microsoft-initiated failover or customer-initiated failover. You can use the [List Blobs API](/rest/api/storageservices/list-blobs) to enumerate the list of blobs or the [List Azure Data Lake Storage API](/rest/api/storageservices/datalakestoragegen2/filesystem/list) for the list of files. For more information, see [Azure Storage as a routing endpoint](/azure/iot-hub/iot-hub-devguide-endpoints#azure-storage-as-a-routing-endpoint).
 
 ### Region recovery
 
@@ -257,12 +257,12 @@ You can design a cross-region failover solution tailored to each individual devi
 
 At a high level, to implement a regional failover model with IoT Hub, you need to take the following measures:
 
-- **A secondary IoT hub and device routing logic:** If service in your primary region is disrupted, devices must begin to connect to your secondary region. Because of the state-aware nature of most services involved, solution administrators commonly trigger the inter-region failover process manually. The best way to communicate the new endpoint to devices while maintaining control over the process is to have them regularly check a concierge service for the current active endpoint. The concierge service can be a web application that's replicated and kept reachable by using DNS-redirection techniques, such as [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md).
+- **A secondary IoT hub and device routing logic:** If service in your primary region is disrupted, devices must begin to connect to your secondary region. Because of the state-aware nature of most services involved, solution administrators commonly trigger the inter-region failover process manually. The best way to communicate the new endpoint to devices while maintaining control over the process is to have them regularly check a concierge service for the current active endpoint. The concierge service can be a web application that's replicated and kept reachable by using DNS-redirection techniques, such as [Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview).
 
   > [!NOTE]
   > Traffic Manager doesn't have built-in support for IoT Hub. You can configure custom Traffic Manager endpoints for each IoT hub. Configure the Traffic Manager endpoint's health probe to use the IoT hub's endpoint.
 
-- **Identity registry replication:** To be usable, the secondary IoT hub must contain all device identities that can connect to the solution. The solution should keep geo-replicated backups of device identities and upload them to the secondary IoT hub before switching the active endpoint for the devices. The device identity export functionality of IoT Hub is useful in this context. For more information, see [Understand the identity registry in your IoT hub](../iot-hub/iot-hub-devguide-identity-registry.md).
+- **Identity registry replication:** To be usable, the secondary IoT hub must contain all device identities that can connect to the solution. The solution should keep geo-replicated backups of device identities and upload them to the secondary IoT hub before switching the active endpoint for the devices. The device identity export functionality of IoT Hub is useful in this context. For more information, see [Understand the identity registry in your IoT hub](/azure/iot-hub/iot-hub-devguide-identity-registry).
 
 - **Merge logic:** When the primary region becomes available again, all the state and data created in the secondary region must be migrated back to the primary region. This state and data mostly relate to device identities and application metadata, which must be merged with the primary IoT hub and any other application-specific stores in the primary region.
 
@@ -270,9 +270,9 @@ At a high level, to implement a regional failover model with IoT Hub, you need t
 
 ## Backup and restore
 
-The IoT Hub service enables bulk export operations, which allow you to export the entire identity registry of an IoT hub. This data is transferred to an Azure Storage blob container by using a shared access signature. This method enables you to create reliable backups of your device information in a blob container that you control. For more information, see [Import and export IoT Hub device identities in bulk](../iot-hub/iot-hub-bulk-identity-mgmt.md).
+The IoT Hub service enables bulk export operations, which allow you to export the entire identity registry of an IoT hub. This data is transferred to an Azure Storage blob container by using a shared access signature. This method enables you to create reliable backups of your device information in a blob container that you control. For more information, see [Import and export IoT Hub device identities in bulk](/azure/iot-hub/iot-hub-bulk-identity-mgmt).
 
-You can also export an existing IoT hub's Azure Resource Manager template (ARM template) to create a backup of the IoT hub's configuration. For more information, see [Manually migrate an IoT hub by using an ARM template](../iot-hub/migrate-hub-arm.md).
+You can also export an existing IoT hub's Azure Resource Manager template (ARM template) to create a backup of the IoT hub's configuration. For more information, see [Manually migrate an IoT hub by using an ARM template](/azure/iot-hub/migrate-hub-arm).
 
 [!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
 
@@ -283,4 +283,4 @@ You can also export an existing IoT hub's Azure Resource Manager template (ARM t
 ## Related content
 
 - [Reliability in Azure](./overview.md)
-- [IoT solution scalability, high availability, and DR](../iot/iot-overview-scalability-high-availability.md)
+- [IoT solution scalability, high availability, and DR](/azure/iot/iot-overview-scalability-high-availability)

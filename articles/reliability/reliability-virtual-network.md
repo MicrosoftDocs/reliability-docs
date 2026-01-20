@@ -113,7 +113,7 @@ For more information about a multi-region networking architecture for web applic
 
 ## Backup and restore
 
-Virtual networks don't store any data that requires backup. However, you can use Bicep, Azure Resource Manager templates, or Terraform to take a snapshot of the configuration of a virtual network if you need to recreate it. For more information, see [Create an Azure virtual network](../virtual-network/quickstart-create-virtual-network.md).
+Virtual networks don't store any data that requires backup. However, you can use Bicep, Azure Resource Manager templates, or Terraform to take a snapshot of the configuration of a virtual network if you need to recreate it. For more information, see [Create an Azure virtual network](/azure/virtual-network/quickstart-create-virtual-network).
 
 ## Service-level agreement
 

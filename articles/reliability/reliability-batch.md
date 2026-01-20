@@ -25,7 +25,7 @@ Batch maintains parity with Azure on supporting availability zones.
 
 ### Prerequisites
 
-- For [user subscription mode Batch accounts](../batch/accounts.md#batch-accounts), make sure that the subscription in which you're creating your pool doesn't have a zone offer restriction on the requested VM SKU. To see if your subscription doesn't have any restrictions, call the [Resource Skus List API](/rest/api/compute/resource-skus/list?tabs=HTTP) and check the `ResourceSkuRestrictions`. If a zone restriction exists, you can submit a support ticket to remove the zone restriction.
+- For [user subscription mode Batch accounts](/azure/batch/accounts#batch-accounts), make sure that the subscription in which you're creating your pool doesn't have a zone offer restriction on the requested VM SKU. To see if your subscription doesn't have any restrictions, call the [Resource Skus List API](/rest/api/compute/resource-skus/list?tabs=HTTP) and check the `ResourceSkuRestrictions`. If a zone restriction exists, you can submit a support ticket to remove the zone restriction.
 
 - Because InfiniBand doesn't support inter-zone communication, you can't create a pool with a zonal policy if it has inter-node communication enabled and uses a [VM SKU that supports InfiniBand](/azure/virtual-machines/workloads/hpc/enable-infiniband).
 
@@ -44,7 +44,7 @@ Batch maintains parity with Azure on supporting availability zones.
 
 For examples on how to create a Batch pool across availability zones, see [Create an Azure Batch pool across availability zones](/azure/batch/create-pool-availability-zones).
 
-Learn more about creating Batch accounts with the [Azure portal](../batch/batch-account-create-portal.md), the [Azure CLI](../batch/scripts/batch-cli-sample-create-account.md), [PowerShell](../batch/batch-powershell-cmdlets-get-started.md), or the [Batch management API](../batch/batch-management-dotnet.md).
+Learn more about creating Batch accounts with the [Azure portal](/azure/batch/batch-account-create-portal), the [Azure CLI](/azure/batch/scripts/batch-cli-sample-create-account), [PowerShell](/azure/batch/batch-powershell-cmdlets-get-started), or the [Batch management API](/azure/batch/batch-management-dotnet).
 
 ### Zone down experience
 
@@ -107,22 +107,22 @@ Microsoft and its customers operate under the Shared Responsibility model. Micro
 
 - Precreate all required services in each region, such as your Batch accounts and associated storage accounts. There's no charge for creating new accounts; charges accrue only when the account is used or when data is stored.
 
-- Make sure [appropriate quotas](../batch/batch-quota-limit.md) are set on all subscriptions ahead of time, so you can allocate the required number of cores using the Batch account. As with other Azure services, there are limits on certain resources associated with the Batch service. Many of these limits are default quotas applied by Azure at the subscription or account level. Keep these quotas in mind as you design and scale up your Batch workloads. 
+- Make sure [appropriate quotas](/azure/batch/batch-quota-limit) are set on all subscriptions ahead of time, so you can allocate the required number of cores using the Batch account. As with other Azure services, there are limits on certain resources associated with the Batch service. Many of these limits are default quotas applied by Azure at the subscription or account level. Keep these quotas in mind as you design and scale up your Batch workloads. 
 
 
 >[!NOTE]
->If you plan to run production workloads in Batch, you may need to increase one or more of the quotas above the default. To raise a quota, you can request a quota increase at no charge. For more information, see [Request a quota increase](../batch/batch-quota-limit.md#increase-a-quota). 
+>If you plan to run production workloads in Batch, you may need to increase one or more of the quotas above the default. To raise a quota, you can request a quota increase at no charge. For more information, see [Request a quota increase](/azure/batch/batch-quota-limit#increase-a-quota). 
 
 #### Storage
 
-You must configure Batch storage to ensure data is backed up cross-region; customer responsibility is the default. Most Batch solutions use Azure Storage for storing [resource files](../batch/resource-files.md) and output files. For example, your Batch tasks (including standard tasks, start tasks, job preparation tasks, and job release tasks) typically specify resource files that reside in a storage account. Storage accounts also store data that is processed and any output data that is generated. Understanding possible data loss across the regions of your service operations is an important consideration. You must also confirm whether data is rewritable or read-only. 
+You must configure Batch storage to ensure data is backed up cross-region; customer responsibility is the default. Most Batch solutions use Azure Storage for storing [resource files](/azure/batch/resource-files) and output files. For example, your Batch tasks (including standard tasks, start tasks, job preparation tasks, and job release tasks) typically specify resource files that reside in a storage account. Storage accounts also store data that is processed and any output data that is generated. Understanding possible data loss across the regions of your service operations is an important consideration. You must also confirm whether data is rewritable or read-only. 
 
 Batch supports the following types of Azure Storage accounts:
 - General-purpose v2 (GPv2) accounts
 - General-purpose v1 (GPv1) accounts
 - Blob storage accounts (currently supported for pools in the Virtual Machine configuration)
 
-For more information about storage accounts, see [Azure storage account overview](../storage/common/storage-account-overview.md).
+For more information about storage accounts, see [Azure storage account overview](/azure/storage/common/storage-account-overview).
 
 You can associate a storage account with your Batch account when you create the account or do this step later.
 
@@ -130,7 +130,7 @@ If you're setting up a separate storage account for each region your service is 
 
 Capacity planning is another important consideration with storage and should be addressed proactively. Consider your cost and performance requirements when choosing a storage account. For example, the GPv2 and blob storage account options support greater [capacity and scalability limits](https://azure.microsoft.com/blog/announcing-larger-higher-scale-storage-accounts/) compared with GPv1. (Contact Azure Support to request an increase in a storage limit.) These account options can improve the performance of Batch solutions that contain a large number of parallel tasks that read from or write to the storage account.
 
-When a storage account is linked to a Batch account, think of it as the autostorage account. An autostorage account is required if you plan to use the [application packages](../batch/batch-application-packages.md) capability, as it's used to store the application package .zip files. An autostorage account can also be used for [task resource files](../batch/resource-files.md#storage-container-name-autostorage); since the autostorage account is already linked to the Batch account, this avoids the need for shared access signature (SAS) URLs to access the resource files.
+When a storage account is linked to a Batch account, think of it as the autostorage account. An autostorage account is required if you plan to use the [application packages](/azure/batch/batch-application-packages) capability, as it's used to store the application package .zip files. An autostorage account can also be used for [task resource files](/azure/batch/resource-files#storage-container-name-autostorage); since the autostorage account is already linked to the Batch account, this avoids the need for shared access signature (SAS) URLs to access the resource files.
 
 ## Next steps
 

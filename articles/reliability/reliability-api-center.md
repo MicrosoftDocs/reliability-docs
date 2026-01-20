@@ -17,7 +17,7 @@ This article describes reliability support in Azure API Center, including availa
 
 [!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
 
-In each [region](../api-center/overview.md) where it's available, Azure API Center supports zone redundancy by default. The Azure API Center service runs in a multitenant environment on availability zone-enabled components. You don't need to set it up or reconfigure for availability zone support. 
+In each [region](/azure/api-center/overview) where it's available, Azure API Center supports zone redundancy by default. The Azure API Center service runs in a multitenant environment on availability zone-enabled components. You don't need to set it up or reconfigure for availability zone support. 
 
 ### Zone down experience
 

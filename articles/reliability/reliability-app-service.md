@@ -13,7 +13,7 @@ ms.date: 10/31/2025
 
 # Reliability in Azure App Service
 
-[Azure App Service](../app-service/overview.md) is an HTTP-based service for hosting web applications, REST APIs, and mobile back ends. App Service integrates with Microsoft Azure to provide security, load balancing, autoscaling, and automated management for applications. As an Azure service, App Service provides a range of capabilities to support your reliability requirements.
+[Azure App Service](/azure/app-service/overview) is an HTTP-based service for hosting web applications, REST APIs, and mobile back ends. App Service integrates with Microsoft Azure to provide security, load balancing, autoscaling, and automated management for applications. As an Azure service, App Service provides a range of capabilities to support your reliability requirements.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -28,7 +28,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ## Reliability architecture overview
 
-When you create an App Service web app, you specify the [App Service plan](../app-service/overview-hosting-plans.md) that runs the app.
+When you create an App Service web app, you specify the [App Service plan](/azure/app-service/overview-hosting-plans) that runs the app.
 
 [!INCLUDE [App Service reliability architecture - plan description](includes/app-service/reliability-architecture-plans-include.md)]
 
@@ -59,9 +59,9 @@ To enable zone redundancy, you must meet the following requirements:
 
 - **Minimum number of instances:** Deploy a minimum of two instances in your plan.
 
-- **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your plan uses. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the plan's resource group. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](../app-service/configure-zone-redundancy.md#check-for-zone-redundancy-support-on-an-app-service-plan).
+- **Scale unit:** Your app must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your plan uses. Instead, when you create an App Service plan, the plan is assigned to a scale unit based on the plan's resource group. To determine whether the scale unit for your App Service plan supports zone redundancy, see [Check for zone redundancy support for an App Service plan](/azure/app-service/configure-zone-redundancy#check-for-zone-redundancy-support-on-an-app-service-plan).
 
-    If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to [redeploy your apps to a new plan on a different scale unit](../azure-resource-manager/management/move-limitations/app-service-move-limitations.md#scale-units-and-zone-redundancy).
+    If your App Service plan is on a scale unit that doesn't support zone redundancy, you can't enable zone redundancy on your plan. Instead, you need to [redeploy your apps to a new plan on a different scale unit](/azure/azure-resource-manager/management/move-limitations/app-service-move-limitations#scale-units-and-zone-redundancy).
 
 ### Instance distribution across zones
 
@@ -83,9 +83,9 @@ If you enable availability zones but specify a capacity of less than two, the pl
 
 ### Configure availability zone support
 
-- **Create a new zone-redundant App Service plan.** For more information, see [Create a new App Service plan that includes zone redundancy](../app-service/configure-zone-redundancy.md#create-a-new-zone-redundant-app-service-plan).
+- **Create a new zone-redundant App Service plan.** For more information, see [Create a new App Service plan that includes zone redundancy](/azure/app-service/configure-zone-redundancy#create-a-new-zone-redundant-app-service-plan).
 
-- **Enable or disable zone redundancy on an existing App Service plan.** For more information, see [Set zone redundancy for an existing App Service plan](../app-service/configure-zone-redundancy.md#set-zone-redundancy-for-an-existing-app-service-plan).
+- **Enable or disable zone redundancy on an existing App Service plan.** For more information, see [Set zone redundancy for an existing App Service plan](/azure/app-service/configure-zone-redundancy#set-zone-redundancy-for-an-existing-app-service-plan).
 
 ### Capacity planning and management
 

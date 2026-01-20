@@ -41,7 +41,7 @@ To create an Azure DNS Private Resolver using Azure portal, see [Quickstart: Cre
 
 There are two technical aspects towards setting up your disaster recovery architecture:
 
--  Using a deployment mechanism to replicate instances, data, and configurations between primary and standby environments. This type of disaster recovery can be done natively viaAzure Site Recovery, see [Azure Site Recovery Documentation](../site-recovery/index.yml) via Microsoft Azure partner appliances/services like Veritas or NetApp. 
+-  Using a deployment mechanism to replicate instances, data, and configurations between primary and standby environments. This type of disaster recovery can be done natively viaAzure Site Recovery, see [Azure Site Recovery Documentation](/azure/site-recovery/) via Microsoft Azure partner appliances/services like Veritas or NetApp. 
 
 - Developing a solution to divert network/web traffic from the primary site to the standby site. This type of disaster recovery can be achieved via Azure DNS, [Azure Traffic Manager(DNS)](reliability-traffic-manager.md), or third-party global load balancers. 
 
@@ -101,5 +101,5 @@ The assumptions made for the solution are:
 ## Next steps
 
 - [Reliability in Azure](/azure/reliability/availability-zones-overview)
-- Learn more about [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md).
-- Learn more about [Azure DNS](../dns/dns-overview.md).
+- Learn more about [Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview).
+- Learn more about [Azure DNS](/azure/dns/dns-overview).

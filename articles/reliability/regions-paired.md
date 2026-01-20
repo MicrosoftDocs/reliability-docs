@@ -22,7 +22,7 @@ You can design a highly resilient solution whether you use paired regions, nonpa
 
 ## Paired regions
 
-Some Azure services use paired regions to build their multi-region geo-replication and geo-redundancy strategy. For example, [Azure geo-redundant storage](../storage/common/storage-redundancy.md#geo-redundant-storage) (GRS) can automatically replicate data to a paired region.
+Some Azure services use paired regions to build their multi-region geo-replication and geo-redundancy strategy. For example, [Azure geo-redundant storage](/azure/storage/common/storage-redundancy#geo-redundant-storage) (GRS) can automatically replicate data to a paired region.
 
 If you're in a region that's paired, then using its pair as a secondary region provides several benefits:
 

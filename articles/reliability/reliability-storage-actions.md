@@ -11,7 +11,7 @@ ms.date: 06/10/2024
 
 # Reliability in Azure Storage Actions
 
-This article describes reliability support in [Azure Storage Actions](../storage-actions/overview.md), and covers both intra-regional resiliency with [availability zones](#availability-zone-support) and [cross-region disaster recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability principles in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
+This article describes reliability support in [Azure Storage Actions](/azure/storage-actions/overview), and covers both intra-regional resiliency with [availability zones](#availability-zone-support) and [cross-region disaster recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability principles in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
 
 Azure Storage Actions is a serverless framework that you can use to perform common data operations on millions of objects across multiple storage accounts. The service itself is regional, and it doesn’t have SKUs or support for availability zones. However, the control plane of the service automatically supports zone-redundancy. The data plane also may support redundancy depending on whether or not the storage account is running on a zone-redundant configuration.
 

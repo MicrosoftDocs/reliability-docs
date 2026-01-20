@@ -17,16 +17,16 @@ This article describes reliability support in Azure Elastic SAN and covers both 
 
 [!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
 
-Azure Elastic SAN supports availability zone deployment with [locally redundant storage](../storage/elastic-san/elastic-san-planning.md#locally-redundant-storage) (LRS) and regional deployment with [zone-redundant storage](../storage/elastic-san/elastic-san-planning.md#zone-redundant-storage) (ZRS).
+Azure Elastic SAN supports availability zone deployment with [locally redundant storage](/azure/storage/elastic-san/elastic-san-planning#locally-redundant-storage) (LRS) and regional deployment with [zone-redundant storage](/azure/storage/elastic-san/elastic-san-planning#zone-redundant-storage) (ZRS).
 
 ### Prerequisites
 
-LRS and ZRS Elastic SAN are currently only available in a subset of regions. For a list of regions, see [Scale targets for Elastic SAN](../storage/elastic-san/elastic-san-scale-targets.md).
+LRS and ZRS Elastic SAN are currently only available in a subset of regions. For a list of regions, see [Scale targets for Elastic SAN](/azure/storage/elastic-san/elastic-san-scale-targets).
 
 
 #### Create a resource using availability zones
 
-To create an Elastic SAN with an availability zone enabled, see [Deploy an Elastic SAN](../storage/elastic-san/elastic-san-create.md).
+To create an Elastic SAN with an availability zone enabled, see [Deploy an Elastic SAN](/azure/storage/elastic-san/elastic-san-create).
 
 
 ### Zone down experience
@@ -43,7 +43,7 @@ Deploying a ZRS Elastic SAN provides more reliability than an LRS Elastic SAN, b
 
 ### Availability zone migration
 
-To migrate an Elastic SAN on LRS to ZRS, snapshot your Elastic SAN volumes, export them to managed disk snapshots, deploy an Elastic SAN on ZRS, and then create volumes on the SAN on ZRS using those disk snapshots. To learn how to use snapshots, see [Snapshot Azure Elastic SAN volumes](../storage/elastic-san/elastic-san-snapshots.md).
+To migrate an Elastic SAN on LRS to ZRS, snapshot your Elastic SAN volumes, export them to managed disk snapshots, deploy an Elastic SAN on ZRS, and then create volumes on the SAN on ZRS using those disk snapshots. To learn how to use snapshots, see [Snapshot Azure Elastic SAN volumes](/azure/storage/elastic-san/elastic-san-snapshots).
 
 ## Disaster recovery and business continuity
 
@@ -51,7 +51,7 @@ To migrate an Elastic SAN on LRS to ZRS, snapshot your Elastic SAN volumes, expo
 
 ### Single and Multi-region disaster recovery
 
-For Elastic SAN, you're responsible for the disaster recovery (DR) experience. You can [take snapshots](../storage/elastic-san/elastic-san-snapshots.md) of your volumes and [export them](../storage/elastic-san/elastic-san-snapshots.md#export-volume-snapshot) to managed disk snapshots. Then, you can [copy an incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions) to store your data is in a region other than the region your Elastic SAN is in. You should export to regions that are geographically distant from your primary region to reduce the possibility of multiple regions being affected due to a disaster.
+For Elastic SAN, you're responsible for the disaster recovery (DR) experience. You can [take snapshots](/azure/storage/elastic-san/elastic-san-snapshots) of your volumes and [export them](/azure/storage/elastic-san/elastic-san-snapshots#export-volume-snapshot) to managed disk snapshots. Then, you can [copy an incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions) to store your data is in a region other than the region your Elastic SAN is in. You should export to regions that are geographically distant from your primary region to reduce the possibility of multiple regions being affected due to a disaster.
 
 #### Outage detection, notification, and management
 
@@ -63,5 +63,5 @@ Microsoft and its customers operate under the [Shared Responsibility Model](./co
 
 ## Next steps
 
-- [Plan for deploying an Elastic SAN](../storage/elastic-san/elastic-san-planning.md)
-- [Snapshot Azure Elastic SAN volumes](../storage/elastic-san/elastic-san-snapshots.md)
+- [Plan for deploying an Elastic SAN](/azure/storage/elastic-san/elastic-san-planning)
+- [Snapshot Azure Elastic SAN volumes](/azure/storage/elastic-san/elastic-san-snapshots)

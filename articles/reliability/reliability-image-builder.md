@@ -47,7 +47,7 @@ It's recommended that you create an AIB resource in another nearby region, into 
 
 ### Single-region geography disaster recovery
 
-In the case of a disaster for single-region, you still need to get an image template resource from that region even when that region isn't available. You can either maintain a copy of an image template locally or can use [Azure Resource Graph](../governance/resource-graph/index.yml) from the Azure portal to get an image template resource.
+In the case of a disaster for single-region, you still need to get an image template resource from that region even when that region isn't available. You can either maintain a copy of an image template locally or can use [Azure Resource Graph](/azure/governance/resource-graph/) from the Azure portal to get an image template resource.
 
 To get an image template resource using Resource Graph from the Azure portal:
 
@@ -81,5 +81,5 @@ In regards to your data processing information, refer to the Azure Image Builder
 ## Next steps
 
 - [Reliability in Azure](overview.md)
-- [Enable Azure VM disaster recovery between availability zones](../site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md)
+- [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery)
 - [Azure Image Builder overview](/azure/virtual-machines/image-builder-overview)

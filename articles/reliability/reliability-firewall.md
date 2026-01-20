@@ -13,7 +13,7 @@ ms.date: 08/27/2025
 
 # Reliability in Azure Firewall
 
-[Azure Firewall](../firewall/overview.md) is a managed, cloud-based network security service that protects Azure Virtual Network resources. It's a fully stateful firewall service that includes built-in high availability and unrestricted cloud scalability.
+[Azure Firewall](/azure/firewall/overview) is a managed, cloud-based network security service that protects Azure Virtual Network resources. It's a fully stateful firewall service that includes built-in high availability and unrestricted cloud scalability.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -98,11 +98,11 @@ This section explains how to configure availability zone support for your firewa
   > [!IMPORTANT]
   > Zone redundancy is automatically enabled when you deploy through the Azure portal. To configure specific zones, you must use another tool, such as the Azure CLI, Azure PowerShell, Bicep, or ARM templates.
 
-  - *Zone-redundant:* When you deploy a new firewall by using the Azure portal, your firewall is zone-redundant by default. For more information, see [Deploy Azure Firewall by using the Azure portal](../firewall/tutorial-firewall-deploy-portal.md).
+  - *Zone-redundant:* When you deploy a new firewall by using the Azure portal, your firewall is zone-redundant by default. For more information, see [Deploy Azure Firewall by using the Azure portal](/azure/firewall/tutorial-firewall-deploy-portal).
 
     When you use the Azure CLI, Azure PowerShell, Bicep, ARM templates, or Terraform, you can optionally specify the availability zones for deployment. To deploy a zone-redundant firewall, specify two or more zones. We recommend that you select all zones so that your firewall can use every availability zone, unless you have a specific reason to exclude a zone.
     
-    For more information about deploying a ZR Firewall, see [Deploy an Azure Firewall with availability zones](../firewall/deploy-availability-zone-powershell.md).
+    For more information about deploying a ZR Firewall, see [Deploy an Azure Firewall with availability zones](/azure/firewall/deploy-availability-zone-powershell).
 
 
     > [!NOTE]
@@ -200,7 +200,7 @@ Azure Firewall provides a higher availability SLA for firewalls deployed across 
 
 ## Related content
 
-- [Azure Firewall overview](../firewall/overview.md)
-- [Azure Firewall features](../firewall/choose-firewall-sku.md)
-- [Azure Firewall best practices for performance](../firewall/firewall-best-practices.md)
-- [Firewall Manager](../firewall-manager/overview.md)
+- [Azure Firewall overview](/azure/firewall/overview)
+- [Azure Firewall features](/azure/firewall/choose-firewall-sku)
+- [Azure Firewall best practices for performance](/azure/firewall/firewall-best-practices)
+- [Firewall Manager](/azure/firewall-manager/overview)

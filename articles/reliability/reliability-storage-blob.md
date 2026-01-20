@@ -181,9 +181,9 @@ For cross-region backup requirements, consider using **Azure Backup for blobs**,
 
 ## Related content
 
-- [Blob Storage overview](../storage/blobs/storage-blobs-overview.md)
-- [Azure Storage redundancy](../storage/common/storage-redundancy.md)
-- [Disaster recovery and storage account failover](../storage/common/storage-disaster-recovery-guidance.md)
-- [Use geo-redundancy to design highly available applications](../storage/common/geo-redundant-design.md)
-- [Change how a storage account is replicated](../storage/common/redundancy-migration.md)
+- [Blob Storage overview](/azure/storage/blobs/storage-blobs-overview)
+- [Azure Storage redundancy](/azure/storage/common/storage-redundancy)
+- [Disaster recovery and storage account failover](/azure/storage/common/storage-disaster-recovery-guidance)
+- [Use geo-redundancy to design highly available applications](/azure/storage/common/geo-redundant-design)
+- [Change how a storage account is replicated](/azure/storage/common/redundancy-migration)
 

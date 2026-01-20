@@ -40,7 +40,7 @@ Each load balancer consists of multiple components, including:
 - *Load balancing rules*, which define how traffic from a frontend should be distributed to a backend pool.
 - *Health probes*, which monitor the availability of backend instances.
 
-To learn more about how Load Balancer works, see [Load Balancer components](../load-balancer/components.md).
+To learn more about how Load Balancer works, see [Load Balancer components](/azure/load-balancer/components).
 
 For globally deployed solutions, you can deploy a *global load balancer*, which is a special type of public load balancer designed to route traffic among different regional deployments of your solution. A global load balancer provides a single anycast IP address. It routes traffic to the closest healthy regional load balancer based on client proximity and regional health status. For more information, see [Resilience to region-wide failures](#resilience-to-region-wide-failures).
 
@@ -104,9 +104,9 @@ When you work with Load Balancer, you set the availability zone support on the f
 
 - **Create a new load balancer with availability zone support.**
 
-    - For *public load balancers*, the frontend IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it. To make the frontend IP configuration zone-redundant, create or select a zone-redundant public IP address. Public IP addresses are zone-redundant by default. For detailed steps, see [Create a public load balancer to load balance VMs using the Azure portal](../load-balancer/quickstart-load-balancer-standard-public-portal.md).
+    - For *public load balancers*, the frontend IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it. To make the frontend IP configuration zone-redundant, create or select a zone-redundant public IP address. Public IP addresses are zone-redundant by default. For detailed steps, see [Create a public load balancer to load balance VMs using the Azure portal](/azure/load-balancer/quickstart-load-balancer-standard-public-portal).
 
-    - For *internal load balancer*s, when you configure the frontend IP of the load balancer, you set the availability zone support type on the frontend IP configuration. For detailed steps, see [Create an internal load balancer to load balance VMs using the Azure portal](../load-balancer/quickstart-load-balancer-standard-internal-portal.md).
+    - For *internal load balancer*s, when you configure the frontend IP of the load balancer, you set the availability zone support type on the frontend IP configuration. For detailed steps, see [Create an internal load balancer to load balance VMs using the Azure portal](/azure/load-balancer/quickstart-load-balancer-standard-internal-portal).
 
 - **Change the availability zone configuration of an existing load balancer.** To change the availability zone configuration of an existing load balancer, you need to replace the frontend IP configuration. You can use this approach to move from a zonal to a zone-redundant frontend IP configuration. The high-level approach is:
 
@@ -129,7 +129,7 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
 - **Traffic routing between zones:** Load balancing can be performed in any availability zone. Traffic is sent to healthy backend instances specified in the backend pool, without consideration of which availability zone the backend instance is in.
 
-- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data. Even if you enable [session persistence](../load-balancer/distribution-mode-concepts.md#session-persistence) on the load balancer, no state is stored on the load balancer. Session persistence adjusts the hashing process to route requests to the same backend instance. However, session persistence isn't guaranteed. When the backend pool changes, the distribution of client requests is recomputed. This process is done without storing or synchronizing state.
+- **Data replication between zones**. Load Balancer is a network pass-through service that doesn't store or replicate application data. Even if you enable [session persistence](/azure/load-balancer/distribution-mode-concepts#session-persistence) on the load balancer, no state is stored on the load balancer. Session persistence adjusts the hashing process to route requests to the same backend instance. However, session persistence isn't guaranteed. When the backend pool changes, the distribution of client requests is recomputed. This process is done without storing or synchronizing state.
 
     The service maintains its configuration state with synchronous replication across zones, ensuring immediate consistency of load balancing rules, health probe configurations, and backend pool membership across all zones.
 
@@ -173,7 +173,7 @@ Global Load Balancer provides a single static anycast IP address that automatica
 
 With Global Load Balancer, you deploy multiple public load balancers in different regions, and the global load balancer acts as a global frontend. If the backend servers in one region have a problem, traffic switches to healthy regions automatically and without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
-For more information, see [Global Load Balancer](../load-balancer/cross-region-overview.md).
+For more information, see [Global Load Balancer](/azure/load-balancer/cross-region-overview).
 
 ### Custom multi-region solutions for resiliency
 
@@ -187,7 +187,7 @@ The Azure Load Balancer SLA applies when there are at least two healthy VMs conf
 
 ### Related content
 
-- [Azure Load Balancer documentation](../load-balancer/load-balancer-overview.md)
-- [Global Load Balancer](../load-balancer/cross-region-overview.md)
+- [Azure Load Balancer documentation](/azure/load-balancer/load-balancer-overview)
+- [Global Load Balancer](/azure/load-balancer/cross-region-overview)
 - [Azure reliability overview](/azure/reliability/overview)
  

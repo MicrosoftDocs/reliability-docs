@@ -29,7 +29,7 @@ DNS is one of the most efficient mechanisms to divert network traffic. DNS is ef
 
 There are two technical aspects towards setting up your disaster recovery architecture:
 
--  Using a deployment mechanism to replicate instances, data, and configurations between primary and standby environments. This type of disaster recovery can be done natively viaAzure Site Recovery, see [Azure Site Recovery Documentation](../site-recovery/index.yml) via Microsoft Azure partner appliances/services like Veritas or NetApp. 
+-  Using a deployment mechanism to replicate instances, data, and configurations between primary and standby environments. This type of disaster recovery can be done natively viaAzure Site Recovery, see [Azure Site Recovery Documentation](/azure/site-recovery/) via Microsoft Azure partner appliances/services like Veritas or NetApp. 
 
 - Developing a solution to divert network/web traffic from the primary site to the standby site. This type of disaster recovery can be achieved via [Azure DNS](reliability-dns.md), Azure Traffic Manager(DNS), or third-party global load balancers. 
 
@@ -106,5 +106,5 @@ This scenario is ideal for the use of Azure Traffic Manager that has inbuilt pro
 
 - [Reliability in Azure](/azure/reliability/availability-zones-overview)
 
-- Learn more about [Azure Traffic Manager](../traffic-manager/traffic-manager-overview.md).
-- Learn more about [Azure DNS](../dns/dns-overview.md).
+- Learn more about [Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview).
+- Learn more about [Azure DNS](/azure/dns/dns-overview).

@@ -49,7 +49,7 @@ API Management service tiers provide different levels of reliability:
 - **Consumption tier:** Has built-in resiliency capabilities and is resilient to a range of faults within a single Azure datacenter. However, the Consumption tier doesn't provide support for availability zones or multi-region deployments. To understand the expected uptime of a Consumption tier API Management instance, review the [service-level agreement (SLA)](#service-level-agreement).
 
 > [!NOTE]
-> The Developer and Premium tiers of API Management support [self-hosted gateways](../api-management/self-hosted-gateway-overview.md), which you can run on your own infrastructure. When you use self-hosted gateways, you're responsible for configuring them to meet your reliability requirements. Self-hosted gateways are outside the scope of this article.
+> The Developer and Premium tiers of API Management support [self-hosted gateways](/azure/api-management/self-hosted-gateway-overview), which you can run on your own infrastructure. When you use self-hosted gateways, you're responsible for configuring them to meet your reliability requirements. Self-hosted gateways are outside the scope of this article.
 
 ## Production deployment recommendations
 
@@ -59,7 +59,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-When you use API Management in front of an API, you might need to retry requests that fail because of transient faults. To protect your backend API from being overwhelmed by too many requests, API Management provides retry, rate-limit, and quota policies. You can also configure load balancing and circuit breaker capabilities by using [backend resources](../api-management/backends.md).
+When you use API Management in front of an API, you might need to retry requests that fail because of transient faults. To protect your backend API from being overwhelmed by too many requests, API Management provides retry, rate-limit, and quota policies. You can also configure load balancing and circuit breaker capabilities by using [backend resources](/azure/api-management/backends).
 
 ## Resilience to availability zone failures
 
@@ -147,7 +147,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 - **Region support:** API Management supports availability zones for the Premium (classic) and Premium v2 tiers in regions where the API Management tier is available and the region [supports availability zones](./regions-list.md).
 
-- **Tier requirement:** You must use the Premium (classic) or Premium v2 tier to configure availability zone support. API Management doesn't currently support availability zones in the classic Consumption, Developer, Basic, and Standard tiers or in the Basic v2 and Standard v2 tiers. For upgrade options, see [Upgrade and scale an API Management instance](../api-management/upgrade-and-scale.md).
+- **Tier requirement:** You must use the Premium (classic) or Premium v2 tier to configure availability zone support. API Management doesn't currently support availability zones in the classic Consumption, Developer, Basic, and Standard tiers or in the Basic v2 and Standard v2 tiers. For upgrade options, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
 :::zone pivot="premium-classic"
 
@@ -161,7 +161,7 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 - **Autoscaling:** If you manually configure availability zones on an API Management instance that's configured with autoscaling, you might need to adjust your autoscale settings after configuration. In this case, the number of API Management units in autoscale rules and limits must be a multiple of the number of zones. If you use the automatic availability zone support, you don't need to adjust your autoscale settings. 
 
-- **IP address requirements:** When you enable availability zone support on an API Management instance that's deployed in an external or internal virtual network, you must specify a public IP address resource for the instance to use. In an internal virtual network, the public IP address is used only for management operations, not for API requests. For more information, see [IP addresses in API Management](../api-management/api-management-howto-ip-addresses.md). 
+- **IP address requirements:** When you enable availability zone support on an API Management instance that's deployed in an external or internal virtual network, you must specify a public IP address resource for the instance to use. In an internal virtual network, the public IP address is used only for management operations, not for API requests. For more information, see [IP addresses in API Management](/azure/api-management/api-management-howto-ip-addresses). 
 
 :::zone-end
 
@@ -189,18 +189,18 @@ Regardless of your availability zone configuration, if you add more units, you i
 
 ### Configure availability zone support
 
-This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](../api-management/enable-availability-zone-support.md).
+This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](/azure/api-management/enable-availability-zone-support).
 
 - **Create an API Management instance that supports availability zones:** When you create a Premium (classic) API Management instance in a region that supports availability zones, the instance supports availability zones by default. You can select automatic availability zone support or manually configure zonal or zone-redundant support.
 
     > [!NOTE]
     > [!INCLUDE [Availability zone numbering](./includes/reliability-availability-zone-numbering-include.md)]
 
-- **Enable or reconfigure availability zone support:** You can change the availability zone configuration for an API Management instance, including adding availability zones and moving a zonal instance between availability zones. To learn how to configure availability zone support on an API Management instance, see [Enable availability zone support on API Management instances](../api-management/enable-availability-zone-support.md). None of the configuration options require downtime.
+- **Enable or reconfigure availability zone support:** You can change the availability zone configuration for an API Management instance, including adding availability zones and moving a zonal instance between availability zones. To learn how to configure availability zone support on an API Management instance, see [Enable availability zone support on API Management instances](/azure/api-management/enable-availability-zone-support). None of the configuration options require downtime.
 
     When you change availability zone configuration, the changes can take 15 to 45 minutes or more to apply. The API Management gateway can continue to handle API requests during this time.
 
-    Changing the availability zone configuration triggers a public and private [IP address change](../api-management/api-management-howto-ip-addresses.md#changes-to-ip-addresses).
+    Changing the availability zone configuration triggers a public and private [IP address change](/azure/api-management/api-management-howto-ip-addresses#changes-to-ip-addresses).
 
 :::zone-end
 
@@ -208,7 +208,7 @@ This section explains how to configure availability zone support for your API Ma
 
 ### Configure availability zone support
 
-This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](../api-management/enable-availability-zone-support.md).
+This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](/azure/api-management/enable-availability-zone-support).
 
 
 - **Create an API Management instance that supports availability zones:** In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. If zone redundancy can't be enabled because of capacity constraints or other issues, the service deployment fails.
@@ -384,7 +384,7 @@ When you add a region, you configure:
 
 - **Region support:** You can create multi-region deployments in the Premium (classic) tier with any Azure region that supports API Management. To see which regions support multi-region deployments, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
-- **Tier requirement:** You must use the Premium (classic) tier to configure multi-region support. To upgrade your instance to the Premium (classic) tier, see [Upgrade to the Premium tier](../api-management/upgrade-and-scale.md#change-your-api-management-service-tier).
+- **Tier requirement:** You must use the Premium (classic) tier to configure multi-region support. To upgrade your instance to the Premium (classic) tier, see [Upgrade to the Premium tier](/azure/api-management/upgrade-and-scale#change-your-api-management-service-tier).
 
 #### Considerations
 
@@ -414,9 +414,9 @@ In multi-region deployments, autoscaling applies only to the primary region. Sec
 
 This section describes what to expect when API Management instances are configured with multi-region support and all regions are operational.
 
-- **Traffic routing between regions:** API Management automatically routes incoming requests to a regional gateway. A request is routed to the regional gateway with the lowest latency from the client. If you need to use a different routing approach, you can configure your own Traffic Manager with custom routing rules. For more information, see [Use custom routing to API Management regional gateways](../api-management/api-management-howto-deploy-multi-region.md#use-custom-routing-to-api-management-regional-gateways).
+- **Traffic routing between regions:** API Management automatically routes incoming requests to a regional gateway. A request is routed to the regional gateway with the lowest latency from the client. If you need to use a different routing approach, you can configure your own Traffic Manager with custom routing rules. For more information, see [Use custom routing to API Management regional gateways](/azure/api-management/api-management-howto-deploy-multi-region#use-custom-routing-to-api-management-regional-gateways).
 
-    When a request reaches an API Management regional gateway, it's routed to the backend API unless a policy returns a response directly from the gateway, such as a cached response or an error code. In a multi-region solution, you need to take care to route to an instance of the backend API that meets your performance requirements. For more information, see [Route API calls to regional backend services](../api-management/api-management-howto-deploy-multi-region.md#route-api-calls-to-regional-backend-services).
+    When a request reaches an API Management regional gateway, it's routed to the backend API unless a policy returns a response directly from the gateway, such as a cached response or an error code. In a multi-region solution, you need to take care to route to an instance of the backend API that meets your performance requirements. For more information, see [Route API calls to regional backend services](/azure/api-management/api-management-howto-deploy-multi-region#route-api-calls-to-regional-backend-services).
 
 - **Data replication between regions:** Gateway configuration, such as APIs and policy definitions, are regularly synchronized between the primary and secondary regions you add. Propagation of updates to the regional gateways normally takes less than 10 seconds.
 
@@ -448,7 +448,7 @@ When the primary region recovers, API Management automatically restores units in
 
 #### Test for region failures
 
-To be ready for unexpected region outages, regularly test your responses to region failures. You can simulate some aspects of a region failure by [disabling routing to a regional gateway](../api-management/api-management-howto-deploy-multi-region.md#disable-routing-to-a-regional-gateway).
+To be ready for unexpected region outages, regularly test your responses to region failures. You can simulate some aspects of a region failure by [disabling routing to a regional gateway](/azure/api-management/api-management-howto-deploy-multi-region#disable-routing-to-a-regional-gateway).
 
 :::zone-end
 
@@ -472,7 +472,7 @@ API Management performs regular service upgrades and other forms of maintenance.
 
 In the Basic, Standard, and Premium (classic) tiers, you can customize when in the update process your instance receives an update. If you need to validate the effect of upgrades on your workload, consider configuring a test instance to receive updates early in an update cycle, and set your production instance to receive updates late in the cycle. You can also specify a maintenance window, which is the time of the day that you want the instance to apply service updates.
 
-For more information, see [Configure service update settings for your API Management instances](../api-management/configure-service-update-settings.md).
+For more information, see [Configure service update settings for your API Management instances](/azure/api-management/configure-service-update-settings).
 
 ## Service-level agreement
 

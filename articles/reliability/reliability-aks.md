@@ -86,7 +86,7 @@ To enhance the reliability and resiliency of AKS production workloads in a regio
 
 - **Set pod topology constraints.** Use pod topology spread constraints to control how pods are spread across different nodes or zones. Constraints help you achieve HA, resiliency, and efficient resource usage. If you prefer to spread pods strictly across zones, you can set constraints to force a pod into a pending state to maintain the balance of pods across zones. For more information, see [Pod topology spread constraints](/azure/aks/best-practices-app-cluster-reliability#pod-topology-spread-constraints).
 
-- **Configure zone-resilient networking.** If your pods serve external traffic, configure your cluster network architecture by using services like [Azure Application Gateway](../application-gateway/overview-v2.md), [Azure Load Balancer](../load-balancer/load-balancer-overview.md), or [Azure Front Door](../frontdoor/front-door-overview.md).
+- **Configure zone-resilient networking.** If your pods serve external traffic, configure your cluster network architecture by using services like [Azure Application Gateway](/azure/application-gateway/overview-v2), [Azure Load Balancer](/azure/load-balancer/load-balancer-overview), or [Azure Front Door](/azure/frontdoor/front-door-overview).
 
 - **Ensure that dependencies are zone resilient.** Most AKS applications use other services for storage, security, or networking. Make sure that you review the zone resiliency recommendations for those services.
 

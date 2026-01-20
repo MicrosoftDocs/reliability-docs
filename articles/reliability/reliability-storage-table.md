@@ -195,10 +195,10 @@ When you design backup strategies for Table Storage, consider the partitioned na
 
 ## Related content
 
-- [What is Table Storage?](../storage/tables/table-storage-overview.md)
-- [Design scalable and performant tables](../storage/tables/table-storage-design.md)
-- [Azure Storage redundancy](../storage/common/storage-redundancy.md)
-- [Azure storage disaster recovery planning and failover](../storage/common/storage-disaster-recovery-guidance.md)
-- [Performance and scalability checklist for Table Storage](../storage/tables/storage-performance-checklist.md)
+- [What is Table Storage?](/azure/storage/tables/table-storage-overview)
+- [Design scalable and performant tables](/azure/storage/tables/table-storage-design)
+- [Azure Storage redundancy](/azure/storage/common/storage-redundancy)
+- [Azure storage disaster recovery planning and failover](/azure/storage/common/storage-disaster-recovery-guidance)
+- [Performance and scalability checklist for Table Storage](/azure/storage/tables/storage-performance-checklist)
 - [Azure reliability](overview.md)
 - [Recommendations for handling transient faults](/azure/well-architected/reliability/handle-transient-faults)

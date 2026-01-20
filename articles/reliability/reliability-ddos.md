@@ -13,7 +13,7 @@ ms.date: 03/14/2024
 # Reliability in Azure DDoS Network Protection
 
 
-This article describes reliability support in [Azure DDoS Network Protection](../ddos-protection/ddos-protection-overview.md), and both regional resiliency with availability zones and [cross-region recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
+This article describes reliability support in [Azure DDoS Network Protection](/azure/ddos-protection/ddos-protection-overview), and both regional resiliency with availability zones and [cross-region recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
 
 
 ## Availability zone support

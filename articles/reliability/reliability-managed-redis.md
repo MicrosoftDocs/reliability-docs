@@ -51,7 +51,7 @@ There are two key concepts that you need to understand when planning resiliency 
 
 - **Shards:** Each node runs multiple Redis server processes called *shards*, which manage a subset of your cache's data. When your cache is configured for high availability, shards are automatically distributed and replicated across nodes. You specify a *cluster policy*, which determines how shards are distributed across nodes.
 
-For more information, see [Azure Managed Redis architecture](../redis/architecture.md) and [Failover and patching for Azure Managed Redis](../redis/failover.md).
+For more information, see [Azure Managed Redis architecture](/azure/redis/architecture) and [Failover and patching for Azure Managed Redis](/azure/redis/failover).
 
 ## Resilience to transient faults
 
@@ -90,7 +90,7 @@ Zone redundancy requires that your cache is configured for high availability, wh
 
 - **Create a new zone-redundant instance:** When you create a new Azure Managed Redis instance, enable high availability configuration and deploy it into a region with availability zones. Then, it automatically includes zone redundancy by default. There's no need for you to perform any more configuration.
 
-  For detailed steps, see [Quickstart: Create an Azure Managed Redis Instance](../redis/quickstart-create-managed-redis.md).
+  For detailed steps, see [Quickstart: Create an Azure Managed Redis Instance](/azure/redis/quickstart-create-managed-redis).
 
 - **Enable zone redundancy on an existing instance:** To configure an existing Azure Managed Redis instance to be zone-redundant, ensure it's deployed in a region that supports availability zones, and enable high availability on the cache.
 
@@ -100,7 +100,7 @@ Zone redundancy requires that your cache is configured for high availability, wh
 
 During a zone-down event, your instance might have fewer resources available to serve your workload. If your instance is often under resource pressure and you need to prepare for availability zone failure, consider one of the following approaches:
 
-- **Overprovision your instance:** Overprovisioning involves selecting a higher performance tier than you might require. It allows your instance to tolerate some capacity loss and continue to function without degraded performance. For more information about the principle of overprovisioning, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale your instance, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
+- **Overprovision your instance:** Overprovisioning involves selecting a higher performance tier than you might require. It allows your instance to tolerate some capacity loss and continue to function without degraded performance. For more information about the principle of overprovisioning, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale your instance, see [Scale an Azure Managed Redis instance](/azure/redis/how-to-scale).
 
 - **Use active geo-replication:** You can deploy multiple instances in different regions, and configure [active geo-replication](#active-geo-replication) to spread your load across those separate instances.
 
@@ -124,7 +124,7 @@ This section describes what to expect when a managed Redis cache is zone-redunda
 
 - **Expected data loss:** Any data that hasn't been replicated to shards in another zone might be lost during a zone failure. Typically the amount of data loss is measured in seconds, but it depends on the replication lag.
 
-- **Expected downtime:** A small amount of downtime, typically 10-15 seconds, might occur while shards fail over to nodes in healthy zones. For information about the unplanned failover process, see [Explanation of a failover](../redis/failover.md#explanation-of-a-failover) When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
+- **Expected downtime:** A small amount of downtime, typically 10-15 seconds, might occur while shards fail over to nodes in healthy zones. For information about the unplanned failover process, see [Explanation of a failover](/azure/redis/failover#explanation-of-a-failover) When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
 
 - **Traffic rerouting:** Azure Managed Redis automatically redirects traffic to nodes in healthy zones.
 
@@ -142,7 +142,7 @@ Azure Managed Redis provides native multi-region support through *active geo-rep
 
 ### Active geo-replication
 
-When you use [active geo-replication](../redis/how-to-active-geo-replication.md), applications can read from and write to any cache instance in the group, with changes automatically synchronized across all regions. The service supports active-active replication patterns where each region can handle both read and write operations simultaneously. When conflicts occur due to concurrent writes in different regions, the service automatically resolves them using predetermined conflict resolution algorithms without requiring manual intervention. This approach provides resiliency to region failures while maintaining low-latency access for globally distributed applications.
+When you use [active geo-replication](/azure/redis/how-to-active-geo-replication), applications can read from and write to any cache instance in the group, with changes automatically synchronized across all regions. The service supports active-active replication patterns where each region can handle both read and write operations simultaneously. When conflicts occur due to concurrent writes in different regions, the service automatically resolves them using predetermined conflict resolution algorithms without requiring manual intervention. This approach provides resiliency to region failures while maintaining low-latency access for globally distributed applications.
 
 The following diagram shows two cache instances in different regions within the same active geo-replication group, with client applications that connect to each cache instance:
 
@@ -158,11 +158,11 @@ You're responsible for configuring your client applications so that, if any regi
 
 - **Instance configuration:** Active geo-replication requires Azure Managed Redis instances of the same tier and size across all participating regions. All cache instances in a replication group must be configured with identical settings including persistence options, modules, and clustering policies.
 
-- **Other requirements:** Your cache instances must meet other requirements, including the modules you use, and it affects how your cache instances can be scaled. For more information, see [Active geo-replication prerequisites](../redis/how-to-active-geo-replication.md#active-geo-replication-prerequisites).
+- **Other requirements:** Your cache instances must meet other requirements, including the modules you use, and it affects how your cache instances can be scaled. For more information, see [Active geo-replication prerequisites](/azure/redis/how-to-active-geo-replication#active-geo-replication-prerequisites).
 
 #### Considerations
 
-- **Failover responsibility:** When you use active geo-replication, **you're responsible for failover between cache instances**. You should prepare and configuring your application to handle failover. Failover involves preparation and might require you complete multiple steps. For more information, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
+- **Failover responsibility:** When you use active geo-replication, **you're responsible for failover between cache instances**. You should prepare and configuring your application to handle failover. Failover involves preparation and might require you complete multiple steps. For more information, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
 
 - **Eventual consistency:** Applications should be designed to handle eventual consistency scenarios, because changes can take time to propagate across all regions depending on network conditions and geographic distance. During region outages, you may experience more data inconsistencies until connectivity is restored and synchronization completes.
 
@@ -172,19 +172,19 @@ When you enable active geo-replication, you are billed for each Azure Managed Re
 
 #### Configure multi-region support
 
-- **Create a new geo-replicated cache instance**: Configure active geo-replication during cache provisioning by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](../redis/how-to-active-geo-replication.md#create-or-join-an-active-geo-replication-group).
+- **Create a new geo-replicated cache instance**: Configure active geo-replication during cache provisioning by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](/azure/redis/how-to-active-geo-replication#create-or-join-an-active-geo-replication-group).
 
 - **Enable an existing cache instance for geo-replication**: You can add an existing cache instance to an active geo-replication group.
 
   However, when an existing instance is added to an active geo-replication group, the data in the instance needs to be flushed, and there is a small amount of downtime. If possible, plan to enable active geo-replication when you create cache instances.
 
-  For more information, see [Add an existing instance to an active geo-replication group](../redis/how-to-active-geo-replication.md#add-an-existing-instance-to-an-active-geo-replication-group).
+  For more information, see [Add an existing instance to an active geo-replication group](/azure/redis/how-to-active-geo-replication#add-an-existing-instance-to-an-active-geo-replication-group).
 
 - **Disable geo-replication on a cache instance**: Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
 
 #### Capacity planning and management
 
-During a region-down event, the other instances might be under higher pressure. If an instance is often already under resource pressure and you need to prepare for the increased capacity requirements during a region failure, consider [overprovisioning the instance](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale an instance, see [Scale an Azure Managed Redis instance](../redis/how-to-scale.md).
+During a region-down event, the other instances might be under higher pressure. If an instance is often already under resource pressure and you need to prepare for the increased capacity requirements during a region failure, consider [overprovisioning the instance](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning). To learn how to scale an instance, see [Scale an Azure Managed Redis instance](/azure/redis/how-to-scale).
 
 #### Behavior when all regions are healthy
 
@@ -198,9 +198,9 @@ This section describes what to expect when instances are configured to use activ
 
 This section describes what to expect when instances are configured to use active geo-replication and there's an outage in one region:
 
-- **Detection and response**: You're responsible for detecting the failure of a cache instance, and deciding when to fail over. You can monitor the health of a geo-replicated cluster, which can help you to decide when to begin failover. For more information, see [Geo-replication metric](../redis/how-to-active-geo-replication.md#geo-replication-metric).
+- **Detection and response**: You're responsible for detecting the failure of a cache instance, and deciding when to fail over. You can monitor the health of a geo-replicated cluster, which can help you to decide when to begin failover. For more information, see [Geo-replication metric](/azure/redis/how-to-active-geo-replication#geo-replication-metric).
 
-  Failover requires that you perform multiple steps. For more detail, see [Force-unlink if there's a region outage](../redis/how-to-active-geo-replication.md#force-unlink-if-theres-a-region-outage).
+  Failover requires that you perform multiple steps. For more detail, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
@@ -232,17 +232,17 @@ Azure Managed Redis performs regular service upgrades and other maintenance task
 
 When maintenance is underway, Azure Managed Redis automatically performs creates new nodes and performs failover automatically. Client applications might see connection interruptions and other transient faults. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
-To learn more about the maintenance processes for Azure Managed Redis, see [Failover and patching for Azure Managed Redis](../redis/failover.md).
+To learn more about the maintenance processes for Azure Managed Redis, see [Failover and patching for Azure Managed Redis](/azure/redis/failover).
 
 ## Backup and restore
 
 Azure Managed Redis provides both data persistence and backup capabilities to protect against data loss scenarios that other reliability features may not address. Backups can provide protection against scenarios such as data corruption, accidental deletion, or configuration errors.
 
-- **Data persistence:** By default, Azure Managed Redis stores all cache data in memory. It can optionally write snapshots of your data to disk by using [data persistence](../redis/how-to-persistence.md). If there's a hardware failure that affects the node, Azure Managed Redis automatically restores the data. There are different types of data persistence you can select from, which provide different tradeoffs between snapshot frequency and the performance effects on your cache.
+- **Data persistence:** By default, Azure Managed Redis stores all cache data in memory. It can optionally write snapshots of your data to disk by using [data persistence](/azure/redis/how-to-persistence). If there's a hardware failure that affects the node, Azure Managed Redis automatically restores the data. There are different types of data persistence you can select from, which provide different tradeoffs between snapshot frequency and the performance effects on your cache.
 
   However, data files can't be restored to another instance, and you can't access the files. Data persistence doesn't protect you against data corruption or accidental deletion.
 
-- **Import and export:** Azure Managed Redis supports backup of your data by using the [import and export functionality](../redis/how-to-import-export-data.md), which saves backup files to Azure Blob Storage. You can configure geo-redundant storage on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
+- **Import and export:** Azure Managed Redis supports backup of your data by using the [import and export functionality](/azure/redis/how-to-import-export-data), which saves backup files to Azure Blob Storage. You can configure geo-redundant storage on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
 
   Exported files can be restored to the same cache instance or a different cache instance.
 

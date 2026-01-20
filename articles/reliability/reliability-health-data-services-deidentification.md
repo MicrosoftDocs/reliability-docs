@@ -70,12 +70,12 @@ Azure Front Door has a built-in feature that allows you to enable these configur
 
 #### Create an Azure Front Door profile
 
-You now create an [Azure Front Door Premium](../frontdoor/front-door-overview.md) to route traffic to your services. 
+You now create an [Azure Front Door Premium](/azure/frontdoor/front-door-overview) to route traffic to your services. 
 
 Run [`az afd profile create`](/cli/azure/afd/profile#az-afd-profile-create) to create an Azure Front Door profile.
 
 > [!NOTE]
-> If you want to deploy Azure Front Door Standard instead of Premium, substitute the value of the `--sku` parameter with Standard_AzureFrontDoor. You can't deploy managed rules with WAF Policy if you choose the Standard tier. For a detailed comparison of the pricing tiers, see [Azure Front Door tier comparison](../frontdoor/standard-premium/tier-comparison.md).
+> If you want to deploy Azure Front Door Standard instead of Premium, substitute the value of the `--sku` parameter with Standard_AzureFrontDoor. You can't deploy managed rules with WAF Policy if you choose the Standard tier. For a detailed comparison of the pricing tiers, see [Azure Front Door tier comparison](/azure/frontdoor/standard-premium/tier-comparison).
 
 ```azurecli-interactive
 az afd profile create --profile-name myfrontdoorprofile --resource-group my-deid --sku Premium_AzureFrontDoor

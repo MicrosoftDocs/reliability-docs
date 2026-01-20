@@ -57,13 +57,13 @@ App Configuration stores are region-specific and can't be migrated across region
 The following steps walk you through the process of creating a new target store and using the import/export functionality to move the configuration data from your current store to the newly created store.
 
 1. Create a target configuration store in a [region where App Configuration has availability zone support](#availability-zone-support-in-azure-app-configuration)
-1. Transfer your configuration data using the [import function](../azure-app-configuration/howto-import-export-data.md) in your target configuration store.
+1. Transfer your configuration data using the [import function](/azure/azure-app-configuration/howto-import-export-data) in your target configuration store.
 1. Optionally, delete your source configuration store if you have no use for it.
 
 ## Next steps
 
 > [!div class="nextstepaction"]
-> [Resiliency and disaster recovery](../azure-app-configuration/concept-geo-replication.md)
+> [Resiliency and disaster recovery](/azure/azure-app-configuration/concept-geo-replication)
 
 > [!div class="nextstepaction"]
 > [Building for reliability](/azure/architecture/framework/resiliency/app-design) in Azure.

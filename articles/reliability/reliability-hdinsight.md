@@ -12,7 +12,7 @@ CustomerIntent: As a cloud architect/engineer, I need general guidance on migrat
 
 # Reliability in Azure HDInsight 
 
-This article describes reliability support in [Azure HDInsight](../hdinsight/hdinsight-overview.md), and covers [availability zones](#availability-zone-support) and [cross-region recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
+This article describes reliability support in [Azure HDInsight](/azure/hdinsight/hdinsight-overview), and covers [availability zones](#availability-zone-support) and [cross-region recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For a more detailed overview of reliability in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
 
 
 ## Availability zone support
@@ -159,7 +159,7 @@ When you create your multi region disaster recovery plan, consider the following
 
 #### Outage detection, notification, and management
 
-- Use Azure monitoring tools on HDInsight to detect abnormal behavior in the cluster and set corresponding alert notifications. You can deploy the pre-configured HDInsight cluster-specific management solutions that collect important performance metrics of the specific cluster type. For more information, see [Azure Monitoring for HDInsight](../hdinsight/hdinsight-hadoop-oms-log-analytics-tutorial.md).  
+- Use Azure monitoring tools on HDInsight to detect abnormal behavior in the cluster and set corresponding alert notifications. You can deploy the pre-configured HDInsight cluster-specific management solutions that collect important performance metrics of the specific cluster type. For more information, see [Azure Monitoring for HDInsight](/azure/hdinsight/hdinsight-hadoop-oms-log-analytics-tutorial).  
 
 - Subscribe to Azure health alerts to be notified about service issues, planned maintenance, health and security advisories for a subscription, service, or region. Health notifications that include the issue cause and resolute ETA help you to better execute failover and failbacks. For more information, see [Azure Service Health documentation](/azure/service-health/).
 
@@ -189,7 +189,7 @@ functionality. Service incidents in one or more of the following services in a s
     * YARN Resource Manager
     * HBase Master
     
-    To learn more, see [high availability services supported by Azure HDInsight](../hdinsight/hdinsight-high-availability-components.md).
+    To learn more, see [high availability services supported by Azure HDInsight](/azure/hdinsight/hdinsight-high-availability-components).
     
    
 - **Metastore(s): Azure SQL Database**. HDInsight uses [Azure SQL Database](https://azure.microsoft.com/support/legal/sla/azure-sql-database/v1_4/) as a metastore, which provides an SLA of 99.99%. Three replicas of data persist within a data center with synchronous replication. If there is a replica loss, an alternate replica is served seamlessly. [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview) is supported out of the box with a maximum of four data centers. When there is a failover, either manual or data center, the first replica in the hierarchy  automatically becomes read-write capable. For more information, see [Azure SQL Database business continuity](/azure/azure-sql/database/business-continuity-high-availability-disaster-recover-hadr-overview).
@@ -199,7 +199,7 @@ functionality. Service incidents in one or more of the following services in a s
 
 - **Authentication: Microsoft Entra ID, Microsoft Entra Domain Services, Enterprise Security Package**. 
     - [Microsoft Entra ID](https://azure.microsoft.com/support/legal/sla/active-directory/v1_0/) provides an SLA of 99.9%. Active Directory is a global service with multiple levels of internal redundancy and automatic recoverability. For more information, see how [Microsoft in continually improving the reliability of Microsoft Entra ID](https://azure.microsoft.com/blog/advancing-azure-active-directory-availability/).
-    - [Microsoft Entra Domain Services](https://azure.microsoft.com/support/legal/sla/active-directory-ds/v1_0/) provides an SLA of 99.9%. Microsoft Entra Domain Services is a highly available service hosted in globally distributed data centers. Replica sets are a preview feature in Microsoft Entra Domain Services that enables geographic disaster recovery if an Azure region goes offline. For more information, see [replica sets concepts and features for Microsoft Entra Domain Services](../active-directory-domain-services/concepts-replica-sets.md) to learn more.  
+    - [Microsoft Entra Domain Services](https://azure.microsoft.com/support/legal/sla/active-directory-ds/v1_0/) provides an SLA of 99.9%. Microsoft Entra Domain Services is a highly available service hosted in globally distributed data centers. Replica sets are a preview feature in Microsoft Entra Domain Services that enables geographic disaster recovery if an Azure region goes offline. For more information, see [replica sets concepts and features for Microsoft Entra Domain Services](/azure/active-directory-domain-services/concepts-replica-sets) to learn more.  
     - [Azure DNS](https://azure.microsoft.com/support/legal/sla/dns/v1_1/) provides an SLA of 100%. HDInsight uses Azure DNS in various places for domain name resolution.
     
 
@@ -211,8 +211,8 @@ functionality. Service incidents in one or more of the following services in a s
 ## Related content
 
 
-* [Azure HDInsight business continuity architectures](../hdinsight/hdinsight-business-continuity-architecture.md)
-* [Azure HDInsight highly available solution architecture case study](../hdinsight/hdinsight-high-availability-case-study.md)
-* [What is Apache Hive and HiveQL on Azure HDInsight?](../hdinsight/hadoop/hdinsight-use-hive.md)
+* [Azure HDInsight business continuity architectures](/azure/hdinsight/hdinsight-business-continuity-architecture)
+* [Azure HDInsight highly available solution architecture case study](/azure/hdinsight/hdinsight-high-availability-case-study)
+* [What is Apache Hive and HiveQL on Azure HDInsight?](/azure/hdinsight/hadoop/hdinsight-use-hive)
 * [Reliability in Azure](./overview.md)
 

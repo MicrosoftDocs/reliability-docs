@@ -72,7 +72,7 @@ Azure Files provides two types of availability zone support:
 
       - *SSD (premium) file shares* through the `FileStorage` storage account kind. For a list of regions that support ZRS for SSD file share accounts, see [ZRS support for SSD file shares](/azure/storage/files/redundancy-premium-file-shares#zrs-support-for-ssd-azure-file-shares).
 
-    - *LRS with zonal placement:* LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](../storage/files/zonal-placement.md#region-support).
+    - *LRS with zonal placement:* LRS with zonal placement is supported for SSD (premium) file shares in [supported regions](/azure/storage/files/zonal-placement#region-support).
 
 - **File share types:**
 
@@ -300,7 +300,7 @@ You can create your snapshots and store them in two different ways:
 
 ## Related content
 
-- [Azure Files documentation](../storage/files/storage-files-introduction.md)
-- [Azure Files redundancy](../storage/files/files-redundancy.md)
-- [Plan for an Azure Files deployment](../storage/files/storage-files-planning.md)
+- [Azure Files documentation](/azure/storage/files/storage-files-introduction)
+- [Azure Files redundancy](/azure/storage/files/files-redundancy)
+- [Plan for an Azure Files deployment](/azure/storage/files/storage-files-planning)
 - [Azure reliability](overview.md)

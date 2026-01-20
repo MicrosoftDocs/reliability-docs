@@ -172,7 +172,7 @@ For more information, see [Guest updates and host maintenance overview](/azure/v
 
 Virtual Machines natively supports backup through Azure Backup. Azure Backup provides a native solution for protecting Virtual Machines by creating and managing backups, with application-consistent protection for the entire VM, including all attached disks. This approach is ideal when you need coordinated backup of multiple disks or application-aware backups. For database workloads, consider application-specific backup solutions that provide transaction-consistent protection and faster recovery options.
 
-You can customize the backup frequency, retention duration, and storage configuration to suit your needs. For more information, see [Azure Backup for VMs](../backup/backup-azure-vms-introduction.md).
+You can customize the backup frequency, retention duration, and storage configuration to suit your needs. For more information, see [Azure Backup for VMs](/azure/backup/backup-azure-vms-introduction).
 
 Backup also supports disks that are attached to VMs. For more information, see [Overview of Azure Disk Backup](/azure/backup/disk-backup-overview).
 

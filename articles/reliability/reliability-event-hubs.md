@@ -13,7 +13,7 @@ ms.date: 10/17/2025
 
 # Reliability in Azure Event Hubs
 
-[Azure Event Hubs](../event-hubs/event-hubs-about.md) is a native cloud service that can stream millions of events per second with low latency, from any source to any destination. Use Event Hubs to ingest and store streaming data, and integrate with client applications built for Apache Kafka or applications that use the Event Hubs client SDKs.
+[Azure Event Hubs](/azure/event-hubs/event-hubs-about) is a native cloud service that can stream millions of events per second with low latency, from any source to any destination. Use Event Hubs to ingest and store streaming data, and integrate with client applications built for Apache Kafka or applications that use the Event Hubs client SDKs.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -29,21 +29,21 @@ This section describes important aspects about how Event Hubs works from a relia
 
 ### Logical architecture
 
-An Event Hubs [*namespace*](../event-hubs/event-hubs-features.md#namespace) serves as the management container for one or more event hubs. You configure the service, such as allocating streaming capacity, configuring network security, and enabling geo-resiliency and geo-disaster recovery, at the namespace level.
+An Event Hubs [*namespace*](/azure/event-hubs/event-hubs-features#namespace) serves as the management container for one or more event hubs. You configure the service, such as allocating streaming capacity, configuring network security, and enabling geo-resiliency and geo-disaster recovery, at the namespace level.
 
 Within a namespace, you can organize events into an *event hub*. The Apache® Kafka ecosystem refers to this type of entity as a *topic*. The event hub or topic is an append-only distributed log of your events.
 
-Each event hub contains one or more [*partitions*](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning plays a key role in your application's reliability design. When you design your application, make a trade-off between maximizing availability and consistency. To maximize uptime for most applications, avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](../event-hubs/event-hubs-availability-and-consistency.md).
+Each event hub contains one or more [*partitions*](/azure/event-hubs/event-hubs-scalability#partitions), which are logs of sequential events. An event hub can use multiple partitions to perform parallel processing and horizontal scaling. Event Hubs only guarantees ordering within a single partition. Partitioning plays a key role in your application's reliability design. When you design your application, make a trade-off between maximizing availability and consistency. To maximize uptime for most applications, avoid addressing partitions directly from your client applications. For more information, see [Availability and consistency in Event Hubs](/azure/event-hubs/event-hubs-availability-and-consistency).
 
 Consumers that read from the event hub can read their events sequentially by maintaining their own *checkpoint*, which identifies the last event that they receive.
 
-For more information about partitions and other fundamental concepts in Event Hubs, see [Features and terminology in Event Hubs](../event-hubs/event-hubs-features.md).
+For more information about partitions and other fundamental concepts in Event Hubs, see [Features and terminology in Event Hubs](/azure/event-hubs/event-hubs-features).
 
 ### Physical architecture
 
-In the physical architecture, an Event Hubs namespace runs within a *cluster*. A cluster provides the underlying compute and storage resources. Most namespaces run on clusters that other Azure customers share. When you use the Premium tier, the namespace is allocated dedicated resources within a shared cluster. When you use the Dedicated tier, a cluster is dedicated to your namespaces. For more information about dedicated clusters, see [Event Hubs Dedicated tier overview](../event-hubs/event-hubs-dedicated-overview.md). Regardless of tier and cluster type, Microsoft manages the clusters and their underlying virtual machines and storage.
+In the physical architecture, an Event Hubs namespace runs within a *cluster*. A cluster provides the underlying compute and storage resources. Most namespaces run on clusters that other Azure customers share. When you use the Premium tier, the namespace is allocated dedicated resources within a shared cluster. When you use the Dedicated tier, a cluster is dedicated to your namespaces. For more information about dedicated clusters, see [Event Hubs Dedicated tier overview](/azure/event-hubs/event-hubs-dedicated-overview). Regardless of tier and cluster type, Microsoft manages the clusters and their underlying virtual machines and storage.
 
-To achieve redundancy, each cluster has multiple replicas that process read and write requests. For high availability and performance optimization, all data is stored on three storage replicas. To scale your namespace's compute resources, deploy throughput units (TUs), processing units (PUs), or capacity units (CUs), depending on the tier. For more information, see [Scaling with Event Hubs](../event-hubs/event-hubs-scalability.md).
+To achieve redundancy, each cluster has multiple replicas that process read and write requests. For high availability and performance optimization, all data is stored on three storage replicas. To scale your namespace's compute resources, deploy throughput units (TUs), processing units (PUs), or capacity units (CUs), depending on the tier. For more information, see [Scaling with Event Hubs](/azure/event-hubs/event-hubs-scalability).
 
 Clusters span multiple physical machines and racks, which reduces the risk of catastrophic failures affecting your namespace. In regions that have availability zones, clusters extend across separate physical datacenters. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
@@ -151,7 +151,7 @@ At any time, you can *promote* a secondary region to a primary region. When you 
 > [!NOTE]
 > Event Hubs geo-replication uses the term *promotion* because it best represents the process of promoting a secondary region to a primary region (and later demoting a primary region to a secondary region). You might also see the term *failover* used to describe the general process.
 
-This section summarizes important aspects of geo-replication. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-replication](../event-hubs/geo-replication.md).
+This section summarizes important aspects of geo-replication. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-replication](/azure/event-hubs/geo-replication).
 
 #### Region support
 
@@ -165,21 +165,21 @@ To enable geo-replication, your namespace must use the Premium or Dedicated tier
 
 When you enable geo-replication, consider the following factors:
 
-- **Checkpoint format:** The format of checkpoints changes. For more information, see [Geo-replication: Consuming data](../event-hubs/geo-replication.md#consuming-data).
+- **Checkpoint format:** The format of checkpoints changes. For more information, see [Geo-replication: Consuming data](/azure/event-hubs/geo-replication#consuming-data).
 
-- **Private endpoints:** If you use private endpoints to connect to your namespace, you also need to configure networking in your primary and secondary regions. For more information, see [Private endpoints](../event-hubs/geo-replication.md#private-endpoints).
+- **Private endpoints:** If you use private endpoints to connect to your namespace, you also need to configure networking in your primary and secondary regions. For more information, see [Private endpoints](/azure/event-hubs/geo-replication#private-endpoints).
 
 #### Cost
 
-To understand how pricing works for geo-replication, see [Pricing](../event-hubs/geo-replication.md#pricing).
+To understand how pricing works for geo-replication, see [Pricing](/azure/event-hubs/geo-replication#pricing).
 
 #### Configure multi-region support
 
-- **Enable geo-replication on a new or existing namespace.** To set up active-active replication for a newly created namespace, see [Enable geo-replication on a new namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable geo-replication on an existing namespace](../event-hubs/use-geo-replication.md#enable-geo-replication-on-an-existing-namespace).
+- **Enable geo-replication on a new or existing namespace.** To set up active-active replication for a newly created namespace, see [Enable geo-replication on a new namespace](/azure/event-hubs/use-geo-replication#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable geo-replication on an existing namespace](/azure/event-hubs/use-geo-replication#enable-geo-replication-on-an-existing-namespace).
 
-- **Change the replication approach.** To change between synchronous and asynchronous replication modes, see [Switch replication mode](../event-hubs/use-geo-replication.md#switch-replication-mode).
+- **Change the replication approach.** To change between synchronous and asynchronous replication modes, see [Switch replication mode](/azure/event-hubs/use-geo-replication#switch-replication-mode).
 
-- **Disable geo-replication.** To disable geo-replication to a secondary region, see [Remove a secondary region](../event-hubs/use-geo-replication.md#remove-a-secondary).
+- **Disable geo-replication.** To disable geo-replication to a secondary region, see [Remove a secondary region](/azure/event-hubs/use-geo-replication#remove-a-secondary).
 
 #### Behavior when all regions are healthy
 
@@ -199,17 +199,17 @@ This section describes what to expect when an Event Hubs namespace is configured
 
     This mode provides a higher write throughput than synchronous replication because there's no inter-region replication latency during write operations. Also, the asynchronous replication mode can tolerate the loss of a secondary region while still allowing write operations in the primary region. However, if the primary region has an outage, any data that hasn't yet been replicated to the secondary region might be unavailable or lost.
 
-    When you configure asynchronous replication, you configure the maximum acceptable lag time for replication to take. At any time, you can verify the current replication lag [by using Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
+    When you configure asynchronous replication, you configure the maximum acceptable lag time for replication to take. At any time, you can verify the current replication lag [by using Azure Monitor metrics](/azure/event-hubs/geo-replication#monitoring-data-replication).
 
     If the asynchronous replication lag increases beyond the maximum you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, it's important to select secondary regions that aren't too geographically distant, and to ensure that your capacity is sufficient for the throughput.
 
-    For more information, see [Replication modes](../event-hubs/geo-replication.md#replication-modes).
+    For more information, see [Replication modes](/azure/event-hubs/geo-replication#replication-modes).
 
 #### Behavior during a region failure
 
 This section describes what to expect when an Event Hubs namespace is configured for geo-replication and there's an outage in the primary or a secondary region.
 
-- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For more information about how to promote a secondary region to the new primary, see [Promote secondary](../event-hubs/use-geo-replication.md#promote-secondary).
+- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For more information about how to promote a secondary region to the new primary, see [Promote secondary](/azure/event-hubs/use-geo-replication#promote-secondary).
 
     When you promote a secondary region, choose whether to perform a *planned promotion* or a *forced promotion*. A planned promotion waits for the secondary region to catch up before accepting new traffic. This approach eliminates data loss but introduces downtime.
 
@@ -237,7 +237,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
     - *Forced promotion, synchronous replication:* No data loss is expected.
 
-    - *Forced promotion, asynchronous replication:* You might experience some data loss for recent events that aren't replicated to the secondary region. The amount depends on the replication lag. To verify the current replication lag, use [Azure Monitor metrics](../event-hubs/geo-replication.md#monitoring-data-replication).
+    - *Forced promotion, asynchronous replication:* You might experience some data loss for recent events that aren't replicated to the secondary region. The amount depends on the replication lag. To verify the current replication lag, use [Azure Monitor metrics](/azure/event-hubs/geo-replication#monitoring-data-replication).
 
     If you perform a forced promotion, you can't recover lost data, even after the primary region becomes available.
 
@@ -255,7 +255,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Traffic rerouting:** After the promotion completes, the namespace's FQDN points to the new primary region. But this redirection depends on how quickly clients' DNS records are updated, including for their DNS servers to honor the time-to-live (TTL) of the namespace DNS records.
 
-    In some situations, you must configure consumer applications to behave consistently after region promotion occurs. For more information, see [Geo-replication: Consuming data](../event-hubs/geo-replication.md#consuming-data).
+    In some situations, you must configure consumer applications to behave consistently after region promotion occurs. For more information, see [Geo-replication: Consuming data](/azure/event-hubs/geo-replication#consuming-data).
 
 #### Region recovery
 
@@ -286,7 +286,7 @@ When you configure metadata geo-disaster recovery, you create an *alias* that cl
 
 If the primary region fails or another type of disaster occurs, you can manually initiate a single-time, one-way failover move from the primary region to the secondary region at any time. The failover completes almost instantly. During the failover process, the geo-disaster recovery alias repoints to the secondary namespace and the pairing is removed.
 
-This section summarizes important aspects of geo-disaster recovery. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-disaster recovery](../event-hubs/event-hubs-geo-dr.md).
+This section summarizes important aspects of geo-disaster recovery. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-disaster recovery](/azure/event-hubs/event-hubs-geo-dr).
 
 #### Region support
 
@@ -296,7 +296,7 @@ You can select any Azure region that supports Event Hubs as your primary or seco
 
 - **Primary namespace tier:** Your primary namespace must be in the Standard tier or higher to use metadata geo-disaster recovery.
 
-- **Secondary namespace tier:** Metadata geo-disaster recovery supports specific combinations of tiers for the primary and secondary namespaces. For more information, see [Supported namespace pairs](../event-hubs/event-hubs-geo-dr.md#supported-namespace-pairs).
+- **Secondary namespace tier:** Metadata geo-disaster recovery supports specific combinations of tiers for the primary and secondary namespaces. For more information, see [Supported namespace pairs](/azure/event-hubs/event-hubs-geo-dr#supported-namespace-pairs).
 
 #### Considerations
 
@@ -304,9 +304,9 @@ You can select any Azure region that supports Event Hubs as your primary or seco
 
 - **Schema registry:** Schema registry metadata replicates when you use metadata geo-disaster recovery, but schemas registered with the schema registry don't replicate.
 
-- **Application design:** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [Considerations](../event-hubs/event-hubs-geo-dr.md#considerations).
+- **Application design:** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [Considerations](/azure/event-hubs/event-hubs-geo-dr#considerations).
 
-- **Private endpoints:** If you use private endpoints to connect to your namespace, configure networking in both your primary and secondary region. For more information, see [Private endpoints](../event-hubs/event-hubs-geo-dr.md#private-endpoints).
+- **Private endpoints:** If you use private endpoints to connect to your namespace, configure networking in both your primary and secondary region. For more information, see [Private endpoints](/azure/event-hubs/event-hubs-geo-dr#private-endpoints).
 
 #### Cost
 
@@ -314,9 +314,9 @@ When you enable metadata geo-disaster recovery, you pay for both the primary and
 
 #### Configure multi-region support
 
-- **Create metadata geo-disaster recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](../event-hubs/event-hubs-geo-dr.md#setup).
+- **Create metadata geo-disaster recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](/azure/event-hubs/event-hubs-geo-dr#setup).
 
-- **Disable metadata geo-disaster recovery.** To break the pairing between namespaces, see [Setup and failover flow](../event-hubs/event-hubs-geo-dr.md#setup).
+- **Disable metadata geo-disaster recovery.** To break the pairing between namespaces, see [Setup and failover flow](/azure/event-hubs/event-hubs-geo-dr#setup).
 
 #### Capacity planning and management
 
@@ -340,7 +340,7 @@ This section describes what to expect when an Event Hubs namespace is configured
 
 - **Detection and response:** You're responsible for monitoring region health and initiating failover manually. Microsoft doesn't perform failover or promote a secondary region automatically, even if your primary region is down.
 
-    For more information about how to initiate failover, see [Manual failover](../event-hubs/event-hubs-geo-dr.md#manual-failover).
+    For more information about how to initiate failover, see [Manual failover](/azure/event-hubs/event-hubs-geo-dr#manual-failover).
 
     Failover is a one-way operation, so you need to reestablish the geo-disaster recovery pairing later. For more information, see [Region recovery](#region-recovery-1).
 
@@ -380,13 +380,13 @@ Understand the potential downtime and data loss that you might experience during
 
 Geo-replication and metadata geo-disaster recovery provide resiliency to region outages and other problems, and they support most workloads. Some Event Hubs tiers don't support these features, or you might require custom replication or need to maintain multiple active regions simultaneously.
 
-Various design patterns can achieve different types of multi-region support in Event Hubs. Many of the patterns require deploying multiple namespaces and using services like Azure Functions to replicate events between them. For more information, see [Multi-site and multi-region federation](../event-hubs/event-hubs-federation-overview.md).
+Various design patterns can achieve different types of multi-region support in Event Hubs. Many of the patterns require deploying multiple namespaces and using services like Azure Functions to replicate events between them. For more information, see [Multi-site and multi-region federation](/azure/event-hubs/event-hubs-federation-overview).
 
 ## Backup and restore
 
-Event Hubs isn't designed as a long-term storage location for your data. Typically, you store data in an event hub for a short period of time and then either process it or persist it in another data storage system. You can configure the data retention period for your event hub based on your requirements and the tier that your namespace uses. For more information, see [Event retention](../event-hubs/event-hubs-features.md#event-retention).
+Event Hubs isn't designed as a long-term storage location for your data. Typically, you store data in an event hub for a short period of time and then either process it or persist it in another data storage system. You can configure the data retention period for your event hub based on your requirements and the tier that your namespace uses. For more information, see [Event retention](/azure/event-hubs/event-hubs-features#event-retention).
 
-If you need to retain a copy of your events, consider using [Event Hubs Capture](../event-hubs/event-hubs-capture-overview.md), which saves copies of events to an Azure Blob Storage account.
+If you need to retain a copy of your events, consider using [Event Hubs Capture](/azure/event-hubs/event-hubs-capture-overview), which saves copies of events to an Azure Blob Storage account.
 
 ## Service-level agreement
 
@@ -396,5 +396,5 @@ Your namespace's availability SLA is higher when it uses the Premium or Dedicate
 
 ### Related content
 
-- [Event Hubs documentation](../event-hubs/event-hubs-about.md)
+- [Event Hubs documentation](/azure/event-hubs/event-hubs-about)
 - [Azure reliability overview](/azure/reliability/overview)

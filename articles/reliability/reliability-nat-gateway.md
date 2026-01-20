@@ -51,7 +51,7 @@ Internally, a NAT gateway consists of one or more *instances*, which represent t
 
 Azure NAT Gateway implements a distributed architecture using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains, enabling it to survive multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
 
-For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resource](../nat-gateway/nat-gateway-resource.md#nat-gateway-architecture).
+For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resource](/azure/nat-gateway/nat-gateway-resource#nat-gateway-architecture).
 
 ## Resilience to transient faults
 
@@ -118,9 +118,9 @@ There is no additional cost to use availability zone support for Azure NAT Gatew
 
 - **New resources:** Deployment steps depend on which availability zone configuration you want to use for your NAT gateway.
 
-    - *Zone-redundant*: To deploy a new zone-redundant NAT gateway using the StandardV2 SKU, see [Create a Standard V2 Azure NAT Gateway](../nat-gateway/quickstart-create-nat-gateway-v2.md).
+    - *Zone-redundant*: To deploy a new zone-redundant NAT gateway using the StandardV2 SKU, see [Create a Standard V2 Azure NAT Gateway](/azure/nat-gateway/quickstart-create-nat-gateway-v2).
 
-    - *Zonal:* To deploy a new zonal NAT gateway using the Standard SKU, see [Create a NAT gateway](../nat-gateway/quickstart-create-nat-gateway.md). When you create the NAT gateway, select its availability zone instead of selecting *No zone*.
+    - *Zonal:* To deploy a new zonal NAT gateway using the Standard SKU, see [Create a NAT gateway](/azure/nat-gateway/quickstart-create-nat-gateway). When you create the NAT gateway, select its availability zone instead of selecting *No zone*.
 
 - **Enable availability zone support:** Azure NAT Gateway availability zone configuration can't be changed after deployment. To modify the availability zone configuration, you must deploy a new NAT gateway with the desired zone settings.
 

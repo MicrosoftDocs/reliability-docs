@@ -29,7 +29,7 @@ The components of Data Factory include:
 
 - **The core Data Factory service**, which manages pipeline triggers and oversees the coordination of pipeline activities. The core service also manages metadata for each component in the data factory. Microsoft manages the core service.
 
-- **[Integration runtimes (IRs)](../data-factory/concepts-integration-runtime.md#integration-runtime-types)**, which connect to data stores and perform activities defined in your pipeline. There are different types of IRs.
+- **[Integration runtimes (IRs)](/azure/data-factory/concepts-integration-runtime#integration-runtime-types)**, which connect to data stores and perform activities defined in your pipeline. There are different types of IRs.
 
     - *Microsoft-managed IRs*, which include the Azure IR and the Azure-SQL Server Integration Services (Azure-SSIS) IR. Microsoft manages the components that make up these runtimes. In some scenarios, you configure settings that affect the resiliency of your IRs.
     
@@ -51,16 +51,16 @@ To prevent duplicate record insertion because of a transient fault, implement th
 
 -  *Use an upsert strategy* for connectors that support upsert. Before duplicate record insertion occurs, use this approach to check whether a record already exists. If it does exist, update it. If it doesn't exist, insert it. For example, SQL commands like `MERGE` or `ON DUPLICATE KEY UPDATE` use this upsert approach.
 
-- *Use copy action strategies.* For more information, see [Data consistency verification in copy activity](../data-factory/copy-activity-data-consistency.md).
+- *Use copy action strategies.* For more information, see [Data consistency verification in copy activity](/azure/data-factory/copy-activity-data-consistency).
 
 ### Retry policies
 
 You can use retry policies to configure parts of your pipeline to retry if there's a problem, like transient faults in connected resources. In Data Factory, you can configure retry policies on the following pipeline object types:
 
-- [Tumbling window triggers](../data-factory/concepts-pipeline-execution-triggers.md#tumbling-window-trigger)
-- [Execution activities](../data-factory/concepts-pipelines-activities.md#execution-activities)
+- [Tumbling window triggers](/azure/data-factory/concepts-pipeline-execution-triggers#tumbling-window-trigger)
+- [Execution activities](/azure/data-factory/concepts-pipelines-activities#execution-activities)
 
-For more information about how to change or disable retry policies for your data factory triggers and activities, see [Pipeline runs and triggers](../data-factory/concepts-pipeline-execution-triggers.md).
+For more information about how to change or disable retry policies for your data factory triggers and activities, see [Pipeline runs and triggers](/azure/data-factory/concepts-pipeline-execution-triggers).
 
 ## Resilience to availability zone failures
 
@@ -86,7 +86,7 @@ Each part of Data Factory supports zone redundancy:
 
         :::image type="content" source="./media/reliability-data-factory/zone-redundancy-core-service-sql-integration-runtime.svg" alt-text="Diagram that shows the zone-redundant core service, and an Azure SSIR integration runtime with two nodes that are deployed into different zones." border="false" :::
 
-    - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](../data-factory/create-self-hosted-integration-runtime.md#high-availability-and-scalability).
+    - *A SHIR* gives you the responsibility for deploying the compute infrastructure to host the runtime. You can deploy multiple nodes, such as individual virtual machines (VMs), and configure them for high availability. You can then distribute those nodes across multiple availability zones. For more information, see [High availability and scalability](/azure/data-factory/create-self-hosted-integration-runtime#high-availability-and-scalability).
 
 ### Requirements
 
@@ -100,7 +100,7 @@ Zone-redundant Data Factory resources can be deployed in [any region that suppor
 
     - *An Azure IR* includes zone redundancy at no extra cost.
 
-    - *An Azure-SSIS IR* requires you to deploy at least two nodes to achieve zone redundancy. For more information about how each node is billed, see [Pricing example: Run SSIS packages on an Azure-SSIS IR](../data-factory/pricing-examples-ssis-on-azure-ssis-integration-runtime.md#pricing-model-for-azure-ssis-integration-runtime).
+    - *An Azure-SSIS IR* requires you to deploy at least two nodes to achieve zone redundancy. For more information about how each node is billed, see [Pricing example: Run SSIS packages on an Azure-SSIS IR](/azure/data-factory/pricing-examples-ssis-on-azure-ssis-integration-runtime#pricing-model-for-azure-ssis-integration-runtime).
 
     - *A SHIR* requires you to deploy and manage the compute infrastructure. To achieve zone resiliency, you need to spread your compute resources across multiple zones. Depending on the number of nodes that you deploy and how you configure them, you might incur extra costs from the underlying compute services and other supporting services. There's no extra charge to run the SHIR on multiple nodes.
 
@@ -174,7 +174,7 @@ Data Factory resources are deployed into a single Azure region. If the region be
 
 Data Factory supports Microsoft-managed failover for data factories in paired regions, except for Brazil South and Southeast Asia. In the unlikely event of a prolonged region failure, Microsoft might initiate a regional failover of your Data Factory instance.
 
-Because of data residency requirements in Brazil South and Southeast Asia, Data Factory data is stored only in the local region by using [Azure Storage zone-redundant storage](../storage/common/storage-redundancy.md#zone-redundant-storage). For Southeast Asia, all data is stored in Singapore. For Brazil South, all data is stored in Brazil. 
+Because of data residency requirements in Brazil South and Southeast Asia, Data Factory data is stored only in the local region by using [Azure Storage zone-redundant storage](/azure/storage/common/storage-redundancy#zone-redundant-storage). For Southeast Asia, all data is stored in Singapore. For Brazil South, all data is stored in Brazil. 
 
 For data factories in nonpaired regions, or in Brazil South or Southeast Asia, Microsoft doesn't perform regional failover on your behalf.
 
@@ -201,7 +201,7 @@ After a Microsoft-managed failover is complete, you can access your Data Factory
 
 If you need your pipelines to be resilient to regional outages and you need control over the failover process, consider using a metadata-driven pipeline.
 
-- **Set up source control for Data Factory** to track and audit any changes to your metadata. You can use this approach to access your metadata JSON files for pipelines, datasets, linked services, and triggers. Data Factory supports different Git repository types, like Azure DevOps and GitHub. For more information, see [Source control in Data Factory](../data-factory/source-control.md).
+- **Set up source control for Data Factory** to track and audit any changes to your metadata. You can use this approach to access your metadata JSON files for pipelines, datasets, linked services, and triggers. Data Factory supports different Git repository types, like Azure DevOps and GitHub. For more information, see [Source control in Data Factory](/azure/data-factory/source-control).
 
 - **Use a continuous integration and continuous delivery (CI/CD) system**, such as Azure DevOps, to manage your pipeline metadata and deployments. You can use CI/CD to quickly restore operations to an instance in another region. If a region is unavailable, you can provision a new data factory manually or through automation. After the new data factory is created, you can restore your pipelines, datasets, and linked services JSON from the existing Git repository. For more information, see [Business continuity and disaster recovery (BCDR) for Data Factory and Azure Synapse Analytics pipelines](/azure/architecture/example-scenario/analytics/pipelines-disaster-recovery).
 
@@ -211,13 +211,13 @@ Depending on the IR that you use, there might be other considerations.
 
     You can also configure a dual standby Azure SSIS IR pair that works in sync with an Azure SQL Database or SQL Managed Instance failover group.
 
-    For more information, see [Configure an Azure-SSIS IR for BCDR](../data-factory/configure-bcdr-azure-ssis-integration-runtime.md).
+    For more information, see [Configure an Azure-SSIS IR for BCDR](/azure/data-factory/configure-bcdr-azure-ssis-integration-runtime).
 
-- *A SHIR* runs on infrastructure that you manage. If the SHIR is deployed to an Azure VM, you can use [Azure Site Recovery](../site-recovery/site-recovery-overview.md) to trigger [VM failover](../site-recovery/azure-to-azure-architecture.md) to another region.
+- *A SHIR* runs on infrastructure that you manage. If the SHIR is deployed to an Azure VM, you can use [Azure Site Recovery](/azure/site-recovery/site-recovery-overview) to trigger [VM failover](/azure/site-recovery/azure-to-azure-architecture) to another region.
 
 ## Backup and restore
 
-Data Factory supports CI/CD through source control integration, so that you can back up the metadata of a data factory instance. CI/CD pipelines deploy this metadata seamlessly into a new environment. For more information, see [CI/CD in Data Factory](../data-factory/continuous-integration-delivery.md).
+Data Factory supports CI/CD through source control integration, so that you can back up the metadata of a data factory instance. CI/CD pipelines deploy this metadata seamlessly into a new environment. For more information, see [CI/CD in Data Factory](/azure/data-factory/continuous-integration-delivery).
 
 ## Service-level agreement
 

@@ -11,7 +11,7 @@ ms.date: 10/02/2025
 
 # Reliability in Azure Storage Discovery
 
-This article explains how [Azure Storage Discovery](../storage-discovery/overview.md) supports reliability, including intra-regional resiliency with [availability zones](#availability-zone-support) and [cross-region disaster recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For general reliability principles in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
+This article explains how [Azure Storage Discovery](/azure/storage-discovery/overview) supports reliability, including intra-regional resiliency with [availability zones](#availability-zone-support) and [cross-region disaster recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity). For general reliability principles in Azure, see [Azure reliability](/azure/architecture/framework/resiliency/overview).
 
 Azure Storage Discovery is a fully managed service that provides enterprise-wide visibility into your Azure Blob Storage and Azure Data lake Storage. From a single pane of glass, you can analyze trends, optimize costs, enhance security, and improve operational efficiency.
 
@@ -39,7 +39,7 @@ Azure Storage Discovery is a fully managed service that provides enterprise-wide
 Storage Discovery doesn't provide outage notifications for every incident. The Storage Discovery service utilizes the same notification infrastructure used across Azure to inform customers about prolonged or severe outages.
 
 > [!NOTE]
-> If you need uninterrupted access to Discovery reports, you can consider creating a second workspace, in a different region. This second workspace should be configured to analyze the same storage resources. This approach protects you from a regional outage affecting your primary workspace. However, it doesn't safeguard against availability issues in the storage resources themselves across regions. Learn more about [Storage Discovery pricing](../storage-discovery/pricing.md) to evaluate additional costs.
+> If you need uninterrupted access to Discovery reports, you can consider creating a second workspace, in a different region. This second workspace should be configured to analyze the same storage resources. This approach protects you from a regional outage affecting your primary workspace. However, it doesn't safeguard against availability issues in the storage resources themselves across regions. Learn more about [Storage Discovery pricing](/azure/storage-discovery/pricing) to evaluate additional costs.
 
 ## Data availability and freshness coverage
 
@@ -47,12 +47,12 @@ Key factors that influence data availability and freshness in your Storage Disco
 
 - After creating a new Storage Discovery workspace, most insights appear in reports within 24 hours. 
 - Most updates, such as adding or removing a storage account in a subscription or resource group that are linked to a Storage Discovery workspace will be reflected in the Storage Discovery reports within 24 hours.
-- Changes related to adding a new [scope](../storage-discovery/management-components.md#scope) or editing an existing scope in your Discovery workspace are typically reflected in the reports within 24 hours.
-- Effect of [changing pricing plan](../storage-discovery/pricing.md) on an existing Storage Discovery workspace is immediate.
+- Changes related to adding a new [scope](/azure/storage-discovery/management-components#scope) or editing an existing scope in your Discovery workspace are typically reflected in the reports within 24 hours.
+- Effect of [changing pricing plan](/azure/storage-discovery/pricing) on an existing Storage Discovery workspace is immediate.
 - When a scope is deleted, you immediately lose the insights gathered for this scope. 
 - When a Discovery workspace is deleted, you immediately lose the insights gathered for all the contained scopes. Exercise caution when deleting a workspace or a scope.
 
 ## Next steps
 
-- [Plan your Storage Discovery deployment](../storage-discovery/deployment-planning.md)
-- [Frequently asked questions](../storage-discovery/frequently-asked-questions.md)
+- [Plan your Storage Discovery deployment](/azure/storage-discovery/deployment-planning)
+- [Frequently asked questions](/azure/storage-discovery/frequently-asked-questions)
