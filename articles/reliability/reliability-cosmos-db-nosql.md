@@ -23,7 +23,7 @@ Azure Cosmos DB automatically mitigates [replica](/azure/cosmos-db/distribute-da
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azure distributes the replicas of your data across multiple availability zones, providing resiliency to datacenter problems and outages. You can enable zone redundancy in Azure regions that supports availability zones. To see if your region supports availability zones, see the [list of supported regions](regions-list.md). 
 
@@ -105,7 +105,7 @@ To learn how to enable zone redundancy on your Azure Cosmos DB account, see [Mig
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 
 Region outages are outages that affect all Azure Cosmos DB nodes in an Azure region, across all availability zones. For the rare cases of region outages, you can configure Azure Cosmos DB to support various outcomes of durability and availability.

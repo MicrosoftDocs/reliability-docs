@@ -24,7 +24,7 @@ Azure Storage Discovery is a fully managed service that provides enterprise-wide
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 - Storage Discovery workspace management is zone-redundant. When a zone is down, your Storage Discovery workspace is still available. You can continue to manage your workspace and access reports.
 
@@ -32,7 +32,7 @@ Azure Storage Discovery is a fully managed service that provides enterprise-wide
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 ### Outage detection and notification
 

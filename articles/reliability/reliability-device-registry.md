@@ -28,7 +28,7 @@ Clients interact with Device Registry by using Azure Resource Manager. Commonly,
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Device Registry is zone redundant by default, which means that it automatically replicates your data across multiple [availability zones](../reliability/availability-zones-overview.md). This setup enhances the resiliency of the service by providing high availability. If there's a failure in one zone, the service can continue to operate seamlessly from another zone.
 
@@ -38,7 +38,7 @@ Microsoft manages setup and configuration for zone redundancy in Azure Device Re
 
 The following list of regions support availability zones in Device Registry:
 
-[!INCLUDE [Azure Device Registry availability zone region support](../iot-operations/includes/device-registry-availability-zone-regions-include.md)]
+[!INCLUDE [Azure Device Registry availability zone region support](includes/device-registry-availability-zone-regions-include.md)]
 
 ### Cost
 

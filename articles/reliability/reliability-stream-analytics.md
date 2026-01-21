@@ -72,7 +72,7 @@ It's a good practice to set up [output error policies](/azure/stream-analytics/s
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [AZ support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [AZ support description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Stream Analytics is automatically zone-redundant in regions that support availability zones, which means that jobs use multiple availability zones. Zone redundancy ensures that your job remains resilient to a wide range of failures, including catastrophic datacenter outages, without any changes to the application logic.
 

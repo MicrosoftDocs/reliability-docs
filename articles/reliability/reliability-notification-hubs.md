@@ -19,7 +19,7 @@ This article describes reliability support in Azure Notification Hubs and covers
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 
 In a region that supports availability zones, Notification Hubs supports a zone-redundant deployment by default. When you deploy with availability zones, both registration data and metadata are replicated across all zones in the specified region. 
@@ -57,7 +57,7 @@ To learn how to move an existing Notification Hubs resource to a new region with
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 Notification Hubs provides metadata disaster recovery coverage through cross-region replication of metadata such as the Notification Hubs name, the connection string, and other critical information. 
 

@@ -25,7 +25,7 @@ Availability zones support for Azure Functions depends on your [Functions hostin
 |[Dedicated (App Service) plan](/azure/azure-functions/dedicated-plan) | GA | See [Reliability in Azure App Service](reliability-app-service.md). |
 | [Consumption plan](/azure/azure-functions/consumption-plan) | n/a | Not supported by the Consumption plan. |
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Functions supports a [zone-redundant deployment](availability-zones-service-support.md).  
 
@@ -476,7 +476,7 @@ When Functions allocates instances to a zone redundant Premium plan, it uses bes
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 This section explains some of the strategies that you can use to deploy a function app to allow for disaster recovery.
 

@@ -66,7 +66,7 @@ It's impossible to eliminate all transient faults, so clients that access your A
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 When you deploy an AKS cluster into a region that supports availability zones, different components require different types of configuration.
 

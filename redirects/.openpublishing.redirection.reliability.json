@@ -153,7 +153,7 @@
     {
       "source_path_from_root": "/articles/reliability/migrate-cache-redis.md",
       "redirect_url": "/azure/redis/migrate-cache-redis-zones",
-      "redirect_document_id": true
+      "redirect_document_id": false
     }
   ]
 }

@@ -74,7 +74,7 @@ When you use Application Gateway, consider the following best practices:
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Application Gateway provides two types of availability zone support when you deploy a Standard_v2 or WAF_v2 gateway in a supported region.
 

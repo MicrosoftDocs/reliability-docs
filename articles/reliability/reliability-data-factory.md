@@ -64,7 +64,7 @@ For more information about how to change or disable retry policies for your data
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Data Factory supports *zone redundancy*, which provides resiliency to failures in [availability zones](availability-zones-overview.md).
 

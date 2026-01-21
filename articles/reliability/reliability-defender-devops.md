@@ -19,7 +19,7 @@ This article is specific to recover in the case of a region outage.  If you are 
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 Microsoft Defender for Cloud DevOps security supports single-region disaster recovery. As such, a multi-region disaster recovery process simply implements the [single-region disaster recovery process outlined in this document](#single-region-disaster-recovery-process). 
 

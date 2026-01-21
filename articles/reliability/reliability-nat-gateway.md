@@ -71,7 +71,7 @@ For comprehensive guidance on connection management and troubleshooting Azure NA
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure NAT Gateway supports availability zones in both zone-redundant and zonal configurations:
 

@@ -31,7 +31,7 @@ IoT Hub provides a reasonably high uptime guarantee, but transient failures can 
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 IoT Hub supports two distinct types of availability zone support:
 

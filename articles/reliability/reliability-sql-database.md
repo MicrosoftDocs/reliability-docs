@@ -58,7 +58,7 @@ You can test your application's resiliency to transient faults by following the 
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 :::zone pivot="general-purpose,premium,business-critical,hyperscale"
 

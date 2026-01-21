@@ -19,7 +19,7 @@ For an architectural overview of reliability in Azure, see [Azure reliability](/
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 To gain availability zone support, you must enable High availability (HA).
 
@@ -35,7 +35,7 @@ To enable availability zones, you must enable High availability (HA) when [creat
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 Azure DocumentDB doesn't provide built-in automatic failover or disaster recovery. Planning for high availability is a critical step as your solution scales.
 
