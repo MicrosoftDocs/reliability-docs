@@ -1,0 +1,66 @@
+### YamlMime:ZonePivotGroups
+groups:
+# Owner: anaharris-ms
+- id: reliability-functions-hosting-plan
+  title: Function app hosting options for Availability Zones support
+  prompt: Choose a hosting option for your function app
+  pivots:
+  - id: flex-consumption-plan
+    title: Flex Consumption plan
+  - id: premium-plan
+    title: Premium plan
+# Owner: estfan
+- id: logic-app-hosting-types
+  title: Azure Logic Apps hosting model
+  prompt: Choose an Azure Logic Apps hosting model
+  pivots:
+  - id: consumption
+    title: Consumption
+  - id: standard-workflow-service-plan
+    title: Standard (Workflow Service Plan)
+  - id: standard-app-service-environment
+    title: Standard (App Service Environment v3)
+# Owner: mathoma
+- id: sql-managed-instance-tiers
+  title: Tier
+  prompt: Choose a service tier
+  pivots:
+  - id: general-purpose
+    title: General Purpose
+  - id: business-critical
+    title: Business Critical
+# Owner: jodowns
+- id: sql-database-tiers
+  title: Tier
+  prompt: Choose a service tier
+  pivots:
+  - id: basic-standard
+    title: Basic or Standard DTU
+  - id: premium
+    title: Premium DTU
+  - id: general-purpose
+    title: General Purpose
+  - id: business-critical
+    title: Business Critical
+  - id: hyperscale
+    title: Hyperscale
+# Owner: anaharris-ms
+- id: virtual-network-gateway-types
+  title: Gateway type
+  prompt: Choose a virtual network gateway type
+  pivots:
+  - id: expressroute
+    title: Azure ExpressRoute gateway
+  - id: vpn
+    title: Azure VPN gateway
+# Owner: danlep
+- id: api-management-tiers
+  title: API Management service tier
+  prompt: "Select the API Management service tier"
+  pivots:
+  - id: premium-classic
+    title: Premium (classic)
+  - id: premium-v2
+    title: Premium v2
+  - id: other-tiers
+    title: Other tiers

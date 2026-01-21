@@ -24,6 +24,13 @@
         ],
         "src": "breadcrumb/reliability",
         "dest": "breadcrumb/reliability"
+      },
+      {
+        "files": [
+          "zone-pivot-groups.yml"
+        ],
+        "src": "zone-pivots",
+        "dest": "zone-pivots/reliability"
       }
     ],
     "resource": [
@@ -125,7 +132,7 @@
       "uhfHeaderId": "azure",
       "ms.suite": "office",
       "adobe-target": true,
-      "zone_pivot_group_filename": "zone-pivot-groups.json"
+      "zone_pivot_group_filename": "zone-pivots/reliability/zone-pivot-groups.json"
     },
     "fileMetadata": {
       "featureFlags": {
