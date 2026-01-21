@@ -1,0 +1,9 @@
+{
+  "redirections": [
+    {
+      "source_path_from_root": "/articles/reliability/migrate-api-mgt.md",
+      "redirect_url": "/azure/api-management/enable-availability-zone-support",
+      "redirect_document_id": false
+    }
+  ]
+}
