@@ -19,7 +19,7 @@ This article contains information on [availability zones support](#availability-
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](./~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 With [Azure Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/flexible-virtual-machine-scale-sets), you can create and manage a group of load balanced VMs. The number of VMs can automatically increase or decrease in response to demand or a defined schedule. Scale sets provide high availability to your applications, and allow you to centrally manage, configure, and update many VMs. There's no cost for the scale set itself. You only pay for each VM instance that you create.
 
