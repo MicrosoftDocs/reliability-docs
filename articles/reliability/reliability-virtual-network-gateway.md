@@ -201,7 +201,7 @@ Transient faults can sometimes affect IPsec tunnels or TCP data flows. When a di
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Virtual network gateways are automatically *zone redundant* when they meet the requirements. Zone redundancy eliminates any single zone as a point of failure and provides the highest level of zone resiliency. Zone-redundant gateways provide automatic failover within the region and maintain connectivity during zone maintenance or outages.
 
@@ -241,7 +241,7 @@ When you use a [supported SKU](#requirements), newly created gateways are automa
 
 - **SKU:** For a virtual network gateway to be zone redundant, it must use a SKU that supports zone redundancy. The following table shows which SKUs support zone redundancy.
 
-    [!INCLUDE [skus-with-az](../expressroute/includes/sku-availability-zones.md)]
+    [!INCLUDE [skus-with-az](includes/sku-availability-zones.md)]
 
 ::: zone-end
 

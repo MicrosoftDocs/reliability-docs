@@ -19,7 +19,7 @@ This article describes reliability support in Azure Batch. It covers how to impr
 ## Availability zone support
 
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Batch maintains parity with Azure on supporting availability zones.
 

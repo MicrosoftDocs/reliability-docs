@@ -16,7 +16,7 @@ This article describes reliability support in [Azure Data Manager for Energy](/a
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Data Manager for Energy supports zone-redundant instances by default and there's no additional configuration required.
 
@@ -36,7 +36,7 @@ During a zone-wide outage, no action is required during zone recovery. There may
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 
 ### Disaster recovery in multi-region geography

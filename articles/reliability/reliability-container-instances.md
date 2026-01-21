@@ -62,7 +62,7 @@ For more information about other errors that might occur at runtime and how to r
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Container Instances supports availability zones in different ways, depending on how you deploy your container groups:
 

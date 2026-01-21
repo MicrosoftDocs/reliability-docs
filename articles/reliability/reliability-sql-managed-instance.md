@@ -94,7 +94,7 @@ When an instance is patched or fails over, the downtime has minimal effect if yo
 
 ::: zone-end
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 When you enable a [zone-redundant](./availability-zones-overview.md#types-of-availability-zone-support) configuration, you can ensure that your SQL managed instance is resilient to a large set of failures, including catastrophic datacenter outages, without any changes to the application logic.
 

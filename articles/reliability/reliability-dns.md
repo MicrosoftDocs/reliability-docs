@@ -21,7 +21,7 @@ This article contains detailed information on [cross-region disaster recovery an
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 
 The Azure DNS failover solution for disaster recovery uses the standard DNS mechanism to fail over to the backup site. The manual option via Azure DNS works best when used in conjunction with the [cold standby or the pilot light approach](/azure/well-architected/reliability/highly-available-multi-region-design#active-passive).

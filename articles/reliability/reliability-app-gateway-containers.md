@@ -17,7 +17,7 @@ This article describes reliability and availability zone support in [Azure Appli
 
 ## Availability zones and zone redundancy support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 
 Application Gateway for Containers (AGC) is always deployed in a highly available configuration.  For Azure regions that support availability zones, AGC is automatically configured as zone redundant.  For regions that don't support availability zones, availability sets are used.

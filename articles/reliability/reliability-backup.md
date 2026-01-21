@@ -51,7 +51,7 @@ The following table lists the various datasources that each vault supports:
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 ### Azure Backup service
 
@@ -69,7 +69,7 @@ To learn how to migrate a Recovery Services vault to availability zone support, 
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 
 When an entire Azure region or datacenter experiences downtime, your vaults continue to be accessible and you'll still be able to see your backup items. However, unless you deploy for regional redundancy, the underlying backup data isn't accessible to you for performing a restore operation.  

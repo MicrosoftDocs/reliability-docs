@@ -67,7 +67,7 @@ If you build any applications that interact with AI Search, they should handle t
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Availability zone support description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone support description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 AI Search is zone redundant, which means that your replicas are distributed across multiple availability zones within the search service region.
 

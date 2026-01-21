@@ -46,7 +46,7 @@ If transient faults affect your virtual machine or bastion host, clients using t
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Bastion supports availability zones in both zone-redundant and zonal configurations:
 
@@ -66,7 +66,7 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
 
 - **Region support:** Zonal and zone-redundant bastion hosts can be deployed into the following regions:
 
-    [!INCLUDE [Azure Bastion availability zone region support](../bastion/includes/availability-zone-regions-include.md)]
+    [!INCLUDE [Azure Bastion availability zone region support](includes/availability-zone-regions-include.md)]
 
 - **SKU:** To configure bastion hosts to be zonal or zone redundant, you must deploy with the Basic, Standard, or Premium SKUs.
 

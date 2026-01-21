@@ -19,7 +19,7 @@ Azure Storage Actions is a serverless framework that you can use to perform comm
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 While the Azure Storage Actions service is regional and doesn’t offer SKUs or availability zones, zone redundancy is available from the control plane and conditionally from the data plane:
 
@@ -39,9 +39,9 @@ The Storage Action service isn't zonal, but the storage account is. If the stora
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
-[!INCLUDE [Storage Actions continuity after a failover](../../includes/storage-actions-reliability.md)]
+[!INCLUDE [Storage Actions continuity after a failover](~/reusable-content/ce-skilling/azure/includes/storage-actions-reliability.md)]
 
 ### Outage detection, notification, and management
 

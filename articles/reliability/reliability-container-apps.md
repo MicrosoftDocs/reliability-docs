@@ -61,7 +61,7 @@ Container Apps automatically handles many transient faults through its platform-
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 When you create a Container Apps environment, you can enable *zone redundancy* to distribute the underlying infrastructure across multiple availability zones in the chosen Azure region. Container Apps automatically schedules the replicas of your apps across zones. This distribution occurs transparently, which means that you don't need to specify zone placement for individual replicas.
 

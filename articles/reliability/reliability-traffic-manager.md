@@ -17,7 +17,7 @@ This article contains [cross-region disaster recovery and business continuity](#
 
 ## Cross-region disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 Azure Traffic Manager is a DNS-based traffic load balancer that lets you  distribute traffic to your public facing applications across global Azure regions. Traffic Manager also provides your public endpoints with high availability and quick responsiveness.
 

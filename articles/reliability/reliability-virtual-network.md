@@ -55,7 +55,7 @@ Transient faults don't usually affect virtual networks. However, transient fault
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 A virtual network and its subnets span all availability zones within the region where it's deployed. You don't have to configure anything to enable this support.
 

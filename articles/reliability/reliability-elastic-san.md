@@ -15,7 +15,7 @@ This article describes reliability support in Azure Elastic SAN and covers both 
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Elastic SAN supports availability zone deployment with [locally redundant storage](/azure/storage/elastic-san/elastic-san-planning#locally-redundant-storage) (LRS) and regional deployment with [zone-redundant storage](/azure/storage/elastic-san/elastic-san-planning#zone-redundant-storage) (ZRS).
 
@@ -47,7 +47,7 @@ To migrate an Elastic SAN on LRS to ZRS, snapshot your Elastic SAN volumes, expo
 
 ## Disaster recovery and business continuity
 
-[!INCLUDE [reliability-disaster-recovery-description-include](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [reliability-disaster-recovery-description-include](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 ### Single and Multi-region disaster recovery
 

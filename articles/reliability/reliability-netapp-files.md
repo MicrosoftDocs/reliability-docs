@@ -44,7 +44,7 @@ For more recommendations, see [Application resilience FAQs for Azure NetApp File
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure NetApp Files supports *zonal* deployments of volumes. Use the [availability zone volume placement feature](/azure/azure-netapp-files/replication#availability-zones) in Azure NetApp Files to deploy each volume in a single availability zone of your choice. You can use this feature only if Azure NetApp Files is present in that availability zone and has sufficient capacity. If you have latency-sensitive applications, you can deploy a volume to the same availability zone as your Azure compute resources and other services.
 

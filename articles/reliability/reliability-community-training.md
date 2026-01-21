@@ -18,7 +18,7 @@ Microsoft Community Training is an Azure-powered cloud-based solution that can d
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Community Training uses Azure availability zones to provide high availability and fault tolerance within an Azure region. Community training offers both control and data plane availability zone support: 
 
@@ -65,7 +65,7 @@ Community Training provides configuration for availability zones only at the tim
 
 ## Disaster recovery and business continuity
 
-[!INCLUDE [introduction to disaster recovery](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 The Microsoft Community Training team manages the entire disaster recovery procedure for Community Training. Disaster recovery isn't active-active or active passive, but is instead based on recovery from the most recent available backup of Azure services. The Community Training team manually creates all resources in the paired region from data backup.
 

@@ -45,7 +45,7 @@ For applications that run on Azure Databricks, implement retry logic with expone
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Databricks supports *zone redundancy* for each component:
 

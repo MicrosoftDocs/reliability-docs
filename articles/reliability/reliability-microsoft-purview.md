@@ -15,7 +15,7 @@ This article describes reliability support in Microsoft Purview for governance e
 
 ## Availability zone support
 
-[!INCLUDE [next step](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [next step](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Microsoft Purview makes commercially reasonable efforts to support zone-redundant availability zones, where resources automatically replicate across zones, without any need for you to set up or configure.
 
@@ -56,7 +56,7 @@ Microsoft Purview makes commercially reasonable efforts to provide availability 
 
 ## Disaster recovery and business continuity
 
-[!INCLUDE [next step](includes/reliability-disaster-recovery-description-include.md)]
+[!INCLUDE [next step](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
 >[!IMPORTANT]
 >Today, Microsoft Purview doesn't support automated disaster recovery. Until that support is added, you're responsible to take care of backup and restore activities. You can manually create a secondary Microsoft Purview account as a warm standby instance in another region. Note that this standby instance in another region would not support Microsoft Purview Data Governance Solution. Today, it only supports Azure Purview solution. We are working on adding DR support for Microsoft Purview Data Governance Solution.
