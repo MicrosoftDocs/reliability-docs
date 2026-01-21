@@ -110,7 +110,7 @@
         "v-thepet",
         "v-thpra"
       ],
-      "breadcrumb_path": "articles/reliability/breadcrumb/toc.yml",
+      "breadcrumb_path": "breadcrumb/reliability/toc.yml",
       "_op_documentIdPathDepotMapping": {
         "articles/iot-central/": {}
       },
