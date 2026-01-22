@@ -233,7 +233,7 @@ productDirectory:
     # Card
     - title: Azure Bastion
       summary: Secure remote access to your virtual machines
-      imageSrc: ../media/index/bastion.svg
+      imageSrc: /azure/media/index/bastion.svg
       url: reliability-bastion.md
       azureCategories:
         - networking
@@ -241,7 +241,7 @@ productDirectory:
     # Card
     - title: Azure Container Apps
       summary: Build and deploy modern apps and microservices using serverless containers
-      imageSrc: ../media/index/container-apps.svg
+      imageSrc: /azure/media/index/container-apps.svg
       url: reliability-container-apps.md
       azureCategories:
         - containers
@@ -483,7 +483,7 @@ tools:
       url: /azure/advisor/
     # Card
     - title: Azure SRE Agent (preview)
-      imageSrc: ../media/index/sre-agent.svg
+      imageSrc: /azure/media/index/sre-agent.svg
       url: /azure/sre-agent/
     # Card
     - title: Azure Backup
@@ -495,11 +495,11 @@ tools:
       url: /azure/site-recovery/site-recovery-overview
     # Card
     - title: Azure Chaos Studio
-      imageSrc: ../media/index/chaos-studio.svg
+      imageSrc: /azure/media/index/chaos-studio.svg
       url: /azure/chaos-studio/
     # Card
     - title: Azure App Testing
-      imageSrc: ../media/index/app-testing.svg
+      imageSrc: /azure/media/index/app-testing.svg
       url: /azure/app-testing/
     # Card
     - title: Azure Front Door
