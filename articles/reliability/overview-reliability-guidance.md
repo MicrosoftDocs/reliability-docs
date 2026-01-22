@@ -1,11 +1,11 @@
 ---
 title: Reliability Guides for Azure Services
 description: See a list of reliability guides for Azure products and services. Learn about transient fault handling, availability zones, and multi-region support.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.topic: reliability-article
 ms.date: 01/15/2026
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---

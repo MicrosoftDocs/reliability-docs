@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Virtual Network Gateways
 description: Learn how to make Azure virtual network gateways resilient to problems like transient faults, availability zone outages, and region outages.
-ms.author: anaharris
-author: anaharris-ms
+ms.author: glynnniall
+author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-vpn-gateway

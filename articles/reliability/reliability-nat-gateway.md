@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure NAT Gateway
 description: Learn how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults and availability zone outages.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-nat-gateway

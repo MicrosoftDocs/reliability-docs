@@ -1,9 +1,9 @@
 ---
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.topic: include
 ms.date: 01/05/2024
-ms.author: anaharris
+ms.author: glynnniall
 ms.subservice: azure-reliability
 ---
 

@@ -1,9 +1,9 @@
 ---
- author: anaharris-ms
+ author: glynnniall
  ms.service: azure
  ms.topic: include
  ms.date: 07/17/2025
- ms.author: anaharris
+ ms.author: glynnniall
  ms.custom: include file
 ---
 App Service performs regular service upgrades and other maintenance tasks. To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the App Service plan during the upgrade process.
