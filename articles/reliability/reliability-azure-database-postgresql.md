@@ -19,7 +19,7 @@ Azure Database for PostgreSQL supports high availability by provisioning physica
 
 ## Availability zone support
 
-[!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Availability zone description](includes/reliability-availability-zone-description-include.md)]
 
 Azure Database for PostgreSQL supports both [zone-redundant and zonal models](availability-zones-service-support.md) for high availability configurations. Both high availability configurations enable automatic failover capability with zero data loss during both planned and unplanned events.
 
@@ -92,6 +92,7 @@ Use HA health status monitoring to:
 For a detailed guide on configuring and interpreting HA health statuses, see [High Availability (HA) health status monitoring for Azure Database for PostgreSQL](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
 
 ### High availability limitations
+<!-- TODO add these into the new RG -->
 
 - Because of synchronous replication to the standby server, especially with a zone-redundant configuration, applications can experience elevated write and commit latency.
 
@@ -143,11 +144,13 @@ An application transaction triggers a write and commit that first logs to the WA
 
 Flexible server health monitoring periodically checks the health of both the primary and standby servers. After multiple pings, if health monitoring detects that a primary server isn't reachable, the service initiates an automatic failover to the standby server. The health monitoring algorithm uses multiple data points to avoid false positive situations.
 
+<!-- John: I'd like to create a document specifically for "failover modes" -->
 #### Failover modes
 
 Flexible server supports two failover modes, [**Planned failover**](#planned-failover) and [**Unplanned failover**](#unplanned-failover). In both modes, once replication breaks, the standby server runs recovery before promotion as a primary and opens for read/write. With automatic DNS entries updated with the new primary server endpoint, applications can connect to the server by using the same endpoint. A new standby server is established in the background, so that your application can maintain connectivity.
 
 #### High availability status
+<!-- This table should probably be added to the intro section of /azure/postgresql/flexible-server/how-to-monitor-high-availability -->
 
 The system continuously monitors the health of primary and standby servers. It takes appropriate actions to fix issues, including triggering a failover to the standby server. The following table lists the possible high availability statuses:
 
@@ -175,6 +178,7 @@ PostgreSQL client applications connect to the primary server by using the DB ser
 1. Writes and commits are acknowledged.
 
 #### Point-in-time restore of high availability servers
+<!-- TODO move to backups section -->
 
 For flexible servers configured with high availability, the system replicates log data in real-time to the standby server. Any user errors on the primary server - such as an accidental drop of a table or incorrect data updates - are replicated to the standby replica. So, you can't use the standby to recover from such logical errors. To recover from such errors, you must perform a point-in-time restore from the backup. By using a flexible server's point-in-time restore capability, you can restore to the time before the error occurred. A new database server is restored as a single-zone flexible server with a new user-provided server name for databases configured with high availability. You can use the restored server for several use cases:
 
@@ -292,7 +296,7 @@ The following picture shows the transition between VM and storage failure.
 
 ## Cross-region disaster recovery and business continuity
 
-If a region-wide disaster occurs, Azure can provide protection from regional or large geography disasters with disaster recovery by making use of another region. For more information on Azure disaster recovery architecture, see [Azure to Azure disaster recovery architecture](/azure/site-recovery/azure-to-azure-architecture).
+If a region-wide disaster occurs, Azure can provide protection from regional or large geography disasters with disaster recovery by making use of another region. For more information on Azure disaster recovery architecture, see [Azure to Azure disaster recovery architecture](../site-recovery/azure-to-azure-architecture.md).
 
 Flexible server provides features that protect data and mitigate downtime for your mission-critical databases during planned and unplanned downtime events. Built on top of the Azure infrastructure that offers robust resiliency and availability, flexible server offers business continuity features that provide fault-protection, address recovery time requirements, and reduce data loss exposure. As you architect your applications, consider the downtime tolerance - the recovery time objective (RTO), and data loss exposure - the recovery point objective (RPO). For example, your business-critical database requires stricter uptime than a test database.
 

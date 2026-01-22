@@ -115,7 +115,7 @@ items:
       - name: Disaster recovery
         href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
     - name: Azure Database for PostgreSQL
-      href: reliability-azure-database-postgresql.md
+      href: reliability-azure-database-postgresql-flexible-server.md
     - name: Azure DocumentDB
       href: reliability-documentdb.md
     - name: Azure Managed Redis
