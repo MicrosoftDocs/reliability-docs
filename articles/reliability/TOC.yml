@@ -106,14 +106,8 @@ items:
         href: /azure/cosmos-db/postgresql/concepts-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/cosmos-db/postgresql/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Database for MySQL
-      href: /azure/mysql/single-server/concepts-business-continuity?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#recover-from-an-azure-regional-data-center-outage
     - name: Azure Database for MySQL - Flexible Server
-      items: 
-      - name: Availability zones
-        href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
+      href: reliability-azure-database-mysql.md
     - name: Azure Database for PostgreSQL
       href: reliability-azure-database-postgresql.md
     - name: Azure DocumentDB
@@ -345,7 +339,7 @@ items:
       - name: Azure Cosmos DB for NoSQL
         href: migrate-cosmos-nosql.md
       - name: Azure Database for MySQL - Flexible Server
-        href: migrate-database-mysql-flex.md
+        href: reliability-azure-database-mysql.md#configure-availability-zone-support
       - name: Azure Database for PostgreSQL
         href: /azure/postgresql/flexible-server/how-to-manage-high-availability-portal?toc=/azure/reliability#enable-high-availability-during-server-creation
       - name: Azure Elastic SAN
