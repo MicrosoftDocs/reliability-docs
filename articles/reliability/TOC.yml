@@ -3,7 +3,7 @@ items:
   href: index.yml
 - name: Overview
   href: overview.md
-- name: Reliability guides by service
+- name: Reliability guides for Azure services
   expanded: true
   items:
   - name: Overview
