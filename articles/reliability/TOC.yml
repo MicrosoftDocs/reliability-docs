@@ -26,6 +26,8 @@ items:
       href: /azure/data-explorer/business-continuity-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Data Factory
       href: reliability-data-factory.md
+    - name: Azure Disk Storage
+      href: ./reliability-storage-disk.md
     - name: Azure Data Share
       href: /azure/data-share/disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Databricks
