@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Backup
 description: Learn how to make Azure Backup resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
