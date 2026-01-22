@@ -5,7 +5,7 @@ author: apurbasroy
 ms.service: azure
 ms.topic: reliability-article
 ms.date: 02/27/2023
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: references_regions, subject-reliability
 CustomerIntent: As a cloud architect/engineer, I need general guidance on migrating HDInsight to using availability zones.
 ---

@@ -5,8 +5,8 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 11/13/2025
-ms.author: anaharris
-author: anaharris-ms
+ms.author: glynnniall
+author: glynnniall
 ms.custom: subject-reliability
 ---
 

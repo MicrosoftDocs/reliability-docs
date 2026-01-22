@@ -2,11 +2,11 @@
 
 title: Azure region - region-down notifications (Service Health only)
 description: Include file for the region-down behavior section's *Notification* bullet that describes how Service Health can be used.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.topic: include
 ms.date: 11/04/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: include file
 ---
 
