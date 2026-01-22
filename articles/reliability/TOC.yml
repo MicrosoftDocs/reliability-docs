@@ -26,8 +26,6 @@ items:
       href: /azure/data-explorer/business-continuity-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Data Factory
       href: reliability-data-factory.md
-    - name: Azure Disk Storage
-      href: ./reliability-storage-disk.md
     - name: Azure Data Share
       href: /azure/data-share/disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Databricks
@@ -58,6 +56,8 @@ items:
       href: reliability-container-instances.md
     - name: Azure Data Factory
       href: reliability-data-factory.md
+    - name: Azure Disk Storage
+      href: reliability-storage-disk.md
     - name: Azure Functions 
       href: reliability-functions.md
     - name: Azure Kubernetes Service (AKS)
@@ -264,6 +264,8 @@ items:
       href: reliability-storage-blob.md
     - name: Azure Databox
       href: /azure/databox/data-box-disk-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-can-i-recover-my-data-if-an-entire-region-fails-
+    - name: Azure Disk Storage
+      href: reliability-storage-disk.md
     - name: Azure Elastic SAN
       href: reliability-elastic-san.md
     - name: Azure Files
@@ -274,8 +276,6 @@ items:
       href: reliability-storage-queue.md
     - name: Azure Storage Actions
       href: reliability-storage-actions.md
-    - name: Azure Storage-Disk Storage
-      href: /azure/virtual-machines/disks-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Storage Mover
       href: reliability-azure-storage-mover.md
     - name: Azure Table Storage
