@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Disk Storage
 description: Learn about reliability in Azure Disk Storage, including availability zones and multi-region deployments.
-ms.author: anaharris
-author: anaharris-ms
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-disk-storage
