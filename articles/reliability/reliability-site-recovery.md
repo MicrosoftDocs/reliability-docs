@@ -14,14 +14,14 @@ ai-usage: ai-assisted
 
 # Reliability in Azure Site Recovery
 
-[Azure Site Recovery](../site-recovery/site-recovery-overview.md) is a managed replication and failover service for virtual machines and other infrastructure, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes seamlessly. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
+[Azure Site Recovery](/azure/site-recovery/site-recovery-overview.md) is a managed replication and failover service for virtual machines and other infrastructure, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes seamlessly. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 This article describes how to make Azure Site Recovery resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Azure Site Recovery service level agreement (SLA).
 
 > [!NOTE]
-> This document describes how the Azure Site Recovery service itself is, or can be made, resilient to various issues. It doesn't explain how to use Azure Site Recovery to protect your VMs or other assets. To learn about how to use Azure Site Recovery, see [About Site Recovery](../site-recovery/site-recovery-overview.md).
+> This document describes how the Azure Site Recovery service itself is, or can be made, resilient to various issues. It doesn't explain how to use Azure Site Recovery to protect your VMs or other assets. To learn about how to use Azure Site Recovery, see [About Site Recovery](/azure/site-recovery/site-recovery-overview.md).
 
 ## Production deployment recommendations for reliability
 
@@ -71,7 +71,7 @@ Site Recovery automatically handles transient faults that occur during replicati
 - Site Recovery 
 
 > [!NOTE]
-> Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](../site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md).
+> Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md).
 
 ### Requirements
 
@@ -142,7 +142,7 @@ However, you can use [disaster recovery drills](/azure/site-recovery/azure-to-az
 ## Resilience to region-wide failures
 
 > [!NOTE]
-> Azure Site Recovery can help you to fail over between VMs in different regions. For more information, see [Replicate Azure VMs to another Azure region](../site-recovery/azure-to-azure-how-to-enable-replication.md).
+> Azure Site Recovery can help you to fail over between VMs in different regions. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication.md).
 
 ### Multi-region support type 1
 
