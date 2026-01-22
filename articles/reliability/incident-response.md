@@ -1,13 +1,13 @@
 ---
 title: What to do during an Azure service disruption
 description: Understand what to do in an Azure service disruption, how to prioritize business continuity, consider your disaster recovery plan, and contact Azure support.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.custom: subject-reliability
 ms.date: 12/03/2024
-ms.author: anaharris
+ms.author: glynnniall
 ---
 
 # What to do during an Azure service disruption

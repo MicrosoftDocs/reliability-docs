@@ -106,8 +106,6 @@ items:
         href: /azure/cosmos-db/postgresql/concepts-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/cosmos-db/postgresql/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Database for MySQL
-      href: /azure/mysql/single-server/concepts-business-continuity?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#recover-from-an-azure-regional-data-center-outage
     - name: Azure Database for MySQL - Flexible Server
       items: 
       - name: Availability zones
@@ -217,7 +215,7 @@ items:
     - name: Azure DDoS Protection
       href: reliability-ddos.md
     - name: Azure ExpressRoute gateway
-      href: reliability-virtual-network-gateway.md?pivot=expressroute
+      href: reliability-virtual-network-gateway.md?pivots=expressroute
     - name: Azure Firewall
       href: reliability-firewall.md
     - name: Azure Load Balancer
@@ -243,7 +241,7 @@ items:
       - name: Disaster recovery
         href: /azure/expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure VPN Gateway
-      href: reliability-virtual-network-gateway.md?pivot=vpn
+      href: reliability-virtual-network-gateway.md?pivots=vpn
   - name: Security
     items:
     - name: Azure Disk Encryption 

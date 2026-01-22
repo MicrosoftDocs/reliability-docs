@@ -1,12 +1,12 @@
 ---
 title: Azure region pairs and nonpaired regions
 description: Learn about Azure region pairs and regions without a pair.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 03/19/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: references_regions, subject-reliability
 ---
 

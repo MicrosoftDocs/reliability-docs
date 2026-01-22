@@ -1,11 +1,11 @@
 ---
 title: Availability zone - note about zonal resources
 description: Include file that describes when to use zonal resources, and important information about their resiliency.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.topic: include
 ms.date: 10/21/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: include file
 ---
 
