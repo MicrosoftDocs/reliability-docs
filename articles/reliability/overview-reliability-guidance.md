@@ -108,7 +108,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Service Bus|[Reliability in Service Bus](reliability-service-bus.md)||
 |Azure Service Fabric|| [Deploy a Service Fabric cluster across availability zones](/azure/service-fabric/service-fabric-cross-availability-zones) </p> [Disaster recovery in Service Fabric](/azure/service-fabric/service-fabric-disaster-recovery) |
 |Azure SignalR Service|| [Resiliency and disaster recovery in Azure SignalR Service](/azure/azure-signalr/signalr-concept-disaster-recovery)|
-|Azure Site Recovery|| [Set up disaster recovery for Azure virtual machines](/azure/site-recovery/azure-to-azure-tutorial-enable-replication)|
+|Azure Site Recovery|[Reliability in Azure Site Recovery](./reliability-site-recovery.md)||
 |Azure SQL Database|[Reliability in Azure SQL Database](reliability-sql-database.md) |
 |Azure SQL Managed Instance| [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md) ||
 |Azure Storage Actions| [Reliability in Storage Actions](reliability-storage-actions.md)||
