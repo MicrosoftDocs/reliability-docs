@@ -217,7 +217,7 @@ items:
     - name: Azure DDoS Protection
       href: reliability-ddos.md
     - name: Azure ExpressRoute gateway
-      href: reliability-virtual-network-gateway.md?pivot=expressroute
+      href: reliability-virtual-network-gateway.md?pivots=expressroute
     - name: Azure Firewall
       href: reliability-firewall.md
     - name: Azure Load Balancer
@@ -243,7 +243,7 @@ items:
       - name: Disaster recovery
         href: /azure/expressroute/designing-for-disaster-recovery-with-expressroute-privatepeering?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure VPN Gateway
-      href: reliability-virtual-network-gateway.md?pivot=vpn
+      href: reliability-virtual-network-gateway.md?pivots=vpn
   - name: Security
     items:
     - name: Azure Disk Encryption 
