@@ -34,11 +34,17 @@ Azure Device Registry is zone redundant by default, which means that it automati
 
 Microsoft manages setup and configuration for zone redundancy in Azure Device Registry. You don't need to perform any more configuration to enable this zone redundancy. Microsoft ensures that the service is configured to provide the highest level of availability and reliability.
 
-### Region support
+### Requirements
 
-The following list of regions support availability zones in Device Registry:
+**Region support:** The following list of regions support availability zones in Device Registry:
 
-[!INCLUDE [Azure Device Registry availability zone region support](includes/device-registry-availability-zone-regions-include.md)]
+| Americas         | Europe               |
+|------------------|----------------------|
+| East US          | Germany West Central |
+| East US 2        | North Europe         |
+| West US          | West Europe          |
+| West US 2        |                      |
+| West US 3        |                      |
 
 ### Cost
 
@@ -46,7 +52,7 @@ There's no extra cost to use zone redundancy for Device Registry.
 
 ### Configure availability zone support
 
-**New resources:** When you create a Device Registry resource in Azure IoT Operations, it automatically includes zone-redundancy by default. There's no need for you to perform any more configuration.
+When you create a Device Registry resource in Azure IoT Operations, it's automatically zone-redundant by default. There's no need for you to perform any more configuration.
 
 ### Behavior when all zones are healthy
 
