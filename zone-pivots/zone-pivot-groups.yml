@@ -1,6 +1,6 @@
 ### YamlMime:ZonePivotGroups
 groups:
-# Owner: anaharris-ms
+# Owner: glynnniall
 - id: reliability-functions-hosting-plan
   title: Function app hosting options for Availability Zones support
   prompt: Choose a hosting option for your function app
@@ -44,7 +44,7 @@ groups:
     title: Business Critical
   - id: hyperscale
     title: Hyperscale
-# Owner: anaharris-ms
+# Owner: glynnniall
 - id: virtual-network-gateway-types
   title: Gateway type
   prompt: Choose a virtual network gateway type

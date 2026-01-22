@@ -1,7 +1,7 @@
 ---
 title: Migrate Log Analytics Dedicated Cluster  workspaces to availability zone support 
 description: Learn how to migrate Log Analytics Dedicated Cluster  workspaces to availability zone support.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure-monitor
 ms.topic: conceptual
 ms.date: 09/19/2024

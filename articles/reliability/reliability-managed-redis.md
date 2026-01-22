@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Managed Redis
 description: Learn how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
-ms.author: anaharris # Anastasia - should this be Francis?
-author: anaharris-ms
+ms.author: glynnniall
+author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis

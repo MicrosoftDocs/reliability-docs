@@ -2,7 +2,7 @@
 title: Reliability in Azure Data Manager for Energy
 description: Learn how to ensure energy data reliability with Azure Data Manager for Energy by using zone-redundant instances and active-passive disaster recovery.
 author: bharathim 
-ms.author: anaharris
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.service: azure-data-manager-energy
 ms.custom: subject-reliability, references_regions
