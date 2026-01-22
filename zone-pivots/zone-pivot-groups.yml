@@ -64,3 +64,12 @@ groups:
     title: Premium v2
   - id: other-tiers
     title: Other tiers
+# Owner: glynnniall
+- id: azure-vmware-solution-generations
+  title: Azure VMware Solution generation
+  prompt: Choose an Azure VMware Solution generation
+  pivots:
+  - id: avs-gen1
+    title: Gen 1
+  - id: avs-gen2
+    title: Gen 2
