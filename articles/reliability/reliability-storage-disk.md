@@ -55,7 +55,7 @@ Managed disks automatically recover from transient faults in the Azure infrastru
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Managed disks support availability zones in both zone-redundant and zonal configurations:
 
