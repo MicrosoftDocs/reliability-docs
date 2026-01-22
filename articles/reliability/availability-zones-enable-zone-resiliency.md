@@ -1,12 +1,12 @@
 ---
 title: Enable Zone Resiliency for Azure Workloads
 description: Learn how to enable zone resilience for Azure workloads. Understand how to prioritize workloads and Azure services for zone resiliency across various services.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: article
 ms.date: 10/29/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: subject-reliability
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Reliability in Azure DocumentDB
 description: Learn how to achieve high availability with Azure DocumentDB by using availability zones, replicas, and disaster recovery.
-author: anaharris-ms
+author: glynnniall
 ms.author: gahllevy
 ms.reviewer: sidandrews
 ms.service: azure-documentdb

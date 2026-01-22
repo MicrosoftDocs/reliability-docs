@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Databricks
 description: Learn about resiliency features in Azure Databricks, including transient fault handling and availability zone support.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-databricks
