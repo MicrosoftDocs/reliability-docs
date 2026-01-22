@@ -1,11 +1,11 @@
 ---
  title: Description of Azure Storage alternative multi-region deployment introduction
  description: Description of Azure Storage alternative multi-region deployment introduction.
- author: anaharris-ms
+ author: glynnniall
  ms.service: azure
  ms.topic: include
  ms.date: 07/02/2024
- ms.author: anaharris
+ ms.author: glynnniall
  ms.custom: include file
 ---
 

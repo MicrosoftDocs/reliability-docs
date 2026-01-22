@@ -4,8 +4,8 @@ description: Learn about geographic and global Azure services. See a list of non
 ms.service: azure
 ms.topic: conceptual
 ms.date: 03/25/2025
-ms.author: anaharris
-author: anaharris-ms
+ms.author: glynnniall
+author: glynnniall
 ms.custom: subject-reliability
 ---
 
