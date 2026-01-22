@@ -1,11 +1,11 @@
 ---
  title: Diagram of Azure Storage zone redundant storage
  description: Diagram of Azure Storage zone redundant storage
- author: anaharris-ms
+ author: glynnniall
  ms.service: azure
  ms.topic: include
  ms.date: 07/02/2024
- ms.author: anaharris
+ ms.author: glynnniall
  ms.custom: include file
 ---
 

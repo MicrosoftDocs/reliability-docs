@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure DNS
 description: Learn how to implement Azure DNS failover for reliable disaster recovery by using cross-region backup sites and automated DNS switching strategies.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.service: azure-traffic-manager
 ms.date: 02/02/2024

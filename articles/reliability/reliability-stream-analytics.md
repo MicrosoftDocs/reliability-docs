@@ -1,7 +1,7 @@
 ---
 title: Reliability in Azure Stream Analytics
 description: Learn how to make Azure Stream Analytics resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
-author: anaharris-ms
+author: glynnniall
 ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability

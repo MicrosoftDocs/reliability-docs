@@ -2,7 +2,7 @@
 title: Reliability in Azure Bot Service 
 description: Learn how Azure Bot Service provides reliability through availability zones, zone redundancy, and disaster recovery for regional bots with local data residency.  
 author: hibrenda 
-ms.author: anaharris
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-ai-bot-service
