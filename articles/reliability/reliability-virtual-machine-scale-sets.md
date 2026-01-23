@@ -161,7 +161,7 @@ This section describes what to expect when scale sets are configured with availa
 
     If you use zone-redundant storage (ZRS) disks and an outage affects your VM, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks?tabs=HTTP#diskdetachoptiontypes) your ZRS disks from the failed VM. This approach allows you to attach the ZRS disks to another VM.
 
-- **Expected downtime**. Any VMs in the affected zone remain down until the availability zone recovers. When you use zone-spanning scale sets, VMs that are located in in healthy zones continue to work.
+- **Expected downtime**. Any VMs in the affected zone remain down until the availability zone recovers. When you use zone-spanning scale sets, VMs that are located in healthy zones continue to work.
 
 - **Traffic rerouting**. You're responsible for rerouting traffic to other VMs in healthy zones.
 
