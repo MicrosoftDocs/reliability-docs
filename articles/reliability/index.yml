@@ -19,13 +19,14 @@ metadata:
 highlightedContent:
 # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | sample tutorial | video | whats-new
   items:
-    #Card
+    # Card
     - title: Resiliency capabilities in Agents (preview)
       itemType: whats-new
-      url: /azure/copilot/resiliency-agent 
-    - title:  Resiliency in Azure
+      url: /azure/copilot/resiliency-agent
+    # Card
+    - title: Resiliency in Azure
       itemType: whats-new
-      url: /azure/resiliency/resiliency-overview 
+      url: /azure/resiliency/resiliency-overview
     # Card
     - title: What is Azure reliability?
       itemType: overview
@@ -98,7 +99,7 @@ conceptualContent:
             - text: Failover and failback
               url: concept-failover-failback.md
               itemType: concept
-      
+
       - title: Reliability on the Azure platform
         links:
             - text: Shared responsibility for reliability
@@ -112,8 +113,8 @@ conceptualContent:
       summary: Summary here
       items:
       - title: Strategy and planning
-        summary: Define business justification and expected outcomes of adoption                 
-        links: 
+        summary: Define business justification and expected outcomes of adoption
+        links:
           - url: /azure/cloud-adoption-framework/strategy/inform/resiliency
             text: Define a reliability strategy
             itemType: concept
@@ -125,13 +126,13 @@ conceptualContent:
             itemType: concept
 
       - title: Implementation and operation
-        summary: Migrate and modernize workload resiliency                 
-        links: 
-          - url: /azure/cloud-adoption-framework/strategy/inform/resiliency   
-            text: Resiliency considerations for your cloud strategy   
+        summary: Migrate and modernize workload resiliency
+        links:
+          - url: /azure/cloud-adoption-framework/strategy/inform/resiliency
+            text: Resiliency considerations for your cloud strategy
             itemType: concept
-          - url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability  
-            text: Prepare your secure cloud estate for availability  
+          - url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability
+            text: Prepare your secure cloud estate for availability
             itemType: concept
           - url: /azure/cloud-adoption-framework/secure/adopt#adopt-the-principle-of-availability
             text: Adopt the principle of availability
@@ -142,7 +143,7 @@ conceptualContent:
 
       - title: Cloud architecture
         summary: Design, build, and continuously improve a resilient cloud architecture
-        links: 
+        links:
           - url: /azure/well-architected/reliability/
             text: Reliability pillar of the Azure Well-Architected Framework
             itemType: concept
@@ -170,7 +171,7 @@ conceptualContent:
           - url: /azure/architecture/web-apps/app-service-environment/architectures/app-service-environment-high-availability-deployment
             text: High availability enterprise deployment with App Service Environment
             itemType: concept
-            
+
 productDirectory:
   title: Reliability guides by service
   summary: See a list of reliability guides for Azure products and services. Learn about transient fault handling, availability zones, and multi-region support.
