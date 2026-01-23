@@ -9,4 +9,4 @@ ms.author: anaharris
 ms.custom: include file
 ---
 
-- **Notification**: [!INCLUDE [Region down notification partial bullet (Service Health only)](./reliability-region-down-notification-service-partial-include.md)]
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./reliability-region-down-notification-service-partial-include.md)]
