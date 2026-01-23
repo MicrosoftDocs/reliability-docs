@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Backup
 description: Learn how to ensure reliability in Azure Backup by using availability zones and redundant storage options like LRS, GRS, and ZRS for data protection and recovery.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup

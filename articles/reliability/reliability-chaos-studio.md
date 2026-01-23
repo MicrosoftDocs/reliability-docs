@@ -2,7 +2,7 @@
 title: Reliability in Azure Chaos Studio
 description: Learn how to improve reliability in Azure Chaos Studio by using availability zones and zone redundancy. Understand disaster recovery and zone outage experiences.
 author: prasha-microsoft 
-ms.author: anaharris
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-chaos-studio

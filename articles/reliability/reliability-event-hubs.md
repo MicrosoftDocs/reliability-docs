@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Event Hubs
 description: Find out about resiliency in Azure Event Hubs, including transient faults, availability zones, geo-disaster recovery, geo-replication, and backups.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
