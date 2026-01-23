@@ -5,7 +5,7 @@ author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
-ms.service: azure-reliability, azure-private-link
+ms.service: azure-private-link
 ms.date: 01/23/2026
 ---
 # Reliability in Azure Private Link service
@@ -27,7 +27,7 @@ This article focuses specifically on Azure Private Link and private endpoints. I
 
 Private link service enables your customers to connect privately to your workloads in Azure. As the service provider, you deploy a Private Link service resource. Service consumers create private endpoints in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses.
 A Private Link service is usually attached to an Azure Load Balancer that fronts backend resources (virtual machines or virtual machine scale sets). You can also use Private Link service Direct Connect (preview), which enables connectivity to any privately routable IP address within your virtual network.
-![Private link service archictecture](articles/reliability/media/reliability-private-link-service/pls-architecture-overview.png)
+<!-- Include diagram once approved by John/ Art department-->
 
 - Software-As-A-Service (SaaS) offerings hosted on Azure and hybrid environments where on-premises networks require secure, private access to Azure-hosted applications.
 - PLS doesn’t operate independently. Availability and resiliency depend on the configuration of all dependent components, including the load balancer, backend virtual machines, and any additional networking services in the traffic path.
@@ -47,8 +47,7 @@ Applications that connect through PLS should follow standard transient fault han
 All cloud-hosted applications should follow the Azure transient fault handling guidance when they communicate with any cloud-hosted APIs, databases, and other components. For more information, see Recommendations for handling transient faults.
 
 ## Resilience to availability zone failures
-
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 ### Availability zone support
 
@@ -124,4 +123,4 @@ Private Link service doesn't store customer data and doesn't require backup or r
 
 ## Related content
 
-[!INCLUDE [security-reminder](../../includes/security-reminder.md)].
+- [Reliability in Azure](./overview.md)
