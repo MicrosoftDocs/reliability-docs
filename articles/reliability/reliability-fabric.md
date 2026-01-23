@@ -4,7 +4,6 @@ description: Learn how to ensure analytics platform reliability with Microsoft F
 author: msmimart 
 ms.author: mimart 
 ms.topic: reliability-article
-ms.reviewer: anaharris
 ms.service: fabric
 ms.subservice: admin
 ms.custom:

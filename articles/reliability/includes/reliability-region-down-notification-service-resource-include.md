@@ -1,11 +1,11 @@
 ---
 title: Region - region-down notifications (Service Health + Resource Health)
 description: Include file for the region-down behavior section's *Notification* bullet that describes how Service Health and Resource Health can be used together.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.topic: include
 ms.date: 10/21/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: include file
 ---
 

@@ -7,11 +7,11 @@ brand: azure
 metadata:
   title: Azure reliability documentation
   description: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multi-region support, and fundamental cloud reliability concepts.
-  keywords: Azure reliability, business continuity, resiliency, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multi-region support.
-  ms.service: azure
+  keywords: Azure reliability, business continuity, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multi-region support.
   ms.topic: hub-page
   ms.author: glynnniall
   author: glynnniall
+  ms.service: azure
   ms.date: 01/23/2026
   featureFlags:
   - clicktale

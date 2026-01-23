@@ -1,11 +1,11 @@
 ---
 title: Migrate Azure Cosmos DB for NoSQL to availability zone support 
 description: Learn how to migrate your Azure Cosmos DB for NoSQL to availability zone support.
-author: anaharris-ms
+author: glynnniall
 ms.service: sql
 ms.topic: conceptual
 ms.date: 04/15/2024
-ms.author: anaharris 
+ms.author: glynnniall 
 ms.custom: subject-reliability, devx-track-azurecli
 ---
 

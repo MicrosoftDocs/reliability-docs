@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Container Registry
 description: Learn about resiliency in Azure Container Registry, including resilience to transient faults, availability zone failures, and region-wide failures. Understand backup and restore options and SLA details.
-ms.author: anaharris
-author: anaharris-ms
+ms.author: glynnniall
+author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-container-registry
