@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure NAT Gateway
-description: Learn how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults and availability zone outages.
+description: Learn how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
@@ -8,34 +8,37 @@ ms.custom: subject-reliability
 ms.service: azure-nat-gateway
 ms.date: 01/06/2026
 ai-usage: ai-assisted
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure NAT Gateway works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure NAT Gateway
 
-[Azure NAT Gateway](/azure/nat-gateway/nat-overview) is a fully managed Network Address Translation (NAT) service that provides outbound internet connectivity for resources connected to your private virtual network. The service provides both source network address translation (SNAT) for outbound connections and destination network address translation (DNAT) for response packets to outbound-originated connections only. Because it sits on your critical network paths, Azure NAT Gateway is designed to be a highly resilient service.
+[Azure NAT Gateway](/azure/nat-gateway/nat-overview) is a fully managed Network Address Translation (NAT) service that provides outbound internet connectivity for resources connected to your private virtual network. The service provides both Source Network Address Translation (SNAT) for outbound connections and Destination Network Address Translation (DNAT) for response packets to outbound-originated connections only. Because Azure NAT Gateway handles traffic for critical virtual network resources, it's designed to provide high resilience.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how you can make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults and availability zone outages. It also highlights some key information about the Azure NAT Gateway service level agreement (SLA).
+This article describes how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults and availability zone outages. It also highlights key information about the Azure NAT Gateway service-level agreement (SLA).
 
 > [!IMPORTANT]
-> When you consider the reliability of a NAT gateway, you also need to consider the reliability of your virtual machines (VMs), disks, other network infrastructure, and applications that run on your VMs. Improving the resiliency of the NAT gateway alone might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might need to make configuration changes across multiple areas.
+> NAT gateway reliability depends on your entire infrastructure. To achieve full resiliency, consider the reliability of your virtual machines (VMs), disks, other network infrastructure, and applications that run on VMs. Improving the resiliency of the NAT gateway might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might make configuration changes across multiple components.
 
 > [!IMPORTANT]
-> Standard V2 SKU Azure NAT Gateway is currently in PREVIEW.
-> See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
+> The StandardV2 SKU for Azure NAT Gateway is currently in preview.
+>
+> For legal terms that apply to Azure features in beta, preview, or not yet released into general availability, see [Supplemental terms of use for Microsoft Azure previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 
 ## Production deployment recommendations
 
 For production workloads, we recommend that you:
 
 > [!div class="checklist"]
-> - **Use the StandardV2 SKU**, which automatically enables [zone redundancy](#resilience-to-availability-zone-failures) in supported regions.
+> - **Use the StandardV2 SKU** to get automatic [zone redundancy](#resilience-to-availability-zone-failures) in supported regions.
+>
 >   > [!NOTE]
->   > Review the [Key limitations of StandardV2 NAT Gateway](/azure/nat-gateway/nat-overview#key-limitations-of-standardv2-nat-gateway) before using it, to ensure that your configuration is supported.
-> - **Configure your NAT gateway with enough public IP addresses** to handle your peak connection requirements, which reduces the likelihood of availability problems due to SNAT port exhaustion.
-> - **Use StandardV2 SKU public IP addresses with StandardV2 NAT Gateway.** Standard SKU public IP addresses aren't supported with StandardV2 NAT Gateway.
+>   > Before deployment, review the [key limitations of StandardV2 Azure NAT Gateway](/azure/nat-gateway/nat-overview#key-limitations-of-standardv2-nat-gateway) to ensure that it supports your configuration.
+>
+> - **Allocate enough public IP addresses** for your peak connection requirements. Insufficient IP addresses can cause SNAT port exhaustion and availability problems.
+>
+> - **Use StandardV2 SKU public IP addresses with StandardV2 Azure NAT Gateway.** StandardV2 Azure NAT Gateway doesn't support Standard SKU public IP addresses.
 
 ## Reliability architecture overview
 
@@ -118,7 +121,7 @@ There is no additional cost to use availability zone support for Azure NAT Gatew
 
 - **New resources:** Deployment steps depend on which availability zone configuration you want to use for your NAT gateway.
 
-    - *Zone-redundant*: To deploy a new zone-redundant NAT gateway using the StandardV2 SKU, see [Create a Standard V2 Azure NAT Gateway](/azure/nat-gateway/quickstart-create-nat-gateway-v2).
+    - *Zone-redundant*: To deploy a new zone-redundant NAT gateway using the StandardV2 SKU, see [Create a StandardV2 Azure NAT Gateway](/azure/nat-gateway/quickstart-create-nat-gateway-v2).
 
     - *Zonal:* To deploy a new zonal NAT gateway using the Standard SKU, see [Create a NAT gateway](/azure/nat-gateway/quickstart-create-nat-gateway). When you create the NAT gateway, select its availability zone instead of selecting *No zone*.
 
