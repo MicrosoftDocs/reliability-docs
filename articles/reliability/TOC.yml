@@ -106,8 +106,6 @@ items:
         href: /azure/cosmos-db/postgresql/concepts-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/cosmos-db/postgresql/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Database for MySQL
-      href: /azure/mysql/single-server/concepts-business-continuity?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#recover-from-an-azure-regional-data-center-outage
     - name: Azure Database for MySQL - Flexible Server
       items: 
       - name: Availability zones
@@ -369,7 +367,7 @@ items:
       - name: Azure SQL Managed Instance
         href: reliability-sql-managed-instance.md#configure-availability-zone-support
       - name: Azure Virtual Machine Scale Sets
-        href: reliability-virtual-machine-scale-sets.md#migrate-to-availability-zone-support
+        href: reliability-virtual-machine-scale-sets.md#configure-availability-zone-support
       - name: Azure Virtual Machines
         href: reliability-virtual-machines.md#configure-availability-zone-support
 - name: Reliability concepts
