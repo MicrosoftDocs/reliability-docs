@@ -456,14 +456,6 @@ productDirectory:
       azureCategories:
         - management-and-governance
         - storage
-    # Card
-    - title: Azure Site Recovery
-      summary: Keep your business running with built-in disaster recovery service
-      imageSrc: /azure/media/index/recovery-services-vaults.svg
-      url: reliability-site-recovery.md
-      azureCategories:
-        - management-and-governance
-        - migration
 
 tools:
   title: Reliability services and capabilities
