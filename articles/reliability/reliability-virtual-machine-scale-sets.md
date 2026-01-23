@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machine-scale-sets
-ms.date: 01/12/2026
+ms.date: 01/23/2026
 #Customer intent: Architects and engineers responsible for business continuity want to understand how Azure Virtual Machine Scale Sets work from a reliability perspective and plan disaster recovery strategies aligned with Azure platform behavior during maintenance events and zone/region incidents.
 ---
 
