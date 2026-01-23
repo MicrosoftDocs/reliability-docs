@@ -2,7 +2,7 @@
 title: Reliability in Microsoft Community Training
 description: Learn how Community Training uses availability zones and disaster recovery strategies to improve reliability. Get guidance on zone redundancy and failover.
 author: atulsoni87AI
-ms.author: anaharris
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure

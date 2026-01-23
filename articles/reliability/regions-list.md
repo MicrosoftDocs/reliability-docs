@@ -1,12 +1,12 @@
 ---
 title: List of Azure regions
 description: Find Azure regions, their physical location, geography, availability zone support, as well as their corresponding paired regions if they have one.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 09/23/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: references_regions, subject-reliability
 #customer intent: As a cloud architect, I want a concise, programmatic list of Azure regions and their characteristics so that I can plan deployments and account for compliance and availability requirements.
 ---

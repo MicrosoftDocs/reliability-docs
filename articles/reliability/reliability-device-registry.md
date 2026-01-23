@@ -2,7 +2,7 @@
 title: Reliability in Azure Device Registry
 description: Learn about resiliency in Azure Device Registry, including resilience to transient faults, availability zone failures, and region-wide failures.
 author: isabellaecr
-ms.author: anaharris
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-device-registry

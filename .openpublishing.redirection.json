@@ -1,6 +1,6 @@
 {
   "redirections": [
-        {
+    {
       "source_path_from_root": "/articles/reliability/migrate-app-service.md",
       "redirect_url": "/azure/reliability/reliability-app-service",
       "redirect_document_id": false
