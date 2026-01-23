@@ -55,7 +55,7 @@ To optimize transient fault handling in your applications, use the latest Servic
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Service Bus supports zone-redundant deployments in all service tiers. When you create a Service Bus namespace in a supported region, zone redundancy is automatically enabled at no extra cost. The zone-redundant deployment model applies to all Service Bus features, including partitioning and sessions.
 
