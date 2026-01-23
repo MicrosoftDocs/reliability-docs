@@ -234,7 +234,7 @@ This section describes what to expect when a Service Bus namespace is configured
 
     - *Forced promotion, synchronous replication:* No data loss is expected.
 
-    - *Forced promotion, asynchronous replication:* You might experience some data loss for recent messages that aren't replicated to the secondary region and for state changes that aren't replicated. The amount depends on the replication lag. To verify the current replication lag, use [Azure Monitor metrics](../service-bus-messaging/service-bus-geo-replication.md#monitoring-data-replication).
+    - *Forced promotion, asynchronous replication:* You might experience some data loss for recent messages that aren't replicated to the secondary region and for state changes that aren't replicated. The amount depends on the replication lag. To verify the current replication lag, use [Azure Monitor metrics](/azure/service-bus-messaging/service-bus-geo-replication#monitoring-data-replication).
     
     If you do a forced promotion, you can't recover lost data, even after the primary region becomes available.
 
