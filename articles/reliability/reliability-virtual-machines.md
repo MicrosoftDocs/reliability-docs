@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Virtual Machines
 description: Learn about resiliency in Azure Virtual Machines, including resilience to transient faults, availability zone failures, region-wide failures, and service maintenance. Understand backup options and SLA details.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machines
@@ -53,9 +53,7 @@ For more information about availability for VMs, see [Availability options for V
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
-
-Applications that run on your VMs should implement appropriate fault-handling strategies to ensure that any temporary interruptions in service don't affect your workload.
+[!INCLUDE [Virtual machines transient faults](includes/virtual-machines/transient-faults-include.md)]
 
 ## Resilience to availability zone failures
 
@@ -69,11 +67,7 @@ If you don't configure a VM to be zonal, it's considered *nonzonal* or *regional
 
 Zonal VMs can be deployed into [any region that supports availability zones](./regions-list.md).
 
-However, some VM types and sizes are only available in specific regions, or specific zones within a region. To check which regions and zones support the VM types that you need, use the following resources:
-
-- To check the VM types available in each region, see [Products available by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/).
-
-- To check the supported VM types and sizes within each zone of a specific region, see [Check VM SKU availability](/azure/virtual-machines/linux/create-cli-availability-zone#check-vm-sku-availability).
+[!INCLUDE [Virtual machines zone region support](includes/virtual-machines/zone-region-support-include.md)]
 
 ### Cost
 
@@ -112,7 +106,7 @@ This section describes what to expect when VM instances are configured with avai
 
 - **Detection and response:** You're responsible for detecting and responding to zone failures that affect your VMs.
 
-- **Notification:** Use [Azure Resource Health](/azure/service-health/resource-health-overview) to detect zone failures and trigger failover processes.
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:** Any active requests or other work that occurs on the VM during the zone failure are likely to be terminated.
 
@@ -128,7 +122,7 @@ This section describes what to expect when VM instances are configured with avai
 
 ### Zone recovery
 
-After the zone is healthy, VMs in the zone restart. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
+[!INCLUDE [Virtual machines zone recovery](includes/virtual-machines/zone-recovery-include.md)]
 
 ### Test for zone failures
 
@@ -170,11 +164,9 @@ For more information, see [Guest updates and host maintenance overview](/azure/v
 
 ## Backup and restore
 
-Virtual Machines natively supports backup through Azure Backup. Azure Backup provides a native solution for protecting Virtual Machines by creating and managing backups, with application-consistent protection for the entire VM, including all attached disks. This approach is ideal when you need coordinated backup of multiple disks or application-aware backups. For database workloads, consider application-specific backup solutions that provide transaction-consistent protection and faster recovery options.
+[!INCLUDE [Virtual machines backups](includes/virtual-machines/backup-include.md)]
 
-You can customize the backup frequency, retention duration, and storage configuration to suit your needs. For more information, see [Azure Backup for VMs](/azure/backup/backup-azure-vms-introduction).
-
-Backup also supports disks that are attached to VMs. For more information, see [Overview of Azure Disk Backup](/azure/backup/disk-backup-overview).
+[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
 
 ## Service-level agreement
 
@@ -184,8 +176,6 @@ For Virtual Machines, the SLA provides a base level of availability. The uptime 
 
 - Configure those VMs to be deployed across two or more availability zones.
 - Configure those VMs to be deployed into an availability set.
-
-For more information, see [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ## Next steps
 

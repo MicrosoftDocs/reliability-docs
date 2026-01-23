@@ -6,7 +6,6 @@ ms.service: azure-service-fabric
 ms.topic: conceptual
 ms.date: 03/23/2023
 ms.author: tomcassidy
-ms.reviewer: anaharris
 ms.custom: subject-reliability
 ---
 

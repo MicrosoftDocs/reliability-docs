@@ -6,8 +6,7 @@ ms.service: azure-database-mysql
 ms.subservice: flexible-server
 ms.topic: conceptual
 ms.date: 12/13/2022
-ms.author: anaharris 
-ms.reviewer: anaharris
+ms.author: glynnniall 
 ms.custom: subject-reliability
 ---
  

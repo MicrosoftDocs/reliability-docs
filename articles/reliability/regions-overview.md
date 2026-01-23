@@ -1,12 +1,12 @@
 ---
 title: What are Azure regions?
 description: Learn about Azure regions, and how to use them to design resilient solutions.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 07/03/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom: subject-reliability, ai-video-concept
 ---
 

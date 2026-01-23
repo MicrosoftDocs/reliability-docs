@@ -1,12 +1,12 @@
 ---
 title: Multi-Region Solutions in Nonpaired Regions
 description: Learn about how to create multi-region solutions even when the regions aren't paired. See Azure services and configurations for multi-region solutions.
-author: anaharris-ms
+author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: article
 ms.date: 10/09/2025
-ms.author: anaharris
+ms.author: glynnniall
 ms.custom:
   - subject-reliability
   - build-2025
