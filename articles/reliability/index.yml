@@ -401,14 +401,14 @@ productDirectory:
     - title: Azure VPN Gateway
       summary: Establish secure, cross-premises connectivity
       imageSrc: https://static.docs.com/ui/media/product/azure/virtual-network-gateways.svg
-      url: reliability-virtual-network-gateway.md?pivot=vpn
+      url: reliability-virtual-network-gateway.md?pivots=vpn
       azureCategories:
         - networking
     # Card
     - title: Azure ExpressRoute gateway
       summary: Dedicated private network fiber connections to Azure
       imageSrc: https://static.docs.com/ui/media/product/azure/expressroute.svg
-      url: reliability-virtual-network-gateway.md?pivot=expressroute
+      url: reliability-virtual-network-gateway.md?pivots=expressroute
       azureCategories:
         - networking
     # Card
