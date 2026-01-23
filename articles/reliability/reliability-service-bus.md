@@ -61,7 +61,9 @@ Service Bus supports zone-redundant deployments in all service tiers. When you c
 
 Service Bus transparently replicates your configuration, metadata, and message data across multiple availability zones in the region. Zone redundancy provides automatic failover without any intervention from you. All Service Bus components, including compute, networking, and storage, are replicated across zones. Service Bus has enough capacity reserves to instantly handle the complete loss of a zone. It continues to operate without data loss or interruption to messaging applications, even if an entire availability zone becomes unavailable.
 
-:::image type="content" source="./media/reliability-service-bus/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant Service Bus namespace." border="false":::
+:::image type="complex" border="false" source="./media/reliability-service-bus/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant Service Bus namespace." lightbox="./media/reliability-service-bus/zone-redundant.svg":::
+   Diagram that shows a zone-redundant Service Bus namespace. It spans three availability zones, ordered from left to right.
+:::image-end:::
 
 ### Requirements
 
@@ -135,7 +137,9 @@ Use geo-replication for scenarios that require resiliency to region outages and 
 
 The namespace essentially extends across regions. One region serves as the primary, and the other regions serve as the secondary. Your Azure subscription shows a single namespace.
 
-:::image type="content" source="./media/reliability-service-bus/geo-replication.svg" alt-text="Diagram that shows a Service Bus namespace configured for geo-replication." border="false":::
+:::image type="complex" border="false" source="./media/reliability-service-bus/geo-replication.svg" alt-text="Diagram that shows a Service Bus namespace configured for geo-replication." lightbox="./media/reliability-service-bus/geo-replication.svg":::
+   Diagram that shows a Service Bus namespace configured for geo-replication that spans two regions. At the top, a client application connects to the namespace FQDN. Below are two regions in a horizontal arrangement: the primary region on the left and the secondary region on the right. Each region contains a Service Bus namespace with metadata and message data sections. A bidirectional arrow between the regions indicates replication of both configuration metadata and message data. The namespace FQDN routes to the primary region during normal operations. During promotion, the FQDN redirects to the secondary region, which becomes the new primary, while the former primary becomes a secondary region.
+:::image-end:::
 
 At any time, you can *promote* the secondary region to a primary region. When you promote the secondary region, Service Bus repoints the namespace's fully qualified domain name (FQDN) to the selected secondary region and demotes the previous primary region to a secondary region. You decide whether to do a *planned promotion*, which means that you wait for data replication to complete, or a *forced promotion*, which might result in data loss.
 
