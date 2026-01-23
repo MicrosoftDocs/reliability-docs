@@ -27,13 +27,13 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ### Logical architecture
 
-A *namespace* serves as the management container for Service Bus and can be configured to use the Basic, Standard, or Premium tier. You configure the service at the namespace level by allocating capacity, configuring network security, and enabling geo-replication and geo-disaster recovery.
+A *namespace* serves as the management container for Service Bus and can be configured to use the Basic, Standard, or Premium tier. You configure the service at the namespace level by allocating capacity, configuring network security, and enabling Geo-Replication and Geo-Disaster Recovery.
 
-Within a namespace, you deploy *queues* and *topics*, which are messaging entities that have different semantics. For more information, see [Service Bus queues, topics, and subscriptions](../service-bus-messaging/service-bus-queues-topics-subscriptions.md).
+Within a namespace, you deploy *queues* and *topics*, which are messaging entities that have different semantics. For more information, see [Service Bus queues, topics, and subscriptions](/azure/service-bus-messaging/service-bus-queues-topics-subscriptions).
 
-You can optionally configure *[partitions](../service-bus-messaging/service-bus-partitioning.md)* on your namespace, which spreads queues and topics across multiple message brokers and messaging stores. A namespace can use multiple partitions to handle parallel processing and horizontal scaling. Service Bus only guarantees ordering within a single partition. Partitioning plays a key role in your application's reliability design. When you design your application, make a trade-off between maximizing availability and consistency. For the Premium tier, [enable partitioning on the namespace](../service-bus-messaging/enable-partitions-premium.md). For Basic and Standard tier namespaces, configure partitions on the entity and [optionally when you send messages](../event-hubs/event-hubs-availability-and-consistency.md).
+You can optionally configure *[partitions](/azure/service-bus-messaging/service-bus-partitioning)* on your namespace, which spreads queues and topics across multiple message brokers and messaging stores. A namespace can use multiple partitions to handle parallel processing and horizontal scaling. Service Bus only guarantees ordering within a single partition. Partitioning plays a key role in your application's reliability design. When you design your application, make a trade-off between maximizing availability and consistency. For the Premium tier, [enable partitioning on the namespace](/azure/service-bus-messaging/enable-partitions-premium). For Basic and Standard tier namespaces, configure partitions on the entity and [optionally when you send messages](/azure/event-hubs/event-hubs-availability-and-consistency).
 
-You can use Service Bus and its asynchronous design approaches to increase the availability of your applications. For more information, see [Asynchronous messaging patterns and high availability](../service-bus-messaging/service-bus-async-messaging.md).
+You can use Service Bus and its asynchronous design approaches to increase the availability of your applications. For more information, see [Asynchronous messaging patterns and high availability](/azure/service-bus-messaging/service-bus-async-messaging).
 
 ### Physical architecture
 
@@ -41,7 +41,7 @@ Service Bus provides the underlying compute and storage resources. For each name
 
 For namespaces that use the Basic or Standard tier, Service Bus provides redundancy through a shared multitenant infrastructure that automatically replicates messages across availability zones where available. The service maintains multiple messaging stores and keeps all copies in sync for both data and management operations.
 
-For [Premium tier namespaces](../service-bus-messaging/service-bus-premium-messaging.md), Service Bus provides dedicated messaging units (MUs) that each have dedicated CPU and memory resources. Premium tier namespaces can automatically scale based on workload demands. For more information, see [Automatically update MUs of a Service Bus namespace](../service-bus-messaging/automate-update-messaging-units.md).
+For [Premium tier namespaces](/azure/service-bus-messaging/service-bus-premium-messaging), Service Bus provides dedicated messaging units (MUs) that each have dedicated CPU and memory resources. Premium tier namespaces can automatically scale based on workload demands. For more information, see [Automatically update MUs of a Service Bus namespace](/azure/service-bus-messaging/automate-update-messaging-units).
 
 Service Bus infrastructure spans multiple physical machines and racks that are spread across fault domains, which reduces the risk of catastrophic failures affecting your namespace. In regions that have availability zones, the infrastructure [extends across separate physical datacenters](#resilience-to-availability-zone-failures). The service implements transparent failure detection and failover mechanisms so that it continues to operate within the assured service levels and typically without noticeable interruptions when these failures occur.
 
@@ -121,64 +121,64 @@ Service Bus manages traffic routing, failover, and zone recovery for zone failur
 
 Service Bus provides two types of multi-region support, both of which require Premium tier namespaces:
 
-- [Geo-replication](#geo-replication) provides active-passive replication of both metadata and message data between a primary region and a secondary region. Use geo-replication for most applications that must remain resilient to region outages and have a low tolerance for message data loss.
+- [Geo-Replication](#geo-replication) provides active-passive replication of both metadata and message data between a primary region and a secondary region. Use Geo-Replication for most applications that must remain resilient to region outages and have a low tolerance for message data loss.
 
-- [Metadata geo-disaster recovery](#metadata-geo-disaster-recovery) provides active-passive replication of configuration and metadata between a primary and secondary region, but it doesn't replicate message data. Consider using geo-disaster recovery for applications that handle their own data replication or don't need data replication.
+- [Metadata Geo-Disaster Recovery](#metadata-geo-disaster-recovery) provides active-passive replication of configuration and metadata between a primary and secondary region, but it doesn't replicate message data. Consider using Geo-Disaster Recovery for applications that handle their own data replication or don't need data replication.
 
-Both geo-replication and metadata geo-disaster recovery require you to manually initiate failover or promotion of a secondary region to become the new primary region. Microsoft doesn't automatically initiate failover or promotion, even if your primary region is down.
+Both Geo-Replication and metadata Geo-Disaster Recovery require you to manually initiate failover or promotion of a secondary region to become the new primary region. Microsoft doesn't automatically initiate failover or promotion, even if your primary region is down.
 
 Namespaces in the Basic and Standard tiers don't include native multi-region features, but you can implement application-level replication patterns by using multiple namespaces across regions. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
-### Geo-replication
+### Geo-Replication
 
-The Premium tier supports geo-replication. This feature replicates metadata, like entities, configuration, and properties, for the namespace. It also replicates data, like messages in your queues and topics, along with message properties and state. You configure the replication approach for your namespace's configuration and data. This feature ensures that your messages remain available in another region and lets you switch to the secondary region when needed.
+The Premium tier supports Geo-Replication. This feature replicates metadata, like entities, configuration, and properties, for the namespace. It also replicates data, like messages in your queues and topics, along with message properties and state. You configure the replication approach for your namespace's configuration and data. This feature ensures that your messages remain available in another region and lets you switch to the secondary region when needed.
 
-Use geo-replication for scenarios that require resiliency to region outages and have a low tolerance for message data loss.
+Use Geo-Replication for scenarios that require resiliency to region outages and have a low tolerance for message data loss.
 
 The namespace essentially extends across regions. One region serves as the primary, and the other regions serve as the secondary. Your Azure subscription shows a single namespace.
 
-:::image type="complex" border="false" source="./media/reliability-service-bus/geo-replication.svg" alt-text="Diagram that shows a Service Bus namespace configured for geo-replication." lightbox="./media/reliability-service-bus/geo-replication.svg":::
-   Diagram that shows a Service Bus namespace configured for geo-replication that spans two regions. At the top, a client application connects to the namespace FQDN. Below are two regions in a horizontal arrangement: the primary region on the left and the secondary region on the right. Each region contains a Service Bus namespace with metadata and message data sections. A bidirectional arrow between the regions indicates replication of both configuration metadata and message data. The namespace FQDN routes to the primary region during normal operations. During promotion, the FQDN redirects to the secondary region, which becomes the new primary, while the former primary becomes a secondary region.
+:::image type="complex" border="false" source="./media/reliability-service-bus/geo-replication.svg" alt-text="Diagram that shows a Service Bus namespace configured for Geo-Replication." lightbox="./media/reliability-service-bus/geo-replication.svg":::
+   Diagram that shows a Service Bus namespace configured for Geo-Replication that spans two regions. At the top, a client application connects to the namespace FQDN. Below are two regions in a horizontal arrangement: the primary region on the left and the secondary region on the right. Each region contains a Service Bus namespace with metadata and message data sections. A bidirectional arrow between the regions indicates replication of both configuration metadata and message data. The namespace FQDN routes to the primary region during normal operations. During promotion, the FQDN redirects to the secondary region, which becomes the new primary, while the former primary becomes a secondary region.
 :::image-end:::
 
 At any time, you can *promote* the secondary region to a primary region. When you promote the secondary region, Service Bus repoints the namespace's fully qualified domain name (FQDN) to the selected secondary region and demotes the previous primary region to a secondary region. You decide whether to do a *planned promotion*, which means that you wait for data replication to complete, or a *forced promotion*, which might result in data loss.
 
 > [!NOTE]
-> Service Bus geo-replication uses the term *promotion* because it best represents the process of promoting a secondary region to a primary region (and later demoting a primary region to a secondary region). The term *failover* is also used to describe this general process.
+> Service Bus Geo-Replication uses the term *promotion* because it best represents the process of promoting a secondary region to a primary region (and later demoting a primary region to a secondary region). The term *failover* is also used to describe this general process.
 
-This section summarizes important aspects of geo-replication. Review the full documentation to learn how it works. For more information, see [Service Bus geo-replication](../service-bus-messaging/service-bus-geo-replication.md).
+This section summarizes important aspects of Geo-Replication. Review the full documentation to learn how it works. For more information, see [Service Bus Geo-Replication](/azure/service-bus-messaging/service-bus-Geo-Replication).
 
 #### Requirements
 
 - **Region support:** You can choose any Azure region that supports Service Bus as your primary or secondary region. You don't need to use Azure paired regions, so select secondary regions based on your latency, compliance, or data residency requirements.
 
-- **Tier:** To enable geo-replication, your namespace must use the Premium tier.
+- **Tier:** To enable Geo-Replication, your namespace must use the Premium tier.
 
-- **Metadata geo-disaster recovery:** You can't configure a namespace to use both geo-replication and geo-disaster recovery.
+- **Metadata Geo-Disaster Recovery:** You can't configure a namespace to use both Geo-Replication and Geo-Disaster Recovery.
 
 #### Considerations
 
-- **Feature limitations:** When you enable geo-replication, some restrictions apply. For more information, see [Service Bus geo-replication](../service-bus-messaging/service-bus-geo-replication.md).
+- **Feature limitations:** When you enable Geo-Replication, some restrictions apply. For more information, see [Service Bus Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication).
 
-- **Private endpoints:** If you use private endpoints to connect to your namespace, you must also configure networking in your primary and secondary regions. For more information, see [Private endpoints](../event-hubs/geo-replication.md#private-endpoints).
+- **Private endpoints:** If you use private endpoints to connect to your namespace, you must also configure networking in your primary and secondary regions. For more information, see [Private endpoints](/azure/event-hubs/geo-replication#private-endpoints).
 
 #### Cost
 
-To learn how pricing works for geo-replication, see [Pricing](../service-bus-messaging/service-bus-geo-replication.md#pricing).
+To learn how pricing works for Geo-Replication, see [Pricing](/azure/service-bus-messaging/service-bus-geo-replication#pricing).
 
 #### Configure multi-region support
 
-- **Enable geo-replication on a new namespace.** To enable geo-replication on a namespace during creation, see [Set up geo-replication](../service-bus-messaging/service-bus-geo-replication.md#setup).
+- **Enable Geo-Replication on a new namespace.** To enable Geo-Replication on a namespace during creation, see [Set up Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication#setup).
 
-- **Migrate from metadata geo-disaster recovery to geo-replication.** [Switch from using metadata geo-disaster recovery to geo-replication](../service-bus-messaging/service-bus-geo-replication.md#migration).
+- **Migrate from metadata Geo-Disaster Recovery to Geo-Replication.** [Switch from using metadata Geo-Disaster Recovery to Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication#migration).
 
-- **Change the replication approach.** To switch between synchronous and asynchronous replication modes, see [Switch replication mode](../service-bus-messaging/service-bus-geo-replication.md#switch-replication-mode).
+- **Change the replication approach.** To switch between synchronous and asynchronous replication modes, see [Switch replication mode](/azure/service-bus-messaging/service-bus-geo-replication#switch-replication-mode).
 
-- **Turn off geo-replication.** To turn off geo-replication for a secondary region, see [Delete secondary region](../service-bus-messaging/service-bus-geo-replication.md#delete-secondary-region).
+- **Turn off Geo-Replication.** To turn off Geo-Replication for a secondary region, see [Delete secondary region](/azure/service-bus-messaging/service-bus-geo-replication#delete-secondary-region).
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when a Service Bus namespace is configured for geo-replication and the primary region is operational.
+This section describes what to expect when a Service Bus namespace is configured for Geo-Replication and the primary region is operational.
 
 - **Traffic routing between regions:** Client applications connect through the FQDN for your namespace, and their traffic routes to the primary region.
 
@@ -194,21 +194,21 @@ This section describes what to expect when a Service Bus namespace is configured
     
     This mode provides higher write throughput than synchronous replication because there's no inter-region replication latency during write operations. It can also tolerate the loss of the secondary region while still allowing write operations in the primary region. But if an outage occurs in the primary region, any data that isn't replicated to the secondary region might be unavailable or lost.
 
-    When you configure asynchronous replication, you set the maximum acceptable lag time for replication. At any time, you can verify the current replication lag by using [Azure Monitor metrics](../service-bus-messaging/service-bus-geo-replication.md#monitoring-data-replication).
+    When you configure asynchronous replication, you set the maximum acceptable lag time for replication. At any time, you can verify the current replication lag by using [Azure Monitor metrics](/azure/service-bus-messaging/service-bus-geo-replication#monitoring-data-replication).
         
     If the asynchronous replication lag increases beyond the maximum that you specify, the primary region starts to throttle incoming requests so that the replication can catch up. To avoid this situation, select secondary regions that aren't too geographically distant and make sure that your capacity is sufficient for the throughput.
 
     Some metadata types are replicated synchronously even when you select the asynchronous replication mode.
 
-    For more information, see [Replication modes](../service-bus-messaging/service-bus-geo-replication.md#replication-modes).
+    For more information, see [Replication modes](/azure/service-bus-messaging/service-bus-geo-replication#replication-modes).
 
 #### Behavior during a region outage
 
-This section describes what to expect when a Service Bus namespace is configured for geo-replication and there's an outage in the primary or a secondary region.
+This section describes what to expect when a Service Bus namespace is configured for Geo-Replication and there's an outage in the primary or a secondary region.
 
-- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For criteria to consider when deciding whether to fail over, see [Recommended scenarios to trigger promotion](../service-bus-messaging/service-bus-geo-replication.md#recommended-scenarios-to-trigger-promotion).
+- **Detection and response:** You're responsible for deciding when to promote your namespace's secondary region to become the new primary region. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. For criteria to consider when deciding whether to fail over, see [Recommended scenarios to trigger promotion](/azure/service-bus-messaging/service-bus-geo-replication#recommended-scenarios-to-trigger-promotion).
 
-    For more information about how to promote a secondary region to the new primary, see [Promotion flow](../service-bus-messaging/service-bus-geo-replication.md#promotion-flow).
+    For more information about how to promote a secondary region to the new primary, see [Promotion flow](/azure/service-bus-messaging/service-bus-geo-replication#promotion-flow).
 
     When you promote a secondary region, choose between a *planned promotion* or a *forced promotion*. A planned promotion waits for the secondary region to catch up before it accepts new traffic. This approach prevents data loss but results in downtime.
 
@@ -226,7 +226,7 @@ This section describes what to expect when a Service Bus namespace is configured
 
         - If you use the asynchronous replication mode, your namespace throttles and doesn't accept new messages after the replication lag reaches the maximum that you configure.
 
-        To continue using the namespace in the primary region, remove the secondary namespace from your geo-replication configuration.
+        To continue using the namespace in the primary region, remove the secondary namespace from your Geo-Replication configuration.
 
 - **Expected data loss:** The amount of data loss depends on whether you do a planned or forced promotion and whether the replication mode is synchronous or asynchronous:
 
@@ -260,62 +260,62 @@ If you did a forced promotion during the region outage, you can't recover lost d
 
 #### Test for region failures
 
-To test geo-replication, temporarily promote the secondary region to primary and validate that your client applications can switch between regions with minimal disruption.
+To test Geo-Replication, temporarily promote the secondary region to primary and validate that your client applications can switch between regions with minimal disruption.
 
 Monitor the promotion duration and validate that your runbooks and automation work correctly. After testing, you can fail back to the original configuration.
 
-Understand the potential downtime and data loss that you might experience during and after the promotion process. Test geo-replication in a nonproduction environment that mirrors the configuration of your production namespace.
+Understand the potential downtime and data loss that you might experience during and after the promotion process. Test Geo-Replication in a nonproduction environment that mirrors the configuration of your production namespace.
 
-### Metadata geo-disaster recovery
+### Metadata Geo-Disaster Recovery
 
-The Premium tier supports metadata geo-disaster recovery. This feature improves recovery from disaster scenarios, including the catastrophic loss of a region. Geo-disaster recovery only replicates the configuration and metadata of your namespace, and it doesn't replicate message data. To support disaster recovery, this feature ensures that a namespace in another region is preconfigured and ready to immediately accept messages from clients. Geo-disaster recovery serves as a one-way recovery solution and doesn't support failback to the prior primary region.
+The Premium tier supports metadata Geo-Disaster Recovery. This feature improves recovery from disaster scenarios, including the catastrophic loss of a region. Geo-Disaster Recovery only replicates the configuration and metadata of your namespace, and it doesn't replicate message data. To support disaster recovery, this feature ensures that a namespace in another region is preconfigured and ready to immediately accept messages from clients. Geo-Disaster Recovery serves as a one-way recovery solution and doesn't support failback to the prior primary region.
 
-Metadata geo-disaster recovery works best for applications that don't strictly need to maintain every message and can tolerate some data loss during a disaster scenario. Metadata geo-disaster recovery might also be appropriate for applications that replicate data themselves, or that don't need data replication at all. For example, when messages contain large images that you later convert to thumbnails, losing some messages from a failed region might be acceptable if you can quickly resume processing new messages in another region and reconstruct the lost messages later.
+Metadata Geo-Disaster Recovery works best for applications that don't strictly need to maintain every message and can tolerate some data loss during a disaster scenario. Metadata Geo-Disaster Recovery might also be appropriate for applications that replicate data themselves, or that don't need data replication at all. For example, when messages contain large images that you later convert to thumbnails, losing some messages from a failed region might be acceptable if you can quickly resume processing new messages in another region and reconstruct the lost messages later.
 
 > [!IMPORTANT]
-> Geo-disaster recovery enables continuity of operations that have the same configuration but **doesn't replicate message data**. If you must replicate message data, consider using [geo-replication](#geo-replication).
+> Geo-Disaster Recovery enables continuity of operations that have the same configuration but **doesn't replicate message data**. If you must replicate message data, consider using [Geo-Replication](#geo-replication).
 
-When you configure metadata geo-disaster recovery, you create an *alias* that client applications connect to. The alias is an FQDN that directs all traffic to the primary namespace by default.
+When you configure metadata Geo-Disaster Recovery, you create an *alias* that client applications connect to. The alias is an FQDN that directs all traffic to the primary namespace by default.
 
-:::image type="complex" border="false" source="./media/reliability-service-bus/geo-disaster-recovery.svg" alt-text="Diagram that shows two Service Bus namespaces that are configured for metadata geo-disaster recovery." lightbox="./media/reliability-service-bus/geo-disaster-recovery.svg":::
+:::image type="complex" border="false" source="./media/reliability-service-bus/geo-disaster-recovery.svg" alt-text="Diagram that shows two Service Bus namespaces that are configured for metadata Geo-Disaster Recovery." lightbox="./media/reliability-service-bus/geo-disaster-recovery.svg":::
    Diagram that shows a client application at the top connected to an alias. Below are two regions arranged horizontally. The primary region on the left contains a primary namespace with metadata and message data sections. The secondary region on the right contains a secondary namespace with a metadata section. A dotted arrow labeled asynchronous replication metadata only points from the metadata section in the primary namespace to the metadata section in the secondary namespace. The alias routes client traffic to the primary namespace during normal operations and redirects to the secondary namespace during failover.
 :::image-end:::
 
-If the primary region fails or another type of disaster occurs, you can manually initiate a single-time, one-way failover move from the primary region to the secondary region at any time. You can do a *safe failover*, which waits for replication to complete before it switches to the secondary. This option might not be available during a region outage. After a failover starts, it completes almost instantly. During the failover process, the geo-disaster recovery alias repoints to the secondary namespace and the pairing is removed.
+If the primary region fails or another type of disaster occurs, you can manually initiate a single-time, one-way failover move from the primary region to the secondary region at any time. You can do a *safe failover*, which waits for replication to complete before it switches to the secondary. This option might not be available during a region outage. After a failover starts, it completes almost instantly. During the failover process, the Geo-Disaster Recovery alias repoints to the secondary namespace and the pairing is removed.
 
-This section summarizes important aspects of geo-disaster recovery. Review the full documentation to learn how it works. For more information, see [Service Bus geo-disaster recovery](../service-bus-messaging/service-bus-geo-dr.md).
+This section summarizes important aspects of Geo-Disaster Recovery. Review the full documentation to learn how it works. For more information, see [Service Bus Geo-Disaster Recovery](/azure/service-bus-messaging/service-bus-geo-dr).
 
 #### Requirements
 
 - **Region support:** You can choose any Azure region that supports Service Bus as your primary or secondary namespace. You don't need to use Azure paired regions, so select secondary regions based on your latency, compliance, or data residency requirements.
 
-- **Tier:** To enable metadata geo-disaster recovery, both namespaces must use the Premium tier.
+- **Tier:** To enable metadata Geo-Disaster Recovery, both namespaces must use the Premium tier.
 
 - **Partitioning:** It's not possible to pair a partitioned namespace with a nonpartitioned namespace.
 
-- **Metadata geo-disaster recovery:** You can't configure a namespace to use both geo-replication and geo-disaster recovery.
+- **Metadata Geo-Disaster Recovery:** You can't configure a namespace to use both Geo-Replication and Geo-Disaster Recovery.
 
 #### Considerations
 
-- **Feature limitations:** When you enable geo-disaster recovery, some restrictions apply. For more information, see [Important points to consider](../service-bus-messaging/service-bus-geo-dr.md#important-points-to-consider) and [Considerations](../service-bus-messaging/service-bus-geo-dr.md#considerations).
+- **Feature limitations:** When you enable Geo-Disaster Recovery, some restrictions apply. For more information, see [Important points to consider](/azure/service-bus-messaging/service-bus-geo-dr#important-points-to-consider) and [Considerations](/azure/service-bus-messaging/service-bus-geo-dr#considerations).
 
 - **Role assignments:** Microsoft Entra role-based access control (RBAC) assignments to entities in the primary namespace don't replicate to the secondary namespace. Create role assignments manually in the secondary namespace to secure access to those entities.
 
-- **Application design:** Geo-disaster recovery requires specific considerations when you design your client applications. For more information, see [Considerations](../service-bus-messaging/service-bus-geo-dr.md#considerations).
+- **Application design:** Geo-Disaster Recovery requires specific considerations when you design your client applications. For more information, see [Considerations](/azure/service-bus-messaging/service-bus-geo-dr#considerations).
 
-- **Private endpoints:** If you use private endpoints to connect to your namespace, configure networking in both your primary and secondary region. For more information, see [Private endpoints](../service-bus-messaging/service-bus-geo-dr.md#private-endpoints).
+- **Private endpoints:** If you use private endpoints to connect to your namespace, configure networking in both your primary and secondary region. For more information, see [Private endpoints](/azure/service-bus-messaging/service-bus-geo-dr#private-endpoints).
 
-- **Namespaces migrated from Standard to Premium:** If your namespace is in the Standard tier and you migrate it to the Premium tier, you must handle the alias differently. For more information, see [Service Bus Standard to Premium](../service-bus-messaging/service-bus-geo-dr.md#service-bus-standard-to-premium).
+- **Namespaces migrated from Standard to Premium:** If your namespace is in the Standard tier and you migrate it to the Premium tier, you must handle the alias differently. For more information, see [Service Bus Standard to Premium](/azure/service-bus-messaging/service-bus-geo-dr#service-bus-standard-to-premium).
 
 #### Cost
 
-When you enable metadata geo-disaster recovery, you pay for both the primary and secondary namespaces.
+When you enable metadata Geo-Disaster Recovery, you pay for both the primary and secondary namespaces.
 
 #### Configure multi-region support
 
-- **Create a metadata geo-disaster recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](../service-bus-messaging/service-bus-geo-dr.md#setup).
+- **Create a metadata Geo-Disaster Recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](/azure/service-bus-messaging/service-bus-geo-dr#setup).
 
-- **Turn off metadata geo-disaster recovery.** To break the pairing between namespaces, see [Setup and failover flow](../service-bus-messaging/service-bus-geo-dr.md#setup).
+- **Turn off metadata Geo-Disaster Recovery.** To break the pairing between namespaces, see [Setup and failover flow](/azure/service-bus-messaging/service-bus-geo-dr#setup).
 
 #### Capacity planning and management
 
@@ -323,9 +323,9 @@ When you plan for multi-region deployments, ensure that both regions have suffic
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when a Service Bus namespace is configured for geo-disaster recovery and the primary region is operational.
+This section describes what to expect when a Service Bus namespace is configured for Geo-Disaster Recovery and the primary region is operational.
 
-- **Traffic routing between regions:** Client applications connect through the geo-disaster recovery alias for your namespace, and their traffic routes to the primary namespace in the primary region.
+- **Traffic routing between regions:** Client applications connect through the Geo-Disaster Recovery alias for your namespace, and their traffic routes to the primary namespace in the primary region.
 
     Only the primary namespace actively processes messages from clients during normal operations. The secondary namespace remains in standby mode, and any requests to access data fail.
 
@@ -335,17 +335,17 @@ This section describes what to expect when a Service Bus namespace is configured
 
 #### Behavior during a region outage
 
-This section describes what to expect when a Service Bus namespace is configured for geo-disaster recovery and there's an outage in the primary region.
+This section describes what to expect when a Service Bus namespace is configured for Geo-Disaster Recovery and there's an outage in the primary region.
 
 - **Detection and response:** You're responsible for monitoring region health and initiating failover manually. Microsoft doesn't initiate failover or promote a secondary region automatically, even if your primary region is down.
 
-    For more information about how to initiate failover, see [Failover flow](../service-bus-messaging/service-bus-geo-dr.md#failover-flow).
+    For more information about how to initiate failover, see [Failover flow](/azure/service-bus-messaging/service-bus-geo-dr#failover-flow).
 
     When you initiate a failover, choose whether to do a *safe failover* or a *standard failover*, like a forced or manual failover. A safe failover waits for replication to complete to the secondary region before the failover starts. This approach reduces the loss of metadata but introduces downtime. Safe failover requires the namespaces to be in the same Azure subscription.
     
     During an outage in the primary region, you typically must do a forced failover. If the primary region is available and you trigger a failover for another reason, you might choose a planned failover.
 
-    Failover is a one-way operation, so you must reestablish the geo-disaster recovery pairing later. For more information, see [Region recovery](#region-recovery-1).
+    Failover is a one-way operation, so you must reestablish the Geo-Disaster Recovery pairing later. For more information, see [Region recovery](#region-recovery-1).
 
 [!INCLUDE [Region down notification (Service Health only)](./includes/reliability-region-down-notification-service-include.md)]
 
@@ -361,11 +361,11 @@ This section describes what to expect when a Service Bus namespace is configured
 
 - **Expected downtime:** Failover typically occurs within 5 to 10 minutes. It can take longer for clients to fully replicate and update DNS entries.
 
-- **Traffic rerouting:** Clients that use the geo-disaster recovery alias to connect to the namespace automatically redirect to the secondary namespace after failover. But this redirection depends on DNS servers honoring the TTL of the namespace DNS records and clients receiving those updated DNS records.
+- **Traffic rerouting:** Clients that use the Geo-Disaster Recovery alias to connect to the namespace automatically redirect to the secondary namespace after failover. But this redirection depends on DNS servers honoring the TTL of the namespace DNS records and clients receiving those updated DNS records.
 
 #### Region recovery
 
-After the original primary region recovers, you must manually reestablish the pairing and optionally fail back. Create a new geo-disaster recovery pairing with the recovered region as secondary, and then do another failover if you want to return to the original region. This process involves potential data loss of messages sent to the temporary primary region.
+After the original primary region recovers, you must manually reestablish the pairing and optionally fail back. Create a new Geo-Disaster Recovery pairing with the recovered region as secondary, and then do another failover if you want to return to the original region. This process involves potential data loss of messages sent to the temporary primary region.
 
 If the disaster causes the loss of all zones in the primary region, your data might be unrecoverable. In other scenarios, the message data that remains in the primary namespace from before the failover is recoverable. You can obtain historic messages from the old primary namespace after you restore access. You're responsible for configuring your applications to receive and process those messages. Microsoft doesn't automatically restore them into your secondary region.
 
@@ -375,11 +375,11 @@ To test your response and disaster recovery processes, do a planned failover dur
 
 Monitor the failover duration and validate that your runbooks and automation work correctly. After testing, you can fail back to the original configuration.
 
-Understand the potential downtime and data loss that you might experience during and after the failover process. Test metadata geo-disaster recovery in a nonproduction environment that mirrors the configuration of your production namespace.
+Understand the potential downtime and data loss that you might experience during and after the failover process. Test metadata Geo-Disaster Recovery in a nonproduction environment that mirrors the configuration of your production namespace.
 
 ### Custom multi-region solutions for resiliency
 
-Geo-replication and metadata geo-disaster recovery provide resiliency to region outages and other problems, and are suitable for most workloads. These capabilities might not suit your needs in the following situations:
+Geo-Replication and metadata Geo-Disaster Recovery provide resiliency to region outages and other problems, and are suitable for most workloads. These capabilities might not suit your needs in the following situations:
 
 - You have requirements for custom replication or for maintaining multiple active regions simultaneously.
 
@@ -387,14 +387,14 @@ Geo-replication and metadata geo-disaster recovery provide resiliency to region 
 
 There are several design patterns that provide different types of multi-region support in Service Bus. Many of these patterns require you to deploy multiple namespaces and configure your application to use them appropriately. For more information, see the following resources:
 
-- [Insulate Service Bus applications against outages and disasters](../service-bus-messaging/service-bus-outages-disasters.md)
-- [Message replication and cross-region federation](../service-bus-messaging/service-bus-federation-overview.md)
+- [Insulate Service Bus applications against outages and disasters](/azure/service-bus-messaging/service-bus-outages-disasters)
+- [Message replication and cross-region federation](/azure/service-bus-messaging/service-bus-federation-overview)
 
 ## Resilience to service maintenance
 
 Service Bus does regular maintenance. During planned maintenance, namespaces are moved to a redundant node that contains the latest updates. During the move, the client SDK disconnects and then reconnects automatically to the namespace. Upgrades typically complete within 30 seconds. It's important that your applications are [prepared for transient network disconnections](#resilience-to-transient-faults) that might occur during maintenance periods.
 
-For more information, see [Azure maintenance events for Service Bus](../service-bus-messaging/prepare-for-planned-maintenance.md).
+For more information, see [Azure maintenance events for Service Bus](/azure/service-bus-messaging/prepare-for-planned-maintenance).
 
 ## Backup and restore
 
@@ -414,6 +414,6 @@ Service Bus provides an SLA for all namespaces. The availability SLA is higher w
 
 ## Related content
 
-- [Introduction to Service Bus](../service-bus-messaging/service-bus-messaging-overview.md)
-- [Service Bus geo-disaster recovery](../service-bus-messaging/service-bus-geo-dr.md)
-- [Service Bus geo-replication](../service-bus-messaging/service-bus-geo-replication.md)
+- [Introduction to Service Bus](/azure/service-bus-messaging/service-bus-messaging-overview)
+- [Service Bus Geo-Disaster Recovery](/azure/service-bus-messaging/service-bus-geo-dr)
+- [Service Bus Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication)
