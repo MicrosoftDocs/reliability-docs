@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Virtual Machines
 description: Learn about resiliency in Azure Virtual Machines, including resilience to transient faults, availability zone failures, region-wide failures, and service maintenance. Understand backup options and SLA details.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machines

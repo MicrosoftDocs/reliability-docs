@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Storage Actions
 description: Learn how to ensure reliability in Azure Storage Actions by using bulk data operations, zone redundancy, and disaster recovery across storage accounts.
-author: anaharris-ms 
-ms.author: anaharris
+author: glynnniall 
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-storage-actions
