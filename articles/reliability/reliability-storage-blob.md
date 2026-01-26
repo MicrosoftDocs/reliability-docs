@@ -50,17 +50,17 @@ Blob Storage provides robust availability zone support through ZRS configuration
 
 Zone redundancy is enabled at the storage account level and applies to all blob containers within that account. You can't set different redundancy levels for individual containers. The redundancy configuration is applied to the entire storage account. When an availability zone experiences an outage, Azure Storage automatically routes requests to healthy zones without requiring intervention from you or your application.
 
-[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-zone-support-include.md)]
 
 ### Requirements
 
-[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-zone-region-support-include.md)]
 
 - **Storage account types:** Zone redundancy is available for both Standard general-purpose v2 and Premium Block Blob storage account types. Block blobs, append blobs, and page blobs all support zone-redundant configurations, but the type of storage account that you use determines which capabilities are available. For more information, see [Supported storage account types](/azure/storage/common/storage-redundancy#supported-storage-account-types).
 
 ### Cost
 
-[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-zone-cost-include.md)]
 
 For more information, see [Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
@@ -68,29 +68,29 @@ For more information, see [Blob Storage pricing](https://azure.microsoft.com/pri
 
 - **Create a blob storage account with zone redundancy.** To create a new storage account with ZRS, see [Create a storage account](/azure/storage/common/storage-account-create) and select **ZRS**, **geo-zone-redundant storage (GZRS)**, or **read-access geo-redundant storage (RA-GZRS)** as the redundancy option during account creation.
 
-[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
+[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-zone-configure-include.md)]
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when a blob storage account is configured for zone redundancy and all availability zones are operational.
 
-[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-zone-normal-operations-include.md)]
 
 ### Behavior during a zone failure
 
 This section describes what to expect when a blob storage account is configured for ZRS and there's an availability zone outage.
 
-[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-zone-down-experience-include.md)]
 
 - **Traffic rerouting:** If an availability zone goes offline, Azure initiates networking changes like Domain Name System (DNS) repointing. These updates ensure that traffic is rerouted to the remaining healthy availability zones. The service maintains full functionality by using the surviving zones and doesn't require customer intervention.
 
 ### Zone recovery
 
-[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-zone-failback-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-zone-testing-include.md)]
 
 ## Resilience to region-wide failures
 
