@@ -88,7 +88,7 @@ The availability zone configuration of your back-end instances operates independ
 To distribute your back-end instances across zones, configure the relevant service according to its reliability features and your architecture requirements.
 
 > [!NOTE]
-> To achieve resilience, distribute back-end instances across multiple availability zones. If all back-end instances run in a single zone, an outage in that zone makes your application unavailable, even if you use a zone‑redundant load balancer.
+> To achieve resilience, distribute back-end instances across multiple availability zones. If all back-end instances run in a single zone, an outage in that zone makes your application unavailable, even if you use a zone-redundant load balancer.
 
 For example, when you use VMs, a common design approach for production workloads is to place multiple zonal VMs in zones 1, 2, and 3 to achieve zone resiliency. For load balancing, you can then create a zone-redundant load balancer and configure those VMs as the back-end instances within the load balancer. The load balancer's health probes automatically remove unhealthy VMs from rotation regardless of their zone location.
 
@@ -196,5 +196,4 @@ The Load Balancer SLA applies when you have at least two healthy VMs configured 
 ### Related content
 
 - [Load Balancer documentation](/azure/load-balancer/load-balancer-overview)
-- [Global load balancer](/azure/load-balancer/cross-region-overview)
 - [Azure reliability overview](overview.md)
