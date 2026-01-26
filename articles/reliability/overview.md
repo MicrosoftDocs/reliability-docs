@@ -21,7 +21,7 @@ In addition to the reliability service guides, Azure reliability documentation a
 - **Azure availability zones**: Information on availability zones, including how they support high availability and disaster recovery. This section also includes lists of Azure services and regions that support availability zones.
 - **Reliability concepts**: Fundamental reliability concepts, such as:
     - Business continuity, high availability, and disaster recovery.
-    - Redundancy, replication (Data redundancy), and backup
+    - Redundancy, replication, and backup.
     - Failover and failback.
     - Shared responsibility between Microsoft and you.
 
