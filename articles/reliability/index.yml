@@ -49,6 +49,21 @@ conceptualContent:
     - title: Azure reliability features
       summary: Learn about the Azure platform features that help you build reliable applications, including availability zones and regions.
       items:
+      - title: Azure availability zones
+        links:
+          - text: What are Azure availability zones?
+            url: availability-zones-overview.md
+            itemType: concept
+          - text: Enable zone resiliency for Azure workloads
+            url: availability-zones-enable-zone-resiliency.md
+            itemType: how-to-guide
+          - text: Zonal resources and zone resiliency
+            url: availability-zones-zonal-resource-resiliency.md
+            itemType: concept
+          - text: Services with availability zone support
+            url: availability-zones-service-support.md
+            itemType: reference
+
       - title: Azure regions
         links:
           - text: What are Azure regions?
@@ -57,33 +72,12 @@ conceptualContent:
           - text: Paired and nonpaired regions
             url: regions-paired.md
             itemType: concept
-          - text: Multi-region solutions in nonpaired regions
-            url: regions-multi-region-nonpaired.md
-            itemType: reference
           - text: Nonregional Azure services
             url: regions-nonregional-services.md
             itemType: reference
           - text: Azure regions list
             url: regions-list.md
             itemType: reference
-
-      - title: Azure availability zones
-        links:
-          - text: What are Azure availability zones?
-            url: availability-zones-overview.md
-            itemType: concept
-          - text: Services with availability zone support
-            url: availability-zones-service-support.md
-            itemType: reference
-          - text: Enable zone resiliency for Azure workloads
-            url: availability-zones-enable-zone-resiliency.md
-            itemType: concept
-          - text: Zonal resources and zone resiliency
-            url: availability-zones-zonal-resource-resiliency.md
-            itemType: concept
-          - text: Migrate to availability zone support
-            url: availability-zones-migration-overview.md
-            itemType: how-to-guide
 
     - title: Understand reliability fundamentals
       summary: Understand concepts like reliability, resiliency, and recovery in the cloud.
@@ -272,7 +266,7 @@ productDirectory:
     # Card
     - title: Device Registry
       summary: Enables the cloud and edge management of assets.
-      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO ask PG for an icon
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
       url: reliability-device-registry.md
       azureCategories:
         - iot
