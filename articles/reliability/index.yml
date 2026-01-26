@@ -86,7 +86,7 @@ conceptualContent:
             itemType: how-to-guide
 
     - title: Understand reliability fundamentals
-      summary: Understand some of the fundamental concepts of reliability in the cloud.
+      summary: Understand concepts like reliability, resiliency, and recovery in the cloud.
       items:
       - title: Reliability concepts
         links:
@@ -110,7 +110,7 @@ conceptualContent:
               itemType: concept
 
     - title: Reliability guidance for each phase of your cloud migration
-      summary: Summary here
+      summary: Helps you plan, design, implement, and operate dependable workloads by addressing strategy, operational practices, and resiliency considerations throughout the migration lifecycle.
       items:
       - title: Strategy and planning
         summary: Define business justification and expected outcomes of adoption
@@ -343,7 +343,7 @@ productDirectory:
         - storage
     # Card
     - title: Azure Files
-      summary: Simple, secure and serverless enterprise-grade cloud file shares
+      summary: Simple, secure, and serverless enterprise-grade cloud file shares
       imageSrc: https://static.docs.com/ui/media/product/azure/storage-azure-files.svg
       url: reliability-storage-files.md
       azureCategories:
