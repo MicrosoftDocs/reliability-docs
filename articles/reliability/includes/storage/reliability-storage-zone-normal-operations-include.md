@@ -9,6 +9,6 @@
  ms.custom: include file
 ---
 
-- **Traffic routing between zones:** [!INCLUDE [Storage - Behavior when all zones are healthy - Traffic routing](./reliability-storage-availability-zone-normal-operations-traffic-routing-include.md)]
+- **Traffic routing between zones:** [!INCLUDE [Storage - Behavior when all zones are healthy - Traffic routing](./reliability-storage-zone-normal-operations-traffic-routing-include.md)]
 
-- **Data replication between zones:** [!INCLUDE [Storage - Behavior when all zones are healthy - Data replication](./reliability-storage-availability-zone-normal-operations-data-replication-include.md)]
+- **Data replication between zones:** [!INCLUDE [Storage - Behavior when all zones are healthy - Data replication](./reliability-storage-zone-normal-operations-data-replication-include.md)]
