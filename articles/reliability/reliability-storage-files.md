@@ -56,7 +56,7 @@ Azure Files provides two types of availability zone support:
 
 - **Zone redundant storage (ZRS):** ZRS configurations automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
-    [!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+    [!INCLUDE [Storage - Availability zone support](includes/storage/reliability-storage-zone-support-include.md)]
 
 - **Zonal placement with LRS:** For premium storage accounts (SSD media tier), you can use zonal placement to select the specific availability zone in which your Azure Files storage account resides. You can use zonal placement if you need to place virtual machines (VMs) in the same zone to reduce latency between compute and storage.
 
@@ -86,7 +86,7 @@ Azure Files provides two types of availability zone support:
 
 The cost impact is different depending on the type of availability zone support you use:
 
-- *ZRS:* [!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Cost](includes/storage/reliability-storage-zone-cost-include.md)]
 
 - *LRS with zonal placement:* LRS with zonal placement is charged at the same rate as LRS.
 
@@ -104,13 +104,13 @@ For detailed pricing information, see [Azure Files pricing](https://azure.micros
 
   - *ZRS:* To convert an existing storage account to ZRS and learn about migration options and requirements, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
-  - *LRS with zonal placement:*: To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
+  - *LRS with zonal placement:* To pin an existing storage account to an Azure-selected zone, see [Pin an existing storage account to an Azure-selected zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
 
 - **Disable availability zone support:**
 
   - *ZRS:* Convert ZRS accounts back to a nonzonal configuration, such as LRS, through the same redundancy configuration change process.
 
-  - *LRS with zonal placement:* To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement#pin-an-existing-storage-account-to-an-azure-selected-zone).
+  - *LRS with zonal placement:* To unpin a storage account from a zone and then convert the zonal storage account to a regional storage account, see [Unpin a storage account from a zone](/azure/storage/files/zonal-placement#unpin-a-storage-account-from-a-zone).
 
 ### Behavior when all zones are healthy
 
@@ -118,13 +118,13 @@ This section describes what to expect when a file storage account is configured 
 
 - **Traffic routing between zones:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Traffic routing](./includes/storage/reliability-storage-availability-zone-normal-operations-traffic-routing-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Traffic routing](./includes/storage/reliability-storage-zone-normal-operations-traffic-routing-include.md)]
 
   - *LRS with zonal placement:* Azure Storage with locally redundant storage (LRS) automatically distributes requests across storage clusters in the availability zone you selected. Traffic distribution is transparent to applications and requires no client-side configuration.
 
 - **Data replication between zones:**
   
-  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Data replication](./includes/storage/reliability-storage-availability-zone-normal-operations-data-replication-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when all zones are healthy - Data replication](./includes/storage/reliability-storage-zone-normal-operations-data-replication-include.md)]
 
   - *LRS with zonal placement:* All write operations to LRS are replicated synchronously across multiple storage replicas within the zone. When you upload or modify data, the operation isn't considered complete until the data has been successfully replicated across all of the replicas.
 
@@ -134,7 +134,7 @@ This section describes what to expect when a file storage account is configured 
 
 - **Detection and response:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Detection and response](./includes/storage/reliability-storage-availability-zone-down-experience-detection-response-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Detection and response](./includes/storage/reliability-storage-zone-down-experience-detection-response-include.md)]
 
   - *LRS with zonal placement:* You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary file share that you precreated in another availability zone.
 
@@ -142,19 +142,19 @@ This section describes what to expect when a file storage account is configured 
 
 - **Active requests:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Active requests](./includes/storage/reliability-storage-availability-zone-down-experience-active-requests-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Active requests](./includes/storage/reliability-storage-zone-down-experience-active-requests-include.md)]
 
   - *LRS with zonal placement:* In-flight requests are dropped and should be retried when the zone recovers.
 
 - **Expected data loss:**
 
-  - *ZRS*: [!INCLUDE [Storage - Behavior when a zone is down - Expected data loss](./includes/storage/reliability-storage-availability-zone-down-experience-expected-data-loss-include.md)]
+  - *ZRS*: [!INCLUDE [Storage - Behavior when a zone is down - Expected data loss](./includes/storage/reliability-storage-zone-down-experience-expected-data-loss-include.md)]
 
   - *LRS with zonal placement:* Data on file shares in the affected zone is unavailable until the zone recovers.
 
 - **Expected downtime:**
 
-  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Expected downtime](./includes/storage/reliability-storage-availability-zone-down-experience-expected-downtime-include.md)]
+  - *ZRS:* [!INCLUDE [Storage - Behavior when a zone is down - Expected downtime](./includes/storage/reliability-storage-zone-down-experience-expected-downtime-include.md)]
 
   - *LRS with zonal placement:* File shares in the affected zone remain down until the availability zone recovers.
 
@@ -168,7 +168,7 @@ This section describes what to expect when a file storage account is configured 
 
 Zone recovery behavior depends on the type of replication the file storage account uses:
 
-- *ZRS:* [!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-zone-failback-include.md)]
 
 - *LRS with zonal placement:* After the zone is healthy, file shares in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
@@ -176,7 +176,7 @@ Zone recovery behavior depends on the type of replication the file storage accou
 
 Zone-down testing options depend on the type of replication the file storage account uses:
 
-- *ZRS:* [!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+- *ZRS:* [!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-zone-testing-include.md)]
 
 - *LRS with zonal placement:* There's no way to simulate an outage of the availability zone that contains your file storage account. However, you can manually configure upstream applications, firewalls, gateways or load balancers to redirect traffic to a different file storage account in a different availability zone.
 
