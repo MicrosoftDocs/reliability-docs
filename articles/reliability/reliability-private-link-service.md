@@ -10,7 +10,7 @@ ms.date: 01/23/2026
 ---
 # Reliability in Azure Private Link service
 
-Azure Private Link service enables you to privately expose your own applications; such as those running on virtual machines, within Azure, allowing other Azure customers or your own networks to connect securely without using public internet addresses. Azure Private Link Service is typically used in combination with an Azure Load Balancer to provide private connectivity to your workloads, ensuring that traffic remains within the Azure network. For more details, see the official [Azure Private Link Service documentation](/azure/private-link/private-link-service-overview).
+Azure Private Link service enables you to privately expose your own applications; such as those running on virtual machines, within Azure, allowing other Azure customers or your own networks to connect securely without using public IP addresses. Azure Private Link Service is typically used in combination with an Azure Load Balancer to provide private connectivity to your workloads, ensuring that traffic remains within the Azure network. For more details, see the official [Azure Private Link Service documentation](/azure/private-link/private-link-service-overview).
 
 When you use Azure, reliability is a shared responsibility. Microsoft provides a range of capabilities to support resiliency and recovery. You're responsible for understanding how those capabilities work across all services that you use and selecting the options that meet your business and uptime requirements. Understanding your responsibilities helps ensure that you design for the appropriate level of reliability that your business requires.
 
