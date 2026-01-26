@@ -16,7 +16,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure NAT Gateway resilient to various outages and problems, including transient faults and availability zone outages. It also highlights key information about the Azure NAT Gateway service-level agreement (SLA).
+This article describes how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults and availability zone outages. It also highlights key information about the Azure NAT Gateway service-level agreement (SLA).
 
 > [!IMPORTANT]
 > NAT gateway reliability depends on your entire infrastructure. To achieve full resiliency, consider the reliability of your virtual machines (VMs), disks, other network infrastructure, and applications that run on VMs. Improving the resiliency of the NAT gateway might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might make configuration changes across multiple components.
@@ -28,7 +28,7 @@ This article describes how to make Azure NAT Gateway resilient to various outage
 
 ## Production deployment recommendations
 
-For production workloads, we recommend that you:
+For production workloads, we recommend the following practices:
 
 > [!div class="checklist"]
 > - **Use the StandardV2 SKU** to get automatic [zone redundancy](#resilience-to-availability-zone-failures) in supported regions.
@@ -54,7 +54,7 @@ Internally, a NAT gateway consists of one or more *instances*, which represent t
 
 Azure NAT Gateway implements a distributed architecture by using software-defined networking to provide high reliability and scalability. The service operates across multiple fault domains so that it can withstand multiple infrastructure component failures without service impact. Azure manages the underlying service operations, including distribution across fault domains and infrastructure redundancy.
 
-For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resource](/azure/nat-gateway/nat-gateway-resource#nat-gateway-architecture).
+For more information about Azure NAT Gateway architecture and redundancy, see [Azure NAT Gateway resources](/azure/nat-gateway/nat-gateway-resource#nat-gateway-architecture).
 
 ## Resilience to transient faults
 
@@ -70,7 +70,7 @@ For more information about Azure NAT Gateway architecture and redundancy, see [A
 
 - **Avoid setting high idle timeout values.** When you set idle timeout values significantly higher than the default 4 minutes for NAT gateway connections, SNAT port exhaustion can occur during high connection volumes.
 
-For more information about connection management and troubleshooting Azure NAT Gateway-specific problems, see [Troubleshoot Azure NAT Gateway connectivity](/azure/nat-gateway/troubleshoot-nat-connectivity).
+For more information about connection management and troubleshooting problems in Azure NAT Gateway, see [Troubleshoot Azure NAT Gateway connectivity](/azure/nat-gateway/troubleshoot-nat-connectivity).
 
 ## Resilience to availability zone failures
 
@@ -82,7 +82,7 @@ Azure NAT Gateway supports availability zones in both zone-redundant and zonal c
 
     :::image type="content" source="media/reliability-nat-gateway/zone-redundant.svg" alt-text="Diagram of zone-redundant deployment of Azure NAT Gateway." border="false":::
 
-- **Zonal:** When you use the Standard (v1) SKU, you can optionally create a zonal configuration. You deploy a zonal NAT gateway into a single availability zone that you select. When you deploy a NAT gateway to a specific zone, it provides outbound connectivity to the internet explicitly from that zone. Zonal public IP addresses from a different availability zone aren't allowed. All traffic from connected subnets routes through the NAT gateway, even if subnet resources reside in a different availability zone.
+- **Zonal:** When you use the Standard (v1) SKU, you can optionally create a zonal configuration. You deploy a zonal NAT gateway in an availability zone that you select. When you deploy a NAT gateway to a specific zone, it provides outbound connectivity to the internet explicitly from that zone. Zonal public IP addresses from a different availability zone aren't allowed. All traffic from connected subnets routes through the NAT gateway, even if subnet resources reside in a different availability zone.
 
     :::image type="content" source="media/reliability-nat-gateway/zonal.svg" alt-text="Diagram of zonal deployment of Azure NAT Gateway." border="false":::
     
@@ -122,7 +122,7 @@ Availability zone support for Azure NAT Gateway has no extra cost. For more info
 
 ### Configure availability zone support
 
-- **New resources:** The deployment steps depend on the availability zone configuration that you choose:
+- **New resources:** The deployment steps depend on your availability zone configuration:
 
     - *Zone-redundant:* To deploy a new zone-redundant NAT gateway by using the StandardV2 SKU, see [Create a StandardV2 Azure NAT Gateway](/azure/nat-gateway/quickstart-create-nat-gateway-v2).
 
@@ -130,7 +130,7 @@ Availability zone support for Azure NAT Gateway has no extra cost. For more info
 
 - **Turn on availability zone support:** You can't change the availability zone configuration for Azure NAT Gateway after deployment. To modify the availability zone configuration, you must deploy a new NAT gateway with the desired zone settings.
 
-    To upgrade from a Standard to StandardV2 NAT gateway, you must also create a new public IP address that uses the StandardV2 SKU.
+    To upgrade from a Standard to StandardV2 NAT gateway, you must create a new public IP address that uses the StandardV2 SKU.
 
 ### Behavior when all zones are healthy
 
@@ -160,19 +160,19 @@ This section describes what to expect when a NAT gateway is configured for avail
 
 - **Active requests:** Active request behavior depends on the availability zone configuration that your NAT gateway uses.
 
-    - *Zone-redundant:* Instances in the faulty zone drop active outbound connections. Clients must retry, and subsequent connection attempts route through a NAT gateway instance in another availability zone.
+    - *Zone-redundant:* Instances in the faulty zone drop active outbound connections. Clients must retry their connection requests, and subsequent attempts route through a NAT gateway instance in another availability zone.
 
     - *Zonal:* A failed zonal NAT gateway drops active outbound connections. You must decide whether and how to re-establish connectivity through alternative connectivity paths. Applications should implement retry logic to handle connection failures.
     
-        If you reroute traffic, the outbound public IP address changes, so any Transmission Control Protocol (TCP) sessions might need to be renegotiated.
+        If you reroute traffic, the outbound public IP address changes, so any Transmission Control Protocol (TCP) sessions might need to be re-established.
 
 - **Expected data loss:** No data loss occurs because Azure NAT Gateway is a stateless service for outbound connectivity. Connection state is re-created when connections are re-established.
 
 - **Expected downtime:** The expected downtime depends on the availability zone configuration that your NAT gateway uses.
 
-    - *Zone-redundant:* Existing connections from the failed zone might go down. Clients can retry connections immediately and requests route to an instance in another zone. All remaining connections from healthy zones persist.
+    - *Zone-redundant:* Existing connections from the failed zone might disconnect. Clients can retry connections immediately, and requests route to an instance in another zone. All remaining connections from healthy zones persist.
 
-    - *Zonal:* Outbound connectivity is lost until the zone recovers, or until you reroute traffic through alternative connectivity methods or NAT gateways in other zones.
+    - *Zonal:* Outbound connectivity is lost until the zone recovers or until you reroute traffic through alternative connectivity methods or NAT gateways in other zones.
 
 - **Traffic rerouting:** The traffic rerouting behavior depends on the availability zone configuration that your NAT gateway uses. 
     
@@ -186,7 +186,7 @@ This section describes what to expect when a NAT gateway is configured for avail
 
 Azure NAT Gateway is a stateless service, so failback operations don't require manual intervention.
 
-When an availability zone recovers, NAT gateway instances in that zone automatically become available for new outbound connections. Connections established through NAT gateway instances in other zones during the outage continue to use their existing connectivity paths until those connections close naturally.
+When an availability zone recovers, NAT gateway instances in that zone automatically become available for new outbound connections. Connections established through NAT gateway instances in other zones during the outage continue to use their existing connectivity paths until those connections close.
 
 ### Test for zone failures
 
@@ -206,11 +206,11 @@ If you design a networking approach that spans multiple regions, deploy independ
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-The *Azure VNet NAT* SLA covers Azure NAT Gateway. The availability SLA only applies when you have two or more healthy VMs, and it excludes SNAT port exhaustion from downtime calculations.
+The Azure VNet NAT SLA covers Azure NAT Gateway. The availability SLA only applies when you have two or more healthy VMs, and it excludes SNAT port exhaustion from downtime calculations.
 
 ### Related content
 
 - [Azure NAT Gateway overview](/azure/nat-gateway/nat-overview)
-- [NAT gateway and availability zones](/azure/nat-gateway/nat-availability-zones)
+- [Reliability in Azure NAT Gateway](/azure/reliability/reliability-nat-gateway)
 - [Troubleshoot Azure NAT Gateway connectivity](/azure/nat-gateway/troubleshoot-nat-connectivity)
-- [Azure NAT Gateway and Azure Resource Health](/azure/nat-gateway/resource-health)
+- [Azure NAT Gateway and Resource Health](/azure/nat-gateway/resource-health)
