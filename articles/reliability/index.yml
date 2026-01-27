@@ -129,6 +129,7 @@ productDirectory:
       imageSrc: https://static.docs.com/ui/media/product/azure/application-gateway.svg
       url: reliability-application-gateway-v2.md
       azureCategories:
+        - featured
         - networking
         - security
     # Card
@@ -210,6 +211,7 @@ productDirectory:
       azureCategories:
         - networking
         - security
+        - featured
     # Card
     - title: Azure IoT Hub
       summary: Connect, monitor, and manage billions of IoT assets
@@ -287,7 +289,6 @@ productDirectory:
       imageSrc: https://static.docs.com/ui/media/product/azure/virtual-machine.svg
       url: reliability-virtual-machines.md
       azureCategories:
-        - featured
         - compute
     # Card
     - title: Azure Virtual Network
@@ -331,6 +332,7 @@ productDirectory:
       url: reliability-virtual-network-gateway.md?pivots=expressroute
       azureCategories:
         - networking
+        - featured
     # Card
     - title: Azure Databricks
       summary: Fast, easy, and collaborative Apache Spark-based analytics platform
@@ -404,7 +406,6 @@ productDirectory:
       imageSrc: /azure/media/index/functions.svg
       url: reliability-functions.md
       azureCategories:
-        - featured
         - compute
         - containers
         - iot
@@ -482,7 +483,7 @@ tools:
       url: /azure/copilot/resiliency-agent
     # Card
     - title: Resiliency in Azure
-      imageSrc: /azure/media/index/resource.svg # TODO resiliency.svg
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO resiliency.svg
       url: /azure/resiliency/resiliency-overview
     # Card
     - title: Azure Service Health
