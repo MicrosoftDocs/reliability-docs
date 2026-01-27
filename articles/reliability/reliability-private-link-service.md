@@ -12,7 +12,7 @@ ms.date: 01/23/2026
 
 Azure Private Link service enables you to privately expose your own applications; such as those running on virtual machines, within Azure, allowing other Azure customers or your own networks to connect securely without using public IP addresses. Azure Private Link Service is typically used in combination with an Azure Load Balancer to provide private connectivity to your workloads, ensuring that traffic remains within the Azure network. For more details, see the official [Azure Private Link Service documentation](/azure/private-link/private-link-service-overview).
 
-When you use Azure, reliability is a shared responsibility. Microsoft provides a range of capabilities to support resiliency and recovery. You're responsible for understanding how those capabilities work across all services that you use and selecting the options that meet your business and uptime requirements. Understanding your responsibilities helps ensure that you design for the appropriate level of reliability that your business requires.
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 This article focuses on the Azure Private Link platform and private endpoints as a connectivity mechanism. It describes platform-level and control-plane behavior during transient faults, availability zone outages, and region-wide outages. Reliability characteristics of specific Azure services accessed via private endpoints are not covered here and are instead documented in each service’s own reliability documentation.
 
@@ -21,16 +21,18 @@ This article focuses on the Azure Private Link platform and private endpoints as
 
 <!-- Note for PG: Does Private Link service Direct Connect change anything or have any reliability implications? -->
 
-[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 ## Reliability architecture overview
 
 Private link service enables your customers to connect privately to your workloads in Azure. As the service provider, you deploy a Private Link service resource. Service consumers create private endpoints in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses.
+
 A Private Link service is usually attached to an Azure Load Balancer that fronts backend resources (virtual machines or virtual machine scale sets). You can also use Private Link service Direct Connect (preview), which enables connectivity to any privately routable IP address within your virtual network.
 <!-- Include diagram once approved by John/ Art department-->
 
 Private Link service can be used for software as a service (SaaS) offerings hosted on Azure, and for hybrid environments where on-premises networks require secure, private access to Azure-hosted applications.
-- PLS doesn’t operate independently. Availability and resiliency depend on the configuration of all dependent components, including the load balancer, backend virtual machines, and any additional networking services in the traffic path.
+
+> [!IMPORTANT] 
+> Private Link service doesn’t operate independently. Availability and resiliency depend on the configuration of all dependent components, including the load balancer, backend virtual machines, and any additional networking services in the traffic path.
 
 > [!IMPORTANT]
 > Private Link service Direct Connect is currently in PREVIEW.
@@ -42,14 +44,11 @@ Private Link service can be used for software as a service (SaaS) offerings host
 
 Transient faults are short-lived, intermittent failures that occur in distributed cloud environments. They usually resolve themselves after a brief period. PLS does not introduce unique transient fault behaviors, so you can rely on standard Azure patterns for handling these scenarios.
 
-Applications that connect through PLS should follow standard transient fault handling practices. Implement retry logic in client applications to handle temporary connectivity interruptions and review the transient fault guidance for all dependent services.
+
 
 All cloud-hosted applications should follow the Azure transient fault handling guidance when they communicate with any cloud-hosted APIs, databases, and other components. For more information, see Recommendations for handling transient faults.
 
 ## Resilience to availability zone failures
-[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
-
-### Availability zone support
 
 Private link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. You don't need to configure anything to enable this behavior.
 
