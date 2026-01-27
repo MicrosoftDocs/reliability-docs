@@ -394,11 +394,83 @@ productDirectory:
     # Card
     - title: Azure AI Bot Service
       summary: Intelligent, serverless bot service that scales on demand
-      imageSrc: ./media/index/bot-services.svg
+      imageSrc: /azure/media/index/bot-services.svg
       url: reliability-bot-service.md
       azureCategories:
         - ai-machine-learning
-
+    # Card
+    - title: Azure Functions
+      summary: Process events with serverless code
+      imageSrc: /azure/media/index/functions.svg
+      url: reliability-functions.md
+      azureCategories:
+        - featured
+        - compute
+        - containers
+        - iot
+        - web
+    # Card
+    - title: HDInsight
+      summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
+      imageSrc: /azure/media/index/hdinsight.svg
+      url: reliability-hdinsight.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure Elastic SAN
+      summary: Elastic SAN is a cloud-native Storage Area Network (SAN) service built on Azure. Gain access to an end-to-end experience like your on-premises SAN.
+      imageSrc: /azure/media/index/elastic-san.svg
+      url: reliability-elastic-san.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Event Grid
+      summary: Get reliable event delivery at massive scale
+      imageSrc: /azure/media/index/event-grid-domains.svg
+      url: reliability-event-grid.md
+      azureCategories:
+        - integration
+        - iot
+    # Card
+    - title: Azure DDoS Protection
+      summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
+      imageSrc: /azure/media/index/ddos-protection.svg
+      url: reliability-ddos-protection.md
+      azureCategories:
+        - networking
+        - security
+    # Card
+    - title: Notification Hubs
+      summary: Send push notifications to any platform from any back end
+      imageSrc: /azure/media/index/notification-hubs.svg
+      url: reliability-notification-hubs.md
+      azureCategories:
+        - iot
+        - mobile
+        - web
+    # Card
+    - title: Microsoft Purview
+      summary: Maximize business value with unified data governance
+      imageSrc: /azure/media/index/purview.svg
+      url: reliability-purview.md
+      azureCategories:
+        - analytics
+        - management-and-governance
+    # Card
+    - title: Azure DNS
+      summary: Host your DNS domain in Azure
+      imageSrc: /azure/media/index/dns.svg
+      url: reliability-dns.md
+      azureCategories:
+        - networking
+    # Card
+    - title: Azure Chaos Studio
+      summary: Improve application resilience by introducing faults and simulating outages
+      imageSrc: /azure/media/index/chaos-studio.svg
+      url: reliability-chaos-studio.md
+      azureCategories:
+        - analytics
+        - management-and-governance
 
 tools:
   title: Reliability services and capabilities
