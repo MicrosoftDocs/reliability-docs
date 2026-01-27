@@ -1,7 +1,7 @@
 ### YamlMime:Hub
 
 title: Azure reliability documentation
-summary: Learn about reliability in Azure services, Azure platform reliability such as availability zones and regions, and fundamental cloud reliability concepts.
+summary: Learn how reliability is built into Azure, including how individual Azure services handle failures, how platform features such as availability zones and regions support high availability and disaster recovery, and the core cloud reliability concepts that guide resilient workload design.
 brand: azure
 
 metadata:
