@@ -190,7 +190,7 @@ This section describes what to expect when a Service Bus namespace is configured
     
     This mode provides the greatest assurance that your message data is safe because it must be committed in both the primary and secondary region. But synchronous replication substantially increases write latency for incoming messages. It also requires that the secondary region be available to accept the write operation, so an outage in the secondary region causes the write operation to fail.
 
-    - *Asynchronous:* The service writes messages to the primary region and then completes the write operation. A short time later, it replicates the messages to the secondary region.
+  - *Asynchronous:* The service writes messages to the primary region and then completes the write operation. A short time later, it replicates the messages to the secondary region.
     
     This mode provides higher write throughput than synchronous replication because there's no inter-region replication latency during write operations. It can also tolerate the loss of the secondary region while still allowing write operations in the primary region. But if an outage occurs in the primary region, any data that isn't replicated to the secondary region might be unavailable or lost.
 
