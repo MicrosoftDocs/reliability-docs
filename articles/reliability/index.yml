@@ -376,6 +376,29 @@ productDirectory:
       azureCategories:
         - management-and-governance
         - storage
+    # Card
+    - title: Azure Database for PostgreSQL
+      summary: Managed PostgreSQL database service for app developers
+      imageSrc: /azure/media/index/database-postgresql-server.svg
+      url: reliability-azure-database-postgresql.md
+      azureCategories:
+        - databases
+        - hybrid
+    # Card
+    - title: Batch
+      summary: Cloud-scale job scheduling and compute management
+      imageSrc: /azure/media/index/batch-accounts.svg
+      url: reliability-batch.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure AI Bot Service
+      summary: Intelligent, serverless bot service that scales on demand
+      imageSrc: ./media/index/bot-services.svg
+      url: reliability-bot-service.md
+      azureCategories:
+        - ai-machine-learning
+
 
 tools:
   title: Reliability services and capabilities
