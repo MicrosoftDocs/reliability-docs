@@ -96,7 +96,7 @@ productDirectory:
   summary: Learn how Microsoft designs each service for reliability and resilience to faults and problems, for example availability zone outages. Understand your responsibilities to meet your own reliability requirements.
   items:
     # Card
-    - title: API Management
+    - title: Azure API Management
       summary: Publish APIs to developers, partners, and employees securely and at scale
       imageSrc: https://static.docs.com/ui/media/product/azure/api-management.svg
       url: reliability-api-management.md
@@ -106,7 +106,7 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: AI Search
+    - title: Azure AI Search
       summary: AI-powered cloud search service for mobile and web app development
       imageSrc: https://static.docs.com/ui/media/product/azure/search.svg
       url: reliability-ai-search.md
@@ -124,7 +124,7 @@ productDirectory:
         - compute
         - containers
     # Card
-    - title: Application Gateway
+    - title: Azure Application Gateway
       summary: Build secure, scalable, and highly available web front ends in Azure
       imageSrc: https://static.docs.com/ui/media/product/azure/application-gateway.svg
       url: reliability-application-gateway-v2.md
@@ -189,14 +189,14 @@ productDirectory:
         - analytics
         - databases
     # Card
-    - title: Device Registry
+    - title: Azure Device Registry
       summary: Enables the cloud and edge management of assets.
       imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
       url: reliability-device-registry.md
       azureCategories:
         - iot
     # Card
-    - title: Event Hubs
+    - title: Azure Event Hubs
       summary: Receive telemetry from millions of devices
       imageSrc: https://static.docs.com/ui/media/product/azure/event-hubs.svg
       url: reliability-event-hubs.md
@@ -218,14 +218,14 @@ productDirectory:
       azureCategories:
         - iot
     # Card
-    - title: Key Vault
+    - title: Azure Key Vault
       summary: Safeguard and maintain control of keys and other secrets
       imageSrc: https://static.docs.com/ui/media/product/azure/key-vault.svg
       url: reliability-key-vault.md
       azureCategories:
         - security
     # Card
-    - title: Logic Apps
+    - title: Azure Logic Apps
       summary: Automate the access and use of data across clouds without writing code
       imageSrc: https://static.docs.com/ui/media/product/azure/logic-apps.svg
       url: reliability-logic-apps.md
@@ -268,21 +268,21 @@ productDirectory:
       azureCategories:
         - storage
     # Card
-    - title: Queue Storage
+    - title: Azure Queue Storage
       summary: Effectively scale apps according to traffic
       imageSrc: https://static.docs.com/ui/media/product/azure/storage-accounts.svg
       url: reliability-storage-queue.md
       azureCategories:
         - storage
     # Card
-    - title: Table Storage
+    - title: Azure Table Storage
       summary: NoSQL key-value store using semi-structured datasets
       imageSrc: https://static.docs.com/ui/media/product/azure/storage-accounts.svg
       url: reliability-storage-table.md
       azureCategories:
         - databases
     # Card
-    - title: Virtual Machines
+    - title: Azure Virtual Machines
       summary: Provision virtual machines for Ubuntu, Red Hat, Windows, and more
       imageSrc: https://static.docs.com/ui/media/product/azure/virtual-machine.svg
       url: reliability-virtual-machines.md
@@ -290,7 +290,7 @@ productDirectory:
         - featured
         - compute
     # Card
-    - title: Virtual Network
+    - title: Azure Virtual Network
       summary: Provision private networks, optionally connect to on-premises datacenters
       imageSrc: https://static.docs.com/ui/media/product/azure/virtual-networks.svg
       url: reliability-virtual-network.md
@@ -340,7 +340,7 @@ productDirectory:
         - ai-machine-learning
         - analytics
     # Card
-    - title: NAT Gateway
+    - title: Azure NAT Gateway
       summary: Provide highly reliable, secure, and scalable outbound connectivity to the internet
       imageSrc: /azure/media/index/nat-gateway.svg
       url: reliability-nat-gateway.md
@@ -362,7 +362,7 @@ productDirectory:
       azureCategories:
         - databases
     # Card
-    - title: Virtual Machine Scale Sets
+    - title: Azure Virtual Machine Scale Sets
       summary: Manage and scale up to thousands of Linux and Windows virtual machines
       imageSrc: /azure/media/index/vm-scale-sets.svg
       azureCategories:
@@ -385,7 +385,7 @@ productDirectory:
         - databases
         - hybrid
     # Card
-    - title: Batch
+    - title: Azure Batch
       summary: Cloud-scale job scheduling and compute management
       imageSrc: /azure/media/index/batch-accounts.svg
       url: reliability-batch.md
@@ -410,7 +410,7 @@ productDirectory:
         - iot
         - web
     # Card
-    - title: HDInsight
+    - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
       imageSrc: /azure/media/index/hdinsight.svg
       url: reliability-hdinsight.md
@@ -424,7 +424,7 @@ productDirectory:
       azureCategories:
         - storage
     # Card
-    - title: Event Grid
+    - title: Azure Event Grid
       summary: Get reliable event delivery at massive scale
       imageSrc: /azure/media/index/event-grid-domains.svg
       url: reliability-event-grid.md
@@ -440,7 +440,7 @@ productDirectory:
         - networking
         - security
     # Card
-    - title: Notification Hubs
+    - title: Azure Notification Hubs
       summary: Send push notifications to any platform from any back end
       imageSrc: /azure/media/index/notification-hubs.svg
       url: reliability-notification-hubs.md
@@ -478,11 +478,11 @@ tools:
   items:
     # Card
     - title: Resiliency capabilities in Agents (preview)
-      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      imageSrc: https://static.docs.com/ui/media/product/azure/azure-copilot.svg
       url: /azure/copilot/resiliency-agent
     # Card
     - title: Resiliency in Azure
-      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO resiliency.svg
       url: /azure/resiliency/resiliency-overview
     # Card
     - title: Azure Service Health
