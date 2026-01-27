@@ -155,8 +155,8 @@ conceptualContent:
             itemType: concept
 
 productDirectory:
-  title: Reliability guides by service
-  summary: See a list of reliability guides for Azure products and services. Learn about transient fault handling, availability zones, and multi-region support.
+  title: Reliability guides for Azure services
+  summary: Learn how Microsoft designs each service for reliability and resilience to faults and problems, for example availability zone outages. Understand your responsibilities to meet your own reliability requirements.
   items:
     # Card
     - title: API Management
