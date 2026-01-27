@@ -435,7 +435,7 @@ productDirectory:
     - title: Azure DDoS Protection
       summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
       imageSrc: /azure/media/index/ddos-protection.svg
-      url: reliability-ddos-protection.md
+      url: reliability-ddos.md
       azureCategories:
         - networking
         - security
@@ -452,7 +452,7 @@ productDirectory:
     - title: Microsoft Purview
       summary: Maximize business value with unified data governance
       imageSrc: /azure/media/index/purview.svg
-      url: reliability-purview.md
+      url: reliability-microsoft-purview.md
       azureCategories:
         - analytics
         - management-and-governance
