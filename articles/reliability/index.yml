@@ -472,6 +472,54 @@ productDirectory:
       azureCategories:
         - analytics
         - management-and-governance
+    # Card
+    - title: Azure Traffic Manager
+      summary: Route incoming traffic for high performance and availability
+      imageSrc: https://static.docs.com/ui/media/product/azure/traffic-manager.svg
+      url: reliability-traffic-manager.md
+      azureCategories:
+        - management-and-governance
+        - networking
+    # Card
+    - title: Azure DocumentDB
+      summary: Innovate on an open-source, MongoDB-compatible multicloud document database
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: reliability-documentdb.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure API Center
+      summary: Track all of your APIs in a centralized location for discovery, reuse, and governance
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: reliability-api-center.md
+      azureCategories:
+        - integration
+        - iot
+        - mobile
+        - web
+    # Card
+    - title: Azure Application Gateway for Containers
+      summary: Load balancing and dynamic traffic management for workloads running in a Kubernetes cluster
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: reliability-app-gateway-containers.md
+      azureCategories:
+        - networking
+        - security
+        - containers
+    # Card
+    - title: Microsoft Fabric
+      summary: Unify your teams and data to accelerate AI innovation with a complete data platform
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: reliability-fabric.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure VM Image Builder
+      summary: Simplify your virtual machine (VM) image building process with an easy-to-use tool
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: reliability-image-builder.md
+      azureCategories:
+        - compute
 
 tools:
   title: Reliability services and capabilities
