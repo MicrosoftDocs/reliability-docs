@@ -149,7 +149,7 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** The failed zone resets any existing TCP and UDP flows within it, and your clients must retry them. Your clients should implement sufficient [transient fault handling](#resilience-to-transient-faults), including automated retries.
+- **Active requests:** The failed zone resets any existing TCP and UDP flows within it, and your clients must retry those flows. Your clients should implement sufficient [transient fault handling](#resilience-to-transient-faults), including automated retries.
 
 - **Expected data loss:** Load Balancer is a stateless network service, so it doesn't store application data and no data loss occurs at the load balancer layer.
 
