@@ -395,7 +395,7 @@ productDirectory:
     - title: Azure AI Bot Service
       summary: Intelligent, serverless bot service that scales on demand
       imageSrc: /azure/media/index/bot-services.svg
-      url: reliability-bot-service.md
+      url: reliability-bot.md
       azureCategories:
         - ai-machine-learning
     # Card
