@@ -114,7 +114,7 @@ When you use Load Balancer, you set the availability zone support on the front-e
 
     - For *public load balancers*, the front-end IP configuration automatically adopts the availability zone configuration of the public IP address resource that you associate with it. To make the front-end IP configuration zone redundant, create or choose a zone-redundant public IP address. Azure configures public IP addresses as zone redundant by default. For more information, see [Create a public load balancer to load balance VMs by using the Azure portal](/azure/load-balancer/quickstart-load-balancer-standard-public-portal).
 
-    - For *internal load balancers*, when you configure the front-end IP of the load balancer, you set the availability zone support type on the front-end IP configuration. For more information, see [Create an internal load balancer to load balance VMs by using the Azure portal](/azure/load-balancer/quickstart-load-balancer-standard-internal-portal).
+    - For *internal load balancers*, when you configure the front-end IP address of the load balancer, you set the availability zone support type on the front-end IP configuration. For more information, see [Create an internal load balancer to load balance VMs by using the Azure portal](/azure/load-balancer/quickstart-load-balancer-standard-internal-portal).
 
 - **Change the availability zone configuration of an existing load balancer.** To change the availability zone configuration of an existing load balancer, replace the front-end IP configuration. You can use this approach to move from a zonal configuration to a zone-redundant front-end IP configuration:
 
