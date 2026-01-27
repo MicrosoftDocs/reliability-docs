@@ -212,11 +212,10 @@ If you design a networking approach that spans multiple regions, deploy independ
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-The Azure VNet NAT SLA covers Azure NAT Gateway. The availability SLA only applies when you have two or more healthy VMs, and it excludes SNAT port exhaustion from downtime calculations.
+The Azure VNet NAT SLA covers Azure NAT Gateway. The availability SLA only applies when you have two or more healthy VMs. It also excludes SNAT port exhaustion from downtime calculations.
 
 ### Related content
 
 - [Azure NAT Gateway overview](/azure/nat-gateway/nat-overview)
-- [Reliability in Azure NAT Gateway](/azure/reliability/reliability-nat-gateway)
 - [Troubleshoot Azure NAT Gateway connectivity](/azure/nat-gateway/troubleshoot-nat-connectivity)
 - [Azure NAT Gateway and Resource Health](/azure/nat-gateway/resource-health)
