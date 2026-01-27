@@ -20,21 +20,9 @@ highlightedContent:
 # itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | sample tutorial | video | whats-new
   items:
     # Card
-    - title: Resiliency capabilities in Agents (preview)
-      itemType: whats-new
-      url: /azure/copilot/resiliency-agent
-    # Card
-    - title: Resiliency in Azure
-      itemType: whats-new
-      url: /azure/resiliency/resiliency-overview
-    # Card
     - title: What is Azure reliability?
       itemType: overview
       url: overview.md
-    # Card
-    - title: Shared responsibility for reliability
-      itemType: concept
-      url: concept-shared-responsibility.md
     # Card
     - title: Reliability guides for Azure services
       itemType: concept
