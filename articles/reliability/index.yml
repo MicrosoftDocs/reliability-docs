@@ -377,52 +377,59 @@ productDirectory:
         - management-and-governance
         - storage
 
-additionalContent:
-  sections:
-    - title: Reliability services and capabilities
-      summary: Azure provides a range of services that help you enhance the reliability of your applications through failover, backup, testing, monitoring, and targeted guidance.
-      items:
-        # Card
-        - title: Azure Service Health
-          summary: Azure Service Health provides personalized alerts and guidance when Azure service issues affect you. It helps you understand the impact of issues, keep your applications running smoothly, and stay informed about planned maintenance that could affect your availability.
-          url: /azure/service-health/
-        # Card
-        - title: Azure Monitor
-          summary: Azure Monitor helps you maximize the availability and performance of your applications and services by delivering a comprehensive solution for collecting, analyzing, and acting on telemetry from your cloud and on-premises environments. It enables you to gain deep insights into your applications, infrastructure, and network, allowing you to proactively identify and resolve issues before they impact your users.
-          url: /azure/azure-monitor/
-        # Card
-        - title: Azure Advisor
-          summary: Azure Advisor is a personalized cloud consultant that helps you follow best practices to optimize your Azure deployments. It analyzes your resource configuration and usage telemetry and then recommends solutions that can help you improve the cost effectiveness, performance, high availability, and security of your Azure resources.
-          url: /azure/advisor/
-        # Card
-        - title: Azure SRE Agent (preview)
-          summary: Azure SRE Agent is a new service that provides proactive reliability monitoring and automated remediation for your Azure workloads. It leverages Site Reliability Engineering (SRE) principles to help you identify and resolve potential reliability issues before they impact your users.
-          url: /azure/sre-agent/
-        # Card
-        - title: Azure Backup
-          summary: Azure Backup is a reliable and cost-effective solution that protects your data and applications from accidental deletion, corruption, and ransomware attacks. It provides simple and secure backup and restore capabilities for on-premises and cloud-based workloads, ensuring that your critical data is always available when you need it.
-          url: /azure/backup/
-        # Card
-        - title: Azure Site Recovery
-          summary: Azure Site Recovery contributes to your business continuity and disaster recovery (BCDR) strategy by keeping your applications and workloads running during outages. Site Recovery replicates workloads running on physical and virtual machines (VMs) from a primary site to a secondary location. When an outage occurs at your primary site, you fail over to the secondary location, and access your apps from there. After the primary location is running again, you can fail back your workloads to it.
-          url: /azure/site-recovery/site-recovery-overview
-        # Card
-        - title: Azure Chaos Studio
-          summary: Azure Chaos Studio is a managed service that enables you to run chaos engineering experiments on your applications in Azure, helping you identify weaknesses and improve reliability.
-          url: /azure/chaos-studio/
-        # Card
-        - title: Azure App Testing
-          summary: Azure App Testing helps you identify and fix reliability issues in your applications before they impact your users.
-          url: /azure/app-testing/
-        # Card
-        - title: Azure Front Door
-          summary: Azure Front Door is a scalable and secure entry point for fast delivery of your global applications.
-          url: /azure/frontdoor/
-        # Card
-        - title: Azure Traffic Manager
-          summary: Azure Traffic Manager enables you to control the distribution of user traffic for service endpoints in different Azure regions.
-          url: /azure/traffic-manager/
-        # Card
-        - title: Azure Load Balancer
-          summary: Azure Load Balancer provides high availability by distributing incoming traffic among healthy VMs.
-          url: /azure/load-balancer/
+tools:
+  title: Reliability services and capabilities
+  summary: Azure provides a range of services that help you enhance the reliability of your applications through failover, backup, testing, monitoring, and targeted guidance.
+  items:
+    # Card
+    - title: Resiliency capabilities in Agents (preview)
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: /azure/copilot/resiliency-agent
+    # Card
+    - title: Resiliency in Azure
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO
+      url: /azure/resiliency/resiliency-overview
+    # Card
+    - title: Azure Service Health
+      imageSrc: https://static.docs.com/ui/media/product/azure/service-health.svg
+      url: /azure/service-health/
+    # Card
+    - title: Azure Monitor
+      imageSrc: https://static.docs.com/ui/media/product/azure/monitor.svg
+      url: /azure/azure-monitor/
+    # Card
+    - title: Azure Advisor
+      imageSrc: https://static.docs.com/ui/media/product/azure/advisor.svg
+      url: /azure/advisor/
+    # Card
+    - title: Azure SRE Agent (preview)
+      imageSrc: /azure/media/index/sre-agent.svg
+      url: /azure/sre-agent/
+    # Card
+    - title: Azure Backup
+      imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
+      url: /azure/backup/
+    # Card
+    - title: Azure Site Recovery
+      imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
+      url: /azure/site-recovery/site-recovery-overview
+    # Card
+    - title: Azure Chaos Studio
+      imageSrc: /azure/media/index/chaos-studio.svg
+      url: /azure/chaos-studio/
+    # Card
+    - title: Azure App Testing
+      imageSrc: /azure/media/index/app-testing.svg
+      url: /azure/app-testing/
+    # Card
+    - title: Azure Front Door
+      imageSrc: https://static.docs.com/ui/media/product/azure/front-door.svg
+      url: /azure/frontdoor/
+    # Card
+    - title: Azure Traffic Manager
+      imageSrc: https://static.docs.com/ui/media/product/azure/traffic-manager.svg
+      url: /azure/traffic-manager/
+    # Card
+    - title: Azure Load Balancer
+      imageSrc: https://static.docs.com/ui/media/product/azure/load-balancer.svg
+      url: /azure/load-balancer/
