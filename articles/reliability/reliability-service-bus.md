@@ -146,7 +146,7 @@ At any time, you can *promote* the secondary region to a primary region. When yo
 > [!NOTE]
 > Service Bus Geo-Replication uses the term *promotion* because it best represents the process of promoting a secondary region to a primary region (and later demoting a primary region to a secondary region). The term *failover* is also used to describe this general process.
 
-This section summarizes important aspects of Geo-Replication. Review the full documentation to learn how it works. For more information, see [Service Bus Geo-Replication](/azure/service-bus-messaging/service-bus-Geo-Replication).
+This section summarizes important aspects of Geo-Replication. Review the full documentation to learn how it works. For more information, see [Service Bus Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication).
 
 #### Requirements
 
@@ -365,7 +365,7 @@ This section describes what to expect when a Service Bus namespace is configured
 
 #### Region recovery
 
-After the original primary region recovers, you must manually reestablish the pairing and optionally fail back. Create a new Geo-Disaster Recovery pairing with the recovered region as secondary, and then do another failover if you want to return to the original region. This process involves potential data loss of messages sent to the temporary primary region.
+After the original primary region recovers, you must manually reestablish the pairing and optionally fail back. Create a new Geo-Disaster Recovery pairing with the recovered region as secondary, and then do another failover if you want to return to the original region. This process involves potential data loss of messages sent to the temporary primary namespace.
 
 If the disaster causes the loss of all zones in the primary region, your data might be unrecoverable. In other scenarios, the message data that remains in the primary namespace from before the failover is recoverable. You can obtain historic messages from the old primary namespace after you restore access. You're responsible for configuring your applications to receive and process those messages. Microsoft doesn't automatically restore them into your secondary region.
 
