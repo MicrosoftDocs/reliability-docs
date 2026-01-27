@@ -40,7 +40,7 @@ highlightedContent:
       itemType: concept
       url: overview-reliability-guidance.md
     # Card
-    - title: Well-architected reliability pillar
+    - title: 'Well-Architected Framework: Reliability pillar'
       itemType: architecture
       url: /azure/well-architected/reliability
 
