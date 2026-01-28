@@ -555,7 +555,7 @@ tools:
       url: /azure/copilot/resiliency-agent
     # Card
     - title: Resiliency in Azure
-      imageSrc: /azure/media/index/resiliency.svg
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
       url: /azure/resiliency/resiliency-overview
     # Card
     - title: Azure Service Health
