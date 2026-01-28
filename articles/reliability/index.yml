@@ -521,6 +521,29 @@ productDirectory:
       url: reliability-image-builder.md
       azureCategories:
         - compute
+    # Card
+    - title: Azure Storage Actions
+      summary: Simplify storage data management at massive scale
+      imageSrc: /azure/media/index/storage-actions.svg
+      url: reliability-storage-actions.md
+      azureCategories:
+        - storage
+        - management-and-governance
+    # Card
+    - title: Azure Storage Discovery
+      summary: Get enterprise-wide visibility into your Azure Blob Storage and Azure Data Lake Storage estates.
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO storage-discovery.svg
+      url: reliability-storage-discovery.md
+      azureCategories:
+        - storage
+        - management-and-governance
+    # Card
+    - title: Azure Storage Mover
+      summary: Accelerate cloud adoption with an end-to-end, managed migration service
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg # TODO storage-mover.svg
+      url: reliability-storage-mover.md
+      azureCategories:
+        - storage
 
 tools:
   title: Reliability services and capabilities
