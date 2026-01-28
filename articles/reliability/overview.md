@@ -3,7 +3,7 @@ title: Azure reliability documentation
 description: Overview of Azure reliability documentation, including platform capabilities, guides for how each Azure service supports reliability, and reliability concepts.
 author: glynnniall
 ms.topic: conceptual
-ms.date: 01/23/2026
+ms.date: 06/23/2025
 ms.author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
@@ -11,7 +11,21 @@ ms.custom: subject-reliability
 CustomerIntent: As a cloud architect/engineer, I want to learn about Azure Reliability.
 ---
 
-# What is Azure reliability?
+# What is Azure reliability documentation?
+
+Azure provides a comprehensive set of reliability capabilities to help you meet your workload requirements.  The Azure reliability documentation provides service-specific guides on how each Azure service supports those platform reliability capabilities, such as transient fault handling, availability zones, multi-region support, and backup support. To see the current list of reliability service guides, see [Reliability guides by service](./reliability-guidance-overview.md).
+
+In addition to the reliability service guides, Azure reliability documentation also includes general information, such as:
+
+- **Azure regions**: Information on Azure regions, paired and nonpaired regions, and different region configurations.
+- **Azure availability zones**: Information on availability zones, including how they support high availability and disaster recovery. This section also includes lists of Azure services and regions that support availability zones.
+- **Reliability concepts**: Fundamental reliability concepts, such as:
+    - Business continuity, high availability, and disaster recovery.
+    - Redundancy, replication, and backup.
+    - Failover and failback.
+    - Shared responsibility between Microsoft and you.
+
+## What is reliability?
 
 *Reliability* refers to the ability of a workload to perform consistently at an acceptable service level, and in accordance with business continuity requirements. Reliability is a key concept in cloud computing. In Azure, reliability is achieved through a combination of factors, including the design of the platform itself, its services, the architecture of your applications, and the implementation of best practices.
 
