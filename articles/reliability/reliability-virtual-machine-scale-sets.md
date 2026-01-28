@@ -73,7 +73,9 @@ Virtual Machine Scale Sets supports availability zones in both zone-spanning and
 
     The following diagram shows a zone-spanning scale set spread across three zones, with one instance in each zone:
 
-    :::image type="content" source="media/reliability-virtual-machine-scale-sets/zone-spanning.svg" alt-text="Diagram that shows a zone-spanning scale set that has three instances, each deployed into a separate availability zone." border="false" lightbox="media/reliability-virtual-machine-scale-sets/zone-spanning.svg":::
+    :::image type="complex" source="media/reliability-virtual-machine-scale-sets/zone-spanning.svg" alt-text="Diagram that shows a zone-spanning scale set that has three instances, each deployed into a separate availability zone." border="false" lightbox="media/reliability-virtual-machine-scale-sets/zone-spanning.svg":::
+       The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A rectangular box spans these three boxes. That box contains an icon labeled scale set on the far left and a VM instance icon under each availability zone heading.
+    :::image-end:::
 
     Zone-spanning is similar to [zone redundancy](./availability-zones-overview.md#types-of-availability-zone-support) in other Azure services, but scale sets don't provide automatic replication of data across zones or failover when zones are down. A zone-spanning scale set might also have all of its instances deployed in a single zone, like when you choose to attach individual VMs to a zone-spanning flexible scale set.
 
@@ -87,6 +89,8 @@ Virtual Machine Scale Sets supports availability zones in both zone-spanning and
     The following diagram shows a zonal scale set in a single zone, with three instances in that zone:
 
     :::image type="content" source="media/reliability-virtual-machine-scale-sets/zonal.svg" alt-text="Diagram that shows a zonal scale set with three instances, each deployed into the same availability zone." border="false" lightbox="media/reliability-virtual-machine-scale-sets/zonal.svg":::
+       The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A rectangular box overlaps with the availability zone 1 box. It contains an icon labeled scale set on the far left and three VM instance icons under the availability zone heading. The boxes for availability zone 2 and availability zone 3 are empty.
+    :::image-end:::    
 
 If you don't specify availability zones for your scale set, it's *nonzonal* or *regional*. In this scenario, instances might be placed in any zone within the region and might not be evenly distributed or located in the same zone. When you use a nonzonal scale set, disk colocation in the same zone is guaranteed for Ultra and Premium v2 disks. Colocation is provided on a best-effort basis for Premium V1 disks and not guaranteed for Standard SKU, including Solid-State Drive (SSD) or hard disk drive (HDD), disks. If any zone in the region fails, your scale set might experience downtime.
 
