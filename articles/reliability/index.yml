@@ -545,6 +545,14 @@ productDirectory:
       url: reliability-azure-storage-mover.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure Disk Storage
+      summary: High-performance, highly durable block storage for Azure Virtual Machines
+      imageSrc: /azure/media/index/disk-storage.svg
+      url: reliability-storage-disk.md
+      azureCategories:
+        - storage
+        - compute
 
 tools:
   title: Reliability services and capabilities
