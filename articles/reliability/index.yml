@@ -517,7 +517,7 @@ productDirectory:
     # Card
     - title: Azure VM Image Builder
       summary: Simplify your virtual machine (VM) image building process with an easy-to-use tool
-      imageSrc: /azure/media/index/vm-image-builder
+      imageSrc: /azure/media/index/vm-image-builder.svg
       url: reliability-image-builder.md
       azureCategories:
         - compute
