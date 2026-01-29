@@ -37,7 +37,7 @@ A Private Link service is usually attached to an Azure Load Balancer that fronts
 > Private Link service Direct Connect is currently in PREVIEW.
 > See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
 
-![Diagram of Private Link service architecture.](/azure/private-link/media/private-link-service-overview/private-link-service-workflow.png)
+:::image type="content" source="/azure/private-link/media/private-link-service-overview/private-link-service-workflow.png" alt-text="Diagram showing a Private Link service deployed by a service provider into their virtual network, with incoming traffic from a service consumer in a different virtual network in a separate Microsoft Entra tenant." border="false" :::
 
 Private Link service can be used for software as a service (SaaS) offerings hosted on Azure, and for hybrid environments where on-premises networks require secure, private access to Azure-hosted applications.
 
@@ -49,9 +49,11 @@ Additionally, when you deploy a Private Link service with a Standard Load Balanc
 
 ## Resilience to availability zone failures
 
-Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. You don't need to configure anything to enable this behavior.
+Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. Service providers don't need to configure anything to enable this behavior.
 
-![Availability zone support.](./media/reliability-private-link-service/private-link-service-zone-redundant.png)
+:::image type="content" source="./media/reliability-private-link-service/private-link-service-zone-redundant.png" alt-text="Diagram showing a zone-redundant Private Link service and public load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
+
+Private endpoints are automatically distributed across availability zones in the region. Service consumers don't need to create separate private endpoints in different zones.
 
 ### Requirements
 
@@ -122,3 +124,4 @@ Private Link service doesn't store customer data and doesn't require backup or r
 ## Related content
 
 - [Reliability in Azure](./overview.md)
+- [Reliability in Azure Load Balancer](./reliability-load-balancer.md)
