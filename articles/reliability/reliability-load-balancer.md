@@ -177,9 +177,9 @@ Public and internal load balancers are deployed into a single Azure region. If t
 
 ### Global load balancers
 
-Global load balancer provides a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global load balancer improves your application's reliability and performance.
+Global load balancers provide a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global load balancers improve your application's reliability and performance.
 
-With global load balancer, you deploy multiple public load balancers in different regions, and the global load balancer serves as a global front end. If your back-end servers in one region have a problem, traffic automatically switches to healthy regions without DNS changes because the anycast IP address remains constant and routes traffic to another region.
+With global load balancers, you deploy multiple public load balancers in different regions, and the global load balancers serve as a global front end. If your back-end servers in one region have a problem, traffic automatically switches to healthy regions without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
 For more information, see [Global load balancer](/azure/load-balancer/cross-region-overview).
 
