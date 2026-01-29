@@ -17,18 +17,6 @@ Azure App Configuration is a managed service that centrally stores and manages a
 
 This article describes the reliability architecture of Azure App Configuration and explains how the service is designed to remain available during transient faults, availability zone failures, and regional outages.
 
-## Production deployment recommendations
-
-<!-- Provide production deployment recommendations. If a WAF service guide exists, link to it. Otherwise, organize guidance as a checklist.
-
-Explain the specific recommendations customers should follow when deploying this service to production. Include:
-- Best practices for achieving high availability
-- Configuration settings that improve reliability
-- Common pitfalls to avoid
-- Links to detailed guidance documents
-
-Structure each recommendation as a bullet point with a brief explanation. -->
-
 ## Reliability architecture overview
 
 Azure App Configuration provides a centralized store for application settings, replacing configuration files embedded directly within applications. This approach enables dynamic updates, versioning of configuration values, and historical tracking of configuration changes over time.
