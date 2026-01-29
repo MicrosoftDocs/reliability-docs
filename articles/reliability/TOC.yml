@@ -224,8 +224,8 @@ items:
       href: reliability-nat-gateway.md
     - name: Azure Network Watcher
       href: /azure/network-watcher/frequently-asked-questions?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#service-availability-and-redundancy
-    - name: Azure Private Link
-      href: /azure/private-link/availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json    
+    - name: Azure Private Link service
+      href: reliability-private-link-service.md
     - name: Azure Public IP
       href: /azure/virtual-network/ip-services/public-ip-addresses?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability-zone 
     - name: Azure Route Server

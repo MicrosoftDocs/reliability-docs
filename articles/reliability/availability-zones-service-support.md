@@ -81,7 +81,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Network Watcher](/azure/network-watcher/frequently-asked-questions) |:::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::||
 | [Azure Network Watcher: Traffic analytics](/azure/network-watcher/frequently-asked-questions) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Notification Hubs](reliability-notification-hubs.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
-| [Azure Private Link](/azure/private-link/private-link-overview) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::||
+| [Azure Private Link service](./reliability-private-link-service.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::||
 | [Azure public IP addresses](/azure/virtual-network/ip-services/public-ip-addresses) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Queue Storage](./reliability-storage-queue.md#resilience-to-availability-zone-failures)| :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Red Hat OpenShift](/azure/openshift/openshift-faq#can-a-cluster-be-deployed-across-multiple-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
