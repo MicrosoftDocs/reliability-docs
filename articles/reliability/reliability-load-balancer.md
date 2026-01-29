@@ -77,7 +77,7 @@ The following diagram shows an internal load balancer that uses a similar zone-r
 :::image-end:::
 
 > [!NOTE]
-> You can deploy zonal load balancers, but we recommend that you use zone-redundant load balancers for all workloads, including workloads that you deploy into a single zone. Microsoft migrates all public IP addresses and load balancers to zone-redundant configurations.
+> You can deploy zonal load balancers, but we recommend that you use zone-redundant load balancers for all workloads, including workloads that you deploy into a single zone. Microsoft is migrating all public IP addresses and load balancers to zone-redundant configurations.
 
 In regions without availability zones, Azure creates all load balancers in a *nonzonal* or *regional* configuration by using a front-end configuration with no zone configured. If the region experiences an outage, your nonzonal load balancers might experience downtime.
 
