@@ -30,7 +30,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ## Reliability architecture overview
 
-A load balancer can be either public or internal. A public load balancer accepts traffic from the internet through a public IP address resource. An internal load balancer accepts traffic only from within your virtual network and other networks that you connect to the virtual network.
+A load balancer can be either public or internal. A public load balancer is reachable from the internet through a public IP address resource. An internal load balancer is reachable only from within your virtual network and other networks that you connect to the virtual network.
 
 Each load balancer consists of multiple components:
 
@@ -79,7 +79,7 @@ The following diagram shows an internal load balancer that uses a similar zone-r
 > [!NOTE]
 > You can deploy zonal load balancers, but we recommend that you use zone-redundant load balancers for all workloads, including workloads that you deploy into a single zone. Microsoft migrates all public IP addresses and load balancers to zone-redundant configurations.
 
-In regions without availability zones, create load balancers in a *nonzonal* or *regional* configuration by using a front-end configuration with no zone configured. If the region experiences an outage, your nonzonal load balancers might experience downtime.
+In regions without availability zones, Azure creates all load balancers in a *nonzonal* or *regional* configuration by using a front-end configuration with no zone configured. If the region experiences an outage, your nonzonal load balancers might experience downtime.
 
 #### Back-end instances and availability zones
 
@@ -104,7 +104,7 @@ If you deploy your VMs in the same availability zone, you can deploy a zone‑re
 
 ### Cost
 
-Availability zone configuration doesn't change the way Azure bills a load balancer. Azure bases billing on the number of rules that you configure and the data that you process, regardless of zone configuration. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
+Availability zone configuration doesn't change the way Azure bills a load balancer. Azure bases billing on the number of rules that you configure and the data that it processes, regardless of zone configuration. For more information, see [Load Balancer pricing](https://azure.microsoft.com/pricing/details/load-balancer/).
 
 ### Configure availability zone support
 
@@ -149,7 +149,7 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** The failed zone resets any existing TCP and UDP flows within it, and your clients must retry those flows. Your clients should implement sufficient [transient fault handling](#resilience-to-transient-faults), including automated retries.
+- **Active requests:** When a zone fails, any existing TCP and UDP flows within the zone are automatically reset, and your clients must retry those flows. Your clients should implement sufficient [transient fault handling](#resilience-to-transient-faults), including automated retries.
 
 - **Expected data loss:** Load Balancer is a stateless network service, so it doesn't store application data and no data loss occurs at the load balancer layer.
 
@@ -157,7 +157,7 @@ This section describes what to expect when a load balancer uses a zone-redundant
 
     If the failure affects compute services in the zone, any VMs or other resources in the affected zone might be unavailable. The load balancer's health probes detect these failures and route traffic to alternative instances in another zone based on the load-balancing algorithm and the back-end instances' health status.
 
-- **Traffic rerouting:** The load balancer continues to operate from the healthy zones. Load Balancer maintains the same front-end IP address during zone failures. This behavior means that you don't need to apply Domain Name System (DNS) updates or reconfigure clients. The load balancer automatically establishes new connections through remaining healthy zones.
+- **Traffic rerouting:** The load balancer continues to operate from the healthy zones. Load Balancer maintains the same front-end IP address during zone failures. This behavior means that you don't need to apply Domain Name System (DNS) updates or reconfigure clients. The Azure platform establishes new client connections through remaining healthy zones.
 
 ### Zone recovery
 
@@ -173,7 +173,7 @@ You can use Azure Chaos Studio to simulate the failure of a VM in a single zone.
 
 ## Resilience to region-wide failures
 
-Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multi-region support through its cross-region load balancer feature, which supports load balancing across Azure regions. You can also deploy other load balancing services to route and fail over across Azure regions
+Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multi-region support through a *global load balancer*, which supports load balancing across Azure regions. You can also deploy other load balancing services to route and fail over across Azure regions
 
 ### Global load balancers
 
