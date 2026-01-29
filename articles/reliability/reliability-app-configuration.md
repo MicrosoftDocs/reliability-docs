@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article 
 ms.custom: subject-reliability, references_regions 
 ms.service: azure-app-configuration
-ms.date: 2026-01-26
+ms.date: 1/29/2026
 ---
 
 # Reliability in Azure Application Configuration
@@ -49,7 +49,7 @@ To mitigate transient issues:
 
 
 ## Resilience to availability zone failures
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 In regions where Azure App Configuration supports availability zones, zone-level resiliency is handled entirely by Microsoft. Customers are not required to configure or manage availability zone settings.
 
@@ -108,5 +108,4 @@ Azure App Configuration provides a published SLA. There are no customer configur
 
 ## Related content
 
-- [Reliability in Azure](/azure/reliability).
-- [!INCLUDE [security-reminder](../../includes/security-reminder.md)]
+- [Reliability in Azure](./overview.md)
