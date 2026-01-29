@@ -27,7 +27,7 @@ This article focuses on the Azure Private Link platform and private endpoints as
 Private link service enables your customers to connect privately to your workloads in Azure. As the service provider, you deploy a Private Link service resource. Service consumers create private endpoints in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses.
 
 A Private Link service is usually attached to an Azure Load Balancer that fronts backend resources (virtual machines or virtual machine scale sets). You can also use Private Link service Direct Connect (preview), which enables connectivity to any privately routable IP address within your virtual network.
-<!-- Include diagram once approved by John/ Art department-->
+![Diagram of Private Link service architecture.](./media/reliability-private-link-service/pls-architecture-overview.png)
 
 Private Link service can be used for software as a service (SaaS) offerings hosted on Azure, and for hybrid environments where on-premises networks require secure, private access to Azure-hosted applications.
 
@@ -52,7 +52,7 @@ All cloud-hosted applications should follow the Azure transient fault handling g
 
 Private link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. You don't need to configure anything to enable this behavior.
 
-<!-- Diagram here? -->
+![Availability zone support.](./media/reliability-private-link-service/pls-availability-zone-support.png)
 > [!NOTE]
 > Your end-to-end resilience to availability zone failures depends on multiple components. Although Private Link services are resilient to availability zone outages, other components might not be. Review the configuration of your load balancers, VMs, and other components to ensure that you can meet your reliability requirements even during a zone failure.
 
