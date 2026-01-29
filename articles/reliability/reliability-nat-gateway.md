@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure NAT Gateway
 description: Learn how to make Azure NAT Gateway resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
-author: glynnniall
-ms.author: glynnniall
+author: asudbring
+ms.author: allensu
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-nat-gateway
@@ -20,11 +20,6 @@ This article describes how to make Azure NAT Gateway resilient to a variety of p
 
 > [!IMPORTANT]
 > When you consider the reliability of a NAT gateway, also consider the reliability of your virtual machines (VMs), disks, other network infrastructure, and applications that run on VMs. Improving the resiliency of the NAT gateway might have limited impact if the other components aren't equally resilient. Depending on your resiliency requirements, you might make configuration changes across multiple components.
-
-> [!IMPORTANT]
-> The StandardV2 SKU for Azure NAT Gateway is currently in preview.
->
-> For legal terms that apply to Azure features in beta, preview, or not yet generally available, see [Supplemental terms of use for Microsoft Azure previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 
 ## Production deployment recommendations for reliability
 

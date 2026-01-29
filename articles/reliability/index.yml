@@ -1,73 +1,604 @@
-### YamlMime:Landing
+### YamlMime:Hub
 
 title: Azure reliability documentation
-summary: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multi-region support, and fundamental cloud reliability concepts.
+summary: Learn how reliability is built into Azure, including how individual Azure services handle failures, how platform features such as availability zones and regions support high availability and disaster recovery, and the core cloud reliability concepts that guide resilient workload design.
+brand: azure
 
 metadata:
   title: Azure reliability documentation
   description: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multi-region support, and fundamental cloud reliability concepts.
   keywords: Azure reliability, business continuity, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multi-region support.
-  ms.topic: landing-page
+  ms.topic: hub-page
   ms.author: glynnniall
   author: glynnniall
   ms.service: azure
-  ms.date: 02/27/2025
-  ms.subservice: azure-reliability
+  ms.date: 01/29/2026
+  featureFlags:
+  - clicktale
 
-landingContent: 
-  # Card
-  - title: Azure reliability documentation
-    linkLists:
-      - linkListType: overview
+highlightedContent:
+# itemType: architecture | concept | deploy | download | get-started | how-to-guide | learn | overview | quickstart | reference | sample tutorial | video | whats-new
+  items:
+    # Card
+    - title: What is Azure reliability documentation?
+      itemType: overview
+      url: overview.md
+    # Card
+    - title: Reliability guides for Azure services
+      itemType: concept
+      url: overview-reliability-guidance.md
+    # Card
+    - title: 'Well-Architected Framework: Reliability pillar'
+      itemType: architecture
+      url: /azure/well-architected/reliability
+
+conceptualContent:
+  sections:
+    - title: Azure reliability features
+      summary: Learn about the Azure platform features that help you build reliable applications, including availability zones and regions.
+      items:
+      - title: Azure availability zones
         links:
-          - text: Azure reliability overview
-            url: overview.md          
-  # Card
-  - title: Reliability guides by service
-    linkLists:
-      - linkListType: overview
-        links:
-          - text: Reliability guidance for Azure services
-            url: overview-reliability-guidance.md
-  # Card
-  - title: Azure regions
-    linkLists:
-      - linkListType: concept
+          - text: What are Azure availability zones?
+            url: availability-zones-overview.md
+            itemType: concept
+          - text: Enable zone resiliency for Azure workloads
+            url: availability-zones-enable-zone-resiliency.md
+            itemType: how-to-guide
+          - text: Zonal resources and zone resiliency
+            url: availability-zones-zonal-resource-resiliency.md
+            itemType: concept
+          - text: Services with availability zone support
+            url: availability-zones-service-support.md
+            itemType: reference
+
+      - title: Azure regions
         links:
           - text: What are Azure regions?
             url: regions-overview.md
+            itemType: concept
           - text: Paired and nonpaired regions
             url: regions-paired.md
-          - text: Multi-region solutions in nonpaired regions
-            url: regions-multi-region-nonpaired.md
+            itemType: concept
           - text: Nonregional Azure services
             url: regions-nonregional-services.md
+            itemType: reference
           - text: Azure regions list
             url: regions-list.md
-  # Card
-  - title: Azure availability zones
-    linkLists:
-      - linkListType: concept
+            itemType: reference
+
+    - title: Understand reliability fundamentals
+      summary: Understand concepts like reliability, resiliency, and recovery in the cloud.
+      items:
+      - title: Reliability concepts
         links:
-          - text: What are Azure availability zones and regions?
-            url: availability-zones-overview.md
-          - text: Services with availability zone support
-            url: availability-zones-service-support.md
-          - text: Azure availability zone migration
-            url: availability-zones-migration-overview.md
-      - linkListType: how-to-guide
+            - text: Business continuity, high availability, and disaster recovery
+              url: concept-business-continuity-high-availability-disaster-recovery.md
+              itemType: concept
+            - text: Redundancy, replication, and backup
+              url: concept-redundancy-replication-backup.md
+              itemType: concept
+            - text: Failover and failback
+              url: concept-failover-failback.md
+              itemType: concept
+
+      - title: Reliability on the Azure platform
         links:
-          - text: Migrate to availability zone support
-            url: availability-zones-migration-overview.md
-  - title: Reliability concepts
-    linkLists:
-      - linkListType: concept
-        links:
-          - text: Business continuity, high availability, and disaster recovery
-            url: concept-business-continuity-high-availability-disaster-recovery.md
-          - text: Redundancy, replication, and backup
-            url: concept-redundancy-replication-backup.md
-          - text: Failover and failback
-            url: concept-failover-failback.md
-          - text: Shared responsibility for resiliency
-            url: concept-shared-responsibility.md
+            - text: Shared responsibility for reliability
+              url: concept-shared-responsibility.md
+              itemType: concept
+            - text: Azure service incident response
+              url: incident-response.md
+              itemType: concept
+
+productDirectory:
+  title: Reliability guides for Azure services
+  summary: Learn how Microsoft designs each service for reliability and resilience to faults and problems, for example availability zone outages. Understand your responsibilities to meet your own reliability requirements.
+  items:
+    # Card
+    - title: Azure API Management
+      summary: Publish APIs to developers, partners, and employees securely and at scale
+      imageSrc: https://static.docs.com/ui/media/product/azure/api-management.svg
+      url: reliability-api-management.md
+      azureCategories:
+        - integration
+        - iot
+        - mobile
+        - web
+    # Card
+    - title: Azure AI Search
+      summary: AI-powered cloud search service for mobile and web app development
+      imageSrc: https://static.docs.com/ui/media/product/azure/search.svg
+      url: reliability-ai-search.md
+      azureCategories:
+        - ai-machine-learning
+        - mobile
+        - web
+    # Card
+    - title: Azure Kubernetes Service (AKS)
+      summary: Simplify the deployment, management, and operations of Kubernetes
+      imageSrc: https://static.docs.com/ui/media/product/azure/kubernetes-services.svg
+      url: reliability-aks.md
+      azureCategories:
+        - featured
+        - compute
+        - containers
+    # Card
+    - title: Azure Application Gateway
+      summary: Build secure, scalable, and highly available web front ends in Azure
+      imageSrc: https://static.docs.com/ui/media/product/azure/application-gateway.svg
+      url: reliability-application-gateway-v2.md
+      azureCategories:
+        - featured
+        - networking
+        - security
+    # Card
+    - title: Azure App Service
+      summary: Quickly create powerful cloud apps for web and mobile
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-service.svg
+      url: reliability-app-service.md
+      azureCategories:
+        - featured
+        - compute
+        - mobile
+        - web
+    # Card
+    - title: Azure App Service Environment
+      summary: A fully isolated and dedicated environment to run App Service apps
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-service.svg
+      url: reliability-app-service-environment.md
+      azureCategories:
+        - compute
+        - mobile
+        - web
+    # Card
+    - title: Azure Bastion
+      summary: Secure remote access to your virtual machines
+      imageSrc: /azure/media/index/bastion.svg
+      url: reliability-bastion.md
+      azureCategories:
+        - networking
+        - security
+    # Card
+    - title: Azure Container Apps
+      summary: Build and deploy modern apps and microservices using serverless containers
+      imageSrc: /azure/media/index/container-apps.svg
+      url: reliability-container-apps.md
+      azureCategories:
+        - containers
+    # Card
+    - title: Azure Container Instances
+      summary: Easily run containers on Azure without managing servers
+      imageSrc: https://static.docs.com/ui/media/product/azure/container-instances.svg
+      url: reliability-container-instances.md
+      azureCategories:
+        - compute
+        - containers
+    # Card
+    - title: Azure Container Registry
+      summary: Store and manage container images across all types of Azure deployments
+      imageSrc: https://static.docs.com/ui/media/product/azure/container-registry.svg
+      url: reliability-container-registry.md
+      azureCategories:
+        - containers
+    # Card
+    - title: Azure Data Factory
+      summary: Hybrid data integration at enterprise scale, made easy
+      imageSrc: https://static.docs.com/ui/media/product/azure/data-factory.svg
+      url: reliability-data-factory.md
+      azureCategories:
+        - analytics
+        - databases
+    # Card
+    - title: Azure Device Registry
+      summary: Enables the cloud and edge management of assets.
+      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
+      url: reliability-device-registry.md
+      azureCategories:
+        - iot
+    # Card
+    - title: Azure Event Hubs
+      summary: Receive telemetry from millions of devices
+      imageSrc: https://static.docs.com/ui/media/product/azure/event-hubs.svg
+      url: reliability-event-hubs.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure Firewall
+      summary: Native firewalling capabilities with built-in high availability, unrestricted cloud scalability, and zero maintenance
+      imageSrc: https://static.docs.com/ui/media/product/azure/firewall.svg
+      url: reliability-firewall.md
+      azureCategories:
+        - networking
+        - security
+        - featured
+    # Card
+    - title: Azure IoT Hub
+      summary: Connect, monitor, and manage billions of IoT assets
+      imageSrc: https://static.docs.com/ui/media/product/azure/iot-hub.svg
+      url: reliability-iot-hub.md
+      azureCategories:
+        - iot
+    # Card
+    - title: Azure Key Vault
+      summary: Safeguard and maintain control of keys and other secrets
+      imageSrc: https://static.docs.com/ui/media/product/azure/key-vault.svg
+      url: reliability-key-vault.md
+      azureCategories:
+        - security
+    # Card
+    - title: Azure Logic Apps
+      summary: Automate the access and use of data across clouds without writing code
+      imageSrc: https://static.docs.com/ui/media/product/azure/logic-apps.svg
+      url: reliability-logic-apps.md
+      azureCategories:
+        - integration
+        - iot
+    # Card
+    - title: Azure NetApp Files
+      summary: Enterprise-grade Azure file shares, powered by NetApp
+      imageSrc: https://static.docs.com/ui/media/product/azure/netapp-files.svg
+      url: reliability-netapp-files.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure SQL Database
+      summary: Managed, intelligent SQL in the cloud
+      imageSrc: https://static.docs.com/ui/media/product/azure/sql-database.svg
+      url: reliability-sql-database.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure SQL Managed Instance
+      summary: Managed, always up-to-date SQL instance in the cloud
+      imageSrc: https://static.docs.com/ui/media/product/azure/sql-managed-instance.svg
+      url: reliability-sql-managed-instance.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure Blob Storage
+      summary: REST-based object storage for unstructured data
+      imageSrc: https://static.docs.com/ui/media/product/azure/storage-accounts.svg
+      url: reliability-storage-blob.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure Files
+      summary: Simple, secure, and serverless enterprise-grade cloud file shares
+      imageSrc: https://static.docs.com/ui/media/product/azure/storage-azure-files.svg
+      url: reliability-storage-files.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure Queue Storage
+      summary: Effectively scale apps according to traffic
+      imageSrc: https://static.docs.com/ui/media/product/azure/storage-accounts.svg
+      url: reliability-storage-queue.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure Table Storage
+      summary: NoSQL key-value store using semi-structured datasets
+      imageSrc: https://static.docs.com/ui/media/product/azure/storage-accounts.svg
+      url: reliability-storage-table.md
+      azureCategories:
+        - databases
+        - storage
+    # Card
+    - title: Azure Virtual Machines
+      summary: Provision virtual machines for Ubuntu, Red Hat, Windows, and more
+      imageSrc: https://static.docs.com/ui/media/product/azure/virtual-machine.svg
+      url: reliability-virtual-machines.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure Virtual Network
+      summary: Provision private networks, optionally connect to on-premises datacenters
+      imageSrc: https://static.docs.com/ui/media/product/azure/virtual-networks.svg
+      url: reliability-virtual-network.md
+      azureCategories:
+        - networking
+    # Card
+    - title: Azure Service Bus
+      summary: Reliable cloud messaging as a service (MaaS) and simple hybrid integration
+      imageSrc: https://static.docs.com/ui/media/product/azure/service-bus.svg
+      url: reliability-service-bus.md
+      azureCategories:
+        - integration
+    # Card
+    - title: Azure Cosmos DB
+      summary: Fast NoSQL database with SLA-backed speed and availability
+      imageSrc: https://static.docs.com/ui/media/product/azure/cosmos-db.svg
+      url: reliability-cosmos-db-nosql.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure Functions
+      summary: Execute event-driven serverless code functions with an end-to-end development experience
+      imageSrc: https://static.docs.com/ui/media/product/azure/functions.svg
+      url: reliability-functions.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure VPN Gateway
+      summary: Establish secure, cross-premises connectivity
+      imageSrc: https://static.docs.com/ui/media/product/azure/virtual-network-gateways.svg
+      url: reliability-virtual-network-gateway.md?pivots=vpn
+      azureCategories:
+        - networking
+    # Card
+    - title: Azure ExpressRoute gateway
+      summary: Dedicated private network fiber connections to Azure
+      imageSrc: https://static.docs.com/ui/media/product/azure/expressroute.svg
+      url: reliability-virtual-network-gateway.md?pivots=expressroute
+      azureCategories:
+        - networking
+        - hybrid
+        - featured
+    # Card
+    - title: Azure Databricks
+      summary: Fast, easy, and collaborative Apache Spark-based analytics platform
+      imageSrc: https://static.docs.com/ui/media/product/azure/databricks.svg
+      url: reliability-databricks.md
+      azureCategories:
+        - ai-machine-learning
+        - analytics
+    # Card
+    - title: Azure NAT Gateway
+      summary: Provide highly reliable, secure, and scalable outbound connectivity to the internet
+      imageSrc: /azure/media/index/nat-gateway.svg
+      url: reliability-nat-gateway.md
+      azureCategories:
+        - networking
+    # Card
+    - title: Azure Stream Analytics
+      summary: Real-time analytics on fast moving streams of data from applications and devices
+      imageSrc: https://static.docs.com/ui/media/product/azure/stream-analytics.svg
+      url: reliability-stream-analytics.md
+      azureCategories:
+        - analytics
+        - iot
+    # Card
+    - title: Azure Managed Redis
+      summary: Power applications with a high-performance, managed cache
+      imageSrc: /azure/media/index/managed-redis.svg
+      url: reliability-managed-redis.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure Virtual Machine Scale Sets
+      summary: Manage and scale up to thousands of Linux and Windows virtual machines
+      imageSrc: /azure/media/index/vm-scale-sets.svg
+      azureCategories:
+        - compute
+      url: reliability-virtual-machine-scale-sets.md
+    # Card
+    - title: Azure Backup
+      summary: Simplify data protection and protect against ransomware
+      imageSrc: /azure/media/index/recovery-services-vaults.svg
+      url: reliability-backup.md
+      azureCategories:
+        - management-and-governance
+        - storage
+    # Card
+    - title: Azure Database for PostgreSQL
+      summary: Managed PostgreSQL database service for app developers
+      imageSrc: /azure/media/index/database-postgresql-server.svg
+      url: reliability-azure-database-postgresql.md
+      azureCategories:
+        - databases
+        - hybrid
+    # Card
+    - title: Azure Batch
+      summary: Cloud-scale job scheduling and compute management
+      imageSrc: /azure/media/index/batch-accounts.svg
+      url: reliability-batch.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure AI Bot Service
+      summary: Intelligent, serverless bot service that scales on demand
+      imageSrc: /azure/media/index/bot-services.svg
+      url: reliability-bot.md
+      azureCategories:
+        - ai-machine-learning
+    # Card
+    - title: Azure Functions
+      summary: Process events with serverless code
+      imageSrc: /azure/media/index/functions.svg
+      url: reliability-functions.md
+      azureCategories:
+        - compute
+        - containers
+        - iot
+        - web
+    # Card
+    - title: Azure HDInsight
+      summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
+      imageSrc: /azure/media/index/hdinsight.svg
+      url: reliability-hdinsight.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure Elastic SAN
+      summary: Elastic SAN is a cloud-native Storage Area Network (SAN) service built on Azure. Gain access to an end-to-end experience like your on-premises SAN.
+      imageSrc: /azure/media/index/elastic-san.svg
+      url: reliability-elastic-san.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure Event Grid
+      summary: Get reliable event delivery at massive scale
+      imageSrc: /azure/media/index/event-grid-domains.svg
+      url: reliability-event-grid.md
+      azureCategories:
+        - integration
+        - iot
+    # Card
+    - title: Azure DDoS Protection
+      summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
+      imageSrc: /azure/media/index/ddos-protection.svg
+      url: reliability-ddos.md
+      azureCategories:
+        - networking
+        - security
+    # Card
+    - title: Azure Notification Hubs
+      summary: Send push notifications to any platform from any back end
+      imageSrc: /azure/media/index/notification-hubs.svg
+      url: reliability-notification-hubs.md
+      azureCategories:
+        - iot
+        - mobile
+        - web
+    # Card
+    - title: Microsoft Purview
+      summary: Maximize business value with unified data governance
+      imageSrc: /azure/media/index/purview.svg
+      url: reliability-microsoft-purview.md
+      azureCategories:
+        - analytics
+        - management-and-governance
+    # Card
+    - title: Azure DNS
+      summary: Host your DNS domain in Azure
+      imageSrc: /azure/media/index/dns.svg
+      url: reliability-dns.md
+      azureCategories:
+        - networking
+    # Card
+    - title: Azure Chaos Studio
+      summary: Improve application resilience by introducing faults and simulating outages
+      imageSrc: /azure/media/index/chaos-studio.svg
+      url: reliability-chaos-studio.md
+      azureCategories:
+        - analytics
+        - management-and-governance
+    # Card
+    - title: Azure Traffic Manager
+      summary: Route incoming traffic for high performance and availability
+      imageSrc: https://static.docs.com/ui/media/product/azure/traffic-manager.svg
+      url: reliability-traffic-manager.md
+      azureCategories:
+        - management-and-governance
+        - networking
+    # Card
+    - title: Azure DocumentDB
+      summary: Innovate on an open-source, MongoDB-compatible multicloud document database
+      imageSrc: /azure/media/index/documentdb.svg
+      url: reliability-documentdb.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure API Center
+      summary: Track all of your APIs in a centralized location for discovery, reuse, and governance
+      imageSrc: /azure/media/index/api-center.svg
+      url: reliability-api-center.md
+      azureCategories:
+        - integration
+        - iot
+        - mobile
+        - web
+    # Card
+    - title: Azure Application Gateway for Containers
+      summary: Load balancing and dynamic traffic management for workloads running in a Kubernetes cluster
+      imageSrc: /azure/media/index/application-gateway-containers.svg
+      url: reliability-app-gateway-containers.md
+      azureCategories:
+        - networking
+        - security
+        - containers
+    # Card
+    - title: Microsoft Fabric
+      summary: Unify your teams and data to accelerate AI innovation with a complete data platform
+      imageSrc: /azure/media/index/microsoft-fabric.svg
+      url: reliability-fabric.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure VM Image Builder
+      summary: Simplify your virtual machine (VM) image building process with an easy-to-use tool
+      imageSrc: /azure/media/index/vm-image-builder.svg
+      url: reliability-image-builder.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure Storage Actions
+      summary: Simplify storage data management at massive scale
+      imageSrc: /azure/media/index/storage-actions.svg
+      url: reliability-storage-actions.md
+      azureCategories:
+        - storage
+        - management-and-governance
+    # Card
+    - title: Azure Storage Discovery
+      summary: Get enterprise-wide visibility into your Azure Blob Storage and Azure Data Lake Storage estates.
+      imageSrc: /azure/media/index/storage-discovery.svg
+      url: reliability-storage-discovery.md
+      azureCategories:
+        - storage
+        - management-and-governance
+    # Card
+    - title: Azure Storage Mover
+      summary: Accelerate cloud adoption with an end-to-end, managed migration service
+      imageSrc: /azure/media/index/storage-mover.svg
+      url: reliability-azure-storage-mover.md
+      azureCategories:
+        - storage
+
+tools:
+  title: Reliability services and capabilities
+  summary: Azure provides a range of services that help you enhance the reliability of your applications through failover, backup, testing, monitoring, and targeted guidance.
+  items:
+    # Card
+    - title: Resiliency capabilities in Agents (preview)
+      imageSrc: /azure/media/index/azure-copilot.svg
+      url: /azure/copilot/resiliency-agent
+    # Card
+    - title: Resiliency in Azure
+      imageSrc: /azure/media/index/resiliency.svg
+      url: /azure/resiliency/resiliency-overview
+    # Card
+    - title: Azure Service Health
+      imageSrc: https://static.docs.com/ui/media/product/azure/service-health.svg
+      url: /azure/service-health/
+    # Card
+    - title: Azure Monitor
+      imageSrc: https://static.docs.com/ui/media/product/azure/monitor.svg
+      url: /azure/azure-monitor/
+    # Card
+    - title: Azure Advisor
+      imageSrc: https://static.docs.com/ui/media/product/azure/advisor.svg
+      url: /azure/advisor/
+    # Card
+    - title: Azure SRE Agent (preview)
+      imageSrc: /azure/media/index/sre-agent.svg
+      url: /azure/sre-agent/
+    # Card
+    - title: Azure Backup
+      imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
+      url: /azure/backup/
+    # Card
+    - title: Azure Site Recovery
+      imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
+      url: /azure/site-recovery/site-recovery-overview
+    # Card
+    - title: Azure Chaos Studio
+      imageSrc: /azure/media/index/chaos-studio.svg
+      url: /azure/chaos-studio/
+    # Card
+    - title: Azure App Testing
+      imageSrc: /azure/media/index/app-testing.svg
+      url: /azure/app-testing/
+    # Card
+    - title: Azure Front Door
+      imageSrc: https://static.docs.com/ui/media/product/azure/front-door.svg
+      url: /azure/frontdoor/
+    # Card
+    - title: Azure Traffic Manager
+      imageSrc: https://static.docs.com/ui/media/product/azure/traffic-manager.svg
+      url: /azure/traffic-manager/
+    # Card
+    - title: Azure Load Balancer
+      imageSrc: https://static.docs.com/ui/media/product/azure/load-balancer.svg
+      url: /azure/load-balancer/
