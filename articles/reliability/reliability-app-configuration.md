@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Application Configuration
-description: Learn how to make Azure Application Configuration resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
+description: Learn how to make Azure Application Configuration resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
 ms.author: glynnniall 
 ms.topic: reliability-article 
@@ -25,13 +25,13 @@ From a reliability perspective, the service is important because any disruption 
 
 ## Resilience to transient faults
 
-Transient faults—such as brief connectivity interruptions—can affect applications that rely on Azure App Configuration, especially if configuration access is on the critical request path.
+Transient faults, such as brief connectivity interruptions, can affect applications that rely on Azure App Configuration, especially if configuration access is on the critical request path.
 
 
 To mitigate transient issues:
 
-- Applications should implement retries when accessing configuration data.
-- Configuration values should be cached locally to reduce dependency on real-time service calls.
+- Implement retries when accessing configuration data.
+- Cache configuration values locally to reduce dependency on real-time service calls.
 - Many Azure App Configuration client libraries automatically cache configuration data and refresh it periodically, reducing the impact of transient service interruptions. 
 <!-- PG: Confirm client library caching behavior and any serice specific guidance.-->
 
@@ -39,25 +39,25 @@ To mitigate transient issues:
 ## Resilience to availability zone failures
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-In regions where Azure App Configuration supports availability zones, zone-level resiliency is handled entirely by Microsoft. Customers are not required to configure or manage availability zone settings.
+Microsoft handles zone-leve resiliency in regions where Azure App Configuration supports availability zones. You don't need to configure or manage availability zone settings.
 
 ### Requirements
 
-**Region support:** Zone-redundant Application Configuration resources can be deployed into any region that supports availability zones. To see which regions support availability zones, see [Azure regions with availability zone support](/azure/reliability/regions-list). Availability zone support is region-specific. Only regions that support availability zones for Azure App Configuration provide this capability.
+**Region support:** You can deploy zone-redundant Azure App Configuration resources into any region that supports availability zones. To see which regions support availability zones, see [Azure regions with availability zone support](/azure/reliability/regions-list). Availability zone support is region-specific. Only regions that support availability zones for Azure App Configuration provide this capability.
 **SKU requirements:** You must use the Standard tier or Premium tier to enable zone redundancy. No specific pricing tiers or SKUs are required.
 <!--NOTE TO SELF:> Region support details are currently documented in legacy migration guidance. A long-term approach for managing this information in Learn content is under discussion. -->
 
 ### Considerations
 
-Availability zone resiliency is enabled automatically in supported regions. Customers cannot opt out and do not need to take any action.
+Availability zone resiliency is enabled automatically in supported regions. You can't opt out and don't need to take any action.
 
 ### Cost
 
-There's no extra cost for zone redundancy for Azure Application Configuration.
+There's no extra cost for zone redundancy for Azure App Configuration.
 
 ### Configure availability zone support
 
-Microsoft configures Azure Application Configuration automatically when a virtual network is deployed in a region that supports availability zones.
+Microsoft configures Azure App Configuration automatically when a virtual network is deployed in a region that supports availability zones.
 
 ### Behavior during a zone failure
 
@@ -81,11 +81,11 @@ Geo-replication is a product feature that enables a configuration store to be re
 
 ## Backup and recovery
 
-Azure App Configuration includes built-in capabilities such as snapshots and soft delete to help protect configuration data. In addition, configuration data can be exported from a store and used as part of a broader backup strategy.
+Azure App Configuration includes built-in capabilities such as snapshots and soft delete to help protect configuration data. In addition, you can export configuration data from a store and use it as part of a broader backup strategy.
 
 ## Resilience to service maintenance
 
-Azure App Configuration does not expose customer-configurable maintenance operations. All service maintenance is handled by Microsoft. As a result, there are no specific customer actions required for maintenance-related reliability.
+Azure App Configuration doesn't expose customer-configurable maintenance operations. Microsoft handles all service maintenance. As a result, there are no specific customer actions required for maintenance-related reliability.
 
 ## Service-level agreement
 
