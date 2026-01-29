@@ -5,6 +5,7 @@ author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
+ai-usage: assisted
 ms.service: azure-private-link
 ms.date: 01/23/2026
 ---
