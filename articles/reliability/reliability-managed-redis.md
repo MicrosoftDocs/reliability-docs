@@ -68,7 +68,7 @@ Follow these recommendations for managing transient faults when you use Azure Ma
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-You can create a *zone-redundant* Azure Managed Redis cache instance, which automatically distributes the cache nodes across multiple availability zones within a region. Zone redundancy reduces the risk of datacenter or availability zone outages making your cache unavailable.
+You can make Azure Managed Redis cache instances *zone-redundant*, which automatically distributes the cache nodes across multiple availability zones within a region. Zone redundancy reduces the risk of datacenter or availability zone outages making your cache unavailable.
 
 To make a cache zone redundant, you must deploy it in a supported region and set it to use the high availability configuration. In regions without availability zones, the high availability configuration still creates at least two nodes, but they aren't placed in separate zones.
 
