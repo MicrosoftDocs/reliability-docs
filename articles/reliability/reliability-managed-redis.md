@@ -166,11 +166,11 @@ You must set up your client applications to redirect requests to a healthy insta
 
 - **Instance configuration:** Active geo-replication requires Azure Managed Redis instances that use the same tier and size in every region. All cache instances in a replication group must use identical settings, including persistence options, modules, and clustering policies.
 
-- **Other requirements:** Your cache instances must meet other requirements, including the modules that you use, and these requirements affect how you can scale your cache instances. For more information, see [Active geo-replication prerequisites](/azure/redis/how-to-active-geo-replication#active-geo-replication-prerequisites).
+- **Other requirements:** Your cache instances must meet other requirements, including the modules that you use. These requirements affect how you can scale your cache instances. For more information, see [Active geo-replication prerequisites](/azure/redis/how-to-active-geo-replication#active-geo-replication-prerequisites).
 
 #### Considerations
 
-- **Failover responsibility:** When you use active geo-replication, **you must handle failover between cache instances**. Prepare your application to handle failover. Failover involves preparation and might require you to follow multiple steps. For more information, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
+- **Failover responsibility:** When you use active geo-replication, **you must handle failover between cache instances**. Prepare your application to handle failover. Failover involves preparation and might require you to do multiple steps. For more information, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
 
 - **Eventual consistency:** Design applications to handle eventual consistency scenarios because changes can take time to propagate across all regions, depending on network conditions and geographic distance. During region outages, you might experience more data inconsistencies until connectivity is restored and synchronization finishes.
 
@@ -208,7 +208,7 @@ This section describes what to expect when you set up instances to use active ge
 
 - **Detection and response:** You must detect the failure of a cache instance and decide when to fail over. You can monitor the health of a geo-replicated cluster, which can help you decide when to begin failover. For more information, see [Geo-replication metric](/azure/redis/how-to-active-geo-replication#geo-replication-metric).
 
-  Failover requires you to follow multiple steps. For more information, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
+  Failover requires you to do multiple steps. For more information, see [Force-unlink if there's a region outage](/azure/redis/how-to-active-geo-replication#force-unlink-if-theres-a-region-outage).
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
@@ -226,7 +226,7 @@ This section describes what to expect when you set up instances to use active ge
 
 #### Region recovery
 
-When a failed region recovers, Azure Managed Redis automatically reintegrates instances in that region into the active geo-replication group without your intervention. The service then automatically syncs data from healthy instances. During this process, the recovered instances gradually sync the changes that occurred during the outage. After synchronization finishes, the recovered instances become fully active and can handle both read and write operations.
+When a failed region recovers, Azure Managed Redis automatically reintegrates instances in that region into the active geo-replication group without your intervention. The service automatically syncs data from healthy instances. During this process, the recovered instances gradually sync the changes that occurred during the outage. After synchronization finishes, the recovered instances become fully active and can handle both read and write operations.
 
 You must reconfigure your application to route traffic back to the recovered region instance.
 
