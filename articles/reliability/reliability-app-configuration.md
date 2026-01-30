@@ -189,8 +189,8 @@ After the region recovers, App Configuration brings the replica back in sync wit
 
 Applications control replica selection, so they can dynamically switch replicas to test failover behavior.
 
-  > [!IMPORTANT]
-    > **Note to PG:** Can we give an approximate time here like 'typically within 15 minutes' or something?
+> [!IMPORTANT]
+> **Note to PG:** Can we give an approximate time here like 'typically within 15 minutes' or something?
 
 ## Backup and recovery
 
