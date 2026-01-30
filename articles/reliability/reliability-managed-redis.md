@@ -218,7 +218,7 @@ This section describes what to expect when you set up instances to use active ge
 
 - **Active requests:** The service terminates requests to the failed region and your application's failover logic must handle them. Applications should implement retry policies that can redirect traffic to healthy caches.
 
-- **Expected data loss:** Asynchronous replication between regions can result in the loss of recent writes to the failed region if those writes haven't replicated to other regions. The amount of potential data loss depends on the replication lag at the time of failure. For more information, see [Active-Active geo-distributed Redis](https://redis.io/docs/latest/operate/rs/databases/active-active/#strong-eventual-consistency) and [Considerations about consistency and data loss in a conflict‑free replicated database (CRDB) regional failure](https://redis.io/kb/doc/21rbquorvb/considerations-about-consistency-and-data-loss-in-a-crdb-regional-failure).
+- **Expected data loss:** Asynchronous replication between regions can result in the loss of recent writes to the failed region if those writes haven't replicated to other regions. The amount of potential data loss depends on the replication lag at the time of failure. For more information, see [Active-Active geo-distributed Redis](https://redis.io/docs/latest/operate/rs/databases/active-active/#strong-eventual-consistency) and [Considerations about consistency and data loss in a conflict‑free replicated database (CRDB) regional failure](https://redis.io/faq/doc/21rbquorvb/considerations-about-consistency-and-data-loss-in-a-crdb-regional-failure).
 
 - **Expected downtime:** Applications experience downtime only for the duration that you need to detect the failure and redirect traffic to healthy regions. This downtime typically ranges from seconds to a few minutes and depends on how you set up your application's health check and failover configuration.
 
@@ -260,7 +260,7 @@ Azure Managed Redis provides both data persistence and backup capabilities to pr
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-The SLA for Azure Managed Redis covers connectivity to the cache endpoints. The SLA doesn't cover protection from data loss.
+The SLA for Azure Managed Redis covers connectivity to the cache endpoints. It doesn't cover protection from data loss.
 
 To be eligible for availability SLAs for Azure Managed Redis, you must meet the following requirements:
 
@@ -269,3 +269,7 @@ To be eligible for availability SLAs for Azure Managed Redis, you must meet the 
 - You must not initiate any product features or management actions that are documented to produce temporary unavailability.
 
 Higher availability SLAs apply when your instance is zone redundant. In some tiers, you can become eligible for a higher availability SLA when you deploy zone-redundant instances into at least three regions by using active geo-replication.
+
+## Related content
+
+- [Reliability in Azure](/azure/reliability)
