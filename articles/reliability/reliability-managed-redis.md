@@ -126,7 +126,7 @@ This section describes what to expect when a managed Redis cache is zone redunda
 
 - **Active requests:** The service might drop in‑flight requests, and applications should retry them. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
-- **Expected data loss:** During a zone failure, the service might lose any data that hasn't replicated to shards in another zone. You typically measure the amount of data loss in seconds, but it depends on the replication lag.
+- **Expected data loss:** Any data that hasn't been replicated to shards in another zone might be lost during a zone failure. You typically measure the amount of data loss in seconds, but it depends on the replication lag.
 
 - **Expected downtime:** A small amount of downtime, typically 10 to 15 seconds, might occur while shards fail over to nodes in healthy zones. For more information about the unplanned failover process, see [Explanation of a failover](/azure/redis/failover#explanation-of-a-failover). When you design applications, follow practices for [transient fault handling](#resilience-to-transient-faults).
 
