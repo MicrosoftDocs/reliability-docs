@@ -106,6 +106,14 @@ productDirectory:
         - mobile
         - web
     # Card
+    - title: Azure App Configuration
+      summary: Centrally manage application settings and feature flags
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-configuration.svg
+      url: reliability-app-configuration.md
+      azureCategories:
+        - developer-tools
+        - integration
+    # Card
     - title: Azure AI Search
       summary: AI-powered cloud search service for mobile and web app development
       imageSrc: https://static.docs.com/ui/media/product/azure/search.svg
