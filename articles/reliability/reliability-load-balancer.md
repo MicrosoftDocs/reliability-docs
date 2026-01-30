@@ -73,7 +73,7 @@ The following diagram shows a zone-redundant public load balancer, which you con
 The following diagram shows an internal load balancer that uses a similar zone-redundant configuration.
 
 :::image type="complex" border="false" source="./media/reliability-load-balancer/zone-redundant-internal-load-balancer.svg" alt-text="Diagram that shows a zone-redundant internal load balancer with a zone-redundant public IP address that directs traffic to three VMs in different availability zones." lightbox="./media/reliability-load-balancer/zone-redundant-internal-load-balancer.svg":::
-   Architecture diagram that shows a zone-redundant internal load balancer deployed across three availability zones. The load balancer includes a zone-redundant front-end IP configuration, a load balancing rule, and a back-end pool that spans all three zones. Traffic routes from the internal front-end IP configuration through the load balancer to the VMs across all zones.
+   Architecture diagram that shows a zone-redundant internal load balancer deployed across three availability zones. The load balancer includes a zone-redundant front-end IP configuration, a load-balancing rule, and a back-end pool that spans all three zones. Traffic routes from the internal front-end IP configuration through the load balancer to the VMs across all zones.
 :::image-end:::
 
 > [!NOTE]
@@ -95,7 +95,7 @@ For example, when you use VMs, a common design approach for production workloads
 If you deploy your VMs in the same availability zone, you can deploy a zone‑redundant front-end IP configuration on your load balancer, as the following diagram shows.
 
 :::image type="complex" border="false" source="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.svg" alt-text="Diagram that shows a zone-redundant public load balancer directing traffic to two different VMs in zone 1." lightbox="./media/reliability-load-balancer/zone-redundant-load-balancer-zonal-virtual-machines.svg":::
-   Architecture diagram that shows a zone-redundant public load balancer deployed across three availability zones, but with both VMs located only in zone 1. A zone-redundant public IP address connects to a zone-redundant front-end IP configuration. The load balancer includes a zone-redundant front-end IP configuration, load-balancing rule, and a back-end pool that spans all three zones. The back-end pool contains two VMs that are both deployed in zone 1 only, and zone 2 and zone 3 have no VMs. This configuration creates a single point of failure (SPoF) because all VMs reside in one zone.
+   Architecture diagram that shows a zone-redundant public load balancer deployed across three availability zones, but with both VMs located only in zone 1. A zone-redundant public IP address connects to a zone-redundant front-end IP configuration. The load balancer includes a zone-redundant front-end IP configuration, a load-balancing rule, and a back-end pool that spans all three zones. The back-end pool contains two VMs that are both deployed in zone 1 only, and zone 2 and zone 3 have no VMs. This configuration creates a single point of failure (SPoF) because all VMs reside in one zone.
 :::image-end:::
 
 ### Requirements
@@ -173,13 +173,13 @@ You can use Azure Chaos Studio to simulate the failure of a VM in a single zone.
 
 ## Resilience to region-wide failures
 
-Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multi-region support through a *global load balancer*, which supports load balancing across Azure regions. You can also deploy other load balancing services to route and fail over across Azure regions
+Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multi-region support through a global load balancer, which supports load balancing across Azure regions. You can also deploy other load-balancing services to route and fail over across Azure regions.
 
 ### Global load balancers
 
 Global load balancers provide a single static anycast IP address that automatically routes traffic to the optimal regional deployment based on client proximity and regional health. Global load balancers improve your application's reliability and performance.
 
-With global load balancers, you deploy multiple public load balancers in different regions, and the global load balancers serve as a global front end. If your back-end servers in one region have a problem, traffic automatically switches to healthy regions without DNS changes because the anycast IP address remains constant and routes traffic to another region.
+With global load balancers, you deploy multiple public load balancers in different regions, and a global load balancer serves as the global front end. If your back-end servers in one region have a problem, traffic automatically switches to healthy regions without DNS changes because the anycast IP address remains constant and routes traffic to another region.
 
 For more information, see [Global load balancer](/azure/load-balancer/cross-region-overview).
 
