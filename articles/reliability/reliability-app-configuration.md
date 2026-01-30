@@ -2,9 +2,10 @@
 title: Reliability in Azure Application Configuration
 description: Learn how to make Azure Application Configuration resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
-ms.author: glynnniall 
+ms.author: pnp 
 ms.topic: reliability-article 
 ms.custom: subject-reliability, references_regions 
+ai.usage: ai-assisted
 ms.service: azure-app-configuration
 ms.date: 1/29/2026
 ---
@@ -25,11 +26,11 @@ For a list of recommended practices and configuration for production workloads, 
 
 When you deploy App Configuration, you deploy a *store*.
 
-Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [Feature flags](/azure/azure-app-configuration/concept-feature-management). The service provides other features for managing and organizing your settings. For more information, see [What is Azure App Configuration?](/azure/azure-app-configuration/overview).
+Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [Feature flags](/azure/azure-app-configuration/concept-feature-management). The service provides other features for managing and organizing your settings. For more information, see [What is Azure App Configuration?](/azure/azure-app-configuration/overview)
 
-App Configuration is a fully managed service, and Microsoft is responsible for storing and managing your settings, as well as performing maintenance on the service.
+App Configuration is a fully managed service. Microsoft is responsible for storing and managing your settings, as well as performing maintenance on the service.
 
-When you're building client applications, you can optionally use App Configuration with Azure Front Door to enable caching and global content delivery to clients. This configuration introduces additional considerations for geo-replication, which are highlighted throughout this document where appropriate.
+When you build client applications, you can optionally use App Configuration with Azure Front Door to enable caching and global content delivery to clients. This configuration introduces other considerations for geo-replication, which are highlighted throughout this article where appropriate.
 
 ## Resilience to transient faults
 
@@ -38,8 +39,8 @@ When you're building client applications, you can optionally use App Configurati
 When you use Azure App Configuration, consider the following best practices to minimize the effect of transient faults on configuration access, especially within critical request paths.
 
 - **Configuration providers:** Use the [Azure App Configuration provider libraries](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities along with many other resiliency features.
-- **SDKs:** Use App Configuration SDKs if your application needs to send write requests. Although the SDKs may not be as feature-rich as providers, they automatically retry on HTTP status code 429 responses and other transient errors.
-- **Retry logic:** Include retry logic in custom clients if you can't use App Configuration Providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time (in milliseconds) before retrying the request.
+- **SDKs:** Use App Configuration SDKs if your application needs to send write requests. Although the SDKs might not be as feature-rich as providers, they automatically retry on HTTP status code 429 responses and other transient errors.
+- **Retry logic:** Include retry logic in custom clients if you can't use App Configuration Providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time in milliseconds before retrying the request.
 - **Caching:** Cache settings in memory when possible to reduce direct requests to your store.
 
 For other application configuration guidance, see [Azure App Configuration FAQ](/azure/azure-app-configuration/faq#my-application-receives-http-status-code-429-responses--why).
@@ -55,15 +56,15 @@ When an availability zone becomes unavailable, App Configuration automatically r
 
 ### Requirements
 
-- **Region support:** Stores are deployed into the following regions are automatically zone-redundant:
+- **Region support:** Stores deployed into the following regions are automatically zone-redundant:
 
     (Table from the legacy migration guide goes here)
-**SKU requirements:** You must use the Standard tier or Premium tier to enable zone redundancy. No specific pricing tiers or SKUs are required.
+- **SKU requirements:** Use the Standard tier or Premium tier to enable zone redundancy. No specific pricing tiers or SKUs are required.
 <!--NOTE TO SELF:> Region support details are currently documented in legacy migration guidance. A long-term approach for managing this information in Learn content is under discussion. -->
 
 ### Considerations
 
-Availability zone resiliency is enabled automatically in supported regions. You can't opt out and don't need to take any action.
+The system automatically enables availability zone resiliency in supported regions. You can't opt out and don't need to take any action.
 
 ### Cost
 
@@ -71,15 +72,15 @@ There's no extra cost for zone redundancy for Azure App Configuration.
 
 ### Configure availability zone support
 
-Microsoft enables zone redundancy for a store automatically when it's deployed in [a region that supports availability zones](#requirements).
+Microsoft automatically enables zone redundancy for a store when it's in [a region that supports availability zones](#requirements).
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when a store is in a region that supports zone redundancy and all availability zones are operational:
+When a store is in a region that supports zone redundancy and all availability zones are operational, you can expect the following behavior:
 
-- **Traffic routing between zones:** App Configuration automatically manages traffic routing between availability zones. During normal operations, requests are distributed across zones transparently.
+- **Traffic routing between zones:** App Configuration automatically manages traffic routing between availability zones. During normal operations, it transparently distributes requests across zones.
 
-- **Data replication between zones:** App Configuration data is synchronously replicated across availability zones in regions that support zones. This replication ensures that your settings remain consistent and available even if a zone becomes unavailable.
+- **Data replication between zones:** In regions that support zones, App Configuration synchronously replicates data across availability zones. This replication ensures that your settings remain consistent and available even if a zone becomes unavailable.
 
     > [!IMPORTANT]
     > **Note to PG:** Please confirm that cross-zone replication is synchronous.
@@ -87,7 +88,7 @@ This section describes what to expect when a store is in a region that supports 
 
 This section describes what to expect when a store is in a region that supports zone redundancy and an availability zone is unavailable:
 
-- **Detection and response:** The App Configuration service is responsible for detecting zone failures and automatically responding to them. You don't need to take any action during a zone failure.
+- **Detection and response:** The App Configuration service detects zone failures and automatically responds to them. You don't need to take any action during a zone failure.
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
@@ -111,21 +112,93 @@ Azure App Configuration provides native **geo-replication** capabilities to supp
 
 ### Geo-replication
 
-Geo-replication is a product feature that enables a configuration store to be replicated across multiple Azure regions. This capability helps protect applications from region-wide service disruptions.
-<!-- TODO: 
-> Further investigation is required to determine:
-> - Exact behavior during regional failover
-> - Configuration requirements
-> - Supported region combinations
-> - Whether additional custom multi-region solutions should be documented
--->
+Geo-replication is a product feature that enables a configuration store to be replicated across multiple Azure regions. Each store can have multiple replicas in different regions. The original store is also a replica. This capability helps protect applications from region-wide service disruptions.
+
+#### Requirements
+
+The configuration store must use a supported tier to enable geo-replication. For more information, see (/azure/azure-app-configuration/howto-geo-replication).
+
+
+#### Considerations
+
+When you enable geo-replication, consider the following factors:
+
+- **Zone-redundant replicas:** Any replica you create in a region in which App Configuration supports availability zones is automatically zone-redundant.
+
+- **Azure Front Door:** If you use Azure Front Door to access your store, your applications must connect through Azure Front Door, and Azure Front Door controls replica selection and failover. For more information, see:(/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
+
+#### Cost
+
+Each geo-replicated region is billed separately according to the pricing for the respective tier and region.
+    > [!IMPORTANT]
+    > **Note to PG:** Is inter-region data egress charged? We say this in some other guides (for example, Azure Container Registry): "Egress charges also apply for data transfer between regions during initial replication and ongoing synchronization."
+
+For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/en-us/pricing/details/app-configuration/).
+
+#### Configure multi-region support
+
+ To set up replication for a newly created configuration store, see [Enable geo-replication ](/azure/azure-app-configuration/howto-geo-replication). 
+
+#### Behavior when all regions are healthy
+
+This section describes what to expect when an App Configuration store is configured for geo-replication, and the primary region is operational.
+
+- **Traffic routing between regions:** 
+    - Each replica is addressable individually and has its own DNS name (note to PG - confirm we're OK to say that)
+    > [!IMPORTANT]
+    > **Note to PG:** Is this correct?
+    - When you use Microsoft's configuration providers, your application can optionally:
+
+        a. Use automatic replica discovery.
+        b. Specify a prioritized list of replicas. App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
+    - All replicas can accept write operations.
+
+    >[!Note] If you use Azure Front Door, traffic routing behavior is different. For more information, see (/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
+
+- **Data replication between regions:** Data is replicated asynchronously and is eventually consistent. You can use the 'replication lag' metric in Azure Monitor to monitor the current replication lag between replicas.
+    > [!IMPORTANT]
+    > **Note to PG:** Can we give an approximate time here like 'typically within 15 minutes' or something?
+
+#### Behavior during a region failure
+
+This section describes what to expect when you configure app configuration for geo-replication and there's an outage in the primary or a secondary region.
+
+- **Detection and response:** 
+    - Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
+    - Your application must switch to another replica. 
+<!--(Is this phrased correctly, John? Are there configuration steps needed or an article we should link to?)-->
+
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
+
+    Use that information and other metrics to decide when to promote a secondary region to a primary region.
+
+- **Active requests:** Retry existing requests against a different replica. 
+
+- **Expected data loss:** If a replica fails, recent changes on that replica might not yet exist on other replicas. Those changes can remain unavailable until the replica recovers. To estimate potential data loss, monitor the replication lag metric in Azure Monitor. 
+
+- **Expected downtime:** When a replica becomes unavailable, it stays offline until its region recovers. Other replicas continue to handle requests. Applications might experience brief downtime while they detect the failure and switch to a healthy replica. The duration depends on how quickly each application performs this detection and failover.
+
+- **Traffic rerouting:** Applications must route traffic to a healthy replica when a failure occurs.
+
+- If you use Microsoft configuration provider libraries, the libraries automatically handle replica selection and failover.
+- If you place Azure Front Door in front of your data store and configure the origin group for failover, applications continue to operate without manual intervention.
+
+#### Region recovery
+
+After the region recovers, App Configuration brings the replica back in sync with the other replicas. Applications using Microsoft configuration providers automatically start using it again.
+
+#### Test for region failures
+
+Applications control replica selection, so they can dynamically switch replicas to test failover behavior.
+
+  > [!IMPORTANT]
+    > **Note to PG:** Can we give an approximate time here like 'typically within 15 minutes' or something?
 
 ## Backup and recovery
 
-
 Azure App Configuration enables you to [export configuration data](/azure/azure-app-configuration/concept-snapshots) from a store and use it as part of a broader backup strategy.
 
-For most solutions, you shouldn't rely exclusively on backups. Instead, use the other capabilities described in this guide to support your resiliency requirements. However, backups protect against some risks that other approaches don't.
+For most solutions, don't rely exclusively on backups. Instead, use the other capabilities described in this guide to support your resiliency requirements. However, backups protect against some risks that other approaches don't.
 
 ## Recovery features
 
@@ -135,15 +208,15 @@ App Configuration provides two key recovery features to prevent accidental or ma
 
 - **Purge protection:** When enabled, purge protection prevents permanent deletion of your store and its objects until the retention period elapses. This safeguard prevents malicious actors from permanently destroying your settings.
 
-We strongly recommend both features for production environments. For more information, see [Soft-delete and purge protection](/azure/azure-app-configuration/concept-soft-delete).
+Use both features for production environments. For more information, see [Soft-delete and purge protection](/azure/azure-app-configuration/concept-soft-delete).
 
 ## Resilience to service maintenance
 
 
-Microsoft regularly performs service updates and other maintenance. These activities are handled automatically by the service, ensuring that maintenance is seamless and transparent to customers. No downtime is expected during maintenance events. As a result, no customer actions are required to maintain reliability.
+Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, ensuring that maintenance is seamless and transparent to customers. No downtime occurs during maintenance events. As a result, no customer actions are required to maintain reliability.
 
 > [!IMPORTANT]
-> **Note to PG:** Please verify that we're OK to say "No downtime is expected during maintenance events".
+> **Note to PG:** Please verify that we're OK to say "No downtime is expected during maintenance events."
 
 ## Resilience to configuration problems
 
