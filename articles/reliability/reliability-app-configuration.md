@@ -4,7 +4,7 @@ description: Learn how to make Azure Application Configuration resilient to vari
 author: glynnniall
 ms.author: pnp 
 ms.topic: reliability-article 
-ms.custom: subject-reliability, references_regions 
+ms.custom: subject-reliability
 ai.usage: ai-assisted
 ms.service: azure-app-configuration
 ms.date: 1/29/2026
