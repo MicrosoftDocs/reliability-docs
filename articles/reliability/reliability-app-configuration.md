@@ -133,11 +133,11 @@ Each geo-replicated region is billed separately according to the pricing for the
     > [!IMPORTANT]
     > **Note to PG:** Is inter-region data egress charged? We say this in some other guides (for example, Azure Container Registry): "Egress charges also apply for data transfer between regions during initial replication and ongoing synchronization."
 
-For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/en-us/pricing/details/app-configuration/).
+For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
 
 #### Configure multi-region support
 
- To set up replication for a newly created configuration store, see [Enable geo-replication ](/azure/azure-app-configuration/howto-geo-replication). 
+To set up replication for a newly created configuration store, see [Enable geo-replication](/azure/azure-app-configuration/howto-geo-replication). 
 
 #### Behavior when all regions are healthy
 
@@ -147,13 +147,11 @@ This section describes what to expect when an App Configuration store is configu
     - Each replica is addressable individually and has its own DNS name (note to PG - confirm we're OK to say that)
     > [!IMPORTANT]
     > **Note to PG:** Is this correct?
-    - When you use Microsoft's configuration providers, your application can optionally:
-
-        a. Use automatic replica discovery.
-        b. Specify a prioritized list of replicas. App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
+    - When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery, or specify a prioritized list of replicas. App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
     - All replicas can accept write operations.
 
-    >[!Note] If you use Azure Front Door, traffic routing behavior is different. For more information, see (/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
+    > [!NOTE]
+    > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
 - **Data replication between regions:** Data is replicated asynchronously and is eventually consistent. You can use the 'replication lag' metric in Azure Monitor to monitor the current replication lag between replicas.
     > [!IMPORTANT]
