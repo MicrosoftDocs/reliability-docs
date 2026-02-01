@@ -72,7 +72,7 @@ When you configure a server, you select one of the following configurations:
 
 - **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. You select which zone they are placed into.
 
-    :::image type="content" source="./media/reliability-azure-database-postgresql/same-zone-high-availability-architecture.png" alt-text="Pictures illustrating zonal high availability architecture." lightbox="./media/reliability-azure-database-postgresql/same-zone-high-availability-architecture.png":::
+    :::image type="content" source="./media/reliability-database-postgresql/same-zone-high-availability-architecture.png" alt-text="Pictures illustrating zonal high availability architecture." lightbox="./media/reliability-database-postgresql/same-zone-high-availability-architecture.png":::
     
     If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
     
@@ -93,7 +93,7 @@ When you configure a server, you select one of the following configurations:
 
     The following picture shows the transition between VM and storage failure.
 
-    :::image type="content" source="./media/reliability-azure-database-postgresql/availability-without-zone-redundant-ha-architecture.png" alt-text="Diagram that shows availability without zone redundant high availability (HA) in steady state." border="false" lightbox="./media/reliability-azure-database-postgresql/availability-without-zone-redundant-ha-architecture.png":::
+    :::image type="content" source="./media/reliability-database-postgresql/availability-without-zone-redundant-ha-architecture.png" alt-text="Diagram that shows availability without zone redundant high availability (HA) in steady state." border="false" lightbox="./media/reliability-database-postgresql/availability-without-zone-redundant-ha-architecture.png":::
 
 ### Requirements
 
@@ -171,7 +171,7 @@ This section describes what to expect when servers are configured with high avai
 
     PostgreSQL client applications connect to the primary server by using the database server name. The primary server directly serves application reads. The application receives confirmation of commits and writes only after the log data persists on both the primary server and the standby replica. Due to this extra round-trip, applications can expect elevated latency for writes and commits.
 
-    :::image type="content" source="./media/reliability-azure-database-postgresql/high-availability-steady-state.png" alt-text="Picture showing high availability steady state operation workflow.":::
+    :::image type="content" source="./media/reliability-database-postgresql/high-availability-steady-state.png" alt-text="Picture showing high availability steady state operation workflow.":::
 
     1. Clients connect to the flexible server and perform write operations.
     1. Changes replicate to the standby site.

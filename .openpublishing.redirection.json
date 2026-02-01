@@ -66,6 +66,11 @@
       "redirect_document_id": true
     },
     {
+      "source_path_from_root": "/articles/reliability/reliability-azure-database-postgresql.md",
+      "redirect_url": "/azure/reliability/reliability-database-postgresql",
+      "redirect_document_id": true
+    },
+    {
       "source_path_from_root": "/articles/reliability/glossary.md",
       "redirect_url": "/azure/reliability/overview",
       "redirect_document_id": false

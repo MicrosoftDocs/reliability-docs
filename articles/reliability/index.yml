@@ -384,7 +384,7 @@ productDirectory:
     - title: Azure Database for PostgreSQL
       summary: Managed PostgreSQL database service for app developers
       imageSrc: /azure/media/index/database-postgresql-server.svg
-      url: reliability-azure-database-postgresql.md
+      url: reliability-azure-postgresql.md
       azureCategories:
         - databases
         - hybrid
