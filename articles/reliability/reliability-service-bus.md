@@ -125,6 +125,18 @@ Service Bus provides two types of multi-region support, both of which require Pr
 
 - [Metadata Geo-Disaster Recovery](#metadata-geo-disaster-recovery) provides active-passive replication of configuration and metadata between a primary and secondary region, but it doesn't replicate message data. Consider using Geo-Disaster Recovery for applications that handle their own data replication or don't need data replication.
 
+The following table summarizes the key differences between the two features:
+
+| Capability | Geo-Replication | Geo-Disaster Recovery |
+|------------|-----------------|----------------------|
+| What's replicated | Metadata and data (messages, message states, property changes) | Metadata only (entities, configuration, properties) |
+| Data loss on failover | No data loss with planned promotion; possible data loss with forced promotion | Messages aren't replicated; must be manually recovered from the old primary namespace |
+| Failover behavior | Promotes secondary to primary; old primary becomes secondary | One-time failover; pairing is broken after failover |
+| Failback capability | Yes, can promote back to original primary | No, must set up new pairing |
+| Replication modes | Synchronous or asynchronous | Not applicable (metadata only) |
+
+For most disaster recovery scenarios, Geo-Replication is the recommended choice as it provides complete data protection. Consider Geo-Disaster Recovery only when you specifically need metadata-only replication.
+
 Both Geo-Replication and metadata Geo-Disaster Recovery require you to manually initiate failover or promotion of a secondary region to become the new primary region. Microsoft doesn't automatically initiate failover or promotion, even if your primary region is down.
 
 Namespaces in the Basic and Standard tiers don't include native multi-region features, but you can implement application-level replication patterns by using multiple namespaces across regions. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
