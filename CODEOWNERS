@@ -1,5 +1,2 @@
 # These owners will be the default owners for everything in the repo. Unless a later match takes precedence
-* @glynnniall @johndowns @v-regandowner
-
-# Content leads to approve all pull requests opened in the repo
-/articles/ @glynnniall @johndowns
+* @glynnniall @johndowns @jmart1428
