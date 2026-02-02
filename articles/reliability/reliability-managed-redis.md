@@ -164,7 +164,7 @@ You're responsible for setting up your client applications to redirect requests 
 
 - **Region support:** You can set up Azure Managed Redis active geo-replication between any Azure regions where the service is available.
 
-- **Instance configuration:** Active geo-replication requires Azure Managed Redis instances that use the same tier and size in every region. All cache instances in a replication group must use identical settings, including persistence options, modules, and clustering policies.
+- **Instance configuration:** Active geo-replication requires Azure Managed Redis instances that use the same tier and size in every participating region. All cache instances in a replication group must use identical settings, including persistence options, modules, and clustering policies.
 
 - **Other requirements:** Your cache instances must meet other requirements, including the modules that you use. These requirements affect how you can scale your cache instances. For more information, see [Active geo-replication prerequisites](/azure/redis/how-to-active-geo-replication#active-geo-replication-prerequisites).
 
@@ -250,7 +250,7 @@ Azure Managed Redis provides both data persistence and backup capabilities to pr
 
   You can't restore data files to another instance, and you can't access the files. Data persistence doesn't protect you from data corruption or accidental deletion.
 
-- **Import and export:** Azure Managed Redis supports backup of your data when you use the [import and export functionality](/azure/redis/how-to-import-export-data), which saves backup files to Azure Blob Storage. You can set up geo-redundant storage (GRS) on your Azure Storage account, or you can copy or move the backup blobs to other locations for further protection.
+- **Import and export:** Azure Managed Redis supports backup of your data when you use the [import and export functionality](/azure/redis/how-to-import-export-data), which saves backup files to Azure Blob Storage. You can set up geo-redundant storage (GRS) on your Azure Storage account in supported regions, or you can copy or move the backup blobs to other locations for further protection.
 
   You can restore exported files to the same cache instance or a different cache instance.
 
