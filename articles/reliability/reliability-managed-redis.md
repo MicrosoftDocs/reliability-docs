@@ -24,9 +24,9 @@ This article describes how to make Azure Managed Redis resilient to a variety of
 To ensure high reliability for your production Azure Managed Redis instances, we recommend that you:
 
 > [!div class="checklist"]
-> - **Enable high availability**, which deploys multiple nodes for your cache.
+> - **Use high availability**, which deploys multiple nodes for your cache.
 >
-> - **Enable zone redundancy** by deploying a highly available cache into a region that has availability zones.
+> - **Use zone redundancy** by deploying a highly available cache into a region that has availability zones.
 >
 > - **Consider implementing active geo-replication** for mission-critical workloads that require cross-region failover.
 
@@ -46,7 +46,7 @@ When you plan for resiliency in Azure Managed Redis, you must understand the key
 
 - **Nodes:** Each cache instance consists of *nodes*, which are virtual machines (VMs). Each VM serves as an independent compute unit in the cluster. You don't see or manage the VMs directly. The platform automatically creates instances, monitors instance health, and replaces any instances that become unhealthy. This set of VMs forms a *cluster*.
 
-  You can set up your instance for high availability. When you enable high availability, Azure Managed Redis ensures that the instance has at least two nodes and automatically replicates data between them. In regions that have availability zones, the service places the nodes into different availability zones. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
+  You can set up your instance for high availability. When you use high availability, Azure Managed Redis ensures that the instance has at least two nodes and automatically replicates data between them. In regions that have availability zones, the service places the nodes into different availability zones. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
   The service abstracts the specific number of nodes in each configuration to avoid complexity and ensure optimal configurations.
 
@@ -176,19 +176,19 @@ You're responsible for setting up your client applications to redirect requests 
 
 #### Cost
 
-When you enable active geo-replication, you pay for each Azure Managed Redis instance in every region within the replication group. You might also incur data transfer charges for cross-region replication traffic between regions. For more information, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) and [Bandwidth pricing details](https://azure.microsoft.com/pricing/details/bandwidth/).
+When you set up active geo-replication, you pay for each Azure Managed Redis instance in every region within the replication group. You might also incur data transfer charges for cross-region replication traffic between regions. For more information, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) and [Bandwidth pricing details](https://azure.microsoft.com/pricing/details/bandwidth/).
 
 #### Configure multi-region support
 
 - **Create a new geo-replicated cache instance.** Set up active geo-replication when you provision the cache by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](/azure/redis/how-to-active-geo-replication#create-or-join-an-active-geo-replication-group).
 
-- **Enable an existing cache instance for geo-replication.** You can add an existing cache instance to an active geo-replication group.
+- **Add an existing cache instance to a geo-replication group.** You can add an existing cache instance to an active geo-replication group.
 
-  When you add an existing instance to an active geo-replication group, the platform needs to clear the data in the instance, and you experience a small amount of downtime. If possible, plan to enable active geo-replication when you create cache instances.
+  When you add an existing instance to an active geo-replication group, the platform needs to clear the data in the instance, and you experience a small amount of downtime. If possible, plan to set up active geo‑replication when you create cache instances.
 
   For more information, see [Add an existing instance to an active geo-replication group](/azure/redis/how-to-active-geo-replication#add-an-existing-instance-to-an-active-geo-replication-group).
 
-- **Turn off geo-replication on a cache instance.** Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically reconfigure themselves.
+- **Turn off geo-replication on a cache instance.** Remove an instance from a geo-replication group by deleting the cache instance. The remaining instances automatically adjust their settings.
 
 #### Capacity planning and management
 
@@ -264,7 +264,7 @@ The SLA for Azure Managed Redis covers connectivity to the cache endpoints. It d
 
 To be eligible for availability SLAs for Azure Managed Redis, you must meet the following requirements:
 
-- You must enable high availability configuration.
+- You must use a high-availability configuration.
 
 - You must not initiate any product features or management actions that are documented to produce temporary unavailability.
 
