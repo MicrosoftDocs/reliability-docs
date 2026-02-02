@@ -21,8 +21,10 @@ This article focuses on the Azure Private Link service and the associated privat
 > [!NOTE]
 > This article focuses on Azure Private Link service, which you use in combination with a load balancer to enable private connectivity to applications that you run on your own VMs. If you use private endpoints with other Azure services, for example Azure Storage or Azure SQL Database, you should instead review those services' reliability guides for any specific reliability information about their private endpoints.
 
-> [!NOTE]
-> Your end-to-end resilience to availability zone failures depends on multiple components. Although Private Link services are resilient to availability zone outages, other components might not be. Review the configuration of your load balancers, VMs, and other components to ensure that you can meet your reliability requirements even during a zone failure. TODO this talks about zones
+> [!IMPORTANT]
+> The reliability of your overall solution depends on the configuration of the backend servers that Private Link service connects to. Depending on your solution, these might be Azure virtual machines (VMs), Azure virtual machine scale sets, or external endpoints. It also includes load balancers and other network components.
+>
+> Your backend servers aren't in scope for this article, but their availability configurations directly affect your application's resilience. Review the reliability guides for all of the Azure services in your solution to understand how each service supports your reliability requirements. By ensuring that your backend servers are also configured for high availability and zone redundancy, you can achieve end-to-end reliability for your application.
 
 ## Reliability architecture overview
 
