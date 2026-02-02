@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-vmware
-ms.date: 01/07/2025
+ms.date: 02/02/2025
 ai-usage: ai-assisted
 zone_pivot_groups: azure-vmware-solution-generations
 ---
