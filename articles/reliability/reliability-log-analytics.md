@@ -23,13 +23,13 @@ This article describes how to make Azure Monitor Logs resilient to a variety of 
 
 Azure Monitor Logs offers several features that enhance workspaces resilience to various types of issues. Use these features individually or in combination, depending on your needs and budget.
 
-|----|----|----|
 | Capability    | Description    | Relative cost |
+|----|----|----|
 | [Availability Zones](/azure/azure-monitor/logs/availability-zones)    | Protect your Log Analytics workspace from datacenter failures through redundancy between zones in your region.    | Least expensive |
-| [Data Export](/azure/azure-monitor/logs/data-export)    | Back up ingested logs against entire region failures by continuously exporting logs to a geo-redundant storage account.    | Somewhat expensive |
+| [Data Export](/azure/azure-monitor/logs/logs-data-export)    | Back up ingested logs against entire region failures by continuously exporting logs to a geo-redundant storage account.    | Somewhat expensive |
 | [Workspace Replication](/azure/azure-monitor/logs/workspace-replication)    | Protect your Log Analytics workspace against entire region failures in Log Analytics or downstream services through redundancy between regions.    | Most expensive |
 
-:::image type="content" source="media/reliability-log-analytics/resiliency-features.png" lightbox-"media/reliability-log-analytics/resiliency-features.png" alt-text="An image showing the resiliency features of Azure Monitor Log Analytics based on the previous table.":::
+:::image type="content" source="media/reliability-log-analytics/resiliency-features.png" lightbox="media/reliability-log-analytics/resiliency-features.png" alt-text="An image showing the resiliency features of Azure Monitor Log Analytics based on the previous table.":::
 
 Certain Log Analytics features aren't compatible with all reliability features. For example, Auxiliary tables aren't supported with workspace replication. For more information, review the [Reliability best practices for Log Analytics](/azure/azure-monitor/logs/best-practices-logs#reliability) for details on feature compatibility.
 
@@ -70,7 +70,7 @@ Initiate an investigation or a switchover for sustained latency longer than five
 
 ## Resilience to availability zone failures
 
-[Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
 
 Azure Monitor Logs offers zone-redundant **data resilience** (stored data) for all regions that support availability zones. Most regions that support availability zones require your workspace to be deployed in a d[dedicated cluster](/azure/azure-monitor/logs/logs-dedicated-clusters), however, some regions support it with the default workspace configuration of a shared cluster. Moving to a dedicated cluster in a region that supports availability zones protects data ingested after the move, not historical data.
 
@@ -241,4 +241,4 @@ For the formal SLA, see [Service Level Agreements for Online Services https://ak
 - [Data collection rules](/azure/azure-monitor/data-collection/data-collection-rule-overview)
 - [Dedicated clusters](/azure/azure-monitor/logs/logs-dedicated-clusters)
 
-[!INCLUDE [security-reminder](../../includes/security-reminder.md)]
+[!INCLUDE [security-reminder](/includes/security-reminder.md)]
