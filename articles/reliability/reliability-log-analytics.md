@@ -70,8 +70,6 @@ Initiate an investigation or a switchover for sustained latency longer than five
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
-
 Azure Monitor Logs offers zone-redundant **data resilience** (stored data) for all regions that support availability zones. Most regions that support availability zones require your workspace to be deployed in a d[dedicated cluster](/azure/azure-monitor/logs/logs-dedicated-clusters), however, some regions support it with the default workspace configuration of a shared cluster. Moving to a dedicated cluster in a region that supports availability zones protects data ingested after the move, not historical data.
 
 Only some regions offer zone-redundant **service resilience** (ingestion and query continuity). 
@@ -240,5 +238,3 @@ For the formal SLA, see [Service Level Agreements for Online Services https://ak
 - [Log Analytics workspace data export](/azure/azure-monitor/logs/logs-data-export)
 - [Data collection rules](/azure/azure-monitor/data-collection/data-collection-rule-overview)
 - [Dedicated clusters](/azure/azure-monitor/logs/logs-dedicated-clusters)
-
-[!INCLUDE [security-reminder](/includes/security-reminder.md)]
