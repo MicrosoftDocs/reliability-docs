@@ -12,17 +12,17 @@ ms.date: 01/30/2026
 
 # Reliability in Azure Private Link service
 
-[Azure Private Link service](/azure/private-link/private-link-service-overview) enables you to privately expose your own applications; such as those running on virtual machines, within Azure, allowing other Azure customers or your own networks to connect securely without using public IP addresses. Azure Private Link Service is typically used in combination with an Azure Load Balancer to provide private connectivity to your workloads, ensuring that traffic remains within the Azure network.
+[Azure Private Link service](/azure/private-link/private-link-service-overview) enables you to privately expose your own applications, such as those running on virtual machines, within an Azure virtual network. Private Link service enables other Azure customers or clients on your own networks to connect securely without using public IP addresses, ensuring that traffic remains within the Azure network.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article focuses on the Azure Private Link platform and private endpoints as a connectivity mechanism. It describes platform-level and control-plane behavior during transient faults, availability zone outages, and region-wide outages.
+This article focuses on the Azure Private Link service and the associated private endpoints as a connectivity mechanism. It describes platform-level and control-plane behavior during transient faults, availability zone outages, and region-wide outages.
 
 > [!NOTE]
 > This article focuses on Azure Private Link service, which you use in combination with a load balancer to enable private connectivity to applications that you run on your own VMs. If you use private endpoints with other Azure services, for example Azure Storage or Azure SQL Database, you should instead review those services' reliability guides for any specific reliability information about their private endpoints.
 
 > [!NOTE]
-> Your end-to-end resilience to availability zone failures depends on multiple components. Although Private Link services are resilient to availability zone outages, other components might not be. Review the configuration of your load balancers, VMs, and other components to ensure that you can meet your reliability requirements even during a zone failure.
+> Your end-to-end resilience to availability zone failures depends on multiple components. Although Private Link services are resilient to availability zone outages, other components might not be. Review the configuration of your load balancers, VMs, and other components to ensure that you can meet your reliability requirements even during a zone failure. TODO this talks about zones
 
 ## Reliability architecture overview
 
@@ -59,7 +59,7 @@ Private endpoints are automatically distributed across availability zones in the
 
 - **Region support:** You can deploy zone redundant Private Link services into [any region that supports availability zones](regions-list.md).
 
-- **Standard Load Balancer dependency:** Your backend Standard Load Balancer should also be configured as zone-redundant to ensure end-to-end zone resiliency.
+- **Load balancer dependency:** Your backend load balancer should also be configured as zone-redundant to ensure end-to-end zone resiliency. For more information, see [Reliability in Azure Load Balancer](./reliability-load-balancer.md).
 
 ### Cost
 
@@ -85,11 +85,11 @@ This section describes what to expect when Private Link services and private end
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
-- **Active requests**: Active requests might be terminated during an availability zone failure. Applications should retry failed requests after transient interruptions, similar to [other transient faults](#resilience-to-transient-faults).
+- **Active requests**: Active requests might be terminated during an availability zone failure. Service consumers should retry failed requests after transient interruptions, similar to [other transient faults](#resilience-to-transient-faults).
 
 - **Expected data loss**: No data loss occurs because Azure Private Link is a stateless service for connectivity.
 
-- **Expected downtime**: Existing connections that connect through the failed zone might go down. Service consumers can retry connections immediately and requests will be routed through infrastructure in another zone.
+- **Expected downtime**: Existing connections that connect through the failed zone might go down. As long as backend components, like the load balancer and application servers, are still available, service consumers can retry connections immediately and requests will be routed through infrastructure in another zone.
 
 - **Traffic rerouting**: When a single availability zone fails, the service continues operating by routing new traffic through healthy zones.
 
@@ -111,7 +111,7 @@ Private Link service is a single-region service. The service doesn't provide nat
 
 ### Custom multi-region solutions for resiliency
 
-If you design a networking approach with multiple regions, you should deploy independent Private Link services and private endpoints into each region. You're responsible for deploying and managing each Private Link service, for routing client traffic to the appropriate Private Link service, and for configuring private endpoints on each Private Link service as you require.
+If you design a networking approach with multiple regions, you (the service provider) should deploy independent Private Link services into each region. You're responsible for deploying and managing each Private Link service. Service consumers are responsible for configuring private endpoints on each Private Link service as required, and for routing traffic to the appropriate Private Link service.
 
 ## Backup and recovery
 
