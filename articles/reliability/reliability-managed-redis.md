@@ -13,11 +13,11 @@ ai-usage: ai-assisted
 
 # Reliability in Azure Managed Redis
 
-[Azure Managed Redis](/azure/redis/overview) is a fully integrated and managed Redis Enterprise service on Azure. It provides high-performance, in-memory data storage for applications and is designed for enterprise workloads that require ultra-low latency, high throughput, and advanced data structures.
+[Azure Managed Redis](/azure/redis/overview) is a fully managed Azure service based on Redis Enterprise. It provides high-performance, in-memory data storage for applications and is designed for enterprise workloads that require ultra-low latency, high throughput, and advanced data structures.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes reliability in Azure Managed Redis, including resilience to transient faults, availability zone failures, and region-wide failures. The article also describes backup strategies and the service-level agreement (SLA).
+This article describes how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
 
 ## Production deployment recommendations
 
@@ -68,7 +68,7 @@ Follow these recommendations for managing transient faults when you use Azure Ma
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-You can make Azure Managed Redis cache instances *zone redundant*, which automatically distributes the cache nodes across multiple availability zones within a region. Zone redundancy reduces the risk that a datacenter or availability zone outages makes your cache unavailable.
+You can make Azure Managed Redis cache instances *zone redundant*, which automatically distributes the cache nodes across multiple availability zones within a region. Zone redundancy reduces the risk that a datacenter or availability-zone outage makes your cache unavailable.
 
 To make a cache zone redundant, you must deploy it in a supported region and set it to use the high availability configuration. In regions without availability zones, the high availability configuration still creates at least two nodes, but they aren't placed in separate zones.
 

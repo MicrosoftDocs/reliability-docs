@@ -9,4 +9,4 @@ ms.author: glynnniall
 ms.custom: include file
 ---
 
-- **Notification:** [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./reliability-availability-zone-down-notification-service-partial-include.md)]
+- **Notification**: [!INCLUDE [Availability zone down notification partial bullet (Service Health only)](./reliability-availability-zone-down-notification-service-partial-include.md)]
