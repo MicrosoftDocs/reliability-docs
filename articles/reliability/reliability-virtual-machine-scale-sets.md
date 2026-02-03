@@ -11,7 +11,7 @@ ms.date: 01/23/2026
 
 # Reliability in Azure Virtual Machine Scale Sets
 
-Use [Azure Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/overview) to create and manage a group of virtual machine (VM) instances. The number of VM instances can automatically increase or decrease in response to demand or a defined schedule. Virtual Machine Scale Sets help make applications highly available and resilient by distributing VMs across multiple availability zones and fault domains.
+[Azure Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/overview) is an Azure compute resource that you can use to create and manage a group of virtual machine (VM) instances. The number of VM instances can automatically increase or decrease in response to demand or a defined schedule. Virtual machine scale sets help make applications highly available and resilient by distributing VMs across multiple availability zones and fault domains.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -53,9 +53,9 @@ Scale sets include many other controls and capabilities that affect how you depl
 
 ## Resilience to instance problems
 
-When a scale set initiates a VM instance creation or deletion task, it's possible that the operation fails. To automatically retry failed VM instance creation or deletion tasks, consider using [Resilient create and delete for Virtual Machine Scale Sets (preview)](/azure/virtual-machine-scale-sets/resilient-vm-create-delete).
+When a scale set initiates a VM instance creation or deletion task, the operation might fail. To automatically retry failed VM instance creation or deletion tasks, consider using the [resilient create and delete feature for Virtual Machine Scale Sets (preview)](/azure/virtual-machine-scale-sets/resilient-vm-create-delete).
 
-Problems might occur while instances run. For example, an instance might become unresponsive because of application crashes or resource exhaustion. By using [automatic instance repairs](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-automatic-instance-repairs), the platform monitors your application's health and automatically does repair actions, like restarting, reimaging, or replacing a VM instance when needed.
+Problems might occur while instances run. For example, an instance might become unresponsive because of application crashes or resource exhaustion. Use [automatic instance repairs](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-automatic-instance-repairs) to monitor your application's health and automatically restart, reimage, or replace a VM instance when needed.
 
 ## Resilience to availability zone failures
 
@@ -69,30 +69,30 @@ Virtual Machine Scale Sets supports availability zones in both zone-spanning and
 
     In a zone-spanning scale set, each VM instance and its disks are tied to a specific availability zone. When all zones are healthy, instances can communicate across zones by using a high-performance, low-latency network. If a zone experiences an outage or connectivity problem, instances in the other zones remain unaffected.
 
-    By default, the scale set has a best-effort approach to evenly spread instances across selected zones. However, if you require strict balancing, you can choose to [change the zone balancing configuration](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-use-availability-zones#zone-balancing).
+    By default, the scale set uses a best-effort approach to evenly spread instances across selected zones. But if you require strict balancing, you can [change the zone balancing configuration](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-use-availability-zones#zone-balancing).
 
-    The following diagram shows a zone-spanning scale set spread across three zones, with one instance in each zone:
+    The following diagram shows a zone-spanning scale set spread across three zones, with one instance in each zone.
 
     :::image type="complex" source="media/reliability-virtual-machine-scale-sets/zone-spanning.svg" alt-text="Diagram that shows a zone-spanning scale set that has three instances, each deployed into a separate availability zone." border="false" lightbox="media/reliability-virtual-machine-scale-sets/zone-spanning.svg":::
-       The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A rectangular box spans these three boxes. That box contains an icon labeled scale set on the far left and a VM instance icon under each availability zone heading.
+       The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A scale set spans these three boxes. Each availability zone includes a VM instance.
     :::image-end:::
 
-    Zone-spanning is similar to [zone redundancy](./availability-zones-overview.md#types-of-availability-zone-support) in other Azure services, but scale sets don't provide automatic replication of data across zones or failover when zones are down. A zone-spanning scale set might also have all of its instances deployed in a single zone, like when you choose to attach individual VMs to a zone-spanning flexible scale set.
+    Zone spanning is similar to [zone redundancy](./availability-zones-overview.md#types-of-availability-zone-support) in other Azure services, but scale sets don't provide automatic replication of data across zones or failover when zones are down. A zone-spanning scale set might also have its instances deployed in a single zone, like when you attach individual VMs to a zone-spanning flexible scale set.
 
     > [!NOTE]
     > If you use the flexible orchestration mode and attach, detach, or remove individual VMs, ensure that the VMs are spread across multiple zones. If the VMs are all in a single zone, your scale set might not be resilient to an outage in that zone.
 
-- A *zonal* scale set, also called *zone-aligned*, places all its instances in a single availability zone that you specify. Each VM and its disks are zonal, so they're pinned to that specific zone.
+- A *zonal* scale set, also called *zone aligned*, places all its instances in a single availability zone that you specify. Each VM and its disks are zonal, so they're pinned to that specific zone.
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
-    The following diagram shows a zonal scale set in a single zone, with three instances in that zone:
+    The following diagram shows a zonal scale set in a single zone, with three instances in that zone.
 
     :::image type="complex" source="media/reliability-virtual-machine-scale-sets/zonal.svg" alt-text="Diagram that shows a zonal scale set with three instances, each deployed into the same availability zone." border="false" lightbox="media/reliability-virtual-machine-scale-sets/zonal.svg":::
        The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A rectangular box overlaps with the availability zone 1 box. It contains an icon labeled scale set on the far left and three VM instance icons under the availability zone heading. The boxes for availability zone 2 and availability zone 3 are empty.
     :::image-end:::    
 
-If you don't specify availability zones for your scale set, it's *nonzonal* or *regional*. In this scenario, instances might be placed in any zone within the region and might not be evenly distributed or located in the same zone. When you use a nonzonal scale set, disk colocation in the same zone is guaranteed for Ultra and Premium v2 disks. Colocation is provided on a best-effort basis for Premium V1 disks and not guaranteed for Standard SKU disks, including solid-state drive (SSD) or hard disk drive (HDD) disks. If any zone in the region fails, your scale set might experience downtime.
+If you don't specify availability zones for your scale set, it's *nonzonal* or *regional*. In this scenario, instances might be placed in any zone within the region and might not be evenly distributed or located in the same zone. When you use a nonzonal scale set, disk colocation in the same zone is guaranteed for Ultra and Premium v2 disks. Colocation is provided on a best-effort basis for Premium v1 disks and not guaranteed for Standard SKU disks, including solid-state drive (SSD) or hard disk drive (HDD) disks. If any zone in the region fails, your scale set might experience downtime.
 
 ### Requirements
 
@@ -110,7 +110,7 @@ If you don't specify availability zones for your scale set, it's *nonzonal* or *
 
 - **Fault domain spreading:** When your scale set uses availability zones, you must select from specific fault domain spreading approaches. We recommend that you use max spreading, which uses as many fault domains as possible, for most workloads. For more information, see [Choose the right number of fault domains for Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-manage-fault-domains).
 
-- **Zone balancing:** [Zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing) determines whether VM instances in a scale set are evenly distributed across the zones that you select. A scale set is considered balanced if each zone has the same number of VMs, plus or minus one VM. You can set the zone balancing mode to best-effort or strict. This setting controls whether the scale set can scale out unevenly, including in zone outage scenarios.
+- **Zone balancing:** [Zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing) determines whether VM instances in a scale set are evenly distributed across the zones that you select. A scale set is considered balanced if each zone has the same number of VMs, plus or minus one VM. You can set the zone balancing mode to best effort or strict. This setting controls whether the scale set can scale out unevenly, including in zone outage scenarios.
 
 - **Placement groups:** For uniform scale sets, if you configure multiple [placement groups](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups), Azure deploys multiple placement groups in each zone that your scale set uses.
 
@@ -203,9 +203,9 @@ You can deploy multiple scale sets into different regions, but you need to imple
 
 ## Resilience to VM reconfiguration
 
-Scale sets give you control over how you apply configuration changes to your VMs, including changing your VM SKU, changing the image that each VM uses, and adding or removing VM extensions. You can control the *upgrade policy mode*, which determines how upgrades are applied. For more information, see [Upgrade policy modes for Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-policy).
+Scale sets let you control how you apply configuration changes to your VMs, like changing your VM SKU, changing the image that each VM uses, and adding or removing VM extensions. You can control the *upgrade policy mode*, which determines how upgrades are applied. For more information, see [Upgrade policy modes for Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-policy).
 
-Some upgrade types can require reimaging or redeploying an instance. If you have specific instances that must be excluded from automatic upgrades, such as instances that contain state that you need to preserve or configuration that you can't replicate on other instances, consider using [instance protection](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-instance-protection).
+Some upgrade types require reimaging or redeploying an instance. To exclude specific instances from automatic upgrades, consider using [instance protection](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-instance-protection). You might exclude instances that contain state that you need to preserve or configuration that you can't replicate on other instances.
 
 ## Resilience to service maintenance
 
@@ -215,7 +215,7 @@ Azure periodically performs updates to improve the reliability, performance, and
 
 - [Maintenance configurations](/azure/virtual-machines/maintenance-configurations) let you schedule a maintenance window at a time that suits your business needs.
 
-- [Scheduled Events for Linux VMs](/azure/virtual-machines/linux/scheduled-events) and for [Windows VMs](/azure/virtual-machines/windows/scheduled-events) gives your application time to prepare for VM maintenance. It provides information about upcoming maintenance events (for example, reboot) so that your application can prepare for them and limit disruption.
+- [Scheduled Events for Linux VMs](/azure/virtual-machines/linux/scheduled-events) and for [Windows VMs](/azure/virtual-machines/windows/scheduled-events) gives your application time to prepare for VM maintenance. It provides information about upcoming maintenance events, like a reboot, so that your application can prepare for them and limit disruption.
 
 ## Service-level agreement
 
@@ -229,4 +229,4 @@ Virtual machine scale sets share the availability SLA for VMs. You can achieve a
 ## Related content
 
 - [What are availability zones?](/azure/reliability/availability-zones-overview)
-- [What are Virtual Machine Scale Sets?](/azure/virtual-machine-scale-sets/overview)
+- [What are virtual machine scale sets?](/azure/virtual-machine-scale-sets/overview)
