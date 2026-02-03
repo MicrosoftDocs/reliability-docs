@@ -110,7 +110,7 @@ This section provides an overview of the different types of zone configuration a
 
 The [zone configuration table](#azure-services-by-zone-configuration-approach) lists the supported zone configuration approach for many Azure services and contains a link to each reliability guide for that service. The reliability guide provides information about how to configure nonzonal service resources to enable availability zone support.
 
-The following table describes each zone configuration approach, including the level of effort and downtime required to enable availability zones.
+The following table describes common zone configuration approaches, including the level of effort and downtime required to enable availability zones. Some services have different approaches listed because of the way they work.
 
 | Approach | Description | Typical level of effort | Might require downtime |
 | --- | --- | --- | --- |
@@ -157,7 +157,7 @@ The following table summarizes the availability zone support for many Azure serv
 | [Azure Event Hubs: all other tiers](./reliability-event-hubs.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
 | [Azure ExpressRoute gateway](./reliability-virtual-network-gateway.md?pivot=expressroute#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | Depends on tier |
 | [Azure Files](./reliability-storage-files.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Moderate cost increase |
-| [Azure Firewall](./reliability-firewall.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | No cost impact |
+| [Azure Firewall](./reliability-firewall.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | New firewalls: Zone resilient by default<br />Existing nonzonal firewalls: Modification (automatic migration in progress) | No cost impact |
 | [Azure Functions](reliability-functions.md#availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Minimum tier and instance count required |
 | [Azure HDInsight](reliability-hdinsight.md#availability-zone-migration) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Redeployment | No cost impact for same number of nodes |
 | [Azure IoT Hub](./reliability-iot-hub.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
