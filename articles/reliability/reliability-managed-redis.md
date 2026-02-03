@@ -96,7 +96,7 @@ Zone redundancy requires you to set up your cache for high availability, which d
 
   For more information, see [Create an Azure Managed Redis instance](/azure/redis/quickstart-create-managed-redis).
 
-- **Make an existing instance zone redundant.** To make an existing Azure Managed Redis instance zone redundant, deploy it in a region that supports availability zones and use high availability on the cache.
+- **Make an existing instance zone redundant.** To make an existing Azure Managed Redis instance zone redundant, deploy it in a region that supports availability zones and set up high availability on the cache.
 
 - **Turn off zone redundancy.** You can't turn off zone redundancy on existing instances because you can't reverse high availability after you apply it to a cache.
 
