@@ -28,7 +28,9 @@ This article focuses on the Azure Private Link service and the associated privat
 
 ## Reliability architecture overview
 
-Private Link service enables your customers to connect privately to your workloads in Azure. As the *service provider*, you deploy a *Private Link service* resource. *Service consumers* create *private endpoints* in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses.
+Private Link service enables your customers to connect privately to your workloads in Azure. As the *service provider*, you deploy a *Private Link service* resource. *Service consumers* create *private endpoints* in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses, even when a consumer uses the private endpoint from an on-premises environment through Azure ExpressRoute or another private connectivity method.
+
+:::image type="content" source="/azure/private-link/media/private-link-service-overview/private-link-service-workflow.png" alt-text="Diagram showing a Private Link service deployed by a service provider into their virtual network, with incoming traffic from a service consumer in a different virtual network in a separate Microsoft Entra tenant." border="false" :::
 
 A Private Link service is usually attached to an Azure Load Balancer that fronts backend resources (virtual machines or virtual machine scale sets). You can also use [Private Link service Direct Connect (preview)](/azure/private-link/configure-private-link-service-direct-connect), which enables connectivity to any privately routable IP address within your virtual network.
 
@@ -38,10 +40,6 @@ A Private Link service is usually attached to an Azure Load Balancer that fronts
 > [!IMPORTANT]
 > Private Link service Direct Connect is currently in PREVIEW.
 > See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
-
-:::image type="content" source="/azure/private-link/media/private-link-service-overview/private-link-service-workflow.png" alt-text="Diagram showing a Private Link service deployed by a service provider into their virtual network, with incoming traffic from a service consumer in a different virtual network in a separate Microsoft Entra tenant." border="false" :::
-
-Private Link service can be used for software as a service (SaaS) offerings hosted on Azure, and for hybrid environments where on-premises networks require secure, private access to Azure-hosted applications.
 
 ## Resilience to transient faults
 
