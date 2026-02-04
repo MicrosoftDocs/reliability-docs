@@ -141,7 +141,7 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when an App Configuration store is configured for geo-replication, and the primary region is operational.
+This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
 - **Traffic routing between regions:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
 
@@ -160,7 +160,7 @@ This section describes what to expect when an App Configuration store is configu
 
 #### Behavior during a region failure
 
-This section describes what to expect when you configure app configuration for geo-replication and there's an outage in the primary or a secondary region.
+This section describes what to expect when you configure a store for geo-replication, and there's an outage in one of the replica regions.
 
 - **Detection and response:** Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
     
