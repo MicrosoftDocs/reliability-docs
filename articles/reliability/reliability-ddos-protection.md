@@ -1,5 +1,4 @@
 ---
----
 title: Reliability in Azure DDoS Protection
 description: Learn how Azure DDoS Protection contributes to application reliability by helping protect workloads from denial-of-service attacks and by operating as a highly resilient, Microsoft-managed service.
 author: glynnniall
@@ -47,7 +46,7 @@ Key architectural characteristics include:
 
 ## Resilience to transient faults
 
-<!-- >[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)] -->
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)] -->
 
 Azure DDoS Protection runs at the network fabric layer, and the source material doesn't identify service-specific transient fault scenarios that require customer action.
 
@@ -56,7 +55,7 @@ Azure DDoS Protection runs at the network fabric layer, and the source material 
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)] -->
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-zonal-include.md)] -->
 
 Azure DDoS Protection is **zone-redundant by default** in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy.
 
