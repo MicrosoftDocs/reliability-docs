@@ -184,6 +184,11 @@
       "source_path": "articles/reliability/migrate-load-balancer.md",
       "redirect_url": "/azure/reliability/reliability-load-balancer",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-community-training.md",
+      "redirect_url": "/azure/industry/training-services/microsoft-community-training/ga-version/infrastructure-management/monitor-your-platform-infrastructure/reliability-in-community-training",
+      "redirect_document_id": false
     }
   ]
 }

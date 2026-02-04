@@ -124,7 +124,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure VMware Solution|| [Deploy disaster recovery by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)|
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
-|Microsoft Community Training| [Reliability in Microsoft Community Training](reliability-community-training.md) ||
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
 |Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
 
