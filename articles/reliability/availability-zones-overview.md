@@ -23,14 +23,14 @@ Datacenter locations are selected by using rigorous vulnerability risk assessmen
 
 Azure doesn't charge for data transfer between availability zones in the same region, whether you use private or public IP addressing.
 
-The following diagram shows several example Azure regions. Regions 1 and 2 support availability zones, and regions 3 and 4 don't have availability zones.
+The following diagram shows several example Azure regions. Regions 1 and 2 support availability zones, and regions 3 and 4 don't have availability zones. Some zones have one datacenter and others have multiple.
 
 :::image type="content" source="media/availability-zones-overview/regions-availability-zones.svg" alt-text="Diagram of physically separate availability zone locations within an Azure region." border="false":::
 
->[!TIP]
->To see which regions support availability zones, see [List of Azure regions](regions-list.md).
+> [!TIP]
+> To see which regions support availability zones, see [List of Azure regions](regions-list.md).
 
-## Datacenters and an availability zones
+## Datacenters and availability zones
 
 An availability zone is a *logical* grouping of one or more physically separate datacenters within a region. Each availability zone is built in a way that if something goes wrong in one (like a power outage or network issue), the others keep working. A single datacenter doesn’t offer this level of protection on its own.
 
