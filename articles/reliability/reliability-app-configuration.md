@@ -42,6 +42,7 @@ When you use Azure App Configuration, consider the following best practices to m
 - **Caching:** Cache settings in memory when possible to reduce direct requests to your store.
 
 For other application configuration guidance, see [Azure App Configuration FAQ](/azure/azure-app-configuration/faq#my-application-receives-http-status-code-429-responses--why).
+
 ## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
@@ -147,7 +148,7 @@ This section describes what to expect when an App Configuration store is configu
     > [!WARNING]
     > **Note to PG:** Is it correct to say that each replica is individually addressable?
     
-    When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
+    Azure App Configuration doesn't automatically route traffic between regions. When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
@@ -183,7 +184,9 @@ This section describes what to expect when you configure app configuration for g
 
 #### Region recovery
 
-After the region recovers, App Configuration brings the replica back in sync with the other replicas. Applications that use Microsoft configuration providers can automatically start using the replica again.
+After the region recovers, App Configuration brings the replica back in sync with the other replicas without your intervention.
+
+You're responsible for reconfiguring your application to route traffic back to the recovered region instance. Applications that use Microsoft configuration providers automatically start using the replica again.
 
 #### Test for region failures
 
