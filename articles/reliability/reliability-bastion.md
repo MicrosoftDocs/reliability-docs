@@ -68,8 +68,8 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
 
     | Americas | Europe | Middle East | Africa | Asia Pacific |
     |---|---|---|---|---|
-    | Canada Central | North Europe | Qatar Central | South Africa North | Australia East |
-    | Central US | Sweden Central | Israel Central | | Korea Central |
+    | Canada Central | North Europe | Israel Central | South Africa North | Australia East |
+    | Central US | Sweden Central | | | Korea Central |
     | East US | UK South
     | East US 2 | West Europe | | |
     | West US 2  | Norway East | | |
