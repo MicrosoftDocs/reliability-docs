@@ -6,22 +6,18 @@ ms.author: glynnniall # Required; Microsoft alias of author; optional team alias
 ms.topic: reliability-article # Required
 ms.custom: subject-reliability # Required - add references_regions only if specific Azure regions are mentioned.
 ms.service: learn # Required replace with your service meta tag. For taxonomies see https://review.learn.microsoft.com/help/platform/metadata-taxonomies/msservice?branch=main
-ms.date: 11/12/2024 # Required; mm/dd/yyyy format.
+ms.date: 02/04/2026 # Required; mm/dd/yyyy format.
 ---
 
 <!-- For guidance on how to fill out this template, see https://learn.microsoft.com/help/patterns/level4/article-reliability -->
 
 # Reliability in [service-name]
 
-<!--
+<!-- Intro paragraph -->
 
-Intro paragraph
+<!-- [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)] -->
 
-[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
-
-This article describes...
-
--->
+<!-- This article describes... -->
 
 ## Production deployment recommendations
 

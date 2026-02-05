@@ -111,13 +111,13 @@ To promote consistency, start with a template:
   **Example (article with all optional sections):**
 
   ```yaml
-  description: Learn how to make Azure [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
+  description: Learn how to make [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
   ```
 
   **Example (article without backup/restore and service maintenance sections):**
 
   ```yaml
-  description: Learn how to make Azure [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
+  description: Learn how to make [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
   ```
 
 ### H1 (headline) and introduction
@@ -144,7 +144,7 @@ The introduction should consist of three paragraphs in the following order:
 
 **Product naming convention**: Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) to confirm how to refer to the service name, including on first use and subsequent uses.
 
-### Production deployment recommendations
+### Production deployment recommendations (for reliability)
 
 This section contains production deployment recommendations for your service.
 
@@ -153,12 +153,18 @@ This section contains production deployment recommendations for your service.
   If there is a WAF service guide, this section should refer to it using the following format:
 
   ```markdown
+  ### Production deployment recommendations
+
   The Azure Well-Architected Framework provides recommendations across reliability, security, cost, operations, and performance. To understand how these areas influence each other and contribute to a reliable \<service-name\> solution, see [Architecture best practices for \<service-name\>](URL).
   ```
+
+  Note that the heading is simply "Production deployment recommendations", because WAF gives recommendations across multiple pillars.
 
 - If your service does NOT have a WAF service guide, and you have guidance, try to organize it as checklist using the following format:
 
   ```markdown
+  ### Production deployment recommendations for reliability
+
   For production workloads, we recommend that you:
 
   > ![div class="checklist"]
@@ -166,9 +172,11 @@ This section contains production deployment recommendations for your service.
   > - Recommendation 2
   ```
 
+  Note that in this case the heading is "Production deployment recommendations for reliability" because the recommendations are solely focused on reliability.
+
 ### Reliability architecture overview
 
-*Optional but strongly recommended section:* This section focuses on important elements of the service architecture that's relevant to the reliability. It doesn't provide a comprehensive review of the entire service architecture but introduces important reliability elements. Common items to include in this section are:
+*Required section:* This section focuses on important elements of the service architecture that's relevant to the reliability. It doesn't provide a comprehensive review of the entire service architecture but introduces important reliability elements. Common items to include in this section are:
 
 - **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components.
 
@@ -201,9 +209,9 @@ Consider whether your service is simple (single or few resources for customers t
 
 - **For complex services**, we often suggest splitting the reliability architecture overview into two subsections:
 
-  - *Logical architecture*, which describes the resources that the customer deploys and works with.
+  - *Logical architecture*, an H3, which describes the resources that the customer deploys and works with.
 
-  - *Physical architecture*, which describes how these local resources map to lower-level infrastructure (such as VMs or nodes).
+  - *Physical architecture*, another H3, which describes how these local resources map to lower-level infrastructure (such as VMs or nodes).
 
   We have a standard include file that introduces the subsections.
 
@@ -832,8 +840,8 @@ Add information about normal operations. Break the content down into two bullets
 - **Traffic routing between regions**. Explains how work is divided up between instances in multiple regions, during regular day-to-day operations - NOT during a region failure.
 
     Commonly, services use one of these traffic routing approaches:
-    - *Active/active.* Requests are spread across instances in every region. Services might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
-    - *Active/passive.* Requests always goes to the primary region.
+    - *Active/active:* Requests are spread across instances in every region. Services might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
+    - *Active/passive:* Requests always goes to the primary region.
 
     **Example:**
 
