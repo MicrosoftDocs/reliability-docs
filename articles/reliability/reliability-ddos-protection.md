@@ -37,10 +37,7 @@ To ensure high reliability for your production Azure DDoS Protection instances, 
 
 Azure DDoS Protection operates as part of the Azure networking fabric rather than as a customer-deployed resource. Enabling the service reconfigures underlying Azure network infrastructure rather than provisioning dedicated customer instances.
 
-:::image type="content"
-    source="./media/ddos-az/ddos.png"
-    alt-text="Diagram showing a DDoS protection architecture across availability zones."
-    border="false":::
+![DDoS protection architecture across availability zones.](./media/ddos-az/ddos.png)
 
 Key architectural characteristics include:
 
