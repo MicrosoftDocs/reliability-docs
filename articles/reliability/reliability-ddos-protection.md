@@ -49,7 +49,7 @@ Key architectural characteristics include:
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)] -->
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 Azure DDoS Protection runs at the network fabric layer, and the source material doesn't identify service-specific transient fault scenarios that require customer action.
 
@@ -58,7 +58,7 @@ Azure DDoS Protection runs at the network fabric layer, and the source material 
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-zonal-include.md)] -->
+[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-zonal-include.md)]
 
 Azure DDoS Protection is **zone-redundant by default** in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy.
 
@@ -79,12 +79,12 @@ Azure DDoS Protection is **zone-redundant by default** in regions that support a
 
 ### Behavior during a zone failure
 
-- **Detection and response:** Microsoft detects availability zone failures and manages all response actions. 
-- **Notification:** Customers can monitor Azure Service Health for service-level notifications. Azure DDoS Protection doesn't expose a Resource Health signal. 
-- **Active requests:** The platform hands active traffic is handled automatically with no customer action required. 
+- **Detection and response:** Microsoft detects availability zone failures and manages all response actions.
+- **Notification:** Customers can monitor Azure Service Health for service-level notifications. Azure DDoS Protection doesn't expose a Resource Health signal.
+- **Active requests:** Active traffic is handled automatically with no customer action required.
 - **Expected data loss:** None. The service doesn't store customer data.
-- **Expected downtime:** None expected. 
-- **Traffic rerouting:** Traffic protection continues using the remaining healthy zones. 
+- **Expected downtime:** None expected.
+- **Traffic rerouting:** Traffic protection continues using the remaining healthy zones.
 
 ### Zone recovery
 
