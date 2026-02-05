@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure App Configuration
-description: Learn how to make Azure App Configuration resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
+description: Learn how to make Azure App Configuration resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages, and learn about backup and restore.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
@@ -18,9 +18,9 @@ ms.date: 02/02/2026
 
 This article describes the reliability architecture of Azure App Configuration and explains how the service is designed to remain available during transient faults, availability zone failures, and region outages.
 
-### Production deployment recommendations for reliability
+## Production deployment recommendations for reliability
 
-For a list of recommended practices and configuration for production workloads, see [Building applications with high resiliency](/azure/azure-app-configuration/howto-best-practices?tabs=dotnet#building-applications-with-high-resiliency).
+For a list of recommended practices and configuration for production workloads, see [Building applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
 
 ## Reliability architecture overview
 
@@ -103,6 +103,14 @@ This section describes what to expect when a store is in a region that supports 
     > **Note to PG:** Please confirm that this statement about downtime is accurate.
 
 - **Traffic rerouting:** App Configuration automatically reroutes traffic away from the affected zone to healthy zones without requiring any customer intervention.
+
+### Zone recovery
+
+When a zone that was previously unavailable recovers, App Configuration automatically restores normal operations across all availability zones. You don't need to take any action to recover from a zone failure.
+
+### Test for zone failures
+
+The Azure App Configuration platform manages traffic routing, failover, and zone recovery for zone-redundant stores. Because this process is fully managed by Microsoft, you don't need to validate availability zone failure processes.
 
 ## Resilience to region-wide failures
 
@@ -195,13 +203,13 @@ You can't simulate a replica failure. However, applications control replica sele
 > [!WARNING]
 > **Note to PG:** Do you have any other suggestions for how to test an application's behavior during a replica failure?
 
-## Backup and recovery
+## Backup and restore
 
-Azure App Configuration enables you to [export configuration data](/azure/azure-app-configuration/concept-snapshots) from a store and use it as part of a broader backup strategy.
+Azure App Configuration enables you to [export configuration data](/azure/azure-app-configuration/howto-import-export-data) from a store and use it as part of a broader backup strategy.
 
-For most solutions, don't rely exclusively on backups. Instead, use the other capabilities described in this guide to support your resiliency requirements. However, backups protect against some risks that other approaches don't.
+[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
-## Recovery features
+## Resilience to accidental deletion
 
 App Configuration provides two key recovery features to prevent accidental or malicious deletion:
 
@@ -229,3 +237,4 @@ Incorrect or accidental configuration changes can cause application downtime. Us
 ## Related content
 
 - [Reliability in Azure](./overview.md)
+- [Azure App Configuration documentation](/azure/azure-app-configuration/)
