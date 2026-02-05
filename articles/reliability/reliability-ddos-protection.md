@@ -11,17 +11,18 @@ ms.date: 02/04/2026
 
 # Reliability in Azure DDoS Protection
 
-Azure DDoS Protection is a foundational Azure networking capability that helps protect applications from distributed denial-of-service (DDoS) attacks. DDoS attacks attempt to overwhelm applications with traffic in order to deny service to legitimate users.
+Azure Distributed Denial of Service (DDoS) Protection is a foundational Azure networking capability that helps protect applications from distributed denial-of-service (DDoS) attacks. DDoS attacks attempt to overwhelm applications with traffic in order to deny service to legitimate users.
 
 > [Azure DDoS Protection](/azure/ddos-protection/ddos-protection-overview) helps safeguard applications by monitoring network traffic patterns and automatically mitigating abnormal traffic that could impact availability.
 
-[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)] -->
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)] 
 
 This article describes how Azure DDoS Protection contributes to workload resilience, including how the service behaves during transient faults, availability zone outages, and region outages.
 
 ## Production deployment recommendations
 
 <!--- Note for John: I can't find a DDoS Article that we usually link to in this section in the WAF documention--->
+To ensure high reliability for your production Azure DDoS Protection instances, we recommend that you:
 
 - **Enable Azure DDoS Protection plans for exposed workloads.**  
   Azure provides a baseline level of DDoS protection for all customers, but workloads with public endpoints can benefit from extra tuning and protection by enabling a DDoS Protection plan.
@@ -35,6 +36,11 @@ This article describes how Azure DDoS Protection contributes to workload resilie
 ## Reliability architecture overview
 
 Azure DDoS Protection operates as part of the Azure networking fabric rather than as a customer-deployed resource. Enabling the service reconfigures underlying Azure network infrastructure rather than provisioning dedicated customer instances.
+
+:::image type="content"
+    source="./media/ddos-az/ddos.png"
+    alt-text="Diagram showing a DDoS protection architecture across availability zones."
+    border="false":::
 
 Key architectural characteristics include:
 
