@@ -124,7 +124,7 @@ This section describes what to expect when a managed Redis cache is zone redunda
 
 [!INCLUDE [Availability zone down notification (Service Health)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
-- **Active requests:** The service might drop in‑flight requests, and applications should retry them. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
+- **Active requests:** The service might drop in-flight requests, and applications should retry them. Applications should [implement retry logic](#resilience-to-transient-faults) to handle these temporary interruptions.
 
 - **Expected data loss:** Any data that hasn't been replicated to shards in another zone might be lost during a zone failure. You typically measure the amount of data loss in seconds, but it depends on the replication lag.
 
