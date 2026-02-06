@@ -17,7 +17,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
+This article describes how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes backup strategies and the service-level agreement (SLA).
 
 ## Production deployment recommendations
 
@@ -216,7 +216,7 @@ This section describes what to expect when you set up instances to use active ge
 
   To monitor the health of the geo-replication relationship, use the *geo-replication healthy* metric. The metric always has a value of `1` (healthy) or `0` (unhealthy). Set up Azure Monitor alerts on this metric to identify when the instances might be out of sync.
 
-- **Active requests:** The service terminates requests to the failed region and your application's failover logic must handle them. Applications should implement retry policies that can redirect traffic to healthy caches.
+- **Active requests:** The service terminates requests to the failed region, and your application's failover logic must handle them. Applications should implement retry policies that can redirect traffic to healthy caches.
 
 - **Expected data loss:** Asynchronous replication between regions can result in the loss of recent writes to the failed region if those writes haven't replicated to other regions. The amount of potential data loss depends on the replication lag at the time of failure. For more information, see [Active-active geo-distributed Redis](https://redis.io/docs/latest/operate/rs/databases/active-active/#strong-eventual-consistency) and [Considerations about consistency and data loss in a conflict‑free replicated database (CRDB) regional failure](https://redis.io/faq/doc/21rbquorvb/considerations-about-consistency-and-data-loss-in-a-crdb-regional-failure).
 
