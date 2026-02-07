@@ -37,7 +37,7 @@ Certain Log Analytics features aren't compatible with all reliability features. 
 
 A healthy Log Analytics workspace relies on:
 - Ingestion pipeline (multitenant, throttling, and retry aware) reachable through public or private link endpoints
-- Metadata and control plane that manages table schemas, table plans and retention periods (Analytics, Basic, Auxiliary), DCR mappings, replication settings, and export rules
+- Metadata and control plane that manages table schemas, table plans, and retention periods (Analytics, Basic, Auxiliary), DCR mappings, replication settings, and export rules
 - Redundant compute nodes that process ingestion, queries, exports, alerts, and replication
 
 Redundancy and replication model
