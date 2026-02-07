@@ -45,7 +45,7 @@ Redundancy and replication model
 - Across regions (workspace replication feature), the service asynchronously propagates new log records from primary to secondary, and preexisting data isn't backfilled
 - Data export asynchronously copies selected tables to Azure Storage or Event Hubs for external retention, governed by export rules
 
-Reliability levers you control
+Reliability configuration options
 - Region selection, zone redundancy, and dedicated cluster linkage if needed
 - Enable workspace replication and choose a compliant secondary location in the same region group (see supported regions list)
 - Data export scope (tables and destinations), storage redundancy, and immutability policies
