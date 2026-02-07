@@ -21,7 +21,7 @@ This article describes how to make Azure Monitor Logs resilient to various poten
 
 ## Production deployment recommendations
 
-Azure Monitor Logs offers several features that enhance workspaces resilience to various types of issues. Use these features individually or in combination, depending on your needs and budget.
+Azure Monitor Logs offers several features that you can use individually or in combination to help enhance workspaces resilience to various types of issues.
 
 | Capability    | Description    | Relative cost |
 |----|----|----|
