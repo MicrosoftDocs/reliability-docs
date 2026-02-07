@@ -58,7 +58,7 @@ Increase availability by combining zone redundancy with workspace replication or
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-For example, the ingestion pipeline, which sends collected data to the Log Analytics workspace, validates that each log record is successfully processed before it removes the record from the pipeline. If the ingestion pipeline isn't available or is throttling requests, the agents that send the data start to buffer locally, retrying the logs for many hours or exponentially backing off. However, a custom application that sends ingestion requests or queries needs to implement its own retry logic.
+For example, the ingestion pipeline that sends collected data to the Log Analytics workspace verifies that each log record is successfully processed before removing it from the pipeline. If the pipeline is unavailable or throttles requests, the agents sending data begin buffering it locally and retrying for many hours, using exponential backoff. In contrast, a custom application that submits ingestion requests or queries must implement its own retry logic.
 
 To validate your custom application is handling transient errors properly, monitor these metrics: 
 - ingestion latency
