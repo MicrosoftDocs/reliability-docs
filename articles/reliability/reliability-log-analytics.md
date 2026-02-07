@@ -50,7 +50,7 @@ Reliability configuration options
 - Enable workspace replication and choose a compliant secondary location in the same region group (see supported regions list)
 - Data export scope (tables and destinations), storage redundancy, and immutability policies
 - Retention tier configuration (interactive versus archive) that balances cost and recovery or query latency (archive requires search or restore for deep query scenarios)
-- Daily cap and alerting on ingestion delay to prevent noise or throttling during incidents
+- Daily ingestion caps and alerting on ingestion delay to limit noise or throttling during incidents
 
 Increase availability by combining zone redundancy with workspace replication or data export rules. Make alert rules and automation portable to the secondary region so your replicated data is usable during a regional outage.
 
