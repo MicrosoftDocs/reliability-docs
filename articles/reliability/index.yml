@@ -97,53 +97,28 @@ conceptualContent:
       - title: Strategy and planning
         summary: Define business justification and expected outcomes of adoption
         links:
-          - url: /azure/cloud-adoption-framework/strategy/inform/resiliency
-            text: Define a reliability strategy
+          - text: Resiliency considerations for your cloud strategy
+            url: /azure/cloud-adoption-framework/strategy/inform/resiliency
             itemType: concept
-            # todo icon?
 
       - title: Implementation and operation
         summary: Migrate and modernize workload resiliency
         links:
-          - url: /azure/cloud-adoption-framework/strategy/inform/resiliency
-            text: Resiliency considerations for your cloud strategy
+          - text: Prepare your secure cloud estate for availability
+            url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability
             itemType: concept
-          - url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability
-            text: Prepare your secure cloud estate for availability
-            itemType: concept
-          - url: /azure/cloud-adoption-framework/secure/adopt#adopt-the-principle-of-availability
-            text: Adopt the principle of availability
-            itemType: concept
-          - url: /azure/cloud-adoption-framework/plan/select-cloud-migration-strategy
-            text: Migration strategies for reliability
+          - text: Adopt the principle of availability
+            url: /azure/cloud-adoption-framework/secure/adopt#adopt-the-principle-of-availability
             itemType: concept
 
       - title: Cloud architecture
         summary: Design, build, and continuously improve a resilient cloud architecture
         links:
-          - url: /azure/well-architected/reliability/
-            text: Reliability pillar of the Azure Well-Architected Framework
+          - text: Reliability pillar of the Azure Well-Architected Framework
+            url: /azure/well-architected/reliability/
             itemType: concept
-          - url: /azure/architecture/guide/design-principles/
-            text: Design principles for Azure applications
-            itemType: concept
-          - url: /azure/architecture/resiliency/failure-mode-analysis
-            text: Failure mode analysis for Azure applications
-            itemType: concept
-          - url: /azure/architecture/best-practices/transient-faults
-            text: Transient fault handling
-            itemType: concept
-          - url: /azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway
-            text: Multi-region load balancing
-            itemType: concept
-          - url: /azure/architecture/networking/guide/network-virtual-appliance-high-availability
-            text: Deploy highly available NVAs
-            itemType: concept
-          - url: /azure/architecture/web-apps/app-service/architectures/baseline-zone-redundant
-            text: Baseline highly available web application
-            itemType: concept
-          - url: /azure/architecture/web-apps/app-service-environment/architectures/app-service-environment-high-availability-deployment
-            text: High availability enterprise deployment with App Service Environment
+          - text: Design principles for Azure applications
+            url: /azure/architecture/guide/design-principles/
             itemType: concept
 
 productDirectory:
