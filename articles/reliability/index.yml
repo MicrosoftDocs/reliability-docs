@@ -92,7 +92,7 @@ conceptualContent:
               itemType: concept
 
     - title: Reliability guidance for each phase of your cloud journey
-      summary: Helps you plan, design, implement, and operate dependable workloads by addressing strategy, operational practices, and reliability considerations throughout your solution's lifecycle.
+      summary: Plan, design, implement, and operate dependable workloads by addressing strategy, operational practices, and reliability considerations throughout your solution's lifecycle.
       items:
       - title: Strategy and planning
         summary: Define business justification and expected outcomes of adoption
