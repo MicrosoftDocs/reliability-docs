@@ -264,7 +264,7 @@ This is a key section. It describes how the service works with Azure's availabil
    ```markdown
    ## Resilience to availability zone failures
 
-   [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+   [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
    ```
 
 2. Provide a high-level overview of how the service supports availability zones. For example, explain whether the service automatically spreads replicas across zones or requires customer configuration.
