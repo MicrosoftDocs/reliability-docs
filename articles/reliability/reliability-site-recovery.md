@@ -95,7 +95,7 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 - **Core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft enables zone resiliency in supported regions.
 
-- **Recovery Services vault:** Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for zone resiliency when you use Site Recovery.
+- **Recovery Services vault:** Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for zone redundancy when you use Site Recovery.
 
 - **Cache storage account:** When you use Azure-to-Azure replication, you're responsible for creating the cache storage account and for configuring it with the appropriate level of redundancy. To make it zone-redundant, configure it for the ZRS replication type. For more information, see [Reliability in Azure Blob Storage](./reliability-storage-blob.md).
 
@@ -172,10 +172,25 @@ However, you can use [disaster recovery drills](/azure/site-recovery/azure-to-az
 
 ## Resilience to region-wide failures
 
-<!-- TODO explain the feature here -->
+For Azure-to-Azure replication, Site Recovery is designed to provide resilience to region failures by enabling failover of VMs to a healthy target region. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication).
 
-> [!NOTE]
-> Azure Site Recovery can help you to fail over between VMs in different regions. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication).
+#### Configure multi-region support
+
+- **Recovery Services vault:** A vault must be deployed into a specific Azure region. If that region has a failure, replicaton continues but you can't perform Site Recovery operations. For that reason, it's a good practice to deploy your Recovery Services vault into your target region.
+
+    Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
+
+- **Cache storage account:** Because the cache storage account is only used as a temporary location for data before it's replicated, you shouldn't configure it to use GRS.
+
+### Behavior during a region failure
+
+The specific behavior of the Site Recovery core service during a region failure depends on which region experiences the failure:
+
+- **Failure in source region:** For Azure-to-Azure replication, you can trigger a failover when the source region is unavailable. Because the source region is unavailable, replication stops until the VM in the source region is healthy.
+
+- **Failure in target region:** Because the target region is unavailable, replication stops until the region is healthy.
+
+- **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data but you can't initiate any operations.
 
 ## Resilience to service maintenance
 
