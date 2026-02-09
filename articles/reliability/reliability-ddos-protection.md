@@ -46,7 +46,7 @@ Azure DDoS Protection runs at the network fabric layer, and the source material 
 
 Azure DDoS Protection is zone-redundant by default in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy. Microsoft manages the distribution of DDoS Protection infrastructure across zones.
 
-![Diagram that shows a DDoS Protection plan that spans multiple availability zones](./media/ddos-az/ddos.png)
+![Diagram that shows a DDoS Protection plan that spans multiple availability zones](./media/reliability-ddos-protection/zone-redundant.png)
 
 ### Requirements
 
