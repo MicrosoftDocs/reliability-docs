@@ -26,9 +26,9 @@ This article describes how to make Azure Site Recovery resilient to a variety of
 For production workloads, we recommend that you:
 
 > [!div class="checklist"]
-> - Use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change, to improve your recovery point objective (RPO).
-> - For Azure to Azure disaster recovery, use zone-redundant storage (ZRS) on the cache storage account.
-> - Deploy your Recovery Services vault in the target region for the replication.
+> - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change, to improve your recovery point objective (RPO).
+> - For Azure to Azure disaster recovery, configure the cache storage account to use zone-redundant storage (ZRS).
+> - Deploy your Recovery Services vault in your target region for replication.
 
 > [!WARNING]
 > **Note to PG:** Please verify these recommendations.
