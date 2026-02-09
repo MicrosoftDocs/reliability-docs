@@ -213,7 +213,7 @@ items:
     - name: Azure DNS 
       href: reliability-dns.md
     - name: Azure DDoS Protection
-      href: reliability-ddos.md
+      href: reliability-ddos-protection.md
     - name: Azure ExpressRoute gateway
       href: reliability-virtual-network-gateway.md?pivots=expressroute
     - name: Azure Firewall

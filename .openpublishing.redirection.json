@@ -184,6 +184,11 @@
       "source_path": "articles/reliability/migrate-load-balancer.md",
       "redirect_url": "/azure/reliability/reliability-load-balancer",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-ddos.md",
+      "redirect_url": "/azure/reliability/reliability-ddos-protection",
+      "redirect_document_id": true
     }
   ]
 }

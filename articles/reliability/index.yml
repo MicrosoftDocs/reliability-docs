@@ -438,7 +438,7 @@ productDirectory:
     - title: Azure DDoS Protection
       summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
       imageSrc: /azure/media/index/ddos-protection.svg
-      url: reliability-ddos.md
+      url: reliability-ddos-protection.md
       azureCategories:
         - networking
         - security
