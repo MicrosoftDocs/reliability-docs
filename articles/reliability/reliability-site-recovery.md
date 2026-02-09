@@ -1,62 +1,58 @@
 ---
 title: Reliability in Azure Site Recovery
 description: Learn how to make Azure Site Recovery resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
-author: anaharris-ms
-ms.author: anaharris
+author: glynnniall
+ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-site-recovery
-ms.date: 01/09/2026
+ms.date: 02/10/2026
 ai-usage: ai-assisted
-
-#Customer intent: As an engineer responsible for business continuity, I want to understand who need to understand the details of how Azure Site Recovery works from a reliability perspective and plan strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Site Recovery
 
-[Azure Site Recovery](/azure/site-recovery/site-recovery-overview.md) is a managed replication and failover service for virtual machines and other infrastructure, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes seamlessly. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
+[Azure Site Recovery](/azure/site-recovery/site-recovery-overview) is a managed replication and failover service for virtual machines and other infrastructure, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes seamlessly. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 This article describes how to make Azure Site Recovery resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Azure Site Recovery service level agreement (SLA).
 
 > [!NOTE]
-> This document describes how the Azure Site Recovery service itself is, or can be made, resilient to various issues. It doesn't explain how to use Azure Site Recovery to protect your VMs or other assets. To learn about how to use Azure Site Recovery, see [About Site Recovery](/azure/site-recovery/site-recovery-overview.md).
+> This document describes how the Azure Site Recovery service itself is, or can be made, resilient to various issues. It doesn't explain how to use Azure Site Recovery to protect your VMs or other assets. To learn about how to use Azure Site Recovery, see [About Site Recovery](/azure/site-recovery/site-recovery-overview).
 
 ## Production deployment recommendations for reliability
 
 For production workloads, we recommend that you:
 
 > [!div class="checklist"]
-> - Use High Churn for VMs that have a high rate of data change.
-> - Use ZRS on the cache storage account
+> - Use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change, to improve your recovery point objective (RPO).
+> - For Azure to Azure disaster recovery, use zone-redundant storage (ZRS) on the cache storage account.
 
-<!-- TODO verify these -->
+> [!WARNING]
+> **Note to PG:** Please verify these recommendations.
 
 ## Reliability architecture overview
 
-[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
+When you use Azure Site Recovery, you define a *source* and *target*, which represent the VMs that are replicated:
+- The *source* can be an Azure VM, or a VM or server from another supported source, including on-premises physical servers, VMware VMs, and Hyper-V VMs.
+- The *target* is always an Azure VM. For Azure-to-Azure VM replication, the target can be a different region or availability zone to the source VM.
 
-### Logical
-
-<!-- TODO -->
-- To define:
-    - source
-    - target
-    - vault
-    - cache storage account (todo check if this is used for all types or just Azure-to-Azure)
-- Optional [recovery plan](/azure/site-recovery/recovery-plan-overview)
-
-- Configure replication from a source VM, or from another supported source - physical, VMware, Hyper-V
-- Can go across zones or regions
+You're responsible for deploying and configuring other resources:
+- *Recovery Services vault*, which Site Recovery uses to store your replication configuration settings. The vault doesn't store your replicated data. The replication configuration of the vault isn't important for Site Recovery, but it's important if you use the same vault for Azure Backup.
+- [*Recovery plan*](/azure/site-recovery/recovery-plan-overview), which configures the snapshot frequency and retention length.
+- For Azure-to-Azure replication, a *cache storage account*, which is an Azure Storage account that stores a copy of the source data in the source region before it's replicated to the target.
 
 > [!NOTE]
 > This guide focuses on the reliability of the Azure-based components of Azure Site Recovery and the replication relationship. If you replicate data or VMs from an on-premises environment or another cloud provider, you should consider the reliability of the components outside of Azure, too.
 
-### Physical
+For more information about the components you deploy, see:
+- [Azure to Azure disaster recovery architecture](/azure/site-recovery/azure-to-azure-architecture)
+- [Hyper-V to Azure disaster recovery architecture](/azure/site-recovery/hyper-v-azure-architecture)
+- [VMware to Azure disaster recovery architecture](/azure/site-recovery/vmware-azure-architecture-modernized)
+- [Physical server to Azure disaster recovery architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
 
-- Vault stores configuration. The replication config doesn't matter for ASR
-- Replication uses a cache storage account in the source region, which stores logs before ASR writes the change to the destination. We recommend ZRS <!-- PG to confirm -->
+The core Site Recovery service runs on infrastructure that Microsoft manages. This document refers to these components collectively as the *core Site Recovery service*.
 
 ## Resilience to transient faults
 
@@ -66,26 +62,34 @@ Site Recovery automatically handles transient faults that occur during replicati
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-<!-- TODO -->
+When you're considering the resiliency of your Site Recovery replication to zone zone failures, there are two separate parts of the service to consider:
 
-- Site Recovery 
+- **Core Site Recovery service:** The Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service are zone-resilient automatically with no customer configuration required.
+
+- **Cache storage account:** For Azure-to-Azure replication, you're responsible for ensuring that the cache storage account is zone-resilient by deploying it using the ZRS tier.
+
+    If you use the locally redundant storage (LRS) Azure Storage replication tier for your cache storage account, then if a zone fails, Site Recovery might not be able to replicate recently changed data to your target.
 
 > [!NOTE]
-> Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery.md).
+> Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery).
 
 ### Requirements
 
-**Region support:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md).
+**Region support:** For the core service, Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md).
+
+    For cache storage accounts, you can deploy a ZRS storage account in all availability zone-enabled regions.
 
 ### Cost
 
-Site Recovery is billed based on the number of VM instances protected, regardless of their availability zone configuration.
+Site Recovery is billed based on the number of VM instances protected, regardless of their availability zone configuration. <!-- TODO link to pricing -->
 
 ### Configure availability zone support
 
-- No config on ASR itself
-- Recovery vault replication setting doesn't affect ASR
-- Cache storage account should be configured for ZRS - see storage guide
+- **Core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft enables zone resiliency in supported regions.
+
+- **Recovery Services vault:** Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for zone resiliency when you use Site Recovery.
+
+- **Cache storage account:** When you use Azure-to-Azure replication, you're responsible for creating the cache storage account and for configuring it with the appropriate level of redundancy. To make it zone-redundant, configure it for the ZRS replication type. For more information, see [Reliability in Azure Blob Storage](./reliability-storage-blob.md).
 
 ### Behavior when all zones are healthy
 
@@ -93,10 +97,11 @@ This section describes what to expect when Site Recovery is used in a region wit
 
 - **Traffic routing between zones:** Site Recovery uses infrastructure in multiple availability zones to trigger and run replication jobs. The service manages this infrastucture transparently to you.
 
-- **Data replication between zones:**
+- **Data replication between zones:** <!-- TODO lead-in sentence here -->
 
-    - ASR replicates config data even if your vault is LRS <!-- PG to verify -->
-    - Cache storage account uses Azure Storage replication betwen zones
+    - *Site Recovery configuration:* Site Recovery replicates your configuration data across zones even if your vault is configured to use LRS. <!-- PG to verify -->
+
+    - *Data:* If your cache storage account is configured to use ZRS, Azure Storage synchronously replicates the cached data betwen zones.
 
 ### Behavior during a zone failure
 
@@ -141,50 +146,10 @@ However, you can use [disaster recovery drills](/azure/site-recovery/azure-to-az
 
 ## Resilience to region-wide failures
 
+<!-- TODO explain the feature here -->
+
 > [!NOTE]
-> Azure Site Recovery can help you to fail over between VMs in different regions. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication.md).
-
-### Multi-region support type 1
-
-#### Requirements
-
-- **Region support:** <!-- Complete this line. -->
-
-#### Considerations
-
-#### Cost
-
-#### Configure multi-region support
-
-#### Capacity planning and management
-
-#### Behavior when all regions are healthy
-
-This section describes what to expect when \[service-name\] resources are configured with multi-region suypport type 1 support and all regions are operational.
-
-- **Traffic routing between regions:** <!-- Complete this line. -->
-
-- **Data replication between regions:** <!-- Complete this line. -->
-
-#### Behavior during a region failure
-
-This section describes what to expect when \[service-name\] resources are configured with multi-region suypport type 1 support and a region outage occurs.
-
-- **Detection and response:** <!-- Complete this line. -->
-
-- **Notification:** <!-- Complete this line. -->
-
-- **Active requests:** <!-- Complete this line. -->
-
-- **Expected data loss:** <!-- Complete this line. -->
-
-- **Expected downtime:** <!-- Complete this line. -->
-
-- **Traffic rerouting:** <!-- Complete this line. -->
-
-#### Region recovery
-
-#### Testing for region failures
+> Azure Site Recovery can help you to fail over between VMs in different regions. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication).
 
 ## Resilience to service maintenance
 
@@ -197,10 +162,7 @@ However, you're responsible for applying updates to Site Recovery components on 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
 For Azure Site Recovery, there are separate SLAs that cover the following:
-- The availability of protected VMs or physical machines during an attempted failover.
-- The recovery time objective (RTO), which is the amount of downtime <!-- TODO -->
-SLA covers the availability of the protected VM or physical machine during a failover attempt, and the RTO
+- **Service availability**, which means the Site Recovery service is available to fail over protected instances. A protected instance is a VM or physical server that's replicated to a secondary location. To be eligible for this SLA, you must retry failed failover attempts at least every 30 minutes.
+- **Recovery time objective (RTO)**, which is the length of time it takes from when you (or scripts you write) trigger a failover to when the target VM is running. This time excludes any manual actions or script execution.
 
-Downtime - Failover of a Protected Instance is unsuccessful due to unavailability of the Azure Site Recovery Service, provided that retries are continually attempted no less frequently than once every thirty minutes.
-
-Only applies when compute capacity is available in the secondary region.
+The SLA only provides for service credits when there's sufficient capacity available in the secondary region.
