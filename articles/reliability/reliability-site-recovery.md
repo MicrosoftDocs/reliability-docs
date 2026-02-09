@@ -70,13 +70,19 @@ Site Recovery automatically handles transient faults that occur during replicati
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-When you're considering the resiliency of your Site Recovery replication to zone failures, there are two separate parts of the service to consider:
+When you're considering the resiliency of your Site Recovery replication to zone failures, there are separate parts of the service to consider:
 
 - **Core Site Recovery service:** The Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service support zone redundancy automatically with no customer configuration required.
+
+- **Recovery Services vault:** The vault stores configuration data. In regions where Site Recovery supports zone resilience, configuration data in the vault is also zone-resilient.
 
 - **Cache storage account:** For Azure-to-Azure replication, you're responsible for ensuring that the cache storage account is zone-redundant by deploying it using the ZRS tier.
 
     If you use the locally redundant storage (LRS) Azure Storage replication tier for your cache storage account, then if a zone fails, Site Recovery might not be able to replicate recently changed data to your target.
+
+The following diagram shows an example of how Site Recovery uses availability zones in an Azure-to-Azure disaster recovery configuration:
+
+![Diagram showing zone-resilient Site Recovery core components, vault, and cache storage account](./media/reliabilty-site-recovery/availability-zones.png)
 
 > [!NOTE]
 > Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery).
@@ -84,7 +90,9 @@ When you're considering the resiliency of your Site Recovery replication to zone
 ### Requirements
 
 **Region support:**
-- **Core Site Recovery service:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
+
+- **Core Site Recovery service and Recovery Services vaults:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
+
 - **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
 ### Cost
@@ -186,11 +194,19 @@ For Azure-to-Azure replication, Site Recovery is designed to provide resilience 
 
 The specific behavior of the Site Recovery core service during a region failure depends on which region experiences the failure:
 
-- **Failure in source region:** For Azure-to-Azure replication, you can trigger a failover when the source region is unavailable. Because the source region is unavailable, replication stops until the VM in the source region is healthy.
+- **Failure in source region:** For Azure-to-Azure replication, you can trigger a failover when the source region is unavailable.
 
-- **Failure in target region:** Because the target region is unavailable, replication stops until the region is healthy.
+    Because the source region is unavailable, replication stops until the VM in the source region is healthy.
+
+    ![Diagram that shows a failure in the source region.](./media/reliabilty-site-recovery/region-failure-source.png)
+
+- **Failure in target region:** Because the target region is unavailable, replication stops, and you can't fail over to the target until the region is healthy.
+
+    ![Diagram that shows a failure in the target region.](./media/reliabilty-site-recovery/region-failure-target.png)
 
 - **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data but you can't initiate any operations.
+
+    ![Diagram that shows a failure in the vault's region.](./media/reliabilty-site-recovery/region-failure-vault.png)
 
 ## Resilience to service maintenance
 
