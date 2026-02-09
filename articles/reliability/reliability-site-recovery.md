@@ -72,7 +72,7 @@ Site Recovery automatically handles transient faults that occur during replicati
 
 When you're considering the resiliency of your Site Recovery replication to zone failures, there are two separate parts of the service to consider:
 
-- **Core Site Recovery service:** The Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service are zone-resilient automatically with no customer configuration required.
+- **Core Site Recovery service:** The Site Recovery service is designed to be resilient to availability zone failures in supported regions. In supported regions, the internal components of the service are zone-resilient automatically with no customer configuration required.
 
 - **Cache storage account:** For Azure-to-Azure replication, you're responsible for ensuring that the cache storage account is zone-redundant by deploying it using the ZRS tier.
 
@@ -83,9 +83,9 @@ When you're considering the resiliency of your Site Recovery replication to zone
 
 ### Requirements
 
-**Region support:** For the core service, Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md).
-
-    For cache storage accounts, you can deploy a ZRS storage account in all availability zone-enabled regions.
+**Region support:**
+- **Core Site Recovery service:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
+- **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
 ### Cost
 
