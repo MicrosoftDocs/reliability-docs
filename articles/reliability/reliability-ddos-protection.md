@@ -18,18 +18,18 @@ ms.date: 02/09/2026
 This article describes how Azure DDoS Protection contributes to workload resilience, including how the service behaves during transient faults, availability zone failures, and region-wide failures.
 
 ## Reliability architecture overview
+<!-- TODO -->
 
-Azure DDoS Protection operates as part of the Azure networking fabric rather than as a customer-deployed resource. Enabling the service reconfigures underlying Azure network infrastructure rather than provisioning dedicated customer instances.
+Azure DDoS Protection operates as part of the Azure networking fabric rather than as a customer-deployed resource. When you enable the service, Microsoft reconfigures the underlying Azure network infrastructure rather than provisioning dedicated customer-isolated compute.
 
-![DDoS protection architecture across availability zones.](./media/ddos-az/ddos.png)
 
 Key architectural characteristics include:
 
-- **Built into the Azure platform fabric**, making it a highly resilient, foundational service.
-- **Shared, Microsoft-managed infrastructure**, rather than customer-isolated compute.
-- **Largely stateless request processing**, with traffic analysis and model training occurring outside the hot path.
+- **Built into the Azure platform fabric.** Microsoft manages the DDoS Protection infrastructure, making it a highly resilient foundational service.
+- **Shared, Microsoft-managed infrastructure.** The service uses shared infrastructure rather than customer-isolated compute.
+- **Largely stateless request processing.** Traffic analysis and model training occur outside the hot path, which means there's minimal state to replicate or recover during failures.
 
-<!--- Include a high-level architecture diagram showing DDoS Protection spanning availability zones -->
+<!-- TODO IP vs. network -->
 
 ## Resilience to transient faults
 
@@ -42,7 +42,7 @@ Azure DDoS Protection runs at the network fabric layer, and the source material 
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure DDoS Protection is zone-redundant by default in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy. Microsoft manages the distribution of DDoS Protection infrastructure across zones.
 
