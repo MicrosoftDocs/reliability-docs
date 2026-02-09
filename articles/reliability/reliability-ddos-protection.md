@@ -35,10 +35,7 @@ Key architectural characteristics include:
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-Azure DDoS Protection runs at the network fabric layer, and the source material doesn't identify service-specific transient fault scenarios that require customer action.
-
-- Transient faults may occur in the broader Azure networking stack, but no DDoS-specific retry or mitigation logic is required from customers.
-- Customers don't implement retry logic directly against Azure DDoS Protection.
+Microsoft manages the resilience of the DDoS protection infrastructure. <!-- TODO applications handle transient faults the same way regardless of which layer of the stack they're from -->
 
 ## Resilience to availability zone failures
 
@@ -82,6 +79,9 @@ This section describes what to expect when you use Azure DDoS Protection in a re
 
 - **Expected downtime:** No downtime is expected to the DDoS Protection, and it continues operating using the remaining healthy zones.
 
+  <!-- TODO infra in the zone could fail -->
+
+- **Traffic rerouting:** Microsoft automatically reroutes traffic protection through the remaining healthy zones. <!-- TODO -->
 
 ### Zone recovery
 
@@ -95,18 +95,43 @@ Azure DDoS Protection is a fully Microsoft-managed, zone-redundant service. Beca
 
 Azure DDoS Protection plans are deployed into a single Azure region. However, the protection applies at the platform level and protects public IP addresses regardless of which region those IP addresses are in.
 
+If a region hosting a protected resource becomes unavailable, that resource is unavailable regardless of DDoS Protection. DDoS Protection continues to operate for protected resources in other regions. <!-- TODO -->
 
 ### Requirements
 
-- **Region support:** DDoS Protection plans can protect resources across regions, independent of the region where the plan itself is deployed. 
-
-### Considerations
-
-- If a region hosting a protected resource becomes unavailable, that resource is unavailable regardless of DDoS Protection.
-- DDoS Protection continues to operate for protected resources in other regions. 
+**Region support:** DDoS Protection plans can protect resources across regions, independent of the region where the plan itself is deployed. <!-- TODO check this is valid for network and IP -->
 
 ### Behavior when all regions are healthy
 
+When all regions are operational:
+
+- **Traffic routing between regions:** Azure DDoS Protection doesn't control or influence cross-region traffic routing. Traffic routing is determined by your application architecture and the services you use (such as Azure Front Door, Traffic Manager, or Azure Load Balancer).
+
+- **Data replication between regions:** Azure DDoS Protection is a stateless service and doesn't replicate customer data between regions.
+
+### Behavior during a region failure
+
+If the region hosting your DDoS Protection plan experiences an outage:
+
+- **Detection and response:** Microsoft detects region failures and manages response actions. You don't need to take any action.
+
+[!INCLUDE [Region down notification (Service Health only)](./includes/reliability-region-down-notification-service-include.md)]
+
+- **Active requests:** Traffic protection for resources outside the affected region continues without interruption.
+
+- **Expected data loss:** None. The service is stateless and doesn't store customer data.
+
+- **Expected downtime:** Resources in the affected region are unavailable regardless of DDoS Protection. Resources in other regions continue to be protected.
+
+- **Traffic rerouting:** Azure DDoS Protection doesn't control traffic routing. If your application uses multi-region deployments, your application's traffic routing configuration determines how traffic is handled during a region failure.
+
+### Region recovery
+
+When the affected region recovers, Azure DDoS Protection automatically resumes normal operations without customer intervention.
+
+### Test for region failures
+
+Azure DDoS Protection is a fully Microsoft-managed service. Because Microsoft manages region redundancy, you don't need to test region failover scenarios specifically for DDoS Protection.
 
 ## Service-level agreement
 
