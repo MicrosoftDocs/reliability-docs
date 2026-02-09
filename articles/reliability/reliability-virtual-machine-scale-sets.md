@@ -77,7 +77,7 @@ Virtual Machine Scale Sets supports availability zones in both zone-spanning and
        The diagram shows three boxes labeled availability zone 1, availability zone 2, and availability zone 3 from left to right. A scale set spans these three boxes. Each availability zone includes a VM instance.
     :::image-end:::
 
-    Zone spanning is similar to [zone redundancy](./availability-zones-overview.md#types-of-availability-zone-support) in other Azure services, but scale sets don't provide automatic replication of data across zones or failover when zones are down. A zone-spanning scale set might also have its instances deployed in a single zone, like when you attach individual VMs to a zone-spanning flexible scale set.
+    Zone spanning is similar to [zone redundancy](./availability-zones-overview.md#types-of-availability-zone-support) in other Azure services, but scale sets don't provide automatic replication of data across zones or failover when zones are down. In some unusual situations, a zone-spanning scale set might also have its instances deployed in a single zone, like when you attach individual VMs in one zone to a zone-spanning flexible scale set that has a single instance in the same zone.
 
     > [!NOTE]
     > If you use the flexible orchestration mode and attach, detach, or remove individual VMs, ensure that the VMs are spread across multiple zones. If the VMs are all in a single zone, your scale set might not be resilient to an outage in that zone.
@@ -132,7 +132,7 @@ This section explains how to configure availability zone support for your scale 
 - **Change the availability zone configuration of an existing scale set.** You can add zones to an existing scale set, but you can't remove zones. For more information, see [Update scale sets to add availability zones](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-use-availability-zones#update-scale-set-to-add-availability-zones).
 
     > [!IMPORTANT]
-    > When you expand a scale set to more zones, the original VM instances don't immediately migrate or change. When you scale out, new instances are created and spread evenly across the selected availability zones. If you need data from the original instances, you're responsible for migrating the data to instances in the new zones. When you scale in the scale set, any regional instances are prioritized for removal first. Then, instances are removed based on the [scale-in policy](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-scale-in-policy).
+    > When you expand a scale set to more zones, the original VM instances don't immediately migrate or change. When you scale out, new instances are created and spread evenly across the selected availability zones. If you need data from the original instances, you're responsible for migrating the data to instances in the new zones. When you scale in the scale set, any regional instances are prioritized for removal first. Then, instances are removed based on the scale set's scale-in policy. For more information, see [How to manually balance your scale set](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing?tabs=example-nonzonal-spanning#how-to-manually-balance-your-scale-set).
 
 ### Capacity planning and management
 
