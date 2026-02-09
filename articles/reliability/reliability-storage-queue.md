@@ -66,17 +66,17 @@ Azure Queue Storage is zone-redundant when deployed with ZRS configuration. Unli
 
 Zone redundancy is enabled at the storage account level and applies to all Queue Storage resources within that account. You can't configure individual queues for different redundancy levels. The setting applies to the entire storage account. When an availability zone experiences an outage, Azure Storage automatically routes requests to healthy zones without requiring any intervention from your application.
 
-[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-availability-zone-support-include.md)]
+[!INCLUDE [Storage - Resilience to availability zone failures - Support](includes/storage/reliability-storage-zone-support-include.md)]
 
 ### Requirements
 
-[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-availability-zone-region-support-include.md)]
+[!INCLUDE [Storage - Supported regions](includes/storage/reliability-storage-zone-region-support-include.md)]
 
 - **Storage account types:** You must use a Standard general-purpose v2 storage account to enable ZRS for Queue Storage. Premium storage accounts don't support Queue Storage.
 
 ### Cost
 
-[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-availability-zone-cost-include.md)]
+[!INCLUDE [Storage - Cost](includes/storage/reliability-storage-zone-cost-include.md)]
 
 For detailed pricing information, see [Queue Storage pricing](https://azure.microsoft.com/pricing/details/storage/queues/).
 
@@ -88,29 +88,29 @@ For detailed pricing information, see [Queue Storage pricing](https://azure.micr
 
     1. [Create a queue](/azure/storage/queues/storage-quickstart-queues-portal).
 
-[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-availability-zone-configure-include.md)]
+[!INCLUDE [Storage - Configure availability zone support](includes/storage/reliability-storage-zone-configure-include.md)]
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when a queue storage account is configured for zone redundancy and all availability zones are operational.
 
-[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-availability-zone-normal-operations-include.md)]
+[!INCLUDE [Storage - Behavior when all zones are healthy](includes/storage/reliability-storage-zone-normal-operations-include.md)]
 
 ### Behavior during a zone failure
 
 When an availability zone becomes unavailable, Queue Storage automatically handles the failover process by taking the following actions.
 
-[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-availability-zone-down-experience-include.md)]
+[!INCLUDE [Storage - Behavior during a zone failure](includes/storage/reliability-storage-zone-down-experience-include.md)]
 
 - **Traffic rerouting.** If a zone becomes unavailable, Azure undertakes networking updates such as Domain Name System (DNS) repointing, so that requests are directed to the remaining healthy availability zones. The service maintains full functionality using the surviving zones with no customer intervention required.
 
 ### Zone recovery
 
-[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-availability-zone-failback-include.md)]
+[!INCLUDE [Storage - Zone recovery](includes/storage/reliability-storage-zone-failback-include.md)]
 
 ### Test for zone failures
 
-[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-availability-zone-testing-include.md)]
+[!INCLUDE [Storage - Test for zone failures](includes/storage/reliability-storage-zone-testing-include.md)]
 
 ## Resilience to region-wide failures
 
