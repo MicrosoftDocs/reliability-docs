@@ -12,7 +12,7 @@ metadata:
   ms.author: glynnniall
   author: glynnniall
   ms.service: azure
-  ms.date: 01/23/2026
+  ms.date: 01/29/2026
   featureFlags:
   - clicktale
 
@@ -388,6 +388,7 @@ productDirectory:
       url: reliability-virtual-network-gateway.md?pivots=expressroute
       azureCategories:
         - networking
+        - hybrid
         - featured
     # Card
     - title: Azure Databricks
