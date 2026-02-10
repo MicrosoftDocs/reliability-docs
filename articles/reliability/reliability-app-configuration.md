@@ -1,13 +1,13 @@
 ---
 title: Reliability in Azure App Configuration
 description: Learn how to make Azure App Configuration resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages, and learn about backup and restore.
-author: glynnniall
-ms.author: pnp
+author: maud-lv
+ms.author: malev
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ai.usage: ai-assisted
 ms.service: azure-app-configuration
-ms.date: 02/02/2026
+ms.date: 02/11/2026
 ---
 
 # Reliability in Azure App Configuration
@@ -77,9 +77,6 @@ When a store is in a region that supports zone redundancy and all availability z
 
 - **Data replication between zones:** In regions that support zones, App Configuration synchronously replicates data across availability zones. This replication ensures that your settings remain consistent and available even if a zone becomes unavailable.
 
-    > [!WARNING]
-    > **Note to PG:** Please confirm that cross-zone replication is synchronous.
-
 ### Behavior during a zone failure
 
 This section describes what to expect when a store is in a region that supports zone redundancy and an availability zone is unavailable:
@@ -91,9 +88,6 @@ This section describes what to expect when a store is in a region that supports 
 - **Active requests:** During a zone failure, the affected zone might fail to handle in-flight requests, which requires client applications to retry them. Client applications should follow [transient fault handling practices](#resilience-to-transient-faults) to ensure that they can retry requests if a zone failure occurs.
 
 - **Expected data loss:** No data loss is expected during a zone failure because of the synchronous replication between zones.
-
-    > [!WARNING]
-    > **Note to PG:** Please confirm that cross-zone replication is synchronous.
 
 - **Expected downtime:** No downtime is expected.
 
