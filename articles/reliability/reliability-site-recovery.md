@@ -64,6 +64,8 @@ The core Site Recovery service runs on infrastructure that Microsoft manages. Th
 
 ## Resilience to transient faults
 
+Transient faults are short, intermittent failures in components. They occur frequently in a distributed environment like the cloud, and they're a normal part of operations. Transient faults correct themselves after a short period of time.
+
 Site Recovery automatically handles transient faults that occur during replication by retrying. You don't need to configure transient fault handling for Azure Site Recovery.
 
 ## Resilience to availability zone failures
@@ -92,6 +94,9 @@ The following diagram shows an example of how Site Recovery uses availability zo
 **Region support:**
 
 - **Core Site Recovery service and Recovery Services vaults:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
+
+    > [!WARNING]
+    > **Note to PG:** Can we give any details on the regions that aren't yet zone-resilient, and the timeline for when they will be?
 
 - **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
