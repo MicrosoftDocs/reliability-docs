@@ -23,7 +23,7 @@ items:
     - name: Azure Chaos Studio
       href: reliability-chaos-studio.md
     - name: Azure Data Explorer
-      href: /azure/data-explorer/business-continuity-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-data-explorer.md
     - name: Azure Data Factory
       href: reliability-data-factory.md
     - name: Azure Data Share

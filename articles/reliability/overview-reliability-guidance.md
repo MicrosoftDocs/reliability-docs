@@ -61,8 +61,8 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Cosmos DB for NoSQL| [Reliability in Azure Cosmos DB for NoSQL](reliability-cosmos-db-nosql.md) ||
 |Azure Cosmos DB for PostgreSQL| | [Availability zone outage resiliency in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-availability-zones) </p> [High availability in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-high-availability)|
 |Azure Data Box|| [Recover data if an entire region fails](/azure/databox/data-box-disk-faq#how-can-i-recover-my-data-if-an-entire-region-fails-)|
-|Azure Data Explorer|| [Business continuity and disaster recovery overview](/azure/data-explorer/business-continuity-overview)|
-|Azure Data Factory| [Reliability in Data Factory](reliability-data-factory.md)||
+|Azure Data Explorer| [Reliability in Azure Data Explorer](./reliability-data-explorer.md) ||
+|Azure Data Factory| [Reliability in Azure Data Factory](reliability-data-factory.md)||
 |Azure Data Manager for Energy| [Reliability in Azure Data Manager for Energy](reliability-energy-data-services.md)||
 |Azure Data Share|| [Disaster recovery for Data Share](/azure/data-share/disaster-recovery)|
 |Azure Database for MySQL|| [High availability concepts in Azure Database for MySQL Flexible Server](/azure/mysql/flexible-server/concepts-high-availability) |
