@@ -47,11 +47,13 @@ From a logical perspective, you deploy clusters, which contain databases, which 
      - A separate Azure Storage layer
      - Clear separation between compute and storage -->
 
+<!-- TODO mention ingestion -->
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-<!-- TODO check about retries, checkpointing -->
+<!-- TODO queued ingestion has retry behaviors built in https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview -->
 
 ## Resilience to availability zone failures
 
