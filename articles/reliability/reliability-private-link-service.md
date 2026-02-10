@@ -30,7 +30,7 @@ This article focuses on the Azure Private Link service and the associated privat
 
 Private Link service enables your customers to connect privately to your workloads in Azure. As the *service provider*, you deploy a *Private Link service* resource. *Service consumers* create *private endpoints* in their own Azure virtual networks. These endpoints connect securely and privately through Private Link to your applications. This setup does not expose public IP addresses, even when a consumer uses the private endpoint from an on-premises environment through Azure ExpressRoute or another private connectivity method.
 
-:::image type="content" source="/azure/private-link/media/private-link-service-overview/private-link-service-workflow.png" alt-text="Diagram showing a Private Link service deployed by a service provider into their virtual network, with incoming traffic from a service consumer in a different virtual network in a separate Microsoft Entra tenant." border="false" :::
+:::image type="content" source="./media/reliability-private-link-service/architecture.svg" alt-text="Diagram showing a Private Link service deployed by a service provider into their virtual network, with incoming traffic from a service consumer in a different virtual network in a separate Microsoft Entra tenant." border="false" :::
 
 A Private Link service is usually attached to an Azure Load Balancer that fronts backend resources (virtual machines or virtual machine scale sets). You can also use [Private Link service Direct Connect (preview)](/azure/private-link/configure-private-link-service-direct-connect), which enables connectivity to any privately routable IP address within your virtual network.
 
@@ -51,7 +51,7 @@ Additionally, when you deploy a Private Link service with a Standard Load Balanc
 
 Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. Service providers don't need to configure anything to enable this behavior.
 
-:::image type="content" source="./media/reliability-private-link-service/private-link-service-zone-redundant.png" alt-text="Diagram showing a zone-redundant Private Link service and public load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
+:::image type="content" source="./media/reliability-private-link-service/zone-redundant.svg" alt-text="Diagram showing a zone-redundant Private Link service and public load balancer, directing traffic to three different VMs in different availability zones." border="false" :::
 
 Private endpoints are automatically distributed across availability zones in the region. Service consumers don't need to create separate private endpoints in different zones.
 
