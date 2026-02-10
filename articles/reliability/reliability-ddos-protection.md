@@ -41,7 +41,7 @@ Enabling DDoS protection doesn't change the way your applications handle transie
 
 Azure DDoS Protection is zone-redundant by default in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy. Microsoft manages the distribution of DDoS Protection infrastructure across zones.
 
-For your workload to be resilient to availability zone failures, you must also configure your your public IP addresses to be zone-redundant, and ensure your backend servers or other resources are zone-resilient.
+Azure DDoS Protection is designed to protect public IP addresses from DDoS attacks. To achieve full resilience to availability zone failures, you must also ensure that your public IP addresses are zone-redundant.
 
 The following diagram shows a zone-redundant DDoS Network Protection plan and multiple protected zone-redundant public IP addresses:
 
