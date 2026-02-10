@@ -17,7 +17,7 @@ ms.date: 02/06/2026
 
 This article describes how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also highlights key information about the Azure Data Explorer service-level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 To improve the reliability of Azure Data Explorer in production environments, consider the following recommendations:
 
@@ -105,8 +105,8 @@ If your workload can’t tolerate this reduction, you should overprovision capac
 
 - **Traffic routing between zones:** During normal operation, Azure Data Explorer uses compute nodes across all available zones for ingestion and query processing. Work is distributed across nodes regardless of their availability zone.
 
-> [!IMPORTANT]
-> Product group: Confirm whether this traffic distribution behavior fully aligns with other Azure compute services.
+> [!WARNING]
+> **Note to PG:** Confirm whether this traffic distribution behavior fully aligns with other Azure compute services.
 
 - **Data replication between zones:** Data is synchronously replicated across availability zones using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
 
