@@ -78,7 +78,7 @@ To understand the mapping between logical and physical zones for your subscripti
 
 # [Azure CLI](#tab/azure-cli)
 
-Use the [az account list-locations](/cli/azure/account?view=azure-cli-latest#az-account-list-locations) command:
+Use the [az account list-locations](/cli/azure/account#az-account-list-locations) command:
 
 ```azurecli
 az account list-locations \
@@ -115,12 +115,9 @@ For each region, Microsoft aims to deploy updates to Azure services within a sin
 
 <a name='inter-zone-latency'></a>
 
-## Inter-zone communication
+## Inter-zone networking
 
-Within each region, availability zones are connected through a high-performance network. Microsoft strives to achieve an inter-zone communication with round-trip latency of less than approximately 2 milliseconds. Low latency allows for high-performance communication within a region, and for synchronous replication of data across multiple availability zones.
-
-> [!NOTE]
-> The target latency refers to the latency of the network links. Depending on the communication protocol you use and the network hops required for any specific network flow, the latency you observe might be different.
+Within each region, availability zones are connected through a high-performance network. Microsoft strives to achieve an inter-zone communication with round-trip latency of less than approximately 2 milliseconds. Low latency allows for high-performance communication within a region, and for synchronous replication of data across multiple availability zones. The target latency refers to the latency of the network links. Depending on the communication protocol you use and the network hops required for any specific network flow, the latency you observe might be different.
 
 In most workloads, you can distribute components of your solution across availability zones without a noticeable effect on your performance. If you have a workload with a high degree of sensitivity to inter-zone latency, it's important to test the latency between your selected availability zones with your actual protocols and configuration. To reduce inter-zone traffic, it's possible to use zonal deployments, but optimally, you should use multiple availability zones in your reliability strategy plan. To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
 
