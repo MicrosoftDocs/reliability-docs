@@ -29,7 +29,7 @@ ms.date: 02/04/2026 # Required; mm/dd/yyyy format.
 
 ## Resilience to availability zone failures
 
-<!-- [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)] -->
+<!-- [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)] -->
 
 ### Requirements
 
