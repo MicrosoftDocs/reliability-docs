@@ -49,7 +49,7 @@ For other application configuration guidance, see [Azure App Configuration FAQ](
 
 App Configuration automatically provides zone redundancy in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
 
-![Availibility zone failures](media/availability-zone-app-config/availablity-zone-app-fail.png)
+![Diagram that shows a zone-redundant App Configuration store, which spans three zones in the region.](media/reliability-app-configuration/zone-redundant.svg)
 
 When an availability zone becomes unavailable, App Configuration automatically redirects your requests to other healthy availability zones to ensure high availability.
 
@@ -58,8 +58,6 @@ When an availability zone becomes unavailable, App Configuration automatically r
 **Region support:** Stores deployed into the following regions are automatically zone-redundant:
 
 [!INCLUDE [Azure App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
-
-<!--NOTE TO SELF:> Region support details are currently documented in legacy migration guidance. A long-term approach for managing this information in Learn content is under discussion. -->
 
 ### Cost
 
