@@ -95,10 +95,7 @@ This section describes what to expect when a store is in a region that supports 
     > [!WARNING]
     > **Note to PG:** Please confirm that cross-zone replication is synchronous.
 
-- **Expected downtime:** A small amount of downtime, usually a few seconds, is expected while the service switches to use infrastructure in a healthy zone.
-
-    > [!WARNING]
-    > **Note to PG:** Please confirm that this statement about downtime is accurate.
+- **Expected downtime:** No downtime is expected.
 
 - **Traffic rerouting:** App Configuration automatically reroutes traffic away from the affected zone to healthy zones without requiring any customer intervention.
 
@@ -134,12 +131,7 @@ When you enable geo-replication, consider the following factors:
 
 #### Cost
 
-Each geo-replicated region is billed separately according to the pricing for the respective tier and region.
-
-> [!WARNING]
-> **Note to PG:** Is inter-region data egress charged? We say this in some other guides (for example, Azure Container Registry): "Egress charges also apply for data transfer between regions during initial replication and ongoing synchronization."
-
-For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
+Each geo-replicated region is billed separately according to the pricing for the respective tier and region. No data egress charges apply for cross-region replication. For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
 
 #### Configure multi-region support
 
@@ -150,9 +142,6 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
 - **Traffic routing between regions:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
-
-    > [!WARNING]
-    > **Note to PG:** Is it correct to say that each replica is individually addressable?
     
     Azure App Configuration doesn't automatically route traffic between regions. When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
 
@@ -160,9 +149,6 @@ This section describes what to expect when you configure an App Configuration st
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
 - **Data replication between regions:** Data is replicated asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
-
-    > [!WARNING]
-    > **Note to PG:** Can we give an approximate replication latency time here like 'typically within 15 minutes', or even a very general idea, like "a few minutes"?
 
 #### Behavior during a region failure
 
@@ -199,7 +185,7 @@ You're responsible for reconfiguring your application to route traffic back to t
 You can't simulate a replica failure. However, applications control replica selection, so they can dynamically switch replicas to test their failover behavior.
 
 > [!WARNING]
-> **Note to PG:** Do you have any other suggestions for how to test an application's behavior during a replica failure?
+> **Note to PG:** Do you have any other suggestions for how to test an application's behavior during a replica failure?`
 
 ## Backup and restore
 
@@ -219,10 +205,7 @@ Use both features for production environments. For more information, see [Soft-d
 
 ## Resilience to service maintenance
 
-Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, ensuring that maintenance is seamless and transparent to customers. No downtime occurs during maintenance events. As a result, no customer actions are required to maintain reliability.
-
-> [!WARNING]
-> **Note to PG:** Please verify that we're OK to say "No downtime is expected during maintenance events."
+Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, ensuring that maintenance is seamless and transparent to you. No downtime is expected during maintenance events unless you've been advised through [Azure Service Health planned maintenance](/azure/service-health/service-health-planned-maintenance).
 
 ## Resilience to configuration problems
 
