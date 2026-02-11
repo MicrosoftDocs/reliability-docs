@@ -4,7 +4,7 @@ description: Learn about availability zones and how to use them to design resili
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
-ms.date: 02/11/2026<img width="781" height="130" alt="image" src="https://github.com/user-attachments/assets/93e8c23f-c54e-4d29-a9af-1e25551985af" />
+ms.date: 02/11/2026
 
 ms.author: glynnniall
 author: glynnniall
