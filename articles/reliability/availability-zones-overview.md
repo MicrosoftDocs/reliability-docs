@@ -4,7 +4,8 @@ description: Learn about availability zones and how to use them to design resili
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
-ms.date: 02/11/2026
+ms.date: 02/11/2026<img width="781" height="130" alt="image" src="https://github.com/user-attachments/assets/93e8c23f-c54e-4d29-a9af-1e25551985af" />
+
 ms.author: glynnniall
 author: glynnniall
 ms.custom: subject-reliability, ai-video-concept
@@ -87,7 +88,7 @@ az account list-locations \
 
 # [Azure PowerShell](#tab/azure-powershell)
 
-Use the [Invoke-AzRestMethod](/powershell/module/az.accounts/invoke-azrestmethod) cmdlet to retrieve the current subscription's availability zone mappings from the List Locations Resource Maanger API:
+Use the [Invoke-AzRestMethod](/powershell/module/az.accounts/invoke-azrestmethod) cmdlet to retrieve the current subscription's availability zone mappings from the List Locations Resource Manager API:
 
 ```azurepowershell
 $subscriptionId = (Get-AzContext).Subscription.ID
