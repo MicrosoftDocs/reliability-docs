@@ -17,7 +17,7 @@ ms.custom: subject-reliability, ai-video-concept
 
 Many Azure regions provide *availability zones*, which are separated groups of datacenters within a region. Each availability zone has independent power, cooling, and networking infrastructure, so that if one zone experiences an outage, then regional services, capacity, and high availability are supported by the remaining zones. Some Azure services automatically use multiple zones, while others require you to configure multiple-zone deployment.
 
-Availability zones don't only protect against large-scale outages that affect an entire zone. They also provide resilience against smaller-scoped failures, such as a server rack or cluster failure within a zone. When such a failure occurs, work can shift to healthy infrastructure in another zone, even though other parts of the affected zone remain operational.
+Availability zones don't only protect against large-scale outages that affect an entire zone. They also provide resilience against smaller-scoped failures, such as a server rack or cluster failure within a zone. In these scenarios, workloads can continue running in other zones, even if parts of the affected zone remain operational.
 
 The following diagram shows several example Azure regions. Regions 1 and 2 support availability zones, and regions 3 and 4 don't have availability zones. Some zones have one datacenter and others have multiple.
 
@@ -30,7 +30,7 @@ The following diagram shows several example Azure regions. Regions 1 and 2 suppo
 
 An availability zone is a *logical grouping* of one or more physically separate datacenters within a region. Each availability zone is built in a way that if something goes wrong in one (like a power outage or network issue), the others keep working. A single datacenter doesn’t offer this level of protection on its own.
 
-Availability zones are typically separated by several kilometers, and usually are within 100 kilometers of each other. This distance means they're close enough to have low-latency connections to other availability zones through a high-performance network. However, they're far enough apart to reduce the likelihood that more than one will be affected by local outages or weather.
+Availability zones are typically separated by several kilometers, and usually are within 100 kilometers of each other. This provides low-latency connectivity while reducing the likelihood local outages or weather events impact multiple zones simultaneously.
 
 Datacenter locations are selected by using rigorous vulnerability risk assessment criteria. This process identifies all significant datacenter-specific risks and considers shared risks between availability zones.
 
@@ -56,7 +56,7 @@ Azure services can provide different types of availability zone support for thei
 
    :::image type="content" source="media/availability-zones-overview/zonal-multiple.svg" alt-text="Diagram of three zonal resources deployed into three separate zones." border="false":::
 
-When you use configure a resource to be zone redundant, or if you use multiple instances of a zonal resource in different availability zones, then your resource is considered to be *zone-resilient*: that is, it's resilient to the outage of a single availability zone. To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
+When you configure a resource to be zone redundant, or if you use multiple instances of a zonal resource in different availability zones, then your resource is considered to be *zone-resilient*: that is, it's resilient to the outage of a single availability zone. To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
 
 When designing your reliability strategy, make sure that you understand how each service in your workload supports availability zones. For example, some services may have extra requirements to meet for availability zone support, such as certain tiers or SKUs. [Reliability guides](./overview-reliability-guidance.md) contain details of any such requirements.
 
@@ -74,7 +74,7 @@ For example, subscription A may have physical zone 1 mapped to logical zone 2, w
 
 :::image type="content" source="media/availability-zones-overview/availability-zones-logical-physical.svg" alt-text="Diagram of logical to physical availability zone mapping." border="false":::
 
-To understand the mapping between logical and physical zones for your subscription, you can use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell), or the Azure Resource Manager APIs.
+To understand the mapping between logical and physical zones for your subscription, use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell), or the Azure Resource Manager APIs.
 
 # [Azure CLI](#tab/azure-cli)
 
