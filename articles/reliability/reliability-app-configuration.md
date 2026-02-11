@@ -183,16 +183,18 @@ One approach to simulating a replica failover is to use your local computer or a
 1. Enable verbose logging for the Azure SDK. In .NET, use the `AzureEventSourceListener` class to configure a logger. For more information, see [Tutorial: Use dynamic configuration in a .NET app - Logging and monitoring](/azure/azure-app-configuration/enable-dynamic-configuration-dotnet-core#logging-and-monitoring).
 
 1. Manually configure your `hosts` file so that requests to your App Configuration store are routed to an IP address that can't receive them, like `127.0.0.1` (localhost).
+
     > [!WARNING]
     > This step effectively blocks access from your computer to your App Configuration store. Only follow these steps in a nonproduction environment.
 
 1. Monitor the logs for a message similar to this:
 
-    ```
-    [Warning] Microsoft-Extensions-Configuration-AzureAppConfiguration-Refresh: Failed to get configuration settings from endpoint 'https://myappconfigstore.azconfig.io'. Failing over to endpoint https://myappconfigstore-eus.azconfig.io'.
+    ```console
+    [Warning] Microsoft-Extensions-Configuration-AzureAppConfiguration-Refresh:
+    Failed to get configuration settings from endpoint 'https://myappconfigstore.azconfig.io'. Failing over to endpoint https://myappconfigstore-eus.azconfig.io'.
     ```
 
-    This message indicates that the application successfully failed over to another replica of your store.
+    This message indicates that the application successfully failed over to use another replica of your store.
 
 1. After completing the test, undo the changes to your `hosts` file.
 
