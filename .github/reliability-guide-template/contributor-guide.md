@@ -1026,24 +1026,28 @@ We recommend adding the following include file, which adds an explanation about 
 
 ### Resilience to service maintenance
 
-Describe how the service maintains reliability during maintenance operations. If the service has no special requirements for customers to maintain reliability during service maintenance, you can omit the section.
+Describe how the service maintains reliability during maintenance operations.
 
-If the customer should take action to avoid issues during maintenance, briefly explain how they can do that:
+If the service has no special requirements for customers to maintain reliability during service maintenance, the section only contains am include file:
 
   **Example:**
 
   ```markdown
   ## Resilience to service maintenance
 
-  [service-name] performs regular service upgrades and other maintenance tasks. To ensure that sufficient capacity is available even during upgrades, you should configure your *resource type* to have additional capacity.
+  [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
   ```
 
-If the customer can control any aspect of when or how maintenance occurs, briefly explain how they can do that. Provide links to any relevant documentation.
+If the customer should take action to avoid issues during maintenance, briefly explain how they can do that. Also, if the customer can control any aspect of when or how maintenance occurs, briefly explain how they can do that. Provide links to any relevant documentation.
 
   **Example:**
 
   ```markdown
   ## Resilience to service maintenance
+
+  [service-name] performs regular service upgrades and other maintenance tasks.
+  
+  To ensure that sufficient capacity is available even during upgrades, you should configure your *resource type* to have additional capacity.
 
   To reduce service disruptions during critical time periods, [service-name] provides controls so that you can specify planned maintenance times.
   ```
@@ -1063,6 +1067,8 @@ Then the section should call out:
 - Key requirements that must be met for the SLA to take effect
 
 Do not repeat the SLA, or provide any exact wording or numbers. Instead, aim to provide a general overview of how a customer should interpret the SLA for a service, because they often are quite specific about what needs to be done for an SLA to apply.
+
+For some services, where the are no callouts, the section should only contain the include file and no other content.
 
 ### Related content
 
