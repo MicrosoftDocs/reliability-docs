@@ -48,7 +48,7 @@ You're responsible for deploying and configuring other resources:
     - *Replication policy*, which configures the snapshot frequency and retention length.
     - [*Recovery plan*](/azure/site-recovery/recovery-plan-overview), which coordinates the order in which machines fail over and can include scripts and manual actions.
 
-- For Azure-to-Azure replication, a *cache storage account*, which is an Azure Storage account that stores a copy of the source data in the source region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
+- For Azure-to-Azure replication, a *cache storage account*, that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
 > [!NOTE]
 > This guide focuses on the reliability of the Azure-based components of Azure Site Recovery and the replication relationship. If you replicate data or VMs from an on-premises environment or another cloud provider, you should also consider the reliability of the components outside of Azure.
@@ -72,7 +72,7 @@ Site Recovery automatically handles transient faults that occur during replicati
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-When you're considering the resiliency of your Site Recovery replication to zone failures, there are separate parts of the service to consider:
+To understand how Azure Site Recovery replication behaves during availability zone failures, you need to consider the following components of the service:
 
 - **Core Site Recovery service:** The Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service support zone redundancy automatically with no customer configuration required.
 
