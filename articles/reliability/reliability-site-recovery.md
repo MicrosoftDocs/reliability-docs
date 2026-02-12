@@ -116,9 +116,9 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 This section describes what to expect when Site Recovery is used in a region with availability zone support for the core service, your cache storage account is configured to use ZRS, and all availability zones are operational.
 
-- **Traffic routing between zones:** The replication process can use infrastructure in multiple availability zones to trigger and run replication jobs. The service manages this infrastructure transparently to you.
+- **Cross-zone operation:** The replication process can use infrastructure in multiple availability zones to trigger and run replication jobs. The service manages this infrastructure transparently to you.
 
-- **Data replication between zones:** Site Recovery and Azure Storage handle zone data replication as follows:
+- **Cross-zone data replication:** Site Recovery and Azure Storage handle zone data replication as follows:
 
     - *Site Recovery configuration:* Site Recovery replicates your configuration data across zones even if your vault is configured to use LRS.
 
@@ -158,11 +158,11 @@ This section describes what to expect when Site Recovery is used in a region wit
 
 - **Expected downtime:** If the failed zone contains either the source or target VM, replication pauses until both instances are available again.
 
-- **Traffic rerouting:** Site Recovery and Azure Storage handle traffic rerouting as follows:
+- **Zone failover:** Site Recovery and Azure Storage automatically adapt to zone failures:
 
     - *Site Recovery core service:* The Site Recovery service automatically uses infrastructure in healthy availability zones to perform replication. You don't need to take any action.
 
-    - *Cache storage account:* Azure Storage automatically routes any requests for the cache data to healthy zones.
+    - *Cache storage account:* Azure Storage automatically routes requests for cache data to healthy zones.
 
 ### Zone recovery
 
