@@ -137,9 +137,6 @@ This section describes what to expect when your cluster is stretched and all ava
 
 - **Traffic routing between zones:** VMs can run on hosts in either availability zone. VM placement can be controlled using vSphere DRS affinity and anti-affinity rules to optimize for performance or availability requirements.
 
-  > [!WARNING]
-  > **Note to PG:** Please verify the statement above is accurate.
-
 - **Data replication between zones:** vSAN replicates data synchronously across availability zones. Each write operation is confirmed by both zones before completion, ensuring consistent data integrity.
 
 ::: zone-end
