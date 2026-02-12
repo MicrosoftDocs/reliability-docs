@@ -66,7 +66,7 @@ To validate your custom application is handling transient errors properly, monit
 - export failures
 - query failure rate 
 
-Initiate an investigation or a switchover for sustained latency longer than five minutes.
+If you see sustained ingestion latency over five minutes, it might indicate a more significant and non-transient problem. Review the guidance in the other sections of this document to understand how to be resilient to other failure types.
 
 ## Resilience to availability zone failures
 
@@ -214,7 +214,9 @@ If workspace replication isn't enabled or a table type isn't supported, consider
 
 ## Backups
 
-Azure Monitor Logs doesn't provide a traditional point-in-time backup and restore mechanism. Durability and recovery rely on intra-region replication (and zone redundancy), workspace replication, and data export for an external long-term copy. For compliance and tamper protection, use data export to Azure storage with immutability policies. For rapid analytics recovery, rely on replication Purge operations propagate to replicated copies and fail if one instance is unavailable. Export immutability provides an extra safeguard.
+Azure Monitor Logs doesn't provide a traditional point-in-time backup or restore capability. Instead, durability and recovery rely on intra-region replication (including zone redundancy), optional workspace replication, and data export to maintain an external copy.
+
+For compliance and tamper protection, configure data export to Azure Storage with immutability policies. For rapid analytics recovery after a failure, rely on platform replication rather than restore operations. Purge requests propagate to all replicated copies and won’t complete unless all replicas are available, while immutable exported data provides an additional safeguard outside the service.
 
 ## Reliability during service maintenance
 
