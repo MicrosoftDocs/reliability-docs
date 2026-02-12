@@ -192,7 +192,7 @@ productDirectory:
     # Card
     - title: Azure Device Registry
       summary: Enables the cloud and edge management of assets.
-      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
+      imageSrc: /azure/media/index/device-registry.svg
       url: reliability-device-registry.md
       azureCategories:
         - iot
