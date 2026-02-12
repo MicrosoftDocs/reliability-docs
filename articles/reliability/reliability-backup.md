@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
-ms.date: 01/20/2026
+ms.date: 02/12/2026
 ai-usage: ai-assisted
 
 #Customer intent: As an engineer responsible for business continuity, I want to understand who need to understand the details of how Azure Backup works from a reliability perspective and plan strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -14,7 +14,7 @@ ai-usage: ai-assisted
 
 # Reliability in Azure Backup
 
-[Azure Backup](/azure/backup/backup-overview) is a built-in Azure service that securely protects cloud and on-premises workloads. Azure Backup can seamlessly scale its protection across multiple workloads and provides native integration with Azure workloads, including virtual machines (VMs), databases, SAP HANA, SQL in Azure VMs, Azure Files, and AKS. You don’t need to manage automation or infrastructure. There’s no need to write scripts or provision storage.
+[Azure Backup](/azure/backup/backup-overview) is a built-in Azure service that securely protects cloud and on-premises workloads. Azure Backup can seamlessly scale its protection across multiple workloads and provides native integration with Azure workloads, including virtual machines (VMs), SAP HANA in Azure VM, SQL in Azure VMs, Azure Files, Azure Blob, Azure Data Lake, Disks, Elastic SAN Volumes, AKS, and more. You don't need to manage automation or infrastructure. There’s no need to write scripts or provision storage.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -25,12 +25,16 @@ This article describes how Azure Backup can be resilient to a variety of potenti
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+For the backup of your production workloads, we recommend that you configure your vault as follows:
 
 > [!div class="checklist"]
-> - Use zone-redundant storage (ZRS) as the minimum storage redundancy tier, so that you can restore your backups during an availability zone outage.
-> - If you use geo-redundant storage (GRS), enable cross-region restore so that you can restore the backups for supported datasources into the paired region at any time.
-> - [Enable soft delete and immutable storage](#resilience-to-loss-of-backup-data) to prevent accidental or malicious deletion of your backup data or vault.
+> - Use zone-redundant storage (ZRS) as the minimum redundancy tier for your backups. Zone-redundant storage replicates your backups across multiple availabilty zones, so that you can restore your backups during an availability zone outage.
+> - If you use geo-redundant storage (GRS) to replicate your backups to a paired Azure region, you should also enable cross-region restore for supported datasources. Cross-region restore means that you can restore the backups into the paired region at any time.
+
+The remaining sections of this article provides more detail on these configurations.
+
+> [!NOTE]
+> These storage redundancy recommendations apply to where backup copies are replicated, not to the Azure Backup service or the resources that you back up. Backup protection and storage redundancy are complementary - backups protect against data loss, while redundancy protects against infrastructure failures.
 
 For a list of other recommendations for Azure Backup, including reliability-focused recommendations, see [Backup cloud and on-premises workloads to cloud](/azure/backup/guidance-best-practices).
 
@@ -264,11 +268,9 @@ You can use [cross-region restore](/azure/backup/backup-create-recovery-services
 
 Azure Backup provides two key recovery features to prevent accidental or malicious deletion of your backup data:
 
-- **Soft delete:** When enabled, soft delete allows you to recover deleted objects and vaults during a configurable retention period. By default, this period is 14 days, but you can configure it. Think of soft delete like a recycle bin for your backups and vaults. For more information, see [Secure by default with soft delete for Azure Backup](/azure/backup/secure-by-default).
+- **Soft delete** allows you to recover deleted objects and vaults during a configurable retention period. By default, this period is 14 days, but you can configure it. Think of soft delete like a recycle bin for your backups and vaults. For more information, see [Secure by default with soft delete for Azure Backup](/azure/backup/secure-by-default).
 
-- **Immutable vaults:** An immutable vault for Azure Backup can help you protect your backup data by blocking any operations that could lead to loss of recovery points. You can lock the immutable vault setting to make it irreversible. You can also use WORM (write once, read many) storage for backups to prevent any malicious actors from disabling immutability and deleting backups. For more information, see [Immutable vault for Azure Backup](/azure/backup/backup-azure-immutable-vault-concept).
-
-We strongly recommend enabling both features for production environments.
+- **Immutable vaults** can help you protect your backup data by blocking any operations that could lead to loss of recovery points. You can lock the immutable vault setting to make it irreversible. You can also use WORM (write once, read many) storage for backups to prevent any malicious actors from disabling immutability and deleting backups. For more information, see [Immutable vault for Azure Backup](/azure/backup/backup-azure-immutable-vault-concept).
 
 ## Service-level agreement
 
