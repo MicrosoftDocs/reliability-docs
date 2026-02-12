@@ -40,7 +40,7 @@ When you use Azure Site Recovery, you define a *source* and *target*, which repr
 - The *source* can be an Azure VM, or a VM or server from another supported source, including on-premises physical servers, VMware VMs, and Hyper-V VMs.
 - The *target* is always an Azure VM. For Azure-to-Azure VM replication, the target can be a different region or availability zone to the source VM.
 
-You're responsible for deploying and configuring other resources:
+You're responsible for deploying and configuring other resources, including the following:
 
 - *Recovery Services vault*, which Site Recovery uses to store your replication configuration settings. The vault doesn't store your replicated data. The redundancy configuration of the vault isn't important for Site Recovery, but it's important if you use the same vault for Azure Backup.
 
@@ -66,7 +66,7 @@ The core Site Recovery service runs on infrastructure that Microsoft manages. Th
 
 Transient faults are short, intermittent failures in components. They occur frequently in a distributed environment like the cloud, and they're a normal part of operations. Transient faults correct themselves after a short period of time.
 
-Site Recovery automatically handles transient faults that occur during replication by retrying. You don't need to configure transient fault handling for Azure Site Recovery.
+Site Recovery automatically handles transient faults that occur during the replication process by retrying its operations. You don't need to configure transient fault handling for Azure Site Recovery.
 
 ## Resilience to availability zone failures
 
@@ -116,7 +116,7 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 This section describes what to expect when Site Recovery is used in a region with availability zone support for the core service, your cache storage account is configured to use ZRS, and all availability zones are operational.
 
-- **Traffic routing between zones:** Site Recovery uses infrastructure in multiple availability zones to trigger and run replication jobs. The service manages this infrastructure transparently to you.
+- **Traffic routing between zones:** The replication process can use infrastructure in multiple availability zones to trigger and run replication jobs. The service manages this infrastructure transparently to you.
 
 - **Data replication between zones:** Site Recovery and Azure Storage handle zone data replication as follows:
 
@@ -160,7 +160,7 @@ This section describes what to expect when Site Recovery is used in a region wit
 
 - **Traffic rerouting:** Site Recovery and Azure Storage handle traffic rerouting as follows:
 
-    - *Site Recovery core service:* The Site Recovery service automatically reroutes traffic to instances in healthy availability zones. You don't need to take any action.
+    - *Site Recovery core service:* The Site Recovery service automatically uses infrastructure in healthy availability zones to perform replication. You don't need to take any action.
 
     - *Cache storage account:* Azure Storage automatically routes any requests for the cache data to healthy zones.
 
