@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-vmware
-ms.date: 02/02/2025
+ms.date: 02/13/2025
 ai-usage: ai-assisted
 zone_pivot_groups: azure-vmware-solution-generations
 ---
@@ -25,9 +25,11 @@ Azure VMware Solution deployments require careful planning across a range of are
 
 ## Reliability architecture overview
 
-Azure VMware Solution uses a hyperconverged infrastructure with VMware vSphere clusters. Each cluster contains ESXi hosts that provide compute, storage through vSAN, and networking through VMware NSX. There are two generations of Azure VMware Solution:
+Azure VMware Solution uses a hyperconverged infrastructure with VMware vSphere clusters.
 
-- Gen 1 uses specialized bare-metal hardware for nodes, and uses dedicated networking approaches.
+When you deploy Azure VMware Solution, you deploy a *private cloud*, which has one or more clusters. Each cluster contains ESXi hosts that provide compute, storage through vSAN, and networking through VMware NSX. There are two generations of Azure VMware Solution:
+
+- Gen 1 uses specialized bare-metal hardware for nodes, and uses dedicated networking approaches. For more information about the key concepts, see [Azure VMware Solution private cloud and cluster concepts](/azure/azure-vmware/architecture-private-clouds).
 - [Gen 2](/azure/azure-vmware/native-introduction) uses standard Azure virtual machine types and Azure virtual networks. This architecture simplifies networking architecture, enhances data transfer speeds, reduces latency for workloads, and improves performance when accessing other Azure services.
 
 ### Fault tolerance
@@ -69,14 +71,11 @@ A *standard cluster* is one that isn't stretched across zones. In a standard clu
 
 :::zone pivot="avs-gen2"
 
-Azure VMware Solution Gen 2 supports availability zones through *zonal clusters*. When you configure a zonal cluster, the cluster and all of its ESXi hosts are deployed into a single availability zone that you select.
+Azure VMware Solution Gen 2 supports *zonal* deployments of private clouds. When you configure a zonal private cloud, each of its clusters and all of their ESXi hosts are deployed into a single availability zone that you select.
 
-A zonal cluster alone doesn’t protect against availability zone failures. You can deploy multiple clusters into separate availability zones for higher resiliency, but you're responsible for deploying and configuring each cluster independently.
+A zonal private cloud doesn’t protect against availability zone failures. You can deploy multiple private clouds into separate availability zones for higher resiliency, but you're responsible for deploying and configuring each private cloud independently.
 
-If you don't select an availability zone, you create a *standard cluster*. The cluster and all of its ESXi hosts are considered to be *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters might be in the affected zone and could experience downtime.
-
-> [!WARNING]
-> **Note to PG:** Please verify the terminology - is a Gen 2 cluster that isn't zonal called a standard cluster?
+If you don't select an availability zone, your private cloud, its clusters, and all of their ESXi hosts are considered to be *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters might be in the affected zone and could experience downtime. <!-- TODO verifying this -->
 
 ::: zone-end
 
@@ -96,7 +95,7 @@ To view information about availability zone support for other generations, selec
 
 :::zone pivot="avs-gen2"
 
-**Region support:** You can deploy zonal clusters in regions that both [support Azure VMware Solution Gen 2](/azure/azure-vmware/native-introduction#regional-availability) and also [support availability zones](./regions-list.md).
+**Region support:** You can deploy zonal private clouds in regions that both [support Azure VMware Solution Gen 2](/azure/azure-vmware/native-introduction#regional-availability) and also [support availability zones](./regions-list.md).
 
 ::: zone-end
 
@@ -147,7 +146,7 @@ This section describes what to expect when your cluster is stretched and all ava
 
 :::zone pivot="avs-gen2"
 
-This section describes what to expect when your cluster is zonal and all availability zones are operational.
+This section describes what to expect when your cluster is deployed in a zonal private cloud, and all availability zones are operational.
 
 - **Traffic routing between zones:** VMs run on hosts within the cluster's availability zone.
 
@@ -179,7 +178,7 @@ This section describes what to expect when your cluster is stretched and an avai
 
 :::zone pivot="avs-gen2"
 
-This section describes what to expect when your cluster is zonal and an availability zone outage occurs.
+This section describes what to expect when your cluster is deployed in a zonal private cloud, and an availability zone outage occurs.
 
 - **Detection and response:** You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary cluster that you precreated in another availability zone.
 
