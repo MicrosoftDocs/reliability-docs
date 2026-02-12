@@ -9,4 +9,4 @@ ms.author: glynnniall
 ms.custom: include file
 ---
 
-Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, ensuring that maintenance is seamless and transparent to you. No downtime is expected during maintenance events unless you've been advised through [Azure Service Health planned maintenance](/azure/service-health/service-health-planned-maintenance).
+Microsoft regularly performs service updates and other maintenance. The Azure platform handles these activities automatically, ensuring that maintenance is seamless and transparent to you. No downtime is expected during maintenance events unless you've been advised through [Azure Service Health planned maintenance](/azure/service-health/service-health-planned-maintenance).
