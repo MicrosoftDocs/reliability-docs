@@ -63,7 +63,7 @@ Azure VMware Solution Gen 1 supports availability zones through [stretched clust
 
 A witness node is automatically deployed into a third availability zone to provide quorum for split-brain scenarios. Microsoft manages the witness node automatically.
 
-:::image type="content" source="/azure/azure-vmware/media/stretch-clusters/diagram-1-vsan-witness-third-availability-zone.png" alt-text="Diagram shows a managed vSAN stretched cluster created in a third Availability Zone with the data being copied to all three of them." border="false" lightbox="/azure/azure-vmware/media/stretch-clusters/diagram-1-vsan-witness-third-availability-zone.png"::: <!-- TODO copy the diagram into our repo? -->
+:::image type="content" source="./media/reliability-vmware-solution/gen1-availability-zones.png" alt-text="Diagram shows a managed vSAN stretched cluster created in a third Availability Zone with the data being copied to all three of them." border="false" lightbox="./media/reliability-vmware-solution/gen1-availability-zones.png":::
 
 A *standard cluster* is one that isn't stretched across zones. In a standard cluster, the cluster and all of its ESXi hosts are considered to be *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters and hosts might be in the affected zone and could experience downtime.
 
