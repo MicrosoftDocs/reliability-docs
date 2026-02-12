@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-site-recovery
-ms.date: 02/10/2026
+ms.date: 02/13/2026
 ai-usage: ai-assisted
 ---
 
@@ -23,12 +23,12 @@ This article describes how to make Azure Site Recovery resilient to a variety of
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+When using Site Recovery with production workloads, we recommend that take these actions:
 
 > [!div class="checklist"]
+> - Deploy your Recovery Services vault in your target region for replication.
 > - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change, to improve your recovery point objective (RPO).
 > - For Azure to Azure disaster recovery, configure the cache storage account to use zone-redundant storage (ZRS).
-> - Deploy your Recovery Services vault in your target region for replication.
 
 > [!WARNING]
 > **Note to PG:** Please verify these recommendations.
