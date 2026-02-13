@@ -4,7 +4,7 @@ description: Learn how to ensure reliability and availability in Azure Database 
 author: gaurikasar
 ms.author: gkasar
 ms.reviewer: maghan, gbowerman
-ms.date: 12/03/2025
+ms.date: 02/12/2026
 ms.service: azure-database-postgresql
 ms.topic: concept-article
 ms.custom:
