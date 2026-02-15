@@ -189,7 +189,7 @@ For Azure-to-Azure replication, Site Recovery is designed to provide resilience 
 
 #### Configure multi-region support
 
-- **Recovery Services vault:** A vault must be deployed into a specific Azure region. If that region has a failure, replication continues but you can't perform Site Recovery operations. For that reason, it's a good practice to deploy your Recovery Services vault into your target region.
+- **Recovery Services vault:** A Recovery Services vault is region-specific. While replication can continue during a outage in the vault's region, Site Recovery management operations aren’t available until the region recovers. Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage.
 
     Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
 
