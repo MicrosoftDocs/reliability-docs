@@ -130,12 +130,8 @@ items:
     items:
     - name: Azure DevOps
       href: /azure/devops/organizations/security/data-protection?view=azure-devops.md&preserve-view=true#data-availability&toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -174,12 +170,8 @@ items:
       href: reliability-backup.md
     - name: Azure Guest Configuration
       href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
     - name: Azure Site Recovery
       items:
       - name: Availability zones
@@ -350,8 +342,6 @@ items:
         href: reliability-aks.md
       - name: Azure Load Balancer 
         href: reliability-load-balancer.md#configure-availability-zone-support
-      - name: Log Analytics Dedicated Cluster workspaces
-        href: migrate-monitor-log-analytics.md
       - name: Azure Recovery Services vault
         href: migrate-recovery-services-vault.md
       - name: Azure Service Fabric

@@ -575,6 +575,14 @@ productDirectory:
       url: reliability-azure-storage-mover.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure Monitor Logs
+      summary: Full observability into your applications, infrastructure, and network # TODO is there a better description?
+      imageSrc: /azure/media/index/monitor.svg
+      url: reliability-monitor-logs.md
+      azureCategories:
+        - devops
+        - management-and-governance
 
 tools:
   title: Reliability services and capabilities
