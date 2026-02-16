@@ -491,27 +491,27 @@ Include this section to explain normal operations when all availability zones ar
 
 **Include two bullets:**
 
-- **Traffic routing between zones**: Explain how traffic is distributed across zones during normal operations.
+- **Cross-region operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
 
-  - *For zone-redundant services*, traffic routing typically services fall into one of these models:
-    - *Active/active*: Requests are automatically spread across instances in every availability zone
-    - *Active/passive*: Requests go to a primary instance with standby instances in other zones
+  - *For zone-redundant services*, work distribution typically services fall into one of these models:
+    - *Active/active*: Work is automatically spread across instances in every availability zone
+    - *Active/passive*: Work goes to a primary instance with standby instances in other zones
 
      **Example:**
 
       ```markdown
-      - **Traffic routing between zones:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
+      - **Cross-region operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
       ```
 
-  - *For zonal services*, clarify that customers are responsible for configuring their solution to route requests between the availability zones.
+  - *For zonal services*, clarify that customers are responsible for configuring their solution to route work between the availability zones.
 
     **Example:**
 
       ```markdown
-      - **Traffic routing between zones:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
+      - **Cross-region operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
       ```
 
-- **Data replication between zones**:
+- **Cross-region data replication**:
 
   - *For zone-redundant services where the service replicates data across zones*, explain:
     - Replication method: synchronous, asynchronous, or hybrid. Most zone-redundant Azure services replicate data synchronously across zones.
@@ -523,7 +523,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
+      - **Cross-region data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
       ```
 
     Some services replicate their data asynchronously, where changes are applied in a single zone and then propagated after some time to the other zones. Use wording similar to this to explain this approach and its tradeoffs.
@@ -531,7 +531,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
+      - **Cross-region data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
       ```
 
   - *For stateless services*, clarify that no data is synchronized.
@@ -539,7 +539,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
+      - **Cross-region data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
       ```
 
 > [!NOTE]
@@ -850,28 +850,28 @@ If your service supports disabling multi-region support, provide links to the re
 
 ### Behavior when all regions are healthy
 
-Add information about normal operations. Break the content down into two bullets: **Traffic routing between regions** and **data replication between regions**.
+Add information about normal operations. Break the content down into two bullets:
 
-- **Traffic routing between regions**. Explains how work is divided up between instances in multiple regions, during regular day-to-day operations - NOT during a region failure.
+- **Cross-region operation:** Explains how work is divided up between instances in multiple regions, during regular day-to-day operations - NOT during a region failure.
 
     Commonly, services use one of these traffic routing approaches:
-    - *Active/active:* Requests are spread across instances in every region. Services might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
-    - *Active/passive:* Requests always goes to the primary region.
+    - *Active/active:* Work is spread across instances in every region. Services that receive requests might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
+    - *Active/passive:* Work always goes to the primary region.
 
     **Example:**
 
     ```markdown
-    - **Traffic routing between regions:** When you configure multi-region support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
+    - **Cross-region operation:** When you configure multi-region support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
     ```
 
-- **Data replication between regions** is only required for services that perform data replication across regions.
+- **Cross-region data replication:** Only required for services that perform data replication across regions.
 
     Most Azure services replicate the data across regions asynchronously, where changes are applied in a single region and then propagated after some time to the other regions. Use wording similar to this to explain this approach and its tradeoffs.
 
     **Example:**
 
     ```markdown
-    - **Data replication between regions**: When a client changes any data in your \[service-name\] resource, that change is applied to the primary region. At that point, the write is considered to be complete. Later, the X resource in the secondary region is automatically updated with the change. This approach is called *asynchronous replication.* Asynchronous replication ensures high performance and throughput. However, any data that wasn't replicated between regions could be lost if the primary region experiences a failure.
+    - **Cross-region data replication:** When a client changes any data in your \[service-name\] resource, that change is applied to the primary region. At that point, the write is considered to be complete. Later, the X resource in the secondary region is automatically updated with the change. This approach is called *asynchronous replication.* Asynchronous replication ensures high performance and throughput. However, any data that wasn't replicated between regions could be lost if the primary region experiences a failure.
     ```
 
     Alternatively, some services replicate their data synchronously which means that changes are applied to multiple (or all) regions simultaneously, and the change isn't considered to be completed until multiple/all regions have acknowledged the change. Use wording similar to the following to explain this approach and its tradeoffs:
@@ -879,7 +879,7 @@ Add information about normal operations. Break the content down into two bullets
     **Example:**
 
     ```markdown
-    - **Data replication between regions**: When a client changes any data in your \[service-name\] resource, that change is applied to all instances in all regions simultaneously. This approach is called *synchronous replication.* Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a region failure. However, because all changes must be replicated across regions that might be geographically distant, you might experience lower throughput or performance.
+    - **Cross-region data replication:** When a client changes any data in your \[service-name\] resource, that change is applied to all instances in all regions simultaneously. This approach is called *synchronous replication.* Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a region failure. However, because all changes must be replicated across regions that might be geographically distant, you might experience lower throughput or performance.
     ```
 
 >[!NOTE]
