@@ -128,7 +128,9 @@ Use the following format for the H1: "Reliability in \[service-name\]".
 
 The introduction should consist of three paragraphs in the following order:
 
-1. **Service introduction**: Begin with a brief 2-3 sentence introduction to the service. The FIRST mention of the service should be formatted as a link to the service overview, using "Azure \[service-name\]" format. For example:
+1. **Service introduction**: Begin with a brief 2-3 sentence introduction to the service. The FIRST mention of the service should be formatted as a link to the service overview. Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) to confirm how to refer to the service name, including on first use and subsequent uses.
+
+  For example:
 
    > [Azure Bastion](/azure/bastion/bastion-overview) is a fully managed platform as a service (PaaS) that you provision to provide high-security connections to virtual machines via a private IP address. It provides seamless RDP/SSH connectivity to your virtual machines directly over TLS from the Azure portal, or via the native SSH or RDP client that's already installed on your local computer.
 
@@ -140,9 +142,16 @@ The introduction should consist of three paragraphs in the following order:
 
 3. **Article scope**: Describe what the article contains, using the terms from the H2 section names. List only the topics actually covered in the article. For example:
 
-   > This article describes how to make Azure Bastion resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Bastion service level agreement (SLA).
+   ```markdown
+   This article describes how to make Azure Bastion resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Bastion service level agreement (SLA).
+   ```
 
-**Product naming convention**: Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) to confirm how to refer to the service name, including on first use and subsequent uses.
+**Dependent resources:** Some types of resources are only ever deployed in conjunction with other resources. For example, virtual machines must be deployed alongside disks, networks, and applications. For these services, include an IMPORTANT note at the end of the introduction, which clarifies that reliability should be considered across all of these individual resources collectively, similar to this example:
+
+  ```markdown
+  > [!IMPORTANT]
+  > When you consider the reliability of a VM, also consider the reliability of your disks, your network infrastructure, and the applications that run on your VMs. Even if you increase the resiliency of a VM, that increase might not be impactful if your other resources and applications aren't also resilient. Depending on your resiliency requirements, you may need to make configuration changes across multiple areas.
+  ```
 
 ### Production deployment recommendations (for reliability)
 
@@ -285,7 +294,7 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - **Zonal**, in which the customer picks a single zone to use.
 
-      For zonal services, add this include file somewhere within the section:
+      For zonal services, add this include file somewhere within the section, which explains that zonal resources aren't inherently zone-resilient:
 
       ```markdown
       [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
@@ -294,6 +303,12 @@ This is a key section. It describes how the service works with Azure's availabil
    - Supports **both models**.
 
    - Some services don't fit neatly into these categories. Please speak to the Reliability Hub team about how best to handle these situations.
+
+   - If the service also supports nonzonal deployments, include a statement similar to this:
+
+    ```markdown
+    If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
+    ```
 
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
