@@ -158,7 +158,7 @@ This section describes what to expect when Site Recovery is used in a region wit
 
 - **Expected downtime:** If the failed zone contains either the source or target VM, replication pauses until both instances are available again.
 
-- **Zone failover:** Site Recovery and Azure Storage automatically adapt to zone failures:
+- **Redistribution:** Site Recovery and Azure Storage automatically adapt to zone failures:
 
     - *Site Recovery core service:* The Site Recovery service automatically uses infrastructure in healthy availability zones to perform replication. You don't need to take any action.
 
