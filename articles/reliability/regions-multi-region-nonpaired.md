@@ -6,6 +6,7 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: article
 ms.date: 10/09/2025
+ms.update-cycle: 1095-days
 ms.author: glynnniall
 ms.custom:
   - subject-reliability
