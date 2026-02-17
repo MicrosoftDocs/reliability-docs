@@ -354,8 +354,6 @@ items:
         href: migrate-monitor-log-analytics.md
       - name: Azure Recovery Services vault
         href: migrate-recovery-services-vault.md
-      - name: Azure Service Fabric
-        href: migrate-service-fabric.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database
