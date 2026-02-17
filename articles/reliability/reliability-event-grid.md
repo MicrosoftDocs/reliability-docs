@@ -175,7 +175,7 @@ To configure your failover preference:
 - **Notification:** Azure Service Health provides outage notifications.
 - **Active requests:** Active requests to the primary region will terminate and must be retried after failover. 
 - **Expected data loss:** Event Grid preserves metadata during failover. Event data in the primary region is unavailable and might be lost if the region is unrecoverable.
-- **Expected downtime:** Downtime depends on the severity of the outage and the time required for Microsoft to assess and initiate failover.
+- **Expected downtime:** Downtime depends on the severity of the outage and the time required for Microsoft to assess and initiate failover. The amount of time that elapses before failover occurs depends on the severity of the disaster and the time required to assess the situation.
 - **Traffic rerouting:** After failover, traffic is automatically routed to the secondary region.
 
 #### Region recovery
