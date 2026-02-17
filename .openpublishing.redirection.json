@@ -191,6 +191,11 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/reliability-energy-data-services.md",
+      "redirect_url": "/azure/energy-data-services/reliability-energy-data-services",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/migrate-monitor-log-analytics.md",
       "redirect_url": "/azure/reliability/reliablity-monitor-logs",
       "redirect_document_id": false
