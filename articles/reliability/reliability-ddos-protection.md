@@ -63,9 +63,9 @@ Azure DDoS Protection is automatically zone-redundant in supported regions. Ther
 
 This section describes what to expect when you deploy a DDoS Protection plan in a region with availability zones, the public IP address is zone-redundant, and all availability zones are operational.
 
-- **Traffic routing between zones:** Traffic inspection can occur in all zones, and traffic is routed between zones transparently as part of Azure networking operations.
+- **Cross-zone operation:** Traffic inspection can occur in all zones, and traffic is routed between zones transparently as part of Azure networking operations.
 
-- **Data replication between zones:** Azure DDoS Protection doesn't replicate customer data between zones because the service is stateless and doesn't maintain customer data.
+- **Cross-zone operation data replication:** Azure DDoS Protection doesn't replicate customer data between zones because the service is stateless and doesn't maintain customer data.
 
 ### Behavior during a zone failure
 
@@ -81,7 +81,7 @@ This section describes what to expect when you deploy a DDoS Protection plan in 
 
 - **Expected downtime:** No downtime is expected to the DDoS Protection plan, and it continues operating using the remaining healthy zones.
 
-- **Traffic rerouting:** Microsoft automatically reroutes traffic protection through the healthy zones.
+- **Redistribution:** Microsoft automatically reroutes traffic protection through the healthy zones.
 
 ### Zone recovery
 
