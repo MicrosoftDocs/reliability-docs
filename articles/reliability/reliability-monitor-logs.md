@@ -131,9 +131,9 @@ During a zone failure, your workspace might experience greater load because of i
 
 This section describes what to expect when a Log Analytics workspace is zone-redundant, and all zones are operational.
 
-- **Traffic routing between zones:** For clusters that have service resilience, ingestion and queries can use infrastructure in any zone. The service automatically distributes work across zones, optimizing for locality and load.
+- **Cross-zone operation:** For clusters that have service resilience, ingestion and queries can use infrastructure in any zone. The service automatically distributes work across zones, optimizing for locality and load.
 
-- **Data replication between zones:** For clusters that have data resilience, The ingestion pipeline commits all writes to multiple replicas in separate zones before acknowledging.
+- **Cross-zone data replication:** For clusters that have data resilience, The ingestion pipeline commits all writes to multiple replicas in separate zones before acknowledging.
 
 ### Behavior during a zone failure
 
@@ -155,7 +155,7 @@ This section describes what to expect when a Log Analytics workspace is zone-red
 
 - **Expected downtime:** For clusters that have service resilience, no downtime is expected. Temporary latency increases or throttling might occur as the service rebalances infrastructure across zones.
 
-- **Traffic rerouting:** For clusters that have service resilience, internal load balancers within the Azure Monitor Logs service redirect traffic to healthy zone nodes. No endpoint change is required.
+- **Rerouting:** For clusters that have service resilience, internal load balancers within the Azure Monitor Logs service redirect traffic to healthy zone nodes. No endpoint change is required.
 
 ### Zone recovery
 
@@ -240,9 +240,9 @@ During a region failure or another switchover or switchback event, your workspac
 
 This section describes what to expect when you configure a Log Analytics workspace for workspace replication, and all regions are operational.
 
-- **Traffic routing between regions:** All ingestion and queries target the primary region's workspace while healthy. The secondary region's workspace holds a passive replica of data, schemas, and configuration until switchover.
+- **Cross-region operation:** All ingestion and queries target the primary region's workspace while healthy. The secondary region's workspace holds a passive replica of data, schemas, and configuration until switchover.
 
-- **Data replication between regions:** New logs, schema, and configuration updates are replicated asynchronously in batches to the secondary. Because it's asynchronous, this replication process doesn't affect ingestion latency.
+- **Cross-zone data replication:** New logs, schema, and configuration updates are replicated asynchronously in batches to the secondary. Because it's asynchronous, this replication process doesn't affect ingestion latency.
 
     > [!WARNING]
     > **Note to PG:** can we give an idea of the replication lag (even if it's vague, like "a few minutes")?
@@ -289,7 +289,7 @@ This section describes what to expect when you configure a Log Analytics workspa
     > [!WARNING]
     > **Note to PG:** Can we give an approximate idea of how long this takes (understanding DNS propagation will be an unknown factor)?
 
-- **Traffic rerouting:** The switchover process updates the DNS records for the ingestion endpoints to point to the secondary region. The platform routes queries internally to the active region.
+- **Redistribution:** The switchover process updates the DNS records for the ingestion endpoints to point to the secondary region. The platform routes queries internally to the active region.
 
     While the workspace is in the switched-over state, log replication happens back to primary region using asynchronous replication.
 
