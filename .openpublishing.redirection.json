@@ -194,6 +194,11 @@
       "source_path": "articles/reliability/reliability-energy-data-services.md",
       "redirect_url": "/azure/energy-data-services/reliability-energy-data-services",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-health-data-services-deidentification.md",
+      "redirect_url": "/azure/healthcare-apis/deidentification/reliability-health-data-services-deidentification",
+      "redirect_document_id": false
     }
   ]
 }
