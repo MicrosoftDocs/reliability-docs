@@ -171,7 +171,7 @@ To configure availability zone support for a server, you configure the high avai
 
 This section describes what to expect when servers are configured with high availability and availability zone support and all availability zones are operational.
 
-- **Traffic routing between zones**: Azure Database for PostgreSQL uses an active/passive configuration where all database connections and queries are handled by the primary server in the primary availability zone. The standby server in the secondary zone remains on standby and doesn't serve client traffic during normal operations.
+- **Cross-zone operation**: Azure Database for PostgreSQL uses an active/passive configuration where all database connections and queries are handled by the primary server in the primary availability zone. The standby server in the secondary zone remains on standby and doesn't serve client traffic during normal operations.
 
     PostgreSQL client applications connect to the primary server by using the database server name. The primary server directly serves application reads. The application receives confirmation of commits and writes only after the log data persists on both the primary server and the standby replica. Due to this extra round-trip, applications can expect elevated latency for writes and commits.
 
@@ -182,7 +182,7 @@ This section describes what to expect when servers are configured with high avai
     1. Primary receives an acknowledgment.
     1. Writes and commits are acknowledged.
 
-- **Data replication between zones**: Changes to data are replicated synchronously between the primary and standby servers. Transactions aren't considered complete until both the primary and standby replicas acknowledge the write.
+- **Cross-zone data replication**: Changes to data are replicated synchronously between the primary and standby servers. Transactions aren't considered complete until both the primary and standby replicas acknowledge the write.
 
     Application transaction-triggered write and commits first log to the WAL on the primary server. The primary server streams these logs to the standby server by using the Postgres streaming protocol. When the standby server storage persists the logs, the primary server acknowledges write completion. The application commits its transaction only after this acknowledgment. This acknowledgment process doesn't wait for the logs to be applied to the standby server.
     
@@ -229,7 +229,7 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zonal:* When a zone is unavailable, servers in that zone are unavailable until the availability zone recovers.
 
-- **Traffic rerouting:** The traffic rerouting behavior depends on the availability zone configuration that your server uses.
+- **Redistribution:** The traffic rerouting behavior depends on the availability zone configuration that your server uses.
 
     - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting connections. Azure automatically establishes a new standby server in the original primary zone once it recovers. <!-- TODO what about in the meantime? -->
 
@@ -299,9 +299,9 @@ Geo-redundant backup storage approximately doubles your backup storage costs bec
 
 #### Behavior when all regions are healthy
 
-**Traffic routing between regions**: In normal operations, all database traffic is directed to the primary region. The geo-redundant backup feature doesn't route traffic between regions - it only ensures backup data protection. All read and write operations remain on the primary server in the primary region.
+- **Cross-region operation:** In normal operations, all database traffic is directed to the primary region. The geo-redundant backup feature doesn't route traffic between regions - it only ensures backup data protection. All read and write operations remain on the primary server in the primary region.
 
-**Data replication between regions**: Geo-redundant backup uses asynchronous storage-level replication to copy backup data and transaction logs to the Azure paired region. Daily backups are automatically copied to the paired region as part of the managed backup process. Transaction logs (WAL files) are also continuously replicated to ensure comprehensive backup coverage. This replication happens transparently in the background with up to one hour of delay for backup data transmission to the paired region.
+- **Cross-region data replication:** Geo-redundant backup uses asynchronous storage-level replication to copy backup data and transaction logs to the Azure paired region. Daily backups are automatically copied to the paired region as part of the managed backup process. Transaction logs (WAL files) are also continuously replicated to ensure comprehensive backup coverage. This replication happens transparently in the background with up to one hour of delay for backup data transmission to the paired region.
 
 
 **Sources:**
@@ -315,7 +315,7 @@ Geo-redundant backup storage approximately doubles your backup storage costs bec
 - **Active requests**: All active connections and transactions in the failed region are lost and must be retried.
 - **Expected data loss**: RPO depends on when the last backup was replicated to the paired region, potentially several hours.
 - **Expected downtime**: RTO includes the time to restore from backup in the destination region, which can be substantial for large databases.
-- **Traffic rerouting**: Customer must update application connection strings to point to the newly restored server in the paired region.
+- **Redistribution**: Customer must update application connection strings to point to the newly restored server in the paired region.
 
 #### Region recovery
 
