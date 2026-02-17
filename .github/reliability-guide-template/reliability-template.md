@@ -67,7 +67,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 - **Expected downtime:**
 
-- **Traffic rerouting:**
+- **Redistribution:**
 
 ### Zone recovery
 
@@ -111,7 +111,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 - **Expected downtime:**
 
-- **Traffic rerouting:**
+- **Redistribution:**
 
 #### Region recovery
 
