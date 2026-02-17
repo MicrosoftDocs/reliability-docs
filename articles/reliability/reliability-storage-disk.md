@@ -116,13 +116,13 @@ ZRS incurs a higher cost than LRS due to the additional replication overhead and
 
 This section describes what to expect when managed disks are configured with availability zone support and all availability zones are operational.
 
-- **Traffic routing between zones**:
+- **Cross-zone operation:**
 
     - *Zone-redundant:* Azure automatically manages traffic routing between availability zones when you use a VM with a zone-redundant disk. During normal operations, requests are distributed across zones transparently.
 
     - *Zonal:* Traffic between a zonal VM and a zonal LRS disk in the same zone remains within the availability zone.
 
-- **Data replication between zones**:
+- **Cross-zone data replication:**
 
     - *Zone-redundant:* ZRS disks replicate every write synchronously across all availability zones in the region. A write operation completes only after data is stored in clusters in every zone. This approach provides strong consistency and immediate availability from any zone, but it can introduce slightly higher write latency compared to LRS disks.
 
@@ -160,7 +160,7 @@ This section describes what to expect when a managed disk is configured for avai
     > [!WARNING]
     > **Note to PG:** Please verify, and if it's accurate, how this would manifest in the VM (e.g. a freeze or a crash).
 
-- **Traffic rerouting:**
+- **Redistribution:**
 
     - *Zone-redundant:* Azure automatically reroutes traffic to another copy of your disk in a healthy zone.
 
