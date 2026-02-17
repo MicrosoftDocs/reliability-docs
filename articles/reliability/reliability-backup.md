@@ -123,9 +123,9 @@ When you enable zone-redundant storage (ZRS) for your backups, you're charged at
 
 When vaults use zone-redundant storage and all availability zones are operational, expect the following:
 
-- **Traffic routing between zones:** Backup jobs run on infrastructure that is replicated across zones. Azure manages jobs from infrastructure in any zone.
+- **Cross-zone operation:** Backup jobs run on infrastructure that is replicated across zones. Azure manages jobs from infrastructure in any zone.
 
-- **Data replication between zones:** ZRS replicates backed up data across zones. Replication occurs synchronously, which means that multiple zones acknowledge each write operation before it's completed.
+- **Cross-zone data replication:** ZRS replicates backed up data across zones. Replication occurs synchronously, which means that multiple zones acknowledge each write operation before it's completed.
 
 ### Behavior during a zone failure
 
@@ -156,7 +156,7 @@ When vaults are configured to use zone-redundant storage and an availability zon
     - For any datasources in the failed availability zone, the datasources might not be available until the zone recovers. Backup jobs might fail to run until the datasource is available again. The RTO is undefined.
     - For any datasources in healthy availability zones, a small amount of downtime, typically a few seconds, might occur while the platform switches to using healthy availability zones for the Azure Backup service.
 
-- **Traffic rerouting:** Any subsequent job executions automatically use infrastructure in healthy zones, as long as the datasources are available.
+- **Redistribution:** Any subsequent job executions automatically use infrastructure in healthy zones, as long as the datasources are available.
 
     You're responsible for restoring your backup to infrastructure in a healhty zone, and for reconfiguring any load balancers, clients, and other systems to redirect traffic to healthy infrastructure in the new zone.
 
@@ -223,9 +223,9 @@ GRS vaults incur extra costs for cross-region replication and storage in the sec
 
 This section describes what to expect when vaults are configured to use geo-redundant storage and all regions are operational.
 
-- **Traffic routing between regions:** Backups are always completed in the primary region, which is the region where the vault and datasource are deployed.
+- **Cross-region operation:** Backups are always completed in the primary region, which is the region where the vault and datasource are deployed.
 
-- **Data replication between regions:** When the vault is configured to use GRS, backups are first committed to the primary region by using locally redundant storage (LRS). After successful completion in the primary region, data is asynchronously replicated to the secondary region where it's stored by using LRS. It can take up to 12 hours to replicate the backup data from the primary region to the secondary region.
+- **Cross-region data replication:** When the vault is configured to use GRS, backups are first committed to the primary region by using locally redundant storage (LRS). After successful completion in the primary region, data is asynchronously replicated to the secondary region where it's stored by using LRS. It can take up to 12 hours to replicate the backup data from the primary region to the secondary region.
 
 #### Behavior during a region failure
 
@@ -247,7 +247,7 @@ This section describes what to expect when vaults are configured to use geo-redu
 
     No backup jobs can run while the primary region is offline. You can restore data in the vault but not add new data.
 
-- **Traffic rerouting:** No backup jobs can run while the primary region is offline. You can restore data in the vault but not add new data.
+- **Redistribution:** No backup jobs can run while the primary region is offline. You can restore data in the vault but not add new data.
 
     You're responsible for restoring your backup to infrastructure in the paired region, and for reconfiguring any load balancers, clients, and other systems to redirect traffic to healthy infrastructure in the paired region.
 
