@@ -2,11 +2,12 @@
 title: Reliability in Azure Event Grid
 description: Learn how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. Learn about backup and restore.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ms.service: event-grid
+ms.service: azure-event-grid
 ms.date: 02/04/2026
+ai-usage: ai-assisted
 ---
 
 <!-- For guidance on how to fill out this template, see https://learn.microsoft.com/help/patterns/level4/article-reliability -->
@@ -17,11 +18,11 @@ Azure Event Grid is a fully managed messaging service that enables event-based c
 
 This article covers production deployment recommendations, how Event Grid behaves during faults and outages, and the options available to help you design for high availability and disaster recovery.
 
-[!INCLUDE [Shared responsibility](../includes/reliability-shared-responsibility-include.md)]
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 ## Production deployment recommendations
 
-Use the Azure Well-Architected Framework (WAF) service guide for Azure Event Grid to inform your production deployments. The WAF guidance provides prescriptive recommendations for designing Event Grid solutions that align with Azure reliability, security, and operational best practices.
+Use the [Azure Well-Architected Framework guidance for Azure Event Grid](azure/well-architected/service-guides/azure-event-grid) to inform your production deployments. The WAF guidance provides prescriptive recommendations for designing Event Grid solutions that align with Azure reliability, security, and operational best practices.
 
 ## Reliability architecture overview
 
@@ -41,7 +42,7 @@ Event Grid supports multiple tiers, including a long-standing basic tier and a n
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](../includes/reliability-transient-fault-description-include.md)]
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 There are two primary transient fault scenarios to consider when you use Azure Event Grid:
 
@@ -53,7 +54,7 @@ Event Grid also supports features such as dead-lettering for undeliverable event
 
 ## Resilience to availability zone failures
 
-[!INCLUDE [Resilience to availability zone failures](../includes/reliability-availability-zone-description-include.md)]
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Event Grid automatically supports availability zone resiliency in regions that support availability zones. You don't need to enable or configure this capability explicitly.
 
@@ -172,9 +173,9 @@ Azure manages all service maintenance for Azure Event Grid. Maintenance activiti
 
 ## Service-level agreement
 
-[!INCLUDE [Service-level agreement](../includes/reliability-service-level-agreement-include.md)]
+[!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
 ## Related content
 
-- Azure Well-Architected Framework guidance for Azure Event Grid
-- Azure Event Grid documentation
+- [Azure Well-Architected Framework guidance for Azure Event Grid](azure/well-architected/service-guides/azure-event-grid)
+- [Azure Event Grid documentation](azure/event-grid/overview) 
