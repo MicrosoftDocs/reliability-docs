@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-vmware
-ms.date: 02/13/2025
+ms.date: 02/18/2025
 ai-usage: ai-assisted
 zone_pivot_groups: azure-vmware-solution-generations
 ---
@@ -135,9 +135,9 @@ You incur costs for each node in the cluster, regardless of the availability zon
 
 This section describes what to expect when your cluster is stretched and all availability zones are operational.
 
-- **Traffic routing between zones:** VMs can run on hosts in either availability zone. VM placement can be controlled using vSphere DRS affinity and anti-affinity rules to optimize for performance or availability requirements.
+- **Cross-region operation:** VMs can run on hosts in either availability zone. VM placement can be controlled using vSphere DRS affinity and anti-affinity rules to optimize for performance or availability requirements.
 
-- **Data replication between zones:** vSAN replicates data synchronously across availability zones. Each write operation is confirmed by both zones before completion, ensuring consistent data integrity.
+- **Cross-region data replication:** vSAN replicates data synchronously across availability zones. Each write operation is confirmed by both zones before completion, ensuring consistent data integrity.
 
 ::: zone-end
 
@@ -145,9 +145,9 @@ This section describes what to expect when your cluster is stretched and all ava
 
 This section describes what to expect when your cluster is deployed in a zonal private cloud, and all availability zones are operational.
 
-- **Traffic routing between zones:** VMs run on hosts within the cluster's availability zone.
+- **Cross-region operation:** VMs run on hosts within the cluster's availability zone.
 
-- **Data replication between zones:** No data is replicated to another zone.
+- **Cross-region data replication:** No data is replicated to another zone.
 
 ::: zone-end
 
@@ -169,7 +169,7 @@ This section describes what to expect when your cluster is stretched and an avai
 
 - **Expected data loss:** Because vSAN uses synchronous replication between zones, there's no data loss expected during a zone failure.
 
-- **Traffic rerouting:** vSphere DRS automatically redistributes VM workloads to the surviving availability zone. Network traffic routing through VMware NSX adapts to the new VM placement automatically.
+- **Redistribution:** vSphere DRS automatically redistributes VM workloads to the surviving availability zone. Network traffic routing through VMware NSX adapts to the new VM placement automatically.
 
 ::: zone-end
 
@@ -187,7 +187,7 @@ This section describes what to expect when your cluster is deployed in a zonal p
 
 - **Expected data loss:** Data in the affected zone is unavailable until the zone recovers.
 
-- **Traffic rerouting:** You're responsible for switching traffic to other clusters in healthy zones, if required.
+- **Redistribution:** You're responsible for switching traffic to other clusters in healthy zones, if required.
 
 ::: zone-end
 
