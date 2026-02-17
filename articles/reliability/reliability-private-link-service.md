@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ai-usage: ai-assisted
 ms.service: azure-private-link
-ms.date: 01/30/2026
+ms.date: 02/18/2026
 ---
 
 # Reliability in Azure Private Link service
@@ -73,25 +73,25 @@ Availability zone support is enabled automatically when you deploy Private Link 
 
 This section describes what to expect when Private Link services and private endpoints are configured for availability zone support and all availability zones are operational.
 
-- **Traffic routing between zones**: Traffic through a private endpoint and Private Link service might be routed through any availability zone.
+- **Cross-zone operation:** Traffic through a private endpoint and Private Link service might be routed through any availability zone.
 
-- **Data replication between zones**: Azure Private Link doesn't perform data replication between zones as it's a stateless service for connectivity.
+- **Cross-zone data replication:** Azure Private Link doesn't perform data replication between zones as it's a stateless service for connectivity.
 
 ### Behavior during a zone failure
 
 This section describes what to expect when Private Link services and private endpoints are configured for availability zone support and there’s an availability zone outage.
 
-- **Detection and response**: Microsoft is responsible for detecting availability zone failures and managing the service response.
+- **Detection and response:** Microsoft is responsible for detecting availability zone failures and managing the service response.
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
-- **Active requests**: Active requests might be terminated during an availability zone failure. Service consumers should retry failed requests after transient interruptions, similar to [other transient faults](#resilience-to-transient-faults).
+- **Active requests:** Active requests might be terminated during an availability zone failure. Service consumers should retry failed requests after transient interruptions, similar to [other transient faults](#resilience-to-transient-faults).
 
-- **Expected data loss**: No data loss occurs because Azure Private Link is a stateless service for connectivity.
+- **Expected data loss:** No data loss occurs because Azure Private Link is a stateless service for connectivity.
 
-- **Expected downtime**: Existing connections that connect through the failed zone might go down. As long as backend components, like the load balancer and application servers, are still available, service consumers can retry connections immediately and requests will be routed through infrastructure in another zone.
+- **Expected downtime:** Existing connections that connect through the failed zone might go down. As long as backend components, like the load balancer and application servers, are still available, service consumers can retry connections immediately and requests will be routed through infrastructure in another zone.
 
-- **Traffic rerouting**: When a single availability zone fails, the service continues operating by routing new traffic through healthy zones.
+- **Redistribution:** When a single availability zone fails, the service continues operating by routing new traffic through healthy zones.
 
   It's unlikely that virtual machines in the affected availability zone would still be operating. However, in the event of a partial zone failure that causes Azure Private Link to be unavailable in the affected zone while virtual machines in the zone continue to operate, any outbound connections to virtual machines in the affected zone are routed through Private Link infrastructure in another zone.
 
