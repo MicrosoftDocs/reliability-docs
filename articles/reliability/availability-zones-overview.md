@@ -4,7 +4,8 @@ description: Learn about availability zones and how to use them to design resili
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
-ms.date: 11/18/2025
+ms.date: 02/11/2026
+
 ms.author: glynnniall
 author: glynnniall
 ms.custom: subject-reliability, ai-video-concept
@@ -15,13 +16,9 @@ ms.custom: subject-reliability, ai-video-concept
 
 >[!VIDEO https://learn-video.azurefd.net/vod/player?id=d36b5b2d-8bd2-43df-a796-b0c77b2f82fc]
 
-Many [Azure regions](./regions-overview.md) provide *availability zones*, which are separated groups of datacenters within a region. Each availability zone has independent power, cooling, and networking infrastructure, so that if one zone experiences an outage, then regional services, capacity, and high availability are supported by the remaining zones.
+Many Azure regions provide *availability zones*, which are separated groups of datacenters within a region. Each availability zone has independent power, cooling, and networking infrastructure, so that if one zone experiences an outage, then regional services, capacity, and high availability are supported by the remaining zones. Some Azure services automatically use multiple zones, while others require you to configure multiple-zone deployment.
 
-Availability zones are typically separated by several kilometers, and usually are within 100 kilometers. This distance means they're close enough to have low-latency connections to other availability zones through a high-performance network. However, they're far enough apart to reduce the likelihood that more than one will be affected by local outages or weather.
-
-Datacenter locations are selected by using rigorous vulnerability risk assessment criteria. This process identifies all significant datacenter-specific risks and considers shared risks between availability zones.
-
-Azure doesn't charge for data transfer between availability zones in the same region, whether you use private or public IP addressing.
+Availability zones don't only protect against large-scale outages that affect an entire zone. They also provide resilience against smaller-scoped failures, such as a server rack or cluster failure within a zone. In these scenarios, workloads can continue running in other zones, even if parts of the affected zone remain operational.
 
 The following diagram shows several example Azure regions. Regions 1 and 2 support availability zones, and regions 3 and 4 don't have availability zones. Some zones have one datacenter and others have multiple.
 
@@ -32,43 +29,43 @@ The following diagram shows several example Azure regions. Regions 1 and 2 suppo
 
 ## Datacenters and availability zones
 
-An availability zone is a *logical* grouping of one or more physically separate datacenters within a region. Each availability zone is built in a way that if something goes wrong in one (like a power outage or network issue), the others keep working. A single datacenter doesn’t offer this level of protection on its own.
+An availability zone is a *logical grouping* of one or more physically separate datacenters within a region. Each availability zone is built in a way that if something goes wrong in one (like a power outage or network issue), the others keep working. A single datacenter doesn’t offer this level of protection on its own.
+
+Availability zones are typically separated by several kilometers, and usually are within 100 kilometers of each other. This provides low-latency connectivity while reducing the likelihood local outages or weather events impact multiple zones simultaneously.
+
+Datacenter locations are selected by using rigorous vulnerability risk assessment criteria. This process identifies all significant datacenter-specific risks and considers shared risks between availability zones.
 
 <a name='zonal-and-zone-redundant-services'></a>
 
 ## Types of availability zone support
 
-Azure services can provide three types of availability zone support for their resources: *zone-redundant* and *zonal*. Each service might support one or more of these types. When designing your reliability strategy, make sure that you understand how each service in your workload supports availability zones by referring to each [service's reliability guide](./overview-reliability-guidance.md). 
+Azure services can provide different types of availability zone support for their resources, and most services support deploying either *zone-redundant* or *zonal* resources:
 
-Each service can implement availability zone support in different ways. The following sections describe the two types of availability zone support services can provide:
-
-- **Zone-redundant resources**: Zone-redundant resources are replicated or distributed across multiple availability zones by the service. For example, zone-redundant data services replicate the data across multiple zones so that a failure in one zone doesn't affect the availability of the data. Some services are automatically zone-redundant in supported regions, while other services require that you configure your resource to be zone-redundant. For most services, Microsoft selects the zones your resources use. Sometimes you can select the set of zones.
+- **Zone-redundant resources**: Zone-redundant resources are replicated or distributed across multiple availability zones by the service. For example, zone-redundant data services replicate the data across multiple zones so that a failure in one zone doesn't affect the availability of the data. Some services are automatically zone-redundant in supported regions, while other services require that you configure your resource to be zone-redundant. For most services, Microsoft selects the zones your resources use, but sometimes you can select the set of zones.
 
     With zone-redundant deployments, Microsoft manages spreading requests across zones and the replication of data across zones. If an outage occurs in an availability zone, Microsoft manages failover to another zone automatically.
 
     :::image type="content" source="media/availability-zones-overview/zone-redundant.svg" alt-text="Diagram of a zone-redundant resource deployed across three zones." border="false":::
 
-- **Zonal resources**: A zonal resource is deployed to a single, self-selected availability zone.
+- **Zonal resources**: A zonal resource is deployed to a single availability zone that you select yourself.
 
    :::image type="content" source="media/availability-zones-overview/zonal-single.svg" alt-text="Diagram of a zonal resource deployed into a single zone." border="false":::
 
-   Zonal deployments don't automatically provide resiliency to availability zone outages. However, zonal resources are isolated from faults in other zones. They can also help you achieve unusually stringent latency or performance requirements. For example, for a chatty workload built using virtual machines, you might choose to deploy multiple virtual machines to the same zone to reduce the latency between them.
-	   
+   Zonal deployments don't automatically provide resiliency to availability zone outages. However, zonal resources are isolated from faults in other zones. They can also help you achieve unusually stringent latency or performance requirements. For example, for a chatty workload built using virtual machines, you might choose to deploy multiple virtual machines to the same zone to reduce the latency of the connections between them.
+
    To make zonal resources resilient to availability zone outages, you need to design an architecture with separate resources in multiple availability zones within the region. Microsoft doesn't manage the process for you. If an outage occurs in an availability zone, you're responsible for failover to another zone.
 
    :::image type="content" source="media/availability-zones-overview/zonal-multiple.svg" alt-text="Diagram of three zonal resources deployed into three separate zones." border="false":::
 
-Some services may have extra requirements to meet for availability zone support. For example, some may only support availability zones for certain tiers or SKUs, or in a subset of Azure regions. [Reliability guides](./overview-reliability-guidance.md) contain details of any requirements you need to meet to enable availability zones on your services.
+When you configure a resource to be zone redundant, or if you use multiple instances of a zonal resource in different availability zones, then your resource is considered to be *zone-resilient*: that is, it's resilient to the outage of a single availability zone. To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
 
-When you use configure a resource to be zone redundant, or if you use multiple instances of a zonal resource in different availability zones, then your resource is considered to be *zone-resilient*: that is, it's resilient to the outage of a single availability zone.
-
-To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
+When designing your reliability strategy, make sure that you understand how each service in your workload supports availability zones. For example, some services may have extra requirements to meet for availability zone support, such as certain tiers or SKUs. [Reliability guides](./overview-reliability-guidance.md) contain details of any such requirements.
 
 If a resource isn't configured to use availability zones, either due to the region you use not supporting zones or because of your configuration choices, it's called a *nonzonal* or *regional* deployment. Azure might place nonzonal resources across any zones in the region. You don't choose which resources go into which zones. If any availability zone in the region experiences an outage, nonzonal resources might be in the affected zone and could experience downtime.
 
 ## Configuring resources for availability zone support
 
-Each service has its own method for configuring availability zone support. To learn about how each service supports availability zones and how to configure that support, see [Azure reliability guides by service](overview-reliability-guidance.md).
+Each service has its own method for configuring availability zone support, and some services don't require any configuration. To learn about how each service supports availability zones and how to configure that support, see [Azure reliability guides by service](overview-reliability-guidance.md).
 
 ## Physical and logical availability zones
 
@@ -78,19 +75,20 @@ For example, subscription A may have physical zone 1 mapped to logical zone 2, w
 
 :::image type="content" source="media/availability-zones-overview/availability-zones-logical-physical.svg" alt-text="Diagram of logical to physical availability zone mapping." border="false":::
 
-To understand the mapping between logical and physical zones for your subscription, use the [List Locations Azure Resource Manager (ARM) API](/rest/api/resources/subscriptions/list-locations). You can use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell) to retrieve the information from the API.
+To understand the mapping between logical and physical zones for your subscription, use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell), or the Azure Resource Manager APIs.
 
-To compare zone mapping for resilient solutions that span multiple subscriptions, use the dedicated ARM API [checkZonePeers](/rest/api/resources/subscriptions/check-zone-peers). To use the `checkZonePeers` API, the feature "Microsoft.Resources/AvailabilityZonePeering" needs to be enabled. For more information about how to enable features, see [Register features in Azure subscription](/azure/azure-resource-manager/management/preview-features).
+# [Azure CLI](#tab/azure-cli)
 
-# [CLI](#tab/azure-cli)
+Use the [az account list-locations](/cli/azure/account#az-account-list-locations) command:
 
 ```azurecli
-az rest --method get \
-    --uri '/subscriptions/{subscriptionId}/locations?api-version=2022-12-01' \
-    --query 'value[?availabilityZoneMappings != `null`].{displayName: displayName, name: name, availabilityZoneMappings: availabilityZoneMappings}'
+az account list-locations \
+    --query "[?availabilityZoneMappings].{availabilityZoneMappings: availabilityZoneMappings, displayName: displayName, name: name}"
 ```
 
-# [PowerShell](#tab/azure-powershell)
+# [Azure PowerShell](#tab/azure-powershell)
+
+Use the [Invoke-AzRestMethod](/powershell/module/az.accounts/invoke-azrestmethod) cmdlet to retrieve the current subscription's availability zone mappings from the List Locations Resource Manager API:
 
 ```azurepowershell
 $subscriptionId = (Get-AzContext).Subscription.ID
@@ -99,20 +97,32 @@ $locations = ($response.Content | ConvertFrom-Json).value
 $locations | Where-Object {$null -ne $_.availabilityZoneMappings} | Select-Object -Property name,displayName,@{name='availabilityZoneMappings';expression={$_.availabilityZoneMappings | convertto-json}} | Format-List
 ```
 
+# [Azure Resource Manager APIs](#tab/apis)
+
+Use one of these Azure Resource Manager APIs:
+
+- [List Locations API](/rest/api/resources/subscriptions/list-locations): Retrieves the zone mappings for a single Azure subscription.
+
+- [Check Zone Peers API](/rest/api/resources/subscriptions/check-zone-peers): Retrieves the zone mappings for multiple Azure subscriptions.
+
+    > [!NOTE]
+    > To use the Check Zone Peers API, the feature `Microsoft.Resources/AvailabilityZonePeering` needs to be enabled on your subscription. For more information about how to enable features, see [Register features in Azure subscription](/azure/azure-resource-manager/management/preview-features).
+
 ---
 
 ## Availability zones and Azure updates
 
 For each region, Microsoft aims to deploy updates to Azure services within a single availability zone at a time. This approach reduces the impact that updates might have on an active workload, allowing the workload to continue to run in other zones while the update is in process. To take advantage of sequenced zone updates, your workload must be already configured to run across multiple zones. For more information about how Azure deploys updates, see [Advancing safe deployment practices](https://azure.microsoft.com/blog/advancing-safe-deployment-practices/).
 
-## Inter-zone latency
+<a name='inter-zone-latency'></a>
 
-Within each region, availability zones are connected through a high-performance network. Microsoft strives to achieve an inter-zone communication with round-trip latency of less than approximately 2 milliseconds. Low latency allows for high-performance communication within a region, and for synchronous replication of data across multiple availability zones.
+## Inter-zone networking
 
-> [!NOTE]
-> The target latency refers to the latency of the network links. Depending on the communication protocol you use and the network hops required for any specific network flow, the latency you observe might be different.
+Within each region, availability zones are connected through a high-performance network. Microsoft strives to achieve an inter-zone communication with round-trip latency of less than approximately 2 milliseconds. Low latency allows for high-performance communication within a region, and for synchronous replication of data across multiple availability zones. The target latency refers to the latency of the network links. Depending on the communication protocol you use and the network hops required for any specific network flow, the latency you observe might be different.
 
 In most workloads, you can distribute components of your solution across availability zones without a noticeable effect on your performance. If you have a workload with a high degree of sensitivity to inter-zone latency, it's important to test the latency between your selected availability zones with your actual protocols and configuration. To reduce inter-zone traffic, it's possible to use zonal deployments, but optimally, you should use multiple availability zones in your reliability strategy plan. To learn more about how to use zonal deployments and maintain zone resiliency, see [Zonal resources and zone resiliency](./availability-zones-zonal-resource-resiliency.md).
+
+Azure doesn't charge for data transfer between availability zones in the same region, whether you use private or public IP addressing.
 
 ## Availability zone architectural guidance
 
@@ -123,14 +133,9 @@ To achieve reliable workloads:
 
 For more detailed information on how to use regions and availability zones in a solution architecture, see [Recommendations for using availability zones and regions](/azure/well-architected/resiliency/regions-availability-zones).
 
-## Next steps
+## Related content
 
-- [Azure services with availability zones](availability-zones-service-support.md)
-
+- [What are Azure regions?](./regions-overview.md)
 - [List of Azure regions](regions-list.md)
-
-- [Availability zone migration guidance](availability-zones-migration-overview.md)
-
-- [Microsoft commitment to expand Azure availability zones to more regions](https://azure.microsoft.com/blog/our-commitment-to-expand-azure-availability-zones-to-more-regions/)
-
+- [Azure services with availability zones](availability-zones-service-support.md)
 - [Recommendations for using availability zones and regions](/azure/well-architected/reliability/regions-availability-zones)

@@ -91,6 +91,36 @@ conceptualContent:
               url: incident-response.md
               itemType: concept
 
+    - title: Reliability guidance for each phase of your cloud journey
+      summary: Plan, design, implement, and operate dependable workloads by addressing strategy, operational practices, and reliability considerations throughout your solution's lifecycle.
+      items:
+      - title: Strategy and planning
+        summary: Define business justification and expected outcomes of adoption
+        links:
+          - text: Resiliency considerations for your cloud strategy
+            url: /azure/cloud-adoption-framework/strategy/inform/resiliency
+            itemType: concept
+
+      - title: Implementation and operation
+        summary: Migrate and modernize workload resiliency
+        links:
+          - text: Prepare your secure cloud estate for availability
+            url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability
+            itemType: concept
+          - text: Adopt the principle of availability
+            url: /azure/cloud-adoption-framework/secure/adopt#adopt-the-principle-of-availability
+            itemType: concept
+
+      - title: Cloud architecture
+        summary: Design, build, and continuously improve a resilient cloud architecture
+        links:
+          - text: Reliability pillar of the Azure Well-Architected Framework
+            url: /azure/well-architected/reliability/
+            itemType: concept
+          - text: Design principles for Azure applications
+            url: /azure/architecture/guide/design-principles/
+            itemType: concept
+
 productDirectory:
   title: Reliability guides for Azure services
   summary: Learn how Microsoft designs each service for reliability and resilience to faults and problems, for example availability zone outages. Understand your responsibilities to meet your own reliability requirements.
