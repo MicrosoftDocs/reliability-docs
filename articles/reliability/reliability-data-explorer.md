@@ -103,12 +103,12 @@ If your workload can’t tolerate this reduction, you should overprovision capac
 
 ### Behavior when all zones are healthy
 
-- **Traffic routing between zones:** During normal operation, Azure Data Explorer uses compute nodes across all available zones for ingestion and query processing. Work is distributed across nodes regardless of their availability zone.
+- **Cross-zone operation:** During normal operation, Azure Data Explorer uses compute nodes across all available zones for ingestion and query processing. Work is distributed across nodes regardless of their availability zone.
 
 > [!WARNING]
 > **Note to PG:** Confirm whether this traffic distribution behavior fully aligns with other Azure compute services.
 
-- **Data replication between zones:** Data is synchronously replicated across availability zones using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
+- **Cross-zone data replication:** Data is synchronously replicated across availability zones using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
 
 ### Behavior during a zone failure
 
@@ -125,7 +125,7 @@ If your workload can’t tolerate this reduction, you should overprovision capac
 
 - **Expected downtime:** A brief service interruption might occur while traffic is redirected to healthy availability zones. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-- **Traffic rerouting:** After a zone failure, Azure Data Explorer routes new requests to compute and storage resources in the remaining healthy zones.
+- **Redistribution:** After a zone failure, Azure Data Explorer routes new requests to compute and storage resources in the remaining healthy zones.
 
 ### Zone recovery
 
