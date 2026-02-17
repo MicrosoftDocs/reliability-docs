@@ -73,9 +73,9 @@ If App Configuration adds availability zone support to an existing region, you d
 
 When a store is in a region that supports zone redundancy and all availability zones are operational, you can expect the following behavior:
 
-- **Traffic routing between zones:** App Configuration automatically manages traffic routing between availability zones. During normal operations, it transparently distributes requests across zones.
+- **Cross-zone operation:** App Configuration automatically manages traffic routing between availability zones. During normal operations, it transparently distributes requests across zones.
 
-- **Data replication between zones:** In regions that support zones, App Configuration synchronously replicates data across availability zones. This replication ensures that your settings remain consistent and available even if a zone becomes unavailable.
+- **Cross-zone data replication:** In regions that support zones, App Configuration synchronously replicates data across availability zones. This replication ensures that your settings remain consistent and available even if a zone becomes unavailable.
 
 ### Behavior during a zone failure
 
@@ -91,7 +91,7 @@ This section describes what to expect when a store is in a region that supports 
 
 - **Expected downtime:** No downtime is expected.
 
-- **Traffic rerouting:** App Configuration automatically reroutes traffic away from the affected zone to healthy zones without requiring any customer intervention.
+- **Redistribution:** App Configuration automatically reroutes traffic away from the affected zone to healthy zones without requiring any customer intervention.
 
 ### Zone recovery
 
@@ -135,14 +135,14 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 
 This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
-- **Traffic routing between regions:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
+- **Cross-zone operation:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
     
     Azure App Configuration doesn't automatically route traffic between regions. When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
-- **Data replication between regions:** Data is replicated asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
+- **Cross-zone data replication:** Data is replicated asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
 
 #### Behavior during a region failure
 
@@ -162,7 +162,7 @@ This section describes what to expect when you configure a store for geo-replica
 
 - **Expected downtime:** When a replica becomes unavailable, it stays offline until its region recovers. Other replicas continue to handle requests. Applications might experience brief downtime while they detect the failure and switch to a healthy replica. The duration depends on how quickly each application performs this detection and failover.
 
-- **Traffic rerouting:** Applications must route traffic to a healthy replica when a failure occurs.
+- **Redistribution:** Applications must route traffic to a healthy replica when a failure occurs.
 
     If you use Microsoft configuration provider libraries, the libraries automatically handle replica selection and failover.
     
