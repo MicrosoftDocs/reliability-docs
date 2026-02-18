@@ -25,6 +25,9 @@ For production workloads, we recommend that you take the following steps to impr
 > - **Deploy a full cluster.** Azure Data Explorer provides [free clusters](/azure/data-explorer/start-for-free) for trial purposes. For production workloads, deploy a full cluster.
 > - **Enable availability zone support.** Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
 
+> [!WARNING]
+> **Note to PG:** Please verify that the checklist above aligns with what you'd recommend for most customers to do to improve their cluster's reliability.
+
 ## Reliability architecture overview
 
 Azure Data Explorer has a clear separation between compute and storage, which is central to its reliability model.
@@ -50,13 +53,11 @@ From a logical perspective, you deploy clusters, which contain databases, which 
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-<!-- TODO: This section needs service-specific guidance on transient fault handling. Areas to cover include:
-     - Built-in retry behavior for queued ingestion (see https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
-     - Recommended retry strategies for queries and management operations
-     - How clients should handle transient connection failures
-     - Any circuit breaker or throttling behaviors customers should be aware of
-     
-     Please provide details on Microsoft's responsibilities (built-in retries, automatic recovery) vs. customer responsibilities (implementing client-side retries, configuring timeouts). -->
+To build resilience to transient faults when you use Azure Data Explorer, follow these practices:
+
+- When you use queued ingestion, rely on the [built-in retry behavior](/azure/data-explorer/ingest-data-overview).
+- Use [Microsoft-provided client libraries and SDKs](/kusto/api/), which automatically retry when transient faults occur.
+- If you use Azure Data Explorer APIs directly, retry any queries and management operations that fail due to a transient fault.
 
 ## Resilience to availability zone failures
 
