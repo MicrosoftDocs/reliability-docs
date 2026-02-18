@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Data Explorer
-description: Learn how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
+description: Learn how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, region-wide failures, and service maintenance, and learn about backup and restore.
 author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
@@ -15,20 +15,14 @@ ms.date: 02/06/2026
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also highlights key information about the Azure Data Explorer service-level agreement (SLA).
+This article describes how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and restore options and resilience to service maintenance, and highlights key information about the Azure Data Explorer service-level agreement (SLA).
 
 ## Production deployment recommendations for reliability
 
-To improve the reliability of Azure Data Explorer in production environments, consider the following recommendations:
+For production workloads, we recommend that you:
 
-- **Enable availability zone support where available.**  
-  Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
-
-- **Plan for reduced capacity during availability zone failures.**  
-  When availability zone support is enabled, a zone outage results in the temporary loss of the compute nodes in the affected zone. This reduces the total available capacity of the cluster. If your workload can’t tolerate reduced capacity during a zone outage, deploy other nodes to ensure sufficient headroom.
-
-- **Design explicitly for regional failures.**  
-  Azure Data Explorer clusters are deployed into a single Azure region. If that region becomes unavailable, the cluster and its data are unavailable. To mitigate region-wide failures, you must design and operate custom multi-region solutions.
+> [!div class="checklist"]
+> - **Enable availability zone support where available.** Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
 
 ## Reliability architecture overview
 
@@ -37,6 +31,8 @@ Azure Data Explorer has a clear separation between compute and storage, which is
 The **compute layer** consists of cluster nodes. These nodes are Microsoft-managed virtual machines that handle data ingestion and query processing.
 
 The **storage layer** is built on Azure Storage and is managed by the service. Storage is independent of the compute layer and persists data separately from the cluster nodes.
+
+<!-- Note: Azure Data Explorer depends on Azure Storage. For information about the reliability of Azure Storage, see [Reliability in Azure Storage](/azure/reliability/reliability-storage-accounts). The storage redundancy configuration for your Azure Data Explorer cluster affects the overall reliability of your data. -->
 
 From a logical perspective, you deploy clusters, which contain databases, which in turn contain tables. This abstraction is sufficient to understand the reliability characteristics of the service without going into low-level implementation details.
 
@@ -47,30 +43,32 @@ From a logical perspective, you deploy clusters, which contain databases, which 
      - A separate Azure Storage layer
      - Clear separation between compute and storage -->
 
-<!-- TODO mention ingestion -->
+<!-- TODO: Mention ingestion and how it relates to reliability. See https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview -->
 
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-<!-- TODO queued ingestion has retry behaviors built in https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview -->
+<!-- TODO: This section needs service-specific guidance on transient fault handling. Areas to cover include:
+     - Built-in retry behavior for queued ingestion (see https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
+     - Recommended retry strategies for queries and management operations
+     - How clients should handle transient connection failures
+     - Any circuit breaker or throttling behaviors customers should be aware of
+     
+     Please provide details on Microsoft's responsibilities (built-in retries, automatic recovery) vs. customer responsibilities (implementing client-side retries, configuring timeouts). -->
 
 ## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-> [!WARNING]
-> **Note to PG:** Confirm whether availability zone support is still in preview as per the [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone) article.
-
-Azure Data Explorer supports a **zone-redundant deployment model**.
-
-When availability zone support is enabled:
+Azure Data Explorer supports zone-redundant deployments. When you enable availability zone is enabled:
 - Compute resources (cluster nodes) are distributed across multiple availability zones.
 - Data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least 3 copies of the data across availability zones.
 
 Microsoft manages the distribution of resources across availability zones and handles detection and response to availability zone failures.
 
-![Diagram showing data storage across availability zones.](./media/data-storage-az/data-storage-az.png)
+<!-- TODO: Update this diagram path to follow conventions: media/reliability-data-explorer/{descriptive-name}.png -->
+![Diagram showing data storage across availability zones.](./media/reliability-data-explorer/zone-redundant.png)
 
 ### Requirements
 
@@ -139,9 +137,7 @@ Availability zone failover and recovery for Azure Data Explorer are fully manage
 
 Azure Data Explorer is a **single-region service**. Clusters are deployed into a single Azure region, and if that region becomes unavailable, the cluster and its data are unavailable.
 
-To minimize the business impact of a regional outage, you can deploy Azure Data Explorer clusters in multiple regions and implement custom data replication and failover strategies. Existing business continuity and disaster recovery documentation covers these scenarios.
-
-Azure paired regions can be used where appropriate, but they aren’t mandatory. Some regions aren’t paired, and regulatory or geopolitical considerations might make paired regions unsuitable.
+To minimize the business impact of a regional outage, you can deploy Azure Data Explorer clusters in multiple regions and implement custom data replication and failover strategies. For more information on how to deploy across multiple regions, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
 ### Custom multi-region solutions for resiliency
 
@@ -153,11 +149,20 @@ For more information see [Outage of an Azure region](/azure/data-explorer/busine
 
 ## Backup and restore
 
+[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+
 Azure Data Explorer doesn't provide a native backup capability. This design aligns with its role as an analytics service, where data is typically retained in upstream systems such as data lakes and re-ingested into Azure Data Explorer as needed.
+
+<!-- TODO: Consider adding information about:
+     - Continuous export to external storage as a way to preserve data
+     - Data export capabilities that customers can use for their own backup procedures
+     - Whether follower databases can be used as part of a data protection strategy -->
 
 ## Resilience to service maintenance
 
-No customer actions are required to maintain reliability during service maintenance. Maintenance activities for Azure Data Explorer are managed by Microsoft. <!-- TODO standard wording -->
+[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
+
+<!-- TODO -->
 
 ## Service-level agreement
 
@@ -167,3 +172,4 @@ No customer actions are required to maintain reliability during service maintena
 
 - [Reliability in Azure](/azure/reliability)
 - [Azure Data Explorer overview](/azure/data-explorer/data-explorer-overview)
+- [Business continuity and disaster recovery overview](/azure/data-explorer/business-continuity-overview)
