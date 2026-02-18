@@ -142,20 +142,12 @@ items:
       href: reliability-api-management.md
     - name: Azure Data Factory
       href: /azure/data-factory/concepts-data-redundancy?bc=%2fazure%2freliability%2fbreadcrumb%2ftoc.json&toc=%2fazure%2freliability%2ftoc.json
-    - name: Azure Data Manager for Energy
-      href: reliability-energy-data-services.md
     - name: Azure Event Grid
       href: ./reliability-event-grid.md
     - name: Azure Event Hubs
       href: ./reliability-event-hubs.md
     - name: Azure Functions 
       href: reliability-functions.md
-    - name: Azure Health Data Services
-      items:
-      - name: Workspace services (FHIR, DICOM, MedTech)
-        href: /azure/healthcare-apis/business-continuity-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: De-identification service
-        href: reliability-health-data-services-deidentification.md
     - name: Azure Logic Apps
       href: reliability-logic-apps.md
     - name: Azure Service Bus
