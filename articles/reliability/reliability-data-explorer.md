@@ -19,10 +19,11 @@ This article describes how to make Azure Data Explorer resilient to various pote
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+For production workloads, we recommend that you take the following steps to improve the reliablity of your Azure Data Explorer cluster:
 
 > [!div class="checklist"]
-> - **Enable availability zone support where available.** Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
+> - **Deploy a full cluster.** Azure Data Explorer provides [free clusters](/azure/data-explorer/start-for-free) for trial purposes. For production workloads, deploy a full cluster.
+> - **Enable availability zone support.** Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
 
 ## Reliability architecture overview
 
@@ -61,50 +62,50 @@ From a logical perspective, you deploy clusters, which contain databases, which 
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Azure Data Explorer supports zone-redundant deployments. When you enable availability zone is enabled:
+Azure Data Explorer supports zone-redundant deployments. When you enable availability zone support:
 - Compute resources (cluster nodes) are distributed across multiple availability zones.
 - Data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least 3 copies of the data across availability zones.
 
 Microsoft manages the distribution of resources across availability zones and handles detection and response to availability zone failures.
 
-<!-- TODO: Update this diagram path to follow conventions: media/reliability-data-explorer/{descriptive-name}.png -->
 ![Diagram showing data storage across availability zones.](./media/reliability-data-explorer/zone-redundant.png)
 
 ### Requirements
 
 - **Region support:** Availability zone support is available in [Azure regions that support availability zones](./regions-list.md).
 
-> [!WARNING]
-> **Note to PG**: Confirm whether Azure Data Explorer supports all availability zone–capable regions or only a subset. If only a subset, we need to list the supported regions. 
+  However, some compute node types and sizes are only available in specific regions, or specific zones within a region.
+
+- **Full clusters:** Availability zone support is available with full clusters. It's not available with [free clusters](/azure/data-explorer/start-for-free).
 
 ### Considerations
 
-- **Zone selection:** Customers can choose which availability zones to use for compute resources. Storage zone placement is managed by Microsoft.
-
-<!-- Note to PG: Validate that customers can select availability zones for compute while storage zone placement is fully managed by Microsoft. -->
+**Zone selection:** For compute nodes, you choose which availability zones to use. Storage zone placement is managed by Microsoft.
 
 ### Cost
 
-Enabling availability zone support incurs extra costs. This is primarily driven by the use of zone-redundant storage, which is billed at a higher rate than locally redundant storage. For more information, see [Azure Data Explorer pricing](https://azure.microsoft.com/pricing/details/data-explorer/).
-
-<!-- Note to PG: Confirm the cost model for availability zone support, especially the impact of using zone-redundant storage. -->
+Enabling availability zone support incurs extra costs for zone-redundant storage, which is billed at a higher rate than locally redundant storage. For more information, see [Azure Data Explorer pricing](https://azure.microsoft.com/pricing/details/data-explorer/) and [Azure Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
 ### Configure availability zone support
 
-You can enable availability zone support when you create a new Azure Data Explorer cluster. You can also migrate an existing cluster to use availability zones. For more information, see [Create a cluster and database](/azure/data-explorer/create-cluster-and-database) and [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
+- **Create a new zone-redundant cluster:** You can enable availability zone support when you create a new Azure Data Explorer cluster. For more information, see [Create a cluster and database](/azure/data-explorer/create-cluster-and-database).
+
+    > [!NOTE]
+    > [!INCLUDE [Availability zone numbering](./includes/reliability-availability-zone-numbering-include.md)]
+
+- **Enable zone redundancy on an existing cluster (preview):** You can also migrate an existing cluster to use availability zones. This capability is in preview. For more information, see [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
+
+- **Disable availability zone support on an existing cluster:** Once a cluster is configured with availability zones, you can't change the cluster to not use availability zones.
 
 ### Capacity planning and management
 
-When an availability zone becomes unavailable, the nodes in that zone are temporarily unavailable, reducing overall cluster capacity.
+When an availability zone becomes unavailable, the nodes in that zone are temporarily unavailable, which reduces your cluster's compute capacity.
 
 If your workload can’t tolerate this reduction, you should overprovision capacity so that sufficient resources remain available during a zone outage. For more information, see [Manage capacity by over-provisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning).
 
 ### Behavior when all zones are healthy
 
 - **Cross-zone operation:** During normal operation, Azure Data Explorer uses compute nodes across all available zones for ingestion and query processing. Work is distributed across nodes regardless of their availability zone.
-
-> [!WARNING]
-> **Note to PG:** Confirm whether this traffic distribution behavior fully aligns with other Azure compute services.
 
 - **Cross-zone data replication:** Data is synchronously replicated across availability zones using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
 
@@ -115,9 +116,6 @@ If your workload can’t tolerate this reduction, you should overprovision capac
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
 - **Active requests:** Active requests that rely on compute or storage resources in the failed zone might be terminated and should be retried by the client.
-
-  > [!WARNING]
-  > **Note to PG:** Confirm how active requests are handled during a zone failure and whether clients should always retry.
 
 - **Expected data loss:** No data loss is expected during an availability zone outage because data is synchronously replicated across zones.
 
