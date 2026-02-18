@@ -68,7 +68,7 @@ Azure Data Explorer supports two types of availability zone configuration:
 
   When you configure your cluster to be zone-redundant, your data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least 3 copies of the data across multiple availability zones.
 
-  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster and storage.](./media/reliability-data-explorer/zone-redundant.png) <!-- TODO redo -->
+  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster and storage.](./media/reliability-data-explorer/zone-redundant.png)
 
 - **Zonal:** You can optionally enable availability zones on your cluster and select a single zone. Microsoft places all of your compute notes into that zone.
     
@@ -76,7 +76,7 @@ Azure Data Explorer supports two types of availability zone configuration:
   
   Your zone selection only applies to your compute nodes. Even if you select a zonal cluster, your data is stored in ZRS.
 
-  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with zone-redundant storage.](./media/reliability-data-explorer/zone-redundant.png) <!-- TODO new diagram required -->
+  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with zone-redundant storage.](./media/reliability-data-explorer/zone-redundant.png)
 
 If you don't enable availability zones, the cluster is *nonzonal*, which means Azure selects the availability zone for each node and your data. If any availability zone in the region has an outage, it might affect your cluster or data. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
 
@@ -193,7 +193,14 @@ Azure Data Explorer doesn't provide a native backup and restore capability. If y
 
 ## Resilience to accidental deletion
 
-<!-- TODO -->
+Azure Data Explorer includes several mechanisms to help you protect against accidental deletion of clusters, databases, tables, and external tables:
+
+- **Accidental cluster or database deletion:** Accidental cluster or database deletion is an irrecoverable action. You can prevent data loss by enabling a [delete lock](/azure/azure-resource-manager/management/lock-resources) on the cluster or database resource.
+
+- **Accidental table deletion:** Users with table admin permissions or higher are allowed to [drop tables](/kusto/management/drop-table-command?view=azure-data-explorer&preserve-view=true). If one of those users accidentally drops a table, you can recover it using the [`.undo drop table`](/kusto/management/undo-drop-table-command?view=azure-data-explorer&preserve-view=true) command. For this command to be successful, you must first enable the *recoverability* property in the [retention policy](/kusto/management/retention-policy?view=azure-data-explorer&preserve-view=true).
+
+- **Accidental external table deletion:*** [External tables](/kusto/query/schema-entities/external-tables?view=azure-data-explorer&preserve-view=true) are Kusto query schema entities that reference data stored outside the database.
+Deletion of an external table only deletes the table metadata. You can recover it by re-executing the table creation command. Use the [soft delete](/azure/storage/blobs/storage-blob-soft-delete) capability to protect against accidental deletion or overwrite of a file/blob for a user-configured amount of time.
 
 ## Service-level agreement
 
