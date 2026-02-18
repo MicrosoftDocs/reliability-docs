@@ -123,13 +123,10 @@ If resources are in a *nonpaired region*, Microsoft doesn’t replicate configur
 
 If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate failovers.
 
-### Region support
-
-Default replication and failover is only supported in regions that are paired.
-
 ### Requirements
 
-Paired region replication and failover options are available for all IoT Hub tiers.
+- Default replication and failover is only supported in regions that are paired.
+- Paired region replication and failover options are available for all IoT Hub tiers.
 
 ### Considerations
 

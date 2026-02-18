@@ -98,11 +98,9 @@ Container Instances supports availability zones in different ways, depending on 
     > [!IMPORTANT]
     > Standby pools aren't designed to be zone resilient. They shouldn't be used for workloads that require resilience to zone failures.
 
-### Region support
-
-Zonal container group deployments are supported in [all regions with availability zones](./regions-list.md).
-
 ### Requirements
+
+- Zonal container group deployments are supported in [all regions with availability zones](./regions-list.md).
 
 - Zonal deployments are available for Linux and Windows Server 2019 container groups.
 

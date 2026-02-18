@@ -76,13 +76,11 @@ Key Vault automatically provides zone redundancy in [regions that support availa
 
 When an availability zone becomes unavailable, Key Vault automatically redirects your requests to other healthy availability zones to ensure high availability. 
 
-### Region support
-
-Key Vault enables zone redundancy by default in [all Azure regions that support availability zones](./regions-list.md).
 
 ### Requirements
 
-All Key Vault SKUs, Standard and Premium, support the same level of availability and resiliency. There aren't any tier-specific requirements to achieve zone resilience.
+- Key Vault enables zone redundancy by default in [all Azure regions that support availability zones](./regions-list.md).
+- All Key Vault SKUs, Standard and Premium, support the same level of availability and resiliency. There aren't any tier-specific requirements to achieve zone resilience.
 
 ### Cost
 
