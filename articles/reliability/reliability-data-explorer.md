@@ -188,9 +188,9 @@ Azure Data Explorer doesn't provide a native backup and restore capability. If y
 
 ## Resilience to service maintenance
 
-[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
+Azure Data Explorer regularly applies service updates and performs routine maintenance. The Azure platform handles these activities automatically while remaining within the availability levels specified in the SLA. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-<!-- TODO -->
+To learn about upcoming maintenance, use [Azure Service Health](/azure/service-health/service-health-planned-maintenance).
 
 ## Resilience to accidental deletion
 
