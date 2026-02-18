@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Load Balancer
 description: Learn how to make Azure Load Balancer resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
-author: themichaelbender-ms
-ms.author: michael.bender
+author: mbender-ms
+ms.author: mbender
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
