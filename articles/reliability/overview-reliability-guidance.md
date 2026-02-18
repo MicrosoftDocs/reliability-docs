@@ -121,7 +121,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Virtual Machine Scale Sets| [Reliability in Virtual Machine Scale Sets](reliability-virtual-machine-scale-sets.md)||
 |Azure Virtual Network| [Reliability in Virtual Network](reliability-virtual-network.md) ||
 |Azure Virtual WAN||[Availability zones and resiliency in Virtual WAN](/azure/virtual-wan/virtual-wan-faq#how-are-availability-zones-and-resiliency-handled-in-virtual-wan)</p> [Disaster recovery design](/azure/virtual-wan/disaster-recovery-design) |
-|Azure VMware Solution|| [Deploy disaster recovery by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)|
+|Azure VMware Solution| [Reliability in Azure VMware Solution](./reliability-vmware-solution.md)||
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
