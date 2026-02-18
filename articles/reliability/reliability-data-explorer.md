@@ -133,28 +133,25 @@ Availability zone failover and recovery for Azure Data Explorer are fully manage
 
 ## Resilience to region-wide failures
 
-Azure Data Explorer is a **single-region service**. Clusters are deployed into a single Azure region, and if that region becomes unavailable, the cluster and its data are unavailable.
-
-To minimize the business impact of a regional outage, you can deploy Azure Data Explorer clusters in multiple regions and implement custom data replication and failover strategies. For more information on how to deploy across multiple regions, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+An Azure Data Explorer cluster is deployed into a single Azure region. If that region becomes unavailable, the cluster and its data are unavailable.
 
 ### Custom multi-region solutions for resiliency
 
-If you need regional resiliency, deploy independent Azure Data Explorer clusters in multiple regions. You’re responsible for coordinating data replication, traffic routing, and failover between regions.
+To minimize the business impact of a region outage, you can deploy separate Azure Data Explorer clusters in multiple regions. Each cluster is independent, and you’re responsible for coordinating data replication, traffic routing, and failover between regions.
 
-This approach works in both paired and non-paired regions and provides flexibility for customers with strict regulatory or availability requirements.
+You can decide between different types of multi-region cluster configurations, which each support different levels of recovery time, potential data loss, effort, and cost. You can select Azure regions for each cluster that support your latency, data residency, and TODO requirements.
 
-For more information see [Outage of an Azure region](/azure/data-explorer/business-continuity-overview#outage-of-an-azure-region).
+For more information about multi-region cluster configurations and patterns you can follow, see [Outage of an Azure region](/azure/data-explorer/business-continuity-overview#outage-of-an-azure-region).
 
 ## Backup and restore
 
 [!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
-Azure Data Explorer doesn't provide a native backup capability. This design aligns with its role as an analytics service, where data is typically retained in upstream systems such as data lakes and re-ingested into Azure Data Explorer as needed.
+Azure Data Explorer doesn't provide a native backup and restore capability. If you need to perform backups of your data, you can consider the following approaches:
 
-<!-- TODO: Consider adding information about:
-     - Continuous export to external storage as a way to preserve data
-     - Data export capabilities that customers can use for their own backup procedures
-     - Whether follower databases can be used as part of a data protection strategy -->
+- [Continuous export](/kusto/management/data-export/continuous-data-export), which periodically exports data to external storage, and supports *exactly once* export of supported data.
+- [Data export to cloud storage](/kusto/management/data-export/export-data-to-storage), which enables you to manually export data to external storage.
+- Ingest data from an upstream source, like a data lake, that you can back up.
 
 ## Resilience to service maintenance
 
