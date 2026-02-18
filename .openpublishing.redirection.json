@@ -201,6 +201,11 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/reliability-health-data-services-deidentification.md",
+      "redirect_url": "/azure/healthcare-apis/deidentification/reliability-health-data-services-deidentification",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/migrate-service-fabric.md",
       "redirect_url": "/azure/service-fabric/migrate-service-fabric-availability-zones",
       "redirect_document_id": false
