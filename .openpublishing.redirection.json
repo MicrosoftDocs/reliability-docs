@@ -196,6 +196,11 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/reliability-defender-devops.md",
+      "redirect_url": "/azure/defender-for-cloud/defender-for-devops-introduction",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/migrate-service-fabric.md",
       "redirect_url": "/azure/service-fabric/migrate-service-fabric-availability-zones",
       "redirect_document_id": false
