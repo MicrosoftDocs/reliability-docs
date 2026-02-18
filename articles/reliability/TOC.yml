@@ -246,8 +246,6 @@ items:
       href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
-    - name: Microsoft Defender for Cloud DevOps security
-      href: reliability-defender-devops.md
   - name: Storage
     items:
     - name: Azure Backup
