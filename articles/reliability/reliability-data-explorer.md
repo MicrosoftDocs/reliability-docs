@@ -46,7 +46,7 @@ An Azure Data Explorer cluster has two primary layers that are applicable to its
 
 - **Compute layer:** Azure Data Explorer is a distributed computing platform and can have two to many node virtual machines (VMs) depending on scale and node role type. Nodes handle data ingestion and query processing work. You don't see or manage the node VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy nodes. When your cluster is [configured to use availability zones](#resilience-to-availability-zone-failures), the nodes are spread among different datacenters.
 
-- **Storage layer:** Azure Data Explorer uses Azure Storage as its durable persistence layer. Azure Storage automatically provides fault tolerance, with the default setting offering locally redundant storage (LRS) within a datacenter. Three replicas are persisted. If a replica is lost while in use, another is deployed without disruption. When your cluster is [configured to use availability zones](#resilience-to-availability-zone-failures), the replicas are spread among different datacenters.
+- **Storage layer:** Azure Data Explorer uses Azure Storage as its durable persistence layer. Azure Storage automatically provides fault tolerance, with the default setting offering locally redundant storage (LRS) within a datacenter. Three replicas are persisted. If a replica is lost while in use, another is deployed without disruption. When your cluster is [configured to use multiple availability zones](#resilience-to-availability-zone-failures), the replicas are spread among different datacenters.
 
 ![Diagram showing a cluster with compute nodes and multiple copies of data.](./media/reliability-data-explorer/physical-architecture.png)
 
@@ -74,13 +74,18 @@ Azure Data Explorer supports two types of availability zone configuration:
 
   ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster, with compute nodes and storage spread across multiple zones.](./media/reliability-data-explorer/zone-redundant.png)
 
-- **Zonal:** You can optionally select a single zone when you enable availability zones on your cluster. Microsoft places all of your compute notes into that zone. This is a *zonal* (single-zone) cluster.
+- **Zonal:** You can optionally select a single zone when you enable availability zones on your cluster. Microsoft places all of your compute notes into that zone. This is a *zonal* (single-zone) cluster. This configuration might occasionally help if you have an unusually latency-sensitive workload, but it doesn't provide resilience to zone outages.
     
   [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
   
-  Your zone selection only applies to your compute nodes. Even if you select a zonal cluster, your data is stored across multiple zones by using ZRS.
+  Your zone selection only applies to your compute nodes. For a zonal cluster, your storage data continues to use LRS, and might be stored in a different zone to your compute nodes.
 
-  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zone-redundant.png)
+  > [!WARNING]
+  > **Note to PG:** As I understand it, LRS doesn't guarantee which zone the copies are in - so it's possible they are in the same zone or a different zone to the compute nodes. Is that accurate?
+  >
+  > If so, it also means that the exposure to zone failures is doubled. Suppose the compute nodes are in zone 1 but the LRS storage copies are all in zone 2. In this scenario, a zone failure in either zone 1 or zone 2 would result in the ADX cluster being unusable. Is that accurate?
+
+  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zonal.png)
 
 If you don't enable availability zones, the cluster is *nonzonal*, which means Azure selects the availability zone for each node and your data. If any availability zone in the region has an outage, it might affect your cluster's nodes, data, or both. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
 
@@ -94,7 +99,7 @@ If you don't enable availability zones, the cluster is *nonzonal*, which means A
 
 ### Considerations
 
-**Zone selection:** For compute nodes, you choose which availability zones to use. Storage zone placement is managed by Microsoft.
+**Zone selection:** For compute nodes, you choose which availability zones to use. Storage zone placement is managed by Microsoft, and storage replicas might be placed in different zones to your compute nodes.
 
 ### Cost
 
@@ -123,6 +128,12 @@ Compute nodes are charged at the same rate whether you use availability zone sup
 
   If the value is `Zonal`, it means the cluster has been configured to use availability zones. However, the cluster might be zonal or zone-redundant. To determine which, use the *zones* property. If the zones list has one zone listed, the cluster is zonal (single-zone). If it has multiple zones listed, it's zone-redundant.
 
+### Capacity planning and management
+
+When an availability zone is unavailable, any nodes in that zone might be temporarily unavailable, which reduces your cluster's compute capacity until the zone recovers.
+
+If your cluster can't tolerate the loss of capacity, consider [*overprovisioning*](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning) your cluster. This approach allows the solution to tolerate some capacity loss and continue to function without degraded performance. However, when you overprovision your cluster, your cluster might have an unbalanced number of nodes across zones.
+
 ### Instance distribution across zones
 
 The cluster's compute layer uses a best-effort approach to evenly spread instances across the zones you select.
@@ -133,7 +144,11 @@ This section describes what to expect when you configure a cluster for availabil
 
 - **Cross-zone operation:** During normal operation, Azure Data Explorer uses all available compute nodes for ingestion, query processing, and other operations. Work is distributed across nodes regardless of their availability zone.
 
-- **Cross-zone data replication:** Data is synchronously replicated across availability zones by using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
+- **Cross-zone data replication:** The cross-zone data replication behavior depends on the availability zone configuration that your cluster uses.
+
+  - *Zone-redundant:* Data is synchronously replicated across availability zones by using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
+
+  - *Zonal:* Data is stored using Azure Storage locally redundant storage, which means all three copies might be in a single availability zone.
 
 ### Behavior during a zone failure
 
@@ -143,19 +158,21 @@ This section describes what to expect when you configure a cluster for availabil
 
   - *Zone-redundant:* Microsoft detects availability zone failures and manages the response for Azure Data Explorer. You don't need to do anything to initiate a zone failover.
 
-  - *Zonal:* You're responsible for detecting a failure that affects your cluster's availability zone. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
+  - *Zonal:* You're responsible for detecting a failure that affects an availability zone used by your cluster. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
 - **Active requests:** Active requests that rely on compute or storage resources in the failed zone might be terminated and should be retried by the client. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-- **Expected data loss:** No data loss is expected during an availability zone outage because data is synchronously replicated across zones.
+- **Expected data loss:** The expected data loss depends on the availability zone configuration that your cluster uses.
+
+  - *Zone-redundant:* No data loss is expected during an availability zone outage because data is synchronously replicated across zones.
+
+  - *Zonal:* Data is unavailable until the zone recovers. In the unlikely event of a permanent loss of a zone that contains all of your storage replicas, the data might be permanently lost.
 
 - **Expected downtime:** The expected downtime depends on the availability zone configuration that your cluster uses.
 
   - *Zone-redundant:* A brief service interruption might occur while traffic is redirected to healthy availability zones. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
-
-      When an availability zone is unavailable, any nodes in that zone might be temporarily unavailable, which reduces your cluster's compute capacity until the zone recovers.
 
   - *Zonal:* Your cluster's compute nodes are unavailable until the availability zone recovers. You also might not be able to access your cluster's data during a zone failure.
 
@@ -167,7 +184,7 @@ This section describes what to expect when you configure a cluster for availabil
 
 ### Zone recovery
 
-When the failed availability zone recovers, Microsoft recreates the cluster nodes in that zone and restores normal traffic distribution across all zones. No customer action is required.
+When the failed availability zone recovers, Microsoft recreates the cluster nodes and storage replicas in that zone and restores normal traffic distribution across all zones. No customer action is required.
 
 ### Test for zone failures
 
@@ -195,7 +212,7 @@ Azure Data Explorer doesn't provide a native backup and restore capability. If y
 
 - [Continuous export](/kusto/management/data-export/continuous-data-export), which periodically exports data to external storage, and supports *exactly once* export of supported data.
 - [Data export to cloud storage](/kusto/management/data-export/export-data-to-storage), which enables you to manually export data to external storage.
-- Ingest data to Azure Data Explorer from an upstream source, like a data lake, that you can back up separately.
+- Ingest raw data to Azure Data Explorer from an upstream source, like a data lake, that you can back up separately.
 
 ## Resilience to accidental deletion
 
@@ -211,7 +228,7 @@ Azure Data Explorer includes several mechanisms to help you protect against acci
 
 ## Resilience to service maintenance
 
-Azure Data Explorer regularly applies service updates and performs routine maintenance. The Azure platform handles these activities automatically while remaining within the availability levels specified in the SLA. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
+Azure Data Explorer regularly applies service updates and performs routine maintenance. The Azure platform handles these activities automatically while remaining within the availability levels specified in the SLA. Ensure that your applications are prepared for occasional loss in connectivity during service maintenance by following [transient fault handling guidance](#resilience-to-transient-faults).
 
 To learn about upcoming maintenance, use [Azure Service Health](/azure/service-health/service-health-planned-maintenance).
 
