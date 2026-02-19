@@ -19,7 +19,7 @@ This article describes how to make Azure Data Explorer resilient to various pote
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you take the following steps to improve the reliablity of your Azure Data Explorer cluster:
+For production workloads, we recommend that you take the following steps to improve the reliability of your Azure Data Explorer cluster:
 
 > [!div class="checklist"]
 > - **Deploy a full cluster.** Azure Data Explorer provides [free clusters](/azure/data-explorer/start-for-free) for trial purposes. For production workloads, deploy a full cluster.
@@ -143,7 +143,7 @@ This section describes what to expect when you configure a cluster for availabil
 
   - *Zone-redundant:* Microsoft detects availability zone failures and manages the response for Azure Data Explorer. You don't need to do anything to initiate a zone failover.
 
-  - *Zonal:* You're responsible for detecting an failure that affects your cluster's availability zone. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
+  - *Zonal:* You're responsible for detecting a failure that affects your cluster's availability zone. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
