@@ -40,8 +40,6 @@ items:
       href: reliability-stream-analytics.md
     - name: Microsoft Fabric
       href: reliability-fabric.md
-    - name: Microsoft Purview
-      href: reliability-microsoft-purview.md
   - name: Compute
     items:
     - name: Azure App Service
