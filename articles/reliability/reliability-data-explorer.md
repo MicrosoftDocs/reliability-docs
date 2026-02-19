@@ -30,24 +30,27 @@ For production workloads, we recommend that you take the following steps to impr
 
 ## Reliability architecture overview
 
-Azure Data Explorer has a clear separation between compute and storage, which is central to its reliability model.
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
 
-The **compute layer** consists of cluster nodes. These nodes are Microsoft-managed virtual machines that handle data ingestion and query processing.
+### Logical architecture
 
-The **storage layer** is built on Azure Storage and is managed by the service. Storage is independent of the compute layer and persists data separately from the cluster nodes.
+The primary resource you deploy is a *cluster*, which represents the infrastructure you need to ingest, store, and query your data. With a cluster, you create *databases*, which in turn contain *tables*.
 
-<!-- Note: Azure Data Explorer depends on Azure Storage. For information about the reliability of Azure Storage, see [Reliability in Azure Storage](/azure/reliability/reliability-storage-accounts). The storage redundancy configuration for your Azure Data Explorer cluster affects the overall reliability of your data. -->
+![Diagram showing a cluster that contains two databases, each with a set of tables.](./media/reliability-data-explorer/logical-architecture.png)
 
-From a logical perspective, you deploy clusters, which contain databases, which in turn contain tables. This abstraction is sufficient to understand the reliability characteristics of the service without going into low-level implementation details.
+Clusters perform [ingestion](/azure/data-explorer/ingest-data-overview) to retrieve data from other data sources and load it into a table in the cluster. Data can then be [queried](/azure/data-explorer/integrate-query-overview) by using the Kusto Query Language (KQL) syntax. Clusters also have a set of management operations that you can perform.
 
-<!-- DIAGRAM CALLOUT -->
-<!-- Include a high-level reliability architecture diagram showing:
-     - An Azure Data Explorer cluster
-     - Multiple compute nodes
-     - A separate Azure Storage layer
-     - Clear separation between compute and storage -->
+### Physical architecture
 
-<!-- TODO: Mention ingestion and how it relates to reliability. See https://learn.microsoft.com/en-us/azure/data-explorer/ingest-data-overview -->
+An Azure Data Explorer cluster has two primary layers that are applicable to its reliability configuration:
+
+- **Compute layer:** Azure Data Explorer is a distributed computing platform and can have two to many node virtual machines (VMs) depending on scale and node role type. Nodes handle data ingestion and query processing work. You don't see or manage the node VMs directly. The platform automatically manages instance creation, health monitoring, and replacement of unhealthy nodes. When your cluster is [configured to use availability zones](#resilience-to-availability-zone-failures), the nodes are spread among different datacenters.
+
+- **Storage layer:** Azure Data Explorer uses Azure Storage as its durable persistence layer. Azure Storage automatically provides fault tolerance, with the default setting offering locally redundant storage (LRS) within a datacenter. Three replicas are persisted. If a replica is lost while in use, another is deployed without disruption. When your cluster is [configured to use availability zones](#resilience-to-availability-zone-failures), the replicas are spread among different datacenters.
+
+![Diagram showing a cluster with compute nodes and multiple copies of data.](./media/reliability-data-explorer/physical-architecture.png)
+
+For more information, see [How Azure Data Explorer works](/azure/data-explorer/how-it-works).
 
 ## Resilience to transient faults
 
@@ -69,17 +72,17 @@ Azure Data Explorer supports two types of availability zone configuration:
 
   When you configure your cluster to be zone-redundant, your data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least three copies of the data across multiple availability zones.
 
-  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster and storage.](./media/reliability-data-explorer/zone-redundant.png)
+  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster, with compute nodes and storage spread across multiple zones.](./media/reliability-data-explorer/zone-redundant.png)
 
-- **Zonal:** You can optionally enable availability zones on your cluster and select a single zone. Microsoft places all of your compute notes into that zone.
+- **Zonal:** You can optionally select a single zone when you enable availability zones on your cluster. Microsoft places all of your compute notes into that zone. This is a *zonal* (single-zone) cluster.
     
   [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
   
-  Your zone selection only applies to your compute nodes. Even if you select a zonal cluster, your data is stored in ZRS.
+  Your zone selection only applies to your compute nodes. Even if you select a zonal cluster, your data is stored across multiple zones by using ZRS.
 
-  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with zone-redundant storage.](./media/reliability-data-explorer/zone-redundant.png)
+  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zone-redundant.png)
 
-If you don't enable availability zones, the cluster is *nonzonal*, which means Azure selects the availability zone for each node and your data. If any availability zone in the region has an outage, it might affect your cluster or data. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
+If you don't enable availability zones, the cluster is *nonzonal*, which means Azure selects the availability zone for each node and your data. If any availability zone in the region has an outage, it might affect your cluster's nodes, data, or both. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
 
 ### Requirements
 
@@ -110,37 +113,41 @@ Compute nodes are charged at the same rate whether you use availability zone sup
   > [!NOTE]
   > [!INCLUDE [Availability zone numbering](./includes/reliability-availability-zone-numbering-include.md)]
 
-- **Enable availability zones on an existing cluster (preview):** You can also migrate an existing cluster to use availability zones. This capability is in preview. For more information, see [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
+- **Enable availability zones on an existing cluster (preview):** You can migrate an existing nonzonal cluster to use availability zones. This capability is in preview. For more information, see [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
 
 - **Reconfigure availability zones on an existing cluster (preview):** You can change the zones used for a cluster. This capability is in preview. For more information, see [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
 
-- **Disable availability zone support on an existing cluster:** Once a cluster is configured with availability zones, you can't change the cluster to not use availability zones.
+- **Disable availability zone support on an existing cluster:** After a cluster is configured with availability zones, you can't change the cluster to not use availability zones.
 
-- **Verify availability zone configuration for clusters:** You can use the cluster's *zone status* property (the `zoneStatus` property in the API) to verify the availability zone configuration of a cluster. If the value is `Zonal`, it means the cluster has been configured to use availability zones.
+- **Verify availability zone configuration for clusters:** You can use the cluster's *zone status* property (the `zoneStatus` property in the API) to verify the availability zone configuration of a cluster.
 
-  However, the cluster might be zonal or zone-redundant. To determine which, use the *zones* property. If the zones list has one zone listed, the cluster is zonal (single-zone). If it has multiple zones listed, it's zone-redundant.
+  If the value is `Zonal`, it means the cluster has been configured to use availability zones. However, the cluster might be zonal or zone-redundant. To determine which, use the *zones* property. If the zones list has one zone listed, the cluster is zonal (single-zone). If it has multiple zones listed, it's zone-redundant.
 
-### Capacity planning and management
+### Instance distribution across zones
 
-When an availability zone becomes unavailable, any nodes in that zone might be temporarily unavailable, which reduces your cluster's compute capacity until the zone recovers.
+The cluster's compute layer uses a best-effort approach to evenly spread instances across the zones you select.
 
 ### Behavior when all zones are healthy
 
+This section describes what to expect when you configure a cluster for availability zone support, and all zones are operational.
+
 - **Cross-zone operation:** During normal operation, Azure Data Explorer uses all available compute nodes for ingestion, query processing, and other operations. Work is distributed across nodes regardless of their availability zone.
 
-- **Cross-zone data replication:** Data is synchronously replicated across availability zones using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
+- **Cross-zone data replication:** Data is synchronously replicated across availability zones by using Azure Storage zone-redundant storage. This provides a high level of data consistency and minimizes the risk of data loss during a zone failure.
 
 ### Behavior during a zone failure
+
+This section describes what to expect when you configure a cluster for availability zone support, and there's an outage in one of the zones.
 
 - **Detection and response:** Responsibility for detection and response depends on the availability zone configuration that your cluster uses.
 
   - *Zone-redundant:* Microsoft detects availability zone failures and manages the response for Azure Data Explorer. You don't need to do anything to initiate a zone failover.
 
-  - *Zonal:* You're responsible for detecting an failure that affects your cluster's availabilty zone. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
+  - *Zonal:* You're responsible for detecting an failure that affects your cluster's availability zone. You're also responsible for any response you decide to initiate, such as switching to a second cluster you previously created in a different availability zone.
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
-- **Active requests:** Active requests that rely on compute or storage resources in the failed zone might be terminated and should be retried by the client.
+- **Active requests:** Active requests that rely on compute or storage resources in the failed zone might be terminated and should be retried by the client. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
 - **Expected data loss:** No data loss is expected during an availability zone outage because data is synchronously replicated across zones.
 
@@ -148,13 +155,15 @@ When an availability zone becomes unavailable, any nodes in that zone might be t
 
   - *Zone-redundant:* A brief service interruption might occur while traffic is redirected to healthy availability zones. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-  - *Zonal:* Your cluster's compute nodes are unavailable until the availabilty zone recovers.
+      When an availability zone is unavailable, any nodes in that zone might be temporarily unavailable, which reduces your cluster's compute capacity until the zone recovers.
+
+  - *Zonal:* Your cluster's compute nodes are unavailable until the availability zone recovers. You also might not be able to access your cluster's data during a zone failure.
 
 - **Redistribution:** The traffic rerouting behavior depends on the availability zone configuration that your cluster uses. 
 
   - *Zone-redundant:* Azure Data Explorer routes new requests to compute and storage resources in the remaining healthy zones.
 
-  - *Zonal:* Your cluster's compute nodes are unavailable until the availabilty zone recovers.
+  - *Zonal:* Your cluster is unavailable until the availability zone recovers.
 
 ### Zone recovery
 
@@ -166,7 +175,7 @@ The options for testing for zone failures depend on the availability zone config
 
 - *Zone-redundant:* Availability zone failover and recovery for Azure Data Explorer are fully managed by Microsoft. You don’t need to initiate or validate availability zone failure processes.
 
-- *Zonal:* To partially simulate the loss of all of the compute nodes during a zone outage, you can stop your cluster.
+- *Zonal:* To partially simulate the loss of all of the compute nodes during a zone outage, you can stop your cluster. You can use this approach to validate parts of your own zone-down detection and failover processes.
 
 ## Resilience to region-wide failures
 
@@ -174,11 +183,9 @@ An Azure Data Explorer cluster is deployed into a single Azure region. If that r
 
 ### Custom multi-region solutions for resiliency
 
-To minimize the business impact of a region outage, you can deploy separate Azure Data Explorer clusters in multiple regions. Each cluster is independent, and you’re responsible for coordinating data replication, traffic routing, and failover between regions.
+To minimize the business impact of a region outage, you can deploy separate Azure Data Explorer clusters in multiple regions. Each cluster is independent, and you’re responsible for managing each cluster, and for coordinating data replication, traffic routing, and failover between regions.
 
-You can decide between different types of multi-region cluster configurations, which each support different levels of recovery time, potential data loss, effort, and cost. You can select Azure regions for each cluster that support your latency and data residency requirements.
-
-For more information about multi-region cluster configurations and patterns you can follow, see [Outage of an Azure region](/azure/data-explorer/business-continuity-overview#outage-of-an-azure-region).
+You can decide between different types of multi-region cluster configurations, which each support different levels of recovery time, potential data loss, effort, and cost. You can select Azure regions for each cluster that support your latency and data residency requirements. For more information about multi-region cluster configurations and patterns you can follow, see [Outage of an Azure region](/azure/data-explorer/business-continuity-overview#outage-of-an-azure-region).
 
 ## Backup and restore
 
@@ -188,13 +195,7 @@ Azure Data Explorer doesn't provide a native backup and restore capability. If y
 
 - [Continuous export](/kusto/management/data-export/continuous-data-export), which periodically exports data to external storage, and supports *exactly once* export of supported data.
 - [Data export to cloud storage](/kusto/management/data-export/export-data-to-storage), which enables you to manually export data to external storage.
-- Ingest data from an upstream source, like a data lake, that you can back up.
-
-## Resilience to service maintenance
-
-Azure Data Explorer regularly applies service updates and performs routine maintenance. The Azure platform handles these activities automatically while remaining within the availability levels specified in the SLA. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
-
-To learn about upcoming maintenance, use [Azure Service Health](/azure/service-health/service-health-planned-maintenance).
+- Ingest data to Azure Data Explorer from an upstream source, like a data lake, that you can back up separately.
 
 ## Resilience to accidental deletion
 
@@ -204,12 +205,21 @@ Azure Data Explorer includes several mechanisms to help you protect against acci
 
 - **Accidental table deletion:** Users with table admin permissions or higher are allowed to [drop tables](/kusto/management/drop-table-command?view=azure-data-explorer&preserve-view=true). If one of those users accidentally drops a table, you can recover it using the [`.undo drop table`](/kusto/management/undo-drop-table-command?view=azure-data-explorer&preserve-view=true) command. For this command to be successful, you must first enable the *recoverability* property in the [retention policy](/kusto/management/retention-policy?view=azure-data-explorer&preserve-view=true).
 
-- **Accidental external table deletion:*** [External tables](/kusto/query/schema-entities/external-tables?view=azure-data-explorer&preserve-view=true) are Kusto query schema entities that reference data stored outside the database.
-Deletion of an external table only deletes the table metadata. You can recover it by re-executing the table creation command. Use the [soft delete](/azure/storage/blobs/storage-blob-soft-delete) capability to protect against accidental deletion or overwrite of a file/blob for a user-configured amount of time.
+- **Accidental external table deletion:** [External tables](/kusto/query/schema-entities/external-tables?view=azure-data-explorer&preserve-view=true) are Kusto query schema entities that reference data stored outside the database. Deletion of an external table only deletes the table metadata. You can recover it by re-executing the table creation command.
+
+  For Azure Blob Storage and Azure Data Lake external tables, use the [soft delete](/azure/storage/blobs/storage-blob-soft-delete) capability to protect against accidental deletion or overwrite of a blob for a user-configured amount of time.
+
+## Resilience to service maintenance
+
+Azure Data Explorer regularly applies service updates and performs routine maintenance. The Azure platform handles these activities automatically while remaining within the availability levels specified in the SLA. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
+
+To learn about upcoming maintenance, use [Azure Service Health](/azure/service-health/service-health-planned-maintenance).
 
 ## Service-level agreement
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
+
+To be eligible for the Azure Data Explorer availability SLA, your application needs to [handle transient faults by retrying failed requests](#resilience-to-transient-faults).
 
 ## Related content
 
