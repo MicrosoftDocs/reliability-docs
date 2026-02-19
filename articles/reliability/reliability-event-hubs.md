@@ -155,7 +155,7 @@ This section summarizes important aspects of geo-replication. Review the full do
 
 #### Requirements
 
-- You can choose any Azure region that supports Event Hubs as your primary region or secondary regions. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
+- **Region support:** You can choose any Azure region that supports Event Hubs as your primary region or secondary regions. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
 - To enable geo-replication, your namespace must use the Premium or Dedicated tier.
 
 #### Considerations

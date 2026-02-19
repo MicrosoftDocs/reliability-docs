@@ -125,7 +125,7 @@ If your IoT hub is in a nonpaired region, or if the default replication and fail
 
 ### Requirements
 
-- Default replication and failover is only supported in regions that are paired.
+- **Region support:** Default replication and failover is only supported in regions that are paired.
 - Paired region replication and failover options are available for all IoT Hub tiers.
 
 ### Considerations

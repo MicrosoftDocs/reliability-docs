@@ -80,7 +80,7 @@ Previously, Azure Firewall deployments that aren't configured to be zone-redunda
 
 ### Requirements
 
-- Azure Firewall supports availability zones in [all regions that support availability zones](../reliability/availability-zones-region-support.md), where the Azure Firewall service is available.
+- **Region support:** Azure Firewall supports availability zones in [all regions that support availability zones](../reliability/availability-zones-region-support.md), where the Azure Firewall service is available.
 - All tiers of Azure Firewall support availability zones.
 - Zone-redundant firewalls require standard public IP addresses configured to be zone-redundant.
 - Zonal firewalls (deployed through API-based tools) require standard public IP addresses and can be configured to be either zone-redundant or zonal in the same zone as the firewall.
