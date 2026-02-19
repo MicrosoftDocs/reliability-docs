@@ -63,7 +63,7 @@ You don't need to divide your virtual networks or subnets by availability zones 
 
 ### Requirements
 
-Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
+- **Region support:** Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
 
 ### Cost
 

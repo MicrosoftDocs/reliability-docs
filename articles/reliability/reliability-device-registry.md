@@ -46,7 +46,7 @@ Microsoft manages setup and configuration for zone redundancy in Azure Device Re
 | West US 2        |                      |
 | West US 3        |                      |
 
-Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).
+- **Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).
 
 ### Cost
 

@@ -65,7 +65,7 @@ If you don't configure a VM to be zonal, it's considered *nonzonal* or *regional
 
 ### Requirements
 
-- Zonal VMs can be deployed into [any region that supports availability zones](./regions-list.md).
+- **Region support:** Zonal VMs can be deployed into [any region that supports availability zones](./regions-list.md).
 - [!INCLUDE [Virtual machines zone region support](includes/virtual-machines/zone-region-support-include.md)]
 
 ### Cost

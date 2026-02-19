@@ -279,7 +279,7 @@ This section describes what to expect when SQL managed instances are configured 
 
 Failover groups don't automatically fail back to the primary region when it's restored, and so it's your responsibility to initiate a failback.
 
-You can select any Azure region for the SQL managed instances within the failover group. Because of the high latency of wide area networks, geo-replication uses an asynchronous replication mechanism. To reduce network delays, select regions that have low latency connections. For more information about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency).
+- **Region support:** You can select any Azure region for the SQL managed instances within the failover group. Because of the high latency of wide area networks, geo-replication uses an asynchronous replication mechanism. To reduce network delays, select regions that have low latency connections. For more information about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency).
 
 #### Test for region failures
 
