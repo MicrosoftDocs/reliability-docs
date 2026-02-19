@@ -56,7 +56,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Disk Storage](/azure/virtual-machines/disks-redundancy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure DNS Private Resolver](/azure/dns/dns-private-resolver-get-started-portal) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::  ||
 | [Azure DNS private zones](/azure/dns/private-dns-getstarted-portal) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
-| [Azure Event Grid](reliability-event-grid.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Event Grid](reliability-event-grid.md#resilience-to-availability-zone-failures-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Event Hubs](./reliability-event-hubs.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure ExpressRoute gateway](reliability-virtual-network-gateway.md?pivot=expressroute#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Files](./reliability-storage-files.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
