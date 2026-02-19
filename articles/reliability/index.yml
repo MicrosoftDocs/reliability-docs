@@ -482,14 +482,6 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: Microsoft Purview
-      summary: Maximize business value with unified data governance
-      imageSrc: /azure/media/index/purview.svg
-      url: reliability-microsoft-purview.md
-      azureCategories:
-        - analytics
-        - management-and-governance
-    # Card
     - title: Azure DNS
       summary: Host your DNS domain in Azure
       imageSrc: /azure/media/index/dns.svg
