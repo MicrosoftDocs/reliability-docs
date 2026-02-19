@@ -65,9 +65,9 @@ To build resilience to transient faults when you use Azure Data Explorer, follow
 
 Azure Data Explorer supports two types of availability zone configuration:
 
-- **Zone-redundant (recommended):** When you enable availability zones on your cluster, you can select multiple availability zones for your cluster's nodes. Microsoft manages the distribution of resources across the selected availability zones and handles detection and response to availability zone failures.
+- **Zone-redundant (recommended):** When you enable availability zones on your cluster, your cluster's nodes are spread across multiple zones. Microsoft manages the distribution of nodes across the selected availability zones and handles detection and response to availability zone failures. A zone-redundant cluster is resilient to an availability zone outage.
 
-  When you configure your cluster to be zone-redundant, your data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least 3 copies of the data across multiple availability zones.
+  When you configure your cluster to be zone-redundant, your data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least three copies of the data across multiple availability zones.
 
   ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster and storage.](./media/reliability-data-explorer/zone-redundant.png)
 
