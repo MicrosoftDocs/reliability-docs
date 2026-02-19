@@ -86,3 +86,4 @@ Do not assume responsibilities are obvious; state them clearly wherever relevant
 
 ## Other notes
 - Never use the word "zonal" as an adjective. Instead of "zonal resilence", use "zone resilience", and so forth.
+- Diagrams and other images must be stored in the `media/reliability-{service-name}` folder. Diagram filenames should be kebab-case and descriptive of the content (e.g. `availability-zones.png` or `zone-redundant.png`).

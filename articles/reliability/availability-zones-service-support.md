@@ -102,7 +102,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Virtual WAN: ExpressRoute](/azure/virtual-wan/virtual-wan-faq#how-are-availability-zones-and-resiliency-handled-in-virtual-wan) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Virtual WAN: Point-to-site VPN gateways](/azure/vpn-gateway/about-zone-redundant-vnet-gateways) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Virtual WAN: Site-to-site VPN gateways](/azure/vpn-gateway/about-zone-redundant-vnet-gateways) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
-| [Azure VMware Solution](/azure/azure-vmware/architecture-private-clouds) || :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| [Azure VMware Solution](./reliability-vmware-solution.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Azure Web PubSub](/azure/azure-web-pubsub/concept-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
 | [Microsoft Entra Domain Services](/azure/active-directory-domain-services/overview) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: ||
