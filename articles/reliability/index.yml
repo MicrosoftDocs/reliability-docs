@@ -583,6 +583,13 @@ productDirectory:
       url: reliability-azure-storage-mover.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure VMware Solution
+      summary: Run your VMware workloads natively on Azure
+      imageSrc: /azure/media/index/azure-vmware.svg
+      url: reliability-vmware-solution.md
+      azureCategories:
+        - compute
 
 tools:
   title: Reliability services and capabilities
