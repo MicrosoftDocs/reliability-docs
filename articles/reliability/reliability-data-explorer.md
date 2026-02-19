@@ -105,7 +105,7 @@ Compute nodes are charged at the same rate whether you use availability zone sup
 
   When you create an availability zone-enabled cluster by using the Azure portal, it's automatically zone-redundant, and Microsoft selects the zones.
 
-  To select zones yourself, or to create a zonal cluster, use another deployment approach like Azure Resource Manager APIs or Bicep.
+  To select zones yourself, or to create a zonal cluster, use another deployment approach like Azure Resource Manager APIs or Bicep. For most situations, we recommend that you create a zone-redundant cluster and that you use all of the zones in the region.
 
   > [!NOTE]
   > [!INCLUDE [Availability zone numbering](./includes/reliability-availability-zone-numbering-include.md)]
@@ -115,6 +115,10 @@ Compute nodes are charged at the same rate whether you use availability zone sup
 - **Reconfigure availability zones on an existing cluster (preview):** You can change the zones used for a cluster. This capability is in preview. For more information, see [Migrate your cluster to support multiple availability zones](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone).
 
 - **Disable availability zone support on an existing cluster:** Once a cluster is configured with availability zones, you can't change the cluster to not use availability zones.
+
+- **Verify availability zone configuration for clusters:** You can use the cluster's *zone status* property (the `zoneStatus` property in the API) to verify the availability zone configuration of a cluster. If the value is `Zonal`, it means the cluster has been configured to use availability zones.
+
+  However, the cluster might be zonal or zone-redundant. To determine which, use the *zones* property. If the zones list has one zone listed, the cluster is zonal (single-zone). If it has multiple zones listed, it's zone-redundant.
 
 ### Capacity planning and management
 
