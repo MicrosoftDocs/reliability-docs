@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Event Grid
-description: Learn how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. Learn about backup and restore.
+description: Learn how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
@@ -10,19 +10,17 @@ ms.date: 02/04/2026
 ai-usage: ai-assisted
 ---
 
-<!-- For guidance on how to fill out this template, see https://learn.microsoft.com/help/patterns/level4/article-reliability -->
-
 # Reliability in Azure Event Grid
 
-Azure Event Grid is a fully managed messaging service that enables event-based communication between services and applications. This article describes how Azure Event Grid supports reliability and resilience, and what you should consider when you design reliable solutions that depend on Event Grid.
-
-This article covers production deployment recommendations, how Event Grid behaves during faults and outages, and the options available to help you design for high availability and disaster recovery.
+[Azure Event Grid](/azure/event-grid/overview) is a fully managed messaging service that enables event-based communication between services and applications. It's commonly used for building event-driven architectures and integrating Azure services with custom applications.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
+This article describes how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also highlights key information about the Azure Event Grid service-level agreement (SLA).
+
 ## Production deployment recommendations
 
-Use the [Azure Well-Architected Framework guidance for Azure Event Grid](/azure/well-architected/service-guides/azure-event-grid) to inform your production deployments. The WAF guidance provides prescriptive recommendations for designing Event Grid solutions that align with Azure reliability, security, and operational best practices.
+The Azure Well-Architected Framework provides recommendations across reliability, security, cost, operations, and performance. To understand how these areas influence each other and contribute to a reliable Azure Event Grid solution, see [Azure Well-Architected Framework guidance for Azure Event Grid](/azure/well-architected/service-guides/azure-event-grid).
 
 ## Reliability architecture overview
 
@@ -32,11 +30,13 @@ Event Grid supports multiple resource types and deployment models:
 
 - **Topics** are the primary entities that receive and store events, including:
   - **System topics**, which are created automatically by Azure services to emit events for specific Azure resource types.
-  - **Custom topics**, which are created and managed by customers.
+  - **Custom topics**, which are created and managed by you.
 - **Domains** group multiple custom topics under a single endpoint.
 - **Namespaces** are used with the standard tier and provide a container for multiple Event Grid resources.
 
-Event Grid supports multiple tiers, including a long-standing basic tier and a newer standard tier. These tiers differ in how resources are deployed and managed.
+Event Grid supports multiple tiers, including the basic tier and the standard tier. These tiers differ in how resources are deployed and managed.
+
+Azure Event Grid is a fully managed service. Microsoft manages the underlying infrastructure, including compute and storage resources. Event Grid automatically distributes resources across availability zones to provide built-in redundancy in supported regions.
 
 <!-- TODO (PG confirmation): Expand this section with a clearer logical/physical architecture narrative and tier-specific nuances (basic vs standard) once verified. -->
 
@@ -50,7 +50,7 @@ There are two primary transient fault scenarios to consider when you use Azure E
 
 - **Outbound connections (Event Grid to subscribers):** Event Grid delivers events to configured destinations. For these outbound connections, you configure retry policies on event subscriptions. These policies define how often and for how long Event Grid retries delivery when transient failures occur. For more information see [Message push delivery and retry with namespace topics](/azure/event-grid/namespace-delivery-retry)
 
-Event Grid also supports features such as dead-lettering for undeliverable events. Configure retry and dead-letter policies according to your application’s reliability requirements, and refer to the [Event Grid documentation](/azure/event-grid/troubleshoot-network-connectivity#troubleshoot-transient-connectivity-issues)  for more information.
+Event Grid also supports features such as dead-lettering for undeliverable events. Configure retry and dead-letter policies according to your application's reliability requirements. For more information, see [Event Grid documentation](/azure/event-grid/troubleshoot-network-connectivity#troubleshoot-transient-connectivity-issues).
 
 ## Resilience to availability zone failures {#availability-zone-support}
 
@@ -72,19 +72,22 @@ No configuration is required. All Event Grid resources in supported regions are 
 
 ### Behavior when all zones are healthy
 
-When availability zones are healthy:
+This section describes what to expect when an Event Grid resource is zone-redundant, and all zones are operational.
 
-- **Traffic routing between zones:** Event Grid operates in an active-active model across availability zones. Client connections are automatically load-balanced across zones, and the service routes operations to available messaging infrastructure regardless of zone. 
-- **Data replication between zones:** Event Grid replicates metadata and event data across availability zones to maintain resiliency. Multiple copies of the messaging store must acknowledge write operations before the service considers them complete, helping to ensure data consistency across zones during normal operations. 
+- **Cross-zone operation:** Event Grid operates in an active-active model across availability zones. Client connections are automatically load-balanced across zones, and the service routes operations to available messaging infrastructure regardless of zone.
+
+- **Cross-zone data replication:** Event Grid replicates metadata and event data across availability zones to maintain resiliency. Multiple copies of the messaging store must acknowledge write operations before the service considers them complete, helping to ensure data consistency across zones during normal operations.
 
 <!-- TODO (PG confirmation): Confirm whether zone replication is synchronous and whether “active-active” is the preferred wording for Event Grid. -->
 
 ### Behavior during a zone failure
 
-When an availability zone experiences an outage:
+This section describes what to expect when an Event Grid resource is zone-redundant, and there's an outage in one of the zones.
 
-- **Detection and response:** Microsoft automatically detects zone failures and initiates failover to healthy zones. No customer action is required for zone-level failover.
+- **Detection and response:** Microsoft automatically detects zone failures and initiates failover to healthy zones. You don't need to do anything to initiate a zone failover.
+
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+
 - **Active requests:** During a zone failure, Event Grid might drop active requests. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
 - **Expected data loss:** No data loss occurs during a zone failure because Event Grid synchronously replicates messages across zones before acknowledgment.
@@ -130,15 +133,15 @@ The following table shows the disaster recovery support for different Event Grid
 
 You can choose between two failover options when configuring custom topics and domains:
 
-**Microsoft-initiated failover**  
+**Microsoft-initiated failover**
 Microsoft-initiated failover is exercised by Microsoft in rare situations to fail over Event Grid resources from an affected region to the corresponding geo-paired region. Microsoft reserves the right to determine when this option will be exercised. This mechanism doesn't involve user consent before traffic is failed over.
 
 > [!IMPORTANT]
 > Microsoft triggers Microsoft-managed failover. It's likely to occur after a significant delay and is done on a best-effort basis. The failover of Event Grid resources might occur at a time that's different from the failover time of other Azure services.
-> 
+>
 > If you need to be resilient to region outages, consider using one of the custom multi-region solutions for resiliency.
 
-**Customer-initiated failover**  
+**Customer-initiated failover**
 Customer-initiated failover is defined by your custom disaster recovery plan for Azure Event Grid topics and domains. No event data is replicated to another region by Microsoft. While this failover option requires more effort, it enables faster failover and you control the choice of secondary regions.
 
 You may want to disable Microsoft-initiated failover because:
@@ -166,21 +169,31 @@ To configure your failover preference:
 
 #### Behavior when all regions are healthy
 
+This section describes what to expect when an Event Grid resource is configured for geo-disaster recovery, and all regions are operational.
+
 - **Traffic routing between regions:** All traffic is routed to the primary region.
+
 - **Data replication between regions:** Metadata is replicated to the paired region. Event data isn't replicated.
 
 #### Behavior during a region failure
 
-- **Detection and response:** Microsoft detects regional failures and determines whether and when to initiate failover.
-- **Notification:** Azure Service Health provides outage notifications.
-- **Active requests:** Active requests to the primary region will terminate and must be retried after failover. 
+This section describes what to expect when an Event Grid resource is configured for geo-disaster recovery, and there's an outage in the primary region.
+
+- **Detection and response:** Microsoft detects region failures and determines whether and when to initiate failover.
+
+[!INCLUDE [Region down notification (Service Health only)](./includes/reliability-region-down-notification-service-include.md)]
+
+- **Active requests:** Active requests to the primary region will terminate and must be retried after failover.
+
 - **Expected data loss:** Event Grid preserves metadata during failover. Event data in the primary region is unavailable and might be lost if the region is unrecoverable.
+
 - **Expected downtime:** Downtime depends on the severity of the outage and the time required for Microsoft to assess and initiate failover. The amount of time that elapses before failover occurs depends on the severity of the disaster and the time required to assess the situation.
+
 - **Traffic rerouting:** After failover, traffic is automatically routed to the secondary region.
 
 #### Region recovery
 
-Microsoft manages region recovery behavior depends on the specific outage scenario. Failover is typically treated as a one-way operation.
+Microsoft manages region recovery. Behavior depends on the specific outage scenario. Failover is typically treated as a one-way operation.
 
 <!-- TODO (PG confirmation): Confirm region recovery/failback behavior and whether the service treats failover as one-way in all scenarios. -->
 
@@ -197,7 +210,7 @@ With this model:
 - You're responsible for deploying, configuring, and keeping resources in sync across regions.
 - Your client applications must detect regional failures and route events to the appropriate region.
 
-This approach provides greater flexibility but also places significant operational responsibility on you. Refer to the Event Grid documentation for detailed guidance and examples.
+This approach provides greater flexibility but also places significant operational responsibility on you. For more information, see [Event Grid documentation](/azure/event-grid/geo-disaster-recovery).
 
 ## Backup and restore
 
@@ -207,7 +220,7 @@ Azure Event Grid doesn't provide a built-in backup and restore mechanism for Eve
 
 ## Resilience to service maintenance
 
-Azure manages all service maintenance for Azure Event Grid. Maintenance activities are designed to avoid customer impact, and no downtime is expected.
+[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
 
 ## Service-level agreement
 
@@ -215,5 +228,6 @@ Azure manages all service maintenance for Azure Event Grid. Maintenance activiti
 
 ## Related content
 
+- [Reliability in Azure](/azure/reliability/overview)
 - [Azure Well-Architected Framework guidance for Azure Event Grid](/azure/well-architected/service-guides/azure-event-grid)
-- [Azure Event Grid documentation](/azure/event-grid/overview) 
+- [Azure Event Grid documentation](/azure/event-grid/overview)
