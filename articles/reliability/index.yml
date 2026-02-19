@@ -576,6 +576,13 @@ productDirectory:
       azureCategories:
         - storage
     # Card
+    - title: Azure VMware Solution
+      summary: Run your VMware workloads natively on Azure
+      imageSrc: /azure/media/index/azure-vmware.svg
+      url: reliability-vmware-solution.md
+      azureCategories:
+        - compute
+    # Card
     - title: Azure Monitor Logs
       summary: Full observability into your applications, infrastructure, and network # TODO is there a better description?
       imageSrc: /azure/media/index/monitor.svg
