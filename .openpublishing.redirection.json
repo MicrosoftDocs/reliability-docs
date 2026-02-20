@@ -209,6 +209,11 @@
       "source_path": "articles/reliability/migrate-service-fabric.md",
       "redirect_url": "/azure/service-fabric/migrate-service-fabric-availability-zones",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-microsoft-purview.md",
+      "redirect_url": "/purview/data-governance-reliability",
+      "redirect_document_id": false
     }
   ]
 }
