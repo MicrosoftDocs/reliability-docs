@@ -40,6 +40,8 @@ items:
       href: reliability-stream-analytics.md
     - name: Microsoft Fabric
       href: reliability-fabric.md
+    - name: Microsoft Purview
+      href: reliability-microsoft-purview.md
   - name: Compute
     items:
     - name: Azure App Service
@@ -71,7 +73,7 @@ items:
     - name: Azure Virtual Machine Scale Sets
       href: reliability-virtual-machine-scale-sets.md
     - name: Azure VMware Solution
-      href: reliability-vmware-solution.md
+      href: /azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
   - name: Containers
     items:
     - name: Azure App Configuration
@@ -130,18 +132,30 @@ items:
         href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Azure Monitor - Log Analytics
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
+  - name: Industry solutions
+    items:
+    - name: Microsoft Community Training
+      href: reliability-community-training.md
   - name: Integration
     items:
     - name: Azure API Management
       href: reliability-api-management.md
     - name: Azure Data Factory
       href: /azure/data-factory/concepts-data-redundancy?bc=%2fazure%2freliability%2fbreadcrumb%2ftoc.json&toc=%2fazure%2freliability%2ftoc.json
+    - name: Azure Data Manager for Energy
+      href: reliability-energy-data-services.md
     - name: Azure Event Grid
       href: ./reliability-event-grid.md
     - name: Azure Event Hubs
       href: ./reliability-event-hubs.md
     - name: Azure Functions 
       href: reliability-functions.md
+    - name: Azure Health Data Services
+      items:
+      - name: Workspace services (FHIR, DICOM, MedTech)
+        href: /azure/healthcare-apis/business-continuity-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      - name: De-identification service
+        href: reliability-health-data-services-deidentification.md
     - name: Azure Logic Apps
       href: reliability-logic-apps.md
     - name: Azure Service Bus
@@ -232,6 +246,8 @@ items:
       href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
+    - name: Microsoft Defender for Cloud DevOps security
+      href: reliability-defender-devops.md
   - name: Storage
     items:
     - name: Azure Backup
@@ -262,6 +278,8 @@ items:
       href: reliability-ai-search.md
     - name: Azure API Management
       href: reliability-api-management.md
+    - name: Azure App Configuration
+      href: reliability-app-configuration.md
     - name: Azure App Service
       href: reliability-app-service.md
     - name: Azure Container Apps
@@ -338,6 +356,8 @@ items:
         href: migrate-monitor-log-analytics.md
       - name: Azure Recovery Services vault
         href: migrate-recovery-services-vault.md
+      - name: Azure Service Fabric
+        href: migrate-service-fabric.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database
