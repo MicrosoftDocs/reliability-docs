@@ -11,7 +11,7 @@ author: glynnniall
 ms.custom: subject-reliability
 ---
 
-# Azure services that support availability zones
+## Azure services that support availability zones
 
 Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the type of offerings that they support.
 
@@ -82,6 +82,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Network Watcher](/azure/network-watcher/frequently-asked-questions) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Network Watcher: Traffic analytics](/azure/network-watcher/frequently-asked-questions) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Notification Hubs](reliability-notification-hubs.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Private Link service](./reliability-private-link-service.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Private Link](/azure/private-link/private-link-overview) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure public IP addresses](/azure/virtual-network/ip-services/public-ip-addresses) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Queue Storage](./reliability-storage-queue.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |

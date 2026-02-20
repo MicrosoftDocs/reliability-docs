@@ -10,7 +10,7 @@ ms.author: glynnniall
 ms.custom: subject-reliability
 ---
 
-# Enable zone resiliency for Azure workloads
+## Enable zone resiliency for Azure workloads
 
 To make your applications more resilient to zone-related hardware failures, network disruptions, and natural disasters, it's important that design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 
@@ -158,7 +158,7 @@ The following table summarizes the availability zone support for many Azure serv
 | [Azure ExpressRoute gateway](./reliability-virtual-network-gateway.md?pivot=expressroute#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Modification | Depends on tier |
 | [Azure Files](./reliability-storage-files.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Moderate cost increase |
 | [Azure Firewall](./reliability-firewall.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | New firewalls: Zone resilient by default. Existing nonzonal firewalls: Modification (automatic migration in progress) | No cost impact |
-| [Azure Functions](reliability-functions.md#migration-to-availability-zone-support-availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Minimum tier and instance count required |
+| [Azure Functions](reliability-functions.md#availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Minimum tier and instance count required |
 | [Azure HDInsight](reliability-hdinsight.md#availability-zone-migration) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Redeployment | No cost impact for same number of nodes |
 | [Azure IoT Hub](./reliability-iot-hub.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
 | [Azure Key Vault](./reliability-key-vault.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
