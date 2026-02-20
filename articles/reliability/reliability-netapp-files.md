@@ -58,7 +58,9 @@ A single-zone deployment isn't sufficient to meet high reliability requirements.
 
 If an availability zone fails, you're responsible for detecting the failure and switching to an alternative volume in a different zone.
 
-### Considerations
+### Requirements
+
+- **Region support:** Cross-zone replication is available in all [availability zone-enabled regions](regions-list.md) that support [Azure NetApp Files](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=netapp&regions=all&rar=true).
 
 - Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You'll see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
 
@@ -148,9 +150,7 @@ By default, Azure NetApp Files is a single-region service. If the region becomes
 
 ### Requirements
 
-- **Region support:** Cross-zone replication is available in all [availability zone-enabled regions](regions-list.md) that support [Azure NetApp Files](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=netapp&regions=all&rar=true).
-
-The secondary region that you can replicate your volumes to depends on the primary region. For more information, see [supported region pairs](/azure/azure-netapp-files/replication#supported-region-pairs). 
+**Region support:** The secondary region that you can replicate your volumes to depends on the primary region. For more information, see [supported region pairs](/azure/azure-netapp-files/replication#supported-region-pairs). 
 
 Replication is permitted between different Azure subscriptions only if they're within the same Microsoft Entra tenant.
 

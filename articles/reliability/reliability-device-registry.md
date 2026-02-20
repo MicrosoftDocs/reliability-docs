@@ -46,8 +46,6 @@ Microsoft manages setup and configuration for zone redundancy in Azure Device Re
 | West US 2        |                      |
 | West US 3        |                      |
 
-- **Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).
-
 ### Cost
 
 There's no extra cost to use zone redundancy for Device Registry.
@@ -139,3 +137,5 @@ The Device Registry platform manages traffic routing, failover, and failback acr
 - [What is Azure IoT Operations? - Azure IoT Operations](/azure/iot-operations/overview-iot-operations)
 
 - [Reliability in Azure](/azure/reliability/overview)
+
+- - **Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).
