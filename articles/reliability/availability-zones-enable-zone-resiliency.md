@@ -10,7 +10,7 @@ ms.author: glynnniall
 ms.custom: subject-reliability
 ---
 
-## Enable zone resiliency for Azure workloads
+# Enable zone resiliency for Azure workloads
 
 To make your applications more resilient to zone-related hardware failures, network disruptions, and natural disasters, it's important that design your Azure workloads for zone resiliency. When you distribute resources across multiple availability zones within a region, you reduce the risk of a single zone outage affecting critical services.
 

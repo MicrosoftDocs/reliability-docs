@@ -11,7 +11,7 @@ ms.date: 02/19/2026
 #Customer intent: I want to understand reliability support in Azure Functions so that I can respond to and/or avoid failures in order to minimize downtime and data loss.
 ---
 
-## Reliability in Azure Functions
+# Reliability in Azure Functions
 
 [Azure Functions](/azure/azure-functions/functions-overview) is a serverless compute service that lets you run event-triggered code without having to explicitly provision or manage infrastructure. Functions provides a fully managed compute platform with high reliability, security, and zero administration for high-scale applications.
 

@@ -11,7 +11,7 @@ author: glynnniall
 ms.custom: subject-reliability
 ---
 
-## Azure services that support availability zones
+# Azure services that support availability zones
 
 Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the type of offerings that they support.
 
