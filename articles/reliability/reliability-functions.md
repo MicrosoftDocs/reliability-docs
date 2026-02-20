@@ -11,7 +11,7 @@ ms.date: 02/19/2026
 #Customer intent: I want to understand reliability support in Azure Functions so that I can respond to and/or avoid failures in order to minimize downtime and data loss.
 ---
 
-# Reliability in Azure Functions
+## Reliability in Azure Functions
 
 [Azure Functions](/azure/azure-functions/functions-overview) is a serverless compute service that lets you run event-triggered code without having to explicitly provision or manage infrastructure. Functions provides a fully managed compute platform with high reliability, security, and zero administration for high-scale applications.
 
@@ -53,7 +53,7 @@ For production workloads, we recommend that you:
 
 <!-- Key consideration: Functions have built-in retry policies for triggers, but you should implement additional retry logic for calls to external services within your function code -->
 
-## Resilience to availability zone failures
+## Resilience to availability zone failures {#availability-zone-support}
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
@@ -65,8 +65,8 @@ Availability zones support for Azure Functions depends on your [Functions hostin
 
 | Hosting plan | Support level | Configuration guide |
 | ----- | ----- | ----- |
-| [Flex Consumption plan](/azure/azure-functions/flex-consumption-plan) | GA | [Configure Flex Consumption availability zones](/azure/azure-functions/functions-availability-zones-configuration?pivots=flex-consumption-plan) |
-| [Elastic Premium plan](/azure/azure-functions/functions-premium-plan) | GA | [Configure Premium availability zones](/azure/azure-functions/functions-availability-zones-configuration?pivots=premium-plan) |
+| [Flex Consumption plan](/azure/azure-functions/flex-consumption-plan) | GA | [Configure Flex Consumption availability zones](/azure/azure-functions/functions-premium-plan#availability-zones) |
+| [Elastic Premium plan](/azure/azure-functions/functions-premium-plan) | GA | [Configure Premium availability zones](/azure/azure-functions/functions-premium-plan#availability-zones) |
 | [Dedicated (App Service) plan](/azure/azure-functions/dedicated-plan) | GA | See [Reliability in Azure App Service](reliability-app-service.md). |
 | [Consumption plan](/azure/azure-functions/consumption-plan) | n/a | Not supported by the Consumption plan. |
 
@@ -123,9 +123,9 @@ Instance spreading with a zone-redundant deployment follows these rules, even as
 
 For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
 
-### Configure availability zone support
+### Configure availability zone support {#create-a-function-app-in-a-zone-redundant-plan}
 
-- **Create a new zone-redundant Azure Functions resource.** For step-by-step configuration instructions, see [Configure availability zones for Azure Functions](/azure/azure-functions/functions-availability-zones-configuration).
+- **Create a new zone-redundant Azure Functions resource.** For step-by-step configuration instructions, see [Configure availability zones for Azure Functions](/azure/azure-functions/functions-premium-plan#availability-zones).
 - **Flex Consumption plans:** You can enable availability zones during app creation or update an existing plan. Both creation and updates are supported.
 - **Elastic Premium plans:** You can only enable availability zones during app creation. You cannot convert an existing Premium plan to use availability zones. For existing Premium plans without zone redundancy, migration to zone-redundant plans requires following the [migration guidance](migrate-functions.md).
 
@@ -161,6 +161,27 @@ When the availability zone recovers, Azure Functions automatically restores inst
 ### Test for zone failures
 
 The Azure Functions platform manages traffic routing, failover, and zone recovery for zone-redundant resources. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate availability zone failure processes.
+
+## Migration to availability zone support {#availability-zone-migration}
+
+To migrate existing Azure Functions to use availability zones:
+
+**Microsoft responsibility:** Microsoft provides the platform capabilities to support availability zones and ensures the underlying infrastructure is available.
+
+**Customer responsibility:** You are responsible for:
+
+- Creating new zone-redundant function apps in supported hosting plans
+- Migrating your function code and configuration to the new zone-redundant resources
+- Testing the migrated functions to ensure proper operation
+- Updating any dependent systems to use the new function app endpoints
+
+**Migration process:**
+
+1. **Premium plans:** Create a new Premium plan with zone redundancy enabled, then redeploy your functions
+2. **Flex Consumption plans:** You can enable zone redundancy on existing plans or create new zone-redundant plans
+3. **Migration guidance:** For detailed migration steps, see [Migrate Azure Functions to availability zones](migrate-functions.md)
+
+**Cost considerations:** Zone redundancy requires minimum instance counts for Premium plans, which may increase costs.
 
 ## Resilience to region-wide failures
 
@@ -227,7 +248,7 @@ For the most current SLA information, see [SLA for Azure Functions](https://azur
 
 ## Related content
 
-- [Configure availability zones for Azure Functions](/azure/azure-functions/functions-availability-zones-configuration)
+- [Configure availability zones for Azure Functions](/azure/azure-functions/functions-premium-plan#availability-zones)
 - [Disaster recovery and geo-distribution in Azure Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution)
 - [Create Azure Front Door](/azure/frontdoor/quickstart-create-front-door)
 - [Event Hubs failover considerations](/azure/event-hubs/event-hubs-geo-dr#considerations)
