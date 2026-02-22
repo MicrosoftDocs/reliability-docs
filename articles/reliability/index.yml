@@ -482,14 +482,6 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: Microsoft Purview
-      summary: Maximize business value with unified data governance
-      imageSrc: /azure/media/index/purview.svg
-      url: reliability-microsoft-purview.md
-      azureCategories:
-        - analytics
-        - management-and-governance
-    # Card
     - title: Azure DNS
       summary: Host your DNS domain in Azure
       imageSrc: /azure/media/index/dns.svg
@@ -582,6 +574,13 @@ productDirectory:
       url: reliability-vmware-solution.md
       azureCategories:
         - compute
+    # Card
+    - title: Azure Private Link service
+      summary: Private access to services hosted on the Azure platform, keeping your data on the Microsoft network
+      imageSrc: /azure/media/index/private-link.svg
+      url: reliability-private-link-service.md
+      azureCategories:
+        - networking
     # Card
     - title: Azure Data Explorer
       summary: Fast and highly scalable data exploration service
