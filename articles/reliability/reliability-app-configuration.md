@@ -24,7 +24,7 @@ For a list of recommended practices and configuration for production workloads, 
 
 ## Reliability architecture overview
 
-When you deploy App Configuration, you deploy a *store*. Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [feature flags](/azure/azure-app-configuration/concept-feature-management). The service provides other features for managing and organizing your settings. For more information, see [What is Azure App Configuration?](/azure/azure-app-configuration/overview)
+When you deploy App Configuration, you deploy a *store*. Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [feature flags](/azure/azure-app-configuration/concept-feature-management). The service also includes built-in capabilities for organizing, securing, versioning, and safely rolling out configuration changes across environments. For more information, see [What is Azure App Configuration?](/azure/azure-app-configuration/overview)
 
 App Configuration is a fully managed service. Microsoft is responsible for storing and managing your settings, as well as performing maintenance on the service.
 
@@ -37,7 +37,7 @@ When you build client applications that connect to Azure App Configuration, you 
 When you use Azure App Configuration, consider the following best practices to minimize the effect of transient faults on configuration access, especially within critical code paths.
 
 - **Configuration providers:** Use the [Azure App Configuration provider libraries](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities along with many other resiliency features.
-- **SDKs:** Use App Configuration SDKs if your application needs to send write requests. SDKs automatically retry on HTTP status code 429 responses and other transient errors.
+- **Azure SDKs:** Use App Configuration SDKs if your application needs to send write requests. SDKs automatically retry on HTTP status code 429 responses and other transient errors.
 - **Retry logic:** Include retry logic in custom clients if you can't use App Configuration Providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time in milliseconds before retrying the request.
 - **Caching:** Cache settings in memory when possible to reduce direct requests to your store.
 
@@ -149,10 +149,10 @@ This section describes what to expect when you configure an App Configuration st
 This section describes what to expect when you configure a store for geo-replication, and there's an outage in one of the replica regions.
 
 - **Detection and response:** Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
-    
-    When you configure Microsoft's configuration providers to perform automatic replica discovery or with a list of multiple replicas, your application automatically fails over to another healthy replica.
-    
-    If you don't use Microsoft's configuration providers, you're responsible for switching your application to a healthy replica.
+
+    When you configure App Configuration providers to perform [automatic replica discovery](/azure/azure-app-configuration/howto-geo-replication?tabs=dotnet#automatic-replica-discovery) or with a list of multiple replicas, your application automatically fails over to another healthy replica. For more information, [see](/azure/azure-app-configuration/configuration-provider-overview)
+
+    If you don't use App Configuration providers, you're responsible for switching your application to a healthy replica.
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
@@ -164,21 +164,23 @@ This section describes what to expect when you configure a store for geo-replica
 
 - **Redistribution:** Applications must route traffic to a healthy replica when a failure occurs.
 
-    If you use Microsoft configuration provider libraries, the libraries automatically handle replica selection and failover.
+    If you use App Configuration provider libraries, the libraries automatically handle replica selection and failover.
     
-    If you place Azure Front Door in front of your data store and [configure the origin group for failover](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing), Azure Front Door automatically reroutes requests to a healthy replica.
+    If you place Azure Front Door in front of your data store and [configure the origin group with multiple replicas as origins for failover](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing), Azure Front Door automatically [reroutes requests to a healthy replica](/azure/frontdoor/routing-methods).
 
 #### Region recovery
 
 After the region recovers, App Configuration brings the replica back in sync with the other replicas without your intervention.
 
-You're responsible for reconfiguring your application to route traffic back to the recovered region instance. Applications that use Microsoft configuration providers automatically start using the replica again.
+You're responsible for reconfiguring your application to route traffic back to the recovered region instance. Applications that use App Configuration providers automatically start using the replica again.
 
 #### Test for region failures
 
-You can't simulate a replica failure. However, applications control replica selection, so they can dynamically switch replicas to test their failover behavior.
+You can't directly simulate a replica failover in App Configuration today. However, because applications control replica selection, you can test failover behavior by forcing the application into a state where it must switch replicas.
 
-One approach to simulating a replica failover is to use your local computer or another nonproduction environment that you have administrative access to. Follow these steps:
+To validate your application’s replica failover behavior, you can introduce a controlled connectivity failure in a nonproduction environment and observe how the application responds.
+
+One approach is to use your local machine or another environment where you have administrative access. Follow these steps:
 
 1. Enable verbose logging for the Azure SDK. In .NET, use the `AzureEventSourceListener` class to configure a logger. For more information, see [Tutorial: Use dynamic configuration in a .NET app - Logging and monitoring](/azure/azure-app-configuration/enable-dynamic-configuration-dotnet-core#logging-and-monitoring).
 

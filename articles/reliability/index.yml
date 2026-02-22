@@ -141,8 +141,11 @@ productDirectory:
       imageSrc: https://static.docs.com/ui/media/product/azure/app-configuration.svg
       url: reliability-app-configuration.md
       azureCategories:
+        - containers
         - developer-tools
         - integration
+        - mobile
+        - web
     # Card
     - title: Azure AI Search
       summary: AI-powered cloud search service for mobile and web app development
