@@ -6,10 +6,8 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
-ms.date: 02/12/2026
+ms.date: 02/23/2026
 ai-usage: ai-assisted
-
-#Customer intent: As an engineer responsible for business continuity, I want to understand who need to understand the details of how Azure Backup works from a reliability perspective and plan strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Backup
@@ -77,9 +75,6 @@ Azure Backup service stores backups in the vault. Vaults are built on top of Azu
 
 When you use Azure Backup, both backup and restore workflows are resilient to intermittent failures. The service automatically retries when it encounters transient network faults or temporary service interruptions. You don't configure any retry logic. If you experience repeated faults, consult [troubleshooting documentation](/azure/backup/backup-vault-troubleshoot).
 
-> [!WARNING]
-> **Note to PG:** Please verify the paragraph above.
-
 ## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
@@ -87,9 +82,6 @@ When you use Azure Backup, both backup and restore workflows are resilient to in
 Azure Backup separately manages the availability zone configuration of the service and for your data.
 
 - **Service:** The Azure Backup service itself is automatically zone-resilient, with no action required from you. However, this built-in zone resiliency doesn't apply to your backed-up data.
-
-    > [!WARNING]
-    > **Note to PG:** Please verify the statement above.
 
 - **Backup storage redundancy:** Select the level of redundancy you want for your backup data by configuring your Recovery Services vault or Backup vault. If you select zone-redundant storage (ZRS), copies of your backup data are automatically stored across multiple availability zones in the Azure region you use.
 
@@ -143,13 +135,7 @@ When vaults are configured to use zone-redundant storage and an availability zon
     - For any datasources in the failed availability zone, the datasources are likely to be unavailable due to the zone failure. Any active jobs might pause or fail.
     - For any datasources in healthy availability zones that are running active jobs, a small amount of downtime, typically a few seconds, might occur while the platform switches to using healthy availability zones for the Azure Backup service.
 
-    > [!WARNING]
-    > **Note to PG:** Please verify the statement above.
-
 - **Expected data loss:** The amount of data loss you can expect is also referred to as the recovery point objective (RPO). The RPO for your backup data depends on multiple factors, including your backup schedule. In general, for a zone outage no loss of backed-up data is expected because all data is replicated synchronously across zones.
-
-    > [!WARNING]
-    > **Note to PG:** Please verify the statement above. Some of your docs say it takes 24 hours to synchronize within the region.
 
 - **Expected downtime:** The amount of downtime you can expect is also referred to as the recovery time objective (RTO). The RTO is different for each of the following scenarios:
 
@@ -258,11 +244,6 @@ When the primary region recovers, Azure Backup automatically restores operations
 #### Testing for region failures
 
 You can use [cross-region restore](/azure/backup/backup-create-recovery-services-vault#set-cross-region-restore) to perform a restore operation to the paired region. You can use this approach to verify your restore and other recovery processes.
-
-### Custom multi-region solutions for resiliency
-
-> [!WARNING]
-> **Note to PG:** Is there any way to back up or replicate backups across nonpaired regions?
 
 ## Resilience to loss of backup data
 
