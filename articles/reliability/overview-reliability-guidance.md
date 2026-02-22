@@ -101,7 +101,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure NetApp Files| [Reliability in Azure NetApp Files](reliability-netapp-files.md)||
 |Azure Network Watcher|| [Network Watcher service availability and redundancy](/azure/network-watcher/frequently-asked-questions#service-availability-and-redundancy)|
 |Azure Notification Hubs| [Reliability in Notification Hubs](reliability-notification-hubs.md)||
-|Azure Private Link|| [Private Link availability](/azure/private-link/availability)   |
+|Azure Private Link service| [Reliability in Azure Private Link service](reliability-private-link-service.md)||
 |Azure public IP addresses|| [Azure public IP addresses availability zone](/azure/virtual-network/ip-services/public-ip-addresses#availability-zone) |
 |Azure Queue Storage|[Reliability in Queue Storage](reliability-storage-queue.md)||
 |Azure Route Server|| [Route Server frequently asked questions (FAQs)](/azure/route-server/route-server-faq)|
@@ -125,7 +125,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
-|Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
 
 ## Related content
 
