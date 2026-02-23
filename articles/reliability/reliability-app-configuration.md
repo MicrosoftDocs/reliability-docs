@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ai.usage: ai-assisted
 ms.service: azure-app-configuration
-ms.date: 02/11/2026
+ms.date: 02/23/2026
 ---
 
 # Reliability in Azure App Configuration
@@ -19,6 +19,13 @@ ms.date: 02/11/2026
 This article describes the reliability architecture of Azure App Configuration and explains how the service is designed to remain available during transient faults, availability zone failures, and region outages.
 
 ## Production deployment recommendations for reliability
+
+For most production deployments of App Configuration, consider the following recommendations:
+
+> [!div class="checklist"]
+> - **SKU:** Use the Standard or Premium SKU.
+> - **Soft Delete and Purge Protection:** Enable Soft Delete and Purge Protection to protect against data deletion.
+> - **For mission-critical scenarios:** Use the Premium SKU, and configure the included replica to enable replication across multiple regions to improve high availability and resilience to region outages.
 
 For a list of recommended practices and configuration for production workloads, see [Building applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
 
@@ -36,7 +43,7 @@ When you build client applications that connect to Azure App Configuration, you 
 
 When you use Azure App Configuration, consider the following best practices to minimize the effect of transient faults on configuration access, especially within critical code paths.
 
-- **Configuration providers:** Use the [Azure App Configuration provider libraries](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities along with many other resiliency features.
+- **Configuration providers:** Use the [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities along with many other resiliency features.
 - **Azure SDKs:** Use App Configuration SDKs if your application needs to send write requests. SDKs automatically retry on HTTP status code 429 responses and other transient errors.
 - **Retry logic:** Include retry logic in custom clients if you can't use App Configuration Providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time in milliseconds before retrying the request.
 - **Caching:** Cache settings in memory when possible to reduce direct requests to your store.
@@ -121,7 +128,7 @@ When you enable geo-replication, consider the following factors:
 
 - **Zone-redundant replicas:** Any replica you create in a region in which App Configuration supports availability zones is automatically zone-redundant.
 
-- **Azure Front Door:** If you use Azure Front Door to access your store, your applications must connect through Azure Front Door, and Azure Front Door controls replica selection and failover. For more information, see [Hyperscale configuration delivery for client applications (preview) - Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
+- **Azure Front Door:** To enable geo-redundant configuration delivery with Azure Front Door, configure App Configuration replicas as origins within an origin group. Correct origin configuration allows Azure Front Door to manage health-based routing, load balancing, and automatic failover across regions. For more information, see [Traffic routing methods to origin](/azure/frontdoor/routing-methods).
 
 #### Cost
 
@@ -137,7 +144,7 @@ This section describes what to expect when you configure an App Configuration st
 
 - **Cross-zone operation:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
     
-    Azure App Configuration doesn't automatically route traffic between regions. When you use Microsoft's configuration providers, your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
+    Azure App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
@@ -150,7 +157,7 @@ This section describes what to expect when you configure a store for geo-replica
 
 - **Detection and response:** Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
 
-    When you configure App Configuration providers to perform [automatic replica discovery](/azure/azure-app-configuration/howto-geo-replication?tabs=dotnet#automatic-replica-discovery) or with a list of multiple replicas, your application automatically fails over to another healthy replica. For more information, [see](/azure/azure-app-configuration/configuration-provider-overview)
+    When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview) and perform [automatic replica discovery](/azure/azure-app-configuration/howto-geo-replication#automatic-replica-discovery) or with a list of multiple replicas, your application automatically fails over to another healthy replica.
 
     If you don't use App Configuration providers, you're responsible for switching your application to a healthy replica.
 
@@ -164,9 +171,9 @@ This section describes what to expect when you configure a store for geo-replica
 
 - **Redistribution:** Applications must route traffic to a healthy replica when a failure occurs.
 
-    If you use App Configuration provider libraries, the libraries automatically handle replica selection and failover.
+    If you use App Configuration configuration providers, the providers automatically handle replica selection and failover.
     
-    If you place Azure Front Door in front of your data store and [configure the origin group with multiple replicas as origins for failover](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing), Azure Front Door automatically [reroutes requests to a healthy replica](/azure/frontdoor/routing-methods).
+    If you place Azure Front Door in front of your data store and [configure the origin group with multiple replicas as origins for failover](/azure/frontdoor/routing-methods), Azure Front Door automatically reroutes requests to a healthy replica.
 
 #### Region recovery
 
