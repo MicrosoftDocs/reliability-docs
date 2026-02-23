@@ -23,13 +23,11 @@ This article describes how to make Azure SQL Managed Instance resilient to a var
 
 For most production deployments of SQL Managed Instance, consider the following recommendations:
 
-- Follow the guidance provided in [High availability and disaster recovery (DR) checklist](/azure/azure-sql/managed-instance/high-availability-disaster-recovery-checklist).
-
-- Enable zone redundancy.
-
-- Configure [automated backups](/azure/azure-sql/managed-instance/automated-backups-overview), and use zone-redundant storage (ZRS) or geo-redundant storage (GRS) for backups.
-
-- Plan to regularly test your backups and restore process.
+> [!div class="checklist"]
+> - Follow the guidance provided in [High availability and disaster recovery (DR) checklist](/azure/azure-sql/managed-instance/high-availability-disaster-recovery-checklist).
+> - Enable zone redundancy.
+> - Configure [automated backups](/azure/azure-sql/managed-instance/automated-backups-overview), and use zone-redundant storage (ZRS) or geo-redundant storage (GRS) for backups.
+> - Plan to regularly test your backups and restore process.
 
 ## Reliability architecture overview
 
