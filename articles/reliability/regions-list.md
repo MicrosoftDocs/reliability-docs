@@ -87,6 +87,102 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | West US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes"   border="false"::: | West Central US | Washington | United States | westus2 |
 | West US 3 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes"   border="false"::: | East US | Phoenix | United States | westus3 |
 
+## Azure regions by geography
+
+> Use the tabs below to explore Azure regions grouped by geography.  
+> Availability zone support, paired regions, and access restrictions are shown where applicable.
+
+### :::zone pivot="azure-geography":::
+
+#### :::zone pivot-item="americas" title="Americas":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| Brazil South | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South Central US | Sao Paulo State | Brazil | brazilsouth |
+| Brazil Southeast | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Brazil South | Rio | Brazil | brazilsoutheast |
+| Canada Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Canada East | Toronto | Canada | canadacentral |
+| Canada East |  | Canada Central | Quebec | Canada | canadaeast |
+| Central US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East US 2 | Iowa | United States | centralus |
+| East US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West US | Virginia | United States | eastus |
+| East US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Central US | Virginia | United States | eastus2 |
+| North Central US |  | South Central US | Illinois | United States | northcentralus |
+| South Central US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Central US | Texas | United States | southcentralus |
+| West Central US |  | West US 2 | Wyoming | United States | westcentralus |
+| West US |  | East US | California | United States | westus |
+| West US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Central US | Washington | United States | westus2 |
+| West US 3 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East US | Phoenix | United States | westus3 |
+| Chile Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Santiago | Chile | chilecentral |
+| Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
+
+---
+
+#### :::zone pivot-item="europe" title="Europe":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| North Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Europe | Ireland | Europe | northeurope |
+| West Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Europe | Netherlands | Europe | westeurope |
+| France Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | France South | Paris | France | francecentral |
+| France South | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | France Central | Marseille | France | francesouth |
+| Germany West Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Germany North | Frankfurt | Germany | germanywestcentral |
+| Germany North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Germany West Central | Berlin | Germany | germanynorth |
+| UK South | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | UK West | London | United Kingdom | uksouth |
+| UK West |  | UK South | Cardiff | United Kingdom | ukwest |
+| Switzerland North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Switzerland West | Zurich | Switzerland | switzerlandnorth |
+| Switzerland West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Switzerland North | Geneva | Switzerland | switzerlandwest |
+| Sweden Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Sweden South | Gävle | Sweden | swedencentral |
+| Poland Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Warsaw | Poland | polandcentral |
+| Spain Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Madrid | Spain | spaincentral |
+| Austria East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Vienna | Austria | austriaeast |
+| Belgium Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Brussels | Belgium | belgiumcentral |
+| Denmark East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Copenhagen | Denmark | denmarkeast |
+| Norway East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Norway West | Norway | Norway | norwayeast |
+| Norway West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Norway East | Norway | Norway | norwaywest |
+
+---
+
+#### :::zone pivot-item="asia-pacific" title="Asia Pacific":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| East Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Southeast Asia | Hong Kong SAR | Asia Pacific | eastasia |
+| Southeast Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East Asia | Singapore | Asia Pacific | southeastasia |
+| Japan East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan West | Tokyo, Saitama | Japan | japaneast |
+| Japan West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan East | Osaka | Japan | japanwest |
+| Korea Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Korea South | Seoul | Korea | koreacentral |
+| Korea South |  | Korea Central | Busan | Korea | koreasouth |
+| Australia East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Australia Southeast | New South Wales | Australia | australiaeast |
+| Australia Southeast |  | Australia East | Victoria | Australia | australiasoutheast |
+| Australia Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Australia Central 2 | Canberra | Australia | australiacentral |
+| Australia Central 2 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Australia Central | Canberra | Australia | australiacentral2 |
+| New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
+| Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
+| Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
+
+---
+
+#### :::zone pivot-item="middle-east-africa" title="Middle East & Africa":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| UAE North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | UAE Central | Dubai | UAE | uaenorth |
+| UAE Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | UAE North | Abu Dhabi | UAE | uaecentral |
+| Qatar Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Doha | Qatar | qatarcentral |
+| South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South Africa West | Johannesburg | South Africa | southafricanorth |
+| South Africa West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | South Africa North | Cape Town | South Africa | southafricawest |
+
+---
+
+#### :::zone pivot-item="india" title="India":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| Central India | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South India | Pune | India | centralindia |
+| South India |  | Central India | Chennai | India | southindia |
+| West India |  | South India | Mumbai | India | westindia |
+
+### :::zone-end:::
+
 ### Azure programmatic region names
 
 To retrieve a list of regions, including the names that can be used for programming and scripting, you can use the following methods:
