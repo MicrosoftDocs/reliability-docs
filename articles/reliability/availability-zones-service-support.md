@@ -62,7 +62,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Files](./reliability-storage-files.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall](reliability-firewall.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall Manager](/azure/firewall-manager/quick-firewall-policy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Functions](./reliability-functions.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Functions](./reliability-functions.md#migration-to-availability-zone-support-availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure HDInsight](./reliability-hdinsight.md#availability-zone-support) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure HPC Cache](/azure/hpc-cache/hpc-cache-overview) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure IoT Hub](reliability-iot-hub.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
@@ -117,4 +117,3 @@ The following table lists zonal and zone-redundant Azure services. Some services
 - [Enable zone resiliency for Azure workloads](availability-zones-enable-zone-resiliency.md)
 - [Availability of service by category](availability-service-by-category.md)
 - [Azure Well-Architected Framework: Overview of the Reliability pillar](/azure/well-architected/reliability)
-
