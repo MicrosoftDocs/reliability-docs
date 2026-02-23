@@ -24,7 +24,7 @@ For most production deployments of App Configuration, consider the following rec
 
 > [!div class="checklist"]
 > - **SKU:** Use the Standard or Premium SKU.
-> - **Soft Delete and Purge Protection:** Enable Soft Delete and Purge Protection to protect against data deletion.
+> - **Soft delete and purge protection:** Enable soft delete and purge protection to protect against data deletion.
 > - **For mission-critical scenarios:** Use the Premium SKU, and configure the included replica to enable replication across multiple regions to improve high availability and resilience to region outages.
 
 For a list of recommended practices and configuration for production workloads, see [Building applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
@@ -153,7 +153,7 @@ This section describes what to expect when you configure an App Configuration st
 
 #### Behavior during a region failure
 
-This section describes what to expect when you configure a store for geo-replication, and there's an outage in one of the replica regions.
+This section describes what to expect when you configure an App Configuration store for geo-replication, and there's an outage in one of the replica regions.
 
 - **Detection and response:** Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
 
