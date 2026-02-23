@@ -151,13 +151,21 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Japan West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan East | Osaka | Japan | japanwest |
 | Korea Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Korea South | Seoul | Korea | koreacentral |
 | Korea South |  | Korea Central | Busan | Korea | koreasouth |
+
+| Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
+| Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
+
+---
+
+#### :::zone pivot-item="oceania" title="Oceania":::
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
 | Australia East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Australia Southeast | New South Wales | Australia | australiaeast |
 | Australia Southeast |  | Australia East | Victoria | Australia | australiasoutheast |
 | Australia Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Australia Central 2 | Canberra | Australia | australiacentral |
 | Australia Central 2 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Australia Central | Canberra | Australia | australiacentral2 |
 | New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
-| Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
-| Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
 
 ---
 
