@@ -34,6 +34,31 @@ For production workloads, we recommend that you:
 
 <!-- Additional guidance: Consider implementing circuit breaker patterns and proper timeout configurations for external dependencies -->
 
+## Reliability Architecture Overview
+
+Reliability in Azure Functions is achieved through a combination of platform features, best practices, and architectural patterns. This section provides an overview of the key components and strategies to ensure high availability and fault tolerance for your serverless applications.
+
+### Key Components
+
+1. **Availability Zones**: Azure Functions can be deployed in availability zones to ensure redundancy and minimize downtime during zone-level failures.
+2. **Geo-Redundancy**: By leveraging Azure's multi-region capabilities, you can deploy your function apps across regions to protect against regional outages.
+3. **Resilient Triggers**: Use triggers like Azure Queue Storage or Event Grid, which are designed to handle transient faults and ensure message delivery.
+4. **Monitoring and Alerts**: Implement Azure Monitor and Application Insights to detect and respond to issues proactively.
+
+### Best Practices
+
+- **Design for Failure**: Assume that failures will happen and design your application to recover gracefully.
+- **Use Retries and Circuit Breakers**: Implement retry policies and circuit breakers to handle transient faults effectively.
+- **Test for Resilience**: Regularly test your application using tools like Azure Chaos Studio to identify and address potential weaknesses.
+
+### Architectural Patterns
+
+- **Side-by-Side Deployment**: Deploy new versions of your function app alongside the existing version to minimize downtime during updates.
+- **Traffic Shaping**: Use Azure Traffic Manager or Front Door to route traffic intelligently and ensure high availability.
+- **Event-Driven Design**: Leverage event-driven architectures to decouple components and improve fault tolerance.
+
+By incorporating these components, practices, and patterns, you can build reliable serverless applications that meet your business continuity and disaster recovery requirements.
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -53,7 +78,7 @@ For production workloads, we recommend that you:
 
 <!-- Key consideration: Functions have built-in retry policies for triggers, but you should implement additional retry logic for calls to external services within your function code -->
 
-## Resilience to availability zone failures {#availability-zone-support}
+## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
@@ -123,7 +148,7 @@ Instance spreading with a zone-redundant deployment follows these rules, even as
 
 For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
 
-### Configure availability zone support {#create-a-function-app-in-a-zone-redundant-plan}
+### Configure availability zone support
 
 - **Create a new zone-redundant Azure Functions resource.** For step-by-step configuration instructions, see [Configure availability zones for Azure Functions](/azure/azure-functions/functions-premium-plan#availability-zones).
 - **Flex Consumption plans:** You can enable availability zones during app creation or update an existing plan. Both creation and updates are supported.
