@@ -24,19 +24,29 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ## Reliability architecture overview
 
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
+
+### Logical architecture
+
 Azure Event Grid routes events from event *publishers* to event *consumers*. It's used both by customer applications and by Azure services to emit and consume events, such as notifications when resources are created, updated, or deleted.
 
 Event Grid supports multiple resource types and deployment models:
 
-- **Topics** are the primary entities that receive and store events, including:
-  - **System topics**, which are created automatically by Azure services to emit events for specific Azure resource types.
-  - **Custom topics**, which are created and managed by you.
-- **Domains** group multiple custom topics under a single endpoint.
-- **Namespaces** are used with the standard tier and provide a container for multiple Event Grid resources.
+- **Topics** are the primary entities that receive and store events.
+
+  **System topics** are created automatically by Azure services to emit events for specific Azure resource types. **Custom topics** are created and managed by you.
+
+  Topics can support both [push and pull delivery](/azure/event-grid/pull-delivery-overview#push-and-pull-delivery).
+
+- **Event domains** group multiple custom topics under a single endpoint, simplifying publishing of events. For more information, see [Understand event domains for managing Event Grid topics](/azure/event-grid/event-domains).
+
+- **Namespaces** are used with the standard tier, and provide a container for multiple Event Grid resources. For more information, see [Azure Event Grid namespace concepts](/azure/event-grid/concepts-event-grid-namespaces).
 
 Event Grid supports multiple tiers, including the basic tier and the standard tier. These tiers differ in how resources are deployed and managed.
 
-Azure Event Grid is a fully managed service. Microsoft manages the underlying infrastructure, including compute and storage resources. Event Grid automatically distributes resources across availability zones to provide built-in zone redundancy in supported regions.
+### Physical architecture
+
+Azure Event Grid is a fully managed service. Microsoft manages the underlying infrastructure, including compute and storage resources. In supported regions, Event Grid [automatically distributes resources across availability zones](#resilience-to-availability-zone-failures) to provide built-in zone redundancy.
 
 ## Resilience to transient faults
 
@@ -62,7 +72,7 @@ When you use Event Grid, consider the following practices to ensure your solutio
 
 Azure Event Grid resources are zone-redundant in regions that support availability zones. Zone redundancy means that even when an availability zone has a problem, your Event Grid resources continue to work by using infrastructure in other zones. Event data is automatically replicated across three availability zones for intra-region resiliency, and Event Grid self-heals during a zone-wide outage. You don't need to enable or configure this capability.
 
-:::image type="complex" source="./media/reliability-event-grid/zone-redundant.svg" alt-text="Diagram that shows zone-redundant Event Grid resources in a region with three availability zones." border="false":::
+:::image type="complex" source="./media/reliability-event-grid/zone-redundant.png" alt-text="Diagram that shows zone-redundant Event Grid resources in a region with three availability zones." border="false":::
 The diagram shows a various Event Grid resources, each distributed across three availability zones.
 :::image-end:::
 
@@ -186,7 +196,7 @@ This section describes what to expect when an Event Grid resource is configured 
   - *Event data:* Event data in the primary region is unavailable and might be lost if the region is unrecoverable.
 
     After a failover occurs, new data is processed from the paired region. The unprocessed events are dispatched from the primary region as soon as the outage is mitigated. If the primary region's recovery requires a longer time than the [time-to-live value set on events](/azure/event-grid/delivery-and-retry#dead-letter-events), the data in the primary region might be dropped. To mitigate this data loss, we recommend that you [configure a dead-letter destination for an event subscription](/azure/event-grid/manage-event-delivery).
-    
+
     If the affected region is lost and nonrecoverable, there will be some data loss. In the best-case scenario, the consumer is keeping up with the publishing rate and only a few seconds of data is lost. The worst-case scenario would be when the consumer isn't actively processing events and with a maximum time to live of 24 hours, the data loss can be up to 24 hours.
 
     > [!NOTE]
