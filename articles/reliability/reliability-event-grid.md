@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-grid
-ms.date: 02/04/2026
+ms.date: 02/25/2026
 ai-usage: ai-assisted
 ---
 
@@ -36,23 +36,25 @@ Event Grid supports multiple resource types and deployment models:
 
 Event Grid supports multiple tiers, including the basic tier and the standard tier. These tiers differ in how resources are deployed and managed.
 
-Azure Event Grid is a fully managed service. Microsoft manages the underlying infrastructure, including compute and storage resources. Event Grid automatically distributes resources across availability zones to provide built-in redundancy in supported regions.
+Azure Event Grid is a fully managed service. Microsoft manages the underlying infrastructure, including compute and storage resources. Event Grid automatically distributes resources across availability zones to provide built-in zone redundancy in supported regions.
 
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-when using Event Grid, consider the following practices to ensure your solution is resilient to transient faults:
+When you use Event Grid, consider the following practices to ensure your solution is resilient to transient faults:
 
 - **Event publishers:** When a client application publishes events to Event Grid, it's responsible for handling transient failures. Applications should implement retry logic when publishing events. For more information, see [Troubleshoot transient conection issues](/azure/event-grid/troubleshoot-network-connectivity#troubleshoot-transient-connectivity-issues).
 
-  <!-- TODO mention SDKs? -->
+  We recommend you use the [Event Grid data plane SDKs](/azure/event-grid/sdk-overview#data-plane-sdks), which automatically provide transient fault handling.
 
 - **Event consumers:** Event Grid delivers events to configured destinations. For these outbound connections, you configure retry policies on event subscriptions. These policies define how often and for how long Event Grid retries delivery when failures occur, including transient faults. For more information see [Message push delivery and retry with namespace topics](/azure/event-grid/namespace-delivery-retry)
 
 - **Idempotency:** It's a good practice to design your eventing architecture for *idempotency*, which means that events can safely be received and processed multiple times. For example, if a transient fault or another problem happens when your application is processing an event, then an idempotent approach means your application can reprocess the message and recover.
 
-- **Dead-lettering:** Event Grid supports *dead-lettering* for undeliverable events, which helps to persist data during longer-lasting faults in event consumers.
+  You're responsible for designing your eventing architecture and application to support idempotency. For general information, see [Idempotency](/azure/architecture/serverless/event-hubs-functions/resilient-design#idempotency).
+
+- **Dead-lettering:** Event Grid supports *dead-lettering* for undeliverable events, which helps to persist data during longer-lasting faults in event consumers. For more information, see [Dead lettering for event subscriptions to namespaces topics in Azure Event Grid](/azure/event-grid/dead-letter-event-subscriptions-namespace-topics).
 
 ## Resilience to availability zone failures
 
@@ -60,7 +62,9 @@ when using Event Grid, consider the following practices to ensure your solution 
 
 Azure Event Grid resources are zone-redundant in regions that support availability zones. Zone redundancy means that even when an availability zone has a problem, your Event Grid resources continue to work by using infrastructure in other zones. Event data is automatically replicated across three availability zones for intra-region resiliency, and Event Grid self-heals during a zone-wide outage. You don't need to enable or configure this capability.
 
-<!-- TODO diagram -->
+:::image type="complex" source="./media/reliability-event-grid/zone-redundant.svg" alt-text="Diagram that shows zone-redundant Event Grid resources in a region with three availability zones." border="false":::
+The diagram shows a various Event Grid resources, each distributed across three availability zones.
+:::image-end:::
 
 ### Requirements
 
@@ -72,7 +76,7 @@ There's no additional cost for zone redundancy. You can't enable or disable this
 
 ### Configure availability zone support
 
-No configuration is required. All Event Grid resources in supported regions are automatically zone-resilient.
+No configuration is required. All Event Grid resources in supported regions are automatically zone-redundant.
 
 ### Behavior when all zones are healthy
 
@@ -95,7 +99,7 @@ This section describes what to expect when an Event Grid resource is zone-redund
 - **Expected data loss:** The Event Grid zone redundancy model is designed to enable resilience to zone failures with minimal impact. However, during a zone failure, there's some possibility of data loss.
 
   If you need to ensure your application doesn't lose data even during a zone failure, you should:
-  - Design your event producers and consumers to follow transient fault handling recommendations, including retries and idempotency.
+  - Design your event producers and consumers to follow [transient fault handling recommendations](#resilience-to-transient-faults), including retries and idempotency.
   - Plan for event durability at the source, or in a durable event store.
 
 - **Expected downtime:** A zone failure might cause a few seconds of downtime. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by retrying after a short period of time, they typically avoid significant impact.
@@ -104,7 +108,7 @@ This section describes what to expect when an Event Grid resource is zone-redund
 
 ### Zone recovery
 
-When the affected zone recovers, Event Grid automatically reintegrates it into the service without requiring customer action. The recovered zone then accepts new connections and processes messages alongside the other zones. Data that replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. You don't need to take action for zone recovery or reintegration.
+When the affected zone recovers, Event Grid automatically reintegrates it into the service without requiring customer action. The recovered zone then accepts new connections and processes messages alongside the other zones. Data that replicated to surviving zones during the outage remains intact, and normal replication resumes across all zones. You don't need to take action for zone recovery or reintegration.
 
 ### Test for zone failures
 
@@ -126,16 +130,18 @@ In [paired Azure regions](./regions-paired.md), Event Grid provides limited geo-
 
 ### Geo-disaster recovery
 
-Geo-disaster recovery replicates Event Grid metadata to your primary region's paired region for supported resources. Event data isn't replicated. This feature isn't available in regions without a paired region.
+Geo-disaster recovery replicates Event Grid metadata to your primary region's paired region for supported resources. Event data isn't replicated.
 
-This feature is designed as a best-effort, Microsoft-managed fallback for severe regional outages and isn't intended to provide rapid or predictable recovery times. Microsoft-initiated failover is exercised by Microsoft in rare situations to fail over Event Grid resources from an affected region to the corresponding geo-paired region. Microsoft reserves the right to determine when this option will be exercised. This mechanism doesn't involve user consent before traffic is failed over.
+Geo-disaster recovery is designed as a best-effort, Microsoft-managed fallback for severe regional outages and isn't intended to provide rapid or predictable recovery times. Microsoft-initiated failover is exercised by Microsoft in rare situations to fail over Event Grid resources from an affected region to the corresponding geo-paired region. Microsoft reserves the right to determine when this option will be exercised. This mechanism doesn't involve customer consent before traffic is failed over.
 
 > [!IMPORTANT]
 > Microsoft triggers Microsoft-managed failover. It's likely to occur after a significant delay and is done on a best-effort basis. The failover of Event Grid resources might occur at a time that's different from the failover time of other Azure services.
 >
 > If you need to be resilient to region outages, consider using one of the custom multi-region solutions for resiliency.
 
-You can optionally disable geo-disaster recovery and use your own [custom multi-region solution](#custom-multi-region-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, no event data is replicated to another region by Microsoft. 
+You can optionally disable geo-disaster recovery and use your own [custom multi-region solution](#custom-multi-region-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, no event data is replicated to another region by Microsoft.
+
+This feature isn't available in regions without a paired region.
 
 #### Requirements
 
@@ -149,9 +155,11 @@ There's no additional cost for geo-disaster recovery.
 
 #### Configure multi-region support
 
-- **To enable geo-disaster recovery:** Update the configuration for your topic or domain and select **Cross-Geo** (default)
+In supported regions, system topics are automatically configured for geo-disaster recovery. For other Event Grid resource types:
 
-- **To disable geo-diaster recovery:** Update the configuration for your topic or domain and select **Regional**
+- **To enable geo-disaster recovery:** Update the configuration for your topic or domain and select **Cross-Geo** (default).
+
+- **To disable geo-diaster recovery:** Update the configuration for your topic or domain and select **Regional**.
 
 #### Behavior when all regions are healthy
 
@@ -169,7 +177,7 @@ This section describes what to expect when an Event Grid resource is configured 
 
 [!INCLUDE [Region down notification (Service Health only)](./includes/reliability-region-down-notification-service-include.md)]
 
-- **Active requests:** Active requests to the primary region are terminated and must be retried after failover completes.
+- **Active requests:** Active requests to the primary region are terminated. Client applications must retry these requests after failover completes.
 
 - **Expected data loss:**
 
@@ -177,9 +185,9 @@ This section describes what to expect when an Event Grid resource is configured 
 
   - *Event data:* Event data in the primary region is unavailable and might be lost if the region is unrecoverable.
 
-    After a failover occurs, new data is processed from the paired region. The unprocessed events are dispatched from the primary region as soon as the outage is mitigated. If the primary region's recovery requires a longer time than the [time-to-live value set on events](/azure/event-grid/delivery-and-retry#dead-letter-events), the data in the primary region might be dropped.
+    After a failover occurs, new data is processed from the paired region. The unprocessed events are dispatched from the primary region as soon as the outage is mitigated. If the primary region's recovery requires a longer time than the [time-to-live value set on events](/azure/event-grid/delivery-and-retry#dead-letter-events), the data in the primary region might be dropped. To mitigate this data loss, we recommend that you [configure a dead-letter destination for an event subscription](/azure/event-grid/manage-event-delivery).
     
-    To mitigate this data loss, we recommend that you [configure a dead-letter destination for an event subscription](/azure/event-grid/manage-event-delivery). If the affected region is lost and nonrecoverable, there will be some data loss. In the best-case scenario, the consumer is keeping up with the publishing rate and only a few seconds of data is lost. The worst-case scenario would be when the consumer isn't actively processing events and with a maximum time to live of 24 hours, the data loss can be up to 24 hours.
+    If the affected region is lost and nonrecoverable, there will be some data loss. In the best-case scenario, the consumer is keeping up with the publishing rate and only a few seconds of data is lost. The worst-case scenario would be when the consumer isn't actively processing events and with a maximum time to live of 24 hours, the data loss can be up to 24 hours.
 
     > [!NOTE]
     > Event Grid can't guarantee data retention during a region outage. If you need guaranteed retention, you need to design your application to durably store events in another data store.
@@ -218,7 +226,9 @@ Consider the following factors when designing a multi-region solution:
   - *Active-active solutions* can be achieved by replicating the metadata and balancing load across the namespaces.
   - *Active-passive solutions* can be achieved by replicating the metadata to keep the secondary namespace ready so that when the primary namespace is unavailable, the traffic can be directed to secondary namespace.
 
-- **Health monitoring:** Your client applications must detect failures of a region and route events to another appropriate region. You can use built-in health APIs provided by Event Grid to monitor the health of topics.
+- **Health monitoring:** You can use built-in health APIs provided by Event Grid to monitor the health of topics.
+
+  Your client applications must detect failures of a region and route events to another appropriate region.
 
   Alternatively, you can implement a *concierge service* that directs clients to the primary or secondary endpoints for their topics or namespaces by performing health checks on those endpoints. The concierge service can be a web application that is geo-replicated and kept reachable using DNS-redirection techniques or services like Azure Traffic Manager.
 
@@ -228,7 +238,7 @@ For more information about one approach, including example code, see [Client-sid
 
 Event Grid is primarily an event routing service and doesn't have native backup or restore features.
 
-If you need to implement backup capabilities, or if you have long-term retention needs, we recommend you perform archiving in your application. To do so, you should route or copy your events to a durable store, such as Azure Blob Storage, in parallel with the primary delivery path. If downstream systems are unavailable, your application can use the archive to replay the events. <!-- TODO any docs about routing events to blobs? -->
+If you need to implement backup capabilities, or if you have long-term retention needs, we recommend you perform archiving in your application. To do so, you should build logic to route or copy your events to a durable store, such as Azure Blob Storage, in parallel with the primary delivery path. If downstream systems are unavailable, your application can use the archive to replay the events.
 
 ## Resilience to service maintenance
 
