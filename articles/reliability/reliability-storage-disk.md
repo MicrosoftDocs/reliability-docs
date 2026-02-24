@@ -137,12 +137,9 @@ This section describes what to expect when a managed disk is configured for avai
 
     - *Zone-redundant:* Some zone outages might affect only disks, only VMs, or both. The behavior you'll observe depends on whether the zone outage affects the VM attached to the disk.
 
-         If the VM remains healthy but the disk is affected by the outage, your VM continues to operate. Microsoft automatically redirects disk operations to work against a replica in a healthy availability zone, and there's nothing you need to do.
+        If the VM remains healthy but the disk is affected by the outage, your VM continues to operate. Microsoft automatically redirects disk operations to work against a replica in a healthy availability zone, and there's nothing you need to do.
 
-       If the VM is down, you need to switch your workload to another VM in a different availability zone. If you've already created the secondary VM, you may have mounted the disk there. If the disk isn't attached to the active VM, you can *force detach* the disk from the failed VM and then attach it to the active VM.
-
-         > [!WARNING]
-         > **Note to PG:** Please verify the above statement is accurate. If so, is there any documentation around force detaching?
+        If the VM is down, you need to switch your workload to another VM in a different availability zone. If you've already created the secondary VM, you may have mounted the disk there. If the disk isn't attached to the active VM, you can *force detach* the disk from the failed VM and then attach it to the active VM. To perform a force detach, you can use the [az vm disk detach Azure CLI command](/cli/azure/vm/disk?view=azure-cli-latest#az-vm-disk-detach).
 
     - *Zonal:* You're responsible for detecting a zone outage, and for triggering a failover or another response. Typically, your response will involve switching your application traffic to a different VM in a different availability zone with its own zonal disk.
 
