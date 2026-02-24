@@ -42,7 +42,7 @@ Event Grid supports multiple resource types and deployment models:
 
 - **Namespaces** are used with the standard tier, and provide a container for multiple Event Grid resources. For more information, see [Azure Event Grid namespace concepts](/azure/event-grid/concepts-event-grid-namespaces).
 
-Event Grid supports multiple tiers, including the basic tier and the standard tier. These tiers differ in how resources are deployed and managed.
+Event Grid supports multiple tiers, including the basic tier and the standard tier. These tiers provide different capabilities, and they differ in how resources are deployed and managed. For more information, see [Choose the right Event Grid tier for your solution](/azure/event-grid/choose-right-tier).
 
 ### Physical architecture
 
