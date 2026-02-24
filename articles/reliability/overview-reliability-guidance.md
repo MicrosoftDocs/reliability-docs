@@ -96,12 +96,12 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Managed Redis|[Reliability in Azure Managed Redis](./reliability-managed-redis.md) ||
 |Azure Media Services|| [High availability by using Media Services and video on demand (VOD)](/azure/media-services/latest/architecture-high-availability-encoding-concept)|
 |Azure Migrate | | [Azure Migrate and backup and disaster recovery](/azure/migrate/resources-faq#does-azure-migrate-offer-backup-and-disaster-recovery)|
-|Azure Monitor Logs | | [Enhance data and service resilience in Azure Monitor Logs by using availability zones](/azure/azure-monitor/logs/availability-zones) </p> [Azure Monitor Logs workspace replication](/azure/azure-monitor/logs/workspace-replication) |
+|Azure Monitor Logs | [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md) ||
 |Azure NAT Gateway | [Reliability in Azure NAT Gateway](./reliability-nat-gateway.md) ||
 |Azure NetApp Files| [Reliability in Azure NetApp Files](reliability-netapp-files.md)||
 |Azure Network Watcher|| [Network Watcher service availability and redundancy](/azure/network-watcher/frequently-asked-questions#service-availability-and-redundancy)|
 |Azure Notification Hubs| [Reliability in Notification Hubs](reliability-notification-hubs.md)||
-|Azure Private Link|| [Private Link availability](/azure/private-link/availability)   |
+|Azure Private Link service| [Reliability in Azure Private Link service](reliability-private-link-service.md)||
 |Azure public IP addresses|| [Azure public IP addresses availability zone](/azure/virtual-network/ip-services/public-ip-addresses#availability-zone) |
 |Azure Queue Storage|[Reliability in Queue Storage](reliability-storage-queue.md)||
 |Azure Route Server|| [Route Server frequently asked questions (FAQs)](/azure/route-server/route-server-faq)|
@@ -121,12 +121,10 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Virtual Machine Scale Sets| [Reliability in Virtual Machine Scale Sets](reliability-virtual-machine-scale-sets.md)||
 |Azure Virtual Network| [Reliability in Virtual Network](reliability-virtual-network.md) ||
 |Azure Virtual WAN||[Availability zones and resiliency in Virtual WAN](/azure/virtual-wan/virtual-wan-faq#how-are-availability-zones-and-resiliency-handled-in-virtual-wan)</p> [Disaster recovery design](/azure/virtual-wan/disaster-recovery-design) |
-|Azure VMware Solution|| [Deploy disaster recovery by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)|
+|Azure VMware Solution| [Reliability in Azure VMware Solution](./reliability-vmware-solution.md)||
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
-|Microsoft Community Training| [Reliability in Microsoft Community Training](reliability-community-training.md) ||
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
-|Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
 
 ## Related content
 

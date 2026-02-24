@@ -241,7 +241,15 @@ When you use a [supported SKU](#requirements), newly created gateways are automa
 
 - **SKU:** For a virtual network gateway to be zone redundant, it must use a SKU that supports zone redundancy. The following table shows which SKUs support zone redundancy.
 
-    [!INCLUDE [skus-with-az](includes/sku-availability-zones.md)]
+    | SKU name | Supports availability zones |
+    |-|-|
+    | Standard | No |
+    | HighPerformance | No |
+    | UltraPerformance | No |
+    | ErGw1Az | Yes |
+    | ErGw2Az | Yes |
+    | ErGw3Az | Yes |
+    | ErGwScale (Preview) | Yes |
 
 ::: zone-end
 
