@@ -77,11 +77,7 @@ items:
   - name: Containers
     items:
     - name: Azure App Configuration
-      items:
-      - name: Availability zones
-        href: /azure/azure-app-configuration/faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-does-app-configuration-ensure-high-data-availability
-      - name: Disaster recovery
-        href: /azure/azure-app-configuration/concept-disaster-recovery?tabs=core2x?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-app-configuration.md
     - name: Azure Container Apps
       href: reliability-container-apps.md
     - name: Azure Container Instances
@@ -268,6 +264,8 @@ items:
       href: reliability-ai-search.md
     - name: Azure API Management
       href: reliability-api-management.md
+    - name: Azure App Configuration
+      href: reliability-app-configuration.md
     - name: Azure App Service
       href: reliability-app-service.md
     - name: Azure Container Apps
@@ -307,7 +305,7 @@ items:
       - name: Azure API Management
         href: reliability-api-management.md#configure-availability-zone-support
       - name: Azure App Configuration
-        href: migrate-app-configuration.md
+        href: reliability-app-configuration.md#resilience-to-availability-zone-failures
       - name: Azure App Service
         href: reliability-app-service.md#configure-availability-zone-support
       - name: Azure Application Gateway

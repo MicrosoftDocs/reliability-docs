@@ -42,7 +42,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure AI Search| [Reliability in AI Search](reliability-ai-search.md) ||
 |Azure API Center| [Reliability in Azure API Center](reliability-api-center.md) ||
 |Azure API Management | [Reliability in API Management](reliability-api-management.md) ||
-|Azure App Configuration||[App Configuration and high data availability](/azure/azure-app-configuration/faq#how-does-app-configuration-ensure-high-data-availability) </p> [Resiliency and disaster recovery](/azure/azure-app-configuration/concept-disaster-recovery)|
+|Azure App Configuration| [Reliability in Azure App Configuration](reliability-app-configuration.md)||
 |Azure App Service| [Reliability in App Service](reliability-app-service.md)||
 |App Service Environment| [Reliability in App Service Environment](reliability-app-service-environment.md)||
 |Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md )    ||
