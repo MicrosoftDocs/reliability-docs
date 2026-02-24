@@ -13,7 +13,7 @@ ai-usage: ai-assisted
 
 # Reliability in Azure Disk Storage
 
-Azure Disk Storage provides fast, reliable managed disks for virtual machines. Built for mission-critical workloads, it ensures enterprise-grade reliability and availability. Your data is automatically replicated to guard against hardware failures, with multiple redundancy options to meet your durability requirements.
+Azure Disk Storage provides managed disks for Azure virtual machines (VMs). Built for mission-critical workloads, it ensures enterprise-grade reliability and availability. Your data is automatically replicated to guard against hardware failures, with multiple redundancy options to meet your durability requirements.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -34,18 +34,17 @@ Each virtual machine (VM) uses disks for different purposes:
 - *Data disks*: Zero or more managed disks for storing applications and data.
 - *Temporary disk*: A non-persistent, unmanaged disk included with every VM.
 
-This guide specifically focuses on managed disks, which reliably persist data.
+Managed disks are designed for 99.999% availability and provide at least 99.999999999% (11 9’s) of durability. With managed disks, your data is replicated three times. If one of the three copies becomes unavailable, Azure automatically spawns a new copy of the data in the background. This ensures the persistence of your data and high fault tolerance.
 
-To learn more about the different disk roles, see [Disk roles](/azure/virtual-machines/managed-disks-overview#disk-roles).
+This guide specifically focuses on managed disks, which reliably persist data. To learn more about the different disk roles, see [Disk roles](/azure/virtual-machines/managed-disks-overview#disk-roles).
 
 By default, managed disks use [locally redundant storage (LRS)](/azure/storage/common/storage-redundancy#locally-redundant-storage). LRS keeps three copies of your disk data within a single datacenter, protecting against hardware failures such as drive or server rack issues.
 
 Although LRS protects your disks against server rack and drive failures, it doesn't account for disasters such as fire or flooding within a datacenter. In the face of such disasters, all replicas of a disk configured to use LRS might be lost or unrecoverable. For higher levels of protection, use [zone-redundant storage (ZRS)](#resilience-to-availability-zone-failures), which replicates your disks across multiple availability zones.
 
-When zones aren’t available or your workload is sensitive to inter-VM latency, deploy VMs and disks across multiple[fault domains](/azure/virtual-machines/availability-set-overview#fault-domains). Fault domains don’t provide zone redundancy, but they reduce the impact of hardware failures, network outages, or power interruptions. This prevents multiple VMs from failing if one storage fault domain goes down.
-You can achieve this with [regional Virtual Machine Scale Sets with flexible orchestration](/azure/virtual-machines/disks-high-availability#use-regional-virtual-machine-scale-sets-with-flexible-orchestration) or [availability sets](/azure/virtual-machines/disks-high-availability#use-availability-sets).
+For applications running on multiple VMs, multiple VMs have the highest availability SLA when distributed across three availability zones. For VMs and disks distributed across multiple availability zones, the disks and their parent VMs are respectively collocated in the same zone, which prevents multiple VMs from going down even if an entire zone experiences an outage.
 
-Managed disks align with the same fault domains as their VMs.
+When zones aren’t available or your workload is sensitive to inter-VM latency, deploy VMs and disks across multiple [fault domains](/azure/virtual-machines/availability-set-overview#fault-domains). Fault domains don’t provide zone redundancy, but they reduce the impact of hardware failures, network outages, or power interruptions. This prevents multiple VMs from failing if one storage fault domain goes down.
 
 ## Resilience to transient faults
 
