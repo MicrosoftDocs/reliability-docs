@@ -92,7 +92,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 > Use the tabs below to explore Azure regions grouped by geography.  
 > Availability zone support, paired regions, and access restrictions are shown where applicable.
 
-### :::zone pivot="azure-geography":::
+### :::zone pivot="geography"
 
 #### :::zone pivot-item="americas" title="Americas":::
 
