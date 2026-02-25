@@ -1,15 +1,14 @@
 ---
 title: Reliability in Azure Database for PostgreSQL
 description: Learn about reliability in Azure Database for PostgreSQL, including availability zones and multi-region deployments.
-ms.author: anaharris
-author: anaharris-ms
+ms.author: maghan
+author: markingmyname
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-database-postgresql	
 ms.subservice: flexible-server
-ms.date: 02/02/2026
+ms.date: 02/26/2026
 ai.usage: ai-assisted
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Database for PostgreSQL works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Database for PostgreSQL
