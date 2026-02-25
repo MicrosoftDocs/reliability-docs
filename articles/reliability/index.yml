@@ -136,6 +136,17 @@ productDirectory:
         - mobile
         - web
     # Card
+    - title: Azure App Configuration
+      summary: Centrally manage application settings and feature flags
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-configuration.svg
+      url: reliability-app-configuration.md
+      azureCategories:
+        - containers
+        - developer-tools
+        - integration
+        - mobile
+        - web
+    # Card
     - title: Azure AI Search
       summary: AI-powered cloud search service for mobile and web app development
       imageSrc: https://static.docs.com/ui/media/product/azure/search.svg
@@ -482,14 +493,6 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: Microsoft Purview
-      summary: Maximize business value with unified data governance
-      imageSrc: /azure/media/index/purview.svg
-      url: reliability-microsoft-purview.md
-      azureCategories:
-        - analytics
-        - management-and-governance
-    # Card
     - title: Azure DNS
       summary: Host your DNS domain in Azure
       imageSrc: /azure/media/index/dns.svg
@@ -575,6 +578,20 @@ productDirectory:
       url: reliability-azure-storage-mover.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure VMware Solution
+      summary: Run your VMware workloads natively on Azure
+      imageSrc: /azure/media/index/azure-vmware.svg
+      url: reliability-vmware-solution.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure Private Link service
+      summary: Private access to services hosted on the Azure platform, keeping your data on the Microsoft network
+      imageSrc: /azure/media/index/private-link.svg
+      url: reliability-private-link-service.md
+      azureCategories:
+        - networking
 
 tools:
   title: Reliability services and capabilities
