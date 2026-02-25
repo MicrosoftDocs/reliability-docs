@@ -6,9 +6,8 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-disk-storage
-ms.date: 01/20/2026
+ms.date: 02/25/2026
 ai-usage: ai-assisted
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Disk Storage works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
 # Reliability in Azure Disk Storage
@@ -60,15 +59,19 @@ Managed disks support availability zones in both zone-redundant and zonal config
 
 - *Zone-redundant storage (ZRS)* synchronously replicates your data across multiple availability zones within a region. When you enable zone redundancy for a managed disk, Azure ensures that a failure in any single zone doesn’t affect data availability. If a zone goes down and your VM remains unaffected, your workloads continue running. However, if your VM is impacted and you need to recover before the outage is resolved, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks?tabs=HTTP#diskdetachoptiontypes) your ZRS disks from the failed VM and attach them to another VM.
 
-    ZRS disks can be shared between VMs to improve availability for clustered or distributed applications such as SQL FCI, SAP ASCS/SCS, or GFS2. You can attach a shared ZRS disk to primary and secondary VMs in different zones, taking advantage of both ZRS disks and VMs distributed across multiple [availability zones](/azure/reliability/availability-zones-overview). If the primary zone fails, you can quickly fail over to the secondary VM using [SCSI persistent reservation](/azure/virtual-machines/disks-shared-enable#supported-scsi-pr-commands).
+    > [!NOTE]
+    > ZRS disks provide strong resilience to a range of problems, including availability zone outages. We recommend you use them for your production managed disks.
 
-- *Zonal LRS disks* reside in a specific availability zone and attach only to VMs in that zone. They replicate within the zone for high durability.
+    ZRS disks can be shared between VMs to improve availability for clustered or distributed applications such as SQL FCI, SAP ASCS/SCS, or GFS2. You can attach a shared ZRS disk to primary and secondary VMs in different zones, taking advantage of both ZRS disks and VMs distributed across multiple availability zones. If the primary zone fails, you can quickly fail over to the secondary VM using [SCSI persistent reservation](/azure/virtual-machines/disks-shared-enable#supported-scsi-pr-commands).
 
-    Zonal LRS disks offer lower write latency than ZRS because replication happens inside one zone. For workloads that need very low disk latency, they’re a strong choice.
+- *Zonal LRS disks* reside in a specific availability zone and attach only to VMs in that zone. A single zonal LRS disk and virtual machine don't provide zone resiliency. Zonal LRS disks can suit workloads that need unusually low disk latency because replication happens inside one zone.
 
-    A single zonal LRS disk and virtual machine don't provide zone resiliency. However, when you have a set of VMs that act together, such as a cluster or set of web servers, you can distribute an individual VM and its disks across multiple zones to achieve zone resiliency.
+    > [!WARNING]
+    > For most workloads, the latency difference between zonal and ZRS disks is negligible. ZRS disks provide substantially higher resilience to zone failures, making them the recommended choice for production environments, where resilience takes priority over minimal latency gains.
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
+
+    When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying separate VMs and disks in multiple zones. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
 
 If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are still considered LRS because they replicate within region. However, you should avoid configuring disks this way in production environments because nonzonal disks don't provide protection against availability zone outages.
 
@@ -80,7 +83,7 @@ If you don't configure availability zone support, your disk is *nonzonal* or *re
 
 - **Disk types:**
     - *Zone-redundant:* Zone-redundant disks are supported with Premium SSD and Standard SSD managed disks. ZRS isn't supported with Premium SSD v2, Ultra Disks, or Standard HDD managed disks.
-    - *Zonal:* All managed disk types support zonal deployments.
+    - *Zonal:* All managed disk types support zonal LRS deployments.
 
 ### Considerations
 
@@ -107,9 +110,9 @@ ZRS incurs a higher cost than LRS due to the additional replication overhead and
     
        While you can't convert a zonal LRS disk to ZRS, you can create a new ZRS disk from a snapshot. For step-by-step instructions, see [Convert a disk from LRS to ZRS](/azure/virtual-machines/disks-migrate-lrs-zrs) for step-by-step migration procedures and requirements.
 
-    - *Zonal:* It's not possible to change the availability zone configuration of an existing zonal or zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
+    - *Zonal:* It's not possible to change the availability zone configuration of an existing zonal LRS or zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
 
-- **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing zonal or zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
+- **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing zonal LRS or zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
 
 ### Behavior when all zones are healthy
 
@@ -125,7 +128,7 @@ This section describes what to expect when managed disks are configured with ava
 
     - *Zone-redundant:* ZRS disks replicate every write synchronously across all availability zones in the region. A write operation completes only after data is stored in clusters in every zone. This approach provides strong consistency and immediate availability from any zone, but it can introduce slightly higher write latency compared to LRS disks.
 
-    - *Zonal:* All write operations to LRS disks are replicated synchronously within the availability zone.
+    - *Zonal:* All write operations to zonal LRS disks are replicated synchronously within the availability zone.
 
     To learn more about data replication for LRS and ZRS storage, see [Azure Storage redundancy](/azure/storage/common/storage-redundancy).
 
@@ -144,7 +147,7 @@ This section describes what to expect when a managed disk is configured for avai
         - Azure CLI: Use the [az vm disk detach command](/cli/azure/vm/disk#az-vm-disk-detach) with the `--force-detach` argument.
         - Azure PowerShell: Use the [Remove-AzVMDataRisk cmdlet](/powershell/module/az.compute/remove-azvmdatadisk) with the `-ForceDetach` argument.
 
-    - *Zonal:* You're responsible for detecting a zone outage, and for triggering a failover or another response. Typically, your response will involve switching your application traffic to a different VM in a different availability zone with its own zonal disk.
+    - *Zonal:* You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
@@ -152,7 +155,7 @@ This section describes what to expect when a managed disk is configured for avai
 
     - *Zone-redundant:* No data loss occurs during zone failures because data is synchronously replicated across multiple zones before write operations complete.
 
-    - *Zonal:* A zonal disk is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers. However, if a zone is permanently lost, any zonal disks in that zone are lost too.
+    - *Zonal:* A zonal LRS disk is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers. However, if a zone is permanently lost, any zonal disks in that zone are lost too.
 
 - **Expected downtime:** Minimal downtime (typically a few seconds) may occur during automatic failover as I/O operations are redirected to healthy zones.
 
@@ -163,7 +166,7 @@ This section describes what to expect when a managed disk is configured for avai
 
     - *Zone-redundant:* Azure automatically reroutes traffic to another copy of your disk in a healthy zone.
 
-    - *Zonal:* A zonal disk is unavailable until the availability zone recovers.
+    - *Zonal:* A zonal LRS disk is unavailable until the availability zone recovers.
 
 ### Zone recovery
 
