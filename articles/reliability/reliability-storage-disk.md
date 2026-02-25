@@ -39,7 +39,7 @@ This guide specifically focuses on managed disks, which reliably persist data. T
 
 By default, managed disks use [locally redundant storage (LRS)](/azure/storage/common/storage-redundancy#locally-redundant-storage). LRS keeps three copies of your disk data within a single datacenter, protecting against hardware failures such as drive or server rack issues.
 
-Although LRS protects your disks against server rack and drive failures, it doesn't account for disasters such as fire or flooding within a datacenter. In the face of such disasters, all replicas of a disk configured to use LRS might be lost or unrecoverable. For higher levels of protection, use [zone-redundant storage (ZRS)](#resilience-to-availability-zone-failures), which replicates your disks across multiple availability zones.
+Although LRS protects your disks against server rack and drive failures, it doesn't account for disasters such as fire or flooding within a datacenter. For higher levels of protection, use [zone-redundant storage (ZRS)](#resilience-to-availability-zone-failures), which replicates your disks across multiple availability zones.
 
 For applications running on multiple VMs, multiple VMs have the highest availability SLA when distributed across three availability zones. For VMs and disks distributed across multiple availability zones, the disks and their parent VMs are respectively collocated in the same zone, which prevents multiple VMs from going down even if an entire zone experiences an outage.
 
