@@ -92,9 +92,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 > Use the tabs below to explore Azure regions grouped by geography.  
 > Availability zone support, paired regions, and access restrictions are shown where applicable.
 
-### :::zone pivot="geography"
-
-#### :::zone pivot-item="americas" title="Americas":::
+#### [Americas](#tab/americas)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -114,9 +112,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Chile Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Santiago | Chile | chilecentral |
 | Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
 
----
-
-#### :::zone pivot-item="europe" title="Europe":::
+#### [Europe](#tab/europe)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -139,9 +135,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Norway East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Norway West | Norway | Norway | norwayeast |
 | Norway West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Norway East | Norway | Norway | norwaywest |
 
----
-
-#### :::zone pivot-item="asia-pacific" title="Asia Pacific":::
+#### [Asia Pacific](#tab/asia-pacific)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -155,9 +149,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
 | Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
 
----
-
-#### :::zone pivot-item="oceania" title="Oceania":::
+#### [Oceania](#tab/oceania)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -167,9 +159,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Australia Central 2 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | Australia Central | Canberra | Australia | australiacentral2 |
 | New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
 
----
-
-#### :::zone pivot-item="middle-east-africa" title="Middle East & Africa":::
+#### [Middle East & Africa](#tab/middle-east-africa)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -179,9 +169,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South Africa West | Johannesburg | South Africa | southafricanorth |
 | South Africa West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | South Africa North | Cape Town | South Africa | southafricawest |
 
----
-
-#### :::zone pivot-item="india" title="India":::
+#### [India](#tab/india)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -189,7 +177,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | South India |  | Central India | Chennai | India | southindia |
 | West India |  | South India | Mumbai | India | westindia |
 
-### :::zone-end:::
+---
 
 ### Azure programmatic region names
 
