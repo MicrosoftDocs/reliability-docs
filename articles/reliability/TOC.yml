@@ -286,6 +286,8 @@ items:
     href: regions-nonregional-services.md
   - name: Azure regions list 
     href: regions-list.md
+  - name: Azure regions by geography
+    href: regions-list.md#azure-regions-by-geography
 - name: Azure availability zones
   items:
   - name: What are Azure availability zones?
