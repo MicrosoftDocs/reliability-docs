@@ -57,7 +57,9 @@ Managed disks automatically recover from transient faults in the Azure infrastru
 
 Managed disks support availability zones in both zone-redundant and zonal configurations:
 
-- *Zone-redundant storage (ZRS)* synchronously replicates your data across multiple availability zones within a region. When you enable zone redundancy for a managed disk, Azure ensures that a failure in any single zone doesn’t affect data availability. If a zone goes down and your VM remains unaffected, your workloads continue running. However, if your VM is impacted and you need to recover before the outage is resolved, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks?tabs=HTTP#diskdetachoptiontypes) your ZRS disks from the failed VM and attach them to another VM.
+- *Zone-redundant storage (ZRS) (recommended)* synchronously replicates your data across multiple availability zones within a region. When you enable zone redundancy for a managed disk, Azure ensures that a failure in any single zone doesn’t affect data availability. If a zone goes down and your VM remains unaffected, your workloads continue running. However, if your VM is impacted and you need to recover before the outage is resolved, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks?tabs=HTTP#diskdetachoptiontypes) your ZRS disks from the failed VM and attach them to another VM.
+
+    ![Diagram of a zone-redundant disk](./media/reliability-storage-disk/zone-redundant.png)
 
     > [!NOTE]
     > ZRS disks provide strong resilience to a range of problems, including availability zone outages. We recommend you use them for your production managed disks.
@@ -69,9 +71,11 @@ Managed disks support availability zones in both zone-redundant and zonal config
     > [!WARNING]
     > For most workloads, the latency difference between zonal and ZRS disks is negligible. ZRS disks provide substantially higher resilience to zone failures, making them the recommended choice for production environments, where resilience takes priority over minimal latency gains.
 
+    ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
+
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
-    When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying separate VMs and disks in multiple zones. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
+    When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying separate VMs and disks into multiple zones. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
 
 If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are still considered LRS because they replicate within region. However, you should avoid configuring disks this way in production environments because nonzonal disks don't provide protection against availability zone outages.
 
