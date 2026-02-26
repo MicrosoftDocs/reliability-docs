@@ -146,9 +146,7 @@ To protect against accidental deletion or corruption:
 
 ## Resilience to service maintenance
 
-[!INCLUDE [Service maintenance description](includes/reliability-maintenance-include.md)]
-
-You might observe brief interruptions (typically seconds), which are mitigated by backend mechanisms such as DNS-based traffic switching. You can't control when maintenance occurs.
+[!INCLUDE [Service maintenance description - transient fault](includes/reliability-maintenance-transient-fault-include.md)]
 
 ## Service-level agreement
 
