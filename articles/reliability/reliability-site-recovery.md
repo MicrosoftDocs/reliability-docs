@@ -4,7 +4,7 @@ description: Learn how to make Azure Site Recovery resilient to a variety of pot
 author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
-ms.custom: subject-reliability
+ms.custom: subject-reliability, references-regions
 ms.service: azure-site-recovery
 ms.date: 02/27/2026
 ai-usage: ai-assisted
@@ -30,9 +30,6 @@ When using Site Recovery with production workloads, we recommend that take these
 > - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change. High Churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
 > - For Azure to Azure disaster recovery, configure the cache storage account to use zone-redundant storage (ZRS).
 > - Enable automatic updates for mobility agents.
-
-> [!WARNING]
-> **Note to PG:** Please verify these recommendations.
 
 ## Reliability architecture overview
 
@@ -94,10 +91,16 @@ The following diagram shows an example of how Site Recovery uses availability zo
 
 **Region support:**
 
-- **Core Site Recovery service and Recovery Services vaults:** Azure Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
+- **Core Site Recovery service and Recovery Services vaults:** Azure Site Recovery is zone-resilient in the following regions:
 
-    > [!WARNING]
-    > **Note to PG:** Can we give any details on the regions that aren't yet zone-resilient, and the timeline for when they will be?
+    | Americas       | Europe         | Middle East    | Asia Pacific      |
+    |----------------|----------------|----------------|-------------------|
+    | Chile Central  | Austria East   | Israel Central | Indonesia Central |
+    | Mexico Central | Italy North    |                | Japan West        |
+    | West US 3      | Poland Central |                | Malaysia West     |
+    |                | Spain Central  |                | New Zealand North |
+
+     Azure Site Recovery is currently deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't yet zone-resilient, zone failures might affect operations.
 
 - **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
