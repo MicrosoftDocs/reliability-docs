@@ -2,11 +2,12 @@
 title: Reliability in Azure Managed Grafana
 description: Find out about reliability in Azure Managed Grafana, including transient faults, availability zones, multi-region support, backups, and service maintenance.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: managed-grafana
 ms.date: 02/26/2026
+ai-usage: as-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Grafana works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
@@ -32,16 +33,21 @@ For production workloads, Microsoft recommends:
 
 [!INCLUDE [Reliability architecture overview introduction](includes/reliability-architecture-overview-introduction-include.md)]
 
-A Standard SKU Azure Managed Grafana workspace consists of:
+### Logical architecture
 
-- A dedicated set of **Grafana servers (virtual machines)** managed by Microsoft.
-- A **load balancer** that distributes incoming requests.
-- A **backend database** (Azure PostgreSQL Flexible Server) used to store configuration and other persistent service data.
+The primary Azure resource that you deploy is a **Grafana workspace**. The workspace is fully managed by Microsoft. You don't interact with or manage any of the underlying infrastructure. All compute, networking, storage, and maintenance is handled by the platform on your behalf.
 
-By default, two Grafana servers are provisioned for a workspace. You don't see or manage these servers directly.
+### Physical architecture
 
-<!-- > **Diagram placeholder**
-> Insert reliability architecture diagram showing a Grafana workspace, load balancer, two Grafana servers, and backend database. -->
+Behind the scenes, when you create a Standard SKU workspace, the Azure platform provisions the following components:
+
+- **Grafana servers**: Dedicated virtual machines that run the Grafana application. By default, two servers are provisioned for redundancy. These servers are fully managed by Microsoft. You don't see them in your subscription, you can't access them, and you aren't responsible for patching, scaling, or maintaining them in any way.
+- **Load balancer**: A network load balancer that distributes incoming browser requests across the Grafana servers. The load balancer monitors server health and automatically routes traffic away from any unhealthy server.
+- **Backend database**: An Azure PostgreSQL Flexible Server instance that stores workspace configuration and other persistent data. This database is shared across all Grafana servers in the workspace.
+
+The load balancer tracks which Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions previously served by the other one, based on information saved in the shared database. In the meantime, the Azure Managed Grafana service works to repair the unhealthy server or bring up a new one.
+
+![Diagram of the Azure Managed Grafana Standard tier workspace setup.](media/service-reliability/diagram.png)
 
 ## Resilience to transient faults
 
@@ -55,10 +61,21 @@ Azure Managed Grafana handles transient faults automatically. Because the worksp
 
 Azure Managed Grafana supports availability zone redundancy in supported Azure regions. When zone redundancy is enabled, the workspace's Grafana servers are distributed across multiple availability zones.
 
+<!--NIALL TODO: Include similar diagram to Azure Firewall topic with no instance in az3-->
+
 ### Requirements
 
-- Zone redundancy must be enabled when the workspace is created.
-- Deploy the workspace into a [region that supports availability zones](regions-list.md).
+Zone redundancy support is enabled in the following regions:
+
+| Americas | Europe | Africa | Asia Pacific |
+| --- | --- | --- | --- |
+| East US | North Europe |  | Australia East |
+| South Central US |  |  | East Asia |
+| West US 3 |  |  |  |
+
+For regions where Azure Managed Grafana is available, see [Products available by region - Azure Managed Grafana](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=managed-grafana&amp;regions=all).
+
+Deploy the workspace into a [region that supports availability zones](regions-list.md).
 
 ### Considerations
 
@@ -67,13 +84,15 @@ Azure Managed Grafana supports availability zone redundancy in supported Azure r
 
 ### Cost
 
-There's no extra charge to enable availability zone support in Azure Managed Grafana. You pay for the resources that are included in the Standard SKU pricing.
+Enabling zone redundancy comes at an extra cost. For more information, see [Azure Managed Grafana pricing](https://azure.microsoft.com/pricing/details/managed-grafana/).
 
 ### Configure availability zone support
 
 - **Create a new resource with availability zones enabled:** Enable zone redundancy during workspace creation through the Azure portal, CLI, or ARM/Bicep templates.
 - **Migration:** You can't enable zone redundancy on an existing workspace. Instead, you need to create a new workspace with zone redundancy enabled, migrate your dashboards and configuration, and then delete the existing workspace.
 - **Disable availability zone support:** You can't disable zone redundancy after workspace creation. Instead, you need to create a new workspace without zone redundancy and delete the existing one.
+
+For more information, see [Enable zone redundancy in Azure Managed Grafana](/azure/managed-grafana/how-to-enable-zone-redundancy).
 
 ### Behavior when all zones are healthy
 

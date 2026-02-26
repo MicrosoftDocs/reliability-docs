@@ -276,6 +276,13 @@ productDirectory:
         - integration
         - iot
     # Card
+    - title: Azure Managed Grafana
+      summary: Fully managed service for analytics and monitoring solutions
+      imageSrc: https://static.docs.com/ui/media/product/azure/managed-grafana.svg
+      url: reliability-managed-grafana.md
+      azureCategories:
+        - monitor
+    # Card
     - title: Azure NetApp Files
       summary: Enterprise-grade Azure file shares, powered by NetApp
       imageSrc: https://static.docs.com/ui/media/product/azure/netapp-files.svg
