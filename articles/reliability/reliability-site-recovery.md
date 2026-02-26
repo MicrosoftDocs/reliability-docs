@@ -6,13 +6,13 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-site-recovery
-ms.date: 02/13/2026
+ms.date: 02/27/2026
 ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Site Recovery
 
-[Azure Site Recovery](/azure/site-recovery/site-recovery-overview) is a managed replication and failover service for virtual machines and other infrastructure, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
+[Azure Site Recovery](/azure/site-recovery/site-recovery-overview) is a managed replication and failover service for virtual machines, designed to keep workloads available during outages. It continuously replicates workloads from primary sites to secondary locations, ensuring minimal data loss and downtime. In the event of planned maintenance or unexpected disruptions, it orchestrates failover and failback processes. This service supports disaster recovery for on-premises environments and Azure VMs, helping organizations maintain business continuity.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -27,8 +27,9 @@ When using Site Recovery with production workloads, we recommend that take these
 
 > [!div class="checklist"]
 > - Deploy your Recovery Services vault in your target region for replication.
-> - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change, to improve your recovery point objective (RPO).
+> - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change. High Churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
 > - For Azure to Azure disaster recovery, configure the cache storage account to use zone-redundant storage (ZRS).
+> - Enable automatic updates for mobility agents.
 
 > [!WARNING]
 > **Note to PG:** Please verify these recommendations.
@@ -46,7 +47,7 @@ You're responsible for deploying and configuring other resources, including the 
 
     A vault can include additional configuration, such as:
     - *Replication policy*, which configures the snapshot frequency and retention length.
-    - [*Recovery plan*](/azure/site-recovery/recovery-plan-overview), which coordinates the order in which machines fail over and can include scripts and manual actions.
+    - [*Recovery plan*](/azure/site-recovery/recovery-plan-overview), which coordinates the order in which machines fail over and can include scripts and manual actions. Recovery plans are particularly useful for workloads with multiple tiers, such as application and database tiers, that need to fail over in a coordinated fashion.
 
 - For Azure-to-Azure replication, a *cache storage account*, that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
@@ -145,7 +146,7 @@ This section describes what to expect when Site Recovery is used in a region wit
 
     - *Zone-to-zone and region-to-region replication of Azure VMs:* If either the source or target instance is in the failed zone, replication pauses until both instances are available again.
 
-        If the failed zone doesn't contain the source or target VM, replication continues to run.
+        If the failed zone doesn't contain the source or target VM, and the cache storage account is configured to use ZRS, then replication continues to run.
 
         > [!WARNING]
         > **Note to PG:** Please confirm the above statement is accurate.
@@ -189,7 +190,7 @@ For Azure-to-Azure replication, Site Recovery is designed to provide resilience 
 
 #### Configure multi-region support
 
-- **Recovery Services vault:** A Recovery Services vault is region-specific. While replication can continue during a outage in the vault's region, Site Recovery management operations aren’t available until the region recovers. Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage, and prevents an outage in a third region from affecting failover and recovery operations.
+- **Recovery Services vault:** A Recovery Services vault is region-specific. While replication can continue during an outage in the vault's region, Site Recovery management operations aren’t available until the region recovers. Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage, and prevents an outage in a third region from affecting failover and recovery operations.
 
     Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
 
@@ -217,7 +218,12 @@ The specific behavior of the Site Recovery core service during a region failure 
 
 Azure automatically manages updates and maintenance for the core Site Recovery service. Maintenance operations don't require downtime and don't interrupt replication of your VMs and servers.
 
-However, you're responsible for applying updates to Site Recovery components on your VMs and servers. For more information, see [Service updates in Site Recovery](/azure/site-recovery/service-updates-how-to).
+However, you're responsible for applying updates to Site Recovery components on your VMs and servers, including the mobility agent where required.
+
+> [!IMPORTANT]
+> We strongly recomemnd you enable automatic updates for agents. If the agent version falls more than four versions behind, replication is disabled and your workload's recoverability is compromised.
+
+For more information, see [Service updates in Site Recovery](/azure/site-recovery/service-updates-how-to).
 
 ## Service-level agreement
 
