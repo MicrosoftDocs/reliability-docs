@@ -151,9 +151,6 @@ This section describes what to expect when Site Recovery is used in a region wit
 
         If the failed zone doesn't contain the source or target VM, and the cache storage account is configured to use ZRS, then replication continues to run.
 
-        > [!WARNING]
-        > **Note to PG:** Please confirm the above statement is accurate.
-
     - *On-premises to Azure:* If the target instance is in the failed zone, replication pauses until the instance is available again.
 
         If the failed zone doesn't contain the target VM, replication continues to run.
