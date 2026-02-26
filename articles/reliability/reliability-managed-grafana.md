@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Managed Grafana
 description: Find out about reliability in Azure Managed Grafana, including transient faults, availability zones, multi-region support, backups, and service maintenance.
-author: glynnniall
-ms.author: pnp
+author: maud-lv
+ms.author: malev
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-grafana
