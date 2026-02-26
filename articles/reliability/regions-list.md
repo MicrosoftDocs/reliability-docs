@@ -27,7 +27,9 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 > Even when a region provides availability zones, it's possible that some services might not support them in that region. Refer to the [Azure service reliability guides](./overview-reliability-guidance.md) to learn about region support for availability zone-enabled services.
  
  ## Azure regions list
- 
+
+#### [All](#tab/all)
+
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |--------|----------------------------|---------------|-------------------|-----------|-------------------|
 | Australia Central | | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Australia Central 2 | Canberra | Australia | australiacentral |
@@ -86,11 +88,6 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | West US | | East US | California | United States | westus |
 | West US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes"   border="false"::: | West Central US | Washington | United States | westus2 |
 | West US 3 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes"   border="false"::: | East US | Phoenix | United States | westus3 |
-
-## Azure regions by geography
-
-> Use the tabs below to explore Azure regions grouped by geography.  
-> Availability zone support, paired regions, and access restrictions are shown where applicable.
 
 #### [Americas](#tab/americas)
 
@@ -162,6 +159,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
+| Israel Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Israel | Israel | israelcentral |
 | Qatar Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Doha | Qatar | qatarcentral |
 | South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South Africa West | Johannesburg | South Africa | southafricanorth |
 | South Africa West | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: | South Africa North | Cape Town | South Africa | southafricawest |
