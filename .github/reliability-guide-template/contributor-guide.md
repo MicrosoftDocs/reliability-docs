@@ -75,7 +75,7 @@ Here's a quick summary of all pattern elements:
 > - Place the article under a **Reliability** [TOC node](#toc-placement) that's under a **Concepts** node.
 > - Set the [metadata](#set-metadata) metadata, especially `ms.topic`, `ms.custom`, and `description`, appropriately for reliability guides.
 > - Use the format "Reliability in \<product or service\>" for the [H1 headline](#h1-headline-and-introduction) and follow the instructions for the introductory section.
-> - Include an H2 section for [production deployment recommendations](#production-deployment-recommendations).
+> - Include an H2 section for [production deployment recommendations](#production-deployment-recommendations-for-reliability).
 > - (Optional) Include an H2 section for [reliability architecture overview](#reliability-architecture-overview).
 > - Include an H2 section that discusses [resilience to transient faults](#resilience-to-transient-faults).
 > - Include an H2 section that discusses [resilience to availability zone failures](#resilience-to-availability-zone-failures).
@@ -306,9 +306,9 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - If the service also supports nonzonal deployments, include a statement similar to this:
 
-    ```markdown
-    If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
-    ```
+      ```markdown
+      If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
+      ```
 
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
