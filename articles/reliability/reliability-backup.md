@@ -81,11 +81,13 @@ When you use Azure Backup, both backup and restore workflows are resilient to in
 
 Azure Backup separately manages the availability zone configuration of the service and for your data.
 
-- **Service:** The Azure Backup service itself is automatically zone-resilient, with no action required from you. However, this built-in zone resiliency doesn't apply to your backed-up data.
+- **Service:** The Azure Backup service itself is automatically zone-resilient in supported regions, with no action required from you. However, this built-in zone resiliency doesn't apply to your backed-up data.
 
 - **Backup storage redundancy:** Select the level of redundancy you want for your backup data by configuring your Recovery Services vault or Backup vault. If you select zone-redundant storage (ZRS), copies of your backup data are automatically stored across multiple availability zones in the Azure region you use.
 
     If you don't use ZRS, your backup data is considered to be *nonzonal* and might be stored in any zone. If any zone in the region has a problem, nonzonal backup data might be unavailable.
+
+:::image type="content" source="./media/reliability-backup/zone-redundant.svg" alt-text="Diagram that shows Azure Backup core service, which is automatically zone-resilient, and zone-redundant backup storage." border="false":::
 
 ### Requirements
 
