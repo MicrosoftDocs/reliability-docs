@@ -5,7 +5,7 @@ author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ms.service: managed-grafana
+ms.service: azure-managed-grafana
 ms.date: 02/26/2026
 ai-usage: as-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Grafana works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
@@ -156,7 +156,7 @@ You might observe brief interruptions (typically seconds), which are mitigated b
 
 The **Essentials SKU** has no SLA and is on a deprecation path. It isn't recommended for production use. The **Standard SKU** is covered by the Azure Managed Grafana SLA.
 
-If cost is a concern and the Standard SKU isn't suitable, an alternative is [Azure Monitor Dashboards with Grafana](/azure/azure-monitor/visualize/grafana-overview), which is operated by the same Microsoft team.
+If cost is a concern and the Standard SKU isn't suitable, an alternative is [Azure Monitor Dashboards with Grafana](/azure/azure-monitor/visualize/visualize-grafana-overview), which is operated by the same Microsoft team.
 
 ## Related content
 
