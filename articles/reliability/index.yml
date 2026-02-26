@@ -278,7 +278,7 @@ productDirectory:
     # Card
     - title: Azure Managed Grafana
       summary: Fully managed service for analytics and monitoring solutions
-      imageSrc: https://static.docs.com/ui/media/product/azure/managed-grafana.svg
+      imageSrc: /azure/media/index/managed-grafana.svg
       url: reliability-managed-grafana.md
       azureCategories:
         - management-and-governance
