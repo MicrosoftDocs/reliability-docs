@@ -281,7 +281,7 @@ productDirectory:
       imageSrc: https://static.docs.com/ui/media/product/azure/managed-grafana.svg
       url: reliability-managed-grafana.md
       azureCategories:
-        - monitor
+        - management-and-governance
     # Card
     - title: Azure NetApp Files
       summary: Enterprise-grade Azure file shares, powered by NetApp

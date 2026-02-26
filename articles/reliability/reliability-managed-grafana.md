@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-grafana
 ms.date: 02/26/2026
-ai-usage: as-assisted
+ai-usage: ai-assisted
 #Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure Managed Grafana works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
 ---
 
@@ -47,7 +47,7 @@ Behind the scenes, when you create a Standard SKU workspace, the Azure platform 
 
 The load balancer tracks which Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions previously served by the other one, based on information saved in the shared database. In the meantime, the Azure Managed Grafana service works to repair the unhealthy server or bring up a new one.
 
-![Diagram of the Azure Managed Grafana Standard tier workspace setup.](media/service-reliability/diagram.png)
+<!-- TODO: Add architecture diagram when available -->
 
 ## Resilience to transient faults
 
