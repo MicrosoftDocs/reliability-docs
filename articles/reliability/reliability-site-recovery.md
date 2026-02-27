@@ -187,7 +187,7 @@ You're responsible for initiating failback for any servers or VMs that you faile
 
 The Site Recovery platform manages zone resiliency for its internal components. Because this feature is fully managed, you don't need to initiate or validate availability zone failure processes.
 
-It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response proceduires. Design your DR drills to avoid impact to your production environment. For more information, see:
+It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response procedures. Design your DR drills to avoid impact to your production environment. For more information, see:
 
 - *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a disaster recovery drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
 
@@ -243,7 +243,7 @@ You're responsible for initiating failback for any servers or VMs that you faile
 
 ### Test for region failures
 
-It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response proceduires. Design your DR drills to avoid impact to your production environment. For more information, see:
+It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response procedures. Design your DR drills to avoid impact to your production environment. For more information, see:
 
 - *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a disaster recovery drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
 
@@ -265,7 +265,7 @@ Azure automatically manages updates and maintenance for the core Site Recovery s
 However, you're responsible for applying updates to Site Recovery components on your VMs and servers, including the mobility agent where required.
 
 > [!IMPORTANT]
-> We strongly recomemnd you enable automatic updates for agents. If the agent version falls more than four versions behind, replication is disabled and your workload's recoverability is compromised.
+> We strongly recommend you enable automatic updates for agents. If the agent version falls more than four versions behind, replication is disabled and your workload's recoverability is compromised.
 
 For more information, see [Service updates in Site Recovery](/azure/site-recovery/service-updates-how-to).
 
