@@ -75,7 +75,7 @@ Azure VMware Solution Gen 2 supports *zonal* deployments of private clouds. When
 
 A zonal private cloud doesn’t protect against availability zone failures. You can deploy multiple private clouds into separate availability zones for higher resiliency, but you're responsible for deploying and configuring each private cloud independently.
 
-If you don't select an availability zone, your private cloud, its clusters, and all of their ESXi hosts are considered to be *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters might be in the affected zone and could experience downtime. <!-- TODO verifying this -->
+If you don't select an availability zone, your private cloud, its clusters, and all of their ESXi hosts are considered to be *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters might be in the affected zone and could experience downtime.
 
 ::: zone-end
 
