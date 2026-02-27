@@ -85,7 +85,7 @@ To understand how Azure Site Recovery replication behaves during availability zo
 
 The following diagram shows an example of how Site Recovery uses availability zones in an Azure-to-Azure disaster recovery configuration:
 
-![Diagram showing zone-resilient Site Recovery core components, vault, and cache storage account](./media/reliabilty-site-recovery/availability-zones.png)
+![Diagram showing zone-resilient Site Recovery core components, vault, and cache storage account](./media/reliability-site-recovery/availability-zones.png)
 
 > [!NOTE]
 > Azure Site Recovery can help you to fail over between VMs in different availability zones. For more information, see [Enable Azure VM disaster recovery between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery).
@@ -220,15 +220,15 @@ The specific behavior of the Site Recovery core service during a region failure 
 
     Because the source region is unavailable, replication stops until the VM in the source region is healthy.
 
-    ![Diagram that shows a failure in the source region.](./media/reliabilty-site-recovery/region-failure-source.png)
+    ![Diagram that shows a failure in the source region.](./media/reliability-site-recovery/region-failure-source.png)
 
 - **Failure in target region:** Because the target region is unavailable, replication stops, and you can't fail over to the target until the region is healthy.
 
-    ![Diagram that shows a failure in the target region.](./media/reliabilty-site-recovery/region-failure-target.png)
+    ![Diagram that shows a failure in the target region.](./media/reliability-site-recovery/region-failure-target.png)
 
 - **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data but you can't initiate any operations.
 
-    ![Diagram that shows a failure in the vault's region.](./media/reliabilty-site-recovery/region-failure-vault.png)
+    ![Diagram that shows a failure in the vault's region.](./media/reliability-site-recovery/region-failure-vault.png)
 
 ### Region recovery
 
