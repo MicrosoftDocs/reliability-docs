@@ -202,11 +202,18 @@ For Azure-to-Azure replication, Site Recovery is designed to provide resilience 
 
 ### Considerations
 
-**Capacity reservations:** You're responsible for verifying that your target region supports the VM types that you need, and that it has available capacity for your workload. We recommend using [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview), which ensure that compute resources are available for your workload if a failover occurs.
+- **Vault region:** A Recovery Services vault is deployed into a specific Azure region, which you select. The vault's region is an important decision. Replication can continue during an outage in the vault's region. However, Site Recovery management operations, including failover and failback, aren’t available until the region recovers.
+
+    Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage, and prevents an outage in a third region from affecting failover and recovery operations.
+
+    > [!NOTE]
+    > If your vault is in the region that you ordinarily use as your target region, then after you fail over and re-establish replication, the vault is now in your new source region. If that region subsequently experiences a problem, you might not be able to perform failback until both regions are healthy.
+
+- **Capacity reservations:** You're responsible for verifying that your target region supports the VM types that you need, and that it has available capacity for your workload. We recommend using [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview), which ensure that compute resources are available for your workload if a failover occurs.
 
 ### Configure multi-region support
 
-- **Recovery Services vault:** A Recovery Services vault is region-specific. While replication can continue during an outage in the vault's region, Site Recovery management operations aren’t available until the region recovers. Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage, and prevents an outage in a third region from affecting failover and recovery operations.
+- **Recovery Services vault:** You need to select the vault's region. For more information, see the preceding [considerations](#considerations) section.
 
     Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
 
