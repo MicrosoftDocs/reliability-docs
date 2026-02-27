@@ -346,7 +346,7 @@ When the availability zone recovers, Azure Functions automatically restores inst
 
 The Azure Functions platform manages traffic routing, failover, and zone recovery for zone-redundant resources. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate availability zone failure processes.
 
-## Migration to availability zone support {#availability-zone-migration}
+## Migration to availability zone support
 
 ::: zone pivot="consumption"
 
