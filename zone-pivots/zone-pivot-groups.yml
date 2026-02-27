@@ -1,14 +1,18 @@
 ### YamlMime:ZonePivotGroups
 groups:
 # Owner: glynnniall
-- id: reliability-functions-hosting-plan
-  title: Function app hosting options for Availability Zones support
-  prompt: Choose a hosting option for your function app
+- id: azure-functions-hosting-plans
+  title: Azure Functions hosting plan
+  prompt: Choose a hosting plan
   pivots:
-  - id: flex-consumption-plan
-    title: Flex Consumption plan
-  - id: premium-plan
-    title: Premium plan
+  - id: consumption
+    title: Consumption
+  - id: flex-consumption
+    title: Flex Consumption
+  - id: premium
+    title: Premium (Elastic Premium)
+  - id: dedicated
+    title: Dedicated (App Service)
 # Owner: estfan
 - id: logic-app-hosting-types
   title: Azure Logic Apps hosting model
