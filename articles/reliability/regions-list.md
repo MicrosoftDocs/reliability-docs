@@ -132,20 +132,23 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | UK West |  | UK South | Cardiff | United Kingdom | ukwest |
 | West Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Europe | Netherlands | Europe | westeurope |
 
-#### [Asia Pacific](#tab/asia-pacific)
+#### [Middle East](#tab/middle-east)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
-| East Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Southeast Asia | Hong Kong SAR | Asia Pacific | eastasia |
-| Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
-| Japan East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan West | Tokyo, Saitama | Japan | japaneast |
-| Japan West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan East | Osaka | Japan | japanwest |
-| Korea Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Korea South | Seoul | Korea | koreacentral |
-| Korea South |  | Korea Central | Busan | Korea | koreasouth |
-| Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
-| Southeast Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East Asia | Singapore | Asia Pacific | southeastasia |
+| Israel Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Israel | Israel | israelcentral |
+| Qatar Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Doha | Qatar | qatarcentral |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: UAE Central | | UAE North | Abu Dhabi | UAE | uaecentral |
+| UAE North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: UAE Central | Dubai | UAE | uaenorth |
 
-#### [Oceania](#tab/oceania)
+#### [Africa](#tab/africa)
+
+| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
+|---|---|---|---|---|---|
+| South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: South Africa West | Johannesburg | South Africa | southafricanorth |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: South Africa West | | South Africa North | Cape Town | South Africa | southafricawest |
+
+#### [Asia Pacific](#tab/asia-pacific)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
@@ -153,25 +156,17 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: Australia Central 2 | | Australia Central | Canberra | Australia | australiacentral2 |
 | Australia East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Australia Southeast | New South Wales | Australia | australiaeast |
 | Australia Southeast |  | Australia East | Victoria | Australia | australiasoutheast |
-| New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
-
-#### [Middle East & Africa](#tab/middle-east-africa)
-
-| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
-|---|---|---|---|---|---|
-| Israel Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Israel | Israel | israelcentral |
-| Qatar Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Doha | Qatar | qatarcentral |
-| South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: South Africa West | Johannesburg | South Africa | southafricanorth |
-| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: South Africa West | | South Africa North | Cape Town | South Africa | southafricawest |
-| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: UAE Central | | UAE North | Abu Dhabi | UAE | uaecentral |
-| UAE North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Restricted region." border="false"::: UAE Central | Dubai | UAE | uaenorth |
-
-#### [India](#tab/india)
-
-| Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
-|---|---|---|---|---|---|
 | Central India | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | South India | Pune | India | centralindia |
+| East Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Southeast Asia | Hong Kong SAR | Asia Pacific | eastasia |
+| Indonesia Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Jakarta | Indonesia | indonesiacentral |
+| Japan East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan West | Tokyo, Saitama | Japan | japaneast |
+| Japan West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Japan East | Osaka | Japan | japanwest |
+| Korea Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Korea South | Seoul | Korea | koreacentral |
+| Korea South |  | Korea Central | Busan | Korea | koreasouth |
+| Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
+| New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
 | South India |  | Central India | Chennai | India | southindia |
+| Southeast Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East Asia | Singapore | Asia Pacific | southeastasia |
 | West India |  | South India | Mumbai | India | westindia |
 
 ---
