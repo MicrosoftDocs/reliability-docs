@@ -32,6 +32,7 @@ When using Site Recovery with production workloads, we recommend that take these
 > - Perform test failovers on a regular basis as part of disaster recovery (DR) drills. DR drills should be run every quarter or biannually to verify your replication and failover processes are healthy.
 > - Use [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview) to ensure compute resources are available in your target region for failover.
 > - Enable automatic updates for mobility agents.
+> - Monitor the health of your replication, and configure alerts so you're notified if a problem happens.
 
 ## Reliability architecture overview
 
@@ -250,6 +251,12 @@ It's important to perform regular disaster recovery drills, which should test yo
     - *Physical to Azure replication:* [Run a test failover (disaster recovery drill) to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
     - *Hyper-V to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
     - *VMware to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+
+## Resilience to configuration and replication problems
+
+A disaster recovery solution is only reliable if you know it's working before a disaster strikes. This means it's important to monitor Azure Site Recovery in case any problems arise, such as configuration problems, or problems with the health of your VM replication. For more information, see [Monitor Azure Site Recovery](/azure/site-recovery/monitor-site-recovery).
+
+We recommend that you configure Azure Monitor alerts so that you're informed of problems with replication health. For more information, see [Built-in Azure Monitor alerts for Azure Site Recovery](/azure/site-recovery/site-recovery-monitor-and-troubleshoot#built-in-azure-monitor-alerts-for-azure-site-recovery).
 
 ## Resilience to service maintenance
 
