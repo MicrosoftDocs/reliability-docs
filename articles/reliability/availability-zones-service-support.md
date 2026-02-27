@@ -11,7 +11,7 @@ author: glynnniall
 ms.custom: subject-reliability
 ---
 
-## Azure services that support availability zones
+# Azure services that support availability zones
 
 Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the type of offerings that they support.
 
@@ -62,7 +62,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Files](./reliability-storage-files.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall](reliability-firewall.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Firewall Manager](/azure/firewall-manager/quick-firewall-policy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Functions](./reliability-functions.md#migration-to-availability-zone-support-availability-zone-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Functions](./reliability-functions.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure HDInsight](./reliability-hdinsight.md#availability-zone-support) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure HPC Cache](/azure/hpc-cache/hpc-cache-overview) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure IoT Hub](reliability-iot-hub.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
