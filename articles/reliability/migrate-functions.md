@@ -30,7 +30,7 @@ To enable an existing function app to use availability zones, you must redeploy 
 Use these steps to enable availability zones:
 
 1. If you're already hosted in a Premium plan in a [supported region], you can reuse your existing resource group and skip to the next step. Otherwise, create a new resource group in a [supported region].
-2. Create a Premium plan in one of the supported regions and the resource group. Ensure the [new Premium plan has zone redundancy enabled](./reliability-functions.md?pivots=premium-plan#create-a-function-app-in-a-zone-redundant-plan).
+2. Create a Premium plan in one of the supported regions and the resource group. Ensure the [new Premium plan has zone redundancy enabled](./reliability-functions.md?pivots=premium#configure-availability-zone-support).
 3. Create a function app in the new Premium plan and deploy your project code to this new app using your desired [deployment method](/azure/azure-functions/functions-deployment-technologies).
 4. After the new app is up and running successfully with availability zones enabled, you can optionally disable or delete the nonavailability zone app.
 
@@ -45,4 +45,4 @@ Use these steps to enable availability zones:
 > [!div class="nextstepaction"]
 > [ARM Quickstart Templates](https://azure.microsoft.com/resources/templates/)
 
-[supported region]: /azure/azure-functions/azure-functions-az-redundancy#regional-availability)
+[supported region]: /azure/azure-functions/azure-functions-az-redundancy#regional-availability
