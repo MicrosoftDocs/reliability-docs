@@ -29,6 +29,8 @@ When using Site Recovery with production workloads, we recommend that take these
 > - Deploy your Recovery Services vault in your target region for replication.
 > - For Azure to Azure disaster recovery, use [High Churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) for VMs that have a high rate of data change. High Churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
 > - For Azure to Azure disaster recovery, configure the cache storage account to use zone-redundant storage (ZRS).
+> - Perform test failovers on a regular basis as part of disaster recovery (DR) drills. DR drills should be run every quarter or biannually to verify your replication and failover processes are healthy.
+> - Use [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview) to ensure compute resources are available in your target region for failover.
 > - Enable automatic updates for mobility agents.
 
 ## Reliability architecture overview
@@ -110,7 +112,9 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 ### Configure availability zone support
 
-- **Core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft enables zone resiliency in supported regions.
+- **Core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft provides zone resiliency in supported regions.
+
+    If Microsoft enables zone resiliency in a region at a later time, your Site Recovery resources automatically benefit from the zone resilience. You don't need to take any action.
 
 - **Recovery Services vault:** Although Recovery Services vaults enable you to configure a level of redundancy, this configuration setting isn't used for Site Recovery. You don't need to configure your vault for zone redundancy when you use Site Recovery.
 
@@ -182,13 +186,24 @@ You're responsible for initiating failback for any servers or VMs that you faile
 
 The Site Recovery platform manages zone resiliency for its internal components. Because this feature is fully managed, you don't need to initiate or validate availability zone failure processes.
 
-However, you can use [disaster recovery drills](/azure/site-recovery/azure-to-azure-tutorial-dr-drill) to test your VM failover.
+It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response proceduires. Design your DR drills to avoid impact to your production environment. For more information, see:
+
+- *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a disaster recovery drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
+
+- *On-premises to Azure replication:*
+    - *Physical to Azure replication:* [Run a test failover (disaster recovery drill) to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
+    - *Hyper-V to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *VMware to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
 ## Resilience to region-wide failures
 
 For Azure-to-Azure replication, Site Recovery is designed to provide resilience to region failures by enabling failover of VMs to a healthy target region. For more information, see [Replicate Azure VMs to another Azure region](/azure/site-recovery/azure-to-azure-how-to-enable-replication).
 
-#### Configure multi-region support
+### Considerations
+
+**Capacity reservations:** You're responsible for verifying that your target region supports the VM types that you need, and that it has available capacity for your workload. We recommend using [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview), which ensure that compute resources are available for your workload if a failover occurs.
+
+### Configure multi-region support
 
 - **Recovery Services vault:** A Recovery Services vault is region-specific. While replication can continue during an outage in the vault's region, Site Recovery management operations aren’t available until the region recovers. Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage, and prevents an outage in a third region from affecting failover and recovery operations.
 
@@ -213,6 +228,28 @@ The specific behavior of the Site Recovery core service during a region failure 
 - **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data but you can't initiate any operations.
 
     ![Diagram that shows a failure in the vault's region.](./media/reliabilty-site-recovery/region-failure-vault.png)
+
+### Region recovery
+
+You're responsible for initiating failback for any servers or VMs that you failed over during the region outage. For more information, see:
+
+- *Zone-to-zone and region-to-region replication of Azure VMs:* [Fail back Azure VM to the primary region](/azure/site-recovery/azure-to-azure-tutorial-failback)
+
+- *On-premises to Azure replication:*
+    - *Physical to Azure replication:* [Physical server to Azure disaster recovery architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
+    - *Hyper-V to Azure replication:* [Hyper-V to Azure disaster recovery architecture](/azure/site-recovery/hyper-v-azure-architecture#failover-and-failback-process)
+    - *VMware to Azure replication:* [About on-premises disaster recovery failover/failback](/azure/site-recovery/failover-failback-overview-modernized)
+
+### Test for region failures
+
+It's important to perform regular disaster recovery drills, which should test your VM failover as well as your overall response proceduires. Design your DR drills to avoid impact to your production environment. For more information, see:
+
+- *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a disaster recovery drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
+
+- *On-premises to Azure replication:*
+    - *Physical to Azure replication:* [Run a test failover (disaster recovery drill) to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
+    - *Hyper-V to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *VMware to Azure replication:* [Run a disaster recovery drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
 ## Resilience to service maintenance
 
