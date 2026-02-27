@@ -226,7 +226,7 @@ The specific behavior of the Site Recovery core service during a region failure 
 
     ![Diagram that shows a failure in the target region.](./media/reliability-site-recovery/region-failure-target.png)
 
-- **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data but you can't initiate any operations.
+- **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data. However, you can't initiate any operations, including failover or failback, until the vault is healthy.
 
     ![Diagram that shows a failure in the vault's region.](./media/reliability-site-recovery/region-failure-vault.png)
 
