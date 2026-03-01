@@ -251,9 +251,9 @@ Instance spreading with a zone-redundant deployment follows these rules, even as
 
 ::: zone-end
 
-For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
-
 ::: zone pivot="flex-consumption,premium"
+
+For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
 
 ### Configure availability zone support
 
@@ -292,8 +292,6 @@ For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/p
 ### Behavior during a zone failure\
 
 - **Detection and response:** The Azure Functions platform is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
-
-- **Notification:**
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
