@@ -106,13 +106,23 @@ The Consumption plan doesn't support availability zones. If zone redundancy is a
 
 ::: zone pivot="flex-consumption"
 
-The Flex Consumption plan supports zone-redundant deployment. When zone redundancy is enabled, the platform automatically spreads your function app instances across all availability zones in the selected region.
+The Flex Consumption plan supports zone-redundant deployments.
 
 ::: zone-end
 
 ::: zone pivot="premium"
 
-The Premium (Elastic Premium) plan supports zone-redundant deployment. When zone redundancy is enabled, the platform automatically spreads your function app instances across all availability zones in the selected region.
+The Premium plan supports zone-redundant deployments.
+
+::: zone-end
+
+::: zone pivot="flex-consumption,premium"
+
+When zone redundancy is enabled, the platform automatically spreads your plan instances across all availability zones in the selected region. If any availability zone in the region has a problem, your functions continue to run using instances in healthy zones.
+
+You must also enable zone-redundant storage (ZRS) on the host storage account, which ensures that it's resilient to zone outages as well.
+
+![Diagram showing zone-redundant Azure Functions plan with three instances spread across three zones, and a zone-redundant storage account](./media/reliability-functions/zone-redundant.png)
 
 ::: zone-end
 
@@ -130,20 +140,44 @@ The Dedicated (App Service) plan supports zone-redundant deployment. When zone r
 
 ::: zone pivot="flex-consumption"
 
-- **Region support:** Zone-redundant Azure Functions resources can be deployed into [any region that supports availability zones](/azure/reliability/availability-zones-service-support).
-- **Storage account requirements:** You must use a [zone-redundant storage account (ZRS)](/azure/storage/common/storage-redundancy#zone-redundant-storage) for your function app's default host storage account.
+- **Region support:** Zone-redundant Flex Consumption plans can be deployed into the following regions:
+
+    | Americas         | Europe               | Middle East    | Africa              | Asia Pacific   |
+    |------------------|----------------------|----------------|---------------------|----------------|
+    | Brazil South     | Germany West Central | Israel Central | South Africa North  | Australia East |
+    | Canada Central   | Italy North          | UAE North      |                     | Central India  |
+    | East US          | North Europe         |                |                     | East Asia      |
+    | East US 2        | Norway East          |                |                     | Japan East     |
+    | West US 2        | Poland Central       |                |                     | Southeast Asia |
+    | West US 3        | Sweden Central       |                |                     |                |
+    |                  | UK South             |                |                     |                |
+    |                  | West Europe          |                |                     |                |
 
 ::: zone-end
 
 ::: zone pivot="premium"
 
-- **Region support:** Zone-redundant Azure Functions resources can be deployed into [any region that supports availability zones](/azure/reliability/availability-zones-service-support).
-- **Storage account requirements:** You must use a [zone-redundant storage account (ZRS)](/azure/storage/common/storage-redundancy#zone-redundant-storage) for your function app's default host storage account.
-- **Minimum instance count:** A minimum of two always-ready instances is required when zone redundancy is enabled.
+- **Region support:** Zone-redundant Premium plans can be deployed into the following regions:
+
+    | Americas         | Europe               | Middle East    | Africa             | Asia Pacific   |
+    |------------------|----------------------|----------------|--------------------|----------------|
+    | Brazil South     | France Central       | Israel Central | South Africa North | Australia East |
+    | Canada Central   | Germany West Central | Qatar Central  |                    | Central India  |
+    | Central US       | Italy North          | UAE North      |                    | China North 3  |
+    | East US          | North Europe         |                |                    | East Asia      |
+    | East US 2        | Norway East          |                |                    | Japan East     |
+    | South Central US | Sweden Central       |                |                    | Southeast Asia |
+    | West US 2        | Switzerland North    |                |                    |                |
+    | West US 3        | UK South             |                |                    |                |
+    |                  | West Europe          |                |                    |                |
+
+- **Minimum instance count:** A minimum of two always-ready instances is required when zone redundancy is enabled for Premium plans.
 
 ::: zone-end
 
 ::: zone pivot="flex-consumption,premium"
+
+- **Storage account requirements:** You must use a [zone-redundant storage account (ZRS)](/azure/storage/common/storage-redundancy#zone-redundant-storage) for your function app's default host storage account.
 
 ### Considerations
 
@@ -281,8 +315,6 @@ The Azure Functions platform manages traffic routing, failover, and zone recover
 
 ::: zone-end
 
-<!-- TODO -->
-
 ## Resilience to region-wide failures
 
 Azure Functions is a single-region service. If the region becomes unavailable, your Azure Functions resource is also unavailable.
@@ -354,8 +386,6 @@ The Premium plan has a 99.95% availability SLA when zone redundancy is enabled.
 The Dedicated (App Service) plan inherits the SLA from the underlying App Service plan. For details, see [Reliability in Azure App Service](reliability-app-service.md).
 
 ::: zone-end
-
-For the most current SLA information, see [SLA for Azure Functions](https://azure.microsoft.com/support/legal/sla/functions/).
 
 ## Related content
 
