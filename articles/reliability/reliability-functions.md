@@ -8,22 +8,11 @@ ms.service: azure-functions
 ms.custom: references_regions, subject-reliability
 ms.date: 02/19/2026
 zone_pivot_groups: azure-functions-hosting-plans
-
-#Customer intent: I want to understand reliability support in Azure Functions so that I can respond to and/or avoid failures in order to minimize downtime and data loss.
 ---
 
 # Reliability in Azure Functions
 
 [Azure Functions](/azure/azure-functions/functions-overview) is an event-driven compute service that lets you run small blocks of code (functions) without having to explicitly provision or manage infrastructure. Functions can respond to events such as HTTP requests, timers, queue messages, and changes in other Azure services, making it well-suited for processing data, integrating systems, and running background tasks.
-
-Azure Functions is available on several different hosting plans, each with different capabilities and reliability characteristics:
-
-- **[Consumption plan](/azure/azure-functions/consumption-plan):** The original serverless tier. You don't pay for dedicated infrastructure — you pay only for function executions and the resources they consume.
-- **[Flex Consumption plan](/azure/azure-functions/flex-consumption-plan):** A modern serverless tier that provides additional capabilities and runs on more modern infrastructure.
-- **[Premium plan](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically. Premium plans offer features such as VNet connectivity, always-ready instances, and larger instance sizes.
-- **[Dedicated (App Service) plan](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized.
-
-<!-- TODO: Confirm with PG that all four tiers should be covered, and whether there are any deprecation plans for Consumption. -->
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -42,6 +31,13 @@ When you deploy Azure Functions, you create and configure several resources that
 ### Plan
 
 A **plan** defines the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior. The type of plan you choose significantly affects the reliability characteristics of your function app.
+
+Azure Functions is available on several different hosting plans, each with different capabilities and reliability characteristics:
+
+- **[Consumption plan](/azure/azure-functions/consumption-plan):** The original serverless tier. You don't pay for dedicated infrastructure — you pay only for function executions and the resources they consume.
+- **[Flex Consumption plan](/azure/azure-functions/flex-consumption-plan):** A modern serverless tier that provides additional capabilities and runs on more modern infrastructure.
+- **[Premium plan](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically. Premium plans offer features such as VNet connectivity, always-ready instances, and larger instance sizes.
+- **[Dedicated (App Service) plan](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized.
 
 ::: zone pivot="consumption"
 
@@ -69,7 +65,7 @@ With a Dedicated (App Service) plan, you configure the plan to specify the SKU (
 
 ### Function app
 
-A **function app** is an application that contains one or more functions. Each function contains the code that implements your business logic. A function app runs on a plan and uses the compute resources that the plan provides.
+A *function app* is an application that contains one or more *functions*. Each function contains the code that implements your business logic. A function app runs on a plan and uses the compute resources that the plan provides.
 
 ### Storage account
 
@@ -126,11 +122,9 @@ The Dedicated (App Service) plan supports zone-redundant deployment. When zone r
 
 ::: zone-end
 
+::: zone pivot="flex-consumption,premium"
+
 ### Requirements
-
-::: zone pivot="consumption"
-
-The Consumption plan doesn't support availability zones.
 
 ::: zone-end
 
@@ -149,18 +143,9 @@ The Consumption plan doesn't support availability zones.
 
 ::: zone-end
 
-::: zone pivot="dedicated"
-
-- **Region support:** Zone-redundant Azure Functions resources can be deployed into [any region that supports availability zones](/azure/reliability/availability-zones-service-support).
-- **Plan tier:** You must use a Premium v2 or higher App Service plan tier. For full requirements, see [Reliability in Azure App Service](reliability-app-service.md).
-
-::: zone-end
+::: zone pivot="flex-consumption,premium"
 
 ### Considerations
-
-::: zone pivot="consumption"
-
-The Consumption plan doesn't support availability zones. If you need zone redundancy, consider migrating to a Flex Consumption or Premium plan.
 
 ::: zone-end
 
@@ -184,17 +169,9 @@ The Consumption plan doesn't support availability zones. If you need zone redund
 
 ::: zone-end
 
-::: zone pivot="dedicated"
-
-- Zone redundancy configuration follows the same rules as App Service. For full details, see [Reliability in Azure App Service](reliability-app-service.md).
-
-::: zone-end
+::: zone pivot="flex-consumption,premium"
 
 ### Instance distribution across zones
-
-::: zone pivot="consumption"
-
-Not applicable. The Consumption plan doesn't support availability zones.
 
 ::: zone-end
 
@@ -220,17 +197,9 @@ Instance spreading with a zone-redundant deployment follows these rules, even as
 
 ::: zone-end
 
-::: zone pivot="dedicated"
-
-Instance distribution follows App Service plan rules. For details, see [Reliability in Azure App Service](reliability-app-service.md).
-
-::: zone-end
+::: zone pivot="flex-consumption,premium"
 
 ### Cost
-
-::: zone pivot="consumption"
-
-Not applicable.
 
 ::: zone-end
 
@@ -248,19 +217,11 @@ Not applicable.
 
 ::: zone-end
 
-::: zone pivot="dedicated"
-
-See [Reliability in Azure App Service](reliability-app-service.md) for cost information.
-
-::: zone-end
-
 For pricing details, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
 
+::: zone pivot="flex-consumption,premium"
+
 ### Configure availability zone support
-
-::: zone pivot="consumption"
-
-The Consumption plan doesn't support availability zones.
 
 ::: zone-end
 
@@ -279,36 +240,22 @@ The Consumption plan doesn't support availability zones.
 
 ::: zone-end
 
-::: zone pivot="dedicated"
-
-See [Reliability in Azure App Service](reliability-app-service.md) for configuration guidance.
-
-::: zone-end
+::: zone pivot="flex-consumption,premium"
 
 ### Behavior when all zones are healthy
 
-::: zone pivot="consumption"
-
-Not applicable.
-
 ::: zone-end
 
-::: zone pivot="flex-consumption,premium,dedicated"
+::: zone pivot="flex-consumption,premium"
 
 - **Cross-zone operation:** When you configure zone redundancy on Azure Functions, requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
 - **Cross-zone data replication:** Because Azure Functions is a stateless compute service, there's no customer data to replicate between zones. The platform handles configuration and metadata replication automatically.
 
 ::: zone-end
 
-### Behavior during a zone failure
+::: zone pivot="flex-consumption,premium"
 
-::: zone pivot="consumption"
-
-Not applicable.
-
-::: zone-end
-
-::: zone pivot="flex-consumption,premium,dedicated"
+### Behavior during a zone failure\
 
 - **Detection and response:** The Azure Functions platform is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover.
 
@@ -324,63 +271,27 @@ Not applicable.
 
 - **Traffic rerouting:** When a zone is unavailable, Azure Functions detects the loss of the zone and creates new instances in another availability zone. Then, any new requests are automatically spread across all active instances.
 
-::: zone-end
-
 ### Zone recovery
 
-::: zone pivot="consumption"
-
-Not applicable.
-
-::: zone-end
-
-::: zone pivot="flex-consumption,premium,dedicated"
-
 When the availability zone recovers, Azure Functions automatically restores instances in the availability zone, removes any temporary instances created in the other availability zones, and reroutes traffic between your instances as normal.
-
-::: zone-end
 
 ### Test for zone failures
 
 The Azure Functions platform manages traffic routing, failover, and zone recovery for zone-redundant resources. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate availability zone failure processes.
 
-## Migration to availability zone support
-
-::: zone pivot="consumption"
-
-The Consumption plan doesn't support availability zones. To use zone redundancy, migrate to a Flex Consumption, Premium, or Dedicated plan.
-
 ::: zone-end
 
-::: zone pivot="flex-consumption"
-
-You can enable availability zones on an existing Flex Consumption plan or create a new zone-redundant plan. For detailed migration steps, see [Migrate Azure Functions to availability zones](migrate-functions.md).
-
-::: zone-end
-
-::: zone pivot="premium"
-
-You can't convert an existing Premium plan to use availability zones. Create a new Premium plan with zone redundancy enabled, then redeploy your functions. For detailed migration steps, see [Migrate Azure Functions to availability zones](migrate-functions.md).
-
-::: zone-end
-
-::: zone pivot="dedicated"
-
-See [Reliability in Azure App Service](reliability-app-service.md) for migration guidance.
-
-::: zone-end
+<!-- TODO -->
 
 ## Resilience to region-wide failures
 
-Azure Functions is a single-region service. If the region becomes unavailable, your Azure Functions resource is also unavailable. However, you can deploy separate resources into multiple regions; it's your responsibility to manage replication, traffic distribution, and failover. For more information on how to deploy across multiple regions, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+Azure Functions is a single-region service. If the region becomes unavailable, your Azure Functions resource is also unavailable.
 
 ### Custom multi-region solutions for resiliency
 
-Because there's no built-in redundancy available, functions run in a function app in a specific Azure region. To avoid loss of execution during outages, you can redundantly deploy the same functions to function apps in multiple regions. To learn more about multi-region deployments, see the guidance in [Highly available multi-region web application](/azure/architecture/reference-architectures/app-service-web-app/multi-region).
+To avoid loss of execution during outages, you can redundantly deploy the same functions to function apps in multiple regions.
 
-**Microsoft responsibility:** Microsoft ensures that the Azure Functions platform is available in each region where you deploy your function apps.
-
-**Customer responsibility:** You are responsible for:
+You're responsible for:
 
 - Deploying function apps to multiple regions
 - Managing traffic distribution between regions
