@@ -31,9 +31,7 @@ This article describes how to make Azure Functions resilient to a variety of pot
 
 ## Production deployment recommendations
 
-The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable Azure Functions solution, see [Azure Functions and reliability](/azure/well-architected/service-guides/azure-functions-security).
-
-<!-- TODO: Confirm WAF service guide URL for Azure Functions. -->
+The Azure Well-Architected Framework provides recommendations across reliability, performance, security, cost, and operations. To understand how these areas influence each other and contribute to a reliable Azure Functions solution, see [Architecture best practices for Azure Functions](/azure/well-architected/service-guides/azure-functions).
 
 ## Reliability architecture overview
 
