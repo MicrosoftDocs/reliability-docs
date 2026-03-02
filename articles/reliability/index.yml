@@ -136,6 +136,17 @@ productDirectory:
         - mobile
         - web
     # Card
+    - title: Azure App Configuration
+      summary: Centrally manage application settings and feature flags
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-configuration.svg
+      url: reliability-app-configuration.md
+      azureCategories:
+        - containers
+        - developer-tools
+        - integration
+        - mobile
+        - web
+    # Card
     - title: Azure AI Search
       summary: AI-powered cloud search service for mobile and web app development
       imageSrc: https://static.docs.com/ui/media/product/azure/search.svg
@@ -264,6 +275,13 @@ productDirectory:
       azureCategories:
         - integration
         - iot
+    # Card
+    - title: Azure Managed Grafana
+      summary: Fully managed service for analytics and monitoring solutions
+      imageSrc: /azure/media/index/managed-grafana.svg
+      url: reliability-managed-grafana.md
+      azureCategories:
+        - management-and-governance
     # Card
     - title: Azure NetApp Files
       summary: Enterprise-grade Azure file shares, powered by NetApp
@@ -581,6 +599,14 @@ productDirectory:
       url: reliability-private-link-service.md
       azureCategories:
         - networking
+    # Card
+    - title: Azure Site Recovery
+      summary: Keep your business running with built-in disaster recovery service
+      imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
+      url: reliability-site-recovery.md
+      azureCategories:
+        - management-and-governance
+        - migration
 
 tools:
   title: Reliability services and capabilities

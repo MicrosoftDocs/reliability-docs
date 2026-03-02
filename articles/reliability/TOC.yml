@@ -75,11 +75,7 @@ items:
   - name: Containers
     items:
     - name: Azure App Configuration
-      items:
-      - name: Availability zones
-        href: /azure/azure-app-configuration/faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-does-app-configuration-ensure-high-data-availability
-      - name: Disaster recovery
-        href: /azure/azure-app-configuration/concept-disaster-recovery?tabs=core2x?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-app-configuration.md
     - name: Azure Container Apps
       href: reliability-container-apps.md
     - name: Azure Container Instances
@@ -164,6 +160,8 @@ items:
       href: reliability-backup.md
     - name: Azure Guest Configuration
       href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
+    - name: Azure Managed Grafana
+      href: reliability-managed-grafana.md
     - name: Azure Monitor - Log Analytics
       items:
       - name: Availability zones
@@ -171,21 +169,13 @@ items:
       - name: Azure Monitor - Log Analytics
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
     - name: Azure Site Recovery
-      items:
-      - name: Availability zones
-        href: /azure/site-recovery/site-recovery-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/site-recovery/azure-to-azure-tutorial-enable-replication?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-site-recovery.md
   - name: Migration
     items:
     - name: Azure Migrate
       href: /azure/migrate/resources-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#does-azure-migrate-offer-backup-and-disaster-recovery
     - name: Azure Site Recovery
-      items:
-      - name: Availability zones
-        href: /azure/site-recovery/site-recovery-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/site-recovery/azure-to-azure-tutorial-enable-replication?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-site-recovery.md
   - name: Networking
     items:
     - name: Azure Application Gateway v2
@@ -266,6 +256,8 @@ items:
       href: reliability-ai-search.md
     - name: Azure API Management
       href: reliability-api-management.md
+    - name: Azure App Configuration
+      href: reliability-app-configuration.md
     - name: Azure App Service
       href: reliability-app-service.md
     - name: Azure Container Apps
@@ -305,7 +297,7 @@ items:
       - name: Azure API Management
         href: reliability-api-management.md#configure-availability-zone-support
       - name: Azure App Configuration
-        href: migrate-app-configuration.md
+        href: reliability-app-configuration.md#resilience-to-availability-zone-failures
       - name: Azure App Service
         href: reliability-app-service.md#configure-availability-zone-support
       - name: Azure Application Gateway
@@ -315,7 +307,7 @@ items:
       - name: Azure Functions
         href: migrate-functions.md
       - name: Azure Backup
-        href: migrate-recovery-services-vault.md
+        href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
         href: reliability-batch.md#availability-zone-migration
       - name: Azure Container Apps
