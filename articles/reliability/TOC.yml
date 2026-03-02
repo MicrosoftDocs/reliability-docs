@@ -160,6 +160,8 @@ items:
       href: reliability-backup.md
     - name: Azure Guest Configuration
       href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
+    - name: Azure Managed Grafana
+      href: reliability-managed-grafana.md
     - name: Azure Monitor - Log Analytics
       items:
       - name: Availability zones
