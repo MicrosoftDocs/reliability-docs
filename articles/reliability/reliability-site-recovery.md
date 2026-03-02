@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-site-recovery
-ms.date: 02/27/2026
+ms.date: 03/03/2026
 ai-usage: ai-assisted
 ---
 
@@ -126,9 +126,6 @@ This section describes what to expect when Site Recovery is used in a region wit
 - **Cross-zone data replication:** Site Recovery and Azure Storage handle zone data replication as follows:
 
     - *Site Recovery configuration:* Site Recovery replicates your configuration data across zones even if your vault is configured to use LRS.
-
-        > [!WARNING]
-        > **Note to PG:** Please verify that this is accurate.
 
     - *Cache storage account:* If your cache storage account is configured to use ZRS, Azure Storage synchronously replicates the cached data between zones.
 
