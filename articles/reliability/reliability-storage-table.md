@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Table Storage
 description: Learn about resiliency in Azure Table Storage, including resilience to transient faults, availability zone failures, and region failures.
-ms.author: glynnniall
-author: glynnniall
+ms.author: shaas
+author: stevenmatthew
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-table-storage
