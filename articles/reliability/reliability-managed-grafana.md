@@ -4,7 +4,7 @@ description: Find out about reliability in Azure Managed Grafana, including tran
 author: maud-lv
 ms.author: malev
 ms.topic: reliability-article
-ms.custom: subject-reliability
+ms.custom: subject-reliability, references_regions
 ms.service: azure-managed-grafana
 ms.date: 03/02/2026
 ai-usage: ai-assisted
