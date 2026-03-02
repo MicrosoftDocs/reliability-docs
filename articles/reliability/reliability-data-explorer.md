@@ -60,7 +60,7 @@ To build resilience to transient faults when you use Azure Data Explorer, follow
 
 - When you use queued ingestion, rely on the [built-in retry behavior](/azure/data-explorer/ingest-data-overview).
 - Use [Microsoft-provided client libraries and SDKs](/kusto/api/), which automatically retry when transient faults occur.
-- If you use Azure Data Explorer APIs directly, retry any queries and management operations that fail due to a transient fault.
+- If you use Azure Data Explorer REST APIs directly, retry any queries and management operations that fail due to a transient fault.
 
 ## Resilience to availability zone failures
 
@@ -124,7 +124,7 @@ Compute nodes are charged at the same rate whether you use availability zone sup
 
 - **Disable availability zone support on an existing cluster:** After a cluster is configured with availability zones, you can't change the cluster to not use availability zones.
 
-- **Verify availability zone configuration for clusters:** You can use the cluster's *zone status* property (the `zoneStatus` property in the API) to verify the availability zone configuration of a cluster.
+- **Verify availability zone configuration for clusters:** You can use the cluster's *zone status* property (the `zoneStatus` property in the REST API) to verify the availability zone configuration of a cluster.
 
   If the value is `Zonal`, it means the cluster has been configured to use availability zones. However, the cluster might be zonal or zone-redundant. To determine which, use the *zones* property. If the zones list has one zone listed, the cluster is zonal (single-zone). If it has multiple zones listed, it's zone-redundant.
 
