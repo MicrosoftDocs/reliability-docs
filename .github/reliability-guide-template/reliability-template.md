@@ -29,7 +29,7 @@ ms.date: 02/04/2026 # Required; mm/dd/yyyy format.
 
 ## Resilience to availability zone failures
 
-<!-- [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)] -->
+<!-- [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)] -->
 
 ### Requirements
 
@@ -49,9 +49,9 @@ ms.date: 02/04/2026 # Required; mm/dd/yyyy format.
 
 This section describes what to expect when you configure a [resource name] for [availability zone support type], and all zones are operational.
 
-- **Traffic routing between zones:**
+- **Cross-zone operation:**
 
-- **Data replication between zones:**
+- **Cross-zone data replication:**
 
 ### Behavior during a zone failure
 
@@ -67,7 +67,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 - **Expected downtime:**
 
-- **Traffic rerouting:**
+- **Redistribution:**
 
 ### Zone recovery
 
@@ -93,9 +93,9 @@ This section describes what to expect when you configure a [resource name] for [
 
 This section describes what to expect when you configure a [resource name] for [multi-region support type], and all regions are operational.
 
-- **Traffic routing between regions:**
+- **Cross-region operation:**
 
-- **Data replication between regions:**
+- **Cross-region data replication:**
 
 #### Behavior during a region failure
 
@@ -111,7 +111,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 - **Expected downtime:**
 
-- **Traffic rerouting:**
+- **Redistribution:**
 
 #### Region recovery
 

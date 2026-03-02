@@ -42,7 +42,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure AI Search| [Reliability in AI Search](reliability-ai-search.md) ||
 |Azure API Center| [Reliability in Azure API Center](reliability-api-center.md) ||
 |Azure API Management | [Reliability in API Management](reliability-api-management.md) ||
-|Azure App Configuration||[App Configuration and high data availability](/azure/azure-app-configuration/faq#how-does-app-configuration-ensure-high-data-availability) </p> [Resiliency and disaster recovery](/azure/azure-app-configuration/concept-disaster-recovery)|
+|Azure App Configuration| [Reliability in Azure App Configuration](reliability-app-configuration.md)||
 |Azure App Service| [Reliability in App Service](reliability-app-service.md)||
 |App Service Environment| [Reliability in App Service Environment](reliability-app-service-environment.md)||
 |Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md )    ||
@@ -91,6 +91,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Kubernetes Service (AKS)| [Reliability in AKS](reliability-aks.md)||
 |Azure Load Balancer| [Reliability in Load Balancer](reliability-load-balancer.md)||
 |Azure Logic Apps|[Reliability in Logic Apps](reliability-logic-apps.md) ||
+|Azure Managed Grafana|[Reliability in Azure Managed Grafana](reliability-managed-grafana.md) ||
 |Azure Machine Learning|| [Failover for business continuity and disaster recovery](/azure/machine-learning/how-to-high-availability-machine-learning)|
 |Azure managed disks|| [Best practices for achieving high availability by using Azure virtual machines and managed disks](/azure/virtual-machines/disks-high-availability)|
 |Azure Managed Redis|[Reliability in Azure Managed Redis](./reliability-managed-redis.md) ||
@@ -101,7 +102,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure NetApp Files| [Reliability in Azure NetApp Files](reliability-netapp-files.md)||
 |Azure Network Watcher|| [Network Watcher service availability and redundancy](/azure/network-watcher/frequently-asked-questions#service-availability-and-redundancy)|
 |Azure Notification Hubs| [Reliability in Notification Hubs](reliability-notification-hubs.md)||
-|Azure Private Link|| [Private Link availability](/azure/private-link/availability)   |
+|Azure Private Link service| [Reliability in Azure Private Link service](reliability-private-link-service.md)||
 |Azure public IP addresses|| [Azure public IP addresses availability zone](/azure/virtual-network/ip-services/public-ip-addresses#availability-zone) |
 |Azure Queue Storage|[Reliability in Queue Storage](reliability-storage-queue.md)||
 |Azure Route Server|| [Route Server frequently asked questions (FAQs)](/azure/route-server/route-server-faq)|
@@ -121,11 +122,10 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Virtual Machine Scale Sets| [Reliability in Virtual Machine Scale Sets](reliability-virtual-machine-scale-sets.md)||
 |Azure Virtual Network| [Reliability in Virtual Network](reliability-virtual-network.md) ||
 |Azure Virtual WAN||[Availability zones and resiliency in Virtual WAN](/azure/virtual-wan/virtual-wan-faq#how-are-availability-zones-and-resiliency-handled-in-virtual-wan)</p> [Disaster recovery design](/azure/virtual-wan/disaster-recovery-design) |
-|Azure VMware Solution|| [Deploy disaster recovery by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)|
+|Azure VMware Solution| [Reliability in Azure VMware Solution](./reliability-vmware-solution.md)||
 |Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
-|Microsoft Purview| [Reliability in Microsoft Purview](reliability-microsoft-purview.md)||
 
 ## Related content
 

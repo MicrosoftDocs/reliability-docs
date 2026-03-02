@@ -7,8 +7,8 @@ model: Claude Opus 4.5 (copilot)
 You are assisting with drafting a *Reliability Guide* that must primarily follow an existing **Markdown template** and its companion **Contribution Guide**.
 
 ## Inputs you may be given
-- A **Reliability Guide Markdown template** #file:./reliability-guide-template-compliance/reliability-template.md
-- A **Contribution Guide Markdown document** #file:./reliability-guide-template-compliance/contributor-guide.md
+- A **Reliability Guide Markdown template** #file:../reliability-guide-template/reliability-template.md
+- A **Contribution Guide Markdown document** #file:../reliability-guide-template/contributor-guide.md
   - Explains the intent of each section
   - Provides recommended phrasing and guidance
   - Highlights common pitfalls and things to watch out for
@@ -86,3 +86,4 @@ Do not assume responsibilities are obvious; state them clearly wherever relevant
 
 ## Other notes
 - Never use the word "zonal" as an adjective. Instead of "zonal resilence", use "zone resilience", and so forth.
+- Diagrams and other images must be stored in the `media/reliability-{service-name}` folder. Diagram filenames should be kebab-case and descriptive of the content (e.g. `availability-zones.png` or `zone-redundant.png`).

@@ -91,6 +91,36 @@ conceptualContent:
               url: incident-response.md
               itemType: concept
 
+    - title: Reliability guidance for each phase of your cloud journey
+      summary: Plan, design, implement, and operate dependable workloads by addressing strategy, operational practices, and reliability considerations throughout your solution's lifecycle.
+      items:
+      - title: Strategy and planning
+        summary: Define business justification and expected outcomes of adoption
+        links:
+          - text: Resiliency considerations for your cloud strategy
+            url: /azure/cloud-adoption-framework/strategy/inform/resiliency
+            itemType: concept
+
+      - title: Implementation and operation
+        summary: Migrate and modernize workload resiliency
+        links:
+          - text: Prepare your secure cloud estate for availability
+            url: /azure/cloud-adoption-framework/secure/ready#prepare-for-availability
+            itemType: concept
+          - text: Adopt the principle of availability
+            url: /azure/cloud-adoption-framework/secure/adopt#adopt-the-principle-of-availability
+            itemType: concept
+
+      - title: Cloud architecture
+        summary: Design, build, and continuously improve a resilient cloud architecture
+        links:
+          - text: Reliability pillar of the Azure Well-Architected Framework
+            url: /azure/well-architected/reliability/
+            itemType: concept
+          - text: Design principles for Azure applications
+            url: /azure/architecture/guide/design-principles/
+            itemType: concept
+
 productDirectory:
   title: Reliability guides for Azure services
   summary: Learn how Microsoft designs each service for reliability and resilience to faults and problems, for example availability zone outages. Understand your responsibilities to meet your own reliability requirements.
@@ -103,6 +133,17 @@ productDirectory:
       azureCategories:
         - integration
         - iot
+        - mobile
+        - web
+    # Card
+    - title: Azure App Configuration
+      summary: Centrally manage application settings and feature flags
+      imageSrc: https://static.docs.com/ui/media/product/azure/app-configuration.svg
+      url: reliability-app-configuration.md
+      azureCategories:
+        - containers
+        - developer-tools
+        - integration
         - mobile
         - web
     # Card
@@ -192,7 +233,7 @@ productDirectory:
     # Card
     - title: Azure Device Registry
       summary: Enables the cloud and edge management of assets.
-      imageSrc: https://static.docs.com/ui/media/product/azure/resource.svg
+      imageSrc: /azure/media/index/device-registry.svg
       url: reliability-device-registry.md
       azureCategories:
         - iot
@@ -234,6 +275,13 @@ productDirectory:
       azureCategories:
         - integration
         - iot
+    # Card
+    - title: Azure Managed Grafana
+      summary: Fully managed service for analytics and monitoring solutions
+      imageSrc: /azure/media/index/managed-grafana.svg
+      url: reliability-managed-grafana.md
+      azureCategories:
+        - management-and-governance
     # Card
     - title: Azure NetApp Files
       summary: Enterprise-grade Azure file shares, powered by NetApp
@@ -452,14 +500,6 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: Microsoft Purview
-      summary: Maximize business value with unified data governance
-      imageSrc: /azure/media/index/purview.svg
-      url: reliability-microsoft-purview.md
-      azureCategories:
-        - analytics
-        - management-and-governance
-    # Card
     - title: Azure DNS
       summary: Host your DNS domain in Azure
       imageSrc: /azure/media/index/dns.svg
@@ -545,6 +585,20 @@ productDirectory:
       url: reliability-azure-storage-mover.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure VMware Solution
+      summary: Run your VMware workloads natively on Azure
+      imageSrc: /azure/media/index/azure-vmware.svg
+      url: reliability-vmware-solution.md
+      azureCategories:
+        - compute
+    # Card
+    - title: Azure Private Link service
+      summary: Private access to services hosted on the Azure platform, keeping your data on the Microsoft network
+      imageSrc: /azure/media/index/private-link.svg
+      url: reliability-private-link-service.md
+      azureCategories:
+        - networking
 
 tools:
   title: Reliability services and capabilities

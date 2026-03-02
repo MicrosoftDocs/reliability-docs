@@ -75,7 +75,7 @@ Here's a quick summary of all pattern elements:
 > - Place the article under a **Reliability** [TOC node](#toc-placement) that's under a **Concepts** node.
 > - Set the [metadata](#set-metadata) metadata, especially `ms.topic`, `ms.custom`, and `description`, appropriately for reliability guides.
 > - Use the format "Reliability in \<product or service\>" for the [H1 headline](#h1-headline-and-introduction) and follow the instructions for the introductory section.
-> - Include an H2 section for [production deployment recommendations](#production-deployment-recommendations).
+> - Include an H2 section for [production deployment recommendations](#production-deployment-recommendations-for-reliability).
 > - (Optional) Include an H2 section for [reliability architecture overview](#reliability-architecture-overview).
 > - Include an H2 section that discusses [resilience to transient faults](#resilience-to-transient-faults).
 > - Include an H2 section that discusses [resilience to availability zone failures](#resilience-to-availability-zone-failures).
@@ -128,7 +128,9 @@ Use the following format for the H1: "Reliability in \[service-name\]".
 
 The introduction should consist of three paragraphs in the following order:
 
-1. **Service introduction**: Begin with a brief 2-3 sentence introduction to the service. The FIRST mention of the service should be formatted as a link to the service overview, using "Azure \[service-name\]" format. For example:
+1. **Service introduction**: Begin with a brief 2-3 sentence introduction to the service. The FIRST mention of the service should be formatted as a link to the service overview. Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) to confirm how to refer to the service name, including on first use and subsequent uses.
+
+  For example:
 
    > [Azure Bastion](/azure/bastion/bastion-overview) is a fully managed platform as a service (PaaS) that you provision to provide high-security connections to virtual machines via a private IP address. It provides seamless RDP/SSH connectivity to your virtual machines directly over TLS from the Azure portal, or via the native SSH or RDP client that's already installed on your local computer.
 
@@ -140,9 +142,16 @@ The introduction should consist of three paragraphs in the following order:
 
 3. **Article scope**: Describe what the article contains, using the terms from the H2 section names. List only the topics actually covered in the article. For example:
 
-   > This article describes how to make Azure Bastion resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Bastion service level agreement (SLA).
+   ```markdown
+   This article describes how to make Azure Bastion resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Bastion service level agreement (SLA).
+   ```
 
-**Product naming convention**: Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) to confirm how to refer to the service name, including on first use and subsequent uses.
+**Dependent resources:** Some types of resources are only ever deployed in conjunction with other resources. For example, virtual machines must be deployed alongside disks, networks, and applications. For these services, include an IMPORTANT note at the end of the introduction, which clarifies that reliability should be considered across all of these individual resources collectively, similar to this example:
+
+  ```markdown
+  > [!IMPORTANT]
+  > When you consider the reliability of a VM, also consider the reliability of your disks, your network infrastructure, and the applications that run on your VMs. Even if you increase the resiliency of a VM, that increase might not be impactful if your other resources and applications aren't also resilient. Depending on your resiliency requirements, you may need to make configuration changes across multiple areas.
+  ```
 
 ### Production deployment recommendations (for reliability)
 
@@ -264,7 +273,7 @@ This is a key section. It describes how the service works with Azure's availabil
    ```markdown
    ## Resilience to availability zone failures
 
-   [!INCLUDE [Resilience to availability zone failures](includes/reliability-availability-zone-description-include.md)]
+   [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
    ```
 
 2. Provide a high-level overview of how the service supports availability zones. For example, explain whether the service automatically spreads replicas across zones or requires customer configuration.
@@ -285,7 +294,7 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - **Zonal**, in which the customer picks a single zone to use.
 
-      For zonal services, add this include file somewhere within the section:
+      For zonal services, add this include file somewhere within the section, which explains that zonal resources aren't inherently zone-resilient:
 
       ```markdown
       [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
@@ -294,6 +303,12 @@ This is a key section. It describes how the service works with Azure's availabil
    - Supports **both models**.
 
    - Some services don't fit neatly into these categories. Please speak to the Reliability Hub team about how best to handle these situations.
+
+   - If the service also supports nonzonal deployments, include a statement similar to this:
+
+      ```markdown
+      If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
+      ```
 
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
@@ -476,27 +491,27 @@ Include this section to explain normal operations when all availability zones ar
 
 **Include two bullets:**
 
-- **Traffic routing between zones**: Explain how traffic is distributed across zones during normal operations.
+- **Cross-region operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
 
-  - *For zone-redundant services*, traffic routing typically services fall into one of these models:
-    - *Active/active*: Requests are automatically spread across instances in every availability zone
-    - *Active/passive*: Requests go to a primary instance with standby instances in other zones
+  - *For zone-redundant services*, work distribution typically services fall into one of these models:
+    - *Active/active*: Work is automatically spread across instances in every availability zone
+    - *Active/passive*: Work goes to a primary instance with standby instances in other zones
 
      **Example:**
 
       ```markdown
-      - **Traffic routing between zones:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
+      - **Cross-region operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
       ```
 
-  - *For zonal services*, clarify that customers are responsible for configuring their solution to route requests between the availability zones.
+  - *For zonal services*, clarify that customers are responsible for configuring their solution to route work between the availability zones.
 
     **Example:**
 
       ```markdown
-      - **Traffic routing between zones:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
+      - **Cross-region operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
       ```
 
-- **Data replication between zones**:
+- **Cross-region data replication**:
 
   - *For zone-redundant services where the service replicates data across zones*, explain:
     - Replication method: synchronous, asynchronous, or hybrid. Most zone-redundant Azure services replicate data synchronously across zones.
@@ -508,7 +523,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
+      - **Cross-region data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
       ```
 
     Some services replicate their data asynchronously, where changes are applied in a single zone and then propagated after some time to the other zones. Use wording similar to this to explain this approach and its tradeoffs.
@@ -516,7 +531,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
+      - **Cross-region data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
       ```
 
   - *For stateless services*, clarify that no data is synchronized.
@@ -524,7 +539,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Data replication between zones:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
+      - **Cross-region data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
       ```
 
 > [!NOTE]
@@ -835,28 +850,28 @@ If your service supports disabling multi-region support, provide links to the re
 
 ### Behavior when all regions are healthy
 
-Add information about normal operations. Break the content down into two bullets: **Traffic routing between regions** and **data replication between regions**.
+Add information about normal operations. Break the content down into two bullets:
 
-- **Traffic routing between regions**. Explains how work is divided up between instances in multiple regions, during regular day-to-day operations - NOT during a region failure.
+- **Cross-region operation:** Explains how work is divided up between instances in multiple regions, during regular day-to-day operations - NOT during a region failure.
 
     Commonly, services use one of these traffic routing approaches:
-    - *Active/active:* Requests are spread across instances in every region. Services might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
-    - *Active/passive:* Requests always goes to the primary region.
+    - *Active/active:* Work is spread across instances in every region. Services that receive requests might use Traffic Manager or Azure Front Door behind the scenes, and you can decide whether to disclose that fact.
+    - *Active/passive:* Work always goes to the primary region.
 
     **Example:**
 
     ```markdown
-    - **Traffic routing between regions:** When you configure multi-region support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
+    - **Cross-region operation:** When you configure multi-region support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
     ```
 
-- **Data replication between regions** is only required for services that perform data replication across regions.
+- **Cross-region data replication:** Only required for services that perform data replication across regions.
 
     Most Azure services replicate the data across regions asynchronously, where changes are applied in a single region and then propagated after some time to the other regions. Use wording similar to this to explain this approach and its tradeoffs.
 
     **Example:**
 
     ```markdown
-    - **Data replication between regions**: When a client changes any data in your \[service-name\] resource, that change is applied to the primary region. At that point, the write is considered to be complete. Later, the X resource in the secondary region is automatically updated with the change. This approach is called *asynchronous replication.* Asynchronous replication ensures high performance and throughput. However, any data that wasn't replicated between regions could be lost if the primary region experiences a failure.
+    - **Cross-region data replication:** When a client changes any data in your \[service-name\] resource, that change is applied to the primary region. At that point, the write is considered to be complete. Later, the X resource in the secondary region is automatically updated with the change. This approach is called *asynchronous replication.* Asynchronous replication ensures high performance and throughput. However, any data that wasn't replicated between regions could be lost if the primary region experiences a failure.
     ```
 
     Alternatively, some services replicate their data synchronously which means that changes are applied to multiple (or all) regions simultaneously, and the change isn't considered to be completed until multiple/all regions have acknowledged the change. Use wording similar to the following to explain this approach and its tradeoffs:
@@ -864,7 +879,7 @@ Add information about normal operations. Break the content down into two bullets
     **Example:**
 
     ```markdown
-    - **Data replication between regions**: When a client changes any data in your \[service-name\] resource, that change is applied to all instances in all regions simultaneously. This approach is called *synchronous replication.* Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a region failure. However, because all changes must be replicated across regions that might be geographically distant, you might experience lower throughput or performance.
+    - **Cross-region data replication:** When a client changes any data in your \[service-name\] resource, that change is applied to all instances in all regions simultaneously. This approach is called *synchronous replication.* Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a region failure. However, because all changes must be replicated across regions that might be geographically distant, you might experience lower throughput or performance.
     ```
 
 >[!NOTE]
@@ -1026,24 +1041,28 @@ We recommend adding the following include file, which adds an explanation about 
 
 ### Resilience to service maintenance
 
-Describe how the service maintains reliability during maintenance operations. If the service has no special requirements for customers to maintain reliability during service maintenance, you can omit the section.
+Describe how the service maintains reliability during maintenance operations.
 
-If the customer should take action to avoid issues during maintenance, briefly explain how they can do that:
+If the service has no special requirements for customers to maintain reliability during service maintenance, the section only contains am include file:
 
   **Example:**
 
   ```markdown
   ## Resilience to service maintenance
 
-  [service-name] performs regular service upgrades and other maintenance tasks. To ensure that sufficient capacity is available even during upgrades, you should configure your *resource type* to have additional capacity.
+  [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
   ```
 
-If the customer can control any aspect of when or how maintenance occurs, briefly explain how they can do that. Provide links to any relevant documentation.
+If the customer should take action to avoid issues during maintenance, briefly explain how they can do that. Also, if the customer can control any aspect of when or how maintenance occurs, briefly explain how they can do that. Provide links to any relevant documentation.
 
   **Example:**
 
   ```markdown
   ## Resilience to service maintenance
+
+  [service-name] performs regular service upgrades and other maintenance tasks.
+  
+  To ensure that sufficient capacity is available even during upgrades, you should configure your *resource type* to have additional capacity.
 
   To reduce service disruptions during critical time periods, [service-name] provides controls so that you can specify planned maintenance times.
   ```
@@ -1063,6 +1082,8 @@ Then the section should call out:
 - Key requirements that must be met for the SLA to take effect
 
 Do not repeat the SLA, or provide any exact wording or numbers. Instead, aim to provide a general overview of how a customer should interpret the SLA for a service, because they often are quite specific about what needs to be done for an SLA to apply.
+
+For some services, where the are no callouts, the section should only contain the include file and no other content.
 
 ### Related content
 
