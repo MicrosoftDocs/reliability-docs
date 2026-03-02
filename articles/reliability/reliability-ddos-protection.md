@@ -6,7 +6,7 @@ ms.author: abell
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-ddos-protection
-ms.date: 02/10/2026
+ms.date: 03/03/2026
 ---
 
 # Reliability in Azure DDoS Protection
@@ -95,18 +95,15 @@ Azure DDoS Protection is a fully Microsoft-managed, zone-redundant service. Beca
 
 The behavior of Azure DDoS Protection during region-wide failures is different depending on the type of DDoS protection you use:
 
+- **DDoS Network Protection plans** are deployed into an Azure region that you select. However, the plan protects public IP addresses in other regions too.
+
+  If the region hosting a DDoS Network Protection plan becomes unavailable, protected public IP addresses in other regions continue to be protected. However, management operations for the plan might be unavailable until the region recovers.
+
 - **DDoS IP Protection** is configured on a single public IP address.
 
   For regional public IP addresses, if there's a region-wide failure, the IP address and its servers are likely to be unavailable.
 
   For global public IP addresses, the IP address remains protected by DDoS IP Protection even when a region fails.
-
-- **DDoS Network Protection plans** are deployed into a single Azure region. However, the protection applies at the platform level and protects public IP addresses regardless of which region those IP addresses are in.
-
-  If the region hosting a DDoS Network Protection plan becomes unavailable, protected public IP addresses in other regions continue to be protected.
-
-  > [!WARNING]
-  > **Note to PG:** Please confirm the above statement.
 
 ## Service-level agreement
 
