@@ -23,7 +23,7 @@ This article describes how to make Azure Site Recovery resilient to a variety of
 
 ## Production deployment recommendations for reliability
 
-When using Site Recovery with production workloads, we recommend that take these actions:
+When using Site Recovery with production workloads, we recommend that you take these actions:
 
 > [!div class="checklist"]
 > - Deploy your Recovery Services vault in your target region for replication.
@@ -39,7 +39,7 @@ When using Site Recovery with production workloads, we recommend that take these
 When you use Azure Site Recovery, you define a *source* and *target*, which represent the VMs that are replicated:
 
 - The *source* can be an Azure VM, or a VM or server from another supported source, including on-premises physical servers, VMware VMs, and Hyper-V VMs.
-- The *target* is always an Azure VM. For Azure-to-Azure VM replication, the target can be a different region or availability zone to the source VM.
+- The *target* is always an Azure VM. For Azure-to-Azure VM replication, the target can be a different region or availability zone from the source VM.
 
 You're responsible for deploying and configuring other resources, including the following:
 
@@ -49,7 +49,7 @@ You're responsible for deploying and configuring other resources, including the 
     - *Replication policy*, which configures the snapshot frequency and retention length.
     - [*Recovery plan*](/azure/site-recovery/recovery-plan-overview), which coordinates the order in which machines fail over and can include scripts and manual actions. Recovery plans are particularly useful for workloads with multiple tiers, such as application and database tiers, that need to fail over in a coordinated fashion.
 
-- For Azure-to-Azure replication, a *cache storage account*, that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
+- For Azure-to-Azure replication, a *cache storage account* that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
 > [!NOTE]
 > This guide focuses on the reliability of the Azure-based components of Azure Site Recovery and the replication relationship. If you replicate data or VMs from an on-premises environment or another cloud provider, you should also consider the reliability of the components outside of Azure.
