@@ -4,7 +4,7 @@ description: Learn how to make Azure Site Recovery resilient to a variety of pot
 author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
-ms.custom: subject-reliability, references-regions
+ms.custom: subject-reliability, references_regions
 ms.service: azure-site-recovery
 ms.date: 02/27/2026
 ai-usage: ai-assisted
