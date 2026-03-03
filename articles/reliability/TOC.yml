@@ -332,8 +332,6 @@ items:
         href: reliability-load-balancer.md#configure-availability-zone-support
       - name: Log Analytics Dedicated Cluster workspaces
         href: migrate-monitor-log-analytics.md
-      - name: Azure Recovery Services vault
-        href: migrate-recovery-services-vault.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database
