@@ -148,7 +148,7 @@ By default, Azure NetApp Files is a single-region service. If the region becomes
 > [!NOTE]
 > You can also replicate a single volume to another availability zone *and* to another region. For more information, see [Understand Azure NetApp Files replication](/azure/azure-netapp-files/replication).
 
-### Requirements
+### Considerations
 
 **Region support:** The secondary region that you can replicate your volumes to depends on the primary region. For more information, see [supported region pairs](/azure/azure-netapp-files/replication#supported-region-pairs). 
 

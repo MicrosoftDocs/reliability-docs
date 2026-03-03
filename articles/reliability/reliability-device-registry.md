@@ -36,7 +36,7 @@ Microsoft manages setup and configuration for zone redundancy in Azure Device Re
 
 ### Requirements
 
-**Region support:** The following list of regions support availability zones in Device Registry:
+**Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md). The following list of regions support availability zones in Device Registry:
 
 | Americas         | Europe               |
 |------------------|----------------------|
@@ -138,4 +138,3 @@ The Device Registry platform manages traffic routing, failover, and failback acr
 
 - [Reliability in Azure](/azure/reliability/overview)
 
-- - **Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).

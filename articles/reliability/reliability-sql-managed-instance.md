@@ -283,6 +283,7 @@ This section describes what to expect when SQL managed instances are configured 
 
 Failover groups don't automatically fail back to the primary region when it's restored, and so it's your responsibility to initiate a failback.
 
+For customer-managed failover groups, you can initiate a failback to the primary region when it's restored. For Microsoft-managed failover groups, the failback process is automatic. For more information, see [Failback to the primary region](/azure/azure-sql/managed-instance/failover-group-sql-mi#failback).
 
 #### Test for region failures
 
