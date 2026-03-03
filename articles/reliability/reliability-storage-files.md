@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Files
 description: Learn about resiliency in Azure Files, including resilience to transient faults, availability zone failures, and region failures.
-ms.author: glynnniall
-author: glynnniall
+author: khdownie
+ms.author: kendownie
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-file-storage
