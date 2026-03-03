@@ -33,17 +33,12 @@ When you enable high availability configuration, the service provisions and main
 
 The service provides built-in redundancy through Azure's storage infrastructure, which automatically maintains multiple copies of data and can recover from storage-level failures. When high availability is enabled, the redundancy model extends across availability zones with automatic failover capabilities.
 
+<!-- TODO -->
+:::image type="content" source="./reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
+
 **Sources:**
 - [What is Azure Database for PostgreSQL?](/azure/postgresql/flexible-server/overview) - Service architecture and deployment models
 - [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-business-continuity) - Built-in reliability features
-
-### High availability configuration
-
-TODO
-
-### Failover types
-
-TODO
 
 ## Resilience to transient faults
 
@@ -65,13 +60,13 @@ When you configure a server, you select one of the following configurations:
 
     We recommend zone-redundant deployments for most production servers. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby replicas.
 
-     :::image type="content" source="~/reusable-content/ce-skilling/azure/media/postgresql/concepts-zone-redundant-high-availability-architecture.png" alt-text="Pictures illustrating redundant high availability architecture." lightbox="~/reusable-content/ce-skilling/azure/media/postgresql/concepts-zone-redundant-high-availability-architecture.png":::
+     :::image type="content" source="./reliability-database-postgresql/zone-redundant.png" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
     Read queries are processed within the primary replica's availability zone, so enable zone redundancy doesn't affect read latency. However, there can be some small latency impact on writes and commits due to synchronous replication between the replicas across zones. The amount of impact is specific to your workloads, the SKU type you select, and the region.
 
 - **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. You select which zone they are placed into.
 
-    :::image type="content" source="./media/reliability-database-postgresql/same-zone-high-availability-architecture.png" alt-text="Pictures illustrating zonal high availability architecture." lightbox="./media/reliability-database-postgresql/same-zone-high-availability-architecture.png":::
+    :::image type="content" source="./reliability-database-postgresql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
     
     If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
     
