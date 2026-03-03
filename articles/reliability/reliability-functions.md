@@ -366,11 +366,28 @@ For disaster recovery for Durable Functions, see [Disaster recovery and geo-dist
 
 ## Resilience to service maintenance
 
-TODO
+Azure Functions performs regular service upgrades and other maintenance tasks. To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
+
+**Enable zone redundancy.** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. *Update domains* consist of collections of VMs that go offline during an update, and they map to availability zones. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or zone becomes unhealthy during an upgrade.
+
+> [!WARNING]
+> **Note to PG:** This section was copied from the App Service reliability guide. Is this accurate for Azure Functions, too? (We'll adjust to remove zone redundancy for consumption plan if so.)
 
 ## Resilience to application deployments
 
-TODO
+Application deployments introduce the risk of problems to a production environment. You should be prepared to roll back an update if it causes problems. You should also control how updates are rolled out to minimize disruption from application restarts.
+
+::: zone pivot="flex-consumption"
+
+Flex Consumption plans support [site update strategies](/azure/azure-functions/flex-consumption-site-updates), which provides multiple ways to deploy your app updates, including rolling updates for zero-downtime deployments.
+
+::: zone-end
+
+::: zone pivot="consumption,premium,dedicated"
+
+Azure Functions [deployment slots](/azure/azure-functions/functions-deployment-slots) enable zero-downtime deployments of your function apps. Use deployment slots to minimize the effect of deployments and configuration changes for your users. Deployment slots also reduce the likelihood that your application restarts. Restarting the application causes a transient fault.
+
+::: zone-end
 
 ## Service-level agreement
 
