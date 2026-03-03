@@ -26,27 +26,41 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 When you deploy Azure Functions, you create and configure several resources that work together:
 
-- **Plan:** A *plan* defines the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior. Depending on the plan type, you might specify the instance size and provide rules about scaling.
+- **Plans and instances:** A *plan* defines the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior.
+
+    For most plan types, your plan runs on multiple VM *instances*. These instances provide the compute resources that run your app code.
 
     Azure Functions is available on several different hosting plan types, each with different capabilities:
 
     - **[Consumption plans](/azure/azure-functions/consumption-plan):** The original serverless tier. Instead of paying for dedicated infrastructure, you pay for function executions and the resources they consume.
 
+        For the Consumption plan, the Azure Functions platform automatically manages instances.
+
     - **[Flex Consumption plans](/azure/azure-functions/flex-consumption-plan):** A modern serverless, Linux-based tier that provides additional capabilities and runs on more modern infrastructure.
 
+        For the Flex Consumption plan, the Azure Functions platform manages scaling, and you can configure always ready instances.
+
     - **[Premium plans](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically.
+        
+        For the Premium plan, the Azure Functions platform manages scaling, and you configure always ready and prewarmed instances.
 
         > [!NOTE]
         > Azure Functions can run on the Azure App Service platform. In the App Service platform, plans that host Premium plan function apps are referred to as Elastic Premium plans, with SKU names like `EP1`. If you choose to run your function app on a Premium plan, make sure to create a plan with an SKU name that starts with `E`, such as `EP1`. App Service plan SKU names that start with `P`, such as `P1V2` (Premium V2 Small plan), are [Dedicated hosting plans](/azure/azure-functions/dedicated-plan). Because they're Dedicated and not Elastic Premium, plans with SKU names starting with `P` don't scale dynamically and can increase your costs.
 
-    - **[Dedicated (App Service) plans](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized. You can also deploy to a private App Service environment. For more details about how App Service plans work, see [Reliability in Azure App Service](reliability-app-service.md) and [Reliability in Azure App Service Environment](./reliability-app-service-environment.md).
+    - **[Dedicated (App Service) plans](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized. You can also deploy to a private App Service environment.
+
+        For the Dedicated plan, you specify the number of instances, or you can use [automatic scaling](/azure/app-service/manage-automatic-scaling?tabs=azure-portal).
+        
+        For more details about how App Service plans work, see [Reliability in Azure App Service](reliability-app-service.md) and [Reliability in Azure App Service Environment](./reliability-app-service-environment.md).
 
 - **Function app:** A *function app* is an application that contains one or more *functions*. Each function contains the code that implements your business logic. A function app runs on a plan and uses the compute resources that the plan provides.
 
-- **Host storage account:** When you create a function app, you must specify a [storage account](/azure/azure-functions/storage-considerations). The storage account is used to manage aspects of the function app's internal operations, including function code storage, logging, and concurrency management (such as blob leases for certain trigger types).
+- **Storage accounts:** When you create a function app, you must specify a [host storage account](/azure/azure-functions/storage-considerations). The storage account is used to manage aspects of the function app's internal operations, including function code storage, logging, and concurrency management (such as blob leases for certain trigger types).
+
+    You can also use a storage account for deployment. This storage account might be the same as your host storage account or a different storage account.
 
     > [!IMPORTANT]
-    > The storage account is a critical part of your Azure Functions reliability architecture. You should configure it for the same level of resilience as your function app. For guidance on configuring storage account reliability, see [Reliability in Azure Blob Storage](reliability-storage-blob.md).
+    > The storage accounts are critical parts of your Azure Functions reliability architecture, and you should configure them to meet your function app's resiliency requirements.
 
 ### Triggers and bindings
 
