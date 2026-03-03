@@ -58,6 +58,14 @@ Azure Functions uses triggers and bindings to integrate with other services:
 
 For more information, see [Azure Functions triggers and bindings](/azure/azure-functions/functions-triggers-bindings).
 
+### Durable Functions
+
+[Durable Functions](/azure/azure-functions/durable/durable-functions-overview) is a feature that lets you create stateful functions, including long-running orchestrations and stateful entities.
+
+When you use Durable Functions, you configure a [storage provider](/azure/azure-functions/durable/durable-functions-storage-providers), which stores the state. You need to evaluate the reliability characteristics of the state store you choose, and configure it to meet your resiliency requirements.
+
+For information about creating using Durable Functions across multiple regions for disaster recovery, see [Disaster recovery and geo-distribution in Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -114,6 +122,8 @@ The Dedicated (App Service) plan supports zone-redundant deployments. When zone 
 
 ::: zone pivot="flex-consumption,premium"
 
+For plans that aren't configured as zone redundant, the underlying virtual machine (VM) instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
+
 ### Requirements
 
 ::: zone-end
@@ -160,14 +170,28 @@ The Dedicated (App Service) plan supports zone-redundant deployments. When zone 
 
 ::: zone pivot="flex-consumption,premium"
 
-- **Storage account requirements:** You must configure your function app's default host storage account to use [zone-redundant storage (ZRS)](/azure/storage/common/storage-redundancy#zone-redundant-storage).
+- **Host storage account:** You must configure your function app's default host storage account to use [zone-redundant storage (ZRS)](/azure/storage/common/storage-redundancy#zone-redundant-storage). If you use a host storage account that isn't configured for ZRS, your app might behave unexpectedly during a zone outage.
 
-    If you use a storage account that isn't configured for ZRS, your app might behave unexpectedly during a zone outage.
+::: zone-end
+
+::: zone pivot="flex-consumption"
+
+- **Deployment container storage account:** If you use a separate storage account for the app's deployment container, you should update it to be zone redundant as well. 
+
+::: zone-end
+
+::: zone pivot="flex-consumption,premium"
 
 - **Operating systems:** Both Windows and Linux plans are supported.
 
+### Considerations
+
+Zone redundancy only guarantees continued uptime for deployed applications. An availability zone outage might affect some aspects of Azure Functions, even though the application continues to serve traffic. These behaviors include plan scaling, application creation, application configuration, and application publishing.
+
+> [!WARNING]
+> **Note to PG:** Should we add a recommendation to overprovision if capacity is tight? We have this in the App Service guide.
+
 ### Instance distribution across zones
-<!-- TODO review this section -->
 
 ::: zone-end
 
@@ -189,7 +213,9 @@ When you configure Elastic Premium function app plans as zone-redundant, the pla
 
 - The minimum function app instance count is two.
 - When you specify a capacity larger than the number of zones, the instances are spread evenly only when the capacity is a multiple of the number of zones.
-- For a capacity value more than Number of Zones * Number of instances, extra instances are spread across the remaining zones.
+- For a capacity value more than Number of Zones * Number of instances, extra instances are spread among the remaining zones.
+
+When Functions allocates instances to a zone redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which is offered by the underlying Azure Virtual Machine Scale Sets. A Premium plan is considered *balanced* when each zone has either the same number of virtual machines in all of the other zones used by the Premium plan, plus-or-minus one virtual machine.
 
 ::: zone-end
 
@@ -226,21 +252,19 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 
 ### Configure availability zone support
 
+- **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see <!-- TODO: Waiting for doc -->.
+
 ::: zone-end
 
 ::: zone pivot="flex-consumption"
 
-- **Create a new zone-redundant Azure Functions plan.** For step-by-step configuration instructions, see [Configure availability zones for Azure Functions](/azure/azure-functions/functions-premium-plan#availability-zones). <!-- TODO -->
-
-- **Enable zone redundancy on an existing plan:** You can enable availability zones during app creation or update an existing plan. <!-- TODO instructions -->
+- **Enable zone redundancy on an existing plan:** You can update an existing Flex Consumption plan to enable zone redundancy. For more information, see <!-- TODO: Waiting for doc -->.
 
 ::: zone-end
 
 ::: zone pivot="premium"
 
-- **Create a new zone-redundant Azure Functions plan.** For step-by-step configuration instructions, see [Configure availability zones for Azure Functions](/azure/azure-functions/functions-premium-plan#availability-zones).
-
-- **Enable zone redundancy on an existing plan:** You can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. However, you can [migrate your function app to a new zone-redundant plan](migrate-functions.md). <!-- TODO -->
+- **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. However, you can [migrate your function app to a new zone-redundant plan](migrate-functions.md). <!-- TODO: Decide what to do with the migration doc -->
 
 ::: zone-end
 
@@ -252,9 +276,14 @@ This section describes what to expect when a plan is zone-redundant, the host st
 
 - **Cross-zone operation:** When you configure zone redundancy on Azure Functions, requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
 
+- **Cross-zone data replication:** Azure Functions is a stateless compute service, so there's no customer data to replicate between zones. The platform replicates configuration across zones automatically.
 
     > [!WARNING]
     > **Note to PG:** Can we specify whether configuration replication is synchronous?
+
+    If your host storage account uses ZRS, Azure Storage synchronously replicates its data across multiple availability zones.
+
+    For Durable Functions, review your storage provider to understand how it replicates data across zones.
 
 ### Behavior during a zone failure
 
@@ -264,13 +293,22 @@ This section describes what to expect when a plan is zone-redundant, the host st
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to an instance in the faulty availability zone are terminated and need to be retried.
+- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to an instance in the faulty availability zone are terminated and need to be retried. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
 - **Expected data loss:** Zone failures aren't expected to cause data loss because Azure Functions is a stateless service.
 
+    If your host storage account uses ZRS, Azure Storage ensures no data loss from a zone failure.
+
+    For Durable Functions, review your storage provider to understand whether data loss is possible during a zone failure.
+
 - **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last a few seconds as traffic is redistributed. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-- **Traffic rerouting:** When a zone is unavailable, Azure Functions detects the loss of the zone and creates new instances in another availability zone. Then, any new requests are automatically spread across all active instances.
+- **Traffic rerouting:** Azure Functions detects the lost instances from that zone and attempts to find new replacement instances. After Azure Functions finds replacements, it distributes traffic across the new instances as needed.
+
+    > [!IMPORTANT]
+    > Azure doesn't guarantee that requests for more instances succeed in a zone-down scenario. The platform attempts to backfill lost instances on a best-effort basis. If you need guaranteed capacity during an availability zone failure, create and configure your plans to account for zone loss by [over-provisioning the capacity](#capacity-planning-and-management).
+
+- **Nonruntime behaviors:** Applications in a zone-redundant App Service plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
 
 ### Zone recovery
 
@@ -325,6 +363,14 @@ Before failover, publishers sending to the shared alias route to the primary eve
 Read more on information and considerations for failover with [Service Bus](/azure/service-bus-messaging/service-bus-geo-dr) and [Event Hubs](/azure/event-hubs/event-hubs-geo-dr).
 
 For disaster recovery for Durable Functions, see [Disaster recovery and geo-distribution in Azure Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
+
+## Resilience to service maintenance
+
+TODO
+
+## Resilience to application deployments
+
+TODO
 
 ## Service-level agreement
 
