@@ -393,29 +393,7 @@ Azure Functions [deployment slots](/azure/azure-functions/functions-deployment-s
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
-::: zone pivot="consumption"
-
-The Consumption plan doesn't have a guaranteed SLA.
-
-::: zone-end
-
-::: zone pivot="flex-consumption"
-
-The Flex Consumption plan has a 99.95% availability SLA when zone redundancy is enabled.
-
-::: zone-end
-
-::: zone pivot="premium"
-
-The Premium plan has a 99.95% availability SLA when zone redundancy is enabled.
-
-::: zone-end
-
-::: zone pivot="dedicated"
-
-The Dedicated (App Service) plan inherits the SLA from the underlying App Service plan. For details, see [Reliability in Azure App Service](reliability-app-service.md).
-
-::: zone-end
+Azure Functions provides distinct availability SLAs for the Consumption plan and for other plan types.
 
 ## Related content
 
