@@ -369,7 +369,7 @@ When you run the same function code in multiple regions, there are two patterns 
 
 With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Front Door can also periodically check the health of each endpoint. When a function in one region stops responding to health checks, Azure Front Door takes it out of rotation and only forwards traffic to the remaining healthy functions.
 
-![Architecture for Azure Front Door and Functions.](./media/reliability-functions/front-door.png)
+![Architecture for Azure Front Door and Functions.](./media/reliability-functions/active-active.png)
 
 #### Active-passive pattern for non-HTTP trigger functions
 
