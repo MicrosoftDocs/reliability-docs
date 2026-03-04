@@ -2,7 +2,7 @@
 title: Reliability in Azure Application Gateway for Containers
 description: Learn how to improve reliability in Azure Application Gateway for Containers by using availability zones and zone redundancy for more resilient performance.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.service: azure-appgw-for-containers
 ms.custom: subject-reliability

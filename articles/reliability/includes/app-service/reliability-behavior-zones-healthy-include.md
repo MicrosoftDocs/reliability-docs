@@ -3,7 +3,7 @@
  ms.service: azure
  ms.topic: include
  ms.date: 07/17/2025
- ms.author: glynnniall
+ ms.author: pnp
  ms.custom: include file
 ---
 The following list describes what to expect when App Service plans are configured for zone redundancy and all availability zones are operational:
