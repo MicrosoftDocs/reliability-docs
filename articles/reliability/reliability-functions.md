@@ -352,42 +352,60 @@ You're responsible for:
 - Ensuring data consistency across regions (if applicable)
 - Monitoring and managing cross-region deployments
 
-When you run the same function code in multiple regions, there are two patterns to consider: active-active and active-passive.
+When you run the same function code in multiple regions, there are two commonly used patterns you can consider: active-active and active-passive. The following sections provide a brief introduction to these patterns, but don't provide detailed guidance or configuration steps.
 
 #### Active-active pattern for HTTP trigger functions
 
-With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Front Door can also periodically check the health of each endpoint. When a function in one region stops responding to health checks, Azure Front Door takes it out of rotation and only forwards traffic to the remaining healthy functions.
+With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Azure Front Door can also periodically check the health of each endpoint. If a function in one region stops responding to health checks, Azure Front Door takes it out of rotation and only forwards traffic to the remaining healthy functions.
 
 ![Architecture for Azure Front Door and Functions.](./media/reliability-functions/active-active.png)
 
 #### Active-passive pattern for non-HTTP trigger functions
 
-For event-driven, non-HTTP-triggered functions (such as Service Bus and Event Hubs triggered functions), use an active-passive pattern. With an active-passive pattern, functions run actively in the region that's receiving events, while the same functions in a second region remain idle. The active-passive pattern provides a way for only a single function to process each message while providing a mechanism to fail over to the secondary region in a disaster. Function apps work with the failover behaviors of the partner services, such as [Azure Service Bus geo-recovery](/azure/service-bus-messaging/service-bus-geo-dr) and [Azure Event Hubs geo-recovery](/azure/event-hubs/event-hubs-geo-dr).
+For event-driven, non-HTTP-triggered functions (such as Service Bus and Event Hubs triggered functions), use an active-passive pattern. With an active-passive pattern, functions run actively in the region that's receiving events, while the same functions in a second region remain idle. The active-passive pattern provides a way for only a single function to process each message, which is important for maintaining data consistency, while also providing a mechanism to fail over to the secondary region in a disaster like a region outage.
 
-Consider an example topology using an Azure Event Hubs trigger. In this case, the active-passive pattern requires the following components:
+Function app failover needs to be considered in conjunction with the failover behaviors of other services, such as:
+- [Azure Service Bus geo-replication and geo-disaster recovery](./reliability-service-bus.md#resilience-to-region-wide-failures)
+- [Azure Event Hubs geo-replication and geo-disaster recovery](./reliability-event-hubs.md#resilience-to-region-wide-failures)
+
+Consider an example topology using an Azure Event Hubs trigger, where your Event Hubs namespace is configured for geo-disaster recovery. In this case, the active-passive pattern requires the following components:
 
 - Azure Event Hubs deployed to both a primary and secondary region.
-- [Geo-disaster enabled](/azure/service-bus-messaging/service-bus-geo-dr) to pair the primary and secondary event hubs. This also creates an _alias_ you can use to connect to event hubs and switch from primary to secondary without changing the connection info.
+- [Geo-disaster recovery enabled](/azure/service-bus-messaging/service-bus-geo-dr) to pair the primary and secondary event hubs. This also creates an *alias* you can use to connect to the Event Hubs namespace, and switch from primary to secondary without changing the connection info.
 - Function apps deployed to both the primary and secondary (failover) region, with the app in the secondary region essentially being idle because messages aren't being sent there.
-- Function app triggers on the _direct_ (nonalias) connection string for its respective event hub.
-- Publishers to the event hub should publish to the alias connection string.
+- Function app triggers on the *direct* (nonalias) connection string for its respective Event Hubs namespace.
+- Publishers to the Event Hubs namespace should publish to the alias connection string.
 
 ![Active-passive example architecture.](./media/reliability-functions/active-passive.png)
 
-Before failover, publishers sending to the shared alias route to the primary event hub. The primary function app is listening exclusively to the primary event hub. The secondary function app is passive and idle. As soon as failover is initiated, publishers sending to the shared alias are routed to the secondary event hub. The secondary function app now becomes active and starts triggering automatically. Effective failover to a secondary region can be driven entirely from the event hub, with the functions becoming active only when the respective event hub is active.
+Before failover, publishers sending to the shared alias route to the primary event hub. The primary function app is listening exclusively to the primary event hub. The secondary function app is passive and idle.
 
-Read more on information and considerations for failover with [Service Bus](/azure/service-bus-messaging/service-bus-geo-dr) and [Event Hubs](/azure/event-hubs/event-hubs-geo-dr).
+As soon as failover is initiated, publishers sending to the shared alias are routed to the secondary event hub. The secondary function app now becomes active and starts triggering automatically. Effective failover to a secondary region can be driven entirely from the event hub, with the functions becoming active only when the respective event hub is active.
 
-For disaster recovery for Durable Functions, see [Disaster recovery and geo-distribution in Azure Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
+#### Durable functions
+
+For multi-region disaster recovery for Durable Functions, see [Disaster recovery and geo-distribution in Azure Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
 
 ## Resilience to service maintenance
 
 Azure Functions performs regular service upgrades and other maintenance tasks. To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
 
-**Enable zone redundancy.** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. *Update domains* consist of collections of VMs that go offline during an update, and they map to availability zones. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or zone becomes unhealthy during an upgrade.
+::: zone pivot="flex-consumption,premium,dedicated"
 
-> [!WARNING]
-> **Note to PG:** This section was copied from the App Service reliability guide. Is this accurate for Azure Functions, too? (We'll adjust to remove zone redundancy for consumption plan if so.)
+- **Enable zone redundancy:** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. *Update domains* consist of collections of VMs that go offline during an update, and they map to availability zones. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or zone becomes unhealthy during an upgrade.
+
+    > [!WARNING]
+    > **Note to PG:** This section was copied from the App Service reliability guide. Is this accurate for Azure Functions, too? (We'll adjust to remove zone redundancy for consumption plan if so.)
+
+::: zone-end
+
+::: zone pivot="dedicated"
+
+- **App Service Environment:** If you host your function app on an App Service Environment, you can customize the upgrade cycle. If you need to validate the effect of upgrades on your workload, enable manual upgrades. This approach allows you to perform validation and testing on a nonproduction instance before applying them to your production instance.
+
+    For more information about maintenance preferences, see [Upgrade preferences for App Service Environment planned maintenance](/azure/app-service/environment/how-to-upgrade-preference).
+
+::: zone-end
 
 ## Resilience to application deployments
 
