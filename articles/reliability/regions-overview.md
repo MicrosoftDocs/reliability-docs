@@ -6,7 +6,7 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 07/03/2025
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability, ai-video-concept
 ---
 

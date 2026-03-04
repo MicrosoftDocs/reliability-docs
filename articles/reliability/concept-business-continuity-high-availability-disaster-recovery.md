@@ -6,7 +6,7 @@ ms.service: azure
 ms.topic: conceptual
 ms.date: 11/04/2025
 ms.update-cycle: 1095-days
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---
