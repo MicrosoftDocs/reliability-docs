@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-database-postgresql	
 ms.subservice: flexible-server
-ms.date: 02/26/2026
+ms.date: 03/04/2026
 ai.usage: ai-assisted
 ---
 
@@ -25,26 +25,40 @@ To learn about how to deploy Azure Database for PostgreSQL to support your solut
 
 ## Reliability architecture overview
 
-<!-- TODO rewrite this, it's a bit weird -->
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
 
-Azure Database for PostgreSQL uses a compute and storage separation architecture designed to support high availability within a single availability zone and across multiple availability zones. The database engine runs on a virtual machine while data files reside on Azure storage that maintains three locally redundant synchronous copies of the database files, ensuring data durability. <!-- TODO verify that the data files are on Azure storage and not LRS disks -->
+### Logical architecture
 
-When you enable high availability configuration, the service provisions and maintains a warm standby server. Data changes on the primary server are synchronously replicated to the standby server to ensure zero data loss. The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can [spread the servers across availability zones](#resilience-to-availability-zone-failures).
+When you work with Azure Database for PostgreSQL, you deploy a *server*, which represents the compute and storage resources required to support your database server. You deploy one or more *databases* to the server.
 
-The service provides built-in redundancy through Azure's storage infrastructure, which automatically maintains multiple copies of data and can recover from storage-level failures. When high availability is enabled, the redundancy model extends across availability zones with automatic failover capabilities.
+Servers can be deployed in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are optimized for different kinds of workloads. In some Azure regions, you can deploy servers with [Azure Confidential Computing](/azure/postgresql/security/security-confidential-computing).
 
-<!-- TODO -->
-:::image type="content" source="./media/reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
+For more information about the general service architecture and deployment models, see [What is Azure Database for PostgreSQL?](/azure/postgresql/flexible-server/overview).
 
-**Sources:**
-- [What is Azure Database for PostgreSQL?](/azure/postgresql/flexible-server/overview) - Service architecture and deployment models
-- [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-business-continuity) - Built-in reliability features
+### Physical architecture
+
+- **Compute and storage separation:** Azure Database for PostgreSQL uses a compute and storage separation architecture designed to support high availability. The database engine runs on a Linux virtual machine, while data files reside on Azure storage that maintains three locally redundant synchronous copies of the database files, ensuring data durability.
+
+- **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby server. Data changes on the primary server are synchronously replicated to the standby server to ensure zero data loss. The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
+
+    :::image type="content" source="./media/reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
+
+    For more information, see [High availability in Azure Database for PostgreSQL](/azure/postgresql/high-availability/concepts-high-availability).
+
+- **Backups:** Azure Database for PostgreSQL automatically creates server backups. For more information, see [Backup and restore](#backup-and-restore).
 
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-Your applications must handle transient connectivity errors that can occur during maintenance, scaling operations, or network interruptions. For detailed suggestions that are specific to Azure Database for PostgreSQL, see [Handling transient connectivity errors in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-connectivity).
+Your applications must handle transient connectivity errors that can occur during maintenance, scaling operations, or network interruptions. Follow these recommendations:
+
+> [!div class="checklist"]
+> - When your application detects transient faults, it should typically retry the operation. Include exponential backoff logic that waits for an increasing amount of time between retries, and cap the number of retry attempts. If the maximum number of retry attempts is reached, your application should treat the operation as failed.
+> - Where possible, use client libraries (also called drivers) that automatically handle retries.
+> - Transient errors that occur during write operations require more careful consideration. Consider making your write operations idempotent, so they can be safely executed multiple times.
+
+For more information, see [Handling transient connectivity errors in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-connectivity).
 
 ## Resilience to availability zone failures
 
@@ -56,48 +70,39 @@ Data files and write-ahead logs (WALs) are stored on premium managed disks withi
 
 When you configure a server, you select one of the following configurations:
 
-- **Zone-redundant high availability:** Zone redundancy provides the highest level of zone resilience by deploying a primary replica in one availability zone and a standby replica in a different availability zone. The standby replica uses similar compute, storage, and network configuration to the primary. You can optionally select the zones for both the primary and secondary replicas, or you can let Microsoft choose zones for you.
+- **Zone-redundant high availability:** Zone redundancy provides the highest level of zone resilience by deploying a primary replica in one availability zone and a standby replica in a different availability zone. The standby replica uses similar compute, storage, and network configuration to the primary. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby replicas.
 
-    We recommend zone-redundant deployments for most production servers. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby replicas.
+    You can optionally select the zones for both the primary and secondary replicas, or you can let Microsoft choose zones for you. 
+
+    We recommend zone-redundant deployments for most production servers.
 
      :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.png" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
     Read queries are processed within the primary replica's availability zone, so enable zone redundancy doesn't affect read latency. However, there can be some small latency impact on writes and commits due to synchronous replication between the replicas across zones. The amount of impact is specific to your workloads, the SKU type you select, and the region.
 
-- **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. You select which zone they are placed into.
+- **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
+
+    You select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
     :::image type="content" source="./media/reliability-database-postgresql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
-    
-    If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
-    
-    Because the replicas are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
-    If your region doesn't support availability zones, then the only high availability configuration you can select is same-zone.
+    Because the replicas are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
-<!-- TODO I don't love this being listed as an option here, not sure if there's a better way to achieve it -->
-- **No high availability:** Although it's not recommended, you can configure your flexible server without high availability enabled. The server has a single primary replica. Servers without high availability don't protect against zone outages or node outages, and they aren't recommended for production workloads.
-
-    For flexible servers configured without high availability, the service provides locally redundant storage with three copies of data in the same datacenter or zone, zone-redundant backup (in regions where it's supported), and built-in server resiliency to automatically restart a crashed server and relocate the server to another physical node. During planned or unplanned failover events, if the server goes down, the service maintains the availability of the servers by using the following automated procedure:
-
-    1. A new compute Linux VM is provisioned.
-    1. The storage with data files is mapped to the new virtual machine.
-    1. PostgreSQL database engine is brought online on the new virtual machine.
-
-    The following picture shows the transition between VM and storage failure.
-
-    :::image type="content" source="./media/reliability-database-postgresql/availability-without-zone-redundant-ha-architecture.png" alt-text="Diagram that shows availability without zone redundant high availability (HA) in steady state." border="false" lightbox="./media/reliability-database-postgresql/availability-without-zone-redundant-ha-architecture.png":::
+If you configure your server without high availability, then it runs on a single replica. If that replica or its zone go down, your server is unavailable. For more information, see [Configurations without availability zones](/azure/postgresql/high-availability/concepts-high-availability#configurations-without-availability-zones).
 
 ### Requirements
 
-- **Region support**: If your server is deployed into [a region that supports availability zones](/azure/reliability/availability-zones-service-support), it can be configured with zone-redundant high availability or zonal (single-zone) high availability.
+- **Region support**: Azure Database for PostgreSQL's support for availability zone configuratons differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/postgresql/overview#azure-regions).
 
-    If your server is deployed into a region that doesn't support availability zones, the region effectively acts as a single availability zone. The only high availability mode that you can select is zonal (same-zone) high availability.
+- **Compute tier:** The following table lists the compute tier support for each type of availability zone support:
 
-- **Compute tiers**: Zone redundancy is supported on General Purpose and Memory Optimized compute tiers.
-
-    Zonal (same-zone) deployments are supported on all compute tiers including Burstable. The Burstable tier only supports zonal deployments.
+    | Pricing tier | Zone-redundant | Zonal (same-zone) |
+    |---|---|---|
+    | Burstable | Not supported | Supported |
+    | General Purpose | Supported | Supported |
+    | Memory Optimized | Supported | Supported |
 
 - **Service tier**: Zone redundancy require General Purpose or Memory Optimized tiers.
 
