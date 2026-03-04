@@ -2,7 +2,7 @@
 title: Reliability in Azure Virtual Machine Scale Sets
 description: Learn how to make Azure Virtual Machine Scale Sets resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machine-scale-sets
