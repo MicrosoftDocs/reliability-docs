@@ -266,32 +266,21 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 
 ### Configure availability zone support
 
-- **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see <!-- TODO: Waiting for doc -->.
-
 ::: zone-end
 
 ::: zone pivot="flex-consumption"
 
-- **Enable zone redundancy on an existing plan:** You can update an existing Flex Consumption plan to enable zone redundancy. For more information, see <!-- TODO: Waiting for doc -->.
+- **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For detailed steps, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#create-a-zone-redundant-function-app).
+
+- **Enable zone redundancy on an existing plan:** You can update an existing Flex Consumption plan to enable zone redundancy. For detailed steps, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#enable-zone-redundancy-on-an-existing-plan).
 
 ::: zone-end
 
 ::: zone pivot="premium"
 
-- **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. You must instead migrate your app by creating a side-by-side deployment on a new Premium plan app.
-    
-    The downtime required for this migration depends on how you choose to redirect traffic during the migration from your old app to your new availability zone-enabled function app:
+- **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For detailed steps, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
 
-    - Consider HTTP-based functions that use an [Application Gateway](/azure/app-service/networking/app-gateway-with-service-endpoints), [custom domain](/azure/app-service/app-service-web-tutorial-custom-domain), or [Azure Front Door](/azure/frontdoor/front-door-overview). In this case, downtime depends on how long it takes to update those respective services with the new app information.
-    - You might also be routing traffic to multiple apps at the same time using a service such as [Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager). In this scenario, you can only fully switch to the new zone-redundant app after everything is deployed and tested fully.
-    - For message-based functions, you should [write defensive functions](/azure/azure-functions/performance-reliability#write-defensive-functions) to ensure messages aren't lost during the migration.
-
-    To enable an existing function app to use availability zones, you must redeploy your project files to a new function app hosted in an zone-redundant Premium plan. Follow these steps:
-    
-    1. If you're already hosted in a Premium plan in a [supported region](#requirements), you can reuse your existing resource group and skip to the next step. Otherwise, create a new resource group in a supported region.
-    1. Create a zone-redundant Premium plan in one of the supported regions and the resource group.
-    1. Create a function app in the new Premium plan and deploy your project code to this new app using your desired [deployment method](/azure/azure-functions/functions-deployment-technologies).
-    1. After the new app is up and running successfully, you can optionally disable or delete the nonzonal app.
+- **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. You must instead migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
 
 ::: zone-end
 
