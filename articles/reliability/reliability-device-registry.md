@@ -36,7 +36,7 @@ Microsoft manages setup and configuration for zone redundancy in Azure Device Re
 
 ### Requirements
 
-**Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md). The following list of regions support availability zones in Device Registry:
+**Region support:** The following list of regions support availability zones in Device Registry:
 
 | Americas         | Europe               |
 |------------------|----------------------|
@@ -89,6 +89,10 @@ The Device Registry platform manages traffic routing, failover, and failback acr
 Device Registry is a single-region service. If the region becomes unavailable, your Device Registry resources are also unavailable.
 
 However, your registry's data is replicated to the paired region. In the event of a prolonged region outage, Microsoft might elect to fail over to the paired region. If this happens, your registry continues to be available in the paired region.
+
+### Requirements
+
+**Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).  
 
 ### Cost
 
