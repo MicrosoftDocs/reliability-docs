@@ -44,15 +44,15 @@ Log Analytics workspaces are associated with a *cluster*, which provides the com
 
 Azure Monitor Logs has two distinct data paths, each with its own reliability characteristics:
 
-- **Ingestion** is the path through which log data flows into a Log Analytics workspace. The ingestion pipeline acknowledges receipt of data only after durably writing it to storage. The ingestion path includes several components:
+- **Ingestion** is the path through which log data flows into a Log Analytics workspace. The Azure Monitor service acknowledges receipt of data only after durably writing it to storage. The ingestion path includes several components:
   
-  - *Data sources* generate telemetry. Some sources, like Azure platform logs sent through diagnostic settings, submit data directly to the ingestion pipeline through *diagnostic settings*. Other sources require an *agent* to collect and forward data. Your applications can also use the [Logs Ingestion API](/azure/azure-monitor/logs/logs-ingestion-api-overview) to send logs directly to Azure Monitor.
+  - *Data sources* generate telemetry. Some sources, like Azure platform logs sent through diagnostic settings, submit data directly to the Azure Monitor service through *diagnostic settings*. Other sources require an *agent* to collect and forward data. Your applications can also use the [Logs Ingestion API](/azure/azure-monitor/logs/logs-ingestion-api-overview) to send logs directly to Azure Monitor.
   
-  - *Data collection rules (DCRs)* define which data to collect, how to transform it, and where to send it. DCRs route data to the ingestion pipeline through a *data collection endpoint (DCE)*.  
+  - *Data collection rules (DCRs)* define which data to collect, how to transform it, and where to send it. DCRs route data to the Azure Monitor service through a *data collection endpoint (DCE)*.  
 
 - **Query** is the path through which you retrieve and analyze data that's already stored in the workspace. Log queries use Kusto Query Language (KQL) and run against the workspace's stored data.
 
-Ingestion and query are handled as distinct service operations, so a disruption to one doesn't necessarily affect the other. For example, during a degradation in the ingestion pipeline, you might still be able to query previously ingested data. Similarly, a query-side issue doesn't prevent new data from being ingested and stored.
+Ingestion and query are handled as distinct service operations, so a disruption to one doesn't necessarily affect the other. For example, during a degradation in the Azure Monitor service, you might still be able to query previously ingested data. Similarly, a query-side issue doesn't prevent new data from being ingested and stored.
 
 For more information about the core components of Azure Monitor Logs, see [Azure Monitor Logs overview](/azure/azure-monitor/logs/data-platform-logs).
 
@@ -68,7 +68,7 @@ You're responsible for deploying and managing agents, and for the reliability of
 
 In Azure Monitor Logs, transient faults are primarily a concern for ingestion:
 
-- **Transient faults within the ingestion pipeline:** The ingestion pipeline that sends collected data to the Log Analytics workspace verifies that each log record is successfully processed before removing it from the pipeline. If the pipeline is unavailable or throttles requests, diagnostic settings and Azure Monitor Agents begin buffering it locally and retrying for many hours, using exponential backoff. In contrast, a custom application that submits ingestion requests or queries must implement its own retry logic.
+- **Transient faults within the Azure Monitor service:** The Azure Monitor service that sends collected data to the Log Analytics workspace verifies that each log record is successfully processed before removing it from the pipeline. If the pipeline is unavailable or throttles requests, diagnostic settings and Azure Monitor Agents begin buffering it locally and retrying for many hours, using exponential backoff. In contrast, a custom application that submits ingestion requests or queries must implement its own retry logic.
 
     > [!WARNING]
     > **Note to PG:** Is it safe to say that Azure resources (diagnostic settings) will also retry during transient faults in the same way that the Azure Monitor Agent does?
@@ -133,7 +133,7 @@ This section describes what to expect when a Log Analytics workspace is zone-red
 
 - **Cross-zone operation:** For clusters that have service resilience, ingestion and queries can use infrastructure in any zone. The service automatically distributes work across zones, optimizing for locality and load.
 
-- **Cross-zone data replication:** For clusters that have data resilience, The ingestion pipeline commits all writes to multiple replicas in separate zones before acknowledging.
+- **Cross-zone data replication:** For clusters that have data resilience, the Azure Monitor service commits all writes to multiple replicas in separate zones before acknowledging.
 
 ### Behavior during a zone failure
 
@@ -149,7 +149,7 @@ This section describes what to expect when a Log Analytics workspace is zone-red
 
     Any active queries might be terminated. Clients can retry the queries.
 
-    For clusters that don't have service resilience, ingestion pipelines might stop processing data that hasn't been committed. Agents or client applications can retry when the zone is healthy.
+    For clusters that don't have service resilience, the Azure Monitor service might stop processing data that hasn't been committed. Agents or client applications can retry when the zone is healthy.
 
 - **Expected data loss:** For clusters that have data resilience, no data loss is expected for data that has been fully committed. Unacknowledged batches need to be retried by the agent or client.
 
@@ -159,7 +159,7 @@ This section describes what to expect when a Log Analytics workspace is zone-red
 
 ### Zone recovery
 
-When an availability zone recovers, Azure Monitor Logs automatically reintegrates the zone into the active service topology. The recovered zone begins processing the ingestion pipeline and queries alongside the other zones. Data that had been replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. You don't need to take action for zone recovery and reintegration.
+When an availability zone recovers, Azure Monitor Logs automatically reintegrates the zone into the active service topology. The recovered zone begins processing the data queued for ingestion and queries alongside the other zones. Data that had been replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. You don't need to take action for zone recovery and reintegration.
 
 ### Test for zone failures
 
@@ -192,10 +192,7 @@ This section summarizes important aspects of workspace replication. Review the f
 
 #### Considerations
 
-- **Alert rules:** Alert rules aren't automatically replicated between the primary and secondary. To maintain identical rule sets in both regions, use infrastructure as code to export alert rules from one workspace and import them the other.
-    
-    > [!WARNING]
-    > **Note to PG:** The workspace replication doc seems to say that (a) the alert rules typically *do* work in the secondary, and (b) it implies there's no way to configure alerts just on the secondary workspace since it's not individually addressable. Can you confirm whether the preceding statement is accurate, given it seems to conflict with the other doc?
+- **Log search alert rules:** [Log search alert rules](../alerts/alerts-types.md#log-alerts) continue to work when you switch between regions unless the Alerts service in the active region isn't working properly or the alert rules aren't available. This can happen, for example, if the region in which the alert rules were created is entirely down. Replication of alert rules across regions isn't done automatically as part of workspace replication, but can be done by the user (for example by exporting from the primary region and importing to the secondary).
 
 - **Manual switchover and switchback:** You're responsible for deciding when to switch over and switch back, and for triggering the switchover and switchback actions.
 
