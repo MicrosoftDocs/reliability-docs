@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Service Bus
 description: Learn about reliability in Azure Service Bus, including availability zones and multi-region deployments.
-ms.author: glynnniall
-author: glynnniall
+ms.author: spelluru
+author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-service-bus

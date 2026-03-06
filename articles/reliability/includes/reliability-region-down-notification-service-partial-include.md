@@ -6,7 +6,7 @@ author: glynnniall
 ms.service: azure
 ms.topic: include
 ms.date: 11/04/2025
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: include file
 ---
 

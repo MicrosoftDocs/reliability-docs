@@ -6,7 +6,7 @@ ms.service: azure-database-mysql
 ms.subservice: flexible-server
 ms.topic: conceptual
 ms.date: 12/13/2022
-ms.author: glynnniall 
+ms.author: pnp
 ms.custom: subject-reliability
 ---
  

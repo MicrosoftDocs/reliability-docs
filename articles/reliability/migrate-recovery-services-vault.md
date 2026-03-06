@@ -5,7 +5,7 @@ author: jfaurskov
 ms.service: azure-site-recovery
 ms.topic: conceptual
 ms.date: 06/24/2022
-ms.author: glynnniall 
+ms.author: pnp
 ms.custom:  subject-reliability
 ---
 

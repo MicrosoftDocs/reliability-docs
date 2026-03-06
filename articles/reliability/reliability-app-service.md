@@ -2,7 +2,7 @@
 title: Reliability in Azure App Service
 description: Learn how to make Azure App Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 author: glynnniall 
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-app-service

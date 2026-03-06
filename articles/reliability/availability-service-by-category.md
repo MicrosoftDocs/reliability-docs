@@ -6,7 +6,7 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: conceptual
 ms.date: 04/11/2025
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability
 ---
 
@@ -136,6 +136,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Kubernetes Fleet Manager
 - Azure Lab Services
 - Azure Machine Learning
+- Azure Managed Grafana
 - Azure Managed HSM
 - Azure Managed Instance for Apache Cassandra
 - Azure NetApp Files
