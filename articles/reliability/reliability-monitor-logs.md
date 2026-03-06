@@ -192,7 +192,7 @@ This section summarizes important aspects of workspace replication. Review the f
 
 #### Considerations
 
-- **Log search alert rules:** [Log search alert rules](../alerts/alerts-types.md#log-alerts) continue to work when you switch between regions unless the Alerts service in the active region isn't working properly or the alert rules aren't available. This can happen, for example, if the region in which the alert rules were created is entirely down. Replication of alert rules across regions isn't done automatically as part of workspace replication, but can be done by the user (for example by exporting from the primary region and importing to the secondary).
+- **Log search alert rules:** [Log search alert rules](/azure/azure-monitor/alerts/alerts-types#log-alerts) continue to work when you switch between regions unless the Alerts service in the active region isn't working properly or the alert rules aren't available. This can happen, for example, if the region in which the alert rules were created is entirely down. Replication of alert rules across regions isn't done automatically as part of workspace replication, but can be done by the user (for example by exporting from the primary region and importing to the secondary).
 
 - **Manual switchover and switchback:** You're responsible for deciding when to switch over and switch back, and for triggering the switchover and switchback actions.
 
