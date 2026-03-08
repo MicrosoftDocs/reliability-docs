@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Functions
-description: Learn how to make Azure Functions resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and cross-region disaster recovery.
+description: Learn how to ensure serverless reliability with Azure Functions by using Azure availability zones, SKUs, and cross-region disaster recovery strategies.
 author: ggailey777
 ms.author: glenga
 ms.topic: reliability-article

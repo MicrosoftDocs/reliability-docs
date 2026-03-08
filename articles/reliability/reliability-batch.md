@@ -2,7 +2,7 @@
 title: Reliability in Azure Batch
 description: Improve reliability in Azure Batch by using availability zones, zone redundancy, and disaster recovery strategies. Design more resilient batch processing workloads.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-batch

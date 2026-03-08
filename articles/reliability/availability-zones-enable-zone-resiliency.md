@@ -6,7 +6,7 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: article
 ms.date: 10/29/2025
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability
 ---
 
