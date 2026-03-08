@@ -88,7 +88,7 @@ Consider the following recommendations for handling transient faults in your fun
 
 - **Triggers and bindings:** The Azure Functions platform includes built-in transient fault handling for many triggers and bindings. When a transient fault occurs while a supported trigger is firing or a supported binding is reading or writing data, the platform can automatically retry the operation. This built-in retry behavior helps ensure that temporary connectivity issues or service blips don't prevent your function from executing. For more information, see [Azure Functions error handling and retries](/azure/azure-functions/functions-bindings-error-pages#retries).
 
-    However, this protection only covers transient faults, persistent failures (such as a misconfigured connection string or a deleted resource) aren't retried.
+    However, this protection only covers transient faults. Persistent failures, such as a misconfigured connection string or a deleted resource, aren't retried.
 
     Persistent failures, and repeated transient failures, are treated as errors, and you can configure logging to capture information about function execution errors. For more information, see [How to configure monitoring for Azure Functions](/azure/azure-functions/configure-monitoring).
 
