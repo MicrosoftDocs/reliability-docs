@@ -171,7 +171,7 @@ This section describes what to expect when a NAT gateway is configured for avail
 
 - **Expected downtime:** The expected downtime depends on the availability zone configuration that your NAT gateway uses.
 
-    - *Zone-redundant:* Existing connections from the failed zone might disconnect. Clients can retry connections immediately, and requests route to an instance in another zone. All remaining connections from healthy zones persist.
+    - *Zone-redundant:* Existing connections from the failed zone might disconnect. Clients can retry connections immediately, and requests route to an instance in another zone. 
 
     - *Zonal:* Outbound connectivity remains unavailable until the zone recovers or until you reroute traffic through alternative connectivity methods or NAT gateways in other zones.
 

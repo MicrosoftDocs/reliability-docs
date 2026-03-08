@@ -3,7 +3,7 @@
  ms.service: azure
  ms.topic: include
  ms.date: 07/17/2025
- ms.author: glynnniall
+ ms.author: pnp
  ms.custom: include file
 ---
 An availability zone outage might affect some aspects of App Service, even though the application continues to serve traffic. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
