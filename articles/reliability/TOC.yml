@@ -160,12 +160,6 @@ items:
       href: reliability-monitor-logs.md
     - name: Azure Managed Grafana
       href: reliability-managed-grafana.md
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
   - name: Migration
@@ -328,8 +322,6 @@ items:
         href: reliability-aks.md
       - name: Azure Load Balancer 
         href: reliability-load-balancer.md#configure-availability-zone-support
-      - name: Azure Recovery Services vault
-        href: migrate-recovery-services-vault.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database
