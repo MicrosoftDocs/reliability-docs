@@ -16,7 +16,7 @@ zone_pivot_groups: azure-functions-hosting-plans
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Functions resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also highlights key information about the Azure Functions service level agreement (SLA).
+This article describes how to make Azure Functions resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also highlights key information about the Azure Functions service level agreement (SLA).
 
 ## Production deployment recommendations
 
@@ -28,30 +28,30 @@ When you deploy Azure Functions, you create and configure several resources that
 
 - **Plans and instances:** A *plan* defines the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior.
 
-    For most plan types, your plan runs on multiple VM *instances*. These instances provide the compute resources that run your app code.
+    For most plan types, your plan runs on multiple Virtual Machine (VM) *instances*. These instances provide the compute resources that run your app code.
 
     Azure Functions is available on several different hosting plan types, each with different capabilities:
 
-    - **[Consumption plans](/azure/azure-functions/consumption-plan):** The original serverless tier. Instead of paying for dedicated infrastructure, you pay for function executions and the resources they consume.
+  - **[Consumption plans](/azure/azure-functions/consumption-plan):** The original serverless tier. Instead of paying for dedicated infrastructure, you pay for function executions and the resources they consume.
 
-        For the Consumption plan, the Azure Functions platform automatically manages instances.
+      For the Consumption plan, the Azure Functions platform automatically manages instances.
 
-    - **[Flex Consumption plans](/azure/azure-functions/flex-consumption-plan):** A modern serverless, Linux-based tier that provides additional capabilities and runs on more modern infrastructure.
+  - **[Flex Consumption plans](/azure/azure-functions/flex-consumption-plan):** A modern serverless, Linux-based tier that provides other capabilities and runs on more modern infrastructure.
 
-        For the Flex Consumption plan, the Azure Functions platform manages scaling, and you can configure always ready instances.
+      For the Flex Consumption plan, the Azure Functions platform manages scaling, and you can configure always ready instances.
 
-    - **[Premium plans](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically.
-        
-        For the Premium plan, the Azure Functions platform manages scaling, and you configure always ready and prewarmed instances.
+  - **[Premium plans](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically.
 
-        > [!NOTE]
-        > Azure Functions can run on the Azure App Service platform. In the App Service platform, plans that host Premium plan function apps are referred to as Elastic Premium plans, with SKU names like `EP1`. If you choose to run your function app on a Premium plan, make sure to create a plan with an SKU name that starts with `E`, such as `EP1`. App Service plan SKU names that start with `P`, such as `P1V2` (Premium V2 Small plan), are [Dedicated hosting plans](/azure/azure-functions/dedicated-plan). Because they're Dedicated and not Elastic Premium, plans with SKU names starting with `P` don't scale dynamically and can increase your costs.
+      For the Premium plan, the Azure Functions platform manages scaling, and you configure always ready and prewarmed instances.
 
-    - **[Dedicated (App Service) plans](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized. You can also deploy to a private App Service environment.
+      > [!NOTE]
+      > Azure Functions can run on the Azure App Service platform. In the App Service platform, plans that host Premium plan function apps are referred to as Elastic Premium plans, with SKU names like `EP1`. If you choose to run your function app on a Premium plan, make sure to create a plan with an SKU name that starts with `E`, such as `EP1`. App Service plan SKU names that start with `P`, such as `P1V2` (Premium V2 Small plan), are [Dedicated hosting plans](/azure/azure-functions/dedicated-plan). Because they're Dedicated and not Elastic Premium, plans with SKU names starting with `P` don't scale dynamically and can increase your costs.
 
-        For the Dedicated plan, you specify the number of instances, or you can use [automatic scaling](/azure/app-service/manage-automatic-scaling?tabs=azure-portal).
-        
-        For more details about how App Service plans work, see [Reliability in Azure App Service](reliability-app-service.md) and [Reliability in Azure App Service Environment](./reliability-app-service-environment.md).
+  - **[Dedicated (App Service) plans](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized. You can also deploy to a private App Service environment.
+
+      For the Dedicated plan, you specify the number of instances, or you can use [automatic scaling](/azure/app-service/manage-automatic-scaling?tabs=azure-portal).
+
+      For more information about how App Service plans work, see [Reliability in Azure App Service](reliability-app-service.md) and [Reliability in Azure App Service Environment](./reliability-app-service-environment.md).
 
 - **Function app:** A *function app* is an application that contains one or more *functions*. Each function contains the code that implements your business logic. A function app runs on a plan and uses the compute resources that the plan provides.
 
@@ -88,11 +88,11 @@ Consider the following recommendations for handling transient faults in your fun
 
 - **Triggers and bindings:** The Azure Functions platform includes built-in transient fault handling for many triggers and bindings. When a transient fault occurs while a supported trigger is firing or a supported binding is reading or writing data, the platform can automatically retry the operation. This built-in retry behavior helps ensure that temporary connectivity issues or service blips don't prevent your function from executing. For more information, see [Azure Functions error handling and retries](/azure/azure-functions/functions-bindings-error-pages#retries).
 
-    However, this protection only covers transient faults — persistent failures (such as a misconfigured connection string or a deleted resource) aren't retried.
+    However, this protection only covers transient faults, persistent failures (such as a misconfigured connection string or a deleted resource) aren't retried.
 
     Persistent failures, and repeated transient failures, are treated as errors, and you can configure logging to capture information about function execution errors. For more information, see [How to configure monitoring for Azure Functions](/azure/azure-functions/configure-monitoring).
 
-- **Your function code:** Within the body of your function, you are responsible for handling transient faults when you make calls to external services. You should implement retry logic, timeouts, and circuit breaker patterns as appropriate for any external service calls made in your function code. Design your functions to be idempotent wherever possible, so that retries don't cause duplicate side effects.
+- **Your function code:** Within the body of your function, you're responsible for handling transient faults when you make calls to external services. You should implement retry logic, timeouts, and circuit breaker patterns as appropriate for any external service calls made in your function code. Design your functions to be idempotent wherever possible, so that retries don't cause duplicate side effects.
 
 - **Clients:** Any client applications that connect to functions synchronously, such as by using an HTTP connection, should be resilient to transient faults.
 
@@ -190,7 +190,7 @@ If you don't enable zone redundancy, your plan is *nonzonal* or *regional*, whic
 
 ::: zone pivot="flex-consumption"
 
-- **Deployment container storage account:** If you use a separate storage account for the app's deployment container, you should update it to be zone redundant as well. 
+- **Deployment container storage account:** If you use a separate storage account for the app's deployment container, you should update it to be zone redundant as well.
 
 ::: zone-end
 
@@ -229,14 +229,14 @@ When you configure Elastic Premium function app plans as zone-redundant, the pla
 - When you specify a capacity larger than the number of zones, the instances are spread evenly only when the capacity is a multiple of the number of zones.
 - For a capacity value more than Number of Zones * Number of instances, extra instances are spread among the remaining zones.
 
-When Functions allocates instances to a zone redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which is offered by the underlying Azure Virtual Machine Scale Sets. A Premium plan is considered *balanced* when each zone has either the same number of virtual machines in all of the other zones used by the Premium plan, plus-or-minus one virtual machine.
+When Functions allocates instances to a zone redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which the underlying Azure Virtual Machine Scale Sets offers. A Premium plan is considered *balanced* when each zone has either the same number of virtual machines in all of the other zones used by the Premium plan, plus-or-minus one virtual machine.
 
 ::: zone-end
 
 ::: zone pivot="flex-consumption,premium"
 
 > [!WARNING]
-> **Note to PG:** Please confirm that the information above is still accurate. App Service changed their behavior to only guarantee two zones (they might use more but they don't specify how many). Would that apply to Flex Consumption and Elastic Premium too?
+> **Note to PG:** Confirm that the information above is still accurate. App Service changed their behavior to only guarantee two zones (they might use more but they don't specify how many). Would that apply to Flex Consumption and Elastic Premium too?
 
 ### Cost
 
@@ -322,7 +322,7 @@ This section describes what to expect when a plan is zone-redundant, the host st
 - **Traffic rerouting:** Azure Functions detects the lost instances from that zone and attempts to find new replacement instances. After Azure Functions finds replacements, it distributes traffic across the new instances as needed.
 
     > [!IMPORTANT]
-    > Azure doesn't guarantee that requests for more instances succeed in a zone-down scenario. The platform attempts to backfill lost instances on a best-effort basis. If you need guaranteed capacity during an availability zone failure, create and configure your plans to account for zone loss by [over-provisioning the capacity](#capacity-planning-and-management).
+    > Azure doesn't guarantee that requests for more instances succeed in a zone-down scenario. The platform attempts to backfill lost instances on a best-effort basis. If you need guaranteed capacity during an availability zone failure, create and configure your plans to account for zone loss by over-provisioning the capacity.
 
 - **Nonruntime behaviors:** Applications in a zone-redundant App Service plan continue to run and serve traffic even if an availability zone experiences an outage. However, nonruntime behaviors might be affected during an availability zone outage. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
 
@@ -356,7 +356,7 @@ When you run the same function code in multiple regions, there are two commonly 
 
 #### Active-active pattern for HTTP trigger functions
 
-With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Azure Front Door can also periodically check the health of each endpoint. If a function in one region stops responding to health checks, Azure Front Door takes it out of rotation and only forwards traffic to the remaining healthy functions.
+With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Azure Front Door can also periodically check the health of each endpoint. If a function in one region stops responding to health checks, Azure Front Door takes it out of rotation, and only forwards traffic to the remaining healthy functions.
 
 ![Architecture for Azure Front Door and Functions.](./media/reliability-functions/active-active.png)
 
@@ -364,7 +364,8 @@ With an active-active pattern, functions in both regions are actively running an
 
 For event-driven, non-HTTP-triggered functions (such as Service Bus and Event Hubs triggered functions), use an active-passive pattern. With an active-passive pattern, functions run actively in the region that's receiving events, while the same functions in a second region remain idle. The active-passive pattern provides a way for only a single function to process each message, which is important for maintaining data consistency, while also providing a mechanism to fail over to the secondary region in a disaster like a region outage.
 
-Function app failover needs to be considered in conjunction with the failover behaviors of other services, such as:
+Function app failover needs to be considered with the failover behaviors of other services, such as:
+
 - [Azure Service Bus geo-replication and geo-disaster recovery](./reliability-service-bus.md#resilience-to-region-wide-failures)
 - [Azure Event Hubs geo-replication and geo-disaster recovery](./reliability-event-hubs.md#resilience-to-region-wide-failures)
 
