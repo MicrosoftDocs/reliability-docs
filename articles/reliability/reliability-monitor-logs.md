@@ -4,10 +4,10 @@ description: Learn about reliability for Azure Monitor Logs (Log Analytics works
 author: austinmccollum
 ms.author: austinmc
 ms.topic: reliability-article
-ms.custom: subject-reliability, references_regions
+ms.custom: subject-reliability
 ms.service: azure-monitor
 ms.subservice: logs
-ms.date: 02/16/2026
+ms.date: 03/09/2026
 ---
 
 # Reliability in Azure Monitor Logs
@@ -52,7 +52,7 @@ Azure Monitor Logs has two distinct data paths, each with its own reliability ch
 
 - **Query** is the path through which you retrieve and analyze data that's already stored in the workspace. Log queries use Kusto Query Language (KQL) and run against the workspace's stored data.
 
-Ingestion and query are handled as distinct service operations, so a disruption to one doesn't necessarily affect the other. For example, during a degradation in the Azure Monitor service, you might still be able to query previously ingested data. Similarly, a query-side issue doesn't prevent new data from being ingested and stored.
+Ingestion and query are handled as distinct service operations, so a disruption to one doesn't necessarily affect the other. For example, during a degradation in the ingestion process, you might still be able to query previously ingested data. Similarly, a query-side issue doesn't prevent new data from being ingested and stored.
 
 For more information about the core components of Azure Monitor Logs, see [Azure Monitor Logs overview](/azure/azure-monitor/logs/data-platform-logs).
 
@@ -66,14 +66,11 @@ You're responsible for deploying and managing agents, and for the reliability of
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-In Azure Monitor Logs, transient faults are primarily a concern for ingestion:
+Consider the following types of transient faults in Azure Monitor Logs:
 
-- **Transient faults within the Azure Monitor service:** The Azure Monitor service that sends collected data to the Log Analytics workspace verifies that each log record is successfully processed before removing it from the pipeline. If the pipeline is unavailable or throttles requests, diagnostic settings and Azure Monitor Agents begin buffering it locally and retrying for many hours, using exponential backoff. In contrast, a custom application that submits ingestion requests or queries must implement its own retry logic.
+- **Transient faults within the Azure Monitor service:** The Azure Monitor service verifies that each log record is successfully ingested in the workspace before removing it from the ingestion process. If ingestion is unavailable or throttles requests, diagnostic settings and Azure Monitor Agents begin buffering it locally and retrying for many hours, using exponential backoff. In contrast, a custom application that submits ingestion requests or queries must implement its own retry logic.
 
-    > [!WARNING]
-    > **Note to PG:** Is it safe to say that Azure resources (diagnostic settings) will also retry during transient faults in the same way that the Azure Monitor Agent does?
-
-- **Transient faults that affect connectivity to the pipeline:** Agents buffer data locally and retry delivery when the ingestion endpoint is temporarily unavailable, which makes the ingestion path more resilient to transient faults.
+- **Transient faults that affect ingestion connectivity:** Agents and Azure diagnostic settings buffer data locally and retry delivery when the ingestion endpoint is temporarily unavailable, which makes the ingestion path more resilient to transient faults.
 
 - **Transient faults that affect custom application logging:** To validate your custom application is handling transient errors properly, monitor these metrics:
     - Ingestion latency
@@ -83,7 +80,7 @@ In Azure Monitor Logs, transient faults are primarily a concern for ingestion:
 
     If you see sustained ingestion latency over five minutes, it might indicate a more significant and non-transient problem. Review the guidance in the other sections of this document to understand how to be resilient to other failure types.
 
-If transient faults occur during queries or when performing other operations, clients are responsible for retrying.
+- **Transient faults during queries and other operations:** If transient faults occur during queries or when performing other operations, clients are responsible for retrying.
 
 ## Resilience to availability zone failures
 
@@ -219,15 +216,17 @@ When you enable workspace replication, you're charged for the replication of all
 - **Enable workspace replication:** The general steps required to enable workspace replication are:
 
     1. [Enable replication and specify the secondary region.](/azure/azure-monitor/logs/workspace-replication#enable-and-disable-workspace-replication).
+
     1. [Validate the provisioning state.](/azure/azure-monitor/logs/workspace-replication#check-workspace-provisioning-state)
+
+        > [!TIP]
+        > Even when the provisioning state is *Succeeded*, table schemas might still be replicating. To verify when table schemas are fully replicated, [audit the secondary workspace](/azure/azure-monitor/logs/workspace-replication#audit-the-inactive-workspace).
+
     1. [Associate data collection rules (DCRs)](/azure/azure-monitor/logs/workspace-replication#associate-data-collection-rules-with-the-workspace-data-collection-endpoint) with the workspace data collection endpoint (DCE) after enabling replication to replicate those streams during switchover.
 
 - **Disable workspace replication:** For detailed steps to disable workspace replication, see [Enable and disable workspace replication](/azure/azure-monitor/logs/workspace-replication#enable-and-disable-workspace-replication).
 
-    Disabling replication stops new logs from being replicated, but doesn't remove already replicated copies until the feature is fully disabled.
-
-    > [!WARNING]
-    > **Note to PG:** Please clarify what "fully disabled" means.
+    Disabling replication stops new logs from being replicated, but doesn't remove already replicated copies until the feature is fully disabled. To monitor the progress of the disable operation, see [Check workspace provisioning state](/azure/azure-monitor/logs/workspace-replication#check-workspace-provisioning-state).
 
 #### Capacity planning and management
 
@@ -258,12 +257,7 @@ This section describes what to expect when you configure a Log Analytics workspa
 
 - **Notifications:** [!INCLUDE [Region down notification partial bullet (Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
-    For information about how to monitor the health of your workspace when making the decision to switch over, see [TMonitor workspace performance using queriesO](/azure/azure-monitor/logs/workspace-replication#monitor-workspace-performance-using-queries).
-    
-    Replication status helps validate secondary freshness.
-
-    > [!WARNING]
-    > **Note to PG:** Please expand on the preceding statement.
+    To help to validate the freshness of your secondary workspace, you can monitor the replication status and also audit the secondary workspace. For information about how to monitor the health of your workspace when making the decision to switch over, see [Monitor workspace performance using queries](/azure/azure-monitor/logs/workspace-replication#monitor-workspace-performance-using-queries).
 
 - **Active requests:** Any active ingestion to the failed region might fail, and any queries in progress in the failed region also might fail.
 
@@ -275,7 +269,7 @@ This section describes what to expect when you configure a Log Analytics workspa
 
     The total amount of data loss is sometimes called the recovery point objective (RPO).
 
-- **Expected downtime:** Thew switchover process involves the secondary workspace pipeline being activated, and an update to the workspace's DNS records.
+- **Expected downtime:** Thew switchover process involves ingestion to the secondary workspace being activated, and an update to the workspace's DNS records.
 
     Although the DNS record change happens quickly, DNS propagation can take longer. If agents or other clients don't honor the DNS time-to-live (TTL), they might continue to attempt ingestion against the primary workspace. Ensure clients don't cache DNS entries for longer than their TTL.
 
@@ -317,7 +311,7 @@ If workspace replication isn't available for your region, or you must use a tabl
 
 - **Export and rehydrate:** If your region is paired with another Azure region, you can use [data export](/azure/azure-monitor/logs/logs-data-export) to continuously export your logs to Azure Blob Storage. Configure the storage account to use one of the geo-redundant storage (GRS) types. Azure Storage automatically and asynchronously replicates the exported logs to the paired region.
 
-    During a disaster, deploy a new workspace and selectively ingest recent critical data. You can also manually query long-term history directly from Blob Storage by using tools like [Azure Storage Explorer](/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer).
+    During a disaster, deploy a new workspace and selectively ingest recent critical data. You can also manually query long-term history directly from Blob Storage by using Azure Data Explorer. For more information, see [Query exported data](/azure/azure-monitor/logs/logs-data-export#query-exported-data).
 
 ## Backup and restore
 
