@@ -3,10 +3,10 @@ title: Shared responsibility for reliability
 description: Learn about the shared responsibility model for reliability on the Azure cloud platform.
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 11/13/2025
 ms.update-cycle: 1095-days
-ms.author: glynnniall
+ms.author: pnp
 author: glynnniall
 ms.custom: subject-reliability
 ---

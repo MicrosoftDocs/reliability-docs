@@ -5,7 +5,7 @@ author: glynnniall
 ms.service: azure
 ms.topic: reliability-article
 ms.date: 01/15/2026
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---
