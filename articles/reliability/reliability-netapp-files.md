@@ -154,7 +154,6 @@ By default, Azure NetApp Files is a single-region service. If the region becomes
 
 ### Considerations
 
-
 Replication is permitted between different Azure subscriptions only if they're within the same Microsoft Entra tenant.
 
 For other considerations related to cross-region replication in Azure NetApp Files, see [Requirements and considerations for using cross-region replication](/azure/azure-netapp-files/replication-requirements).
