@@ -2,7 +2,7 @@
 title: Azure nonregional services
 description: Learn about geographic and global Azure services. See a list of nonregional services and whether they are global or geographic.
 ms.service: azure
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 03/25/2025
 ms.author: pnp
 author: glynnniall
