@@ -2,7 +2,7 @@
 title: Reliability in Azure Bastion
 description: Learn about resiliency in Azure Bastion, including resilience to transient faults, availability zone failures, and region failures.
 author: glynnniall 
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-bastion

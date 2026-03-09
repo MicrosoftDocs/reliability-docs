@@ -5,7 +5,7 @@ author: glynnniall
 ms.service: sql
 ms.topic: conceptual
 ms.date: 04/15/2024
-ms.author: glynnniall 
+ms.author: pnp
 ms.custom: subject-reliability, devx-track-azurecli
 ---
 

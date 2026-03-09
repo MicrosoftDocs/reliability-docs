@@ -1,7 +1,7 @@
 ---
 title: Reliability in Azure Container Registry
 description: Learn about resiliency in Azure Container Registry, including resilience to transient faults, availability zone failures, and region-wide failures. Understand backup and restore options and SLA details.
-ms.author: glynnniall
+ms.author: pnp
 author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
@@ -158,13 +158,11 @@ Container Registry geo-replication doesn't rely on Azure paired regions. You can
 
 This section summarizes information about geo-replication as it relates to reliability. For more information, see [Geo-replication in Container Registry](/azure/container-registry/container-registry-geo-replication).
 
-### Region support
-
-Geo-replication is available in all Azure regions where the Premium tier is supported. You can replicate to any combination of regions, regardless of whether Azure pairs those regions.
 
 ### Requirements
 
-You must use the Premium tier to enable geo-replication.
+- **Region support:** Geo-replication is available in all Azure regions where the Premium tier is supported. You can replicate to any combination of regions, regardless of whether Azure pairs those regions.
+- You must use the Premium tier to enable geo-replication.
 
 ### Considerations
 
