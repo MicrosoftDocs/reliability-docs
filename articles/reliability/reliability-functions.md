@@ -6,7 +6,7 @@ ms.author: glenga
 ms.topic: reliability-article
 ms.service: azure-functions
 ms.custom: references_regions, subject-reliability
-ms.date: 03/03/2026
+ms.date: 03/10/2026
 zone_pivot_groups: azure-functions-hosting-plans
 ---
 
@@ -124,7 +124,7 @@ When zone redundancy is enabled, the platform automatically spreads your plan in
 
 You must also enable zone-redundant storage (ZRS) on the host storage account, which ensures that it's resilient to zone outages as well.
 
-![Diagram showing zone-redundant Azure Functions plan with three instances spread across three zones, and a zone-redundant storage account](./media/reliability-functions/zone-redundant.png)
+![Diagram showing zone-redundant Azure Functions plan with three instances spread across three zones, and a zone-redundant storage account](./media/reliability-functions/zone-redundant.svg)
 
 ::: zone-end
 
@@ -358,7 +358,7 @@ When you run the same function code in multiple regions, there are two commonly 
 
 With an active-active pattern, functions in both regions are actively running and processing events, either in a duplicate manner or in rotation. You should use an active-active pattern in combination with [Azure Front Door](/azure/frontdoor/front-door-overview) for your critical HTTP-triggered functions, which can route and round-robin HTTP requests between functions running in multiple regions. Azure Front Door can also periodically check the health of each endpoint. If a function in one region stops responding to health checks, Azure Front Door takes it out of rotation, and only forwards traffic to the remaining healthy functions.
 
-![Architecture for Azure Front Door and Functions.](./media/reliability-functions/active-active.png)
+![Diagram showing an example active-active architecture, with Azure Front Door routing between Azure Functions apps in different regions, each with their own database.](./media/reliability-functions/active-active.svg)
 
 #### Active-passive pattern for non-HTTP trigger functions
 
@@ -377,7 +377,7 @@ Consider an example topology using an Azure Event Hubs trigger, where your Event
 - Function app triggers on the *direct* (nonalias) connection string for its respective Event Hubs namespace.
 - Publishers to the Event Hubs namespace should publish to the alias connection string.
 
-![Active-passive example architecture.](./media/reliability-functions/active-passive.png)
+![Diagram showing an example active-passive architecture, with Event Hubs geo-disaster recovery spanning multiple regions and separate function apps and databases in each region.](./media/reliability-functions/active-passive.svg)
 
 Before failover, publishers sending to the shared alias route to the primary event hub. The primary function app is listening exclusively to the primary event hub. The secondary function app is passive and idle.
 
