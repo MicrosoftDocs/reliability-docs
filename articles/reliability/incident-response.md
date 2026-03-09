@@ -4,7 +4,7 @@ description: Understand what to do in an Azure service disruption, how to priori
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: concept-article
 ms.custom: subject-reliability
 ms.date: 12/03/2024
 ms.update-cycle: 1095-days
