@@ -221,11 +221,10 @@ The options for testing for zone failures depend on the availability zone config
 
 ## Resilience to region-wide failures
 
-Although Flexible Server doesn't have built-in automatic regional failover, it offers robust disaster recovery capabilities that you can configure based on your specific recovery requirements. 
+Although Azure Database for PostgreSQL doesn't have built-in automatic regional failover, it offers robust disaster recovery capabilities that you can configure based on your specific recovery requirements. 
 
 The service supports geo-redundant backup storage that replicates your backup data to an Azure paired region, enabling *geo-redundant backup and restore* if the primary region becomes unavailable. Additionally, you can deploy *cross-region read replicas* to maintain a synchronized copy of your database in a different region for faster recovery.
 
-<!--Feature: Geo-redundant backup and restore-->
 ### Geo-redundant backup and restore
 
 Geo-redundant backup and restore give you the ability to restore your server in a different region if a disaster occurs. It also provides at least 99.99999999999999 percent (16 nines) durability of backup objects over a year.
@@ -367,6 +366,7 @@ You can also use either of the following customer-managed data migration methods
 - [Geo-replication in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-read-replicas-geo) - Cross-region read replica configuration and management
 
 ## Backup and restore
+<!-- TODO -->
 
 Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups stored in zone-redundant storage where available.
 
@@ -382,35 +382,28 @@ For more information, see [Backup and restore in Azure Database for PostgreSQL](
 
 Azure Database for PostgreSQL automatically handles critical servicing tasks including patching of the underlying hardware, operating system, and database engine. The service includes security updates, software updates, and minor version upgrades as part of planned maintenance.
 
-You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime.
+To ensure your server remains available during maintenance windows, follow thwse recommendations:
 
-To ensure continuous availability during maintenance windows:
+- **Enable high availability**: During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
 
-- **Enable high availability**: With high availability configured with either zonal or zone-redundant models, one server can be maintained while the other continues serving requests, significantly reducing downtime.
-- **Configure custom maintenance windows**: Schedule maintenance during low-activity periods to minimize business impact. TODO /postgresql/flexible-server/concepts-maintenance
-- **Implement retry logic**: Ensure applications can handle brief connectivity interruptions that may occur during maintenance restarts. [TODO](#resilience-to-transient-faults)
+    For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
 
-For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
+- **Configure custom maintenance windows**: You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Schedule maintenance](/azure/postgresql/configure-maintain/how-to-configure-scheduled-maintenance).
 
-<!-- TODO moved from ZR section -->
-- **Maintenance activites:** Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node.
+- **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
 
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-Azure Database for PostgreSQL - Flexible Server provides different availability SLAs based on the server's configuration:
+Azure Database for PostgreSQL provides different availability SLAs based on the server's configuration:
 
 - Servers configured with zone-redundant high availability.
-- Servers configured with single-zone (zonal) high availability.
+- Servers configured with zonal (single-zone) high availability.
 - Servers configured without high availability.
 
 ### Related content
 
-- [What are availability zones?](/azure/reliability/availability-zones-overview)
-- [Azure reliability](/azure/reliability/overview)
-- [Transient fault guidance](/azure/well-architected/reliability/handle-transient-faults)
+- [Azure reliability](./overview.md)
 - [Architecture best practices for Azure Database for PostgreSQL](/azure/well-architected/service-guides/postgresql)
-- [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-business-continuity)
-- [Configure high availability for Azure Database for PostgreSQL](/azure/postgresql/flexible-server/how-to-configure-high-availability)
-- [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-backup-restore)
+- [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-business-continuity)
