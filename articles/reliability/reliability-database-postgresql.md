@@ -116,12 +116,6 @@ If you configure your server without high availability, then it runs on a single
 
 - **Region capacity:** If a zone-redundant server's region lacks capacity for a zone-redundant configuration, you can tell Azure to create both replicas in the same zone temporarily, then automatically migrate to achieve zone redundancy once capacity is available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
 
-- **Zone-redundant backups:** The primary database replica periodically performs automatic backups. At the same time, the standby replica continuously archives the transaction logs in the backup storage. If the region supports availability zones, backup data is stored on zone-redundant storage (ZRS). In regions that don't support availability zones, backup data is stored on local redundant storage (LRS).
-
-> [!WARNING]
-> **Note to PG:** Can you confirm that ZRS backups are used regardless of the server's HA or zone config, and it's purely about the region?
-<!-- TODO if it is, it becomes an option for restoring a zonal server -->
-
 ### Cost
 
 When you enable high availability, the secondary replica is created and billed at the same rate as the primary. The availability zone configuration doesn't affect the cost. There are no charges for data replication within or between availability zones. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
@@ -174,7 +168,7 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures and initiates failover to the standby server without requiring customer action. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
 
-    - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover that you might require, such as manually failing over to a second server you precreated in another zone or region.
+    - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover or recovery stpes that you might require, such as restoring zone-redundant backups to a separate server you precreated in another zone or region.
 
 - **Notification:** High availability (HA) health status monitoring in Azure Database for PostgreSQL provides a continuous overview of the health and readiness of HA-enabled instances. The monitoring feature is built on top of [Azure Resource Health](/azure/service-health/resource-health-overview), and can detect and alert on any issues that might affect your database's failover readiness or overall availability. By assessing key metrics like connection status, failover state, and data replication health, HA health status monitoring enables proactive troubleshooting and helps maintain your database's uptime and performance.
 
@@ -221,74 +215,10 @@ The options for testing for zone failures depend on the availability zone config
 
 ## Resilience to region-wide failures
 
-Although Azure Database for PostgreSQL doesn't have built-in automatic regional failover, it offers robust disaster recovery capabilities that you can configure based on your specific recovery requirements. 
+Azure Database for PostgreSQL supports *cross-region read replicas*, which you can use to maintain a synchronized copy of your database in a different region for faster recovery.
 
-The service supports geo-redundant backup storage that replicates your backup data to an Azure paired region, enabling *geo-redundant backup and restore* if the primary region becomes unavailable. Additionally, you can deploy *cross-region read replicas* to maintain a synchronized copy of your database in a different region for faster recovery.
+You can also use geo-redundant backups, in supported regions. For more information, see [Backup and restore](#backup-and-restore).
 
-### Geo-redundant backup and restore
-
-Geo-redundant backup and restore give you the ability to restore your server in a different region if a disaster occurs. It also provides at least 99.99999999999999 percent (16 nines) durability of backup objects over a year.
-
-You can only configure geo-redundant backup when you create the server. When you configure the server with geo-redundant backup, the backup data and transaction logs are copied to the paired region asynchronously through storage replication.
-
-For more information on geo-redundant backup and restore, see [geo-redundant backup and restore](/azure/postgresql/flexible-server/concepts-backup-restore#geo-redundant-backup-and-restore).
-
-#### Requirements
-
-- **Region support:** Geo-redundant backup storage is available for servers in paired regions that support geo-redundant storage (GRS).  For more information on Azure paired regions, see [Azure paired regions](./regions-paired.md). To learn about GRS support, see [Azure Storage redundancy](/azure/reliability/reliability-storage-blob#multi-region-support).
-
-- **Pricing tier**: All pricing tiers support geo-redundant backups and cross-region read replicas.
-
-#### Configure multi-region support
-
-- **Create**: To learn how to create geo-redundant backups, see [Backup and restore concepts](/azure/postgresql/flexible-server/concepts-backup-restore). 
-
-- **Migrate**: Geo-redundant backup configuration can't be changed after server creation
-
-#### Considerations
-
-- **Recovery Point Objective (RPO)**: Geo-redundant backups may have an RPO of several hours depending on the backup schedule. Cross-region read replicas typically have an RPO of up to 5 minutes under normal conditions.
-- **Recovery Time Objective (RTO)**: Geo-restore operations can take significant time depending on database size. Read replica promotion offers much faster RTO, typically within minutes.
-- **Connection string updates**: Applications must update connection strings when failing over to a different region, unless using virtual endpoints.
-
-
-#### Cost
-
-Geo-redundant backup storage approximately doubles your backup storage costs because data is replicated to a second region. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
-
-
-#### Behavior when all regions are healthy
-
-- **Cross-region operation:** In normal operations, all database traffic is directed to the primary region. The geo-redundant backup feature doesn't route traffic between regions - it only ensures backup data protection. All read and write operations remain on the primary server in the primary region.
-
-- **Cross-region data replication:** Geo-redundant backup uses asynchronous storage-level replication to copy backup data and transaction logs to the Azure paired region. Daily backups are automatically copied to the paired region as part of the managed backup process. Transaction logs (WAL files) are also continuously replicated to ensure comprehensive backup coverage. This replication happens transparently in the background with up to one hour of delay for backup data transmission to the paired region.
-
-
-**Sources:**
-- [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-backup-restore) - Geo-redundant backup configuration and normal operations
-- [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery) - Backup replication behavior and regional failover procedures
-
-
-#### Behavior during a region failure
-
-- **Detection and response**: Microsoft detects region-wide outages and makes geo-redundant backups available in the paired region. Customer must initiate the geo-restore process.
-- **Active requests**: All active connections and transactions in the failed region are lost and must be retried.
-- **Expected data loss**: RPO depends on when the last backup was replicated to the paired region, potentially several hours.
-- **Expected downtime**: RTO includes the time to restore from backup in the destination region, which can be substantial for large databases.
-- **Redistribution**: Customer must update application connection strings to point to the newly restored server in the paired region.
-
-#### Region recovery
-
-When the primary region recovers, you must manually configure and sync any changes made during the outage if you want to return operations to the original region.
-
-#### Test for region failures
-
-- **Planned testing**: Regularly test your geo-restore procedures to ensure they meet your RTO and RPO requirements.
-- **Application testing**: Verify that your applications can handle connection string changes and properly redirect traffic to a different region.
-- **End-to-end validation**: Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
-
-
-<!--Feature: Cross-region read replicas-->
 ### Cross-region read replicas
 
 You can deploy cross region read replicas to protect your databases from region-level failures. Read replicas are updated asynchronously by using PostgreSQL's physical replication technology, and they can lag the primary. General purpose and memory optimized compute tiers support read replicas.
@@ -353,12 +283,11 @@ If you need multi-region resilience beyond the built-in geo-redundant backup and
 For detailed architectural guidance, see:
 - [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery)
 
-
 <!-- TODO consider whether to include this:
 You can also use either of the following customer-managed data migration methods to replicate data to a nonpaired region: 
 
 - [Dump and restore](/azure/postgresql/migrate/how-to-migrate-using-dump-and-restore)
-- [Logical replication and logical decoding](/azure/postgresql/flexible-server/concepts-logical)
+- [Logical replication and logical decoding]( )
 -->
 
 **Sources:**
@@ -367,6 +296,14 @@ You can also use either of the following customer-managed data migration methods
 
 ## Backup and restore
 <!-- TODO -->
+
+<!-- TODO mention zone-redundant backups -->
+
+- **Zone-redundant backups:** The primary database replica periodically performs automatic backups. At the same time, the standby replica continuously archives the transaction logs to the backup storage. <!-- TODO make this applicable to non-HA config too -->
+
+    If the region supports availability zones, backup data is stored on zone-redundant storage (ZRS). In regions that don't support availability zones, backup data is stored on local redundant storage (LRS).
+
+<!-- TODO add geo-redundant backups -->
 
 Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups stored in zone-redundant storage where available.
 
@@ -382,15 +319,16 @@ For more information, see [Backup and restore in Azure Database for PostgreSQL](
 
 Azure Database for PostgreSQL automatically handles critical servicing tasks including patching of the underlying hardware, operating system, and database engine. The service includes security updates, software updates, and minor version upgrades as part of planned maintenance.
 
-To ensure your server remains available during maintenance windows, follow thwse recommendations:
+To ensure your server remains available during maintenance windows, follow these recommendations:
 
-- **Enable high availability**: During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
-
-    For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
-
-- **Configure custom maintenance windows**: You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Schedule maintenance](/azure/postgresql/configure-maintain/how-to-configure-scheduled-maintenance).
-
-- **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
+> [!div class="checklist"]
+> - **Enable high availability**: During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
+>
+>    For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
+>
+> - **Configure custom maintenance windows**: You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Schedule maintenance](/azure/postgresql/configure-maintain/how-to-configure-scheduled-maintenance).
+>
+> - **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
 
 ## Service-level agreement
 
