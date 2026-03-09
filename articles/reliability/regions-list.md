@@ -4,7 +4,7 @@ description: Find Azure regions, their physical location, geography, availabilit
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: concept-article
+ms.topic: reference
 ms.date: 09/23/2025
 ms.update-cycle: 1095-days
 ms.author: pnp
