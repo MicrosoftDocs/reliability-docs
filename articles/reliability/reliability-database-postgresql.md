@@ -70,7 +70,7 @@ For more information, see [Handling transient connectivity errors in Azure Datab
 
 Azure Database for PostgreSQL has different types of availability zone support, which you choose though the *high availability* configuration. Enabling high availability deploys a secondary *standby* replica alongside your primary. This high availability model is designed to ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replicas. If a disruption occurs to the primary replica, the server automatically fails over to the standby replica.
 
-Data files and write-ahead logs (WALs) are stored on premium managed disks within each availabilty zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
+Data files and write-ahead logs (WALs) are stored on premium managed disks within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
 
 When you configure a server, you select one of the following configurations:
 
@@ -84,7 +84,7 @@ When you configure a server, you select one of the following configurations:
 
     Read queries are processed within the primary replica's availability zone, so enable zone redundancy doesn't affect read latency. However, there can be some small latency impact on writes and commits due to synchronous replication between the replicas across zones. The amount of impact is specific to your workloads, the SKU type you select, and the region.
 
-- **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
+- **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
     You select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
@@ -94,11 +94,11 @@ When you configure a server, you select one of the following configurations:
 
     Because the replicas are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
-If you configure your server without high availability, then it runs on a single replica. If that replica or its zone go down, your server is unavailable. For more information, see [Configurations without availability zones](/azure/postgresql/high-availability/concepts-high-availability#configurations-without-availability-zones).
+If you configure your server without high availability, then it runs on a single replica. If that replica or its zone goes down, your server is unavailable. For more information, see [Configurations without availability zones](/azure/postgresql/high-availability/concepts-high-availability#configurations-without-availability-zones).
 
 ### Requirements
 
-- **Region support**: Azure Database for PostgreSQL's support for availability zone configuratons differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/postgresql/overview#azure-regions).
+- **Region support**: Azure Database for PostgreSQL's support for availability zone configurations differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/postgresql/overview#azure-regions).
 
 - **Compute tier:** The following table lists the compute tier support for each type of availability zone support:
 
@@ -108,7 +108,7 @@ If you configure your server without high availability, then it runs on a single
     | General Purpose | Supported | Supported |
     | Memory Optimized | Supported | Supported |
 
-- **Service tier**: Zone redundancy require General Purpose or Memory Optimized tiers.
+- **Service tier**: Zone redundancy requires General Purpose or Memory Optimized tiers.
 
     Zonal (same-zone) deployments are supported on all pricing tiers. 
 
@@ -168,13 +168,13 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures and initiates failover to the standby server without requiring customer action. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
 
-    - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover or recovery stpes that you might require, such as restoring zone-redundant backups to a separate server you precreated in another zone or region.
+    - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover or recovery steps that you might require, such as restoring zone-redundant backups to a separate server you precreated in another zone or region.
 
 - **Notification:** High availability (HA) health status monitoring in Azure Database for PostgreSQL provides a continuous overview of the health and readiness of HA-enabled instances. The monitoring feature is built on top of [Azure Resource Health](/azure/service-health/resource-health-overview), and can detect and alert on any issues that might affect your database's failover readiness or overall availability. By assessing key metrics like connection status, failover state, and data replication health, HA health status monitoring enables proactive troubleshooting and helps maintain your database's uptime and performance.
 
     For a detailed guide on configuring and interpreting HA health statuses, see [High Availability (HA) health status monitoring for Azure Database for PostgreSQL](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
 
-- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to an replica in the faulty availability zone are terminated and need to be retried. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
+- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
 - **Expected data loss:** The amount of data loss depends on the availability zone configuration that your server uses.
 
@@ -208,7 +208,7 @@ The options for testing for zone failures depend on the availability zone config
 
 - *Zone-redundant:* You can test your application's resilience to failover by using a *forced failover*. A forced failover lets you simulate an unplanned outage scenario while running your workload and observe your application downtime. We recommend running simulations in a non-production environment, or at a quiet time. For more information, see [Initiate a forced failover](/azure/postgresql/high-availability/how-to-configure-high-availability#initiate-a-forced-failover)..
 
-- *Zonal:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to during a zone outage. For more information, see [Stop compute of a server](/azure/postgresql/configure-maintain/how-to-stop-server).
+- *Zonal:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to what happens during a zone outage. For more information, see [Stop compute of a server](/azure/postgresql/configure-maintain/how-to-stop-server).
 
 > [!WARNING]
 > **Note to PG:** Do you have any suggestions for other ways to simulate or test a zone failure scenario?
@@ -274,7 +274,7 @@ After the primary region recovers, you can establish a new read replica from the
 
 ### Custom multi-region solutions for resiliency
 
-If you need multi-region resilience beyond the built-in geo-redundant backup and read replica capabilities, you can deploy multiple independent Azure Database for PostgreSQL instances across regions with application-level data synchronization. Consider these architectural patterns:
+If you need multi-region resilience beyond the built-in geo-redundant backup and read replica capabilities, you can deploy multiple independent Azure Database for PostgreSQL servers across different Azure regions with application-level data synchronization. Consider these architectural patterns:
 
 - **Active-passive with application-level failover**: Deploy primary and secondary database instances with application logic to handle failover and data synchronization.
 - **Active-active with data partitioning**: Distribute data across multiple regions based on geographic or functional boundaries.
