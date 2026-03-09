@@ -4,7 +4,7 @@ description: Learn about Azure regions, and how to use them to design resilient 
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 07/03/2025
 ms.author: pnp
 ms.custom: subject-reliability, ai-video-concept
