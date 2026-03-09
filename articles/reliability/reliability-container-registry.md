@@ -158,13 +158,11 @@ Container Registry geo-replication doesn't rely on Azure paired regions. You can
 
 This section summarizes information about geo-replication as it relates to reliability. For more information, see [Geo-replication in Container Registry](/azure/container-registry/container-registry-geo-replication).
 
-### Region support
-
-Geo-replication is available in all Azure regions where the Premium tier is supported. You can replicate to any combination of regions, regardless of whether Azure pairs those regions.
 
 ### Requirements
 
-You must use the Premium tier to enable geo-replication.
+- **Region support:** Geo-replication is available in all Azure regions where the Premium tier is supported. You can replicate to any combination of regions, regardless of whether Azure pairs those regions.
+- You must use the Premium tier to enable geo-replication.
 
 ### Considerations
 

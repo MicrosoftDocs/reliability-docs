@@ -215,9 +215,9 @@ When you create a failover group, you select the [failover policy](/azure/azure-
 > [!IMPORTANT]
 > Use customer-managed failover options to develop, test, and implement your DR plans. **Don't rely on Microsoft-managed failover**, which might only be used in extreme circumstances. A Microsoft-managed failover is likely initiated for an entire region. It can't be initiated for individual failover groups, SQL managed instances, subscriptions, or customers. Failover might occur at different times for different Azure services. We recommend that you use customer-managed failover.
 
-#### Region support
+#### Requirements
 
-You can select any Azure region for the SQL managed instances within the failover group. Because of the high latency of wide area networks, geo-replication uses an asynchronous replication mechanism. To reduce network delays, select regions that have low latency connections. For more information about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency).
+- **Region support:** You can select any Azure region for the SQL managed instances within the failover group. Because of the high latency of wide area networks, geo-replication uses an asynchronous replication mechanism. To reduce network delays, select regions that have low latency connections. For more information about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency).
 
 #### Cost
 
@@ -280,6 +280,8 @@ This section describes what to expect when SQL managed instances are configured 
 #### Region recovery
 
 Failover groups don't automatically fail back to the primary region when it's restored, and so it's your responsibility to initiate a failback.
+
+For customer-managed failover groups, you can initiate a failback to the primary region when it's restored. For Microsoft-managed failover groups, the failback process is automatic. For more information, see [Failback to the primary region](/azure/azure-sql/managed-instance/failover-group-sql-mi#failback).
 
 #### Test for region failures
 
