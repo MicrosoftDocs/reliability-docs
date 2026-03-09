@@ -44,6 +44,8 @@ Behind the scenes, when you create a workspace, the Azure platform provisions th
 
 The load balancer tracks which of the Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions previously served by the other one, based on information saved in the shared database. In the meantime, the Azure Managed Grafana service works to repair the unhealthy server or bring up a new one.
 
+:::image type="content" source="media/reliability-managed-grafana/workspace-virtual-machines.svg" alt-text="Diagram that shows a Azure Managed Grafana workspace that consists of two virtual machines and a load balancer deployed by the service." border="false":::
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -55,6 +57,8 @@ You can build client applications to interact with your Grafana workspace throug
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Managed Grafana workspaces support zone redundancy in supported Azure regions. When zone redundancy is enabled, the workspace's Grafana servers are distributed across multiple availability zones. Microsoft selects the zones your workspace uses. Other resources, such as the network load balancer, database, and shared gateway, are also configured to use multiple availability zones.
+
+:::image type="content" source="media/reliability-managed-grafana/zone-redundant.svg" alt-text="Diagram that shows an Azure Managed Grafana workspace with two instances, each in a separate availability zone, and a zone-redundant load balancer." border="false":::
 
 If you don't enable zone redundancy, it's *nonzonal* or *regional*, which means that the servers and other components might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your workspace might experience downtime.
 
