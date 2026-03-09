@@ -393,6 +393,13 @@ For detailed architectural guidance, see:
 - [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery)
 
 
+<!-- TODO consider whether to include this:
+You can also use either of the following customer-managed data migration methods to replicate data to a nonpaired region: 
+
+- [Dump and restore](/azure/postgresql/migrate/how-to-migrate-using-dump-and-restore)
+- [Logical replication and logical decoding](/azure/postgresql/flexible-server/concepts-logical)
+-->
+
 **Sources:**
 - [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery) - Regional failover options and procedures
 - [Geo-replication in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-read-replicas-geo) - Cross-region read replica configuration and management
