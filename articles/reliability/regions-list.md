@@ -14,7 +14,7 @@ ms.custom: references_regions, subject-reliability
 
 # Azure regions list
 
-Azure provides the most extensive global footprint of any cloud provider and is rapidly opening new regions. This article contains a list of all Azure regions, their paired region status, physical location, geography, and [availability zone](availability-zones-overview.md) support.
+Azure provides the most extensive global footprint of any cloud provider and is rapidly opening new regions. This article contains a list of all regions in the Azure public cloud, their paired region status, physical location, geography, and [availability zone](availability-zones-overview.md) support.
 
 ## Legend
 
@@ -26,7 +26,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 > [!NOTE]
 > Even when a region provides availability zones, it's possible that some services might not support them in that region. Refer to the [Azure service reliability guides](./overview-reliability-guidance.md) to learn about region support for availability zone-enabled services.
  
- ## Azure regions list
+## Azure regions list
 
 #### [All](#tab/all)
 
@@ -179,6 +179,13 @@ To retrieve a list of regions, including the names that can be used for programm
 - [Azure CLI - az account list-locations](/cli/azure/account#az-account-list-locations)
 - [Azure PowerShell - Get-AzLocation](/powershell/module/az.resources/get-azlocation)
 - [Azure Resource Manager REST API](/rest/api/resources/subscriptions/list-locations)
+
+## Sovereign cloud regions
+
+For information about regions in Azure's sovereign clouds, see the following resources:
+
+- [Azure for US Government regions](/azure/azure-government/documentation-government-welcome#region-pairing)
+- [Azure in China regions](/azure/china/overview-regions)
 
 ## Related content
 
