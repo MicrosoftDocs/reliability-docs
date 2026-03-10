@@ -224,6 +224,11 @@
       "source_path": "articles/reliability/migrate-recovery-services-vault.md",
       "redirect_url": "/azure/backup/backup-create-recovery-services-vault#modify-default-settings",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/migrate-database-mysql-flex.md",
+      "redirect_url": "/azure/reliability/reliability-database-mysql",
+      "redirect_document_id": false
     }
   ]
 }

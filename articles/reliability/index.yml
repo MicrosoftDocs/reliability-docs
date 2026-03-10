@@ -611,7 +611,7 @@ productDirectory:
     - title: Azure Database for MySQL
       summary: Managed MySQL database service for app developers
       imageSrc: /azure/media/index/database-mysql-server.svg
-      url: reliability-azure-database-mysql.md
+      url: reliability-database-mysql.md
       azureCategories:
         - databases
 

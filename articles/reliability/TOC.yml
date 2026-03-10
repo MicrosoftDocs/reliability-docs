@@ -100,8 +100,8 @@ items:
         href: /azure/cosmos-db/postgresql/concepts-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
       - name: Disaster recovery
         href: /azure/cosmos-db/postgresql/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Database for MySQL - Flexible Server
-      href: reliability-azure-database-mysql.md
+    - name: Azure Database for MySQL
+      href: reliability-database-mysql.md
     - name: Azure Database for PostgreSQL
       href: reliability-azure-database-postgresql.md
     - name: Azure DocumentDB
@@ -314,8 +314,8 @@ items:
         href: reliability-container-registry.md#configure-availability-zone-support
       - name: Azure Cosmos DB for NoSQL
         href: migrate-cosmos-nosql.md
-      - name: Azure Database for MySQL - Flexible Server
-        href: reliability-azure-database-mysql.md#configure-availability-zone-support
+      - name: Azure Database for MySQL
+        href: reliability-database-mysql.md#configure-availability-zone-support
       - name: Azure Database for PostgreSQL
         href: /azure/postgresql/flexible-server/how-to-manage-high-availability-portal?toc=/azure/reliability#enable-high-availability-during-server-creation
       - name: Azure Elastic SAN
