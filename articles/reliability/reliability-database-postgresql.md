@@ -232,7 +232,7 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 :::image type="content" source="./media/reliability-database-postgresql/read-replica-failure.png" alt-text="Diagram showing a read replica in a second Azure region that has been promoted to the primary replica, with the read-write endpoint now directing read-write traffic to the secondary region." border="false" :::
 
 > [!NOTE]
-> This section focuses on how read replicas can support resilience to region-wide failures. Read replicas can also be used for other purposes, like improving performance and supporting high-scale geographically distributed user bases. For general information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
+> This section summarizes some of the important information about  how read replicas can support resilience to region-wide failures. Read replicas can also be used for other purposes, like improving performance and supporting high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
 
 #### Requirements
 
@@ -249,10 +249,10 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 - **Delete a read replica:** To learn how to delete a read replica, see [Delete a read replica](/azure/postgresql/read-replica/how-to-delete-read-replica).
 
 #### Considerations
-<!-- TODO this section -->
 
-- **Recovery Time Objective (RTO):** Read replica promotion occurs typically within minutes.
 - **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
+
+<!-- TODO monitor replication lag -->
 
 <!-- TODO HA - read replicas don't have HA, and when promoted they aren't HA -->
 
@@ -270,33 +270,39 @@ This section describes what to expect when your server is configured with a read
 
 - **Traffic routing between regions:** In normal operations, your virtual endpoint directs traffic for the read-write endpoint to the primary server in the primary region. If you also use the virtual endpoint's read-only endpoint, then it directs traffic to whichever replica you configure.
 
-- **Data replication between regions:** Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
+- **Data replication between regions:** Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
 
 #### Behavior during a region failure
 
 This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and there's an outage in the primary region:
 
-<!-- TODO this section -->
-
-- **Detection and response:** Customer detects regional outage and manually promotes a read replica to become a standalone read-write server.
+- **Detection and response:** You're responsible for detecting an outage in the primary region, and manually promoting a read replica to become the new primary server. During a region outage, you must perform a forced promotion, which results in the loss of any unreplicated data.
 
     > [!IMPORTANT]
     > You're responsible for triggering promotion. Azure doesn't promote read replicas automatically, even if there's a region failure.
 
+    For detailed steps to initiate a promotion, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary).
+
     > [!WARNING]
-    > **Note to PG:** The [promotion doc](/azure/postgresql/read-replica/concepts-read-replicas-promote#:~:text=However%2C%20an%20exception%20is%20made%20in%20the%20case%20of%20regional%20outages.) mentions that exceptions to some requirements are made during region outages. How is a region outage decided? Does this require Microsoft to set some config somewhere to relax these settings? If so, how quickly after a region fails should a customer expect that to happen?
+    > **Note to PG:** The promotion doc [mentions that exceptions to some requirements are made during region outages](/azure/postgresql/read-replica/concepts-read-replicas-promote#:~:text=However%2C%20an%20exception%20is%20made%20in%20the%20case%20of%20regional%20outages.). How is a region outage decided? Does this require Microsoft to set some config somewhere to relax these settings? If so, how quickly after a region fails should a customer expect that to happen?
 
-- **Notification:** TODO
+- **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
-- **Active requests:** All active connections to the primary region are lost. New connections must be directed to the promoted replica.
+- **Active requests:** All active connections to the primary region are dropped. Applications need to retry making connections to the promoted replica after the promotion process completes.
 
-- **Expected data loss:** RPO is typically up to 5 minutes under normal conditions, potentially longer during severe regional failures.
+- **Expected data loss:** During a region outage, you must perform a forced promotion, which results in the loss of any unreplicated data.
 
-- **Expected downtime:** RTO is typically within minutes for the promotion process, plus time to redirect application traffic.
+    The amount of data loss depends on the replication lag at the time of the outage. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
 
-- **Traffic rerouting:** Customer must update application connection strings to point to the promoted read replica, unless using virtual endpoints.
+    > [!WARNING]
+    > **Note to PG:** If the primary server is later restored, can any of the unreplicated data be manually recovered, or is it always permanently lost?
 
-    <!-- TODO enable HA on new primary server -->
+- **Expected downtime:** Forced promotion typically completes within 1-3 minutes of being triggered. Applications might also need to reconnect to the correct endpoint. Virtual endpoints are updated as part of the forced promotion process. Applications should honor the time-to-live (TTL) of the endpoint's DNS records to ensure they quickly reconnect to the correct replica after promotion completes.
+
+- **Traffic rerouting:** The virtual endpoint for the server automatically redirects application traffic to the new primary replica.
+
+    > [!NOTE]
+    > After a read replica is promoted to be the primary server, it doesn't have high availability configuration enabled. You need to enable high availability configuration manually, or add it to your own automation processes.
 
 #### Region recovery
 
