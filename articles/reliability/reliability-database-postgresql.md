@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Database for PostgreSQL
-description: Learn about reliability in Azure Database for PostgreSQL, including availability zones and multi-region deployments.
+description: Learn how to make Azure Database for PostgreSQL resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
 ms.author: maghan
 author: markingmyname
 ms.topic: reliability-article
@@ -240,6 +240,20 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 - **Compute tiers:** General purpose and memory optimized compute tiers support read replicas. The burstable tier doesn't support read replicas.
 
+#### Considerations
+
+- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures and forced promotions, the symmetrical server requirement can be waived, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
+
+- **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
+
+- **High availability:** Read replicas can't have high availability enabled, and when they're promoted, they also don't have high availability. You're responsible for configuring high availability after promoting a replica.
+
+For additional considerations that apply to the promotion process, see [Promote read replicas in Azure Database for PostgreSQL - Considerations](/azure/postgresql/read-replica/concepts-read-replicas-promote#considerations).
+
+#### Cost
+
+Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
+
 #### Configure multi-region support
 
 - **Create a read replica:** To learn how to create a read replica, see [Create a read replica](/azure/postgresql/read-replica/how-to-create-read-replica). Replicas can be configured after the primary server is created, as long as the primary server is running and accessible.
@@ -247,20 +261,6 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
     To create a virtual endpoint, see [Create virtual endpoints](/azure/postgresql/read-replica/how-to-create-virtual-endpoints).
 
 - **Delete a read replica:** To learn how to delete a read replica, see [Delete a read replica](/azure/postgresql/read-replica/how-to-delete-read-replica).
-
-#### Considerations
-
-- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures and forced promotions, the symmetrical server requirement can be waived, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
-
-- **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
-
-- **High availability:** Read replicas can't be have high availability enabled, and when they're promoted, they don't have high availability. You're responsible for configuring high availability after promoting a replica.
-
-For additional considerations that apply to the promotion process, see [Promote read replicas in Azure Database for PostgreSQL - Considerations](/azure/postgresql/read-replica/concepts-read-replicas-promote#considerations).
-
-#### Cost
-
-Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
 
 #### Behavior when all regions are healthy
 
@@ -304,7 +304,7 @@ This section describes what to expect when your server is configured with a read
 
 #### Region recovery
 
-When you use virtual endpoints, after the primary region recovers, the old primary server is automatially configured as a read replica. You can perform another promotion to return the primary operations to your preferred primary region.
+When you use virtual endpoints, after the primary region recovers, the old primary server is automatically configured as a read replica. You can perform another promotion to return the primary operations to your preferred primary region.
 
 #### Test for region failures
 
@@ -316,7 +316,7 @@ You can initiate a promotion at any time, even when regions are healthy. For det
 
 Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups.
 
-[!INCLUDE [Backups includ ](includes/reliability-backups-include.md)]
+[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
 - **Backup storage:** The service stores backups in zone-redundant storage (ZRS) if the region supports availability zones, or locally redundant storage (LRS) otherwise. This backup storage applies to all servers, regardless of their high availability configuration.
 
