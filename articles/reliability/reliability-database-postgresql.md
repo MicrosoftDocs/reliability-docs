@@ -31,7 +31,7 @@ To learn about how to deploy Azure Database for PostgreSQL to support your solut
 
 When you work with Azure Database for PostgreSQL, you deploy a *server*, which represents the compute and storage resources required to support your database server. You deploy one or more *databases* to the server.
 
-Servers can be deployed in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are optimized for different kinds of workloads. In some Azure regions, you can deploy servers with [Azure Confidential Computing](/azure/postgresql/security/security-confidential-computing).
+Servers can be deployed in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are [optimized for different kinds of workloads](/azure/postgresql/compute-storage/concepts-compute). In some Azure regions, you can deploy servers with [Azure Confidential Computing](/azure/postgresql/security/security-confidential-computing).
 
 For more information about the general service architecture and deployment models, see [What is Azure Database for PostgreSQL?](/azure/postgresql/flexible-server/overview).
 
