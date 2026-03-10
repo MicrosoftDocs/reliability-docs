@@ -88,7 +88,7 @@ When you configure a server, you select one of the following configurations:
 
 - **Zonal (same-zone) high availability:** The primary and standby replicas use the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
-    You select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
+    You can select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
     :::image type="content" source="./media/reliability-database-postgresql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
@@ -238,7 +238,7 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 - **Region support:** You can create cross-region read replicas in any region that supports Azure Database for PostgreSQL. You aren’t limited to Azure paired regions.
 
-- **Compute tiers:** General purpose and memory optimized compute tiers support read replicas. The burstable tier doesn't support read replicas.
+- **Compute tiers:** The General Purpose and Memory Optimized compute tiers support read replicas. The Burstable tier doesn't support read replicas.
 
 #### Considerations
 
