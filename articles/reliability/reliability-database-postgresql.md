@@ -313,27 +313,20 @@ You should regularly test read replica promotion procedures to ensure your proce
 You can initiate a promotion at any time, even when regions are healthy. For detailed steps, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary). We recommend that you perform any forced promotion testing in a non-production environment. Alternatively, you can initiate a planned promotion of your read replica to avoid data loss, but with the caveat that the promotion process is different to what you might see in a region outage. Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
 
 ## Backup and restore
-<!-- TODO -->
 
-<!-- TODO mention zone-redundant backups -->
+Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups.
 
-- **Zone-redundant backups:** The primary database replica periodically performs automatic backups. At the same time, the standby replica continuously archives the transaction logs to the backup storage. <!-- TODO make this applicable to non-HA config too -->
+[!INCLUDE [Backups includ ](includes/reliability-backups-include.md)]
 
-    If the region supports availability zones, backup data is stored on zone-redundant storage (ZRS). In regions that don't support availability zones, backup data is stored on local redundant storage (LRS).
+- **Backup storage:** The service stores backups in zone-redundant storage (ZRS) if the region supports availability zones, or locally redundant storage (LRS) otherwise. This backup storage applies to all servers, regardless of their high availability configuration.
 
-<!-- TODO add geo-redundant backups -->
+    In Azure regions with pairs, you can configure [geo-redundant (GRS) backup storage](/azure/postgresql/backup-restore/concepts-backup-restore#geo-redundant-backup-and-restore) at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
-Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups stored in zone-redundant storage where available.
+    The default backup retention period is 7 days, with the option to extend retention. All backups are encrypted.
 
-The service automatically creates server backups and stores them in the region's zone-redundant storage (ZRS) if the region supports availability zones, or locally redundant storage (LRS) otherwise. The default backup retention period is 7 days, with the option to extend retention up to 35 days. All backups are encrypted using AES 256-bit encryption.
+- **Point-in-time restore:** Point-in-time restore allows you to restore your database to any moment within the backup retention period, creating a new server with the restored data. This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios. When you restore a geo-redundant backup, you create a new server in the paired region.
 
-You can configure geo-redundant backup storage at server creation time to replicate backups to the Azure paired region for additional protection against regional failures. This option provides at least 99.99999999999999% (16 nines) durability of backup objects over a year.
-
-Point-in-time restore allows you to restore your database to any moment within the backup retention period, creating a new server with the restored data. This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios.
- 
-For more information, see [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-backup-restore).
-
-TODO [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery) - Regional failover options and procedures
+For more information, see [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-backup-restore).
 
 ## Resilience to service maintenance
 
@@ -360,8 +353,9 @@ Azure Database for PostgreSQL provides different availability SLAs based on the 
 - Servers configured with zonal (single-zone) high availability.
 - Servers configured without high availability.
 
-### Related content
+## Related content
 
 - [Azure reliability](./overview.md)
 - [Architecture best practices for Azure Database for PostgreSQL](/azure/well-architected/service-guides/postgresql)
 - [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-business-continuity)
+- [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-geo-disaster-recovery)
