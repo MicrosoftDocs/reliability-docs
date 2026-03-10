@@ -39,7 +39,9 @@ For more information about the general service architecture and deployment model
 
 - **Compute and storage separation:** Azure Database for PostgreSQL uses a compute and storage separation architecture to support high availability. The database engine runs on a Linux virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
 
-- **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby server. Data changes on the primary server are synchronously replicated to the standby server to ensure zero data loss. The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
+- **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby server (replica). Data changes on the primary server are synchronously replicated to the standby server to ensure zero data loss during a failure of the primary server.
+
+    The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
 
     :::image type="content" source="./media/reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
 
@@ -190,7 +192,7 @@ This section describes what to expect when servers are configured with high avai
 
 - **Redistribution:** The traffic rerouting behavior depends on the availability zone configuration that your server uses.
 
-    - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting connections. Azure automatically establishes a new standby server in the original primary zone after it recovers.
+    - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting new connections. Azure automatically establishes a new standby server in the original primary zone after it recovers. For full details, see [Forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover).
 
     - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a secondary server in another availability zone or region, you're responsible for rerouting traffic to that secondary instance.
 
