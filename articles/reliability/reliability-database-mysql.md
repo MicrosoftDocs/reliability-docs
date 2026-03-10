@@ -119,7 +119,7 @@ When you enable zone-redundancy or a zonal configuration, you're charged for the
 
 ### Configure availability zone support
 
-- **To create a zone-redundant MySQL Flexible server**, go to [Enable high availability during server creation](/azure/mysql/flexible-server/how-to-configure-high-availabilityhow-to-configure-high-availability#enable-high-availability-during-server-creation).
+- **To create a zone-redundant MySQL Flexible server**, go to [Enable high availability during server creation](/azure/mysql/flexible-server/how-to-configure-high-availability#enable-high-availability-during-server-creation).
 
 <!-- John: There is nothing here in this how-to describing how or when to set the Availability Zone. In the portal you, the customer can choose a zone to deploy to. -->
 
@@ -224,7 +224,7 @@ Azure Database for MySQL supports [read replicas](/azure/mysql/flexible-server/c
 
 #### Requirements
 
-- **Region support**: Read replicas can be created in any [Azure supported region where Azure Database for MySQL Flexible Server is available](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/table).
+- **Region support**: Read replicas can be created in any [Azure supported region where Azure Database for MySQL Flexible Server is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 - **Source server requirements**: The source server must be running and accessible.
 - **Compute tier requirements**: Read replicas are available only for General Purpose and Business Critical compute tiers. The Burstable compute tier doesn't support read replicas.
 - **Replica limits**: You can replicate from a source server to up to five replicas.
