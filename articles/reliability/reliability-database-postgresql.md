@@ -225,11 +225,11 @@ You can deploy read replicas to protect your databases from region-level failure
 
 *Virtual endpoints* provide read-write and read-only endpoints for your server, and automatically direct traffic to the correct replica when a replica is promoted. While they're not required for cross-region read replicas, we strongly recommend you use them when using read replicas to increase your application's resilience. A virtual endpoint ensures your applications switch between replicas with minimal downtime. For more information, see [Virtual endpoints for read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-virtual-endpoints).
 
-<!-- TODO diagram -->
+:::image type="content" source="./media/reliability-database-postgresql/read-replica.png" alt-text="Diagram showing a read replica in a second Azure region, with a read-write endpoint directing read-write traffic to the primary server." border="false" :::
 
 If your primary region fails, you can trigger a *promotion* so that your secondary replica becomes the primary. There are different types of failover that you can trigger depending on how you use read replicas. When you use read replicas to provide resilience to region failures, you typically use the *promote to primary server* approach, which updates your virtual endpoint. During a region outage, you need to perform a *forced promotion*, which can result in some data loss for any unreplicated data. In planned scenarios where the primary region is healthy, you can choose to perform a planned promotion to avoid data loss. For more information, see [Promote read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-promote).
 
-<!-- TODO diagram -->
+:::image type="content" source="./media/reliability-database-postgresql/read-replica-failure.png" alt-text="Diagram showing a read replica in a second Azure region that has been promoted to the primary replica, with the read-write endpoint now directing read-write traffic to the secondary region." border="false" :::
 
 > [!NOTE]
 > This section focuses on how read replicas can support resilience to region-wide failures. Read replicas can also be used for other purposes, like improving performance and supporting high-scale geographically distributed user bases. For general information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
@@ -253,6 +253,8 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 - **Recovery Time Objective (RTO)**: Read replica promotion occurs typically within minutes.
 - **Configuration differences**: Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
+
+<!-- TODO HA - read replicas don't have HA, and when promoted they aren't HA -->
 
 #### Cost
 
