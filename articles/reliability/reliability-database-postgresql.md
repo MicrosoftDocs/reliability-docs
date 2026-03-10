@@ -98,7 +98,7 @@ If you configure your server without high availability, then it runs on a single
 
 ### Requirements
 
-- **Region support**: Azure Database for PostgreSQL's support for availability zone configurations differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/postgresql/overview#azure-regions).
+- **Region support:** Azure Database for PostgreSQL's support for availability zone configurations differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/postgresql/overview#azure-regions).
 
 - **Compute tier:** The following table lists the compute tier support for each type of availability zone support:
 
@@ -108,7 +108,7 @@ If you configure your server without high availability, then it runs on a single
     | General Purpose | Supported | Supported |
     | Memory Optimized | Supported | Supported |
 
-- **Service tier**: Zone redundancy requires General Purpose or Memory Optimized tiers.
+- **Service tier:** Zone redundancy requires General Purpose or Memory Optimized tiers.
 
     Zonal (same-zone) deployments are supported on all pricing tiers. 
 
@@ -236,7 +236,7 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 #### Requirements
 
-- **Region support**: Cross-region read replicas can be created in any region where Azure Database for PostgreSQL is available. You're not restricted to using paired Azure regions.
+- **Region support:** Cross-region read replicas can be created in any region where Azure Database for PostgreSQL is available. You're not restricted to using paired Azure regions.
 
 - **Compute tiers:** General purpose and memory optimized compute tiers support read replicas. The burstable tier doesn't support read replicas.
 
@@ -251,10 +251,14 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 #### Considerations
 <!-- TODO this section -->
 
-- **Recovery Time Objective (RTO)**: Read replica promotion occurs typically within minutes.
-- **Configuration differences**: Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
+- **Recovery Time Objective (RTO):** Read replica promotion occurs typically within minutes.
+- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
 
 <!-- TODO HA - read replicas don't have HA, and when promoted they aren't HA -->
+
+<!-- TODO see considerations section in promotion doc -->
+
+<!-- TODO server symmetry required -->
 
 #### Cost
 
@@ -264,9 +268,9 @@ Read replicas incur compute and storage costs, as well as cross-region data tran
 
 This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and all regions are operational:
 
-- **Traffic routing between regions**: In normal operations, your virtual endpoint directs traffic for the read-write endpoint to the primary server in the primary region. If you also use the virtual endpoint's read-only endpoint, then it directs traffic to whichever replica you configure.
+- **Traffic routing between regions:** In normal operations, your virtual endpoint directs traffic for the read-write endpoint to the primary server in the primary region. If you also use the virtual endpoint's read-only endpoint, then it directs traffic to whichever replica you configure.
 
-- **Data replication between regions**: Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically several minutes, but it can be much longer. For more information, see TODO.
+- **Data replication between regions:** Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
 
 #### Behavior during a region failure
 
@@ -274,46 +278,35 @@ This section describes what to expect when your server is configured with a read
 
 <!-- TODO this section -->
 
-- **Detection and response**: Customer detects regional outage and manually promotes a read replica to become a standalone read-write server.
-- **Active requests**: All active connections to the primary region are lost. New connections must be directed to the promoted replica.
-- **Expected data loss**: RPO is typically up to 5 minutes under normal conditions, potentially longer during severe regional failures.
-- **Expected downtime**: RTO is typically within minutes for the promotion process, plus time to redirect application traffic.
-- **Traffic rerouting**: Customer must update application connection strings to point to the promoted read replica, unless using virtual endpoints.
+- **Detection and response:** Customer detects regional outage and manually promotes a read replica to become a standalone read-write server.
+
+    > [!IMPORTANT]
+    > You're responsible for triggering promotion. Azure doesn't promote read replicas automatically, even if there's a region failure.
+
+    > [!WARNING]
+    > **Note to PG:** The [promotion doc](/azure/postgresql/read-replica/concepts-read-replicas-promote#:~:text=However%2C%20an%20exception%20is%20made%20in%20the%20case%20of%20regional%20outages.) mentions that exceptions to some requirements are made during region outages. How is a region outage decided? Does this require Microsoft to set some config somewhere to relax these settings? If so, how quickly after a region fails should a customer expect that to happen?
+
+- **Notification:** TODO
+
+- **Active requests:** All active connections to the primary region are lost. New connections must be directed to the promoted replica.
+
+- **Expected data loss:** RPO is typically up to 5 minutes under normal conditions, potentially longer during severe regional failures.
+
+- **Expected downtime:** RTO is typically within minutes for the promotion process, plus time to redirect application traffic.
+
+- **Traffic rerouting:** Customer must update application connection strings to point to the promoted read replica, unless using virtual endpoints.
+
+    <!-- TODO enable HA on new primary server -->
 
 #### Region recovery
-<!-- TODO this section -->
 
-After the primary region recovers, you can establish a new read replica from the promoted server back to the original region, then perform another promotion to return operations to the preferred region.
+When you use virtual endpoints, after the primary region recovers, the old primary server is automatially configured as a read replica. You can perform another promotion to return the primary operations to your preferred primary region.
 
 #### Test for region failures
-<!-- TODO this section -->
 
-- **Planned testing**: Regularly test read replica promotion procedures to ensure they meet your RTO and RPO requirements.
-- **Application testing**: Verify that your applications can handle connection string changes and properly redirect traffic to a different region.
-- **End-to-end validation**: Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
+You should regularly test read replica promotion procedures to ensure your processes are valid, and that the capabilities meet your RTO and RPO requirements.
 
-### Custom multi-region solutions for resiliency
-<!-- TODO this section -->
-
-If you need multi-region resilience beyond the built-in geo-redundant backup and read replica capabilities, you can deploy multiple independent Azure Database for PostgreSQL servers across different Azure regions with application-level data synchronization. Consider these architectural patterns:
-
-- **Active-passive with application-level failover**: Deploy primary and secondary database instances with application logic to handle failover and data synchronization.
-- **Active-active with data partitioning**: Distribute data across multiple regions based on geographic or functional boundaries.
-- **Hybrid approaches**: Combine Azure Database for PostgreSQL read replicas with application-level logic for more complex scenarios.
-
-For detailed architectural guidance, see:
-- [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery)
-
-<!-- TODO consider whether to include this:
-You can also use either of the following customer-managed data migration methods to replicate data to a nonpaired region: 
-
-- [Dump and restore](/azure/postgresql/migrate/how-to-migrate-using-dump-and-restore)
-- [Logical replication and logical decoding]( )
--->
-
-**Sources:**
-- [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery) - Regional failover options and procedures
-- [Geo-replication in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-read-replicas-geo) - Cross-region read replica configuration and management
+You can initiate a promotion at any time, even when regions are healthy. For detailed steps, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary). We recommend that you perform any forced promotion testing in a non-production environment. Alternatively, you can initiate a planned promotion of your read replica to avoid data loss, but with the caveat that the promotion process is different to what you might see in a region outage. Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
 
 ## Backup and restore
 <!-- TODO -->
@@ -336,6 +329,8 @@ Point-in-time restore allows you to restore your database to any moment within t
  
 For more information, see [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-backup-restore).
 
+TODO [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-geo-disaster-recovery) - Regional failover options and procedures
+
 ## Resilience to service maintenance
 
 Azure Database for PostgreSQL automatically handles critical servicing tasks including patching of the underlying hardware, operating system, and database engine. The service includes security updates, software updates, and minor version upgrades as part of planned maintenance.
@@ -343,11 +338,11 @@ Azure Database for PostgreSQL automatically handles critical servicing tasks inc
 To ensure your server remains available during maintenance windows, follow these recommendations:
 
 > [!div class="checklist"]
-> - **Enable high availability**: During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
+> - **Enable high availability:** During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
 >
 >    For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
 >
-> - **Configure custom maintenance windows**: You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Schedule maintenance](/azure/postgresql/configure-maintain/how-to-configure-scheduled-maintenance).
+> - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Schedule maintenance](/azure/postgresql/configure-maintain/how-to-configure-scheduled-maintenance).
 >
 > - **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
 
