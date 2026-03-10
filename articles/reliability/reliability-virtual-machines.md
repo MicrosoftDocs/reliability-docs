@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Virtual Machines
 description: Learn about resiliency in Azure Virtual Machines, including resilience to transient faults, availability zone failures, region-wide failures, and service maintenance. Understand backup options and SLA details.
-author: glynnniall
-ms.author: glynnniall
+author: mattmcinnes
+ms.author: mattmcinnes
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machines
@@ -63,9 +63,9 @@ An individual VM can be deployed in a *zonal* configuration, which means that it
 
 If you don't configure a VM to be zonal, it's considered *nonzonal* or *regional*. Nonzonal VMs might be placed in any availability zone within the region. If any availability zone in the region experiences an outage, nonzonal VMs might be in the affected zone and can experience downtime.
 
-### Region support
+### Requirements
 
-Zonal VMs can be deployed into [any region that supports availability zones](./regions-list.md).
+**Region support:** Zonal VMs can be deployed into [any region that supports availability zones](./regions-list.md).
 
 [!INCLUDE [Virtual machines zone region support](includes/virtual-machines/zone-region-support-include.md)]
 

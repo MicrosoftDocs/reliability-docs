@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Event Hubs
 description: Find out about resiliency in Azure Event Hubs, including transient faults, availability zones, geo-disaster recovery, geo-replication, and backups.
-author: glynnniall
-ms.author: glynnniall
+author: spelluru
+ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-hubs
@@ -153,13 +153,10 @@ At any time, you can *promote* a secondary region to a primary region. When you 
 
 This section summarizes important aspects of geo-replication. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-replication](/azure/event-hubs/geo-replication).
 
-#### Region support
-
-You can choose any Azure region that supports Event Hubs as your primary region or secondary regions. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
-
 #### Requirements
 
-To enable geo-replication, your namespace must use the Premium or Dedicated tier.
+- **Region support:** You can choose any Azure region that supports Event Hubs as your primary region or secondary regions. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
+- To enable geo-replication, your namespace must use the Premium or Dedicated tier.
 
 #### Considerations
 

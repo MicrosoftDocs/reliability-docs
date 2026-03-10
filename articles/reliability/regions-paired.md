@@ -4,10 +4,10 @@ description: Learn about Azure region pairs and regions without a pair.
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: conceptual
+ms.topic: concept-article
 ms.date: 03/19/2025
 ms.update-cycle: 1095-days
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: references_regions, subject-reliability
 ---
 

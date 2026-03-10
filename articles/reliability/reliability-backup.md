@@ -2,7 +2,7 @@
 title: Reliability in Azure Backup
 description: Learn how to make Azure Backup resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
@@ -81,11 +81,13 @@ When you use Azure Backup, both backup and restore workflows are resilient to in
 
 Azure Backup separately manages the availability zone configuration of the service and for your data.
 
-- **Service:** The Azure Backup service itself is automatically zone-resilient, with no action required from you. However, this built-in zone resiliency doesn't apply to your backed-up data.
+- **Service:** The Azure Backup service itself is automatically zone-resilient in supported regions, with no action required from you. However, this built-in zone resiliency doesn't apply to your backed-up data.
 
 - **Backup storage redundancy:** Select the level of redundancy you want for your backup data by configuring your Recovery Services vault or Backup vault. If you select zone-redundant storage (ZRS), copies of your backup data are automatically stored across multiple availability zones in the Azure region you use.
 
     If you don't use ZRS, your backup data is considered to be *nonzonal* and might be stored in any zone. If any zone in the region has a problem, nonzonal backup data might be unavailable.
+
+:::image type="content" source="./media/reliability-backup/zone-redundant.svg" alt-text="Diagram that shows Azure Backup core service, which is automatically zone-resilient, and zone-redundant backup storage." border="false":::
 
 ### Requirements
 
@@ -107,7 +109,7 @@ When you enable zone-redundant storage (ZRS) for your backups, you're charged at
 
     For Recovery Services vaults, storage redundancy must be configured *before* protecting any workloads. Once a workload is protected, the setting is locked and can't be changed.
     
-    You can create a new vault configured to use ZRS and reassign your workloads to the new vault. However, this approach requires downtime, and you're responsible for manually deleting manually deleting any existing recovery points and other data because the old vault's retention policies no longer apply. For more information about deleting a vault, see [Delete a Backup vault](/azure/backup/create-manage-backup-vault#delete-a-backup-vault) or [Delete a Recovery Services vault](/azure/backup/backup-azure-delete-vault#delete-protected-items-in-the-cloud).
+    You can create a new vault configured to use ZRS and reassign your workloads to the new vault. However, this approach requires downtime. For more information, see Create and configure a Recovery Services vault - Modify default settings](/azure/backup/backup-create-recovery-services-vault#modify-default-settings). You're also responsible for manually deleting manually deleting any existing recovery points and other data because the old vault's retention policies no longer apply. For more information about deleting a vault, see [Delete a Backup vault](/azure/backup/create-manage-backup-vault#delete-a-backup-vault) or [Delete a Recovery Services vault](/azure/backup/backup-azure-delete-vault#delete-protected-items-in-the-cloud).
 
 ### Behavior when all zones are healthy
 
