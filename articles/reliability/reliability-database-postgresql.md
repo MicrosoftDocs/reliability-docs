@@ -250,15 +250,13 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 #### Considerations
 
-- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
+- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures and forced promotions, the symmetrical server requirement can be waived, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
 
-<!-- TODO monitor replication lag -->
+- **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
 
-<!-- TODO HA - read replicas don't have HA, and when promoted they aren't HA -->
+- **High availability:** Read replicas can't be have high availability enabled, and when they're promoted, they don't have high availability. You're responsible for configuring high availability after promoting a replica.
 
-<!-- TODO see considerations section in promotion doc -->
-
-<!-- TODO server symmetry required -->
+For additional considerations that apply to the promotion process, see [Promote read replicas in Azure Database for PostgreSQL - Considerations](/azure/postgresql/read-replica/concepts-read-replicas-promote#considerations).
 
 #### Cost
 
