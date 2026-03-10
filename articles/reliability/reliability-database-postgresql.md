@@ -37,7 +37,7 @@ For more information about the general service architecture and deployment model
 
 ### Physical architecture
 
-- **Compute and storage separation:** Azure Database for PostgreSQL uses a compute and storage separation architecture designed to support high availability. The database engine runs on a Linux virtual machine, while data files reside on Azure storage that maintains three locally redundant synchronous copies of the database files, ensuring data durability.
+- **Compute and storage separation:** Azure Database for PostgreSQL uses a compute and storage separation architecture to support high availability. The database engine runs on a Linux virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
 
 - **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby server. Data changes on the primary server are synchronously replicated to the standby server to ensure zero data loss. The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
 
@@ -60,7 +60,7 @@ For more information about the general service architecture and deployment model
 Your applications must handle transient connectivity errors that can occur during maintenance, scaling operations, or network interruptions. Follow these recommendations:
 
 > [!div class="checklist"]
-> - When your application detects transient faults, it should typically retry the operation. Include exponential backoff logic that waits for an increasing amount of time between retries, and cap the number of retry attempts. If the maximum number of retry attempts is reached, your application should treat the operation as failed.
+> - When your application encounters transient faults, retry the operation by using exponential backoff. Increase the delay between retries and limit the number of attempts. If the operation still fails after the maximum retries, treat it as a failure.
 > - Where possible, use client libraries (also called drivers) that automatically handle retries.
 > - Transient errors that occur during write operations require more careful consideration. Consider making your write operations idempotent, so they can be safely executed multiple times.
 
@@ -70,7 +70,7 @@ For more information, see [Handling transient connectivity errors in Azure Datab
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Azure Database for PostgreSQL has different types of availability zone support, which you choose though the *high availability* configuration. Enabling high availability deploys a secondary *standby* replica alongside your primary. This high availability model is designed to ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replicas. If a disruption occurs to the primary replica, the server automatically fails over to the standby replica.
+You can select your type of availability zone support though the *high availability* configuration. Enabling high availability deploys a secondary *standby* replica alongside your primary. This high availability model helps ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replicas. If a disruption occurs to the primary replica, the server automatically fails over to the standby replica.
 
 Data files and write-ahead logs (WALs) are stored on premium managed disks within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
 
@@ -78,15 +78,15 @@ When you configure a server, you select one of the following configurations:
 
 - **Zone-redundant high availability:** Zone redundancy provides the highest level of zone resilience by deploying a primary replica in one availability zone and a standby replica in a different availability zone. The standby replica uses similar compute, storage, and network configuration to the primary. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby replicas.
 
-    You can optionally select the zones for both the primary and secondary replicas, or you can let Microsoft choose zones for you. 
+   You can either select the availability zones for the primary and secondary replicas or let Microsoft choose them.
 
     We recommend zone-redundant deployments for most production servers.
 
      :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.png" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
-    Read queries are processed within the primary replica's availability zone, so enable zone redundancy doesn't affect read latency. However, there can be some small latency impact on writes and commits due to synchronous replication between the replicas across zones. The amount of impact is specific to your workloads, the SKU type you select, and the region.
+    The primary replica processes read queries, so zone redundancy doesn't affect read latency. Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby replica. The impact varies by workload, selected SKU, and region.
 
-- **Zonal (same-zone) high availability:** In the single-zone configuration, the primary and standby replicas are both placed into the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
+- **Zonal (same-zone) high availability:** The primary and standby replicas use the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
     You select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
@@ -116,7 +116,7 @@ If you configure your server without high availability, then it runs on a single
 
 ### Considerations
 
-- **Region capacity:** If a zone-redundant server's region lacks capacity for a zone-redundant configuration, you can tell Azure to create both replicas in the same zone temporarily, then automatically migrate to achieve zone redundancy once capacity is available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
+- **Region capacity:** If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both replicas in the same availability zone and automatically migrate them to separate zones when capacity becomes available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
 
 ### Cost
 
@@ -168,13 +168,13 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability). When a zone fails, Azure initiates a [forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover) to the standby server without requiring you to take action.
 
-    - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover or recovery steps that you might require, such as restoring zone-redundant backups to a separate server you precreated in another zone or region.
+    - *Zonal:* If the availability zone that hosts a zonal server becomes unavailable, both the primary and standby replicas are unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
 
-- **Notification:** High availability (HA) health status monitoring in Azure Database for PostgreSQL provides a continuous overview of the health and readiness of HA-enabled instances. The monitoring feature is built on top of [Azure Resource Health](/azure/service-health/resource-health-overview), and can detect and alert on any issues that might affect your database's failover readiness or overall availability. By assessing key metrics like connection status, failover state, and data replication health, HA health status monitoring enables proactive troubleshooting and helps maintain your database's uptime and performance.
+- **Notification:** High availability (HA) health status monitoring in Azure Database for PostgreSQL provides a continuous overview of the health and readiness of HA-enabled instances. The monitoring feature is built on top of [Azure Resource Health](/azure/service-health/resource-health-overview), and can detect and alert on any issues that might affect your database's failover readiness or overall availability. Assess key metrics like connection status, failover state, and data replication health, to enable proactive troubleshooting and helps maintain your database's uptime and performance.
 
     For a detailed guide on configuring and interpreting HA health statuses, see [High Availability (HA) health status monitoring for Azure Database for PostgreSQL](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
 
-- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
+- **Active requests:** When an availability zone becomes unavailable, any in‑progress requests to replicas in the affected zone might be terminated. Applications must retry these requests. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
 - **Expected data loss:** The amount of data loss depends on the availability zone configuration that your server uses.
 
@@ -186,7 +186,7 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* Failover typically completes within 60-120 seconds. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-    - *Zonal:* When a zone is unavailable, servers in that zone are unavailable until the availability zone recovers.
+    - *Zonal:* Servers in an impacted zone are unavailable until the availability zone recovers.
 
 - **Redistribution:** The traffic rerouting behavior depends on the availability zone configuration that your server uses.
 
@@ -221,9 +221,9 @@ You can also use geo-redundant backups, in supported regions, to provide cross-r
 
 ### Cross-region read replicas
 
-You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for PostgreSQL server. By placing a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. Read replicas are updated asynchronously by using PostgreSQL's physical replication technology, and they can lag the primary. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the primary server. For more information on read replica features and considerations, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
+You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for PostgreSQL server. By placing a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. PostgreSQL's physical replication technology updates read replicas asynchronously, and they can lag the primary. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the primary server. For more information on read replica features and considerations, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
 
-*Virtual endpoints* provide read-write and read-only endpoints for your server, and automatically direct traffic to the correct replica when a replica is promoted. While they're not required for cross-region read replicas, we strongly recommend you use them when using read replicas to increase your application's resilience. A virtual endpoint ensures your applications switch between replicas with minimal downtime. For more information, see [Virtual endpoints for read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-virtual-endpoints).
+*Virtual endpoints* provide read-write and read-only endpoints and automatically redirect traffic when a replica is promoted, which helps minimize downtime during failover events. We strongly recommend using virtual endpoints with cross-region read replicas to improve application resilience. For more information, see [Virtual endpoints for read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-virtual-endpoints).
 
 :::image type="content" source="./media/reliability-database-postgresql/read-replica.png" alt-text="Diagram showing a read replica in a second Azure region, with a read-write endpoint directing read-write traffic to the primary server." border="false" :::
 
@@ -232,11 +232,11 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 :::image type="content" source="./media/reliability-database-postgresql/read-replica-failure.png" alt-text="Diagram showing a read replica in a second Azure region that has been promoted to the primary replica, with the read-write endpoint now directing read-write traffic to the secondary region." border="false" :::
 
 > [!NOTE]
-> This section summarizes some of the important information about  how read replicas can support resilience to region-wide failures. Read replicas can also be used for other purposes, like improving performance and supporting high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
+> This section summarizes some of the important information about how read replicas can support resilience to region-wide failures. You can also use read replicas to improve performance and support high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
 
 #### Requirements
 
-- **Region support:** Cross-region read replicas can be created in any region where Azure Database for PostgreSQL is available. You're not restricted to using paired Azure regions.
+- **Region support:** You can create cross-region read replicas in any region that supports Azure Database for PostgreSQL. You aren’t limited to Azure paired regions.
 
 - **Compute tiers:** General purpose and memory optimized compute tiers support read replicas. The burstable tier doesn't support read replicas.
 
@@ -308,9 +308,15 @@ When you use virtual endpoints, after the primary region recovers, the old prima
 
 #### Test for region failures
 
-You should regularly test read replica promotion procedures to ensure your processes are valid, and that the capabilities meet your RTO and RPO requirements.
+Regularly test read replica promotion procedures to ensure your processes are valid, and that the capabilities meet your RTO and RPO requirements.
 
-You can initiate a promotion at any time, even when regions are healthy. For detailed steps, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary). We recommend that you perform any forced promotion testing in a non-production environment. Alternatively, you can initiate a planned promotion of your read replica to avoid data loss, but with the caveat that the promotion process is different to what you might see in a region outage. Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
+You can promote a read replica to become the primary server at any time, even when all regions are healthy. For testing:
+- You can perform forced promotion testing. We recommend you perform these tests in a non-production environment as it can result in data loss. Forced promotion testing helps to simulate the behavior that you see during a region outage.
+- For planned maintenance, or testing scenarios where you want to avoid data loss, use a planned promotion instead. Be aware that planned promotion follows a different process than promotion during a region outage.
+
+For step-by-step instructions, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary).
+
+As part of your disaster recovery strategy, regularly run full recovery drills. These drills should include data validation, application functionality testing, and documented rollback procedures.
 
 ## Backup and restore
 
