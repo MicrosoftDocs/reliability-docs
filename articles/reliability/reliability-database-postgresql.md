@@ -217,44 +217,60 @@ The options for testing for zone failures depend on the availability zone config
 
 Azure Database for PostgreSQL supports *cross-region read replicas*, which you can use to maintain a synchronized copy of your database in a different region for faster recovery.
 
-You can also use geo-redundant backups, in supported regions. For more information, see [Backup and restore](#backup-and-restore).
+You can also use geo-redundant backups, in supported regions, to provide cross-region recovery. However, backups typically involve more downtime and data loss than replication. For more information, see [Backup and restore](#backup-and-restore).
 
 ### Cross-region read replicas
 
-You can deploy cross region read replicas to protect your databases from region-level failures. Read replicas are updated asynchronously by using PostgreSQL's physical replication technology, and they can lag the primary. General purpose and memory optimized compute tiers support read replicas.
+You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for PostgreSQL server. By placing a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. Read replicas are updated asynchronously by using PostgreSQL's physical replication technology, and they can lag the primary. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the primary server. For more information on read replica features and considerations, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
 
-For more information on read replica features and considerations, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
+*Virtual endpoints* provide read-write and read-only endpoints for your server, and automatically direct traffic to the correct replica when a replica is promoted. While they're not required for cross-region read replicas, we strongly recommend you use them when using read replicas to increase your application's resilience. A virtual endpoint ensures your applications switch between replicas with minimal downtime. For more information, see [Virtual endpoints for read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-virtual-endpoints).
+
+<!-- TODO diagram -->
+
+If your primary region fails, you can trigger a *promotion* so that your secondary replica becomes the primary. There are different types of failover that you can trigger depending on how you use read replicas. When you use read replicas to provide resilience to region failures, you typically use the *promote to primary server* approach, which updates your virtual endpoint. During a region outage, you need to perform a *forced promotion*, which can result in some data loss for any unreplicated data. In planned scenarios where the primary region is healthy, you can choose to perform a planned promotion to avoid data loss. For more information, see [Promote read replicas in Azure Database for PostgreSQL](/azure/postgresql/read-replica/concepts-read-replicas-promote).
+
+<!-- TODO diagram -->
+
+> [!NOTE]
+> This section focuses on how read replicas can support resilience to region-wide failures. Read replicas can also be used for other purposes, like improving performance and supporting high-scale geographically distributed user bases. For general information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
 
 #### Requirements
 
-- **Region support**: Cross-region read replicas can be created in any region where Azure Database for PostgreSQL is available, not just paired regions. For the complete list of supported regions, see [Azure regions](https://azure.microsoft.com/global-infrastructure/services/).
-- **Cross-region read replicas**: Can be configured after server creation. The primary server must be running and accessible.
-- **Pricing tier**: All pricing tiers support cross-region read replicas.
+- **Region support**: Cross-region read replicas can be created in any region where Azure Database for PostgreSQL is available. You're not restricted to using paired Azure regions.
+
+- **Compute tiers:** General purpose and memory optimized compute tiers support read replicas. The burstable tier doesn't support read replicas.
 
 #### Configure multi-region support
 
-- **Create**: To learn how to create cross-region read replicas, see [Read replicas in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-read-replicas#create-a-replica). Replicas can be configured after server creation. The primary server must be running and accessible.
+- **Create a read replica:** To learn how to create a read replica, see [Create a read replica](/azure/postgresql/read-replica/how-to-create-read-replica). Replicas can be configured after the primary server is created, as long as the primary server is running and accessible.
 
-- **Migrate**:  Read replicas can be added to existing servers through the Azure portal, CLI, or REST API.  However, moving read replicas to another resource group after their creation is unsupported. Additionally, moving replicas to a different subscription, and moving the primary that has read replicas to another resource group or subscription, is not supported.
+    To create a virtual endpoint, see [Create virtual endpoints](/azure/postgresql/read-replica/how-to-create-virtual-endpoints).
+
+- **Delete a read replica:** To learn how to delete a read replica, see [Delete a read replica](/azure/postgresql/read-replica/how-to-delete-read-replica).
 
 #### Considerations
+<!-- TODO this section -->
 
-- **Recovery Point Objective (RPO)**:  Cross-region read replicas typically have an RPO of up to 5 minutes under normal conditions.
 - **Recovery Time Objective (RTO)**: Read replica promotion occurs typically within minutes.
 - **Configuration differences**: Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover.
-- **Connection string updates**: Applications must update connection strings when failing over to a different region, unless using virtual endpoints.
 
 #### Cost
 
-Cross-region read replicas incur full compute and storage costs in the destination region, plus data transfer charges for replication. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
+Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
 
 #### Behavior when all regions are healthy
 
-**Traffic routing between regions**: In normal operations, all database traffic is directed to the primary region. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the primary server.
+This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and all regions are operational:
 
-**Data replication between regions**: Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. Backup data is copied to the paired region as part of the automated backup process, typically within hours of the backup being created.
+- **Traffic routing between regions**: In normal operations, your virtual endpoint directs traffic for the read-write endpoint to the primary server in the primary region. If you also use the virtual endpoint's read-only endpoint, then it directs traffic to whichever replica you configure.
+
+- **Data replication between regions**: Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically several minutes, but it can be much longer. For more information, see TODO.
 
 #### Behavior during a region failure
+
+This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and there's an outage in the primary region:
+
+<!-- TODO this section -->
 
 - **Detection and response**: Customer detects regional outage and manually promotes a read replica to become a standalone read-write server.
 - **Active requests**: All active connections to the primary region are lost. New connections must be directed to the promoted replica.
@@ -263,16 +279,19 @@ Cross-region read replicas incur full compute and storage costs in the destinati
 - **Traffic rerouting**: Customer must update application connection strings to point to the promoted read replica, unless using virtual endpoints.
 
 #### Region recovery
+<!-- TODO this section -->
 
 After the primary region recovers, you can establish a new read replica from the promoted server back to the original region, then perform another promotion to return operations to the preferred region.
 
 #### Test for region failures
+<!-- TODO this section -->
 
 - **Planned testing**: Regularly test read replica promotion procedures to ensure they meet your RTO and RPO requirements.
 - **Application testing**: Verify that your applications can handle connection string changes and properly redirect traffic to a different region.
 - **End-to-end validation**: Conduct full disaster recovery drills that include data validation, application functionality testing, and rollback procedures.
 
 ### Custom multi-region solutions for resiliency
+<!-- TODO this section -->
 
 If you need multi-region resilience beyond the built-in geo-redundant backup and read replica capabilities, you can deploy multiple independent Azure Database for PostgreSQL servers across different Azure regions with application-level data synchronization. Consider these architectural patterns:
 
