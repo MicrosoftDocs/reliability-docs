@@ -13,7 +13,7 @@ ai.usage: ai-assisted
 
 # Reliability in Azure Database for PostgreSQL
 
-[Azure Database for PostgreSQL](/azure/postgresql/flexible-server/overview) is a fully managed database service designed to give you granular control and flexibility over database management functions and configuration settings. The service provides flexibility and high availability based on your requirements.
+[Azure Database for PostgreSQL](/azure/postgresql/overview) is a fully managed database service designed to give you granular control and flexibility over database management functions and configuration settings. The service provides flexibility and high availability based on your requirements.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -33,7 +33,7 @@ When you work with Azure Database for PostgreSQL, you deploy a *server*, which r
 
 Servers can be deployed in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are [optimized for different kinds of workloads](/azure/postgresql/compute-storage/concepts-compute). In some Azure regions, you can deploy servers with [Azure Confidential Computing](/azure/postgresql/security/security-confidential-computing).
 
-For more information about the general service architecture and deployment models, see [What is Azure Database for PostgreSQL?](/azure/postgresql/flexible-server/overview).
+For more information about the general service architecture and deployment models, see [What is Azure Database for PostgreSQL?](/azure/postgresql/overview).
 
 ### Physical architecture
 
@@ -64,7 +64,7 @@ Your applications must handle transient connectivity errors that can occur durin
 > - Where possible, use client libraries (also called drivers) that automatically handle retries.
 > - Transient errors that occur during write operations require more careful consideration. Consider making your write operations idempotent, so they can be safely executed multiple times.
 
-For more information, see [Handling transient connectivity errors in Azure Database for PostgreSQL](/azure/postgresql/flexible-server/concepts-connectivity).
+For more information, see [Handling transient connectivity errors in Azure Database for PostgreSQL](/azure/postgresql/troubleshoot/concepts-connectivity).
 
 ## Resilience to availability zone failures
 
@@ -126,16 +126,16 @@ When you enable high availability, the secondary replica is created and billed a
 
 To configure availability zone support for a server, you configure the high availability settings.
 
-- **Create a server with zone-redundant or zonal (single-zone) high availability:** To learn how to create a server with availability zone configuration, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/flexible-server/quickstart-create-server-portal).
+- **Create a server with zone-redundant or zonal (single-zone) high availability:** To learn how to create a server with availability zone configuration, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/configure-maintain/quickstart-create-server).
 
-- **Change the availability zone configuration for existing servers:** You can change the availability zone configuration for existing servers by changing the high availability settings. For detailed steps, see [Enable high availability for existing servers](/azure/postgresql/flexible-server/how-to-configure-high-availability#enable-high-availability-for-existing-servers).
+- **Change the availability zone configuration for existing servers:** You can change the availability zone configuration for existing servers by changing the high availability settings. For detailed steps, see [Enable high availability for existing servers](/azure/postgresql/high-availability/how-to-configure-high-availability#enable-high-availability-for-existing-servers).
 
     You can't change the zone used for either the primary or secondary replicas after they've been created. You need to recreate the server.
 
     > [!TIP]
     > It's a good idea to wait until the server activity is low before you change high availability configuration.
 
-- **Disable high availability:** Disabling high availability removes the standby replica, so your server has a single replica and isn't resilient to outages in its availability zone. For more information, see [Disable high availability](/azure/postgresql/flexible-server/how-to-configure-high-availability#disable-high-availability).
+- **Disable high availability:** Disabling high availability removes the standby replica, so your server has a single replica and isn't resilient to outages in its availability zone. For more information, see [Disable high availability](/azure/postgresql/high-availability/how-to-configure-high-availability#disable-high-availability).
 
 ### Behavior when all zones are healthy
 
@@ -166,7 +166,7 @@ This section describes what to expect when servers are configured with high avai
 
     In the event of a zone failure, the behavior is different depending on the availability zone configuration that your server uses:
 
-    - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability). When a zone fails, Azure initiates a [forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover) to the standby server without requiring you to take action.
+    - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures. To view the possible high availability status types, see [High availability status types](/azure/postgresql/high-availability/how-to-monitor-high-availability). When a zone fails, Azure initiates a [forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover) to the standby server without requiring you to take action.
 
     - *Zonal:* If the availability zone that hosts a zonal server becomes unavailable, both the primary and standby replicas are unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
 
