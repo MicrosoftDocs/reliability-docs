@@ -323,7 +323,9 @@ Azure Database for PostgreSQL automatically performs backups that provide point-
 
     The default backup retention period is 7 days, with the option to extend retention. All backups are encrypted.
 
-- **Point-in-time restore:** Point-in-time restore allows you to restore your database to any moment within the backup retention period, creating a new server with the restored data. This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios. When you restore a geo-redundant backup, you create a new server in the paired region.
+- **Point-in-time restore:** Point-in-time restore allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from. When you restore a geo-redundant backup, you create a new server in the paired region.
+
+    This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios.
 
 For more information, see [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-backup-restore).
 
