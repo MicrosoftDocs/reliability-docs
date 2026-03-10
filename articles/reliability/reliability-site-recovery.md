@@ -51,7 +51,7 @@ You're responsible for deploying and configuring other resources, including the 
 
 - For Azure-to-Azure replication, a *cache storage account* that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
-:::image type="content" source="media/reliability-site-recovery/recovery-vault-storage.svg" alt-text="Diagram showing the relationship between the Recovery Services vault, cache storage account, source, and target in Azure Site Recovery." lightbox="media/reliability-site-recovery/recovery-vault-storage.png":::
+:::image type="content" source="media/reliability-site-recovery/recovery-vault-storage.svg" border="false" alt-text="Diagram showing the relationship between the Recovery Services vault, cache storage account, source, and target in Azure Site Recovery.":::
 
 > [!NOTE]
 > This guide focuses on the reliability of the Azure-based components of Azure Site Recovery and the replication relationship. If you replicate data or VMs from an on-premises environment or another cloud provider, you should also consider the reliability of the components outside of Azure.
@@ -222,15 +222,15 @@ The specific behavior of the Site Recovery core service during a region failure 
 
     Because the source region is unavailable, replication stops until the VM in the source region is healthy.
 
-    :::image type="content" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" alt-text="Diagram showing the behavior when the source region fails. The source is unavailable, and replication stops until the source region recovers." lightbox="media/reliability-site-recovery/source-available-site-recovery-denied.png":::
+    :::image type="content" source="media/reliability-site-recovery/site-recovery-denied.svg" border="false" alt-text="Diagram showing the behavior when the source region fails. The source is unavailable, and replication stops until the source region recovers.":::
 
 - **Failure in target region:** Because the target region is unavailable, replication stops, and you can't fail over to the target until the region is healthy.
 
-    :::image type="content" source="media/reliability-site-recovery/site-recovery-denied.svg" alt-text="Diagram showing the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers." lightbox="media/reliability-site-recovery/site-recovery-denied.png":::
+    :::image type="content" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" border="false" alt-text="Diagram showing the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers.":::
 
 - **Failure in the region that contains the vault:** If the vault is deployed into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data. However, you can't initiate any operations, including failover or failback, until the vault is healthy.
 
-    :::image type="content" source="media/reliability-site-recovery/replication-available-failover-denied.svg" alt-text="Diagram showing the behavior when the vault region fails. Replication continues, but failover and failback operations are unavailable until the vault region recovers." lightbox="media/reliability-site-recovery/replication-available-failover-denied.png":::
+    :::image type="content" source="media/reliability-site-recovery/replication-available-failover-denied.svg" border="false" alt-text="Diagram showing the behavior when the vault region fails. Replication continues, but failover and failback operations are unavailable until the vault region recovers.":::
 
 ### Region recovery
 
