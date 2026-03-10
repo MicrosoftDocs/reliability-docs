@@ -359,3 +359,4 @@ Azure Database for PostgreSQL provides different availability SLAs based on the 
 - [Architecture best practices for Azure Database for PostgreSQL](/azure/well-architected/service-guides/postgresql)
 - [Overview of business continuity with Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-business-continuity)
 - [Geo-disaster recovery in Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-geo-disaster-recovery)
+- [Azure Database for PostgreSQL Resiliency Solution Accelerator](https://github.com/Azure-Samples/Azure-PostgreSQL-Resiliency-Architecture) - Terraform scripts to implement many of the resiliency and recoverability principles described in this article.
