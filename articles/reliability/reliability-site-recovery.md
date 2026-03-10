@@ -216,7 +216,7 @@ For Azure-to-Azure replication, Site Recovery is designed to provide resilience 
 
 ### Behavior during a region failure
 
-The specific behavior of the Site Recovery core service duri.ng a region failure depends on which region experiences the failure:
+The specific behavior of the Site Recovery core service during a region failure depends on which region experiences the failure:
 
 - **Failure in source region:** For Azure-to-Azure replication, you can trigger a failover when the source region is unavailable.
 
