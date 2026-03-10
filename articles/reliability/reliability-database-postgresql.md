@@ -43,7 +43,9 @@ For more information about the general service architecture and deployment model
 
     :::image type="content" source="./media/reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
 
-    A standby replica is deployed in the same VM configuration - including vCores, storage, and network settings - as the primary replica.
+    A standby replica is deployed in the same VM configuration as the primary replica, including vCores, storage, and network settings.
+
+    You can switch between replicas by performing a *failover*. There are two types of failover: *forced failovers*, which are used when the primary replica fails, and *planned failovers*, which are used during some maintenance operations and in other scenarios where you need to minimize application downtime during a failover.
 
     Operations such as stop, start, and restart are performed on both primary and standby database replicas at the same time. Planned events such as scale computing and scale storage happen on the standby first and then on the primary replica. Currently, the server doesn't fail over for these planned operations.
 
@@ -160,13 +162,11 @@ This section describes what to expect when servers are configured with high avai
 
 This section describes what to expect when servers are configured with high availability and availability zone support and there's an availability zone outage.
 
-<!-- TODO planned vs. forced failover -->
-
 - **Detection and response:** Azure periodically checks the health of both the primary and standby servers. After multiple pings, if health monitoring detects that a primary server isn't reachable, the service initiates an automatic failover to the standby server. The health monitoring algorithm uses multiple data points to avoid false positive situations.
 
     In the event of a zone failure, the behavior is different depending on the availability zone configuration that your server uses:
 
-    - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures and initiates failover to the standby server without requiring customer action. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability).
+    - *Zone-redundant:* Azure Database for PostgreSQL automatically detects availability zone failures. To view the possible high availability status types, see [High availability status types](/azure/postgresql/flexible-server/how-to-monitor-high-availability). When a zone fails, Azure initiates a [forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover) to the standby server without requiring you to take action.
 
     - *Zonal:* If the zone containing a zonal server experiences an outage, both replicas are unavailable. You're responsible for detecting the loss of the zone and performing any failover or recovery steps that you might require, such as restoring zone-redundant backups to a separate server you precreated in another zone or region.
 
@@ -198,7 +198,7 @@ This section describes what to expect when servers are configured with high avai
 
 The zone recovery behavior depends on the availability zone configuration that your server uses.
 
-- *Zone-redundant:* When the availability zone recovers, Azure Database for PostgreSQL automatically rebuilds the standby server in the recovered zone and synchronizes it with the current primary. The recovered zone then serves as the standby location. The service doesn't automatically move the primary role back to the original zone to avoid unnecessary disruption. You can manually initiate a planned failover if you want to return the primary to the original zone.
+- *Zone-redundant:* When the availability zone recovers, Azure Database for PostgreSQL automatically rebuilds the standby server in the recovered zone and synchronizes it with the current primary. The recovered zone then serves as the standby location. The service doesn't automatically move the primary role back to the original zone to avoid unnecessary disruption. You can [manually initiate a planned failover](/azure/postgresql/high-availability/how-to-configure-high-availability#initiate-a-planned-failover) if you want to return the primary to the original zone.
 
 - *Zonal:* After the zone is healthy, servers in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
@@ -206,7 +206,7 @@ The zone recovery behavior depends on the availability zone configuration that y
 
 The options for testing for zone failures depend on the availability zone configuration that your instance uses.
 
-- *Zone-redundant:* You can test your application's resilience to failover by using a *forced failover*. A forced failover lets you simulate an unplanned outage scenario while running your workload and observe your application downtime. We recommend running simulations in a non-production environment, or at a quiet time. For more information, see [Initiate a forced failover](/azure/postgresql/high-availability/how-to-configure-high-availability#initiate-a-forced-failover)..
+- *Zone-redundant:* You can test your application's resilience to failover by initiating a *forced failover*. A forced failover lets you simulate an unplanned outage scenario while running your workload and observe your application downtime. We recommend running simulations in a non-production environment, or at a quiet time. For more information, see [Initiate a forced failover](/azure/postgresql/high-availability/how-to-configure-high-availability#initiate-a-forced-failover)..
 
 - *Zonal:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to what happens during a zone outage. For more information, see [Stop compute of a server](/azure/postgresql/configure-maintain/how-to-stop-server).
 
