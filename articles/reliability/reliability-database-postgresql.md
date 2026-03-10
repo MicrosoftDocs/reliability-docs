@@ -212,9 +212,6 @@ The options for testing for zone failures depend on the availability zone config
 
 - *Zonal:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to what happens during a zone outage. For more information, see [Stop compute of a server](/azure/postgresql/configure-maintain/how-to-stop-server).
 
-> [!WARNING]
-> **Note to PG:** Do you have any suggestions for other ways to simulate or test a zone failure scenario?
-
 ## Resilience to region-wide failures
 
 Azure Database for PostgreSQL supports *cross-region read replicas*, which you can use to maintain a synchronized copy of your database in a different region for faster recovery.
@@ -244,7 +241,7 @@ If your primary region fails, you can trigger a *promotion* so that your seconda
 
 #### Considerations
 
-- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures and forced promotions, the symmetrical server requirement can be waived, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
+- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures, the symmetrical server requirement can be waived for forced promotions, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
 
 - **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
 
@@ -283,19 +280,13 @@ This section describes what to expect when your server is configured with a read
 
     For detailed steps to initiate a promotion, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary).
 
-    > [!WARNING]
-    > **Note to PG:** The promotion doc [mentions that exceptions to some requirements are made during region outages](/azure/postgresql/read-replica/concepts-read-replicas-promote#:~:text=However%2C%20an%20exception%20is%20made%20in%20the%20case%20of%20regional%20outages.). How is a region outage decided? Does this require Microsoft to set some config somewhere to relax these settings? If so, how quickly after a region fails should a customer expect that to happen?
-
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
 - **Active requests:** All active connections to the primary region are dropped. Applications need to retry making connections to the promoted replica after the promotion process completes.
 
-- **Expected data loss:** During a region outage, you must perform a forced promotion, which results in the loss of any unreplicated data.
+- **Expected data loss:** During a region outage, you must perform a forced promotion, which results in the permanent loss of any unreplicated data.
 
     The amount of data loss depends on the replication lag at the time of the outage. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
-
-    > [!WARNING]
-    > **Note to PG:** If the primary server is later restored, can any of the unreplicated data be manually recovered, or is it always permanently lost?
 
 - **Expected downtime:** Forced promotion typically completes within 1-3 minutes of being triggered. Applications might also need to reconnect to the correct endpoint. Virtual endpoints are updated as part of the forced promotion process. Applications should honor the time-to-live (TTL) of the endpoint's DNS records to ensure they quickly reconnect to the correct replica after promotion completes.
 
