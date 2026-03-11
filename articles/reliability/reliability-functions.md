@@ -24,36 +24,9 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ## Reliability architecture overview
 
-When you deploy Azure Functions, you create and configure several resources that work together:
+When you deploy Azure Functions, it's important to be familiar with several concepts:
 
-- **Plans and instances:** A *plan* defines the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior.
-
-    For most plan types, your plan runs on multiple Virtual Machine (VM) *instances*. These instances provide the compute resources that run your app code.
-
-    Azure Functions is available on several different hosting plan types, each with different capabilities:
-
-  - **[Consumption plans](/azure/azure-functions/consumption-plan):** The original serverless tier. Instead of paying for dedicated infrastructure, you pay for function executions and the resources they consume.
-
-      For the Consumption plan, the Azure Functions platform automatically manages instances.
-
-  - **[Flex Consumption plans](/azure/azure-functions/flex-consumption-plan):** A modern serverless, Linux-based tier that provides other capabilities and runs on more modern infrastructure.
-
-      For the Flex Consumption plan, the Azure Functions platform manages scaling, and you can configure always ready instances.
-
-  - **[Premium plans](/azure/azure-functions/functions-premium-plan)** (also called Elastic Premium): Provides dedicated infrastructure that the service scales automatically.
-
-      For the Premium plan, the Azure Functions platform manages scaling, and you configure always ready and prewarmed instances.
-
-      > [!NOTE]
-      > Azure Functions can run on the Azure App Service platform. In the App Service platform, plans that host Premium plan function apps are referred to as Elastic Premium plans, with SKU names like `EP1`. If you choose to run your function app on a Premium plan, make sure to create a plan with an SKU name that starts with `E`, such as `EP1`. App Service plan SKU names that start with `P`, such as `P1V2` (Premium V2 Small plan), are [Dedicated hosting plans](/azure/azure-functions/dedicated-plan). Because they're Dedicated and not Elastic Premium, plans with SKU names starting with `P` don't scale dynamically and can increase your costs.
-
-  - **[Dedicated (App Service) plans](/azure/azure-functions/dedicated-plan):** Runs your function app on App Service infrastructure that you manage. This plan is a good choice when you already have App Service plans that are underutilized. You can also deploy to a private App Service environment.
-
-      For the Dedicated plan, you specify the number of instances, or you can use [automatic scaling](/azure/app-service/manage-automatic-scaling?tabs=azure-portal).
-
-      For more information about how App Service plans work, see [Reliability in Azure App Service](reliability-app-service.md) and [Reliability in Azure App Service Environment](./reliability-app-service-environment.md).
-
-- **Function app:** A *function app* is an application that contains one or more *functions*. Each function contains the code that implements your business logic. A function app runs on a plan and uses the compute resources that the plan provides.
+- **[Hosting plans](/azure/azure-functions/functions-scale):** Plans represent the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior.
 
 - **Storage accounts:** When you create a function app, you must specify a [host storage account](/azure/azure-functions/storage-considerations). The storage account is used to manage aspects of the function app's internal operations, including function code storage, logging, and concurrency management (such as blob leases for certain trigger types).
 
@@ -62,23 +35,11 @@ When you deploy Azure Functions, you create and configure several resources that
     > [!IMPORTANT]
     > The storage accounts are critical parts of your Azure Functions reliability architecture, and you should configure them to meet your function app's resiliency requirements.
 
-### Triggers and bindings
+- **[Triggers and bindings](/azure/azure-functions/functions-triggers-bindings)**: These enable your function to respond to events, receive, and write data from other services.
 
-Azure Functions uses triggers and bindings to integrate with other services:
+- **[Durable Functions](/azure/azure-functions/durable/durable-functions-overview):** Durable functions are stateful functions, including long-running orchestrations and stateful entities.
 
-- A *trigger* defines the event that causes a function to execute. For example, an HTTP trigger responds to web requests, a timer trigger runs on a schedule, and a Blob Storage trigger fires when a blob is created or modified.
-- An *input binding* provides data to the function from another service. For example, an input binding can read a blob from a storage account so it's ready for your function code to work with.
-- An *output binding* writes data from the function to another service. For example, an output binding can save a record to a database or write a blob to a storage container.
-
-For more information, see [Azure Functions triggers and bindings](/azure/azure-functions/functions-triggers-bindings).
-
-### Durable Functions
-
-[Durable Functions](/azure/azure-functions/durable/durable-functions-overview) is a feature that lets you create stateful functions, including long-running orchestrations and stateful entities.
-
-When you use Durable Functions, you configure a [storage provider](/azure/azure-functions/durable/durable-functions-storage-providers), which stores the state. You need to evaluate the reliability characteristics of the state store you choose, and configure it to meet your resiliency requirements.
-
-For information about creating using Durable Functions across multiple regions for disaster recovery, see [Disaster recovery and geo-distribution in Durable Functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
+    When you use Durable Functions, you configure a [storage provider](/azure/azure-functions/durable/durable-functions-storage-providers), which stores the state. You need to evaluate the reliability characteristics of the state store you choose, and configure it to meet your resiliency requirements.
 
 ## Resilience to transient faults
 
@@ -267,10 +228,6 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 - **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For detailed steps, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
 
 - **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. You must instead migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
-
-::: zone-end
-
-::: zone pivot="flex-consumption,premium"
 
 ### Behavior when all zones are healthy
 
