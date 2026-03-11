@@ -6,7 +6,7 @@ ms.author: glenga
 ms.topic: reliability-article
 ms.service: azure-functions
 ms.custom: references_regions, subject-reliability
-ms.date: 03/10/2026
+ms.date: 03/12/2026
 zone_pivot_groups: azure-functions-hosting-plans
 ---
 
@@ -144,21 +144,7 @@ If you don't enable zone redundancy, your plan is *nonzonal* or *regional*, whic
 
 ::: zone pivot="flex-consumption"
 
-- **Region support:** Zone-redundant Flex Consumption plans can be deployed into the following regions:
-
-    | Americas         | Europe               | Middle East    | Africa              | Asia Pacific   |
-    |------------------|----------------------|----------------|---------------------|----------------|
-    | Brazil South     | Germany West Central | Israel Central | South Africa North  | Australia East |
-    | Canada Central   | Italy North          | UAE North      |                     | Central India  |
-    | East US          | North Europe         |                |                     | East Asia      |
-    | East US 2        | Norway East          |                |                     | Japan East     |
-    | West US 2        | Poland Central       |                |                     | Southeast Asia |
-    | West US 3        | Sweden Central       |                |                     |                |
-    |                  | UK South             |                |                     |                |
-    |                  | West Europe          |                |                     |                |
-
-    > [!WARNING]
-    > **Note to PG:** In the old version of this document, you provide an Azure CLI query instead of a list. How frequently does the list change?
+- **Region support:** Zone-redundant Flex Consumption plans can be deployed into a specific set of regions. You can retrieve the current list of supported regions by using the Azure CLI. For more information, see [View regions that support availability zones](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan##view-regions-that-support-availability-zones).
 
 ::: zone-end
 
@@ -178,6 +164,8 @@ If you don't enable zone redundancy, your plan is *nonzonal* or *regional*, whic
     | West US 3        | UK South             |                |                    |                |
     |                  | West Europe          |                |                    |                |
 
+- **Operating systems:** Both Windows and Linux plans are supported.
+
 - **Minimum instance count:** A minimum of two always-ready instances is required when zone redundancy is enabled for Premium plans.
 
 ::: zone-end
@@ -195,8 +183,6 @@ If you don't enable zone redundancy, your plan is *nonzonal* or *regional*, whic
 ::: zone-end
 
 ::: zone pivot="flex-consumption,premium"
-
-- **Operating systems:** Both Windows and Linux plans are supported.
 
 ### Considerations
 
@@ -293,9 +279,6 @@ This section describes what to expect when a plan is zone-redundant, the host st
 - **Cross-zone operation:** When you configure zone redundancy on Azure Functions, requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
 
 - **Cross-zone data replication:** Azure Functions is a stateless compute service, so there's no customer data to replicate between zones. The platform replicates configuration across zones automatically.
-
-    > [!WARNING]
-    > **Note to PG:** Can we specify whether configuration replication is synchronous?
 
     If your host storage account uses ZRS, Azure Storage synchronously replicates its data across multiple availability zones.
 

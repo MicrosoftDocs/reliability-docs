@@ -5,14 +5,14 @@ groups:
   title: Azure Functions hosting plan
   prompt: Choose a hosting plan
   pivots:
-  - id: consumption
-    title: Consumption
   - id: flex-consumption
     title: Flex Consumption
   - id: premium
     title: Premium (Elastic Premium)
   - id: dedicated
     title: Dedicated (App Service)
+  - id: consumption
+    title: Consumption
 # Owner: estfan
 - id: logic-app-hosting-types
   title: Azure Logic Apps hosting model
