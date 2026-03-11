@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-database-postgresql	
 ms.subservice: flexible-server
-ms.date: 03/10/2026
+ms.date: 03/11/2026
 ai.usage: ai-assisted
 ---
 
@@ -313,19 +313,21 @@ As part of your disaster recovery strategy, regularly run full recovery drills. 
 
 ## Backup and restore
 
-Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities. Backups are fully managed by Microsoft and include both full backups and transaction log backups.
-
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Backups are fully managed by Microsoft, don't interrupt the availability of the server, and include both full backups and transaction log backups.
 
 - **Backup storage:** The service stores backups in zone-redundant storage (ZRS) if the region supports availability zones, or locally redundant storage (LRS) otherwise. This backup storage applies to all servers, regardless of their high availability configuration.
 
     In Azure regions with pairs, you can configure [geo-redundant (GRS) backup storage](/azure/postgresql/backup-restore/concepts-backup-restore#geo-redundant-backup-and-restore) at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
-    The default backup retention period is 7 days, with the option to extend retention. All backups are encrypted.
+    The default backup retention period is 7 days, with the option to extend retention. You can also use Azure Backup for long-term storage of manual backups. All backups are encrypted.
 
-- **Point-in-time restore:** Point-in-time restore allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from. When you restore a geo-redundant backup, you create a new server in the paired region.
+- **Restore:** Point-in-time recovery allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from.
+
+    When you restore a geo-redundant backup, you create a new server in the paired region.
 
     This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios.
+
+[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
 For more information, see [Backup and restore in Azure Database for PostgreSQL](/azure/postgresql/backup-restore/concepts-backup-restore).
 
