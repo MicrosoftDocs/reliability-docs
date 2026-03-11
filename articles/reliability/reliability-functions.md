@@ -372,14 +372,21 @@ For multi-region disaster recovery for Durable Functions, see [Disaster recovery
 
 ## Resilience to service maintenance
 
-Azure Functions performs regular service upgrades and other maintenance tasks. To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
+Azure Functions performs regular service upgrades and other maintenance tasks.
 
-::: zone pivot="flex-consumption,premium,dedicated"
+- **Transient fault resilience:** During service maintenance, the instances that run your function app might be restarted or experience temporary interruptions. Ensure any client applications that interact with your function app are [resilient to transient faults](#resilience-to-transient-faults).
+
+::: zone pivot="flex-consumption"
+
+- **Enable zone redundancy:** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or zone becomes unhealthy during an upgrade.
+
+::: zone-end
+
+::: zone pivot="premium,dedicated"
+
+To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
 
 - **Enable zone redundancy:** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. *Update domains* consist of collections of VMs that go offline during an update, and they map to availability zones. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or zone becomes unhealthy during an upgrade.
-
-    > [!WARNING]
-    > **Note to PG:** This section was copied from the App Service reliability guide. Is this accurate for Azure Functions, too? (We'll adjust to remove zone redundancy for consumption plan if so.)
 
 ::: zone-end
 
