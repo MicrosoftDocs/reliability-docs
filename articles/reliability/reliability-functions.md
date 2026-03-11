@@ -28,7 +28,7 @@ When you deploy Azure Functions, it's important to be familiar with several conc
 
 - **[Hosting plans](/azure/azure-functions/functions-scale):** Plans represent the hosting environment for your function apps. The plan determines the compute resources available, the pricing model, and the scaling behavior.
 
-- **Storage accounts:** When you create a function app, you must specify a [host storage account](/azure/azure-functions/storage-considerations). The storage account is used to manage aspects of the function app's internal operations, including function code storage, logging, and concurrency management (such as blob leases for certain trigger types).
+- **[Storage accounts](/azure/azure-functions/storage-considerations):** When you create a function app, you must specify a host storage account. The storage account is used to manage aspects of the function app's internal operations, including function code storage, logging, and concurrency management (such as blob leases for certain trigger types).
 
     You can also use a storage account for deployment. This storage account might be the same as your host storage account or a different storage account.
 
