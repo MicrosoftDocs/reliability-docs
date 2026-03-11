@@ -3,7 +3,7 @@ title: Azure Services That Support Availability Zones
 description: Learn about which Azure services provide availability zone support, including zonal and zone-redundant options, and the requirements that some services have.
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: article
+ms.topic: reference
 ms.date: 09/16/2025
 ms.update-cycle: 1095-days
 ms.author: pnp
