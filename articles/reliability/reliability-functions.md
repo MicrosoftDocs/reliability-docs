@@ -178,12 +178,12 @@ When you configure Elastic Premium function app plans as zone-redundant, the pla
 
 When Functions allocates instances to a zone redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which the underlying Azure Virtual Machine Scale Sets offers. A Premium plan is considered *balanced* when each zone has either the same number of virtual machines in all of the other zones used by the Premium plan, plus-or-minus one virtual machine.
 
+> [!WARNING]
+> **Note to PG:** Confirm that the information above is still accurate. App Service changed their behavior to only guarantee two zones (they might use more but they don't specify how many). Would that apply to Flex Consumption and Elastic Premium too?
+
 ::: zone-end
 
 ::: zone pivot="flex-consumption,premium"
-
-> [!WARNING]
-> **Note to PG:** Confirm that the information above is still accurate. App Service changed their behavior to only guarantee two zones (they might use more but they don't specify how many). Would that apply to Flex Consumption and Elastic Premium too?
 
 ### Cost
 
