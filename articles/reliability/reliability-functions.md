@@ -229,6 +229,8 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 
 ### Capacity planning and management
 
+Zone-redundant function apps continue to run even when zones in the region suffer an outage.
+
 During a zone outage, Azure Functions detects lost instances and automatically tries to locate or create replacement instances in the healthy zones. This process is done on a best-effort basis and isn't guaranteed. If your workload must have a certain number of instances to maintain your expected service level, then consider *over-provisioning* the number of always-ready instances. This approach allows the solution to tolerate some capacity loss and continue to function without degraded performance. For more information, see [Manage capacity by using over-provisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning).
 
 ### Behavior when all zones are healthy
