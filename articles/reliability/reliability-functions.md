@@ -149,9 +149,6 @@ If you don't enable zone redundancy, your plan is *nonzonal* or *regional*, whic
 
 Zone redundancy only guarantees continued uptime for deployed applications. An availability zone outage might affect some aspects of Azure Functions, even though the application continues to serve traffic. These behaviors include plan scaling, application creation, application configuration, and application publishing.
 
-> [!WARNING]
-> **Note to PG:** Should we add a recommendation to overprovision if capacity is tight? We have this in the App Service guide.
-
 ### Instance distribution across zones
 
 ::: zone-end
@@ -177,9 +174,6 @@ When you configure Elastic Premium function app plans as zone-redundant, the pla
 - For a capacity value more than Number of Zones * Number of instances, extra instances are spread among the remaining zones.
 
 When Functions allocates instances to a zone redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which the underlying Azure Virtual Machine Scale Sets offers. A Premium plan is considered *balanced* when each zone has either the same number of virtual machines in all of the other zones used by the Premium plan, plus-or-minus one virtual machine.
-
-> [!WARNING]
-> **Note to PG:** Confirm that the information above is still accurate. App Service changed their behavior to only guarantee two zones (they might use more but they don't specify how many). Would that apply to Flex Consumption and Elastic Premium too?
 
 ::: zone-end
 
@@ -228,6 +222,14 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 - **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For detailed steps, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
 
 - **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. You must instead migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
+
+::: zone-end
+
+::: zone pivot="flex-consumption,premium"
+
+### Capacity planning and management
+
+During a zone outage, Azure Functions detects lost instances and automatically tries to locate or create replacement instances in the healthy zones. This process is done on a best-effort basis and isn't guaranteed. If your workload must have a certain number of instances to maintain your expected service level, then consider *over-provisioning* the number of always-ready instances. This approach allows the solution to tolerate some capacity loss and continue to function without degraded performance. For more information, see [Manage capacity by using over-provisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning).
 
 ### Behavior when all zones are healthy
 
