@@ -4,7 +4,7 @@ description: Learn how to enable zone resilience for Azure workloads. Understand
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: article
+ms.topic: concept-article
 ms.date: 10/29/2025
 ms.author: pnp
 ms.custom: subject-reliability
@@ -148,7 +148,7 @@ The following table summarizes the availability zone support for many Azure serv
 | [Azure Cosmos DB for NoSQL](./reliability-cosmos-db-nosql.md#migrate-to-availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Modification | None if using autoscale or multi-region writes |
 | [Azure Data Factory](./reliability-data-factory.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Always zone resilient | N/A |
 | [Azure Data Lake Storage](reliability-storage-blob.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Moderate cost increase |
-| [Azure Database for MySQL](./reliability-database-mysql.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Redeployment | Requires primary and high availability (HA) instance |
+| [Azure Database for MySQL](./reliability-database-mysql.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Redeployment | Requires primary and high availability (HA) replica |
 | [Azure Database for PostgreSQL - Flexible Server](./reliability-postgresql-flexible-server.md#availability-zone-redeployment-and-migration) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | Requires primary and HA instance |
 | [Azure Databricks](./reliability-databricks.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | | Enablement | No cost impact for same number of VMs; moderate cost increase for storage |
 | [Azure Disk Storage (managed disks)](/azure/virtual-machines/disks-migrate-lrs-zrs) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Enablement | Moderate cost increase |

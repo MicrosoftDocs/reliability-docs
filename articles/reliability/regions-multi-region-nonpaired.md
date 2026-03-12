@@ -4,7 +4,7 @@ description: Learn about how to create multi-region solutions even when the regi
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: article
+ms.topic: concept-article
 ms.date: 10/09/2025
 ms.update-cycle: 1095-days
 ms.author: pnp
