@@ -305,7 +305,7 @@ items:
       - name: Azure Blob Storage
         href: reliability-storage-blob.md#configure-availability-zone-support
       - name: Azure Functions
-        href: migrate-functions.md
+        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure Backup
         href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
