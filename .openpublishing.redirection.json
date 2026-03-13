@@ -224,6 +224,16 @@
       "source_path": "articles/reliability/migrate-recovery-services-vault.md",
       "redirect_url": "/azure/backup/backup-create-recovery-services-vault#modify-default-settings",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/migrate-cosmos-nosql.md",
+      "redirect_url": "/azure/reliability/reliability-cosmos-db",
+      "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-cosmos-db-nosql.md",
+      "redirect_url": "/azure/reliability/reliability-cosmos-db",
+      "redirect_document_id": false
     }
   ]
 }
