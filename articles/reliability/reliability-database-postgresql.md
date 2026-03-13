@@ -122,7 +122,7 @@ If you configure your server without high availability, then it runs on a single
 
 ### Cost
 
-When you enable high availability, the secondary replica is created and billed at the same rate as the primary. The availability zone configuration doesn't affect the cost. There are no charges for data replication within or between availability zones. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
+When you enable high availability, the secondary replica is created and billed at the same rate as the primary. The availability zone configuration doesn't affect the cost. There are no charges for data replication within or between availability zones. Depending on your backup storage volume, you might also be billed for backup storage. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
 
 ### Configure availability zone support
 
