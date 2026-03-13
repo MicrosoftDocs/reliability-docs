@@ -221,9 +221,14 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/migrate-recovery-services-vault.md",
+      "redirect_url": "/azure/backup/backup-create-recovery-services-vault#modify-default-settings",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/reliability-ddos.md",
       "redirect_url": "/azure/reliability/reliability-ddos-protection",
-      "redirect_document_id": false
+      "redirect_document_id": true
     }
   ]
 }
