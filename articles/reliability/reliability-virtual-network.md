@@ -61,9 +61,9 @@ A virtual network and its subnets span all availability zones within the region 
 
 You don't need to divide your virtual networks or subnets by availability zones to accommodate zonal resources. For example, if you configure a zonal VM, you don't have to consider the virtual network when you select the availability zone for the VM. The same is true for other zonal resources.
 
-### Region support
+### Requirements
 
-Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
+- **Region support:** Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
 
 ### Cost
 
