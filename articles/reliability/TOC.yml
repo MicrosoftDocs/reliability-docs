@@ -311,7 +311,7 @@ items:
       - name: Azure Container Registry
         href: reliability-container-registry.md#configure-availability-zone-support
       - name: Azure Cosmos DB
-        href: migrate-cosmos-db.md#configure-availability-zone-support
+        href: reliability-cosmos-db.md#configure-availability-zone-support
       - name: Azure Database for MySQL - Flexible Server
         href: migrate-database-mysql-flex.md
       - name: Azure Database for PostgreSQL
