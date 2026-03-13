@@ -357,9 +357,10 @@ productDirectory:
     - title: Azure Cosmos DB
       summary: Fast NoSQL database with SLA-backed speed and availability
       imageSrc: https://static.docs.com/ui/media/product/azure/cosmos-db.svg
-      url: reliability-cosmos-db-nosql.md
+      url: reliability-cosmos-db.md
       azureCategories:
         - databases
+        - featured
     # Card
     - title: Azure Functions
       summary: Execute event-driven serverless code functions with an end-to-end development experience

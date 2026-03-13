@@ -320,8 +320,8 @@ When using backups as part of a disaster recovery plan it's important to take th
 
 Many Azure data and storage services support backups, such as the following:
 
-- [Azure Backup](/azure/reliability/reliability-backup) provides automated backups for virtual machine disks, storage accounts, AKS, and a variety of other sources.
-- Many Azure database services, including [Azure SQL Database](./reliability-sql-database.md) and [Azure Cosmos DB](/azure/reliability/reliability-cosmos-db-nosql), have an automated backup capability for your databases.
+- [Azure Backup](./reliability-backup.md) provides automated backups for virtual machine disks, storage accounts, AKS, and a variety of other sources.
+- Many Azure database services, including [Azure SQL Database](./reliability-sql-database.md) and [Azure Cosmos DB](./reliability-cosmos-db.md), have an automated backup capability for your databases.
 - [Azure Key Vault](./reliability-key-vault.md) provides features to back up your secrets, certificates, and keys.
 
 To learn more about recovery strategies for backup and restore, see [Well-Architected Framework - Recovery strategy for backup and restore](/azure/well-architected/design-guides/disaster-recovery#recovery-strategy-for-backup-and-restore).
