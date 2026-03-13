@@ -85,7 +85,7 @@ When zone redundancy is enabled, the platform automatically spreads your plan in
 
 You must also enable zone-redundant storage (ZRS) on the host storage account, which ensures that it's resilient to zone outages as well.
 
-![Diagram showing zone-redundant Azure Functions plan with three instances spread across three zones, and a zone-redundant storage account](./media/reliability-functions/zone-redundant.svg)
+![Diagram showing zone-redundant Azure Functions plan with three instances spread across three zones, and a zone-redundant storage account.](./media/reliability-functions/zone-redundant.svg)
 
 ::: zone-end
 
