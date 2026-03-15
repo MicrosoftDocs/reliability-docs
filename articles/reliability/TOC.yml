@@ -16,7 +16,7 @@ items:
       href: reliability-bot.md
     - name: Azure Databricks
       href: reliability-databricks.md
-    - name: Azure Machine Learning Service
+    - name: Azure Machine Learning
       href: /azure/machine-learning/how-to-high-availability-machine-learning?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json   
   - name: Analytics
     items:
@@ -94,7 +94,7 @@ items:
     items:
     - name: Azure Cosmos DB for NoSQL
       href: reliability-cosmos-db-nosql.md
-    - name: Azure Database for MySQL - Flexible Server
+    - name: Azure Database for MySQL
       items: 
       - name: Availability zones
         href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
@@ -122,7 +122,7 @@ items:
       items:
       - name: Availability zones
         href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
+      - name: Data export
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
   - name: Integration
     items:
@@ -158,12 +158,14 @@ items:
       items:
       - name: Availability zones
         href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
+      - name: Data export
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
   - name: Migration
     items:
+    - name: Azure Migrate
+      href: /azure/migrate/resources-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#does-azure-migrate-offer-backup-and-disaster-recovery
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
   - name: Networking
