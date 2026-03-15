@@ -6,6 +6,7 @@ ms.author: glenga
 ms.topic: reliability-article
 ms.service: azure-functions
 ms.custom: references_regions, subject-reliability
+ai.usage: ai-assisted
 ms.date: 03/12/2026
 zone_pivot_groups: azure-functions-hosting-plans
 ---
