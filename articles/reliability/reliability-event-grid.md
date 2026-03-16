@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-grid
-ms.date: 02/25/2026
+ms.date: 03/17/2026
 ai-usage: ai-assisted
 ---
 
