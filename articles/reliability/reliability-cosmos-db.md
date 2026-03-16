@@ -37,7 +37,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azure distributes the replicas of your data across multiple availability zones, providing resiliency to datacenter problems and outages. Microsoft selects the availability zones to use.
 
-<!-- TODO diagram showing replicas across zones -->
+![Diagram showing an Azure Cosmos DB account with a replica set that contains four replicas, which are distributed across the zones.](./media/reliability-cosmos-db/zone-redundant.png)
 
 An Azure Cosmos DB account might use multiple regions (locations). You can configure zone redundancy separately for each region in your account.
 
