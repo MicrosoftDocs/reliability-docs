@@ -296,8 +296,6 @@ items:
         href: reliability-application-gateway-v2.md#configure-availability-zone-support
       - name: Azure Blob Storage
         href: reliability-storage-blob.md#configure-availability-zone-support
-      - name: Azure Functions
-        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure Backup
         href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
@@ -316,6 +314,8 @@ items:
         href: reliability-azure-database-postgresql.md
       - name: Azure Elastic SAN
         href: reliability-elastic-san.md#availability-zone-migration
+      - name: Azure Functions
+        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure HDInsight
         href: reliability-hdinsight.md#availability-zone-migration
       - name: Azure Kubernetes Service
