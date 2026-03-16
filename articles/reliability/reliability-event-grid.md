@@ -54,7 +54,7 @@ Azure Event Grid is a fully managed service. Microsoft manages the underlying in
 
 When you use Event Grid, consider the following practices to ensure your solution is resilient to transient faults:
 
-- **Event publishers:** When a client application publishes events to Event Grid, it's responsible for handling transient failures. Applications should implement retry logic when publishing events. For more information, see [Troubleshoot transient conection issues](/azure/event-grid/troubleshoot-network-connectivity#troubleshoot-transient-connectivity-issues).
+- **Event publishers:** When a client application publishes events to Event Grid, it's responsible for handling transient failures. Applications should implement retry logic when publishing events. For more information, see [Troubleshoot transient connection issues](/azure/event-grid/troubleshoot-network-connectivity#troubleshoot-transient-connectivity-issues).
 
   We recommend you use the [Event Grid data plane SDKs](/azure/event-grid/sdk-overview#data-plane-sdks), which automatically provide transient fault handling.
 
