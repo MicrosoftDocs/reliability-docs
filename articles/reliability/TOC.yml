@@ -160,6 +160,8 @@ items:
       href: reliability-backup.md
     - name: Azure Guest Configuration
       href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
+    - name: Azure Managed Grafana
+      href: reliability-managed-grafana.md
     - name: Azure Monitor - Log Analytics
       items:
       - name: Availability zones
@@ -167,21 +169,13 @@ items:
       - name: Azure Monitor - Log Analytics
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
     - name: Azure Site Recovery
-      items:
-      - name: Availability zones
-        href: /azure/site-recovery/site-recovery-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/site-recovery/azure-to-azure-tutorial-enable-replication?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-site-recovery.md
   - name: Migration
     items:
     - name: Azure Migrate
       href: /azure/migrate/resources-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#does-azure-migrate-offer-backup-and-disaster-recovery
     - name: Azure Site Recovery
-      items:
-      - name: Availability zones
-        href: /azure/site-recovery/site-recovery-overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/site-recovery/azure-to-azure-tutorial-enable-replication?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-site-recovery.md
   - name: Networking
     items:
     - name: Azure Application Gateway v2
@@ -311,7 +305,7 @@ items:
       - name: Azure Blob Storage
         href: reliability-storage-blob.md#configure-availability-zone-support
       - name: Azure Functions
-        href: migrate-functions.md
+        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure Backup
         href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
@@ -338,8 +332,6 @@ items:
         href: reliability-load-balancer.md#configure-availability-zone-support
       - name: Log Analytics Dedicated Cluster workspaces
         href: migrate-monitor-log-analytics.md
-      - name: Azure Recovery Services vault
-        href: migrate-recovery-services-vault.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database

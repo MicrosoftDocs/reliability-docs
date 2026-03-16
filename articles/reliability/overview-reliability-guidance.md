@@ -5,7 +5,7 @@ author: glynnniall
 ms.service: azure
 ms.topic: reliability-article
 ms.date: 01/15/2026
-ms.author: glynnniall
+ms.author: pnp
 ms.custom: subject-reliability
 ms.subservice: azure-reliability
 ---
@@ -57,7 +57,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Container Apps| [Reliability in Container Apps](reliability-azure-container-apps.md)||
 |Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 |Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
-|Azure Cosmos DB for MongoDB vCore| [Reliability in Azure Cosmos DB for MongoDB vCore](reliability-cosmos-mongodb.md)||
 |Azure Cosmos DB for NoSQL| [Reliability in Azure Cosmos DB for NoSQL](reliability-cosmos-db-nosql.md) ||
 |Azure Cosmos DB for PostgreSQL| | [Availability zone outage resiliency in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-availability-zones) </p> [High availability in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-high-availability)|
 |Azure Data Box|| [Recover data if an entire region fails](/azure/databox/data-box-disk-faq#how-can-i-recover-my-data-if-an-entire-region-fails-)|
@@ -74,6 +73,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 |Azure Disk Encryption|| [Redundancy options for managed disks](/azure/virtual-machines/disks-redundancy) |
 |Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
+|Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||
 |Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 |Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
 |Azure Event Hubs| [Reliability in Azure Event Hubs](./reliability-event-hubs.md) ||
@@ -91,6 +91,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Kubernetes Service (AKS)| [Reliability in AKS](reliability-aks.md)||
 |Azure Load Balancer| [Reliability in Load Balancer](reliability-load-balancer.md)||
 |Azure Logic Apps|[Reliability in Logic Apps](reliability-logic-apps.md) ||
+|Azure Managed Grafana|[Reliability in Azure Managed Grafana](reliability-managed-grafana.md) ||
 |Azure Machine Learning|| [Failover for business continuity and disaster recovery](/azure/machine-learning/how-to-high-availability-machine-learning)|
 |Azure managed disks|| [Best practices for achieving high availability by using Azure virtual machines and managed disks](/azure/virtual-machines/disks-high-availability)|
 |Azure Managed Redis|[Reliability in Azure Managed Redis](./reliability-managed-redis.md) ||
@@ -108,7 +109,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Service Bus|[Reliability in Service Bus](reliability-service-bus.md)||
 |Azure Service Fabric|| [Deploy a Service Fabric cluster across availability zones](/azure/service-fabric/service-fabric-cross-availability-zones) </p> [Disaster recovery in Service Fabric](/azure/service-fabric/service-fabric-disaster-recovery) |
 |Azure SignalR Service|| [Resiliency and disaster recovery in Azure SignalR Service](/azure/azure-signalr/signalr-concept-disaster-recovery)|
-|Azure Site Recovery|| [Set up disaster recovery for Azure virtual machines](/azure/site-recovery/azure-to-azure-tutorial-enable-replication)|
+|Azure Site Recovery|[Reliability in Azure Site Recovery](./reliability-site-recovery.md)||
 |Azure SQL Database|[Reliability in Azure SQL Database](reliability-sql-database.md) |
 |Azure SQL Managed Instance| [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md) ||
 |Azure Storage Actions| [Reliability in Storage Actions](reliability-storage-actions.md)||
