@@ -21,6 +21,15 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 <!-- TODO -->
 
+- Logical
+    - Account, database, containers - serve as the logical units of distribution and scalability. You create collections, tables, and graphs and these are internally represented as containers.
+    - Logical partitioning
+    - Global distribution
+
+- Physical
+    - [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-distribution)
+    - Quorums
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -275,13 +284,22 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 ## Resilience to service maintenance
 
-<!-- TODO -->
+[!INCLUDE [Service maintenance description - transient fault](includes/reliability-maintenance-transient-fault-include.md)]
+
+<!-- TODO maybe add more -->
 
 ## Service-level agreement
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
-<!-- TODO -->
+Azure Cosmos DB provides SLAs for a range of configurations and service characteristics, including availability, latency, throughput, and consistency.
+
+The availability SLAs are different depending on whether you use any of the following product capabilities:
+
+- Provisioned throughput
+- Single-region account with availability zone support (zone redundancy)
+- Accounts that use multiple read regions
+- Accounts that use multiple write regions
 
 ## Related content
 
