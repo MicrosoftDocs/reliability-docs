@@ -27,29 +27,41 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 <!-- TODO -->
 
+[Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications)
+
 ## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-<!-- TODO -->
+Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azure distributes the replicas of your data across multiple availability zones, providing resiliency to datacenter problems and outages.
+
+We recommend using zone redundancy in regions where it's supported, especially for single-region accounts. Because availability zones are physically separate and provide distinct power source, network, and cooling, the availability SLAs for Azure Cosmos DB are higher for zone-redundant accounts than accounts that don't use availability zones.
 
 ### Requirements
 
-- **Region support:** <!-- TODO -->
-
-<!-- TODO -->
+**Region support:** You can enable zone redundancy in Azure regions that supports availability zones. To see if your region supports availability zones, see [the list of supported regions](./regions-list.md).
 
 ### Considerations
 
-<!-- TODO -->
+- A single-region account with Availability Zones can maintain read-write availability when an outage affects only one availability zone. However, if multiple availability zones or the entire region is impacted, single-region accounts lose read and write access until service is restored.
+
+- TODO interactions between multi-region and AZ support
 
 ### Cost
 
-<!-- TODO -->
+Regions where zone redundancy is enabled are charged at a premium. However, the premium pricing for availability zones is waived for accounts configured with multi-region writes and/or for collections configured with autoscale mode. For more information, see [Azure Cosmos DB pricing](https://azure.microsoft.com/pricing/details/cosmos-db/).
 
 ### Configure availability zone support
 
-<!-- TODO -->
+You can configure availability zones only when you add a new region to an Azure Cosmos DB account.
+
+- **Create a new Azure Cosmos DB account with zone redundancy:** 
+
+- **Add a zone-redundant region to an existing Azure Cosmos DB account:** To enable availability zone support on an existing account, you need to add a new region and enable zone redundancy on that region. TODO
+
+    - [Azure portal](/azure/cosmos-db/how-to-manage-database-account#add-remove-regions-from-your-database-account)
+    - [Azure CLI](/azure/cosmos-db/manage-with-cli#add-or-remove-regions)
+    - [Azure Resource Manager templates](/azure/cosmos-db/manage-with-templates)
 
 ### Capacity planning and management
 
@@ -69,7 +81,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Detection and response:** <!-- TODO -->
 
-- **Notification:** <!-- TODO -->
+[!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
 - **Active requests:** <!-- TODO -->
 
@@ -81,11 +93,11 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 ### Zone recovery
 
-<!-- TODO -->
+When the availability zone recovers, Azure Cosmos DB automatically restores replicas in the availability zone, and reroutes traffic between replicas as normal.
 
 ### Test for zone failures
 
-<!-- TODO -->
+The Azure Cosmos DB platform manages traffic routing, failover, and failback for zone-redundant accounts. Because this feature is fully managed, you don't need to initiate anything or validate availability zone failure processes.
 
 ## Resilience to region-wide failures
 
