@@ -491,7 +491,7 @@ Include this section to explain normal operations when all availability zones ar
 
 **Include two bullets:**
 
-- **Cross-region operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
+- **Cross-zone operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
 
   - *For zone-redundant services*, work distribution typically services fall into one of these models:
     - *Active/active*: Work is automatically spread across instances in every availability zone
@@ -500,7 +500,7 @@ Include this section to explain normal operations when all availability zones ar
      **Example:**
 
       ```markdown
-      - **Cross-region operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
+      - **Cross-zone operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
       ```
 
   - *For zonal services*, clarify that customers are responsible for configuring their solution to route work between the availability zones.
@@ -508,10 +508,10 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
+      - **Cross-zone operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
       ```
 
-- **Cross-region data replication**:
+- **Cross-zone data replication**:
 
   - *For zone-redundant services where the service replicates data across zones*, explain:
     - Replication method: synchronous, asynchronous, or hybrid. Most zone-redundant Azure services replicate data synchronously across zones.
@@ -523,7 +523,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
+      - **Cross-zone data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput.
       ```
 
     Some services replicate their data asynchronously, where changes are applied in a single zone and then propagated after some time to the other zones. Use wording similar to this to explain this approach and its tradeoffs.
@@ -531,7 +531,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
+      - **Cross-zone data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
       ```
 
   - *For stateless services*, clarify that no data is synchronized.
@@ -539,7 +539,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
+      - **Cross-zone data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
       ```
 
 > [!NOTE]
@@ -594,7 +594,7 @@ Explain what happens when an availability zone fails. Be precise and clear, as c
     **Example:**
 
     ```markdown
-    - **Active requests**: When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried.
+    - **Active requests**: When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
     ```
 
 - **Expected data loss:** Explain if the customer should expect any data loss during a zone failover.
