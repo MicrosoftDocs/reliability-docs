@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure VMware Solution
 description: Learn about resiliency in Azure VMware Solution, including resilience to transient faults, availability zone failures, and region failures.
-author: glynnniall
-ms.author: glynnniall
+author: jjaygbay1
+ms.author: jacobjaygbay
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-vmware
-ms.date: 02/18/2025
+ms.date: 02/18/2026
 ai-usage: ai-assisted
 zone_pivot_groups: azure-vmware-solution-generations
 ---

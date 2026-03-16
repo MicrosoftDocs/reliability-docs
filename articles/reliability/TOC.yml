@@ -305,7 +305,7 @@ items:
       - name: Azure Blob Storage
         href: reliability-storage-blob.md#configure-availability-zone-support
       - name: Azure Functions
-        href: migrate-functions.md
+        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure Backup
         href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
@@ -332,8 +332,6 @@ items:
         href: reliability-load-balancer.md#configure-availability-zone-support
       - name: Log Analytics Dedicated Cluster workspaces
         href: migrate-monitor-log-analytics.md
-      - name: Azure Recovery Services vault
-        href: migrate-recovery-services-vault.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database

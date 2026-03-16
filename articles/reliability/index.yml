@@ -9,7 +9,7 @@ metadata:
   description: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multi-region support, and fundamental cloud reliability concepts.
   keywords: Azure reliability, business continuity, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multi-region support.
   ms.topic: hub-page
-  ms.author: glynnniall
+  ms.author: pnp
   author: glynnniall
   ms.service: azure
   ms.date: 01/29/2026
@@ -367,6 +367,9 @@ productDirectory:
       url: reliability-functions.md
       azureCategories:
         - compute
+        - containers
+        - iot
+        - web
     # Card
     - title: Azure VPN Gateway
       summary: Establish secure, cross-premises connectivity
@@ -450,16 +453,6 @@ productDirectory:
       url: reliability-bot.md
       azureCategories:
         - ai-machine-learning
-    # Card
-    - title: Azure Functions
-      summary: Process events with serverless code
-      imageSrc: /azure/media/index/functions.svg
-      url: reliability-functions.md
-      azureCategories:
-        - compute
-        - containers
-        - iot
-        - web
     # Card
     - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters

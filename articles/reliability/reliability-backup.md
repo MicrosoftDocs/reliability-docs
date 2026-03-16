@@ -2,7 +2,7 @@
 title: Reliability in Azure Backup
 description: Learn how to make Azure Backup resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
 author: glynnniall
-ms.author: glynnniall
+ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
@@ -109,7 +109,7 @@ When you enable zone-redundant storage (ZRS) for your backups, you're charged at
 
     For Recovery Services vaults, storage redundancy must be configured *before* protecting any workloads. Once a workload is protected, the setting is locked and can't be changed.
     
-    You can create a new vault configured to use ZRS and reassign your workloads to the new vault. However, this approach requires downtime, and you're responsible for manually deleting manually deleting any existing recovery points and other data because the old vault's retention policies no longer apply. For more information about deleting a vault, see [Delete a Backup vault](/azure/backup/create-manage-backup-vault#delete-a-backup-vault) or [Delete a Recovery Services vault](/azure/backup/backup-azure-delete-vault#delete-protected-items-in-the-cloud).
+    You can create a new vault configured to use ZRS and reassign your workloads to the new vault. However, this approach requires downtime. For more information, see Create and configure a Recovery Services vault - Modify default settings](/azure/backup/backup-create-recovery-services-vault#modify-default-settings). You're also responsible for manually deleting manually deleting any existing recovery points and other data because the old vault's retention policies no longer apply. For more information about deleting a vault, see [Delete a Backup vault](/azure/backup/create-manage-backup-vault#delete-a-backup-vault) or [Delete a Recovery Services vault](/azure/backup/backup-azure-delete-vault#delete-protected-items-in-the-cloud).
 
 ### Behavior when all zones are healthy
 
