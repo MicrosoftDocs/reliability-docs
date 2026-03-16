@@ -38,7 +38,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications)
 
-<a name="availability-zone-support" />
+<a name="availability-zone-support"></a>
 
 ## Resilience to availability zone failures
 
