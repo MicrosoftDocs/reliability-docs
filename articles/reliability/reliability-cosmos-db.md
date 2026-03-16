@@ -65,7 +65,7 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. T
 
     Enabling zone redundancy isn't an account-wide choice. A single Azure Cosmos DB account can span an arbitrary number of Azure regions, each of which can independently be configured to use zone redundancy. Some regions don't yet support availability zones, but adding them to an Azure Cosmos DB account won't prevent enabling zone redundancy in other regions configured for that account.
 
-- **Serverless:** Serverless accounts can use availability zones, but this choice is only available during account creation. Existing accounts without availability zones cannot be converted to an availability zone configuration. For mission critical workloads, provisioned throughput is the recommended choice. <!-- TODO verify still correct -->
+- **Serverless:** Serverless accounts can use zone redundancy, but this choice is only available during account creation. Existing serverless accounts without availability zones can;t be converted to an availability zone configuration. For mission critical workloads, we recommend you use provisioned throughput.
 
 ### Considerations
 
@@ -212,7 +212,7 @@ When the availability zone recovers, Azure Cosmos DB automatically restores repl
 
 ### Test for zone failures
 
-Your applications can partially simulate the zone outage behavior by using the Azure Cosmos DB Fault Injection library for Java. The [Server Return Gone](/java/api/overview/azure/cosmos-test-readme#server-return-gone-scenario) scenario lets you inject `GONE` errors into specific replicas, exercising the same SDK retry and re-routing code paths that activate during a real zone outage. <!-- TODO review this more -->
+Your applications can partially simulate the zone outage behavior by using the Azure Cosmos DB Fault Injection library for Java. The [Server Return Gone](/java/api/overview/azure/cosmos-test-readme#server-return-gone-scenario) scenario lets you inject `GONE` errors into specific replicas. This approach helps you to exercise the same SDK retry logic, and re-routes to use the code paths that activate during a real zone outage.
 
 ## Resilience to region-wide failures
 
