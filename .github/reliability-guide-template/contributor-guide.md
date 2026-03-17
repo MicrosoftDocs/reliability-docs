@@ -120,6 +120,23 @@ To promote consistency, start with a template:
   description: Learn how to make [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
   ```
 
+### Writing style
+
+Follow these writing style guidelines throughout the reliability guide:
+
+- **Use active voice and "you" as the subject.** Address the reader directly. Prefer "you" as the subject instead of passive constructions.
+- **Prefer descriptive over prescriptive language.** Use "you can" and "you're responsible for" rather than "you must" where appropriate.
+- **Add cross-references between sections.** When discussing content that's related to another section, link to it. For example, when discussing expected downtime during failover, link to the transient fault handling section.
+- **Remove unnecessary qualifiers.** Avoid phrases like "in any way" or other padding words that don't add meaning.
+
+### Formatting and terminology
+
+Follow these formatting conventions:
+
+- **Italics for introducing terms.** When introducing a term for the first time, use *italics* (for example, *workspace*). Don't use bold for term introductions.
+- **Bold for labels in structured lists.** Use bold for labels at the beginning of list items (for example, "**Region support:**"). Don't use bold for inline references to tools, APIs, or features.
+- **Official service names.** Use official Azure service names throughout the document. For example, use "Azure Database for PostgreSQL" rather than informal names. Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) for correct naming conventions.
+
 ### H1 (headline) and introduction
 
 The headline (H1) is the primary heading at the top of the article.
@@ -187,9 +204,11 @@ This section contains production deployment recommendations for your service.
 
 *Required section:* This section focuses on important elements of the service architecture that's relevant to the reliability. It doesn't provide a comprehensive review of the entire service architecture but introduces important reliability elements. Common items to include in this section are:
 
-- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components.
+- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components. Explain what the reader does with a resource after deployment, not just that it exists.
 
-- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, please explicitly mention that.
+- **SKUs and tiers:** If your service offers multiple tiers or SKUs, briefly explain the key differences and when a customer might choose each tier, especially if some tiers support different reliability features than others. Link to the relevant documentation for more information about the pricing tiers.
+
+- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, explicitly mention that.
 
   For example, you might need a customer to deploy a storage account to use the service, and that storage account's redundancy model (LRS/ZRS/GRS) will affect how resilient their overall solution is.
 
@@ -304,14 +323,17 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - Some services don't fit neatly into these categories. Please speak to the Reliability Hub team about how best to handle these situations.
 
-   - If the service also supports nonzonal deployments, include a statement similar to this:
-
-      ```markdown
-      If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
-      ```
-
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
+
+3. **Nonzonal deployments:** If the service also supports nonzonal deployments, where no zone guarantees are made, include a statement similar to this:
+
+  ```markdown
+  If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
+  ```
+
+  > [!IMPORTANT]
+  > Explain what happens when zone redundancy is *not* enabled. Customers need to understand the implications of not configuring zone redundancy so they can make informed decisions.
 
 #### Requirements
 
@@ -358,6 +380,8 @@ Region support must be the FIRST bullet point.
         | West US 2        |                      |               |                    |                |
         | West US 3        |                      |               |                    |                |
         ```
+
+        If a column has no entries, remove it from the table.
 
     1. In this section, include that file within the **Region support** bullet.
 
@@ -1084,6 +1108,19 @@ Then the section should call out:
 Do not repeat the SLA, or provide any exact wording or numbers. Instead, aim to provide a general overview of how a customer should interpret the SLA for a service, because they often are quite specific about what needs to be done for an SLA to apply.
 
 For some services, where the are no callouts, the section should only contain the include file and no other content.
+
+### Flagging facts for product group review
+
+When drafting a reliability guide, you might include facts or technical details that need to be verified by the product group (PG). Use a `> [!WARNING]` block with a "**Note to PG:**" prefix to flag these items for review. Remove these warning blocks before publication.
+
+**Example:**
+
+```markdown
+> [!WARNING]
+> **Note to PG:** Please verify whether synchronous replication is used between zones, and confirm the expected failover time.
+```
+
+Also flag any disclosed implementation details that might need PG approval before publication.
 
 ### Related content
 
