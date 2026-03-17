@@ -73,7 +73,7 @@ There's no extra cost for zone redundancy with IoT Hub.
 
 ### Configure availability zone support
 
-IoT Hub resources automatically support zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
+IoT Hub resources automatically support zone redundancy when deployed in [supported regions](#requirements). No further configuration is required.
 
 ### Behavior when all zones are healthy
 
