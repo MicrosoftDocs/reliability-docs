@@ -51,7 +51,7 @@ To learn about how to create multi-region solutions by using Azure Data Factory,
 
 ## Azure Event Grid
 
-For geo-replication of Azure Event Grid topics in nonpaired regions, you can implement [client-side failover](/azure/event-grid/custom-disaster-recovery-client-side).
+To learn about how to create multi-region solutions by using Azure Event Grid, see [Reliability in Azure Event Grid](./reliability-event-grid.md).
 
 ## Azure IoT Hub 
 
