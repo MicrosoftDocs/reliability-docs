@@ -29,6 +29,8 @@ A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-d
 
 Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
 
+<!-- TODO proivisioned, autoscale, serverless -->
+
 ### Physical architecture
 
 Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by guaranteeing at least three replicas of your data in each Azure region for your account within a four-replica quorum. This guarantee results in zero downtime and zero data loss during individual node outages, without requiring application changes or configurations.
@@ -283,15 +285,16 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 ## Backup and restore
 
-Azure Cosmos DB supports backup and point-in-time restore capabilities, including continuous and periodic backups. You can configure the retention period. For more information, see [Online backup and on-demand data restore in Azure Cosmos DB](/azure/cosmos-db/online-backup-and-restore).
-
 [!INCLUDE [Backups include](includes/reliability-backups-include.md)]
+
+When an Azure Cosmos DB account is deployed in a single region, generally no data loss occurs. Data access is restored after Azure Cosmos DB services recover in the affected region. Data loss might occur only with an unrecoverable disaster in the Azure Cosmos DB region, or because of accidental deletions or other problems in your application. To help you protect against data loss, Azure Cosmos DB provides two backup modes:
+
+- [Continuous backups](/azure/cosmos-db/continuous-backup-restore-introduction) back up the data in each region every 100 seconds. They enable you to restore your data to any point in time with 1-second granularity. In each region, the backup is dependent on the data committed in that region. If the region has zone redundancy enabled, then the backup is stored in zone-redundant storage.
+- [Periodic backups](/azure/cosmos-db/periodic-backup-restore-introduction) fully back up all partitions from all containers under your account, with no synchronization across partitions. The minimum backup interval is 1 hour.
 
 ## Resilience to service maintenance
 
-Azure Cosmos DB transparently manages all details of individual compute nodes. You don't have to worry about any kind of patching or planned maintenance. Azure Cosmos DB guarantees SLAs for availability and P99 latency through all automatic maintenance operations that the system performs.
-
-
+Azure Cosmos DB transparently manages all details of individual compute nodes, and automatically performs patching and other types of planned maintenance. The Azure Cosmos DB SLAs for availability and P99 latency apply through all automatic maintenance operations that the system performs.
 
 ## Service-level agreement
 
