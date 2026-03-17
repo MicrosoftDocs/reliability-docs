@@ -19,24 +19,27 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ## Reliability architecture overview
 
-<!-- TODO -->
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
 
-- Logical
-    - Account, database, containers - serve as the logical units of distribution and scalability. You create collections, tables, and graphs and these are internally represented as containers.
-    - Logical partitioning
-    - Global distribution
+### Logical architecture
 
-- Physical
-    - [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-distribution)
-    - Quorums
+The primary resource you deploy is an Azure Cosmos DB *account*. Each account can have multiple *databases*, and databases can have multiple *containers*. Containers serve as the logical units of distribution and scalability. You create collections, tables, and graphs, depending on the API you use to interact with Azure Cosmos DB. These entities are internally represented as containers. For more information about the resource model, see [Databases, containers, and items in Azure Cosmos DB](/azure/cosmos-db/resource-model).
+
+A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-data-globally). You can configure multiple regions for reading or [for writing](/azure/cosmos-db/multi-region-writes). Azure Cosmos DB automatically geo-replicates your data. Geo-replication behavior is affected by the configuration you use, such as the [consistency level](/azure/cosmos-db/consistency-levels), which indicates how you wish to make tradeoffs between data consistency, availability, latency, and throughput. Different consistency levels optimize for different concerns, support different guarantees, and provide different types of cross-region replication.
+
+Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
+
+### Physical architecture
+
+Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by guaranteeing at least three replicas of your data in each Azure region for your account within a four-replica quorum. This guarantee results in zero downtime and zero data loss during individual node outages, without requiring application changes or configurations.
+
+Internally, Azure Cosmos DB manages your data through various constructs including *physical partitions*, *partition sets*, and *replica sets*. For more detailed information, see [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-distribution).
 
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-<!-- TODO -->
-
-[Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications)
+The Azure Cosmos DB SDKs automatically implement support for a range of resiliency considerations, including transient fault handling through automatic retries, and honoring rate limit responses sent by the service. For more information, see [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications).
 
 <a name="availability-zone-support"></a>
 
@@ -188,7 +191,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Cross-zone operation:** Requests are automatically spread across the replicas in each availability zone. A request might go to a replica in any availability zone.
 
-- **Cross-zone data replication:** When a client makes a change to any data, that change is applied to multiple replicas in different zones simultaneously. This approach is referred to as *synchronous replication*. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput.
+- **Cross-zone data replication:** When a client makes a change to any data, that change is applied to multiple replicas in different zones to achieve quorum. This approach is referred to as *synchronous replication*. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput.
 
 ### Behavior during a zone failure
 
@@ -280,13 +283,15 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 ## Backup and restore
 
-<!-- TODO -->
+Azure Cosmos DB supports backup and point-in-time restore capabilities, including continuous and periodic backups. You can configure the retention period. For more information, see [Online backup and on-demand data restore in Azure Cosmos DB](/azure/cosmos-db/online-backup-and-restore).
+
+[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
 
 ## Resilience to service maintenance
 
-[!INCLUDE [Service maintenance description - transient fault](includes/reliability-maintenance-transient-fault-include.md)]
+Azure Cosmos DB transparently manages all details of individual compute nodes. You don't have to worry about any kind of patching or planned maintenance. Azure Cosmos DB guarantees SLAs for availability and P99 latency through all automatic maintenance operations that the system performs.
 
-<!-- TODO maybe add more -->
+
 
 ## Service-level agreement
 
