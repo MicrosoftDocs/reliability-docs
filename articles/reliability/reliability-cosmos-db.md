@@ -279,10 +279,6 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 <!-- TODO -->
 
-### Custom multi-region solutions for resiliency
-
-<!-- TODO -->
-
 ## Backup and restore
 
 [!INCLUDE [Backups include](includes/reliability-backups-include.md)]
