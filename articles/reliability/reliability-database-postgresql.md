@@ -43,7 +43,7 @@ For more information about the general service architecture and deployment model
 
     The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
 
-    :::image type="content" source="./media/reliability-database-postgresql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
+    :::image type="content" source="./media/reliability-database-postgresql/high-availability.svg" alt-text="Diagram showing the high availability architecture, with a primary and standby server." border="false" :::
 
     A standby replica is deployed in the same VM configuration as the primary replica, including vCores, storage, and network settings.
 
@@ -84,7 +84,7 @@ When you configure a server, you select one of the following configurations:
 
     We recommend zone-redundant deployments for most production servers.
 
-     :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.png" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
+     :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.svg" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
     The primary replica processes read queries, so zone redundancy doesn't affect read latency. Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby replica. The impact varies by workload, selected SKU, and region.
 
@@ -92,7 +92,7 @@ When you configure a server, you select one of the following configurations:
 
     You can select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
-    :::image type="content" source="./media/reliability-database-postgresql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
+    :::image type="content" source="./media/reliability-database-postgresql/zonal.svg" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
     [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
