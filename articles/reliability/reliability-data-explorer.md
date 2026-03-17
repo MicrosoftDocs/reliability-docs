@@ -36,7 +36,7 @@ For production workloads, we recommend that you take the following steps to impr
 
 The primary resource you deploy is a *cluster*, which represents the infrastructure you need to ingest, store, and query your data. With a cluster, you create *databases*, which in turn contain *tables*.
 
-![Diagram showing a cluster that contains two databases, each with a set of tables.](./media/reliability-data-explorer/logical-architecture.png)
+![Diagram showing a cluster that contains two databases, each with a set of tables.](./media/reliability-data-explorer/logical-architecture.svg)
 
 Clusters perform [ingestion](/azure/data-explorer/ingest-data-overview) to retrieve data from other data sources and load it into a table in the cluster. Data can then be [queried](/azure/data-explorer/integrate-query-overview) by using the Kusto Query Language (KQL) syntax. Clusters also have a set of management operations that you can perform.
 
@@ -48,7 +48,7 @@ An Azure Data Explorer cluster has two primary layers that are applicable to its
 
 - **Storage layer:** Azure Data Explorer uses Azure Storage as its durable persistence layer. Azure Storage automatically provides fault tolerance, with the default setting offering locally redundant storage (LRS) within a datacenter. Three replicas are persisted. If a replica is lost while in use, another is deployed without disruption. When your cluster is [configured to use multiple availability zones](#resilience-to-availability-zone-failures), the replicas are spread among different datacenters.
 
-![Diagram showing a cluster with compute nodes and multiple copies of data.](./media/reliability-data-explorer/physical-architecture.png)
+![Diagram showing a cluster with compute nodes and multiple copies of data.](./media/reliability-data-explorer/physical-architecture.svg)
 
 For more information, see [How Azure Data Explorer works](/azure/data-explorer/how-it-works).
 
@@ -72,7 +72,7 @@ Azure Data Explorer supports two types of availability zone configuration:
 
   When you configure your cluster to be zone-redundant, your data is stored using Azure Storage zone-redundant storage (ZRS), which synchronously replicates at least three copies of the data across multiple availability zones.
 
-  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster, with compute nodes and storage spread across multiple zones.](./media/reliability-data-explorer/zone-redundant.png)
+  ![Diagram showing a zone-redundant deployment of an Azure Data Explorer cluster, with compute nodes and storage spread across multiple zones.](./media/reliability-data-explorer/zone-redundant.svg)
 
 - **Zonal:** You can optionally select a single zone when you enable availability zones on your cluster. Microsoft places all of your compute notes into that zone. This is a *zonal* (single-zone) cluster. This configuration might occasionally help if you have an unusually latency-sensitive workload, but it doesn't provide resilience to zone outages.
     
@@ -85,7 +85,7 @@ Azure Data Explorer supports two types of availability zone configuration:
   >
   > If so, it also means that the exposure to zone failures is doubled. Suppose the compute nodes are in zone 1 but the LRS storage copies are all in zone 2. In this scenario, a zone failure in either zone 1 or zone 2 would result in the ADX cluster being unusable. Is that accurate?
 
-  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zonal.png)
+  ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zonal.svg)
 
 If you don't enable availability zones, the cluster is *nonzonal*, which means Azure selects the availability zone for each node and your data. If any availability zone in the region has an outage, it might affect your cluster's nodes, data, or both. We don't recommend a nonzonal configuration because it doesn't provide protection against availability zone outages.
 
