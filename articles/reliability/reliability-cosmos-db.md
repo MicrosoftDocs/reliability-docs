@@ -352,4 +352,8 @@ The availability SLAs are different depending on whether you use any of the foll
 
 ## Related content
 
-<!-- TODO -->
+- [Azure reliability](/azure/reliability/overview)
+- [Azure Cosmos DB overview](/azure/cosmos-db/overview)
+- [Consistency levels in Azure Cosmos DB](/azure/cosmos-db/consistency-levels)
+- [Global data distribution with Azure Cosmos DB](/azure/cosmos-db/distribute-data-globally)
+- [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability) <!-- TODO read -->
