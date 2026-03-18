@@ -33,7 +33,7 @@ A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-d
 
 <!-- TODO
 - RUs, and throughput types - provisioned, autoscale, serverless
-
+- Tiers (Business Critical etc)
 -->
 
 ### Physical architecture
