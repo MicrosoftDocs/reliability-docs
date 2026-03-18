@@ -6,7 +6,7 @@ ms.author: mbender
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
-ms.date: 01/08/2026
+ms.date: 03/20/2026
 ai-usage: ai-assisted
 
 ---
