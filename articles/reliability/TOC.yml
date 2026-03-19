@@ -16,7 +16,7 @@ items:
       href: reliability-bot.md
     - name: Azure Databricks
       href: reliability-databricks.md
-    - name: Azure Machine Learning Service
+    - name: Azure Machine Learning
       href: /azure/machine-learning/how-to-high-availability-machine-learning?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json   
   - name: Analytics
     items:
@@ -31,7 +31,7 @@ items:
     - name: Azure Databricks
       href: reliability-databricks.md
     - name: Azure Event Hubs
-      href: /azure/event-hubs/event-hubs-business-continuity-outages-disasters?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: ./reliability-event-hubs.md
     - name: Azure HDInsight
       href: reliability-hdinsight.md
     - name: Azure Machine Learning
@@ -96,13 +96,7 @@ items:
     items:
     - name: Azure Cosmos DB for NoSQL
       href: reliability-cosmos-db-nosql.md
-    - name: Azure Cosmos DB for PostgreSQL
-      items: 
-      - name: Availability zones
-        href: /azure/cosmos-db/postgresql/concepts-availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/cosmos-db/postgresql/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Database for MySQL - Flexible Server
+    - name: Azure Database for MySQL
       items: 
       - name: Availability zones
         href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
@@ -130,14 +124,14 @@ items:
       items:
       - name: Availability zones
         href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
+      - name: Data export
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
   - name: Integration
     items:
     - name: Azure API Management
       href: reliability-api-management.md
     - name: Azure Data Factory
-      href: /azure/data-factory/concepts-data-redundancy?bc=%2fazure%2freliability%2fbreadcrumb%2ftoc.json&toc=%2fazure%2freliability%2ftoc.json
+      href: reliability-data-factory.md
     - name: Azure Event Grid
       href: ./reliability-event-grid.md
     - name: Azure Event Hubs
@@ -160,15 +154,13 @@ items:
     items:
     - name: Azure Backup
       href: reliability-backup.md
-    - name: Azure Guest Configuration
-      href: /azure/governance/machine-configuration/overview?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability
     - name: Azure Managed Grafana
       href: reliability-managed-grafana.md
     - name: Azure Monitor - Log Analytics
       items:
       - name: Availability zones
         href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Azure Monitor - Log Analytics
+      - name: Data export
         href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
@@ -186,8 +178,6 @@ items:
       href: reliability-app-gateway-containers.md
     - name: Azure Bastion
       href: reliability-bastion.md
-    - name: Azure Communications Gateway
-      href: /azure/communications-gateway/reliability-communications-gateway?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure DNS 
       href: reliability-dns.md
     - name: Azure DDoS Protection
@@ -222,8 +212,6 @@ items:
       href: reliability-virtual-network-gateway.md?pivots=vpn
   - name: Security
     items:
-    - name: Azure Disk Encryption 
-      href: /azure/virtual-machines/disks-redundancy?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Firewall
       href: reliability-firewall.md
     - name: Azure Key Vault
@@ -234,7 +222,7 @@ items:
       href: reliability-backup.md
     - name: Azure Blob Storage
       href: reliability-storage-blob.md
-    - name: Azure Databox
+    - name: Azure Data Box
       href: /azure/databox/data-box-disk-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-can-i-recover-my-data-if-an-entire-region-fails-
     - name: Azure Disk Storage
       href: reliability-storage-disk.md
@@ -262,8 +250,12 @@ items:
       href: reliability-app-configuration.md
     - name: Azure App Service
       href: reliability-app-service.md
+    - name: App Service Environment
+      href: reliability-app-service-environment.md
     - name: Azure Container Apps
       href: reliability-container-apps.md
+    - name: Azure Functions  
+      href: reliability-functions.md
     - name: Azure Notification Hubs
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
@@ -306,8 +298,6 @@ items:
         href: reliability-application-gateway-v2.md#configure-availability-zone-support
       - name: Azure Blob Storage
         href: reliability-storage-blob.md#configure-availability-zone-support
-      - name: Azure Functions
-        href: migrate-functions.md
       - name: Azure Backup
         href: reliability-backup.md#configure-availability-zone-support
       - name: Azure Batch
@@ -320,12 +310,14 @@ items:
         href: reliability-container-registry.md#configure-availability-zone-support
       - name: Azure Cosmos DB for NoSQL
         href: migrate-cosmos-nosql.md
-      - name: Azure Database for MySQL - Flexible Server
+      - name: Azure Database for MySQL
         href: migrate-database-mysql-flex.md
       - name: Azure Database for PostgreSQL
-        href: /azure/postgresql/flexible-server/how-to-manage-high-availability-portal?toc=/azure/reliability#enable-high-availability-during-server-creation
+        href: reliability-azure-database-postgresql.md
       - name: Azure Elastic SAN
         href: reliability-elastic-san.md#availability-zone-migration
+      - name: Azure Functions
+        href: reliability-functions.md#configure-availability-zone-support
       - name: Azure HDInsight
         href: reliability-hdinsight.md#availability-zone-migration
       - name: Azure Kubernetes Service

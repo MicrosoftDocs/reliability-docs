@@ -57,7 +57,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Container Apps| [Reliability in Container Apps](reliability-azure-container-apps.md)||
 |Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 |Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
-|Azure Cosmos DB for MongoDB vCore| [Reliability in Azure Cosmos DB for MongoDB vCore](reliability-cosmos-mongodb.md)||
 |Azure Cosmos DB for NoSQL| [Reliability in Azure Cosmos DB for NoSQL](reliability-cosmos-db-nosql.md) ||
 |Azure Cosmos DB for PostgreSQL| | [Availability zone outage resiliency in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-availability-zones) </p> [High availability in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-high-availability)|
 |Azure Data Box|| [Recover data if an entire region fails](/azure/databox/data-box-disk-faq#how-can-i-recover-my-data-if-an-entire-region-fails-)|
@@ -75,6 +74,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 |Azure Disk Encryption|| [Redundancy options for managed disks](/azure/virtual-machines/disks-redundancy) |
 |Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
+|Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||
 |Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 |Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
 |Azure Event Hubs| [Reliability in Azure Event Hubs](./reliability-event-hubs.md) ||

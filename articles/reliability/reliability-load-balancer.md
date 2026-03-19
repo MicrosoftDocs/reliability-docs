@@ -6,7 +6,7 @@ ms.author: mbender
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-load-balancer
-ms.date: 01/08/2026
+ms.date: 03/20/2026
 ai-usage: ai-assisted
 
 ---
@@ -77,9 +77,9 @@ The following diagram shows an internal load balancer that uses a similar zone-r
 :::image-end:::
 
 > [!NOTE]
-> You can deploy zonal load balancers, but we recommend that you use zone-redundant load balancers for all workloads, including workloads that you deploy into a single zone. Microsoft is migrating all public IP addresses and load balancers to zone-redundant configurations.
+> You can deploy zonal load balancers, but we recommend that you use zone-redundant load balancers for all workloads, including workloads that you deploy into a single zone.
 
-In regions without availability zones, Azure creates all load balancers in a *nonzonal* or *regional* configuration by using a front-end configuration with no zone configured. If the region experiences an outage, your nonzonal load balancers might experience downtime.
+In regions without availability zones, Azure creates all load balancers in a *nonzonal* or *regional* configuration by using a front-end configuration with no zone configured. If the region experiences an outage, your nonzonal load balancers might experience downtime. Public IP addresses created in a region that is later upgraded to have availability zones will be made zone-redundant once the region is in general availability status with multiple availability zones.
 
 #### Back-end instances and availability zones
 
