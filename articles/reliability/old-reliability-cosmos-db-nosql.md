@@ -54,47 +54,6 @@ When you configure an Azure Cosmos DB account for multiple write regions, strong
 
 When an Azure Cosmos DB account is configured with multiple-region writes, one of the regions will act as an arbiter in write conflicts.
 
-#### Best practices for multi-region writes
-<!-- TODO consider moving into the multi-region writes doc -->
-
-Here are some best practices to consider when you're writing to multiple regions.
-
-##### Keep local traffic local
-
-When you use multiple-region writes, the application should issue read and write traffic that originates in the local region strictly to the local Cosmos DB region. For optimal performance, avoid cross-region calls.
-
-It's important for the application to minimize conflicts by avoiding the following antipatterns:
-
-* Sending the same write operation to all regions to increase the odds of getting a fast response time
-
-* Randomly determining the target region for a read or write operation on a per-request basis
-
-* Using a round-robin policy to determine the target region for a read or write operation on a per-request basis.
-
-##### Avoid dependency on replication lag
-
-You can't configure multiple-region write accounts for strong consistency. The region that's being written to responds immediately after Azure Cosmos DB replicates the data locally while asynchronously replicating the data globally.
-
-Though it's infrequent, a replication lag might occur on one or a few partitions when you're geo-replicating data. Replication lag can occur because of a rare blip in network traffic or higher-than-usual rates of conflict resolution.
-
-For instance, an architecture in which the application writes to Region A but reads from Region B introduces a dependency on replication lag between the two regions. However, if the application reads and writes to the same region, performance remains constant even in the presence of replication lag.
-
-##### Evaluate session consistency usage for write operations
-
-In session consistency, you use the session token for both read and write operations.
-
-For read operations, Azure Cosmos DB sends the cached session token to the server with a guarantee of receiving data that corresponds to the specified (or a more recent) session token.
-
-For write operations, Azure Cosmos DB sends the session token to the database with a guarantee of persisting the data only if the server has caught up to the provided session token. In single-region write accounts, the write region is always guaranteed to have caught up to the session token. However, in multiple-region write accounts, the region that you write to might not have caught up to writes issued to another region. If the client writes to Region A with a session token from Region B, Region A won't be able to persist the data until it catches up to changes made in Region B.
-
-It's best to use session tokens only for read operations and not for write operations when you're passing session tokens between client instances.
-
-##### Mitigate rapid updates to the same document
-
-The server's updates to resolve or confirm the absence of conflicts can collide with writes triggered by the application when the same document is repeatedly updated. Repeated updates in rapid succession to the same document experience higher latencies during conflict resolution.
-
-Although occasional bursts in repeated updates to the same document are inevitable, you might consider exploring an architecture where new documents are created instead if steady-state traffic sees rapid updates to the same document over an extended period.
-
 ### Read and write outages
 
 Clients of single-region accounts will experience loss of read and write availability until service is restored.
