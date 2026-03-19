@@ -607,7 +607,6 @@ productDirectory:
       url: reliability-storage-disk.md
       azureCategories:
         - storage
-        - compute
 
 tools:
   title: Reliability services and capabilities
