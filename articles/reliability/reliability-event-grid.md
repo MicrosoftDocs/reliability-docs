@@ -30,6 +30,8 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 Azure Event Grid routes events from event *publishers* to event *consumers*. It's used both by customer applications and by Azure services to emit and consume events, such as notifications when resources are created, updated, or deleted.
 
+:::image type="content" source="media/reliability-event-grid/spanning-services.svg" alt-text="Diagram that shows Event Grid routing events from publishers to consumers across Azure services." border="false":::
+
 Event Grid supports multiple resource types and deployment models:
 
 - **Topics** are the primary entities that receive and store events.
