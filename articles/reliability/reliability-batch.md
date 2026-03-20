@@ -7,6 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-batch
 ms.date: 03/09/2023
+ms.update-cycle: 1095-days
 ---
 
 <!--#Customer intent:  I want to understand reliability support in Azure Batch so that I can respond to and/or avoid failures in order to minimize downtime and data loss. -->
