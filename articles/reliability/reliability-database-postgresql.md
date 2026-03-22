@@ -72,7 +72,7 @@ For more information, see [Handling transient connectivity errors in Azure Datab
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-You can select your type of availability zone support though the *high availability* configuration. Enabling high availability deploys a secondary *standby* replica alongside your primary. This high availability model helps ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replicas. If a disruption occurs to the primary replica, the server automatically fails over to the standby replica.
+You can select your type of availability zone support though the *high availability* configuration. Enabling high availability deploys a *standby* server alongside your primary server. This high availability model helps ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replicas. If a disruption occurs to the primary replica, the server automatically fails over to the standby replica.
 
 Data files and write-ahead logs (WALs) are stored on premium managed disks within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
 
@@ -194,7 +194,7 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting new connections. Azure automatically establishes a new standby server in the original primary zone after it recovers. For full details, see [Forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover).
 
-    - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a separate server that you precreated in another availability zone or region, you're responsible for rerouting traffic to that secondary instance.
+    - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a separate server that you precreated in another availability zone or region, you're responsible for rerouting traffic to that server.
 
 ### Zone recovery
 
