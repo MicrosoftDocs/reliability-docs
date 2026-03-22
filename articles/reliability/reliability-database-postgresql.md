@@ -7,13 +7,13 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-database-postgresql	
 ms.subservice: flexible-server
-ms.date: 03/11/2026
+ms.date: 03/23/2026
 ai.usage: ai-assisted
 ---
 
 # Reliability in Azure Database for PostgreSQL
 
-[Azure Database for PostgreSQL](/azure/postgresql/overview) is a fully managed database service designed to give you granular control and flexibility over database management functions and configuration settings. The service provides flexibility and high availability based on your requirements.
+[Azure Database for PostgreSQL](/azure/postgresql/overview) is a fully managed database service designed to give you granular control and flexibility over database management functions and configuration settings. The service provides high availability and disaster recovery capabilities based on your requirements.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -76,13 +76,13 @@ You can select your type of availability zone support though the *high availabil
 
 Data files and write-ahead logs (WALs) are stored on premium managed disks within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
 
-When you configure a server, you select one of the following configurations:
+Azure Database for PostgreSQL supports two availability zone configuration types when you use high availability:
 
 - **Zone-redundant high availability:** Zone redundancy provides the highest level of zone resilience by deploying a primary replica in one availability zone and a standby replica in a different availability zone. The standby replica uses similar compute, storage, and network configuration to the primary. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby replicas.
 
-   You can either select the availability zones for the primary and secondary replicas or let Microsoft choose them.
+   You can either select the availability zones for the primary and standby servers or let Microsoft choose them.
 
-    We recommend zone-redundant deployments for most production servers.
+    We recommend zone-redundant deployments for production servers.
 
      :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.svg" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
@@ -90,11 +90,11 @@ When you configure a server, you select one of the following configurations:
 
 - **Zonal (same-zone) high availability:** The primary and standby replicas use the same availability zone. If a disruption occurs to the primary replica, but the zone is still healthy, the server automatically fails over to the standby replica. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
-    You can select which zone the primary and standby replicas are placed into. If your region doesn't support availability zones, the region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
-
     :::image type="content" source="./media/reliability-database-postgresql/zonal.svg" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
-    [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
+    Zonal (same-zone) high availability is only available in the following situations:
+    - The region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
+    - If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both replicas in the same availability zone and automatically migrate them to separate zones when capacity becomes available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
 
     Because the replicas are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -122,17 +122,17 @@ If you configure your server without high availability, then it runs on a single
 
 ### Cost
 
-When you enable high availability, the secondary replica is created and billed at the same rate as the primary. The availability zone configuration doesn't affect the cost. There are no charges for data replication within or between availability zones. Depending on your backup storage volume, you might also be billed for backup storage. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
+When you enable high availability, the standby server is created and billed at the same rate as the primary. The availability zone configuration doesn't affect the cost. There are no charges for data replication within or between availability zones. Depending on your backup storage volume, you might also be billed for backup storage. For detailed pricing information, see [Azure Database for PostgreSQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/).
 
 ### Configure availability zone support
 
 To configure availability zone support for a server, you configure the high availability settings.
 
-- **Create a server with zone-redundant or zonal (single-zone) high availability:** To learn how to create a server with availability zone configuration, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/configure-maintain/quickstart-create-server).
+- **Create a zone-redundant server:** To learn how to create a server with availability zone configuration, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/configure-maintain/quickstart-create-server).
 
 - **Change the availability zone configuration for existing servers:** You can change the availability zone configuration for existing servers by changing the high availability settings. For detailed steps, see [Enable high availability for existing servers](/azure/postgresql/high-availability/how-to-configure-high-availability#enable-high-availability-for-existing-servers).
 
-    You can't change the zone used for either the primary or secondary replicas after they've been created. You need to recreate the server.
+    You can't change the zone used for either the primary or standby server after they've been created. You need to recreate the server.
 
     > [!TIP]
     > It's a good idea to wait until the server activity is low before you change high availability configuration.
@@ -194,7 +194,7 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting new connections. Azure automatically establishes a new standby server in the original primary zone after it recovers. For full details, see [Forced failover](/azure/postgresql/high-availability/concepts-high-availability#forced-failover).
 
-    - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a secondary server in another availability zone or region, you're responsible for rerouting traffic to that secondary instance.
+    - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a separate server that you precreated in another availability zone or region, you're responsible for rerouting traffic to that secondary instance.
 
 ### Zone recovery
 
