@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-data-explorer
-ms.date: 02/06/2026
+ms.date: 03/23/2026
 ---
 
 # Reliability in Azure Data Explorer
@@ -24,9 +24,6 @@ For production workloads, we recommend that you take the following steps to impr
 > [!div class="checklist"]
 > - **Deploy a full cluster.** Azure Data Explorer provides [free clusters](/azure/data-explorer/start-for-free) for trial purposes. For production workloads, deploy a full cluster.
 > - **Enable availability zone support.** Azure Data Explorer supports availability zones. When availability zone support is enabled, compute nodes are distributed across multiple availability zones and data is stored using zone-redundant storage. This configuration improves resilience to availability zone failures.
-
-> [!WARNING]
-> **Note to PG:** Please verify that the checklist above aligns with what you'd recommend for most customers to do to improve their cluster's reliability.
 
 ## Reliability architecture overview
 
@@ -79,11 +76,6 @@ Azure Data Explorer supports two types of availability zone configuration:
   [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
   
   Your zone selection only applies to your compute nodes. For a zonal cluster, your storage data continues to use LRS, and might be stored in a different zone to your compute nodes.
-
-  > [!WARNING]
-  > **Note to PG:** As I understand it, LRS doesn't guarantee which zone the copies are in - so it's possible they are in the same zone or a different zone to the compute nodes. Is that accurate?
-  >
-  > If so, it also means that the exposure to zone failures is doubled. Suppose the compute nodes are in zone 1 but the LRS storage copies are all in zone 2. In this scenario, a zone failure in either zone 1 or zone 2 would result in the ADX cluster being unusable. Is that accurate?
 
   ![Diagram showing a zonal deployment of an Azure Data Explorer cluster, with all compute notes in a single zone, and zone-redundant storage.](./media/reliability-data-explorer/zonal.svg)
 
