@@ -128,7 +128,7 @@ When you enable high availability, the standby server is created and billed at t
 
 To configure availability zone support for a server, you configure the high availability settings.
 
-- **Create a zone-redundant server:** To learn how to create a server with availability zone configuration, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/configure-maintain/quickstart-create-server).
+- **Create a zone-redundant server:** To learn how to create a server with high availability and zone redundancy enabled, see [Quickstart: Create an Azure Database for PostgreSQL in the Azure portal](/azure/postgresql/configure-maintain/quickstart-create-server).
 
 - **Change the availability zone configuration for existing servers:** You can change the availability zone configuration for existing servers by changing the high availability settings. For detailed steps, see [Enable high availability for existing servers](/azure/postgresql/high-availability/how-to-configure-high-availability#enable-high-availability-for-existing-servers).
 
