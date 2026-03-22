@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Data Explorer
 description: Learn how to make Azure Data Explorer resilient to various potential outages and problems, including transient faults, availability zone failures, region-wide failures, and service maintenance, and learn about backup and restore.
-author: glynnniall
-ms.author: glynnniall
+author: spelluru
+ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-data-explorer
