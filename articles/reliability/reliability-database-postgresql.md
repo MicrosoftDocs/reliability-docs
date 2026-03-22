@@ -319,7 +319,7 @@ Azure Database for PostgreSQL automatically performs backups that provide point-
 
     In Azure regions with pairs, you can configure [geo-redundant (GRS) backup storage](/azure/postgresql/backup-restore/concepts-backup-restore#geo-redundant-backup-and-restore) at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
-    The default backup retention period is 7 days, with the option to extend retention. You can also use Azure Backup for long-term storage of manual backups. All backups are encrypted.
+    The default backup retention period is 7 days, with the option to extend retention up to 35 days. You can also use Azure Backup for long-term storage of manual backups for up to 10 years. All backups are encrypted.
 
 - **Restore:** Point-in-time recovery allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from.
 
