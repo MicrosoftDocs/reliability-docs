@@ -60,8 +60,8 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Cosmos DB for NoSQL| [Reliability in Azure Cosmos DB for NoSQL](reliability-cosmos-db-nosql.md) ||
 |Azure Cosmos DB for PostgreSQL| | [Availability zone outage resiliency in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-availability-zones) </p> [High availability in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-high-availability)|
 |Azure Data Box|| [Recover data if an entire region fails](/azure/databox/data-box-disk-faq#how-can-i-recover-my-data-if-an-entire-region-fails-)|
-|Azure Data Explorer|| [Business continuity and disaster recovery overview](/azure/data-explorer/business-continuity-overview)|
-|Azure Data Factory| [Reliability in Data Factory](reliability-data-factory.md)||
+|Azure Data Explorer| [Reliability in Azure Data Explorer](./reliability-data-explorer.md) ||
+|Azure Data Factory| [Reliability in Azure Data Factory](reliability-data-factory.md)||
 |Azure Data Manager for Energy| [Reliability in Azure Data Manager for Energy](reliability-energy-data-services.md)||
 |Azure Data Share|| [Disaster recovery for Data Share](/azure/data-share/disaster-recovery)|
 |Azure Database for MySQL|| [High availability concepts in Azure Database for MySQL Flexible Server](/azure/mysql/flexible-server/concepts-high-availability) |
@@ -77,7 +77,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 |Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
 |Azure Event Hubs| [Reliability in Azure Event Hubs](./reliability-event-hubs.md) ||
-|Azure ExpressRoute| [Reliability in Azure ExpressRoute](reliability-virtual-network-gateway.md?pivot=expressroute) ||
+|Azure ExpressRoute| [Reliability in Azure ExpressRoute](reliability-virtual-network-gateway.md?pivots=expressroute) ||
 |Azure Files| [Reliability in Azure Files](reliability-storage-files.md)||
 |Azure Firewall| [Reliability in Azure Firewall](./reliability-firewall.md) ||
 |Azure Functions|  [Reliability in Azure Functions ](reliability-functions.md)||
@@ -123,7 +123,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Virtual Network| [Reliability in Virtual Network](reliability-virtual-network.md) ||
 |Azure Virtual WAN||[Availability zones and resiliency in Virtual WAN](/azure/virtual-wan/virtual-wan-faq#how-are-availability-zones-and-resiliency-handled-in-virtual-wan)</p> [Disaster recovery design](/azure/virtual-wan/disaster-recovery-design) |
 |Azure VMware Solution| [Reliability in Azure VMware Solution](./reliability-vmware-solution.md)||
-|Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivot=vpn) ||
+|Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivots=vpn) ||
 |Azure Web Application Firewall| | [Deploy Azure Firewall with availability zones by using Azure PowerShell](/azure/firewall/deploy-availability-zone-powershell) </p> [Achieve a disaster recovery scenario across datacenters by using Application Gateway](/azure/application-gateway/application-gateway-faq#how-do-i-achieve-a-disaster-recovery-scenario-across-datacenters-by-using-application-gateway)|
 |Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
 
