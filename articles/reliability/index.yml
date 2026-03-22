@@ -601,6 +601,13 @@ productDirectory:
         - management-and-governance
         - migration
     # Card
+    - title: Azure Data Explorer
+      summary: Fast and highly scalable data exploration service
+      imageSrc: /azure/media/index/data-explorer.svg
+      url: reliability-data-explorer.md
+      azureCategories:
+        - analytics
+    # Card
     - title: Azure Disk Storage
       summary: High-performance, highly durable block storage for Azure Virtual Machines
       imageSrc: /azure/media/index/disk-storage.svg

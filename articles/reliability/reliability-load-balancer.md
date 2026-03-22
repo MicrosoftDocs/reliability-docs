@@ -122,7 +122,7 @@ When you use Load Balancer, you set the availability zone support on the front-e
     
         For *public load balancers*, create a new public IP address that uses your desired availability zone configuration. Then reconfigure your load balancer to add a front-end IP configuration that references that public IP address.
 
-        For *internal load balancers*, reconfigure your load balancer to add a new front-end IP configuration with your desired availability configuration. This step assigns a new private IP address from within your subnet.
+        For *internal load balancers*, reconfigure your load balancer to add a new front-end IP configuration with your desired availability zone configuration. This step assigns a new private IP address from within your subnet.
     
     1. Reconfigure your load-balancing rules to use the new front-end IP configuration.
     

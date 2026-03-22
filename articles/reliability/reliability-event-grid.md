@@ -72,6 +72,10 @@ When you use Event Grid, consider the following practices to ensure your solutio
 
 Azure Event Grid resources are zone-redundant in regions that support availability zones. Zone redundancy means that even when an availability zone has a problem, your Event Grid resources continue to work by using infrastructure in other zones. Event data is automatically replicated across three availability zones for intra-region resiliency, and Event Grid self-heals during a zone-wide outage. You don't need to enable or configure this capability.
 
+:::image type="complex" source="./media/reliability-event-grid/zone-redundant.svg" alt-text="Diagram that shows zone-redundant Event Grid resources in a region with three availability zones." border="false":::
+  The diagram shows a various Event Grid resources, each distributed across three availability zones.
+:::image-end:::
+
 ### Requirements
 
 **Region support:** Zone redundancy is available in [all Azure regions that support availability zones](./regions-list.md).
