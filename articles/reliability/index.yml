@@ -367,6 +367,9 @@ productDirectory:
       url: reliability-functions.md
       azureCategories:
         - compute
+        - containers
+        - iot
+        - web
     # Card
     - title: Azure VPN Gateway
       summary: Establish secure, cross-premises connectivity
@@ -450,16 +453,6 @@ productDirectory:
       url: reliability-bot.md
       azureCategories:
         - ai-machine-learning
-    # Card
-    - title: Azure Functions
-      summary: Process events with serverless code
-      imageSrc: /azure/media/index/functions.svg
-      url: reliability-functions.md
-      azureCategories:
-        - compute
-        - containers
-        - iot
-        - web
     # Card
     - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
@@ -615,6 +608,13 @@ productDirectory:
       azureCategories:
         - management-and-governance
         - migration
+    # Card
+    - title: Azure Data Explorer
+      summary: Fast and highly scalable data exploration service
+      imageSrc: /azure/media/index/data-explorer.svg
+      url: reliability-data-explorer.md
+      azureCategories:
+        - analytics
 
 tools:
   title: Reliability services and capabilities

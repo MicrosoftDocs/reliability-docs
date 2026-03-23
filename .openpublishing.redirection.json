@@ -226,6 +226,11 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/migrate-functions.md",
+      "redirect_url": "/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/migrate-monitor-log-analytics.md",
       "redirect_url": "/azure/reliability/reliability-monitor-logs",
       "redirect_document_id": false

@@ -4,8 +4,9 @@ description: Learn about region types and service categories in Azure.
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
-ms.topic: concept-article
+ms.topic: reference
 ms.date: 04/11/2025
+ms.update-cycle: 1095-days
 ms.author: pnp
 ms.custom: subject-reliability
 ---

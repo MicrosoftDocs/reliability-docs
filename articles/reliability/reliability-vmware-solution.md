@@ -6,7 +6,7 @@ ms.author: jacobjaygbay
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-vmware
-ms.date: 02/18/2025
+ms.date: 02/18/2026
 ai-usage: ai-assisted
 zone_pivot_groups: azure-vmware-solution-generations
 ---
@@ -207,15 +207,9 @@ When the availability zone recovers, clusters and hosts in the zone are availabl
 
 ### Test for zone failures
 
-You can simulate zone failures by:
-
-- Using vSphere to put hosts into maintenance mode to simulate zone-level failures.
-
-- Validating that backup and monitoring systems continue to function during simulated failures.
-
 :::zone pivot="avs-gen1"
 
-- Testing application resilience to VM restarts and network path changes, especially when you have stretched clusters or deploy applications across separate clusters in different zones.
+To prepare for zone failures, you should test your application's resilience to VM restarts and network path changes, especially when you have stretched clusters or deploy applications across separate clusters in different zones.
 
 Because Azure VMware Solution manages the infrastructure response to zone failures, you primarily need to test your application's response to VM restarts.
 
