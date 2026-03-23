@@ -57,10 +57,10 @@ Managed disks automatically recover from transient faults in the Azure infrastru
 
 Managed disks provide two types of availability zone support:
 
-- [Zone-redundant disks (ZRS)](#zone-redundant-disks), which provide automatic resiliency to zone outages. We recommend ZRS disks for most workloads.
-- [Zonal LRS disks](#zonal-lrs-disks), which don't provide automatic resiliency to zone outages. When you use zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages. Microsoft doesn't do it automatically.
+- [Zone-redundant disks (ZRS)](#zone-redundant-disks), which are deployed into multiple zones and provide automatic resiliency to zone outages. **We recommend ZRS disks for most workloads.**
+- [Zonal LRS disks](#zonal-lrs-disks), which are deployed into a single zone and don't provide automatic resiliency to zone outages. When you use zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages. Microsoft doesn't do it automatically.
 
-If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are still considered LRS because they replicate within region. However, you should avoid configuring disks this way in production environments because nonzonal disks don't provide protection against availability zone outages.
+If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are considered LRS because they are replicated within the region. However, you should avoid configuring disks this way in production environments because nonzonal disks don't provide protection against availability zone outages.
 
 ### Zone-redundant disks
 
@@ -81,27 +81,21 @@ If a ZRS disk is attached to a single VM in a zone that goes down, you can [forc
 
 - **Disk types:** Zone-redundant disks are supported with Premium SSD and Standard SSD managed disks. ZRS isn't supported with Premium SSD v2, Ultra Disks, or Standard HDD managed disks.
 
-#### Considerations
-
-When using ZRS for Azure managed disks, it's important to consider the performance implications. ZRS disks have slightly higher write latency compared to LRS disks due to synchronous replication across zones. This latency difference is typically minimal but may be noticeable for latency-sensitive workloads requiring sub-millisecond response times.
-
 #### Cost
 
 ZRS incurs a higher cost than LRS due to the additional replication overhead and infrastructure required to maintain data across multiple zones. The exact cost difference varies by region and disk type. For detailed pricing information, see [Azure managed disk pricing](https://azure.microsoft.com/pricing/details/managed-disks/).
 
 #### Configure availability zone support
 
-- **Create a new ZRS disk:** To create a new managed disk with zonal LRS or ZRS redundancy, see [Tutorial - Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks) for Linux VMs, or [Tutorial: Manage disks with Azure PowerShell](/azure/virtual-machines/windows/tutorial-manage-data-disk) for Windows VMs.
+- **Create a new ZRS disk:** To create a new ZRS managed disk, see [Tutorial - Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks) for Linux VMs, or [Tutorial: Manage disks with Azure PowerShell](/azure/virtual-machines/windows/tutorial-manage-data-disk) for Windows VMs. Select a ZRS disk tier during disk creation.
 
-    Select a ZRS disk tier during disk creation.
-
-    You're responsible for attaching your disk to VMs, including configuring [shared disks](/azure/virtual-machines/disks-shared) on multiple VMs if appropriate for your workload.
+    You're responsible for attaching your disk to VMs, including configuring [shared disks](/azure/virtual-machines/disks-shared) on multiple VMs in different zones if that's appropriate for your workload.
 
 - **Change an existing disk to use ZRS:** You can convert an existing nonzonal (regional) disk to ZRS.
     
-    While you can't convert a zonal LRS disk to ZRS, you can create a new ZRS disk from a snapshot. For step-by-step instructions, see [Convert a disk from LRS to ZRS](/azure/virtual-machines/disks-migrate-lrs-zrs) for step-by-step migration procedures and requirements.
+    While you can't convert a zonal LRS disk to ZRS, you can create a new ZRS disk from a snapshot. See [Convert a disk from LRS to ZRS](/azure/virtual-machines/disks-migrate-lrs-zrs) for step-by-step migration procedures and requirements.
 
-- **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
+- **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing ZRS disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
 
 #### Behavior when all zones are healthy
 
@@ -109,7 +103,7 @@ This section describes what to expect when managed disks are configured to use Z
 
 - **Cross-zone operation:** Azure automatically manages traffic routing between availability zones when you use a VM with a zone-redundant disk. During normal operations, requests are distributed across zones transparently.
 
-- **Cross-zone data replication:** ZRS disks replicate every write synchronously across all availability zones in the region. A write operation completes only after data is stored in clusters in every zone. This approach provides strong consistency and immediate availability from any zone, but it can introduce slightly higher write latency compared to LRS disks.
+- **Cross-zone data replication:** ZRS disks replicate every write synchronously across multiple availability zones in the region. A write operation completes only after data is stored in clusters in multiple zones. This approach provides strong consistency and high availability, but it can introduce slightly higher write latency compared to LRS disks.
 
 #### Behavior during a zone failure
 
@@ -117,13 +111,13 @@ This section describes what to expect when a managed disk is configured to use Z
 
  - **Detection and response:** Some zone outages might affect only disks, only VMs, or both. The behavior you'll observe depends on whether the zone outage affects the VM attached to the disk.
 
-    If the VM remains healthy but the disk is affected by the outage, your VM continues to operate. Microsoft automatically redirects disk operations to work against a replica in a healthy availability zone, and there's nothing you need to do.
+    If the VM remains healthy but the disk is affected by the outage, your VM continues to operate. Microsoft automatically redirects disk operations to work against the data in healthy availability zones, and there's nothing you need to do.
 
     If the VM is down, you need to switch your workload to another VM in a different availability zone.
     
     - *Shared disks:* If you've already created the secondary VM in a different zone and have configured [shared disks](/azure/virtual-machines/disks-shared), the disk is available for the secondary VM to use with no configuration changes required.
 
-    - *Disks that aren't shared:* If the disk isn't already attached to the secondary VM, you can *force detach* the disk from the failed VM and then attach it to the active VM. To perform a force detach:
+    - *Disks that aren't shared:* You can *force detach* the disk from the failed VM and then attach it a VM in a healthy zone. To perform a force detach:
 
         - Azure CLI: Use the [az vm disk detach command](/cli/azure/vm/disk#az-vm-disk-detach) with the `--force-detach` argument.
         - Azure PowerShell: Use the [Remove-AzVMDataRisk cmdlet](/powershell/module/az.compute/remove-azvmdatadisk) with the `-ForceDetach` argument.
@@ -150,24 +144,16 @@ During failback, you may experience slightly elevated latency for a brief period
 > [!WARNING]
 > **Note to PG:** Please verify the statement above.
 
-#### Test for zone failures
-
-You can't directly simulate zone failures at the disk level, but you can use Azure Chaos Studio's support for [simulating zone-down events in virtual machine scale sets](/azure/chaos-studio/chaos-studio-fault-library#virtual-machine-scale-set) to simulate the loss of a virtual machine.
-
-You should test your application's resilience to zone failures and managed disk behavior during outages. Test application resilience by monitoring disk performance during simulated zone outages. Validate that your applications handle increased latency appropriately. Implement automated testing scenarios that verify your applications can handle temporary I/O delays and force detach operations for shared disks.
-
 ### Zonal LRS disks
 
-*Zonal LRS disks* reside in a specific availability zone and attach only to VMs in that zone. **A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk has an outage, the disk is unavailable.**
+Zonal LRS disks reside in a specific availability zone and attach only to VMs in that zone. **A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk has an outage, the disk is unavailable.**
+
+When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones. Each VM and disk can provide low latency communication and replication because it's within a single zone. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
 
 ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
 
-Zonal LRS disks can suit workloads that need unusually low disk latency because replication happens inside one zone.
-
 > [!WARNING]
 > For most workloads, the latency difference between zonal and ZRS disks is negligible. ZRS disks provide substantially higher resilience to zone failures, making them the recommended choice for production environments, where resilience takes priority over minimal latency gains.
-
-When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying separate VMs and disks into multiple zones. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
 
 #### Requirements
 
@@ -181,13 +167,13 @@ Zonal LRS disks are charged at the same rate as nonzonal disks. For detailed pri
 
 #### Configure availability zone support
 
-- **Create a new disk with availability zone support:** To create a new managed disk with zonal LRS or ZRS redundancy, see [Tutorial - Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks) for Linux VMs, or [Tutorial: Manage disks with Azure PowerShell](/azure/virtual-machines/windows/tutorial-manage-data-disk) for Windows VMs.
+- **Create a new disk with availability zone support:** To create a new managed disk with zonal LRS redundancy, see [Tutorial - Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks) for Linux VMs, or [Tutorial: Manage disks with Azure PowerShell](/azure/virtual-machines/windows/tutorial-manage-data-disk) for Windows VMs.
 
     Select the availability zone during disk creation.
 
-- **Change the availability zone configuration of an existing disk:** It's not possible to change the availability zone configuration of an existing zonal LRS disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
+    [!INCLUDE [Zonal resource description](includes/reliability-availability-zone-zonal-include.md)]
 
-- **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing zonal LRS disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
+- **Change the availability zone configuration of an existing disk:** It's not possible to change the availability zone configuration of an existing zonal LRS disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
 
 #### Behavior when all zones are healthy
 
@@ -201,7 +187,7 @@ This section describes what to expect when a managed disk is configured to use z
 
 This section describes what to expect when a managed disk is configured to use zonal LRS, and there's an availability zone outage.
 
- - **Detection and response:** You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk.
+ - **Detection and response:** You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk in the same zone.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
@@ -213,13 +199,13 @@ This section describes what to expect when a managed disk is configured to use z
 
 #### Zone recovery
 
-When the failed availability zone recovers, managed disks recover automatically. If the VM attached to the disk has been affected by the outage, you might need to restart the VM to recover. You're responsible for resyncing data between other VMs and disks in other availability zones, if you use them.
+When the failed availability zone recovers, managed disks recover automatically. If the VM attached to the disk has been affected by the outage, you might need to restart the VM to recover. You're responsible for resyncing application data to other VMs and disks in other availability zones, if you use them.
 
-#### Test for zone failures
+### Test for zone failures
 
-You can't directly simulate zone failures at the disk level, but you can use Azure Chaos Studio's support for [simulating zone-down events in virtual machine scale sets](/azure/chaos-studio/chaos-studio-fault-library#virtual-machine-scale-set) to simulate the loss of a virtual machine.
+You can't directly simulate zone failures at the disk level, but you can use Azure Chaos Studio's support for [simulating zone-down events in virtual machine scale sets](/azure/chaos-studio/chaos-studio-fault-library#virtual-machine-scale-set) and [simulating the loss of an individual virtual machine](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct).
 
-You should test your application's resilience to zone failures and managed disk behavior during outages. Test application resilience by monitoring disk performance during simulated zone outages. Validate that your applications handle increased latency appropriately. Implement automated testing scenarios that verify your applications can handle temporary I/O delays and force detach operations for shared disks.
+You should test your application's resilience to zone failures and managed disk behavior during outages. Monitor disk performance during simulated zone outages, and validate that your applications handle increased latency appropriately. Implement automated testing scenarios that verify your applications can handle temporary I/O delays and force detach operations for shared disks.
 
 ## Resilience to region-wide failures
 
