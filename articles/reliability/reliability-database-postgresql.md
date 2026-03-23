@@ -86,7 +86,7 @@ Azure Database for PostgreSQL supports two availability zone configuration types
 
      :::image type="content" source="./media/reliability-database-postgresql/zone-redundant.svg" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
-    The primary server processes read queries, so zone redundancy doesn't affect read latency. Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. The impact varies by workload, selected SKU, and region.
+    Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. The impact varies by workload, selected SKU, and region.
 
 - **Zonal (same-zone) high availability:** The primary and standby servers use the same availability zone. If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
@@ -94,7 +94,7 @@ Azure Database for PostgreSQL supports two availability zone configuration types
 
     Zonal (same-zone) high availability is only available in the following situations:
     - The region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
-    - If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both servers in the same availability zone and automatically migrate them to separate zones when capacity becomes available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
+    - If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both servers in the same availability zone and automatically migrate them to separate zones when capacity becomes available. This option is available when you use the Azure portal or the Azure CLI to deploy a server. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -118,7 +118,7 @@ If you configure your server without high availability, then it runs on a single
 
 ### Considerations
 
-- **Region capacity:** If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both servers in the same availability zone and automatically migrate them to separate zones when capacity becomes available. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
+- **Region capacity:** If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both servers in the same availability zone and automatically migrate them to separate zones when capacity becomes available. This option is available when you use the Azure portal or the Azure CLI to deploy a server. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options).
 
 ### Cost
 
