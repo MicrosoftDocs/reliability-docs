@@ -7,12 +7,8 @@ ms.topic: reliability-article
 ms.custom:
   - subject-reliability
   - references_regions
-  - build-2025
 ms.service: azure-iot-hub
-ms.date: 05/02/2025
-
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure IoT Hub works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
-
+ms.date: 03/26/2026
 ---
 
 # Reliability in Azure IoT Hub
@@ -109,11 +105,11 @@ Because IoT Hub fully manages traffic routing, failover, and failback for zone f
 
 ## Resilience to region-wide failures
 
-IoT Hub is a single-region service. If the region becomes unavailable, your IoT Hub resources are also unavailable.
+IoT Hub is a single-region service. If the region becomes unavailable, your IoT Hub resources are also unavailable. However, there are approaches that you can use to help ensure resilience to region outages. These approaches depend on whether IoT Hub is in a paired or nonpaired region and on your specific requirements and configuration.
 
-However, if your resources are in a [region that's paired](./regions-paired.md), your IoT hub's data is replicated to the paired region.
+### Microsoft-managed failover to a paired region
 
-Your IoT hub might fail over to the paired region in the following scenarios:
+If your resources are in a [region that's paired](./regions-paired.md), your IoT hub's data is replicated to the paired region. Your IoT hub might fail over to the paired region in the following scenarios:
 
 - *Customer-initiated failover:* You can trigger manual failover to the paired region yourself, whether the region is experiencing downtime or not. You can use this approach to perform planned failovers and drills.
 
@@ -123,22 +119,22 @@ If resources are in a *nonpaired region*, Microsoft doesn’t replicate configur
 
 If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate failovers.
 
-### Requirements
+#### Requirements
 
 - **Region support:** Default replication and failover is only supported in regions that are paired.
-- Paired region replication and failover options are available for all IoT Hub tiers.
+- **Tier:** Paired region replication and failover options are available for all IoT Hub tiers.
 
-### Considerations
+#### Considerations
 
 Don't use customer-initiated failover to permanently migrate your hub between the Azure paired regions. Generally, devices are located close to the hub's primary region. If you move your hub to the secondary region, latency increases for operations between the devices and the IoT hub in the secondary location.
 
-### Cost
+#### Cost
 
 For hubs in regions that are paired, there's no extra cost for cross-region data replication or failover.
 
 If your IoT hub is in a nonpaired region, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) for possible cost information.
 
-### Configure replication and prepare for failover
+#### Configure replication and prepare for failover
 
 By default, cross-region data replication is automatically configured when you create an IoT hub in a paired region. This process is a default option and requires no intervention from you. In regions except for Brazil South and Southeast Asia (Singapore), your customer data isn't stored or processed outside of the geography where you deploy the service instance.
 
@@ -146,7 +142,7 @@ If your IoT hub is in the Brazil South or Southeast Asia (Singapore) regions, yo
 
 If your IoT hub is in a nonpaired region, you need to plan your own cross-region replication and failover approach. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 This section describes what to expect when an IoT hub is configured for cross-region replication and failover, and the primary region is operational.
 
@@ -154,7 +150,7 @@ This section describes what to expect when an IoT hub is configured for cross-re
 
 - **Traffic routing between regions:** In normal operations, traffic only flows to the primary region.
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 This section describes what to expect when an IoT hub is configured for cross-region replication and failover and there's an outage in the primary region.
 
@@ -206,7 +202,7 @@ This section describes what to expect when an IoT hub is configured for cross-re
 
   After the failover operation for the IoT hub completes, all operations from the device and back-end applications are expected to continue working without requiring manual intervention. This continuity ensures that your device-to-cloud messages continue to work, and the entire device registry is intact. If you emit events through Azure Event Grid, they can be consumed via the same subscriptions that you configured earlier as long as those Event Grid subscriptions continue to be available. No further handling is required for custom endpoints.
 
-### Post-failover configuration required
+#### Post-failover configuration required
 
 Depending on where you route your IoT hub's messages, you might need to perform extra steps after failover completes.
 
@@ -224,13 +220,13 @@ Depending on where you route your IoT hub's messages, you might need to perform 
 
 - **Azure Storage:** When routing to Azure Storage, list the blobs or files first. Then iterate over them to ensure that all blobs or files are read without assuming partitioning. The partition range can potentially change during a Microsoft-initiated failover or customer-initiated failover. You can use the [List Blobs API](/rest/api/storageservices/list-blobs) to enumerate the list of blobs or the [List Azure Data Lake Storage API](/rest/api/storageservices/datalakestoragegen2/filesystem/list) for the list of files. For more information, see [Azure Storage as a routing endpoint](/azure/iot-hub/iot-hub-devguide-endpoints#azure-storage-as-a-routing-endpoint).
 
-### Region recovery
+#### Region recovery
 
 To fail back to the primary region, you can manually trigger the failover action a second time. It's important to remember the [restrictions on how frequently you can fail over](#behavior-during-a-region-failure).
 
 If the original failover operation was performed to recover from an extended outage in the original primary region, perform failback to the primary region after the primary region recovers from the outage.
 
-### Test for region failures
+#### Test for region failures
 
 To simulate a failure during a region outage, you can trigger a manual failover of your IoT hub. However, because regional failover causes both downtime and data loss, you should only perform test failovers in nonproduction environments. For more information, see [Behavior during a region failure](#behavior-during-a-region-failure). Consider setting up a test IoT Hub instance to initiate the planned failover option periodically. Periodic testing can help you build confidence in your ability to restore and operate your end-to-end solutions effectively when a real disaster occurs.
 
