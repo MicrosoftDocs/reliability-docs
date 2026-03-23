@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-database-postgresql	
 ms.subservice: flexible-server
-ms.date: 03/23/2026
+ms.date: 03/24/2026
 ai.usage: ai-assisted
 ---
 
