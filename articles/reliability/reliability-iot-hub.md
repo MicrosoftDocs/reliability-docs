@@ -98,6 +98,9 @@ IoT Hub supports two distinct types of availability zone support:
 | West US 2 | :::image type="content" source="./media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="./media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | West US 3 | :::image type="content" source="./media/icon-x.svg" alt-text="No" border="false"::: | :::image type="content" source="./media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 
+> [!WARNING]
+> **Note to PG:** Please confirm that this is list is still accurate.
+
 IoT hubs that you create in regions that aren't on this list aren't resilient to zone outages.
 
 ### Cost
@@ -146,15 +149,17 @@ IoT Hub is a single-region service. If the region becomes unavailable, your IoT 
 
 ### Microsoft-managed failover to a paired region
 
-If your resources are in a [region that's paired](./regions-paired.md), your IoT hub's data is replicated to the paired region. Your IoT hub might fail over to the paired region in the following scenarios:
+If your resources are in a [region that's paired](./regions-paired.md), your IoT hub's data is replicated to the paired region. If resources are in a *nonpaired region*, Microsoft doesn’t replicate configuration and data across regions, and there’s no built-in cross-region failover. However, you can deploy separate resources into multiple regions. In this scenario, it's your responsibility to manage replication, traffic distribution, and failover.
+
+If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate failovers.
+
+#### Failover types
+
+Your IoT hub might fail over to the paired region in the following scenarios:
 
 - *Customer-initiated failover:* You can trigger manual failover to the paired region yourself, whether the region is experiencing downtime or not. You can use this approach to perform planned failovers and drills.
 
 - *Microsoft-initiated failover:* If a region is lost, Microsoft can initiate a failover of IoT hubs to the paired region. However, Microsoft is unlikely to initiate failover except after a significant delay and on a best-effort basis. Failover of IoT Hub resources might occur at a different time than failover of other Azure services. This process is a default option and requires no intervention from you.
-
-If resources are in a *nonpaired region*, Microsoft doesn’t replicate configuration and data across regions, and there’s no built-in cross-region failover. However, you can deploy separate resources into multiple regions. In this scenario, it's your responsibility to manage replication, traffic distribution, and failover.
-
-If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate failovers.
 
 #### Requirements
 
