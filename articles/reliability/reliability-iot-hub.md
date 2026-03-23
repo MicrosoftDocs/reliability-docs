@@ -19,6 +19,43 @@ ms.date: 03/26/2026
 
 This article describes how to make IoT Hub resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can use backups to recover from other types of problems, and highlights some key information about the IoT Hub service level agreement (SLA).
 
+## Production deployment recommendations for reliability
+
+For production workloads, we recommend that you:
+
+> [!div class="checklist"]
+> - Deploy your IoT hub in a region that supports zone redundancy for both compute and data components. For more information, see [Requirements](#requirements).
+> - Implement appropriate [retry patterns](/azure/iot/concepts-manage-device-reconnections#retry-patterns) in all devices and applications that communicate with IoT Hub.
+> - Design your device reconnection logic to handle transient faults and service failovers. For more information, see [Manage device reconnections to create resilient applications](/azure/iot/concepts-manage-device-reconnections).
+
+For general guidance about designing reliable IoT solutions, see [IoT solution scalability, high availability, and disaster recovery](/azure/iot/iot-overview-scalability-high-availability). <!-- TODO review -->
+
+> [!WARNING]
+> **Note to PG:** Please verify that the recommendations above are reasonable.
+
+## Reliability architecture overview
+<!-- TODO check and rewrite as needed -->
+
+When you create an IoT hub, you deploy a single *IoT hub* resource that includes all of the functionality required to manage and communicate with your devices. The major components of an IoT hub include:
+
+- **Device identity registry:** A database that stores information about the devices and modules that can connect to your IoT hub. Each device must have an entry in the identity registry before it can connect. For more information, see [Understand the identity registry in your IoT hub](/azure/iot-hub/iot-hub-devguide-identity-registry).
+
+- **Messaging components:** IoT Hub handles bidirectional messaging between devices and your back-end applications, including device-to-cloud telemetry, cloud-to-device commands, and direct method invocations.
+
+- **Device twins:** JSON documents that store device state information, including metadata, configurations, and conditions. Devices and back-end applications can read and update device twins.
+
+For reliability purposes, IoT Hub components are categorized into two groups:
+
+- **Compute components:** Manage device connections, authenticate requests, route messages, and process direct method invocations. These components determine IoT Hub's ability to accept and process requests.
+
+- **Data components:** Store the device identity registry, device twins, and device-to-cloud messages. These components determine data availability and durability.
+
+This distinction is important because [different regions support different levels of zone redundancy](#requirements) for these components.
+
+**Dependencies:** IoT Hub integrates with other Azure services for message routing and storage. If you configure message routing to endpoints such as Azure Storage, Azure Event Hubs, or Azure Service Bus, the reliability of your overall solution depends on the reliability configuration of those services. You're responsible for ensuring that those dependent services meet your reliability requirements.
+
+If you use [IoT Hub Device Provisioning Service (DPS)](/azure/iot-dps/about-iot-dps) for device provisioning, your solution's reliability also depends on DPS. For more information, see [IoT Hub Device Provisioning Service high availability and disaster recovery](/azure/iot-dps/iot-dps-ha-dr).
+
 ## Resilience to transient faults
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
@@ -268,6 +305,11 @@ The IoT Hub service enables bulk export operations, which allow you to export th
 You can also export an existing IoT hub's Azure Resource Manager template (ARM template) to create a backup of the IoT hub's configuration. For more information, see [Manually migrate an IoT hub by using an ARM template](/azure/iot-hub/migrate-hub-arm).
 
 [!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+
+## Resilience to service maintenance
+<!-- TODO check for any special callouts -->
+
+[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
 
 ## Service-level agreement
 
