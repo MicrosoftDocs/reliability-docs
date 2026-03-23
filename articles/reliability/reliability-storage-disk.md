@@ -99,7 +99,7 @@ ZRS incurs a higher cost than LRS due to the additional replication overhead and
 
 - **Change an existing disk to use ZRS:** You can convert an existing nonzonal (regional) disk to ZRS.
     
-       While you can't convert a zonal LRS disk to ZRS, you can create a new ZRS disk from a snapshot. For step-by-step instructions, see [Convert a disk from LRS to ZRS](/azure/virtual-machines/disks-migrate-lrs-zrs) for step-by-step migration procedures and requirements.
+    While you can't convert a zonal LRS disk to ZRS, you can create a new ZRS disk from a snapshot. For step-by-step instructions, see [Convert a disk from LRS to ZRS](/azure/virtual-machines/disks-migrate-lrs-zrs) for step-by-step migration procedures and requirements.
 
 - **Disable availability zone support:** It's not possible to change the availability zone configuration of an existing zone-redundant disk. Instead, you need to create a new disk with the new configuration using a snapshot from the previous disk, and delete the old one.
 
