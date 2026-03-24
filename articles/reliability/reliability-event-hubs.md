@@ -74,15 +74,13 @@ Event Hubs transparently replicates your configuration, metadata, and event data
 The diagram shows an Event Hubs cluster distributed across three availability zones. Each zone contains a shared namespace, and the cluster spans all zones to provide high availability.
 :::image-end:::
 
-### Region support
-
-Zone-redundant Event Hubs namespaces can be deployed into any [Azure region that supports availability zones](./regions-list.md).
-
 ### Requirements
 
-- Standard and Premium tiers support availability zones with no extra configuration required.
+- **Region support:** Zone-redundant Event Hubs namespaces can be deployed into any [Azure region that supports availability zones](./regions-list.md).
 
-- For the Dedicated tier, availability zones require a minimum of three CUs.
+- **Tiers:** Standard and Premium tiers support availability zones with no extra configuration required.
+
+- **Minimum capacity:** For the Dedicated tier, availability zones require a minimum of three CUs.
 
 ### Cost
 
@@ -90,7 +88,7 @@ Zone redundancy in Event Hubs doesn't add extra cost.
 
 ### Configure availability zone support
 
-Event Hubs namespaces automatically support zone redundancy when deployed in [supported regions](#region-support). No further configuration is required.
+Event Hubs namespaces automatically support zone redundancy when deployed in [supported regions](#requirements). No further configuration is required.
 
 ### Behavior when all zones are healthy
 
@@ -285,11 +283,9 @@ If the primary region fails or another type of disaster occurs, you can manually
 
 This section summarizes important aspects of geo-disaster recovery. Review the full documentation to understand exactly how it works. For more information, see [Event Hubs geo-disaster recovery](/azure/event-hubs/event-hubs-geo-dr).
 
-#### Region support
-
-You can select any Azure region that supports Event Hubs as your primary or secondary namespace. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
-
 #### Requirements
+
+- **Region support:** You can select any Azure region that supports Event Hubs as your primary or secondary namespace. You don't need to use Azure paired regions, so you can choose secondary regions based on your latency, compliance, or data residency requirements.
 
 - **Primary namespace tier:** Your primary namespace must be in the Standard tier or higher to use metadata geo-disaster recovery.
 

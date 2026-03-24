@@ -43,12 +43,7 @@ Choose any [Azure Database for MySQL available Azure regions](/azure/mysql/flexi
 
 ## Azure Database for PostgreSQL
 
-For geo-replication in nonpaired regions with Azure Database for PostgreSQL, you can use a managed service that supports geo-replication. The Azure Database for PostgreSQL managed service supports active [geo-replication](/azure/postgresql/flexible-server/concepts-read-replicas) to create a continuously readable secondary replica of your primary server. The readable secondary replica might be in the same Azure region as the primary server or, more commonly, in a different region. This kind of readable secondary replica is also known as *geo-replica*.
- 
-You can also use either of the following customer-managed data migration methods to replicate data to a nonpaired region: 
-
-- [Dump and restore](/azure/postgresql/migrate/how-to-migrate-using-dump-and-restore)
-- [Logical replication and logical decoding](/azure/postgresql/flexible-server/concepts-logical)
+To learn about how to create multi-region solutions by using Azure Database for PostgreSQL, see [Reliability in Azure Database for PostgreSQL](./reliability-database-postgresql.md).
 
 ## Azure Data Factory
 
@@ -56,7 +51,7 @@ To learn about how to create multi-region solutions by using Azure Data Factory,
 
 ## Azure Event Grid
 
-For geo-replication of Azure Event Grid topics in nonpaired regions, you can implement [client-side failover](/azure/event-grid/custom-disaster-recovery-client-side).
+To learn about how to create multi-region solutions by using Azure Event Grid, see [Reliability in Azure Event Grid](./reliability-event-grid.md).
 
 ## Azure IoT Hub 
 
