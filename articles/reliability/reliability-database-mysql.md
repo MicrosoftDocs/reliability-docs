@@ -73,30 +73,25 @@ Your applications must handle transient connectivity errors that can occur durin
 
 You can select your type of availability zone support though the *high availability* configuration. Enabling high availability deploys a *standby* replica server alongside your primary server. This high availability model helps ensure that committed data is never lost during failures. Whichever high availability deployment model you choose, data is synchronously committed to both the primary and standby replica servers. If a disruption occurs to the primary server, the server automatically fails over to the standby replica server.
 
-<!-- TODO verify -->
-Data files and write-ahead logs (WALs) are stored on premium managed disks within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
+Data is stored on premium storage within each availability zone, with locally redundant storage (LRS) that automatically stores three data copies within each zone.
 
 Azure Database for MySQL supports two availability zone configuration types when you use high availability:
 
 - **Zone-redundant high availability:** Zone redundancy provides the highest level of zone resilience by deploying a primary server in one availability zone and a standby replica server in a different availability zone. The standby replica server uses similar compute, storage, and network configuration to the primary. A zone-redundant configuration provides physical isolation of the entire stack between primary and standby servers.
 
-   You can either select the availability zones for the primary and standby servers or let Microsoft choose them. <!-- TODO verify -->
+   You select the availability zones for the primary and standby servers.
 
     We recommend zone-redundant deployments for production servers.
 
      :::image type="content" source="./media/reliability-database-mysql/zone-redundant.svg" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
-    Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. The impact varies by workload, selected SKU, and region.
+    Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
 - **Zonal (same-zone) high availability:** The primary and standby servers use the same availability zone. If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
-    <!-- TODO check with PG if this is still supported -->
-
     :::image type="content" source="./media/reliability-database-mysql/zonal.svg" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
-    Zonal (same-zone) high availability is only available in the following situations:
-    - The region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
-    - If a region doesn’t have sufficient capacity for a zone-redundant deployment, the service can initially place both servers in the same availability zone and automatically migrate them to separate zones when capacity becomes available. This option is available when you use the Azure portal or the Azure CLI to deploy a server. For more information, see [Configure Business Critical (High Availability) options](/azure/postgresql/high-availability/concepts-high-availability#configure-business-critical-high-availability-options). <!-- TODO ask PG if anything like this exists -->
+    While it's not the recommended option, you can opt into zonal (same-zone) high availability when you deploy your server. It's also the only high availability option available if the server's region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -120,7 +115,11 @@ To configure availability zone support for a server, you configure the high avai
     - Azure portal: [Manage zone redundant high availability in Azure Database for MySQL with the Azure portal](/azure/mysql/flexible-server/how-to-configure-high-availability#enable-high-availability-during-server-creation)
     - Azure CLI: [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli#enable-high-availability-during-server-creation)
 
-- **Change the availability zone configuration for existing servers:** You must enable high availablity when you create a new server. <!-- TODO check the details - docs say can only enable ZR HA when you create, but maybe same-zone HA can be added later? -->
+- **Create a zonal server:** To create a server with same-zone (zonal) high availability, you must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Enable high-availability during server creation](/azure/mysql/flexible-server/how-to-configure-high-availability-cli#enable-high-availability-during-server-creation).
+
+- **Change the availability zone configuration for existing servers:** To move from zone-redundant to same-zone high availability, first disable high availability, and then enable same-zone high availability. You must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli).
+
+    You can't move from same-zone to zone-redundant high availability, and you can't enable high availability on an existing server.
 
 - **Disable high availability:** Disabling high availability removes the standby relica server, so your server isn't resilient to outages in its availability zone. For more information, see [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability).
 
