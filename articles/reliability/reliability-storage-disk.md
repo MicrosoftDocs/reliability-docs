@@ -55,10 +55,7 @@ Managed disks automatically recover from transient faults in the Azure infrastru
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Managed disks provide two types of availability zone support:
-
-- [Zone-redundant disks (ZRS)](#zone-redundant-disks), which are deployed into multiple zones and provide automatic resiliency to zone outages. **We recommend ZRS disks for most workloads.**
-- [Zonal LRS disks](#zonal-lrs-disks), which are deployed into a single zone and don't provide automatic resiliency to zone outages. When you use zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages. Microsoft doesn't do it automatically.
+There are two ways to use availability zones with managed disks. You can either deploy a [zone-redundant (ZRS) disk](#zone-redundant-disks), which is in all availability zones in a region, or a [zonal LRS disk](#zonal-lrs-disks), which is only in a single zone. We recommend ZRS disks for most workloads because ZRS disks provide automatic zone resiliency and zonal LRS disks don't provide automatic zone resiliency. With zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages - it's not done for you.
 
 If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are considered LRS because they are replicated within the region. However, you should avoid configuring disks this way in production environments because nonzonal disks don't provide protection against availability zone outages.
 
