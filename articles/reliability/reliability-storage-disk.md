@@ -146,7 +146,7 @@ During failback, you may experience slightly elevated latency for a brief period
 
 ### Zonal LRS disks
 
-Zonal LRS disks reside in a specific availability zone and attach only to VMs in that zone. **A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk has an outage, the disk is unavailable.**
+Zonal LRS disks reside in a specific availability zone and attach only to VMs in that zone. All of the copies of the disk's data are in the same zone. **A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk has an outage, the disk is unavailable.**
 
 ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
 
