@@ -148,12 +148,12 @@ During failback, you may experience slightly elevated latency for a brief period
 
 Zonal LRS disks reside in a specific availability zone and attach only to VMs in that zone. **A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk has an outage, the disk is unavailable.**
 
-When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones. Each VM and disk can provide low latency communication and replication because it's within a single zone. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
-
 ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
 
+When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones. Each VM and disk can provide low latency communication and replication because it's within a single zone. However, this architecture can be complex to design and deploy, and for most situations ZRS disks are the better choice.
+
 > [!WARNING]
-> For most workloads, the latency difference between zonal and ZRS disks is negligible. ZRS disks provide substantially higher resilience to zone failures, making them the recommended choice for production environments, where resilience takes priority over minimal latency gains.
+> ZRS disks provide substantially higher resilience to zone failures, making them the recommended choice for production environments, where resilience takes priority over minimal latency gains.
 
 #### Requirements
 
