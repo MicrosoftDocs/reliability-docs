@@ -40,7 +40,7 @@ Behind the scenes, when you create a workspace, the Azure platform provisions th
 
 - **Grafana servers**: Dedicated virtual machines that run the Grafana application. By default, two servers are provisioned for high availability and redundancy. These servers are fully managed by Microsoft. You don't see them in your subscription, you can't access them, and you aren't responsible for patching, scaling, or maintaining them.
 - **Load balancer**: A network load balancer that distributes incoming browser requests across the Grafana servers. The load balancer monitors server health and automatically routes traffic away from any unhealthy server.
-- **Backend database**: An Azure Database for PostgreSQL database that stores workspace configuration and other persistent data. This database is shared across all Grafana servers in the workspace.
+- **Backend database**: An Azure Database for PostgreSQL database that stores workspace configuration and other persistent data. This database is shared across all Grafana servers in the workspace. For more information about how the database is resilient to a range of faults, see [Reliability in Azure Database for PostgreSQL](./reliability-database-postgresql.md).
 
 The load balancer tracks which of the Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions previously served by the other one, based on information saved in the shared database. In the meantime, the Azure Managed Grafana service works to repair the unhealthy server or bring up a new one.
 
