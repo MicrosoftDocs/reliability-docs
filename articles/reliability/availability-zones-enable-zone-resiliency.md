@@ -74,7 +74,7 @@ Use the following guidance to prioritize Azure service groups based on their cri
 
 1. **Improve operational data storage resiliency.** Operational data stores contain valuable data that multiple workloads often use, so improving the availability of those data stores can help many workloads.
 
-   For operational data storage resiliency, focus on services like Azure SQL Database, Azure SQL Managed Instance, Azure Storage, Azure Data Lake Storage, Azure Cosmos DB, Azure PostgreSQL Flexible Server, Azure MySQL Flexible Server, and Azure Managed Redis.
+   For operational data storage resiliency, focus on services like Azure SQL Database, Azure SQL Managed Instance, Azure Storage, Azure Data Lake Storage, Azure Cosmos DB, Azure Database for PostgreSQL, Azure MySQL Flexible Server, and Azure Managed Redis.
 
 1. **Prioritize compute services.** These services are often easy to replicate and distribute among zones because they're stateless.
 

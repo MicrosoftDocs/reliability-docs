@@ -311,7 +311,7 @@ items:
       - name: Azure Database for MySQL
         href: migrate-database-mysql-flex.md
       - name: Azure Database for PostgreSQL
-        href: reliability-azure-database-postgresql.md
+        href: reliability-database-postgresql.md
       - name: Azure Elastic SAN
         href: reliability-elastic-san.md#availability-zone-migration
       - name: Azure Functions
