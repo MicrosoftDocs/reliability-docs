@@ -214,18 +214,20 @@ You can also use geo-redundant backups, in supported regions, to provide cross-r
 
 ## Backup and restore
 
-<!-- TODO verify this, and look for more info on Universal Geo-restore -->
 Azure Database for MySQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Backups are fully managed by Microsoft, don't interrupt the availability of the server, and include both full backups and transaction log backups.
 
-- **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with zonal (single-zone) high availability, backups are stored in locally redundant storage (LRS). <!-- TODO check that -->
+- **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with zonal (single-zone) high availability, backups are stored in locally redundant storage (LRS).
 
     In Azure regions with pairs, you can configure geo-redundant (GRS) backup storage at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
     The default backup retention period is 7 days, with the option to extend retention up to 35 days. All backups are encrypted.
 
-- **Restore:** Point-in-time recovery allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from. <!-- TODO verify -->
+- **Restore:** Point-in-time recovery allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from.
 
     When you restore a geo-redundant backup, you create a new server in the paired region.
+
+    > [!WARNING]
+    > **Note to PG:** Can you please provide more detail about Universal Geo-Restore? What scenarios does it help with? From my testing, it doesn't provide geo-restore for 3+0 regions - can you please confirm?
 
     This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios.
 
@@ -234,18 +236,17 @@ Azure Database for MySQL automatically performs backups that provide point-in-ti
 For more information, see [Backup and restore in Azure Database for MySQL](/azure/mysql/flexible-server/concepts-backup-restore).
 
 ## Resilience to service maintenance
-<!-- TODO check -->
 
-Azure Database for MySQL automatically handles critical servicing tasks including patching of the underlying hardware, operating system, and database engine. The service includes security updates, software updates, and minor version upgrades as part of planned maintenance.
+Azure Database for MySQL automatically handles critical servicing tasks including patching of the underlying hardware, operating system, and database engine. The service includes security updates, software updates, and minor version upgrades as part of planned maintenance. For more information, see [Scheduled maintenance in Azure Database for MySQL](/azure/mysql/flexible-server/concepts-maintenance).
 
 To ensure your server remains available during maintenance windows, follow these recommendations:
 
 > [!div class="checklist"]
-> - **Enable high availability:** During maintenance, the server may need to be restarted as part of the update process. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability.
+> - **Avoid management operations during maintenance periods:** Don't perform server management operations while maintenance is underway, because these operations can affect your server's reliability.
 >
->    For servers without high availability enabled, expect brief downtime during maintenance operations. With high availability enabled, maintenance operations typically complete with minimal or no downtime.
+> - **Use near-zero-downtime maintenance:** If your server has high availability enabled and meets other eligibility criteria, maintenance operations often complete within 10-30 seconds. For more information, see [Near-zero-downtime maintenance](/azure/mysql/flexible-server/concepts-maintenance#near-zero-downtime-maintenance).
 >
-> - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Manage scheduled maintenance settings for Azure Database for MySQL - Flexible server](/azure/mysql/flexible-server/how-to-maintenance-portal).
+> - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. You can also reschedule planned maintenance operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Manage scheduled maintenance settings for Azure Database for MySQL](/azure/mysql/flexible-server/how-to-maintenance-portal).
 >
 > - **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
 
