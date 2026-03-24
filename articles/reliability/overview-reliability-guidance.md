@@ -65,7 +65,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Data Manager for Energy| [Reliability in Azure Data Manager for Energy](reliability-energy-data-services.md)||
 |Azure Data Share|| [Disaster recovery for Data Share](/azure/data-share/disaster-recovery)|
 |Azure Database for MySQL| [Reliability in Azure Database for MySQL](reliability-database-mysql.md)||
-|Azure Database for PostgreSQL| [Reliability in Azure Database for PostgreSQL](reliability-azure-database-postgresql.md)||
+|Azure Database for PostgreSQL| [Reliability in Azure Database for PostgreSQL](reliability-database-postgresql.md)||
 |Azure Databricks | [Reliability in Azure Databricks](reliability-databricks.md)||
 |Azure DDoS Protection| [Reliability in DDoS Protection](reliability-ddos.md)||
 |Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||

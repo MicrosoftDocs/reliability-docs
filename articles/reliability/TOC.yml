@@ -97,7 +97,7 @@ items:
     - name: Azure Database for MySQL
       href: reliability-database-mysql.md
     - name: Azure Database for PostgreSQL
-      href: reliability-azure-database-postgresql.md
+      href: reliability-database-postgresql.md
     - name: Azure DocumentDB
       href: reliability-documentdb.md
     - name: Azure Managed Redis
@@ -307,7 +307,7 @@ items:
       - name: Azure Database for MySQL
         href: reliability-database-mysql.md#configure-availability-zone-support
       - name: Azure Database for PostgreSQL
-        href: reliability-azure-database-postgresql.md
+        href: reliability-database-postgresql.md
       - name: Azure Elastic SAN
         href: reliability-elastic-san.md#availability-zone-migration
       - name: Azure Functions
