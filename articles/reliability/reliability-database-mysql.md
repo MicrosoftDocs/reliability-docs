@@ -37,9 +37,7 @@ For more information about the general service architecture and deployment model
 
 ### Physical architecture
 
-<!-- TODO verify -->
-
-- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a Linux virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
+- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
 
 - **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby replica server. Data changes on the primary server are synchronously replicated to the standby replica server to ensure zero data loss during a failure of the primary server.
 
@@ -49,9 +47,7 @@ For more information about the general service architecture and deployment model
 
     A standby replica server is deployed in the same VM configuration as the primary server, including vCores, storage, and network settings.
 
-    You can switch between servers by performing a *failover*. There are two types of failover: *forced failovers*, which are used when the primary server fails, and *planned failovers*, which are used during some maintenance operations and in other scenarios where you need to minimize application downtime during a failover.
-
-    Operations such as stop, start, and restart are performed on both primary and standby replica servers at the same time. Planned events such as scale computing and scale storage happen on the standby first and then on the primary server. Currently, the server doesn't fail over for these planned operations.
+    You can switch between servers by performing a *failover*. There are two types of failover: *unplanned failovers*, which are used when the primary server fails, and *planned failovers*, which are used in other scenarios where you need to minimize application downtime during a failover.
 
     For more information, see [High availability in Azure Database for MySQL](/azure/mysql/flexible-server/concepts-high-availability).
 
@@ -249,6 +245,9 @@ To ensure your server remains available during maintenance windows, follow these
 > - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. You can also reschedule planned maintenance operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Manage scheduled maintenance settings for Azure Database for MySQL](/azure/mysql/flexible-server/how-to-maintenance-portal).
 >
 > - **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
+
+> [!WARNING]
+> **Note to PG:** Do you recommend opting a non-production server into Virtual Canary maintenance, so a customer can test for potential issues in future updates?
 
 ## Service-level agreement
 
