@@ -61,7 +61,7 @@ Your applications must handle transient connectivity errors that can occur durin
 
 > [!div class="checklist"]
 > - When your application encounters transient faults, retry the operation by using exponential backoff. Increase the delay between retries and limit the number of attempts. If the operation still fails after the maximum retries, treat it as a failure.
-> - Where possible, use [client libraries](/azure/mysql/flexible-server/concepts-connection-libraries) that automatically handle retries. <!-- TODO check -->
+> - Where possible, use [client libraries](/azure/mysql/flexible-server/concepts-connection-libraries) that automatically handle retries.
 > - Transient errors that occur during write operations require more careful consideration. Consider making your write operations idempotent, so they can be safely executed multiple times.
 
 > [!WARNING]
