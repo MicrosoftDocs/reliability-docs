@@ -37,7 +37,7 @@ For more information about the general service architecture and deployment model
 
 ### Physical architecture
 
-- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
+- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a virtual machine. Data files are stored in Azure Storage locally redundant storage (LRS), which synchronously maintains three copies of the data within the same datacenter to protect against storage hardware failures.
 
 - **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby replica server. Data changes on the primary server are synchronously replicated to the standby replica server to ensure zero data loss during a failure of the primary server.
 
@@ -91,7 +91,11 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     :::image type="content" source="./media/reliability-database-mysql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
-    While it's not the recommended option, you can opt into zonal (same-zone) high availability when you deploy your server. It's also the only high availability option available if the server's region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
+    While zonal high availability improves resilience to node‑level failures, it doesn’t protect against availability zone outages.
+    
+    We recommend zonal (same‑zone) high availability only in specific scenarios:
+    - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
+    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making same‑zone high availability the only available high availability option.
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -147,7 +151,7 @@ This section describes what to expect when servers are configured with high avai
     - *Zonal*: Because both servers are in the same zone, no traffic is replicated between zones.
 
     > [!NOTE]
-    > The system replicates log data in real-time to the standby replica server. Any user errors on the primary server, such as an accidental drop of a table or incorrect data updates, are replicated to the standby replica server. So, you can't use the standby replica server to recover from these kinds of errors, and you must perform a point-in-time restore from the backup. For more information, see [Backup and restore](#backup-and-restore).
+    > The system replicates all changes in real-time to the standby replica server, including unintended user errors like an accidental drop of a table or incorrect data updates. Because of the immediate replication, you can't use the standby replica for recovery. To recover from user errors, you must perform a point‑in‑time restore from a backup. For more information, see [Backup and restore](#backup-and-restore).
 
 ### Behavior during a zone failure
 
