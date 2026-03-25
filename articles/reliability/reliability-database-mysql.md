@@ -128,21 +128,7 @@ To configure availability zone support for a server, you configure the high avai
 
 - **Change the availability zone configuration for existing servers:** If you have an existing server, the approach you follow to enable availability zone support depends on the server's initial configuration.
 
-    To change an existing server to zone-redundant high availability, you need to migrate to a new server:
-    1. Create a new server with zone-redundant high availability enabled, following the instructions in *Create a zone-redundant server* above.
-    1. Migrate your workload to the new server. Depending on the migration approach, downtime might be required.
-
-        - **Offline migration approaces:** If your application can afford some downtime, offline migrations are always the preferred choice, as they're simple and easy to execute. With an offline migration, the source server is taken offline, and a dump and restores of the databases are performed on the target server. This option will require the most downtime. The duration of the downtime is determined by the time it takes to perform the restoration on the target server.
-
-            - **Data Migration Service (DMS):** To learn how to use DMS, see [Migrate from MySQL to Azure Database for MySQL offline using DMS via the Azure portal](/azure/dms/tutorial-mysql-azure-mysql-offline-portal). Although the tutorial outlines steps for migrating from an on-premises MySQL server to Azure Database for MySQL, you can use the same procedure for migrating data from one Azure Database for MySQL server that doesn’t support availability zones to another that supports availability zones.
-
-            - **Open-source tools:** You can migrate offline with open-source tools, such as **MySQL Workbench**, **mydumper/myloader**, or **mysqldump** to backup and restore the database. For information on how to use these tools, see [Options for migrating Azure Database for  MySQL - Single Server to Flexible Server](https://techcommunity.microsoft.com/t5/azure-database-for-mysql-blog/options-for-migrating-azure-database-for-mysql-single-server-to/ba-p/2674062). Although the tutorial outlines steps for migrating from Azure MySQL Single Server to Flexible Server, you can use the same procedure for migrating data from one Azure Database for MySQL Flexible Server that doesn’t support availability zones to another that supports availability zones.
-
-        - **Online migration approaches:** Online migrations minimize application minimal downtime. The source server allows updates, and the migration solution replicates the ongoing changes between the source and target server along with the initial dump and restore on the target. However, these approaches are more complex to implement than an offline migration.
-
-            - **Data Migration Service (DMS):** To learn how to use DMS, see [Migrate from MySQL to Azure Database for MySQL online using DMS via the Azure portal](/azure/dms/tutorial-mysql-azure-external-to-flex-online-portal). Although the tutorial outlines steps for migrating from an on-premises MySQL server to Azure Database for MySQL, you can use the same procedure for migrating data from one Azure Database for MySQL server that doesn’t support availability zones to another that supports availability zones.
-
-            - **Open-source tools:** You can use a combination of open-source tools such as **mydumper/myloader** together with [Data-in replication](/azure/mysql/flexible-server/concepts-data-in-replication)
+    To change an existing server to zone-redundant high availability, you need to migrate to a new server. For more information, see [Migrate from an existing server to a zone-redundant server](/azure/mysql/flexible-server/concepts-high-availability#migrate-from-an-existing-server-to-a-zone-redundant-server).
 
     To change an existing server to same-zone high availability:
     1. [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability), if it's enabled.
