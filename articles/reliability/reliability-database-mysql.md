@@ -31,13 +31,13 @@ To learn about how to deploy Azure Database for MySQL to support your solution's
 
 When you work with Azure Database for MySQL, you deploy a *server*, which represents the compute and storage resources required to support your database server. You deploy one or more *databases* to the server.
 
-Servers can be deployed in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are [optimized for different kinds of workloads](/azure/mysql/flexible-server/concepts-service-tiers-storage).
+You can deploy servers in multiple *compute tiers*: Burstable, General Purpose, and Memory Optimized, each of which are [optimized for different kinds of workloads](/azure/mysql/flexible-server/concepts-service-tiers-storage).
 
 For more information about the general service architecture and deployment models, see [What is Azure Database for MySQL?](/azure/mysql/overview).
 
 ### Physical architecture
 
-- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a virtual machine, while data files are stored in Azure storage, which maintains three locally redundant synchronous copies of the database files to ensure data durability.
+- **Compute and storage separation:** Azure Database for MySQL uses a compute and storage separation architecture to support high availability. The database engine runs on a virtual machine. Data files are stored in Azure Storage locally redundant storage (LRS), which synchronously maintains three copies of the data within the same datacenter to protect against storage hardware failures.
 
 - **High availability:** You can optionally enable a *high availability configuration* on your server. When you enable the high availability configuration, the service provisions and maintains a warm standby replica server. Data changes on the primary server are synchronously replicated to the standby replica server to ensure zero data loss during a failure of the primary server.
 
@@ -91,7 +91,11 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     :::image type="content" source="./media/reliability-database-mysql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
-    While it's not the recommended option, you can opt into zonal (same-zone) high availability when you deploy your server. It's also the only high availability option available if the server's region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
+    While zonal high availability improves resilience to node‑level failures, it doesn’t protect against availability zone outages.
+    
+    We recommend zonal (same‑zone) high availability only in specific scenarios:
+    - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
+    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making same‑zone high availability the only available high availability option.
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -154,18 +158,18 @@ This section describes what to expect when servers are configured with high avai
 
 - **Cross-zone data replication:** Changes to data are replicated synchronously between the primary and standby servers. Transactions aren't considered complete until both the primary and standby servers acknowledge the write.
 
-    Application transaction-triggered write and commits first write to the primary server. The primary server streams these logs to the standby server by using the MySQL replication protocol. When the standby replica server storage persists the logs, the primary server acknowledges write completion. The application commits its transaction only after this acknowledgment. This acknowledgment process doesn't wait for the logs to be applied to the standby replica server.
+    Writes are committed on the primary server and synchronously replicated to the standby server’s storage. The primary server acknowledges the commit only after the standby server persists the logs, but before the logs are applied on the standby server.
     
     The effects of replication are different depending on the availability zone configuration that your server uses:
 
-    - *Zone-redundant:* Because the servers are in separate zones, this approach ensures zero data loss during a zone failure. This situation is also sometimes called achieving a recovery point objective (RPO) of zero for zone failures.
+    - *Zone-redundant:* Because the servers are in separate zones, this approach ensures zero data loss during a zone failure. This situation is also known as achieving a recovery point objective (RPO) of zero for zone failures.
     
         However, cross-zone replication might introduce a small amount of extra latency. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
     - *Zonal*: Because both servers are in the same zone, no traffic is replicated between zones.
 
     > [!NOTE]
-    > The system replicates log data in real-time to the standby replica server. Any user errors on the primary server, such as an accidental drop of a table or incorrect data updates, are replicated to the standby replica server. So, you can't use the standby replica server to recover from these kinds of errors, and you must perform a point-in-time restore from the backup. For more information, see [Backup and restore](#backup-and-restore).
+    > The system replicates all changes in real-time to the standby replica server, including unintended user errors like an accidental drop of a table or incorrect data updates. Because of the immediate replication, you can't use the standby replica for recovery. To recover from user errors, you must perform a point‑in‑time restore from a backup. For more information, see [Backup and restore](#backup-and-restore).
 
 ### Behavior during a zone failure
 
@@ -179,15 +183,15 @@ This section describes what to expect when servers are configured with high avai
     
         To view the possible high availability status types, see [Monitor high availability](/azure/mysql/flexible-server/concepts-high-availability#monitor-high-availability). When a zone fails, Azure initiates an [unplanned failover](/azure/mysql/flexible-server/concepts-high-availability#unplanned-automatic-failover) to the standby server without requiring you to take action.
 
-    - *Zonal:* If the availability zone that hosts a zonal server becomes unavailable, both the primary and standby servers are unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
+    - *Zonal:* Both primary and standby servers are unavailable if the availability zone that hosts a zonal server becomes unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
 
 - **Notification**: [!INCLUDE [Availability zone down notification partial bullet (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-partial-include.md)]
 
-    Azure Database for MySQL generates an Azure Reosuce Health event when an unplanned failover occurs.
+    Azure Database for MySQL generates an Azure Resource Health event when an unplanned failover occurs.
 
 - **Active requests:** When an availability zone becomes unavailable, any in‑progress requests to servers in the affected zone might be terminated. Applications must retry these requests. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** The amount of data loss depends on the availability zone configuration that your server uses.
+- **Expected data loss:** The amount of data loss depends on your server's availability zone configuration.
 
     - *Zone-redundant:* Zero data loss is expected during zone failover because of synchronous replication between the primary and standby servers in different zones.
 
@@ -250,7 +254,7 @@ If your primary region fails, you can trigger a *failover* so that your secondar
 
 #### Considerations
 
-- **Configuration differences:** When you create a replica, it inherits several settings from the source server, including the compute genration, vCores, and storage. You can customize these values on the read replica after it's created. However, it's best to use equal or greater values to ensure that the replica can keep up with changes in the source.
+- **Configuration differences:** When you create a replica, it inherits several settings from the source server, including the compute generation, vCores, and storage. You can customize these values on the read replica after it's created. However, it's best to use equal or greater values to ensure that the replica can keep up with changes in the source.
 
 - **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/mysql/flexible-server/concepts-read-replicas#monitor-replication).
 
@@ -266,7 +270,7 @@ Read replicas incur compute and storage costs, as well as cross-region data tran
     - Azure portal: [How to create and manage read replicas in Azure Database for MySQL - Flexible Server by using the Azure portal](/azure/mysql/flexible-server/how-to-read-replicas-portal)
     - Azure CLI: [How to create and manage read replicas in Azure Database for MySQL - Flexible Server using the Azure CLI](/azure/mysql/flexible-server/how-to-read-replicas-cli)
     
-    Replicas can be configured after the source server is created, as long as the source server is running and accessible.
+    You can configure replicas can be configured after you create the source server, as long as the source server is running and accessible.
 
 - **Stop replication:** To learn how to stop replication, see [Stop replication to a replica server](/azure/mysql/flexible-server/how-to-read-replicas-portal#stop-replication-to-a-replica-server).
 
@@ -308,7 +312,7 @@ This section describes what to expect when your server is configured with a read
 - **Traffic rerouting:** You're responsible for reconfiguring your applications to connect to the new primary server.
 
     > [!NOTE]
-    > After a read replica is failed over to be the primary server, it doesn't have high availability configuration enabled. You need to enable high availability configuration manually, or add it to your own automation processes.
+    > After you fail over a read replica to become the primary server, the server doesn't have high availability enabled. You must enable high availability manually or include it in your automation.
 
 #### Region recovery
 
@@ -329,7 +333,7 @@ As part of your disaster recovery strategy, regularly run full recovery drills. 
 
 ## Backup and restore
 
-Azure Database for MySQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Backups are fully managed by Microsoft, don't interrupt the availability of the server, and include both full backups and transaction log backups.
+Azure Database for MySQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Microsoft fully manages backups, don't interrupt the availability of the server, and include both full backups and transaction log backups.
 
 - **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with zonal (single-zone) high availability, backups are stored in locally redundant storage (LRS).
 
