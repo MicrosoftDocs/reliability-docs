@@ -43,7 +43,7 @@ For more information about the general service architecture and deployment model
 
     The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
 
-    :::image type="content" source="./media/reliability-database-mysql/high-availability.svg" alt-text="Diagram showing the high availability architecture, with a primary and standby replica server." border="false" :::
+    :::image type="content" source="./media/reliability-database-mysql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby replica server." border="false" :::
 
     A standby replica server is deployed in the same VM configuration as the primary server, including vCores, storage, and network settings.
 
@@ -83,13 +83,13 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     We recommend zone-redundant deployments for production servers.
 
-     :::image type="content" source="./media/reliability-database-mysql/zone-redundant.svg" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
+     :::image type="content" source="./media/reliability-database-mysql/zone-redundant.png" alt-text="Diagram showing a zone-redundant server, with the primary and standby servers in different availability zones." border="false" :::
 
     Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
 - **Zonal (same-zone) high availability:** The primary and standby servers use the same availability zone. If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
-    :::image type="content" source="./media/reliability-database-mysql/zonal.svg" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
+    :::image type="content" source="./media/reliability-database-mysql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
 
     While it's not the recommended option, you can opt into zonal (same-zone) high availability when you deploy your server. It's also the only high availability option available if the server's region doesn't support availability zones. The region effectively functions as a single zone, and so the only high availability configuration you can select is same-zone.
 
@@ -215,11 +215,11 @@ You can also use geo-redundant backups, in supported regions, to provide cross-r
 
 You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to ten read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously from the source server in the primary region, and they can lag the source. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the source server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
 
-:::image type="content" source="./media/reliability-database-mysql/read-replica.svg" alt-text="Diagram showing a read replica in a second Azure region, with the application directing read-write traffic to the source server." border="false" :::
+:::image type="content" source="./media/reliability-database-mysql/read-replica.png" alt-text="Diagram showing a read replica in a second Azure region, with the application directing read-write traffic to the source server." border="false" :::
 
 If your primary region fails, you can trigger a *failover* so that your secondary replica becomes the primary server. You do this by stopping the replication process. Because of the asynchronous replication, failover can result in data loss. Your application then needs to connect to the new primary server, and you're responsible for this application reconfiguration.
 
-:::image type="content" source="./media/reliability-database-mysql/read-replica-failure.svg" alt-text="Diagram showing a read replica in a second Azure region that has been failed over to become the primary server, with the  application now directing read-write traffic to the secondary region." border="false" :::
+:::image type="content" source="./media/reliability-database-mysql/read-replica-failure.png" alt-text="Diagram showing a read replica in a second Azure region that has been failed over to become the primary server, with the  application now directing read-write traffic to the secondary region." border="false" :::
 
 > [!NOTE]
 > This section summarizes some of the important information about how read replicas can support resilience to region-wide failures. You can also use read replicas to improve performance and support high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
@@ -321,10 +321,7 @@ Azure Database for MySQL automatically performs backups that provide point-in-ti
 
 - **Restore:** Point-in-time recovery allows you to restore your database to any moment within the backup retention period. The restore process creates a new database server with a new user-provided server name, which you can then use as-is or copy data from.
 
-    When you restore a geo-redundant backup, you create a new server in the paired region.
-
-    > [!WARNING]
-    > **Note to PG:** Can you please provide more detail about Universal Geo-Restore? What scenarios does it help with? From my testing, it doesn't provide geo-restore for 3+0 regions - can you please confirm?
+    When you restore a geo-redundant backup, you create a new server in the paired region. In some regions, you can use Universal Geo-Restore to restore a geo-redundant backup to a region that isn't your primary region's paired region.
 
     This capability is useful for recovering from accidental data modifications, application errors, or testing scenarios.
 
