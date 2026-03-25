@@ -297,7 +297,12 @@ This section describes what to expect when your server is configured with a read
 
 #### Region recovery
 
-When the region recovers, you're responsible for any failback activities to resume operations in the primary region. Microsoft doesn't automatically move the primary server. You can create a new read replica in the primary region, then perform another failover process. However, this process might result in data loss.
+When the region recovers, you're responsible for any failback activities to resume operations in the primary region. Microsoft doesn't automatically move the primary server. You can create a new read replica in the primary region, then perform another failover process to restore operations in the primary region. Consider one of the following approches, depending on whether your application can tolerate downtime or data loss:
+
+- Take your application offline, and wait for the replication to catch up with all of the changes. This approach requires application downtime, roughly equal to the replication lag.
+- Perform the failover and accept the loss of any unreplicated data.
+
+Remember you're also responsible for reconfiguring your applications to connect to the new primary server as required.
 
 #### Test for region failures
 
