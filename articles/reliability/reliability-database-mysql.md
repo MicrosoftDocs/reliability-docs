@@ -193,9 +193,6 @@ The zone recovery behavior depends on the availability zone configuration that y
 
 - *Zone-redundant:* When the availability zone recovers, Azure Database for MySQL automatically rebuilds the standby server in the recovered zone and synchronizes it with the current primary. The recovered zone then serves as the standby location. The service doesn't automatically move the primary role back to the original zone to avoid unnecessary disruption. You can [manually initiate a planned failover](/azure/mysql/flexible-server/concepts-high-availability#planned-forced-failover) if you want to return the primary to the original zone.
 
-    > [!WARNING]
-    > **Note to PG:** Please verify the statement above is correct.
-
 - *Zonal:* After the zone is healthy, servers in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
 ### Test for zone failures
@@ -216,7 +213,7 @@ You can also use geo-redundant backups, in supported regions, to provide cross-r
 
 ### Cross-region read replicas
 
-You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously from the source server in the primary region, and they can lag the source. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the source server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
+You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to ten read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously from the source server in the primary region, and they can lag the source. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the source server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
 
 :::image type="content" source="./media/reliability-database-mysql/read-replica.svg" alt-text="Diagram showing a read replica in a second Azure region, with the application directing read-write traffic to the source server." border="false" :::
 
@@ -349,9 +346,8 @@ To ensure your server remains available during maintenance windows, follow these
 > - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. You can also reschedule planned maintenance operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Manage scheduled maintenance settings for Azure Database for MySQL](/azure/mysql/flexible-server/how-to-maintenance-portal).
 >
 > - **Implement retry logic:** Ensure your applications can handle brief connectivity interruptions that may occur during maintenance restarts. To make your applications resilient to these types of problems, see [Resilience to transient faults](#resilience-to-transient-faults) guidance.
-
-> [!WARNING]
-> **Note to PG:** Do you recommend opting a non-production server into Virtual Canary maintenance, so a customer can test for potential issues in future updates?
+>
+> - **Enable Virtual Canary maintenance on development and test servers:** Virtual Canary maintenance offers early access to updates. By enabling it on development and test servers, you can verify that your workload isn't affected by upcoming updates before they reach your production servers. For more information, see [Virtual Canary maintenance](/azure/mysql/flexible-server/concepts-maintenance#virtual-canary-maintenance).
 
 ## Service-level agreement
 
