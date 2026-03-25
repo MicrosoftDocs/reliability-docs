@@ -214,21 +214,18 @@ Azure Database for MySQL supports *cross-region read replicas*, which you can us
 
 You can also use geo-redundant backups, in supported regions, to provide cross-region recovery. However, backups typically involve more downtime and data loss than replication. For more information, see [Backup and restore](#backup-and-restore).
 
-<!-- TODO rest of the section -->
 ### Cross-region read replicas
 
-You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously, and they can lag the primary. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the primary server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
+You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to five read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously from the source server in the primary region, and they can lag the source. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the source server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
 
-*Virtual endpoints* provide read-write and read-only endpoints and automatically redirect traffic when a replica is promoted, which helps minimize downtime during failover events. We strongly recommend using virtual endpoints with cross-region read replicas to improve application resilience. For more information, see [Virtual endpoints for read replicas in Azure Database for MySQL](/azure/postgresql/read-replica/concepts-read-replicas-virtual-endpoints). <!-- TODO -->
+:::image type="content" source="./media/reliability-database-mysql/read-replica.svg" alt-text="Diagram showing a read replica in a second Azure region, with the application directing read-write traffic to the source server." border="false" :::
 
-:::image type="content" source="./media/reliability-database-mysql/read-replica.svg" alt-text="Diagram showing a read replica in a second Azure region, with a read-write endpoint directing read-write traffic to the primary server." border="false" :::
+If your primary region fails, you can trigger a *failover* so that your secondary replica becomes the primary server. You do this by stopping the replication process. Because of the asynchronous replication, failover can result in data loss. Your application then needs to connect to the new primary server, and you're responsible for this application reconfiguration.
 
-If your primary region fails, you can trigger a *failover* so that your secondary replica becomes the primary. There are different types of failover that you can trigger depending on how you use read replicas. When you use read replicas to provide resilience to region failures, you typically use the *promote to primary server* approach, which updates your virtual endpoint. During a region outage, you need to perform a *forced promotion*, which can result in some data loss for any unreplicated data. In planned scenarios where the primary region is healthy, you can choose to perform a planned promotion to avoid data loss. For more information, see [Promote read replicas in Azure Database for MySQL](/azure/postgresql/read-replica/concepts-read-replicas-promote). <!-- TODO -->
-
-:::image type="content" source="./media/reliability-database-mysql/read-replica-failure.svg" alt-text="Diagram showing a read replica in a second Azure region that has been promoted to the primary replica, with the read-write endpoint now directing read-write traffic to the secondary region." border="false" :::
+:::image type="content" source="./media/reliability-database-mysql/read-replica-failure.svg" alt-text="Diagram showing a read replica in a second Azure region that has been failed over to become the primary server, with the  application now directing read-write traffic to the secondary region." border="false" :::
 
 > [!NOTE]
-> This section summarizes some of the important information about how read replicas can support resilience to region-wide failures. You can also use read replicas to improve performance and support high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/postgresql/flexible-server/concepts-read-replicas).
+> This section summarizes some of the important information about how read replicas can support resilience to region-wide failures. You can also use read replicas to improve performance and support high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
 
 #### Requirements
 
@@ -238,73 +235,75 @@ If your primary region fails, you can trigger a *failover* so that your secondar
 
 #### Considerations
 
-- **Configuration differences:** Read replicas may not inherit all configuration settings from the primary server. Plan to configure necessary settings post-failover. Your primary server and replicas should be *symmetrical*, which means they need to have the same tiers, storage sizes, and values for some settings. During region failures, the symmetrical server requirement can be waived for forced promotions, but it's a good practice to have symmetrical configuration where possible to avoid unexpected problems. For more information, see [Configuration management](/azure/postgresql/read-replica/concepts-read-replicas#configuration-management).
+- **Configuration differences:** When you create a replica, it inherits several settings from the source server, including the compute genration, vCores, and storage. You can customize these values on the read replica after it's created. However, it's best to use equal or greater values to ensure that the replica can keep up with changes in the source.
 
-- **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
+- **Monitoring replication lag:** The asynchronous replication process requires a replication lag, which can vary depending on a number of factors. When the replication lag is very high, your server might experience problems. It's important to monitor the replication lag so that you can mitigate problems before they escalate. For more information, see [Monitor replication](/azure/mysql/flexible-server/concepts-read-replicas#monitor-replication).
 
-- **High availability:** Read replicas can't have high availability enabled, and when they're promoted, they also don't have high availability. You're responsible for configuring high availability after promoting a replica.
-
-For additional considerations that apply to the promotion process, see [Promote read replicas in Azure Database for MySQL - Considerations](/azure/postgresql/read-replica/concepts-read-replicas-promote#considerations).
+- **High availability:** Read replicas can't have high availability enabled, and when they're failed over to become the primary server, they also don't have high availability. You're responsible for configuring high availability after failing over to a replica.
 
 #### Cost
 
-Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for MySQL pricing](https://azure.microsoft.com/pricing/details/postgresql/flexible-server/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
+Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for MySQL pricing](https://azure.microsoft.com/pricing/details/mysql/flexible-server/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
 
 #### Configure multi-region support
 
-- **Create a read replica:** To learn how to create a read replica, see [Create a read replica](/azure/postgresql/read-replica/how-to-create-read-replica). Replicas can be configured after the primary server is created, as long as the primary server is running and accessible.
+- **Create a read replica:** To learn how to create a read replica, see:
+    - Azure portal: [How to create and manage read replicas in Azure Database for MySQL - Flexible Server by using the Azure portal](/azure/mysql/flexible-server/how-to-read-replicas-portal)
+    - Azure CLI: [How to create and manage read replicas in Azure Database for MySQL - Flexible Server using the Azure CLI](/azure/mysql/flexible-server/how-to-read-replicas-cli)
+    
+    Replicas can be configured after the source server is created, as long as the source server is running and accessible.
 
-    To create a virtual endpoint, see [Create virtual endpoints](/azure/postgresql/read-replica/how-to-create-virtual-endpoints).
+- **Stop replication:** To learn how to stop replication, see [Stop replication to a replica server](/azure/mysql/flexible-server/how-to-read-replicas-portal#stop-replication-to-a-replica-server).
 
-- **Delete a read replica:** To learn how to delete a read replica, see [Delete a read replica](/azure/postgresql/read-replica/how-to-delete-read-replica).
+- **Delete a read replica:** To learn how to delete a read replica, see [Delete a replica server](/azure/mysql/flexible-server/how-to-read-replicas-portal#delete-a-replica-server).
 
 #### Behavior when all regions are healthy
 
 This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and all regions are operational:
 
-- **Traffic routing between regions:** In normal operations, your virtual endpoint directs traffic for the read-write endpoint to the primary server in the primary region. If you also use the virtual endpoint's read-only endpoint, then it directs traffic to whichever replica you configure.
+- **Traffic routing between regions:** In normal operations, your application should direct read-write traffic to the source server in the primary region. You can optionally direct read requests to your read replica.
 
-- **Data replication between regions:** Cross-region read replicas use asynchronous replication to minimize impact on primary server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the primary server and replicas. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
+- **Data replication between regions:** Cross-region read replicas use asynchronous replication to minimize impact on source server performance. The amount of replication lag depends on a number of factors, including the write load and the latency between the source server and replicas. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/mysql/flexible-server/concepts-read-replicas#monitor-replication), and for detailed instructions, see [Monitor replication in the Azure portal](/azure/mysql/flexible-server/how-to-read-replicas-portal#monitor-replication).
 
 #### Behavior during a region failure
 
 This section describes what to expect when your server is configured with a read replica in another region and a virtual endpoint, and there's an outage in the primary region:
 
-- **Detection and response:** You're responsible for detecting an outage in the primary region, and manually promoting a read replica to become the new primary server. During a region outage, you must perform a forced promotion, which results in the loss of any unreplicated data.
+- **Detection and response:** You're responsible for detecting an outage in the primary region, and manually triggering a failover. This action can result in the loss of any unreplicated data.
 
     > [!IMPORTANT]
-    > You're responsible for triggering promotion. Azure doesn't promote read replicas automatically, even if there's a region failure.
+    > You're responsible for triggering failover. Azure doesn't fail over to read replicas automatically, even if there's a region failure.
 
-    For detailed steps to initiate a promotion, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary).
+    Failover requires that you:
+    1. Stop replication. This is an irreversable procedure, and the server can't be made into a replica again. The process results in data loss. For more detail on the implications of this action, see [Stop replication](/azure/mysql/flexible-server/concepts-read-replicas#stop-replication).
+    1. Reconfigure your application to use the new primary.
+
+    For more information, see [Failover](/azure/mysql/flexible-server/concepts-read-replicas#failover).
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
-- **Active requests:** All active connections to the primary region are dropped. Applications need to retry making connections to the promoted replica after the promotion process completes.
+- **Active requests:** All active connections to the source region are dropped if the source server is unavailable. Applications need to retry making connections to the new primary server after the failover process completes.
 
-- **Expected data loss:** During a region outage, you must perform a forced promotion, which results in the permanent loss of any unreplicated data.
+- **Expected data loss:** During a region outage, you must perform a failover that stops replication. This process results in the permanent loss of any unreplicated data.
 
-    The amount of data loss depends on the replication lag at the time of the outage. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/postgresql/read-replica/concepts-read-replicas#monitor-replication).
+    The amount of data loss depends on the replication lag at the time of the outage. Replication lag is typically at least several minutes, but it can be much longer. For more information, see [Monitor replication](/azure/mysql/flexible-server/concepts-read-replicas#monitor-replication).
 
-- **Expected downtime:** Forced promotion typically completes within 1-3 minutes of being triggered. Applications might also need to reconnect to the correct endpoint. Virtual endpoints are updated as part of the forced promotion process. Applications should honor the time-to-live (TTL) of the endpoint's DNS records to ensure they quickly reconnect to the correct replica after promotion completes.
+- **Expected downtime:** Stopping replication typically completes within 2 minutes of being triggered. You're responsible for reconfiguring your applications to connect to the new primary server, and the time it takes for you to perform the reconfiguration also contributes to your overall downtime.
 
-- **Traffic rerouting:** The virtual endpoint for the server automatically redirects application traffic to the new primary replica.
+- **Traffic rerouting:** You're responsible for reconfiguring your applications to connect to the new primary server.
 
     > [!NOTE]
-    > After a read replica is promoted to be the primary server, it doesn't have high availability configuration enabled. You need to enable high availability configuration manually, or add it to your own automation processes.
+    > After a read replica is failed over to be the primary server, it doesn't have high availability configuration enabled. You need to enable high availability configuration manually, or add it to your own automation processes.
 
 #### Region recovery
 
-When you use virtual endpoints, after the primary region recovers, the old primary server is automatically configured as a read replica. You can perform another promotion to return the primary operations to your preferred primary region.
+When the region recovers, you're responsible for any failback activities to resume operations in the primary region. Microsoft doesn't automatically move the primary server. You can create a new read replica in the primary region, then perform another failover process. However, this process might result in data loss.
 
 #### Test for region failures
 
-Regularly test read replica promotion procedures to ensure your processes are valid, and that the capabilities meet your RTO and RPO requirements.
+Regularly test read replica failover procedures to ensure your processes are valid, and that the capabilities meet your RTO and RPO requirements.
 
-You can promote a read replica to become the primary server at any time, even when all regions are healthy. For testing:
-- You can perform forced promotion testing. We recommend you perform these tests in a non-production environment as it can result in data loss. Forced promotion testing helps to simulate the behavior that you see during a region outage.
-- For planned maintenance, or testing scenarios where you want to avoid data loss, use a planned promotion instead. Be aware that planned promotion follows a different process than promotion during a region outage.
-
-For step-by-step instructions, see [Switch over read replica to primary](/azure/postgresql/read-replica/how-to-switch-over-replica-to-primary).
+You can fail over a read replica to become the primary server at any time, even when all regions are healthy. We recommend you perform these tests in a non-production environment as it can result in data loss and requires manual failback.
 
 As part of your disaster recovery strategy, regularly run full recovery drills. These drills should include data validation, application functionality testing, and documented rollback procedures.
 
