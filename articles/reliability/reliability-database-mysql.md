@@ -82,13 +82,15 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
-- **Locally redundant (zonal) high availability:** The primary and standby servers use the same availability zone. If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A zonal deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
+- **Locally redundant high availability:** The primary and standby servers use the same availability zone. In regions with availability zones, this kind of configuration is also sometimes called *zonal* or *single-zone*.
 
-    :::image type="content" source="./media/reliability-database-mysql/zonal.png" alt-text="Diagram showing a zonal server, with the primary and standby servers in the same availability zone." border="false" :::
+    If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A locally redundant deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
 
-    While zonal high availability improves resilience to node‑level failures, it doesn’t protect against availability zone outages.
+    :::image type="content" source="./media/reliability-database-mysql/locally-redundant.png" alt-text="Diagram showing a locally redundant server, with the primary and standby servers in the same availability zone." border="false" :::
+
+    While locally redundant high availability improves resilience to node‑level failures, it doesn’t protect against availability zone outages.
     
-    We recommend zonal (same‑zone) high availability only in specific scenarios:
+    We recommend locally redundant high availability only in specific scenarios:
     - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
     - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making same‑zone high availability the only available high availability option.
 
@@ -115,11 +117,14 @@ When you enable high availability, the standby server is created and billed at t
 
 To configure availability zone support for a server, you configure the high availability settings.
 
+> [!NOTE]
+> [!INCLUDE [Availability zone numbering](./includes/reliability-availability-zone-numbering-include.md)]
+
 - **Create a zone-redundant server:** To learn how to create a server with high availability and zone redundancy enabled, see:
     - Azure portal: [Manage zone redundant high availability in Azure Database for MySQL with the Azure portal](/azure/mysql/flexible-server/how-to-configure-high-availability#enable-high-availability-during-server-creation)
     - Azure CLI: [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli#enable-high-availability-during-server-creation)
 
-- **Create a zonal server:** To create a server with same-zone (zonal) high availability, you must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Enable high-availability during server creation](/azure/mysql/flexible-server/how-to-configure-high-availability-cli#enable-high-availability-during-server-creation).
+- **Create a locally redundant server:** To create a server with locally redundant high availability in the same availability zone, you must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Enable high-availability during server creation](/azure/mysql/flexible-server/how-to-configure-high-availability-cli#enable-high-availability-during-server-creation).
 
 - **Change the availability zone configuration for existing servers:** If you have an existing server, the approach you follow to enable availability zone support depends on the server's initial configuration.
 
@@ -147,7 +152,7 @@ This section describes what to expect when servers are configured with high avai
     
         However, cross-zone replication might introduce a small amount of extra latency. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
-    - *Zonal*: Because both servers are in the same zone, no traffic is replicated between zones.
+    - *Locally redundant*: Because both servers are in the same zone, no traffic is replicated between zones.
 
     > [!NOTE]
     > The system replicates all changes in real-time to the standby replica server, including unintended user errors like an accidental drop of a table or incorrect data updates. Because of the immediate replication, you can't use the standby replica for recovery. To recover from user errors, you must perform a point‑in‑time restore from a backup. For more information, see [Backup and restore](#backup-and-restore).
@@ -164,7 +169,7 @@ This section describes what to expect when servers are configured with high avai
     
         To view the possible high availability status types, see [Monitor high availability](/azure/mysql/flexible-server/concepts-high-availability#monitor-high-availability). When a zone fails, Azure initiates an [unplanned failover](/azure/mysql/flexible-server/concepts-high-availability#unplanned-automatic-failover) to the standby server without requiring you to take action.
 
-    - *Zonal:* Both primary and standby servers are unavailable if the availability zone that hosts a zonal server becomes unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
+    - *Locally redundant:* Both primary and standby servers are unavailable if the availability zone that hosts a locally redundant server becomes unavailable. In this scenario, the service doesn't provide automatic failover. You're responsible for detecting the zone outage and performing recovery actions, such as restoring zone‑redundant backups to a separate server in another availability zone or region.
 
 - **Notification**: [!INCLUDE [Availability zone down notification partial bullet (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-partial-include.md)]
 
@@ -176,19 +181,19 @@ This section describes what to expect when servers are configured with high avai
 
     - *Zone-redundant:* Zero data loss is expected during zone failover because of synchronous replication between the primary and standby servers in different zones.
 
-    - *Zonal:* Data on servers in the affected zone is unavailable until the zone recovers.
+    - *Locally redundant:* Data on servers in the affected zone is unavailable until the zone recovers.
 
 - **Expected downtime:** The amount of downtime depends on the availability zone configuration that your server uses.
 
     - *Zone-redundant:* Failover typically completes within 60-120 seconds. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-    - *Zonal:* Servers in an impacted zone are unavailable until the availability zone recovers.
+    - *Locally redundant:* Servers in an impacted zone are unavailable until the availability zone recovers.
 
 - **Redistribution:** The traffic rerouting behavior depends on the availability zone configuration that your server uses.
 
     - *Zone-redundant:* After failover, the former standby server becomes the new primary and begins accepting new connections. Azure automatically establishes a standby server in the original primary zone after it recovers. For full details, see [Unplanned failover](/azure/mysql/flexible-server/concepts-high-availability#unplanned-automatic-failover).
 
-    - *Zonal:* When a zone is unavailable, your server is unavailable. If you have a separate server that you precreated in another availability zone or region, you're responsible for rerouting traffic to that server.
+    - *Locally redundant:* When a zone is unavailable, your server is unavailable. If you have a separate server that you precreated in another availability zone or region, you're responsible for rerouting traffic to that server.
 
 ### Zone recovery
 
@@ -196,7 +201,7 @@ The zone recovery behavior depends on the availability zone configuration that y
 
 - *Zone-redundant:* When the availability zone recovers, Azure Database for MySQL automatically rebuilds the standby server in the recovered zone and synchronizes it with the current primary. The recovered zone then serves as the standby location. The service doesn't automatically move the primary role back to the original zone to avoid unnecessary disruption. You can [manually initiate a planned failover](/azure/mysql/flexible-server/concepts-high-availability#planned-forced-failover) if you want to return the primary to the original zone.
 
-- *Zonal:* After the zone is healthy, servers in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
+- *Locally redundant:* After the zone is healthy, servers in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
 ### Test for zone failures
 
@@ -204,7 +209,7 @@ The options for testing for zone failures depend on the availability zone config
 
 - *Zone-redundant:* You can test your application's resilience to failover by initiating a planned failover. A planned failover lets you simulate an unplanned outage scenario while running your workload and observe your application downtime. We recommend running simulations in a non-production environment, or at a quiet time. For more information, see [Planned failover](/azure/mysql/flexible-server/concepts-high-availability#planned-forced-failover).
 
-- *Zonal:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to what happens during a zone outage. For more information, see:
+- *Locally redundant:* While you can't simulate a full zone outage, you can simulate your server being unavailable in a similar way to what happens during a zone outage. For more information, see:
     - Azure portal: [Stop/Start an Azure Database for MySQL - Flexible Server instance](/azure/mysql/flexible-server/how-to-stop-start-server-portal)
     - Azure CLI: [Restart/stop/start an Azure Database for MySQL - Flexible Server instance](/azure/mysql/flexible-server/how-to-restart-stop-start-server-cli)
 
@@ -316,7 +321,7 @@ As part of your disaster recovery strategy, regularly run full recovery drills. 
 
 Azure Database for MySQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Microsoft fully manages backups, don't interrupt the availability of the server, and include both full backups and transaction log backups.
 
-- **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with zonal (single-zone) high availability, backups are stored in locally redundant storage (LRS).
+- **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with locally redundant high availability, backups are stored in locally redundant storage (LRS).
 
     In Azure regions with pairs, you can configure geo-redundant (GRS) backup storage at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
@@ -341,7 +346,7 @@ To ensure your server remains available during maintenance windows, follow these
 > [!div class="checklist"]
 > - **Avoid management operations during maintenance periods:** Don't perform server management operations while maintenance is underway, because these operations can affect your server's reliability.
 >
-> - **Use near-zero-downtime maintenance:** If your server has high availability enabled and meets other eligibility criteria, maintenance operations often complete within 10-30 seconds. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or zonal high availability. For more information, see [Near-zero-downtime maintenance](/azure/mysql/flexible-server/concepts-maintenance#near-zero-downtime-maintenance).
+> - **Use near-zero-downtime maintenance:** If your server has high availability enabled and meets other eligibility criteria, maintenance operations often complete within 10-30 seconds. If you have high availability enabled, maintenance operations typically use rolling updates to minimize downtime. Periodic maintenance activities such as minor version upgrades happen on the standby replica first. To reduce downtime, the standby is promoted to primary so that workloads can keep on while the maintenance tasks are applied on the remaining node. This sequencing applies whether your server uses zone-redundant or Locally redundant high availability. For more information, see [Near-zero-downtime maintenance](/azure/mysql/flexible-server/concepts-maintenance#near-zero-downtime-maintenance).
 >
 > - **Configure custom maintenance windows:** You can configure the maintenance schedule to be system-managed or define a custom maintenance window to minimize the impact on your business operations. You can also reschedule planned maintenance operations. Schedule maintenance during low-activity periods to minimize business impact. For more information, see [Manage scheduled maintenance settings for Azure Database for MySQL](/azure/mysql/flexible-server/how-to-maintenance-portal).
 >
@@ -356,7 +361,7 @@ To ensure your server remains available during maintenance windows, follow these
 Azure Database for MySQL provides different availability SLAs based on the server's configuration:
 
 - Servers configured with zone-redundant high availability.
-- Servers configured with zonal (single-zone) high availability.
+- Servers configured with Locally redundant high availability.
 - Servers configured without high availability.
 
 ## Related content
