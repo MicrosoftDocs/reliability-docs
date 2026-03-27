@@ -180,7 +180,7 @@ This section describes what to expect when a managed disk is configured to use z
 
 #### Zone recovery
 
-When the failed availability zone recovers, managed disks recover automatically. If the VM attached to the disk has been affected by the outage, you might need to restart the VM to recover. You're responsible for resyncing application data to other VMs and disks in other availability zones, if you use them.
+When the failed availability zone recovers, managed disks recover automatically. If the VM attached to the disk has been affected by the outage, it restarts. You're responsible for resyncing application data to other VMs and disks in other availability zones, if you use them.
 
 ### Test for zone failures
 
