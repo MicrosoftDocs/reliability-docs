@@ -94,7 +94,7 @@ Azure Database for MySQL supports two availability zone configuration types when
     - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
     - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making locally redundant high availability the only available high availability option.
 
-    Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
+    Because the servers are in the same zone, it can reduce the write latency to applications you deploy within that zone.
 
 If you configure your server without high availability, then it runs on a single server. If that server or its zone goes down, your server is unavailable.
 
@@ -152,7 +152,7 @@ This section describes what to expect when servers are configured with high avai
     
         However, cross-zone replication might introduce a small amount of extra latency. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
-    - *Locally redundant*: Because both servers are in the same zone, no traffic is replicated between zones.
+    - *Locally redundant*: No traffic is replicated between zones.
 
     > [!NOTE]
     > The system replicates all changes in real-time to the standby replica server, including unintended user errors like an accidental drop of a table or incorrect data updates. Because of the immediate replication, you can't use the standby replica for recovery. To recover from user errors, you must perform a point‑in‑time restore from a backup. For more information, see [Backup and restore](#backup-and-restore).
