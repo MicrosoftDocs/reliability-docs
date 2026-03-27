@@ -55,7 +55,9 @@ Managed disks automatically recover from transient faults in the Azure infrastru
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-There are two ways to use availability zones with managed disks. You can either deploy a [zone-redundant (ZRS) disk](#zone-redundant-disks), which is in all availability zones in a region, or a [zonal LRS disk](#zonal-lrs-disks), which is only in a single zone. For the best reliability, we recommend using ZRS disks because ZRS disks provide automatic zone resiliency. With zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages - it's not done for you.
+There are two ways to use availability zones with managed disks:
+- You can deploy a [zone-redundant (ZRS) disk](#zone-redundant-disks), which is in all availability zones in a region. For the best reliability, we recommend using ZRS disks because ZRS disks provide automatic zone resiliency.
+- You can deploy a [zonal LRS disk](#zonal-lrs-disks), which is only in a single zone. With zonal LRS disks, you're responsible for configuring your workload to be resilient to zone outages. You do this deploying multiple VMs and disks and spreading them across availability zones.
 
 If you don't configure availability zone support, your disk is *nonzonal* or *regional* and might be placed in any availability zone in the region. These disks are considered LRS because they are replicated within the region.
 
@@ -134,7 +136,7 @@ Zonal LRS disks reside in a specific availability zone and attach only to VMs in
 
 ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
 
-When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones.
+When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones. For more information on this approach, see [Distribute VMs and disks across availability zones](/azure/virtual-machines/disks-high-availability#distribute-vms-and-disks-across-availability-zones).
 
 #### Requirements
 
