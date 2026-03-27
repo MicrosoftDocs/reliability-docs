@@ -82,17 +82,15 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     Write operations can experience a small increase in commit latency because the service synchronously replicates data to the standby server. On average, you can expect 5-10 percent increased latency for application writes and commits, but the impact varies by workload, selected SKU, and region.
 
-- **Locally redundant high availability:** The primary and standby servers use the same availability zone. In regions with availability zones, this kind of configuration is also sometimes called *zonal* or *single-zone*.
+- **Locally redundant high availability:** The primary and standby servers use the same availability zone. If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server.
 
-    If a disruption occurs to the primary server, but the zone is still healthy, the server automatically fails over to the standby server. A locally redundant deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone.
+    A locally redundant deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone. In regions with availability zones, this kind of configuration is also sometimes called *zonal* or *single-zone*.
 
     :::image type="content" source="./media/reliability-database-mysql/locally-redundant.png" alt-text="Diagram showing a locally redundant server, with the primary and standby servers in the same availability zone." border="false" :::
-
-    While locally redundant high availability improves resilience to node‑level failures, it doesn’t protect against availability zone outages.
     
     We recommend locally redundant high availability only in specific scenarios:
     - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
-    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making locally redundant high availability the only available high availability option.
+    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making locally redundant high availability the only high availability option.
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within that zone.
 
