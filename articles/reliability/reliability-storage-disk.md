@@ -170,15 +170,15 @@ This section describes what to expect when a managed disk is configured to use z
 
 This section describes what to expect when a managed disk is configured to use zonal LRS, and there's an availability zone outage.
 
- - **Detection and response:** You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk in the same zone.
+ - **Detection and response:** You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk in its zone.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Expected data loss:** A zonal LRS disk is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers. However, if a zone is permanently lost, any zonal disks in that zone are lost too.
+- **Expected data loss:** A zonal LRS disk is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers.
 
 - **Expected downtime:** A zonal LRS disk is unavailable until the availability zone recovers.
 
-- **Redistribution:** A zonal LRS disk is unavailable until the availability zone recovers.
+    If you have another VM in a different availability zone that can run your workload, you're responsible for switching to that VM, or for pre-configuring load balancers or other systems to automatically switch to it.
 
 #### Zone recovery
 
