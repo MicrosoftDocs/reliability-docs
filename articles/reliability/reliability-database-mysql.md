@@ -92,7 +92,7 @@ Azure Database for MySQL supports two availability zone configuration types when
     
     We recommend locally redundant high availability only in specific scenarios:
     - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
-    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making same‑zone high availability the only available high availability option.
+    - When you deploy to a region that doesn't support availability zones, the region effectively functions as a single zone, making locally redundant high availability the only available high availability option.
 
     Because the servers are in the same zone, it can reduce the write latency to applications you deploy within the same zone.
 
@@ -102,7 +102,7 @@ If you configure your server without high availability, then it runs on a single
 
 - **Region support:** Azure Database for MySQL's support for availability zone configurations differs between Azure regions. For a full list of regions, and the types of availability zone support and any specific considerations for that region, see [Azure regions](/azure/mysql/flexible-server/overview#azure-regions).
 
-- **Service tier:** High availability requires General Purpose or Memory Optimized tiers. The Burstable tier doesn't support high availability (zone-redundant or same-zone).
+- **Service tier:** High availability requires General Purpose or Memory Optimized tiers. The Burstable tier doesn't support high availability (zone-redundant or locally redundant).
 
 ### Cost
 
@@ -130,9 +130,9 @@ To configure availability zone support for a server, you configure the high avai
 
     To change an existing server to zone-redundant high availability, you need to migrate to a new server. For more information, see [Migrate from an existing server to a zone-redundant server](/azure/mysql/flexible-server/concepts-high-availability#migrate-from-an-existing-server-to-a-zone-redundant-server).
 
-    To change an existing server to same-zone high availability:
+    To change an existing server to locally redundant high availability:
     1. [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability), if it's enabled.
-    1. Enable same-zone high availability. You must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli).
+    1. Enable locally redundant high availability. You must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli).
 
 - **Disable high availability:** Disabling high availability removes the standby relica server, so your server isn't resilient to outages in its availability zone. For more information, see [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability).
 
