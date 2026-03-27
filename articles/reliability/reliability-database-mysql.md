@@ -43,8 +43,6 @@ For more information about the general service architecture and deployment model
 
     The architecture separates the compute layer from the storage layer, allowing the service to handle different types of failures appropriately. For higher resiliency, you can spread the servers across availability zones.
 
-    :::image type="content" source="./media/reliability-database-mysql/high-availability.png" alt-text="Diagram showing the high availability architecture, with a primary and standby replica server." border="false" :::
-
     A standby replica server is deployed in the same VM configuration as the primary server, including vCores, storage, and network settings.
 
     You can switch between servers by performing a *failover*. There are two types of failover: *unplanned failovers*, which are used when the primary server fails, and *planned failovers*, which are used in other scenarios where you need to minimize application downtime during a failover.
