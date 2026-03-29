@@ -62,8 +62,8 @@
     },
     {
       "source_path_from_root": "/articles/reliability/reliability-postgresql-flexible-server.md",
-      "redirect_url": "/azure/reliability/reliability-azure-database-postgresql",
-      "redirect_document_id": true
+      "redirect_url": "/azure/reliability/reliability-database-postgresql",
+      "redirect_document_id": false
     },
     {
       "source_path_from_root": "/articles/reliability/reliability-azure-database-postgresql.md",
