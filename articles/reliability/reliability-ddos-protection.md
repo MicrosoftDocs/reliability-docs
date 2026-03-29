@@ -6,7 +6,7 @@ ms.author: abell
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-ddos-protection
-ms.date: 03/09/2026
+ms.date: 03/30/2026
 ---
 
 # Reliability in Azure DDoS Protection
@@ -41,7 +41,7 @@ Enabling DDoS protection doesn't change the way your applications handle transie
 
 Azure DDoS Protection is zone-redundant by default in regions that support availability zones. The service spans all availability zones automatically and requires no customer configuration to enable zone redundancy. Microsoft manages the distribution of DDoS Protection infrastructure across zones.
 
-Azure DDoS Protection is designed to protect public IP addresses from DDoS attacks. To achieve full resilience to availability zone failures, you must also ensure that your public IP addresses are zone-redundant.
+Azure DDoS Protection is designed to protect public IP addresses from DDoS attacks. To achieve full resilience to availability zone failures, you must also ensure that your public IP addresses are zone-redundant. You should also review the zone resilience of your entire workload, including other Azure services that you use.
 
 The following diagram shows a zone-redundant DDoS Network Protection plan and multiple protected zone-redundant public IP addresses:
 
@@ -79,7 +79,9 @@ This section describes what to expect when you deploy a DDoS Protection plan in 
 
 - **Expected data loss:** No data loss is expected because the service is stateless and doesn't store customer data.
 
-- **Expected downtime:** No downtime is expected to the DDoS Protection plan, and it continues operating using the remaining healthy zones.
+- **Expected downtime:** During a zone failure, the availability of your *data path* isn't affected. The data path represents the traffic path from the Azure edge, through the Azure platform, to your application. Your application remains protected by your DDoS Protection plan throughout a zone outage.
+
+  However, if you perform management operations on your DDoS Protection plan during a zone failure, these operations might be delayed until the platform internally performs a failover.
 
 - **Redistribution:** Microsoft automatically reroutes traffic protection through the healthy zones.
 
