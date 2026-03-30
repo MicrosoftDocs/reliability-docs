@@ -136,7 +136,9 @@ Zonal LRS disks reside in a specific availability zone and attach only to VMs in
 
 ![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
 
-When you have a set of VMs that act together, such as a cluster or set of web servers, you can manually implement zone resiliency by deploying multiple VMs and disks and spreading them across multiple zones. For more information on this approach, see [Distribute VMs and disks across availability zones](/azure/virtual-machines/disks-high-availability#distribute-vms-and-disks-across-availability-zones).
+For multi-VM workloads, you can achieve zone resiliency by deploying multiple VMs and their zonal LRS disks across different availability zones. This approach is the most common way to achieve high availability for workloads like web servers, application tiers, and database clusters. You place a load balancer in front of your VMs to distribute traffic. If a zone fails, the load balancer routes traffic to the VMs in healthy zones, and your workload continues to operate.
+
+This multi-zone distribution pattern works with all disk types, including Premium SSD v2 and Ultra Disks, which only support LRS. For more information on this approach, see [Distribute VMs and disks across availability zones](/azure/virtual-machines/disks-high-availability#distribute-vms-and-disks-across-availability-zones).
 
 #### Requirements
 
@@ -164,21 +166,33 @@ This section describes what to expect when a managed disk is configured to use z
 
 - **Cross-zone operation:** Traffic between a zonal VM and a zonal LRS disk in the same zone remains within the availability zone.
 
+    When you deploy multiple VMs across zones with a load balancer, the load balancer distributes incoming requests to VMs in all zones. Each VM reads and writes to its own zonal disk.
+
 - **Cross-zone data replication:** All write operations to zonal LRS disks are replicated synchronously within the availability zone.
+
+    When you deploy multiple VMs across zones, if your workload requires data consistency across VMs, you're responsible for synchronizing data, such as by using database replication or application-layer replication.
 
 #### Behavior during a zone failure
 
 This section describes what to expect when a managed disk is configured to use zonal LRS, and there's an availability zone outage.
 
- - **Detection and response:** You're responsible for detecting a zone outage, and for triggering a failover or another response. For example, you might switch your application traffic to use a different VM in a different availability zone, which has its own zonal LRS disk in its zone.
+ - **Detection and response:** When you have VMs distributed across multiple zones with a load balancer, the load balancer can detect when VMs in a zone become unhealthy and automatically stops sending traffic to those VMs. Your workload continues to run on the VMs and zonal LRS disks in healthy zones.
+
+    If you have a single VM with a zonal LRS disk, you're responsible for detecting a zone outage and triggering a failover or another response.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Expected data loss:** A zonal LRS disk is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers.
+- **Expected data loss:** A zonal LRS disk in the failed zone is unavailable until the availability zone recovers. In most scenarios, LRS replication means that your disk retains its data and the data can be recovered after the zone recovers.
 
-- **Expected downtime:** A zonal LRS disk is unavailable until the availability zone recovers.
+    When you have VMs distributed across zones, any data that was only on the disks in the failed zone is temporarily unavailable. If your application synchronizes data across VMs, the VMs in healthy zones continue to serve requests using their own data.
 
-    If you have another VM in a different availability zone that can run your workload, you're responsible for switching to that VM, or for pre-configuring load balancers or other systems to automatically switch to it.
+- **Expected downtime:** A single zonal LRS disk is unavailable until the availability zone recovers.
+
+    When you have VMs and disks distributed across zones with a load balancer, your workload continues to operate on the VMs in healthy zones.
+
+- **Redistribution:** When you have VMs distributed across zones with a load balancer, the load balancer automatically redistributes traffic to VMs in healthy zones. You don't need to take any action to reroute traffic.
+
+    If you have a single VM with a zonal LRS disk, you're responsible for rerouting traffic to another VM if you have one available.
 
 #### Zone recovery
 
