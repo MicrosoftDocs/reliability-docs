@@ -8,6 +8,7 @@ ms.custom: subject-reliability
 ms.service: azure-virtual-machines
 ms.subservice: image-builder
 ms.date: 08/22/2023
+ms.update-cycle: 1095-days
 ---
 
 # Reliability in Azure Image Builder (AIB)
