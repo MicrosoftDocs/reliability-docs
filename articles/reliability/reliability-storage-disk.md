@@ -136,7 +136,9 @@ Zonal LRS disks reside in a specific availability zone and attach only to VMs in
 
 ![Diagram that shows a zonal LRS disk, with all of its replicas in a single availability zone.](./media/reliability-storage-disk/zonal.svg)
 
-For multi-VM workloads, you can achieve zone resiliency by deploying multiple VMs and their zonal LRS disks across different availability zones. This approach is the most common way to achieve high availability for workloads like web servers, application tiers, and database clusters. You place a load balancer in front of your VMs to distribute traffic. If a zone fails, the load balancer routes traffic to the VMs in healthy zones, and your workload continues to operate.
+For multi-VM workloads, you can achieve zone resiliency by deploying multiple VMs and their zonal LRS disks across different availability zones. This approach is the most common way to achieve high availability for workloads like web servers, application tiers, and database clusters. You place a load balancer in front of your VMs to distribute traffic. If a zone fails, the load balancer routes traffic to the VMs in healthy zones, and your workload continues to operate:
+
+![Diagram that shows three VMs in different zones, each with their own zonal LRS disk, and a zone-redundant load balancer that distributes traffic among the VMs.](./media/reliability-storage-disk/multiple-zonal-vm-disks.png)
 
 This multi-zone distribution pattern works with all disk types, including Premium SSD v2 and Ultra Disks, which only support LRS. For more information on this approach, see [Distribute VMs and disks across availability zones](/azure/virtual-machines/disks-high-availability#distribute-vms-and-disks-across-availability-zones).
 
