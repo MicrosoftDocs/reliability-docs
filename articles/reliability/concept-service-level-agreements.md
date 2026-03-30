@@ -19,12 +19,12 @@ A service-level agreement (SLA) is one of the most commonly referenced documents
 
 This article explains how to interpret SLAs methodically so that you can use them as engineering inputs when you design resilient workloads. This article describes how to:
 
-- Explain what an SLA actually guarantees. 
-- Identify how technology service providers typically define and measure availability. 
-- Recognize conditions and exclusions that affect coverage. 
+- Explain what an SLA actually guarantees.
+- Identify how technology service providers typically define and measure availability.
+- Recognize conditions and exclusions that affect coverage.
 - Use SLAs to inform architectural decisions rather than as substitutes for resilience.
 
-Most SLAs define commitments around uptime or availability, but service providers can also define SLAs around other requirements, such as performance, recovery time, or data durability. 
+Most SLAs define commitments around uptime or availability, but service providers can also define SLAs around other requirements, such as performance, recovery time, or data durability.
 
 > [!IMPORTANT]
 > This article explains how to *interpret* SLAs. It doesn't provide legal advice or guidance about how to dispute service providers or claim service credits. It isn't specific to Microsoft SLAs. The examples and principles apply broadly to help you read any service provider's SLA critically.
