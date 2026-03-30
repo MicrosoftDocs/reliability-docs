@@ -65,7 +65,7 @@ If you don't configure availability zone support, your disk is *nonzonal* or *re
 
 Zone-redundant storage (ZRS) synchronously replicates your data across three availability zones within a region. When you enable zone redundancy for a managed disk, Azure ensures that a failure in any single zone doesn’t affect data availability.
 
-![Diagram of a zone-redundant disk](./media/reliability-storage-disk/zone-redundant.png)
+![Diagram of a zone-redundant disk, with its replicas spread across three availability zones in the region.](./media/reliability-storage-disk/zone-redundant.svg)
 
 ZRS disks can be [shared between VMs](/azure/virtual-machines/disks-shared) to improve availability for clustered or distributed applications such as SQL FCI, SAP ASCS/SCS, or GFS2. You can attach a shared ZRS disk to primary and secondary VMs in different zones, taking advantage of both ZRS disks and VMs distributed across multiple availability zones. If the primary zone fails, you can quickly fail over to the secondary VM using [SCSI persistent reservation](/azure/virtual-machines/disks-shared-enable#supported-scsi-pr-commands).
 
@@ -134,7 +134,7 @@ Azure automatically detects when the previously failed zone is healthy and resto
 
 Zonal LRS disks reside in a specific availability zone and attach only to VMs in that zone. All of the copies of the disk's data are in the same zone. A single zonal LRS disk and virtual machine don't provide zone resiliency. If the zone containing the disk experiences an outage, the disk may become unavailable.
 
-![Diagram of a zonal disk](./media/reliability-storage-disk/zonal.png)
+![Diagram that shows a zonal LRS disk, with all of its replicas in a single availability zone.](./media/reliability-storage-disk/zonal.svg)
 
 For multi-VM workloads, you can achieve zone resiliency by deploying multiple VMs and their zonal LRS disks across different availability zones. This approach is the most common way to achieve high availability for workloads like web servers, application tiers, and database clusters. You place a load balancer in front of your VMs to distribute traffic. If a zone fails, the load balancer routes traffic to the VMs in healthy zones, and your workload continues to operate.
 
