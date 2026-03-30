@@ -344,7 +344,7 @@ items:
     href: concept-failover-failback.md
   - name: Shared responsibility for reliability
     href: concept-shared-responsibility.md
-  - name: How to read a Service Level Agreement (SLA)
+  - name: How to read a service-level agreement (SLA)
     href: concept-service-level-agreements.md
 - name: Resources
   items:
