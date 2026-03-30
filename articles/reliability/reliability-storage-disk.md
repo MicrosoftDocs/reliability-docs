@@ -35,7 +35,7 @@ Each virtual machine (VM) uses disks for different purposes:
 
 This guide specifically focuses on managed disks, which reliably persist data. To learn more about the different disk roles, see [Disk roles](/azure/virtual-machines/managed-disks-overview#disk-roles).
 
-Managed disks are designed for 99.999% availability and provide at least 99.999999999% (11 9’s) of durability. With managed disks, your data is replicated three times. If one of the three copies becomes unavailable, Azure automatically spawns a new copy of the data in the background. This ensures the persistence of your data and high fault tolerance.
+Managed disks are designed for 99.999% VM availability and provide at least 99.999999999% (11 9’s) of durability. With managed disks, your data is replicated three times. If one of the three copies becomes unavailable, Azure automatically spawns a new copy of the data in the background. This ensures the persistence of your data and high fault tolerance.
 
 By default, managed disks use [locally redundant storage (LRS)](/azure/storage/common/storage-redundancy#locally-redundant-storage). LRS keeps three copies of your disk data within a single datacenter, protecting against hardware failures such as drive or server rack issues.
 
@@ -69,7 +69,7 @@ Zone-redundant storage (ZRS) synchronously replicates your data across three ava
 
 ZRS disks can be [shared between VMs](/azure/virtual-machines/disks-shared) to improve availability for clustered or distributed applications such as SQL FCI, SAP ASCS/SCS, or GFS2. You can attach a shared ZRS disk to primary and secondary VMs in different zones, taking advantage of both ZRS disks and VMs distributed across multiple availability zones. If the primary zone fails, you can quickly fail over to the secondary VM using [SCSI persistent reservation](/azure/virtual-machines/disks-shared-enable#supported-scsi-pr-commands).
 
-If a ZRS disk is attached to a single VM in a zone that goes down, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks#diskdetachoptiontypes) your ZRS disks from the failed VM and attach them to another VM.
+If a ZRS disk is attached as a data disk to a single VM in a zone that goes down, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks#diskdetachoptiontypes) the disk from the failed VM and attach it to another VM.
 
 #### Requirements
 
@@ -116,7 +116,7 @@ This section describes what to expect when a managed disk is configured to use Z
     - *Disks that aren't shared:* You can *force detach* the disk from the failed VM and then attach it a VM in a healthy zone. To perform a force detach:
 
         - Azure CLI: Use the [az vm disk detach command](/cli/azure/vm/disk#az-vm-disk-detach) with the `--force-detach` argument.
-        - Azure PowerShell: Use the [Remove-AzVMDataRisk cmdlet](/powershell/module/az.compute/remove-azvmdatadisk) with the `-ForceDetach` argument.
+        - Azure PowerShell: Use the [Remove-AzVMDataDisk cmdlet](/powershell/module/az.compute/remove-azvmdatadisk) with the `-ForceDetach` argument.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
