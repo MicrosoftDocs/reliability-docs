@@ -24,7 +24,7 @@ This article explains how to interpret SLAs methodically so that you can use the
 - Recognize conditions and exclusions that affect coverage. 
 - Use SLAs to inform architectural decisions, not to replace the resilience that you design.
 
-Most SLAs define commitments around uptime or availability, but service providers can also define SLAs around other requirements, such as performance, recovery time, or data durability. 
+Most SLAs define commitments around uptime or availability, but service providers can also define SLAs around other requirements, such as performance, recovery time, or data durability.
 
 > [!IMPORTANT]
 > This article explains how to *interpret* SLAs. It doesn't provide legal advice or guidance about how to dispute service providers or claim service credits. It isn't specific to Microsoft SLAs. The examples and principles apply broadly to help you read any service provider's SLA critically.
@@ -45,7 +45,7 @@ For more information about how to define SLOs and reliability targets, see [Reco
 
 SLAs are engineering signals, not strict availability guarantees. They describe the conditions under which a service provider commits to a defined level of service. They also describe the financial consequences if the service provider doesn't meet those commitments. SLAs don't guarantee that your application is reliable, that your users avoid downtime, or that the service provider prevents all failures.
 
-Assumptions about SLAs lead to poor architectural decisions. Architects sometimes treat an SLA's uptime percentage as a direct indicator of service reliability. This approach often overlooks critical details, including what qualifies as downtime, what conditions must be met, and what scenarios are excluded. The resulting workload design might not tolerate the failure modes that the SLA implies.
+Assumptions about SLAs lead to poor architectural decisions. Architects sometimes treat an SLA's uptime percentage as a direct indicator of service reliability. This approach often overlooks critical details, including how downtime is defined, which conditions must be met, and which scenarios are excluded. The resulting workload design might not tolerate the failure modes that the SLA implies.
 
 A careful review of SLAs uncovers important signals for designing resilient systems:
 
@@ -63,7 +63,7 @@ An SLA is a set of conditional commitments. It states that *if* a customer meets
 
 SLAs apply only when you meet specific preconditions, such as configuration requirements, deployment topologies, or operational behaviors. The SLA specifies exactly what counts as a failure. If a problem doesn't meet the documented definition of downtime, the SLA doesn't cover it.
 
-Don't create a *composite SLA* that multiplies SLA percentages together to estimate the availability of a system that has multiple dependencies. This calculation can provide an approximate maximum limit, but it's unreliable in practice. It assumes that all services fail independently, which rarely happens. It also ignores the unique definitions, conditions, and exclusions in each SLA. Composite calculations create false confidence and can't replace proper SLO definition and failure mode analysis for your workload. For more information, see [Recommendations for defining reliability targets](/azure/well-architected/reliability/metrics).
+Don't create a *composite SLA* that multiplies SLA percentages together to estimate the availability of a system that has multiple dependencies. This calculation can provide an approximate maximum limit, but it's unreliable in practice. It assumes that all services fail independently, which rarely happens. It also ignores the unique definitions, conditions, and exclusions in each SLA. Composite calculations often make a system seem more reliable than it is, and they don't replace proper SLO definition or failure mode analysis (FMA) for your workload. For more information, see [Recommendations for defining reliability targets](/azure/well-architected/reliability/metrics).
 
 ## A practical model for reading SLAs
 
@@ -77,7 +77,7 @@ Start with the definitions section. The definitions control how the SLA measures
 
 - **Key terms:** Terms like *valid request*, *downtime*, and *billable minutes* define what the service provider commits to. If an operation doesn't qualify as a valid request under the SLA, it doesn't affect the availability calculation.
 
-    Identify what operations the SLA covers, what components it explicitly or implicitly excludes, and whether it applies per service instance or across a pool of instances.
+    Identify which operations the SLA covers, which components it explicitly or implicitly excludes, and whether it applies to each service instance or across a pool of instances.
 
 > [!TIP]
 > A 99.9% SLA doesn't guarantee that the service always remains available. It also doesn't mean that you should expect only 8.7 hours of downtime per year. The SLA's definition of downtime determines what gets measured. Narrow definitions mean that the service can experience problems that affect your users without violating the SLA.
@@ -90,10 +90,10 @@ Understand how the SLA calculates availability:
 
 - **Retries and aggregation:** Some SLAs require you to retry failed requests for a specified period before they count as failures. Other SLAs aggregate availability over an entire billing period, so brief outages might not reduce the calculated availability enough to trigger a credit.
 
-- **Aggregation scope:** Determine whether the SLA measures availability per individual service instance or across all instances in a scope, such as an account or subscription. When the SLA calculates availability across multiple instances, healthy instances can offset failed instances, which produces a higher reported availability than any single instance actually experienced.
+- **Aggregation scope:** Determine whether the SLA measures availability per individual service instance or across all instances in a scope, such as an account or subscription. When the SLA calculates availability across multiple instances, healthy instances can offset failed instances. This calculation produces a higher reported availability than any single instance actually experienced.
 
 > [!TIP]
-> SLAs usually measure uptime over a billing period, not in real time. A service can have an outage that lasts several minutes and still meet its SLA for the month.
+> SLAs usually measure uptime over a billing period, not in real time. A service can experience an outage that lasts several minutes and still meet its SLA for the month.
 
 ### Pass 3: Prerequisites, variations, and exclusions
 
@@ -114,7 +114,7 @@ Identify the conditions that the SLA requires:
 
 To use the service most effectively, consider what the SLA reveals about how the service behaves and how you should design your solution around it:
 
-- **Expected failure modes:** The SLA's definitions and conditions reveal which failures the service provider considers normal and expected. Your architecture must tolerate these failures.
+- **Expected failure modes:** The SLA's definitions and conditions indicate which failure types the service provider treats as normal and expected. Your architecture must tolerate these failures.
 
 - **Service provider priorities:** How the service provider defines availability, measures it, and excludes certain scenarios reveals its core commitment and what it considers your responsibility.
 
@@ -128,11 +128,11 @@ The SLA defines service credits as the compensation for downtime, but service pr
 
 Before an incident occurs, identify what data you need to collect to substantiate a claim. Review the SLA's definitions and measurement method to determine:
 
-- **Which metrics map to the SLA:** If the SLA measures request success rate, monitor HTTP response codes for the covered endpoints. If it measures uptime in minutes, monitor service availability at regular intervals.
+- **Which metrics map to the SLA:** If the SLA measures request success rate, monitor HTTP response codes for the endpoints that the SLA covers. If it measures uptime in minutes, monitor service availability at regular intervals.
 
 - **Which instances are in scope:** SLAs often apply to specific tiers, versions, or deployment configurations. Monitor only the instances that qualify for SLA coverage.
 
-- **What the provider considers a failure:** Some SLAs define downtime narrowly. For example, the SLA might require all requests to fail for one or more consecutive minutes, or it might require a documented outage on a public list. If necessary, configure your monitoring to capture the specific failure conditions that the SLA defines.
+- **What the provider considers a failure:** Some SLAs define downtime narrowly. For example, the SLA might require all requests to fail for one or more consecutive minutes, or it might require a documented outage on a public list. If necessary, set up your monitoring to capture the specific failure conditions that the SLA defines.
 
 #### Step 2: Keep records during and after an incident
 
@@ -198,7 +198,7 @@ The PPaaS SLA includes the following definitions:
     \text{Monthly uptime percentage} = \frac{\text{Total billable minutes} - \text{Downtime}}{\text{Total billable minutes}} \times 100
     $$
 
-The PPaaS SLA includes the following service credits:
+The PPaaS SLA includes the following service credits.
 
 | Tier | Monthly uptime percentage | Service credit |
 | --- | --- | --- |
