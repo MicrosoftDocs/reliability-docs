@@ -7,6 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machines
 ms.date: 09/10/2025
+ms.update-cycle: 1095-days
 #Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Virtual Machines works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
 ---
 
