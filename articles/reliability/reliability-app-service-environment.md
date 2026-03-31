@@ -62,6 +62,8 @@ However, you can enable or disable zone redundancy on each plan. This means that
 
 When you create a zone-redundant App Service plan in your environment, the instances of your App Service plan are distributed across the availability zones in the region. For more information, see [Instance distribution across zones](../reliability/reliability-app-service.md#instance-distribution-across-zones).
 
+:::image type="content" source="media/reliability-app-service-environment/zone-redundant.png" alt-text="Diagram of a zone-redundant App Service Environment and plan, with two instances deployed across two different zones." border="false":::
+
 If your App Service Environment and plans aren't configured as zone redundant, they're considered *nonzonal*, and the underlying virtual machine (VM) instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
 
 ### Requirements
