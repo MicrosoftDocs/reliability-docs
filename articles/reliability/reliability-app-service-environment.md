@@ -62,6 +62,8 @@ However, you can enable or disable zone redundancy on each plan. This means that
 
 When you create a zone-redundant App Service plan in your environment, the instances of your App Service plan are distributed across the availability zones in the region. For more information, see [Instance distribution across zones](../reliability/reliability-app-service.md#instance-distribution-across-zones).
 
+If your App Service Environment and plans aren't configured as zone redundant, they're considered *nonzonal*, and the underlying virtual machine (VM) instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
+
 ### Requirements
 
 To enable zone redundancy for your App Service Environment, you must meet the following requirements:
@@ -84,14 +86,9 @@ To enable zone redundancy for your App Service Environment, you must meet the fo
 
 ### Considerations
 
-An availability zone outage might affect some aspects of App Service, even though the application continues to serve traffic. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
+- **Nonruntime behaviors:** An availability zone outage might affect some aspects of App Service, even though the application continues to serve traffic. These behaviors include App Service plan scaling, application creation, application configuration, and application publishing.
 
-When you enable zone redundancy on your App Service plan, you also improve resiliency during platform updates. For more information, see [Resilience to service maintenance](#resilience-to-service-maintenance).
-
-> [!NOTE]
-> The number of availability zones varies by scale unit, but is always at least two. Azure adjusts internal infrastructure to maintain equivalent reliability regardless of the number of zones. A zone-redundant App Service Environment provides the same SLA regardless of how many zones it uses.
-
-For App Service plans that aren't zone redundant, the underlying VM instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
+- **Platform updates:** When you enable zone redundancy on your App Service plan, you also improve resiliency during platform updates. For more information, see [Resilience to service maintenance](#resilience-to-service-maintenance).
 
 ### Cost
 
