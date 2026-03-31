@@ -88,6 +88,9 @@ An availability zone outage might affect some aspects of App Service, even thoug
 
 When you enable zone redundancy on your App Service plan, you also improve resiliency during platform updates. For more information, see [Resilience to service maintenance](#resilience-to-service-maintenance).
 
+> [!NOTE]
+> The number of availability zones varies by scale unit, but is always at least two. Azure adjusts internal infrastructure to maintain equivalent reliability regardless of the number of zones. A zone-redundant App Service Environment provides the same SLA regardless of how many zones it uses.
+
 For App Service plans that aren't zone redundant, the underlying VM instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
 
 ### Cost
