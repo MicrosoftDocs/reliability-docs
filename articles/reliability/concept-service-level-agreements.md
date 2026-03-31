@@ -22,7 +22,7 @@ This article explains how to interpret SLAs methodically so that you can use the
 - Explain what an SLA actually guarantees. 
 - Identify how technology service providers typically define and measure availability. 
 - Recognize conditions and exclusions that affect coverage. 
-- Use SLAs to inform architectural decisions rather than as substitutes for resilience.
+- Use SLAs to inform architectural decisions, not to replace the resilience that you design.
 
 Most SLAs define commitments around uptime or availability, but service providers can also define SLAs around other requirements, such as performance, recovery time, or data durability. 
 
@@ -37,7 +37,7 @@ Before you read an SLA, understand where it fits alongside other reliability con
 
 - A **service-level objective (SLO)** is an internal reliability target that you set for your own workload.
 
-An SLA describes the *minimum* guarantee that the service provider commits to. An SLO reflects the reliability that your *users* actually need. Use SLAs to inform your SLO but rarely mirror SLAs directly. Account for your own code, dependencies, operational processes, and users' tolerance for downtime. Sometimes, you need stricter SLOs than your service providers' SLAs combined. Other times, your workload can tolerate problems that exceed what your service provider financially commits to.
+An SLA describes the *minimum* guarantee that the service provider commits to. An SLO reflects the reliability that your *users* actually need. Use SLAs to inform your SLO but don't simply adopt an SLA's percentage as your workload's reliability target. Account for your own code, dependencies, operational processes, and users' tolerance for downtime. Sometimes, you need stricter SLOs than your service providers' SLAs combined. Other times, your workload can tolerate problems that exceed what your service provider financially commits to.
 
 For more information about how to define SLOs and reliability targets, see [Recommendations for defining reliability targets](/azure/well-architected/reliability/metrics).
 
@@ -122,7 +122,7 @@ To use the service most effectively, consider what the SLA reveals about how the
 
 ### Pass 5: How to claim service credits
 
-The SLA defines service credits as the financial remedy, but service providers don't usually apply them automatically. They don't proactively monitor SLA violations or file claims for you. You must detect outages that breach the SLA, document them, and submit claims within the deadline. Use the following steps to prepare for and do that process.
+The SLA defines service credits as the compensation for downtime, but service providers don't usually apply them automatically. They don't proactively monitor SLA violations or file claims for you. You must detect outages that breach the SLA, document them, and submit claims within the deadline. Use the following steps to prepare for and do that process.
 
 #### Step 1: Know what to monitor
 
@@ -162,11 +162,11 @@ Before you file a claim, calculate whether the incident meets the threshold for 
 
 Most SLAs impose a deadline to submit claims after an incident. If you miss the deadline, you forfeit the credit regardless of the severity of the outage.
 
-- **Find the claim window:** Review the SLA document for the submission deadline. Common timeframes range from 30 to 60 days after the end of the billing month when the incident occurs, but each service provider sets its own deadline.
+1. **Find the claim window:** Review the SLA document for the submission deadline. Common timeframes range from 30 to 60 days after the end of the billing month when the incident occurs, but each service provider sets its own deadline.
 
-- **Submit through the correct channel:** Service providers typically require that you file claims through a support portal or a formal request process. Follow the documented procedure to avoid claim rejection.
+1. **Include supporting evidence:** Attach the records that you collected in Step 2, including timestamps, error logs, retry evidence, and configuration details. Service providers process well-documented claims more quickly.
 
-- **Include supporting evidence:** Attach the records that you collected in Step 2, including timestamps, error logs, retry evidence, and configuration details. Service providers process well-documented claims more quickly.
+1. **Submit through the correct channel:** Service providers typically require that you file claims through a support portal or a formal request process. Follow the documented procedure to avoid claim rejection.
 
 > [!NOTE]
 > Service credits are typically a percentage of the monthly service fee for the affected service. If your monthly spend on a service is modest, a 10% credit might amount to a small sum, regardless of how severe the impact was on your business. **Credits don't cover lost revenue, customer attrition, or reputational damage.**
