@@ -352,9 +352,10 @@ To ensure your server remains available during maintenance windows, follow these
 
 Azure Database for PostgreSQL provides different availability SLAs based on the server's configuration:
 
-- Servers configured with zone-redundant high availability.
-- Servers configured with zonal (single-zone) high availability.
-- Servers configured without high availability.
+- Servers configured with zone-redundant high availability offers uptime SLA of 99.99%.
+- Servers configured with zonal high availability offers uptime SLA of 99.95%.
+- Servers configured without high availability 99.9%.
+
 
 ## Related content
 
