@@ -90,7 +90,7 @@ Understand how the SLA calculates availability:
 
 - **Retries and aggregation:** Some SLAs require you to retry failed requests for a specified period before they count as failures. Other SLAs aggregate availability over an entire billing period, so brief outages might not reduce the calculated availability enough to trigger a credit.
 
-- **Aggregation scope:** Determine whether the SLA measures availability per individual service instance or across all instances in a scope, such as an account or subscription. When the SLA calculates availability across multiple instances, healthy instances can offset failed instances. This calculation produces a higher reported availability than any single instance actually experienced.
+- **Aggregation scope:** Determine whether the SLA measures availability per individual service instance or across all instances in a scope, such as an account or subscription. When the SLA calculates availability across multiple instances, healthy instances can offset failed instances. This calculation might produce a higher reported availability than any single instance actually experienced.
 
 > [!TIP]
 > SLAs usually measure uptime over a billing period, not in real time. A service can experience an outage that lasts several minutes and still meet its SLA for the month.
@@ -186,16 +186,16 @@ PPaaS is intentionally absurd, but the structure of its SLA reflects many real-w
 
 The PPaaS SLA includes the following definitions:
 
-- **Valid request:** A message dispatched through the PPaaS API that conforms to the documented message schema.
+- **Valid Request:** A message dispatched through the PPaaS API that conforms to the documented message schema.
 
-- **Downtime:** A period when all attempts to send a *valid request* to a provisioned PPaaS endpoint either fail with an error response or receive no response.
+- **Downtime:** A period when all attempts to send a *Valid Request* to a provisioned PPaaS endpoint either fail with an error response or receive no response.
 
-- **Total billable minutes:** The total number of minutes in the billing month during which at least one *valid request* submission operation was attempted.
+- **Total Billable Minutes:** The total number of minutes in the billing month during which at least one *Valid Request* submission operation was attempted.
 
-- **Monthly uptime percentage**, calculated as:
+- **Monthly Uptime Percentage**, calculated as:
 
     $$
-    \text{Monthly uptime percentage} = \frac{\text{Total billable minutes} - \text{Downtime}}{\text{Total billable minutes}} \times 100
+    \text{Monthly Uptime Percentage} = \frac{\text{Total Billable Minutes} - \text{Downtime}}{\text{Total Billable Minutes}} \times 100
     $$
 
 The PPaaS SLA includes the following service credits.
@@ -224,11 +224,11 @@ The following passes apply the five-pass approach to the PPaaS SLA. Each step su
 
 Examine what each defined term means:
 
-- **Valid request:** Messages that conform to the documented schema and don't exceed the size limit. You can check the limit in the product documentation. Oversized messages that fail aren't measured against the SLA.
+- **Valid Request:** Messages that conform to the documented schema and don't exceed the size limit. You can check the limit in the product documentation. Oversized messages that fail aren't measured against the SLA.
 
-- **Total billable minutes:** The minutes when you attempt to send a message. If you don't send messages for part of the month, those idle minutes don't factor into the calculation, even if the service has a problem during that time.
+- **Total Billable Minutes:** The minutes when you attempt to send a message. If you don't send messages for part of the month, those idle minutes don't factor into the calculation, even if the service has a problem during that time.
 
-- **Dispatch time:** The time to queue a message, not the flight time, delivery confirmation, or return transit. If your pigeon takes three days to deliver a message, that's outside the SLA's scope.
+- **How availability is defined:** The SLA covers the time to queue a message, not the flight time, delivery confirmation, or return transit. If your pigeon takes three days to deliver a message, that's outside the SLA's scope.
 
 ### Pass 2: Understand how availability is measured
 
@@ -268,6 +268,6 @@ To be ready to substantiate a claim if PPaaS fails to meet its SLA, prepare the 
 
 ## Next steps
 
-- Review the SLAs for the services that you depend on. For Microsoft services, start with the [SLAs for online services](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services). Your workload might also depend on services from other service providers. Apply the same five-pass approach to those SLAs.
+- Review the SLAs for the services that you depend on. For Microsoft services, start with the [SLAs for online services](https://aka.ms/csla). Your workload might also depend on services from other service providers. Apply the same five-pass approach to those SLAs.
 - Compare SLA guarantees with your workload's reliability goals to identify gaps.
 - Learn how to define SLOs that go beyond service provider SLAs. See [Recommendations for defining reliability targets](/azure/well-architected/reliability/metrics).
