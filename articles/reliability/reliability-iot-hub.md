@@ -256,7 +256,7 @@ Depending on where you route your IoT hub's messages, you might need to perform 
 
   - *The Azure portal:* For more information about how to use the portal to retrieve the Event Hubs-compatible endpoint and the Event Hubs-compatible name, see [Connect to the built-in endpoint](/azure/iot-hub/iot-hub-devguide-messages-read-builtin#connect-to-the-built-in-endpoint).
 
-  - *The .NET SDK:* To use the IoT hub connection string to recapture the Event Hubs-compatible endpoint, use the [sample code](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/iothub-connect-to-eventhubs). This code example uses the connection string to get the new Event Hubs endpoint and re-establish the connection. You must have Visual Studio installed.
+  - *The .NET SDK:* To use the IoT hub connection string to recapture the Event Hubs-compatible endpoint, use the [sample code](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/eventhubs/iothub-connect-to-eventhubs). This code example uses the connection string to get the new Event Hubs endpoint and re-establish the connection. You must have Visual Studio installed.
 
 - **Azure Functions and Azure Stream Analytics:** If you use Azure Functions or Stream Analytics to connect to the built-in events endpoint, you must update the Event Hubs endpoint that the function or job connects to, following the same process outlined in the preceding bullet point. Then perform a **Restart** action because any event stream offsets become invalid after failover.
 
