@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure DDoS Protection
 description: Learn how Azure DDoS Protection is resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
-author: AbdullahBell
-ms.author: abell
+author: duongau
+ms.author: duau
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-ddos-protection
-ms.date: 03/30/2026
+ms.date: 04/02/2026
 ---
 
 # Reliability in Azure DDoS Protection
