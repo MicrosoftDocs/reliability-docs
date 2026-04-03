@@ -68,7 +68,7 @@ Azure VMware Solution Gen 1 supports availability zones through *[stretched clus
 A witness node is automatically deployed into a third availability zone to provide quorum for split-brain scenarios. Microsoft manages the witness node automatically.
 
 :::image type="complex" source="./media/reliability-vmware-solution/gen1-availability-zones.png" alt-text="Diagram that shows a managed vSAN stretched cluster created in a third availability zone with data copied to all three zones." border="false" lightbox="./media/reliability-vmware-solution/gen1-availability-zones.png":::
-   At the top of the diagram, a legend indicates that the Microsoft Azure logo represents the Azure platform, a location pin icon labeled dual availability zones in an Azure region represents two availability zones, and a key icon represents a single Azure subscription. The diagram is divided into three main sections. On the left, availability zone one is labeled as the preferred site. On the right, availability zone two is labeled as the secondary site. At the botton, availability zone three is labeled as the witness site. A box that represents Azure VMware Solution private cloud A spans availability zones one and two. Within availability zone one, four components are arranged horizontally: a server rack icon represents Azure bare-metal ESXi hosts, a stacked layers icon represents the VMware vSAN datastore preferred fault domain, a server icon represents the VMware vCenter server, and a network topology icon represents VMware NSX. A stretched-vSAN datastore label spans horizontally across both zones and connects the VMware vSAN datastore preferred fault domain in availability zone one to the VMware vSAN datastore secondary fault domain in availability zone two. The bottom half of availability zone one contains three components arranged horizontally. A circular badge icon represents VMware NSX Edge A. A cloud network icon represents VMware HCX. A monitor icon represents Gold SLA apps. Within availability zone two, two rows of components are arranged horizontally. The top row includes Azure bare-metal ESXi hosts and the VMware vSAN datastore secondary fault domain. The bottom row contains VMware NSX Edge B, Gold SLA apps enclosed in a dashed box, a monitor icon that represents Silver SLA apps, and a monitor icon that represents Bronze SLA apps. A dotted line labeled policy-based synchronous replication connects the Gold SLA apps in availability zone one to the Gold SLA apps box in availability zone two. This line indicates synchronization or replication between these applications across zones. Solid lines connect availability zone one and availability zone two to a box labeled availability zone three - witness site at the bottom of the diagram. Availability zone three contains a VMware vSAN witness appliance.
+   At the top of the diagram, a legend indicates that the Microsoft Azure logo represents the Azure platform, a location pin icon labeled dual availability zones in an Azure region represents two availability zones, and a key icon represents a single Azure subscription. The diagram is divided into three main sections. On the left, availability zone one is labeled as the preferred site. On the right, availability zone two is labeled as the secondary site. At the bottom, availability zone three is labeled as the witness site. A box that represents Azure VMware Solution private cloud A spans availability zones one and two. Within availability zone one, four components are arranged horizontally: a server rack icon represents Azure bare-metal ESXi hosts, a stacked layers icon represents the VMware vSAN datastore preferred fault domain, a server icon represents the VMware vCenter server, and a network topology icon represents VMware NSX. A stretched-vSAN datastore label spans horizontally across both zones and connects the VMware vSAN datastore preferred fault domain in availability zone one to the VMware vSAN datastore secondary fault domain in availability zone two. The bottom half of availability zone one contains three components arranged horizontally. A circular badge icon represents VMware NSX Edge A. A cloud network icon represents VMware HCX. A monitor icon represents Gold SLA apps. Within availability zone two, two rows of components are arranged horizontally. The top row includes Azure bare-metal ESXi hosts and the VMware vSAN datastore secondary fault domain. The bottom row contains VMware NSX Edge B, Gold SLA apps enclosed in a dashed box, a monitor icon that represents Silver SLA apps, and a monitor icon that represents Bronze SLA apps. A dotted line labeled policy-based synchronous replication connects the Gold SLA apps in availability zone one to the Gold SLA apps box in availability zone two. This line indicates synchronization or replication between these applications across zones. Solid lines connect availability zone one and availability zone two to a box labeled availability zone three - witness site at the bottom of the diagram. Availability zone three contains a VMware vSAN witness appliance.
 :::image-end:::
 
 A *standard cluster* is a cluster that isn't stretched across zones. In a standard cluster, the cluster and all of its ESXi hosts are considered *nonzonal* or *regional*. Nonzonal clusters might be placed in any availability zone within the region, and Microsoft selects the zone. If an availability zone in the region experiences an outage, nonzonal clusters and hosts in the affected zone might experience downtime.
@@ -143,7 +143,7 @@ This section describes what to expect when your cluster is stretched and all ava
 
 - **Cross-region operation:** VMs can run on hosts in either availability zone. You can control VM placement by using vSphere Distributed Resource Scheduler (DRS) affinity and anti-affinity rules to optimize for performance or availability requirements.
 
-- **Cross-region data replication:** vSAN replicates data synchronously across availability zones. Both zones confirm each write operation efore completion to ensure consistent data integrity.
+- **Cross-region data replication:** vSAN replicates data synchronously across availability zones. Both zones confirm each write operation before completion to ensure consistent data integrity.
 
 ::: zone-end
 
@@ -183,7 +183,7 @@ This section describes what to expect when your cluster is stretched and an avai
 
 This section describes what to expect when your cluster is deployed in a zonal private cloud, and an availability zone outage occurs.
 
-- **Detection and response:** You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary cluster that you precreated in another availability zone.
+- **Detection and response:** You need to detect the loss of an availability zone. If necessary, you can initiate a failover to a secondary cluster that you create earlier in another availability zone.
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
@@ -193,7 +193,7 @@ This section describes what to expect when your cluster is deployed in a zonal p
 
 - **Expected data loss:** Data in the affected zone is unavailable until the zone recovers.
 
-- **Redistribution:** You're responsible for switching traffic to other clusters in healthy zones, if required.
+- **Redistribution:** You're responsible for switching traffic to other clusters in healthy zones, if necessary.
 
 ::: zone-end
 
@@ -223,7 +223,7 @@ Because Azure VMware Solution manages the infrastructure response to zone failur
 
 :::zone pivot="avs-gen2"
 
-You're responsible for any infrastructure response to zone failures, such as failover to another cluster in a different zone or region. Ensure you test your response processes thoroughly.
+You're responsible for any infrastructure response to zone failures, such as failover to another cluster in a different zone or region. Ensure that you thoroughly test your response processes.
 
 ::: zone-end
 
@@ -235,9 +235,9 @@ However, you can also design custom multi-region solutions that combine differen
 
 ### Custom multi-region solutions for resiliency
 
-To achieve multi-region resilience with Azure VMware Solution, you need to deploy separate private clouds in multiple regions and implement failover and other disaster recovery solutions.
+To achieve multi-region resilience with Azure VMware Solution, you need to deploy separate private clouds in multiple regions and implement failover and other disaster recovery (DR) solutions.
 
-There are a range of options that support different requirements. For more information, see [Non-Microsoft backup and disaster recovery solutions for Azure VMware Solution](/azure/azure-vmware/ecosystem-disaster-recovery-vms).
+There are a range of options that support different requirements. For more information, see [Non-Microsoft backup and DR solutions for Azure VMware Solution](/azure/azure-vmware/ecosystem-disaster-recovery-vms).
 
 ## Backup and restore
 
@@ -251,7 +251,7 @@ Azure does automatic platform maintenance to apply security updates, deploy new 
 
 To learn about the effect that maintenance can have on the components of Azure VMware Solution, and to understand the components that you're responsible for maintaining and the components that Microsoft maintains, see [Azure VMware Solution private cloud maintenance](/azure/azure-vmware/azure-vmware-solution-private-cloud-maintenance).
 
-You can set up the maintenance windows for your cluster to reduce the likelihood that maintenance affects your production workloads. For more information, see [Plan self-service maintenance for Azure VMware Solution (public preview)](/azure/azure-vmware/self-service-maintenance-orchestration).
+You can set up the maintenance windows for your cluster to reduce the likelihood that maintenance affects your production workloads. For more information, see [Plan self-service maintenance for Azure VMware Solution](/azure/azure-vmware/self-service-maintenance-orchestration).
 
 ## Service-level agreement
 
@@ -261,17 +261,17 @@ Azure VMware Solution provides different availability SLAs for workload infrastr
 
 :::zone pivot="avs-gen1"
 
-Clusters configured as stretched clusters have a higher workload infrastructure availability SLA.
+Clusters that you configure as stretched clusters have a higher workload infrastructure availability SLA.
 
 ::: zone-end
 
-However, in order to qualify for the availability SLAs, you must set up your cluster in specific ways. Refer to the SLA text for detailed information.
+However, to qualify for the availability SLAs, you must set up your cluster in specific ways. For more information, see the SLA text.
 
 ## Related content
 
 - [Reliability in Azure](./overview.md)
-- [What is Azure VMware Solution?](/azure/azure-vmware/introduction)
+- [Overview of Azure VMware Solution](/azure/azure-vmware/introduction)
 - [Deploy vSAN stretched clusters](/azure/azure-vmware/deploy-vsan-stretched-clusters)
-- [Deploy disaster recovery by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)
-- [Business continuity and disaster recovery for Azure VMware Solution](/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-business-continuity-and-disaster-recovery)
+- [Deploy DR by using VMware HCX](/azure/azure-vmware/deploy-disaster-recovery-using-vmware-hcx)
+- [Business continuity and disaster recovery (BCDR) for Azure VMware Solution](/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-business-continuity-and-disaster-recovery)
 - [Azure VMware Solution workloads](/azure/well-architected/azure-vmware/overview)
