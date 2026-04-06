@@ -222,6 +222,8 @@ items:
       href: reliability-storage-blob.md
     - name: Azure Data Box
       href: /azure/databox/data-box-disk-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-can-i-recover-my-data-if-an-entire-region-fails-
+    - name: Azure Disk Storage
+      href: reliability-storage-disk.md
     - name: Azure Elastic SAN
       href: reliability-elastic-san.md
     - name: Azure Files
@@ -232,8 +234,6 @@ items:
       href: reliability-storage-queue.md
     - name: Azure Storage Actions
       href: reliability-storage-actions.md
-    - name: Azure Storage-Disk Storage
-      href: /azure/virtual-machines/disks-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Storage Mover
       href: reliability-azure-storage-mover.md
     - name: Azure Table Storage

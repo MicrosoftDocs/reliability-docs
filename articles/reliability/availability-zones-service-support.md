@@ -53,7 +53,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure DDoS Protection](./reliability-ddos-protection.md) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Dedicated Host](/azure/virtual-machines/dedicated-hosts#high-availability-considerations) | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Disk Encryption](/azure/virtual-machines/disks-redundancy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Disk Storage](/azure/virtual-machines/disks-redundancy) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| [Azure Disk Storage](./reliability-storage-disk.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure DNS Private Resolver](/azure/dns/dns-private-resolver-get-started-portal) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure DNS private zones](/azure/dns/private-dns-getstarted-portal) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Event Grid](reliability-event-grid.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
