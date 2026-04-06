@@ -179,7 +179,7 @@ items:
     - name: Azure DNS 
       href: reliability-dns.md
     - name: Azure DDoS Protection
-      href: reliability-ddos.md
+      href: reliability-ddos-protection.md
     - name: Azure ExpressRoute gateway
       href: reliability-virtual-network-gateway.md?pivots=expressroute
     - name: Azure Firewall
@@ -344,6 +344,8 @@ items:
     href: concept-failover-failback.md
   - name: Shared responsibility for reliability
     href: concept-shared-responsibility.md
+  - name: How to read a service-level agreement (SLA)
+    href: concept-service-level-agreements.md
 - name: Resources
   items:
   - name: Azure service incident response
