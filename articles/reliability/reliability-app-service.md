@@ -46,7 +46,7 @@ When you create an App Service web app, you specify the [App Service plan](/azur
 
 For **Premium v2 to v4 tiers**, you can configure App Service as *zone redundant*, which means that your resources are distributed across multiple availability zones. Distribution across multiple zones helps your production workloads achieve resiliency and reliability. When you configure zone redundancy on App Service plans, all apps that use the plan become zone redundant.
 
-:::image type="content" source="media/reliability-app-service/zone-redundant.png" alt-text="Diagram of a zone-redundant App Service plan, with two instances deployed across two different zones." border="false":::
+:::image type="content" source="media/reliability-app-service/zone-redundant.svg" alt-text="Diagram of a zone-redundant App Service plan, with two instances deployed across two different zones." border="false":::
 
 If your App Service plan isn't configured as zone redundant, it's considered *nonzonal*, and the underlying virtual machine (VM) instances aren't resilient to availability zone failures. They can experience downtime during an outage in any zone in that region.
 
