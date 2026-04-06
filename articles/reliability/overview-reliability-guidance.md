@@ -68,10 +68,11 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Database for MySQL Flexible Server||[High availability concepts in Azure Database for MySQL Flexible Server](/azure/mysql/flexible-server/concepts-high-availability) </p>[Point-in-time restore in Azure Database for MySQL](/azure/mysql/flexible-server/how-to-restore-server-portal#geo-restores-to-latest-restore-point) |
 |Azure Database for PostgreSQL| [Reliability in Azure Database for PostgreSQL](reliability-database-postgresql.md)||
 |Azure Databricks | [Reliability in Azure Databricks](reliability-databricks.md)||
-|Azure DDoS Protection| [Reliability in DDoS Protection](reliability-ddos.md)||
+|Azure DDoS Protection| [Reliability in DDoS Protection](reliability-ddos-protection.md)||
 |Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||
 |Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 |Azure Disk Encryption|| [Redundancy options for managed disks](/azure/virtual-machines/disks-redundancy) |
+|Azure Disk Storage|[Reliability in Azure Disk Storage](./reliability-storage-disk.md)||
 |Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
 |Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||
 |Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||

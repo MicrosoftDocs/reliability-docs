@@ -81,6 +81,9 @@ conceptualContent:
             - text: Failover and failback
               url: concept-failover-failback.md
               itemType: concept
+            - text: How to read a service-level agreement (SLA)
+              url: concept-service-level-agreements.md
+              itemType: concept
 
       - title: Reliability on the Azure platform
         links:
@@ -479,7 +482,7 @@ productDirectory:
     - title: Azure DDoS Protection
       summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
       imageSrc: /azure/media/index/ddos-protection.svg
-      url: reliability-ddos.md
+      url: reliability-ddos-protection.md
       azureCategories:
         - networking
         - security
@@ -607,6 +610,13 @@ productDirectory:
       url: reliability-data-explorer.md
       azureCategories:
         - analytics
+    # Card
+    - title: Azure Disk Storage
+      summary: High-performance, highly durable block storage for Azure Virtual Machines
+      imageSrc: /azure/media/index/disk-storage.svg
+      url: reliability-storage-disk.md
+      azureCategories:
+        - storage
 
 tools:
   title: Reliability services and capabilities
