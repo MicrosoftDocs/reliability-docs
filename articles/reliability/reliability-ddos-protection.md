@@ -6,7 +6,7 @@ ms.author: duau
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-ddos-protection
-ms.date: 04/02/2026
+ms.date: 04/07/2026
 ---
 
 # Reliability in Azure DDoS Protection
