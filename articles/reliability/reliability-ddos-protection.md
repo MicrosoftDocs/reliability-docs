@@ -45,7 +45,7 @@ Azure DDoS Protection is designed to protect public IP addresses from DDoS attac
 
 The following diagram shows a zone-redundant DDoS Network Protection plan and multiple protected zone-redundant public IP addresses:
 
-![Diagram that shows a DDoS Protection plan that spans multiple availability zones](./media/reliability-ddos-protection/zone-redundant.svg)
+![Diagram that shows a DDoS Protection plan that spans multiple availability zones.](./media/reliability-ddos-protection/zone-redundant.svg)
 
 ### Requirements
 
