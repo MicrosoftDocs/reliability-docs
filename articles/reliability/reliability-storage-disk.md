@@ -233,7 +233,7 @@ For critical workloads, implement a layered backup strategy combining Azure Disk
 
 Azure Disk Storage doesn't provide its own availability SLA, but instead is included in the SLA for VMs. The configuration of your disk can affect the availability SLA of your VM.
 
-### Related content
+## Related content
 
 - [Azure managed disk types](/azure/virtual-machines/disks-types)
 - [Backup and disaster recovery for Azure managed disks](/azure/virtual-machines/backup-and-disaster-recovery-for-azure-iaas-disks)
