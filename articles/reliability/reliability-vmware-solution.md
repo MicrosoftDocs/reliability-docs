@@ -21,17 +21,17 @@ This article describes how to make Azure VMware Solution resilient to potential 
 
 ## Production deployment recommendations
 
-Azure VMware Solution deployments require careful planning across a range of areas and often require multiple Azure services. For detailed guidance, see [Azure VMware Solution workloads](/azure/well-architected/azure-vmware/overview) in the Azure Well-Architected Framework.
+Azure VMware Solution deployments require careful planning across a range of areas and often require multiple Azure services. For more information, see [Azure VMware Solution workloads](/azure/well-architected/azure-vmware/overview) in the Azure Well-Architected Framework.
 
 ## Reliability architecture overview
 
-Azure VMware Solution uses a hyperconverged infrastructure with VMware vSphere clusters.
+Azure VMware Solution uses a hyperconverged infrastructure (HCI) with VMware vSphere clusters.
 
 When you deploy Azure VMware Solution, you deploy a *private cloud*, which has one or more clusters. Each cluster contains ESXi hosts that provide compute, storage through virtual SAN (vSAN), and networking through VMware NSX. There are two generations of Azure VMware Solution:
 
 - Gen 1 uses specialized bare-metal hardware for nodes and uses dedicated networking approaches. For more information about the key concepts, see [Azure VMware Solution private cloud and cluster concepts](/azure/azure-vmware/architecture-private-clouds).
 
-- [Gen 2](/azure/azure-vmware/native-introduction) uses standard Azure VM types and Azure virtual networks. This architecture simplifies networking architecture, enhances data transfer speeds, reduces latency for workloads, and improves performance when accessing other Azure services.
+- [Gen 2](/azure/azure-vmware/native-introduction) uses standard Azure VM types and Azure virtual networks. This architecture simplifies networking architecture, enhances data transfer speeds, reduces latency for workloads, and improves performance when you access other Azure services.
 
 ### Fault tolerance
 
@@ -85,13 +85,13 @@ If you don't select an availability zone, your private cloud, its clusters, and 
 
 ::: zone-end
 
-To see information about availability zone support for other generations, select the appropriate generation at the beginning of this article.
+For more information about availability zone support for other generations, select the appropriate generation at the beginning of this article.
 
 ### Requirements
 
 :::zone pivot="avs-gen1"
 
-- **Region support:** Stretched clusters are only available in Azure regions that support the stretched cluster configuration. Check the [Azure region availability zone to host type mapping table](/azure/azure-vmware/architecture-private-clouds#azure-region-availability-zone-to-host-type-mapping-table) for current region support.
+- **Region support:** Stretched clusters are available only in Azure regions that support the stretched-cluster configuration. Check the [Azure region availability zone to host type mapping table](/azure/azure-vmware/architecture-private-clouds#azure-region-availability-zone-to-host-type-mapping-table) for current region support.
 
 - **Minimum hosts:** Deploy a minimum of six hosts across two availability zones (three hosts for each zone) to enable stretched-cluster configuration. When you scale in or out, you must scale in pairs so that each zone has an equal number of hosts.
 
@@ -117,11 +117,11 @@ Each availability zone in a region can support specific host types. For a detail
 
 You incur costs for each node in the cluster, regardless of the cluster's availability zone configuration. For detailed pricing information, see [Azure VMware Solution pricing](https://azure.microsoft.com/pricing/details/azure-vmware/).
 
-### Set up availability zone support
+### Configure availability zone support
 
 :::zone pivot="avs-gen1"
 
-- **Deploy a new cluster:** When you create a new Azure VMware Solution private cloud in a supported region, you can configure it as a stretched cluster during deployment. This configuration distributes hosts across two availability zones automatically. For more information, see [Deploy vSAN stretched clusters](/azure/azure-vmware/deploy-vsan-stretched-clusters).
+- **Deploy a new cluster:** When you create a new Azure VMware Solution private cloud in a supported region, you can set it up as a stretched cluster during deployment. This configuration distributes hosts across two availability zones automatically. For more information, see [Deploy vSAN stretched clusters](/azure/azure-vmware/deploy-vsan-stretched-clusters).
 
 - **Existing clusters:** You can't convert a standard cluster to a stretched cluster, and you can't convert a stretched cluster to a standard cluster. Instead, you need to deploy a new cluster and migrate your workloads.
 
@@ -167,15 +167,15 @@ This section describes what to expect when your cluster is stretched and an avai
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** Any VMs that run in the failed availability zone are restarted on hosts in the surviving availability zone. Active requests and connections to affected VMs are terminated, and clients are responsible for retrying them.
+- **Active requests:** Any VMs that run in the failed availability zone restart on hosts in the healthy availability zone. Active requests and connections to affected VMs terminate, and clients are responsible for retrying them.
 
 - **Expected downtime:** The time to restart failed VMs in the healthy zone is typically a few minutes, depending on the VM configuration and startup procedures. The stretched cluster remains operational with reduced capacity.
 
-  If the failed availability zone contains the witness node, the witness becomes unreachable. As long as sufficient data replicas remain available, the data hosts and running workloads continue to operate without immediate data loss. However, vSAN loses quorum awareness in this state. This loss prevents it from safely making placement and recovery decisions. It also causes certain operations, such as VM power-on after failures, rebalancing, and repairs, to be blocked.
+  If the failed availability zone contains the witness node, the witness becomes unreachable. As long as sufficient data replicas remain available, the data hosts and running workloads continue to operate without immediate data loss. However, vSAN loses quorum awareness in this state. This loss prevents it from safely making placement and recovery decisions. It also blocks certain operations, such as VM power-on after failures, rebalancing, and repairs.
 
-- **Expected data loss:** Because vSAN uses synchronous replication between zones, there's no data loss expected during a zone failure.
+- **Expected data loss:** Because vSAN uses synchronous replication between zones, no data loss is expected during a zone failure.
 
-- **Redistribution:** vSphere DRS automatically redistributes VM workloads to the surviving availability zone. Network traffic routing through VMware NSX adapts to the new VM placement automatically.
+- **Redistribution:** vSphere DRS automatically redistributes VM workloads to the healthy availability zone. Network traffic routing through VMware NSX adapts to the new VM placement automatically.
 
 ::: zone-end
 
@@ -187,7 +187,7 @@ This section describes what to expect when your cluster is deployed in a zonal p
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** Active requests and connections to affected VMs are terminated, and clients are responsible for retrying them.
+- **Active requests:** Active requests and connections to affected VMs terminate, and clients are responsible for retrying them.
 
 - **Expected downtime:** When a zone is unavailable, your cluster and its workloads are unavailable until the availability zone recovers.
 
@@ -237,7 +237,7 @@ However, you can also design custom multi-region solutions that combine differen
 
 To achieve multi-region resilience with Azure VMware Solution, you need to deploy separate private clouds in multiple regions and implement failover and other disaster recovery (DR) solutions.
 
-There are a range of options that support different requirements. For more information, see [Non-Microsoft backup and DR solutions for Azure VMware Solution](/azure/azure-vmware/ecosystem-disaster-recovery-vms).
+A range of options support different resilience requirements. For more information, see [Non-Microsoft backup and DR solutions for Azure VMware Solution](/azure/azure-vmware/ecosystem-disaster-recovery-vms).
 
 ## Backup and restore
 
@@ -249,7 +249,7 @@ For your VM workloads, Azure VMware Solution supports multiple backup approaches
 
 Azure does automatic platform maintenance to apply security updates, deploy new features, and improve service reliability.
 
-To learn about the effect that maintenance can have on the components of Azure VMware Solution, and to understand the components that you're responsible for maintaining and the components that Microsoft maintains, see [Azure VMware Solution private cloud maintenance](/azure/azure-vmware/azure-vmware-solution-private-cloud-maintenance).
+To learn how maintenance affects Azure VMware Solution components, and to understand the components that you're responsible for maintaining versus the components that Microsoft maintains, see [Azure VMware Solution private cloud maintenance](/azure/azure-vmware/azure-vmware-solution-private-cloud-maintenance).
 
 You can set up the maintenance windows for your cluster to reduce the likelihood that maintenance affects your production workloads. For more information, see [Plan self-service maintenance for Azure VMware Solution](/azure/azure-vmware/self-service-maintenance-orchestration).
 
@@ -261,7 +261,7 @@ Azure VMware Solution provides different availability SLAs for workload infrastr
 
 :::zone pivot="avs-gen1"
 
-Clusters that you configure as stretched clusters have a higher workload infrastructure availability SLA.
+Clusters that you set up as stretched clusters have a higher workload infrastructure availability SLA.
 
 ::: zone-end
 
