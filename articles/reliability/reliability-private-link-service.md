@@ -111,7 +111,7 @@ Private Link service is a single-region service. The service doesn't provide nat
 
 ### Custom multiregion solutions for resiliency
 
-If you design a networking approach with multiple regions, it's your responsibility to deploy independent Private Link services into each region. You're responsible for Private Link service deployment and management. Service consumers are responsible for private endpoint configuration on  Private Link services. Service consumers are also responsible for routing traffic to the appropriate Private Link service.
+If you design a networking approach with multiple regions, it's your responsibility to deploy independent Private Link services into each region. You're responsible for Private Link service deployment and management. Service consumers are responsible for private endpoint configuration on Private Link services. Service consumers are also responsible for routing traffic to the appropriate Private Link service.
 
 ## Backup and recovery
 
