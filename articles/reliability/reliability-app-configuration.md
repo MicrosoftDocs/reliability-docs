@@ -1,54 +1,59 @@
 ---
 title: Reliability in Azure App Configuration
-description: Learn how to make Azure App Configuration resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages, and learn about backup and restore.
+description: Learn how to make Azure App Configuration resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
 author: maud-lv
 ms.author: malev
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ai.usage: ai-assisted
 ms.service: azure-app-configuration
-ms.date: 02/23/2026
+ms.date: 04/09/2026
 ---
 
 # Reliability in Azure App Configuration
 
-[Azure App Configuration](/azure/azure-app-configuration/overview) centrally stores and manages application configuration settings and feature flags, replacing configuration files embedded directly within applications. This approach enables dynamic updates, versioning of configuration values, and historical tracking of configuration changes over time. The availability and reliability of App Configuration are important considerations because application behavior can directly depend on access to configuration data at runtime.
+[Azure App Configuration](/azure/azure-app-configuration/overview) centrally stores and manages application configuration settings and feature flags, which replaces configuration files embedded directly within applications. With this approach, you can dynamically update configuration values, track version history, and maintain a record of configuration changes over time. The availability and reliability of App Configuration are important considerations because application behavior can directly depend on access to configuration data at runtime.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes the reliability architecture of Azure App Configuration and explains how the service is designed to remain available during transient faults, availability zone failures, and region outages.
+This article describes the reliability architecture of App Configuration and how the service is designed to remain available during transient faults, availability zone failures, and region outages.
 
-## Production deployment recommendations for reliability
+## Production deployment recommendations
 
 For most production deployments of App Configuration, consider the following recommendations:
 
 > [!div class="checklist"]
 > - **SKU:** Use the Standard or Premium SKU.
-> - **Soft delete and purge protection:** Enable soft delete and purge protection to protect against data deletion.
-> - **For mission-critical scenarios:** Use the Premium SKU, and configure the included replica to enable replication across multiple regions to improve high availability and resilience to region outages.
+>
+> - **Soft delete and purge protection:** Turn on soft delete and purge protection to help prevent data deletion.
+>
+> - **For mission-critical scenarios:** Use the Premium SKU and configure the included replica to replicate across multiple regions. This approach improves high availability and resilience to region outages.
 
-For a list of recommended practices and configuration for production workloads, see [Building applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
+For a list of recommended practices and configuration for production workloads, see [Build applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
 
 ## Reliability architecture overview
 
-When you deploy App Configuration, you deploy a *store*. Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [feature flags](/azure/azure-app-configuration/concept-feature-management). The service also includes built-in capabilities for organizing, securing, versioning, and safely rolling out configuration changes across environments. For more information, see [What is Azure App Configuration?](/azure/azure-app-configuration/overview)
+When you deploy App Configuration, you deploy a *store*. Your store contains various types of settings that your application might use, including [keys and values](/azure/azure-app-configuration/concept-key-value), and [feature flags](/azure/azure-app-configuration/concept-feature-management). The service also includes built-in capabilities for organizing, securing, versioning, and safely rolling out configuration changes across environments. For more information, see [What is App Configuration?](/azure/azure-app-configuration/overview)
 
-App Configuration is a fully managed service. Microsoft is responsible for storing and managing your settings, as well as performing maintenance on the service.
+App Configuration is a fully managed service. Microsoft is responsible for performing maintenance on the service and storing and managing your settings.
 
-When you build client applications that connect to Azure App Configuration, you can optionally [use App Configuration with Azure Front Door (preview)](/azure/azure-app-configuration/concept-hyperscale-client-configuration) to enable caching and global traffic acceleration. This configuration introduces other considerations for geo-replication, which are highlighted throughout this article where appropriate.
+When you build client applications that connect to App Configuration, you can optionally [use App Configuration with Azure Front Door (preview)](/azure/azure-app-configuration/concept-hyperscale-client-configuration) to enable caching and global traffic acceleration. This configuration introduces other considerations for geo-replication, which are highlighted throughout this article where appropriate.
 
 ## Resilience to transient faults
 
 [!INCLUDE [Transient fault description](includes/reliability-transient-fault-description-include.md)]
 
-When you use Azure App Configuration, consider the following best practices to minimize the effect of transient faults on configuration access, especially within critical code paths.
+When you use App Configuration, consider the following best practices to minimize the effect of transient faults on configuration access, especially within critical code paths.
 
-- **Configuration providers:** Use the [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities along with many other resiliency features.
+- **Configuration providers:** Use [App Configuration providers](/azure/azure-app-configuration/configuration-provider-overview), which have built-in retry and caching capabilities and other resiliency features.
+
 - **Azure SDKs:** Use App Configuration SDKs if your application needs to send write requests. SDKs automatically retry on HTTP status code 429 responses and other transient errors.
-- **Retry logic:** Include retry logic in custom clients if you can't use App Configuration Providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time in milliseconds before retrying the request.
+
+- **Retry logic:** Include retry logic in custom clients if you can't use App Configuration providers or SDKs. The `retry-after-ms` header in the response provides a suggested wait time in milliseconds before the client retries the request.
+
 - **Caching:** Cache settings in memory when possible to reduce direct requests to your store.
 
-For other application configuration guidance, see [Azure App Configuration FAQ](/azure/azure-app-configuration/faq#my-application-receives-http-status-code-429-responses--why).
+For other application configuration guidance, see [App Configuration FAQ](/azure/azure-app-configuration/faq#my-application-receives-http-status-code-429-responses--why).
 
 ## Resilience to availability zone failures
 
@@ -56,7 +61,9 @@ For other application configuration guidance, see [Azure App Configuration FAQ](
 
 App Configuration automatically provides zone redundancy in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
 
-![Diagram that shows a zone-redundant App Configuration store, which spans three zones in the region.](media/reliability-app-configuration/zone-redundant.svg)
+:::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant App Configuration store that spans three zones in the region." lightbox="media/reliability-app-configuration/zone-redundant.svg":::
+   The diagram shows availability zones 1, 2, and 3. The App Configuration store spans all three zones in the region.
+:::image-end:::
 
 When an availability zone becomes unavailable, App Configuration automatically redirects your requests to other healthy availability zones to ensure high availability.
 
@@ -64,21 +71,21 @@ When an availability zone becomes unavailable, App Configuration automatically r
 
 **Region support:** Stores deployed into the following regions are automatically zone-redundant:
 
-[!INCLUDE [Azure App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
+[!INCLUDE [App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
 
 ### Cost
 
-There's no extra cost for zone redundancy for Azure App Configuration.
+There's no extra cost for zone redundancy for App Configuration.
 
 ### Configure availability zone support
 
-Microsoft automatically enables zone redundancy for a store when it's in [a region that supports availability zones](#requirements).
+Microsoft automatically configures zone redundancy for a store when it's in [a region that supports availability zones](#requirements).
 
-If App Configuration adds availability zone support to an existing region, you don't need to do anything to start benefiting from the availability zone support. Your store will benefit from the availability zone support that has become available for App Configuration stores in the region.
+If App Configuration adds availability zone support to an existing region, you don't need to take any action to benefit from the availability zone support. Your store benefits from the availability zone support that becomes available for App Configuration stores in the region.
 
 ### Behavior when all zones are healthy
 
-When a store is in a region that supports zone redundancy and all availability zones are operational, you can expect the following behavior:
+This section describes what to expect when you configure an App Configuration store for zone redundancy, and all zones are operational.
 
 - **Cross-zone operation:** App Configuration automatically manages traffic routing between availability zones. During normal operations, it transparently distributes requests across zones.
 
@@ -86,7 +93,7 @@ When a store is in a region that supports zone redundancy and all availability z
 
 ### Behavior during a zone failure
 
-This section describes what to expect when a store is in a region that supports zone redundancy and an availability zone is unavailable:
+This section describes what to expect when you configure an App Configuration store for zone redundancy, and there's an outage in one of the zones.
 
 - **Detection and response:** The App Configuration service detects zone failures and automatically responds to them. You don't need to take any action during a zone failure.
 
@@ -102,23 +109,23 @@ This section describes what to expect when a store is in a region that supports 
 
 ### Zone recovery
 
-When a zone that was previously unavailable recovers, App Configuration automatically restores normal operations across all availability zones. You don't need to take any action to recover from a zone failure.
+When a previously unavailable zone recovers, App Configuration automatically restores normal operations across all availability zones. You don't need to take any action to recover from a zone failure.
 
 ### Test for zone failures
 
-The Azure App Configuration platform manages traffic routing, failover, and zone recovery for zone-redundant stores. Because this process is fully managed by Microsoft, you don't need to validate availability zone failure processes.
+The App Configuration platform manages traffic routing, failover, and zone recovery for zone-redundant stores. Microsoft fully manages this process, so you don't need to validate availability zone failure processes.
 
 ## Resilience to region-wide failures
 
-Azure App Configuration provides native geo-replication capabilities to support resilience during region outages. Geo-replication allows configuration data to be replicated across regions as a managed service feature.
+App Configuration provides native geo-replication capabilities to support resilience during region outages. Geo-replication allows configuration data to replicate across regions as a managed service feature.
 
 ### Geo-replication
 
-Geo-replication enables a store to be replicated across multiple Azure regions. Each store can have multiple *replicas* in different regions. The original store is also a replica. This capability helps protect applications from region-wide disruptions.
+With geo-replication, you can replicate a store across multiple Azure regions. Each store can have multiple *replicas* in different regions. The original store is also a replica. This capability helps protect applications from region-wide disruptions.
 
 #### Requirements
 
-- **Region support:** You can create replicas in any Azure region supported by Azure App Configuration, even if the regions aren't Azure paired regions.
+- **Region support:** You can create replicas in any Azure region that App Configuration supports, even if the regions aren't Azure paired regions.
 
 - **Tier:** The configuration store must use a supported tier to enable geo-replication. For more information, see [Enable geo-replication](/azure/azure-app-configuration/howto-geo-replication).
 
@@ -126,13 +133,13 @@ Geo-replication enables a store to be replicated across multiple Azure regions. 
 
 When you enable geo-replication, consider the following factors:
 
-- **Zone-redundant replicas:** Any replica you create in a region in which App Configuration supports availability zones is automatically zone-redundant.
+- **Zone-redundant replicas:** Any replica that you create in a region in which App Configuration supports availability zones is automatically zone-redundant.
 
-- **Azure Front Door:** To enable geo-redundant configuration delivery with Azure Front Door, configure App Configuration replicas as origins within an origin group. Correct origin configuration allows Azure Front Door to manage health-based routing, load balancing, and automatic failover across regions. For more information, see [Traffic routing methods to origin](/azure/frontdoor/routing-methods).
+- **Azure Front Door:** To enable geo-redundant configuration delivery with Azure Front Door, configure App Configuration replicas as origins within an origin group. Correctly configured origins are required for Azure Front Door to perform health-based routing, load balancing, and automatic failover across regions. For more information, see [Traffic routing methods to origin](/azure/frontdoor/routing-methods).
 
 #### Cost
 
-Each geo-replicated region is billed separately according to the pricing for the respective tier and region. No data egress charges apply for cross-region replication. For pricing details, see [Azure App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
+Each geo-replicated region is billed separately according to the pricing for the respective tier and region. No data egress charges apply for cross-region replication. For pricing details, see [App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
 
 #### Configure multi-region support
 
@@ -142,14 +149,14 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 
 This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
-- **Cross-zone operation:** Each replica is addressable individually and has its own DNS name. All replicas can accept both read and write operations.
+- **Cross-zone operation:** Each replica is individually addressable and has its own DNS name. All replicas can accept both read and write operations.
     
-    Azure App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This enables your application to control which replica it uses.
+    App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This approach gives your application control over which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
-- **Cross-zone data replication:** Data is replicated asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
+- **Cross-zone data replication:** Data replicates asynchronously and remains eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
 
 #### Behavior during a region failure
 
@@ -167,7 +174,7 @@ This section describes what to expect when you configure an App Configuration st
 
 - **Expected data loss:** If a replica fails, recent changes made on that replica might not yet be replicated to other replicas. Those changes can remain unavailable until the replica recovers. To estimate potential data loss, monitor the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring).
 
-- **Expected downtime:** When a replica becomes unavailable, it stays offline until its region recovers. Other replicas continue to handle requests. Applications might experience brief downtime while they detect the failure and switch to a healthy replica. The duration depends on how quickly each application performs this detection and failover.
+- **Expected downtime:** When a replica becomes unavailable, it remains offline until its region recovers. Other replicas continue to handle requests. Applications might experience brief downtime while they detect the failure and switch to a healthy replica. The duration depends on how quickly each application performs this detection and failover.
 
 - **Redistribution:** Applications must route traffic to a healthy replica when a failure occurs.
 
@@ -177,26 +184,26 @@ This section describes what to expect when you configure an App Configuration st
 
 #### Region recovery
 
-After the region recovers, App Configuration brings the replica back in sync with the other replicas without your intervention.
+After the region recovers, App Configuration syncs the replica with the other replicas without your intervention.
 
-You're responsible for reconfiguring your application to route traffic back to the recovered region instance. Applications that use App Configuration providers automatically start using the replica again.
+You're responsible for reconfiguring your application to route traffic back to the recovered region instance. Applications that use App Configuration providers automatically start to use the replica again.
 
 #### Test for region failures
 
 You can't directly simulate a replica failover in App Configuration today. However, because applications control replica selection, you can test failover behavior by forcing the application into a state where it must switch replicas.
 
-To validate your application’s replica failover behavior, you can introduce a controlled connectivity failure in a nonproduction environment and observe how the application responds.
+To validate your application's replica failover behavior, you can introduce a controlled connectivity failure in a nonproduction environment and observe how the application responds.
 
 One approach is to use your local machine or another environment where you have administrative access. Follow these steps:
 
-1. Enable verbose logging for the Azure SDK. In .NET, use the `AzureEventSourceListener` class to configure a logger. For more information, see [Tutorial: Use dynamic configuration in a .NET app - Logging and monitoring](/azure/azure-app-configuration/enable-dynamic-configuration-dotnet-core#logging-and-monitoring).
+1. Turn on verbose logging for the Azure SDK. In .NET, use the `AzureEventSourceListener` class to configure a logger. For more information, see [Logging and monitoring](/azure/azure-app-configuration/enable-dynamic-configuration-dotnet-core#logging-and-monitoring).
 
 1. Manually configure your `hosts` file so that requests to your App Configuration store are routed to an IP address that can't receive them, like `127.0.0.1` (localhost).
 
     > [!WARNING]
     > This step effectively blocks access from your computer to your App Configuration store. Only follow these steps in a nonproduction environment.
 
-1. Monitor the logs for a message similar to this:
+1. Monitor the logs for a message similar to the following example:
 
     ```console
     [Warning] Microsoft-Extensions-Configuration-AzureAppConfiguration-Refresh:
@@ -205,11 +212,11 @@ One approach is to use your local machine or another environment where you have 
 
     This message indicates that the application successfully failed over to use another replica of your store.
 
-1. After completing the test, undo the changes to your `hosts` file.
+1. After you complete the test, undo the changes to your `hosts` file.
 
 ## Backup and restore
 
-Azure App Configuration enables you to [export configuration data](/azure/azure-app-configuration/howto-import-export-data) from a store and use it as part of a broader backup strategy.
+You can use App Configuration to [export configuration data](/azure/azure-app-configuration/howto-import-export-data) from a store and use it as part of a broader backup strategy.
 
 [!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
@@ -217,19 +224,19 @@ Azure App Configuration enables you to [export configuration data](/azure/azure-
 
 App Configuration provides two key recovery features to prevent accidental or malicious deletion:
 
-- **Soft delete:** When enabled, soft delete allows you to recover deleted stores and settings during a configurable retention period. Think of soft delete like a recycle bin for your App Configuration resources.
+- **Soft delete:** When you turn on soft delete, you can recover deleted stores and settings during a configurable retention period. Soft delete functions like a recycle bin for your App Configuration resources.
 
-- **Purge protection:** When enabled, purge protection prevents permanent deletion of your store and its settings until the retention period elapses. This safeguard prevents malicious actors from permanently destroying your settings.
+- **Purge protection:** When you turn on purge protection, the service prevents permanent deletion of your store and its settings until the retention period elapses. This safeguard prevents malicious actors from permanently destroying your settings.
 
 Use both features for production environments. For more information, see [Soft-delete and purge protection](/azure/azure-app-configuration/concept-soft-delete).
 
 ## Resilience to service maintenance
 
-Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, ensuring that maintenance is seamless and transparent to you. No downtime is expected during maintenance events unless you've been advised through [Azure Service Health planned maintenance](/azure/service-health/service-health-planned-maintenance).
+Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, which makes them transparent to you. No downtime is expected during maintenance events unless [Azure Service Health](/azure/service-health/service-health-planned-maintenance) provides a planned maintenance notice.
 
 ## Resilience to configuration problems
 
-Incorrect or accidental configuration changes can cause application downtime. Use [configuration snapshots](/azure/azure-app-configuration/concept-snapshots) to safely roll out changes to configuration. Monitor your application health following any configuration changes, and revert to the last-known-good configuration snapshot if the changes introduce a problem.
+Incorrect or accidental configuration changes can cause application downtime. Use [configuration snapshots](/azure/azure-app-configuration/concept-snapshots) to safely roll out changes to configuration. Monitor your application health after any configuration changes, and revert to the last-known-good configuration snapshot if the changes introduce a problem.
 
 ## Service-level agreement
 
@@ -238,4 +245,4 @@ Incorrect or accidental configuration changes can cause application downtime. Us
 ## Related content
 
 - [Reliability in Azure](./overview.md)
-- [Azure App Configuration documentation](/azure/azure-app-configuration/)
+- [App Configuration documentation](/azure/azure-app-configuration/)
