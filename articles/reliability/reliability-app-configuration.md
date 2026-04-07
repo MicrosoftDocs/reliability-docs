@@ -23,6 +23,7 @@ This article describes the reliability architecture of App Configuration and how
 For most production deployments of App Configuration, consider the following recommendations:
 
 > [!div class="checklist"]
+>
 > - **SKU:** Use the Standard or Premium SKU.
 >
 > - **Soft delete and purge protection:** Turn on soft delete and purge protection to help prevent data deletion.
