@@ -72,7 +72,7 @@ When an availability zone becomes unavailable, App Configuration automatically r
 
 **Region support:** Stores deployed into the following regions are automatically zone-redundant:
 
-[!INCLUDE [App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
+[!INCLUDE [Azure App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
 
 ### Cost
 
@@ -157,7 +157,7 @@ This section describes what to expect when you configure an App Configuration st
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
-- **Cross-zone data replication:** Data replicates asynchronously and remains eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
+- **Cross-zone data replication:** Data replicates asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
 
 #### Behavior during a region failure
 
