@@ -42,7 +42,7 @@ For a list of other recommendations for Backup, including reliability-focused re
 
 ### Logical architecture
 
-Backup can back up and restore a variety of data sources. You set up backups differently depending on the data source that you work with. Common data sources include the following locations:
+Backup can back up and restore a variety of data sources. You set up backups differently depending on the data source that you work with. The following data sources are common:
 
 - Azure VMs
 - Various databases
@@ -62,12 +62,12 @@ Microsoft manages the core Backup service infrastructure. This infrastructure is
 
 Backup stores backups in the vault. Vaults are built on top of Azure Storage. Vaults automatically replicate your backup data, and the backup durability and resilience depend on the vault's storage redundancy.
 
-- [Locally redundant storage (LRS)](/azure/storage/common/storage-redundancy?#locally-redundant-storage) replicates the data within your vault to one or more Azure availability zones located in the primary region of your choice. You can't choose your preferred availability zone, but Azure might move or expand LRS accounts across zones to improve load balancing. Your data isn't guaranteed to be spread across zones. For more information, see [Overview of availability zones](./availability-zones-overview.md).
+- [Locally redundant storage (LRS)](/azure/storage/common/storage-redundancy?#locally-redundant-storage) replicates data within your vault to one or more Azure availability zones located in the primary region of your choice. You can't choose your preferred availability zone, but Azure might move or expand LRS accounts across zones to improve load balancing. Your data isn't guaranteed to be spread across zones. For more information, see [Overview of availability zones](./availability-zones-overview.md).
 
 - ZRS and GRS provide extra protections. This article describes these options in detail.
 
 > [!NOTE]
-> Some data sources support *operational tier* backups, which store data in another location rather than in the vault. For example, [Azure managed disks backup](/azure/backup/backup-managed-disks) and [AKS backups](/azure/backup/azure-kubernetes-service-cluster-backup) support operational tier backups, which are stored in disk snapshots. This article doesn't discuss operational tier backup storage, but you can apply the information about Backup.
+> Some data sources support *operational tier* backups, which store data in another location rather than in the vault. For example, [Azure managed disks backup](/azure/backup/backup-managed-disks) and [AKS backups](/azure/backup/azure-kubernetes-service-cluster-backup) support operational tier backups, which are stored in disk snapshots. This article doesn't discuss operational tier backup storage, but you can apply the resiliency guidance in this article to Backup operations and workflows for these backup types.
 
 ## Resilience to transient faults
 
@@ -178,7 +178,7 @@ The paired region is also known as the *secondary region*.
     Two boxes represent the primary region and the secondary region. They each contain a smaller box that represents the datacenter. A box inside the datacenter box represents LRS. It includes the storage account and three icons labeled copy 1, copy 2, and copy 3. A dotted line that represents GRS encompasses the LRS boxes in both regions. An arrow labeled geo-replication points from the storage account in the primary region to the storage account in the secondary region.
 :::image-end:::
 
-If you don't configure GRS and an outage occurs in the vault's region, you might be able access the vault and view backup items. However, without regional redundancy, the underlying backup data remains unavailable for restore operations.
+If you don't configure GRS and an outage occurs in the vault's region, you might be able to access the vault and view backup items. However, without regional redundancy, the underlying backup data remains unavailable for restore operations.
 
 #### CRR
 
@@ -251,7 +251,7 @@ When the primary region recovers, Backup automatically restores operations in th
 
 You can use [CRR](/azure/backup/backup-create-recovery-services-vault#set-cross-region-restore) to perform a restore operation to the paired region. Use this approach to verify restore and other recovery processes.
 
-## Resilience to service maintenance
+## Resilience to loss of backup data
 
 Backup provides two key recovery features to prevent accidental or malicious deletion of your backup data:
 
