@@ -128,7 +128,7 @@ To configure availability zone support for a server, you configure the high avai
     1. [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability), if it's enabled.
     1. Enable local-redundant high availability. You must use the Azure CLI or another programmatic deployment method. For Azure CLI instructions, see [Manage zone redundant high-availability in Azure Database for MySQL with Azure CLI](/azure/mysql/flexible-server/how-to-configure-high-availability-cli).
 
-- **Disable high availability:** Disabling high availability removes the standby relica server, so your server isn't resilient to zone-level outages. However, if geo-redundant backups are enabled, the server can still be recovered in a different region by using those backups. For more information, see [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability).
+- **Disable high availability:** Disabling high availability removes the standby replica server, so your server isn't resilient to zone-level outages. However, if geo-redundant backups are enabled, the server can still be recovered in a different region by using those backups. For more information, see [Disable high availability](/azure/mysql/flexible-server/how-to-configure-high-availability#disable-high-availability).
 
 ### Behavior when all zones are healthy
 
@@ -217,7 +217,7 @@ You can also use geo-redundant backups, in supported regions, to provide cross-r
 
 You can deploy read replicas to protect your databases from region-level failures. Each read replica is a separate Azure Database for MySQL server. When you place a read replica in a second Azure region, your database server can provide resilience to a region-wide problem. You can deploy up to ten read replicas, which can optionally be in different Azure regions. MySQL's physical replication technology updates read replicas asynchronously from the source server in the primary region, and they can lag the source. Cross-region read replicas can optionally serve read-only workloads to reduce latency for globally distributed applications or to offload read traffic from the source server. For more information on read replica features and considerations, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
 
-If your primary region fails, you can manually fail over so that your secondary replica becomes the primary server. You do this by stopping the replication process, which promotes the read replica to be be a read-write server. Because of the asynchronous replication, failover can result in data loss. Your application then needs to connect to the new primary server, and you're responsible for this application reconfiguration.
+If your primary region fails, you can manually fail over so that your secondary replica becomes the primary server. You do this by stopping the replication process, which promotes the read replica to be a read-write server. Because of the asynchronous replication, failover can result in data loss. Your application then needs to connect to the new primary server, and you're responsible for this application reconfiguration.
 
 > [!NOTE]
 > This section summarizes some of the important information about how read replicas can support resilience to region-wide failures. You can also use read replicas to improve performance and support high-scale geographically distributed user bases. For more information, see [Read replicas](/azure/mysql/flexible-server/concepts-read-replicas).
@@ -270,7 +270,7 @@ This section describes what to expect when your server is configured with a read
     > You're responsible for triggering failover. Azure doesn't fail over to read replicas automatically, even if there's a region failure.
 
     Failover requires that you:
-    1. Stop replication. This is an irreversable procedure, and the server can't be made into a replica again. The process results in data loss. For more detail on the implications of this action, see [Stop replication](/azure/mysql/flexible-server/concepts-read-replicas#stop-replication).
+    1. Stop replication. This is an irreversible procedure, and the server can't be made into a replica again. The process results in data loss. For more detail on the implications of this action, see [Stop replication](/azure/mysql/flexible-server/concepts-read-replicas#stop-replication).
     1. Reconfigure your application to use the new primary.
 
     For more information, see [Failover](/azure/mysql/flexible-server/concepts-read-replicas#failover).
@@ -292,7 +292,7 @@ This section describes what to expect when your server is configured with a read
 
 #### Region recovery
 
-When the region recovers, you're responsible for any failback activities to resume operations in the primary region. Microsoft doesn't automatically move the primary server. You can create a new read replica in the primary region, then perform another failover process to restore operations in the primary region. Consider one of the following approches, depending on whether your application can tolerate downtime or data loss:
+When the region recovers, you're responsible for any failback activities to resume operations in the primary region. Microsoft doesn't automatically move the primary server. You can create a new read replica in the primary region, then perform another failover process to restore operations in the primary region. Consider one of the following approaches, depending on whether your application can tolerate downtime or data loss:
 
 - Take your application offline, and wait for the replication to catch up with all of the changes. This approach requires application downtime, roughly equal to the replication lag.
 - Perform the failover and accept the loss of any unreplicated data.
