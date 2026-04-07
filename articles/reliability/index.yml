@@ -617,6 +617,13 @@ productDirectory:
       url: reliability-storage-disk.md
       azureCategories:
         - storage
+    # Card
+    - title: Azure Database for MySQL
+      summary: Managed MySQL database service for app developers
+      imageSrc: /azure/media/index/database-mysql-server.svg
+      url: reliability-database-mysql.md
+      azureCategories:
+        - databases
 
 tools:
   title: Reliability services and capabilities
