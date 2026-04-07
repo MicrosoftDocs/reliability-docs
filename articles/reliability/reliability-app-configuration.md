@@ -232,7 +232,7 @@ Use both features for production environments. For more information, see [Soft-d
 
 ## Resilience to service maintenance
 
-Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, which makes them transparent to you. No downtime is expected during maintenance events unless [Azure Service Health](/azure/service-health/service-health-planned-maintenance) provides a planned maintenance notice.
+Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, which makes maintenance simple and transparent to you. No downtime is expected during maintenance events unless [Azure Service Health](/azure/service-health/service-health-planned-maintenance) provides a planned maintenance notice.
 
 ## Resilience to configuration problems
 
