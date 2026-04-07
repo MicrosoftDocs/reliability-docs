@@ -71,7 +71,6 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure DDoS Protection| [Reliability in DDoS Protection](reliability-ddos-protection.md)||
 |Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||
 |Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
-|Azure Disk Encryption|| [Redundancy options for managed disks](/azure/virtual-machines/disks-redundancy) |
 |Azure Disk Storage|[Reliability in Azure Disk Storage](./reliability-storage-disk.md)||
 |Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
 |Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||

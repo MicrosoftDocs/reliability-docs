@@ -111,9 +111,11 @@ This section describes what to expect when VM instances are configured with avai
 
 - **Active requests:** Any active requests or other work that occurs on the VM during the zone failure are likely to be terminated.
 
-- **Expected data loss:** Zonal VM disks might be unavailable during a zone failure.
+- **Expected data loss:** Zonal LRS disks might be unavailable during a zone failure.
 
-    If you use zone-redundant storage (ZRS) disks and an outage affects your VM, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks?tabs=HTTP#diskdetachoptiontypes) your ZRS disks from the failed VM. This approach allows you to attach the ZRS disks to another VM.
+    If you use zone-redundant storage (ZRS) disks and an outage affects your VM, you can [force detach](/rest/api/compute/virtual-machines/attach-detach-data-disks#diskdetachoptiontypes) your ZRS disks from the failed VM. This approach allows you to attach the ZRS disks to another VM.
+
+    For more information about how to make disks resilient to availability zone failures and other problems, see [Reliability in Azure Disk Storage](./reliability-storage-disk.md).
 
 - **Expected downtime:** VMs remain down until the availability zone recovers.
 
@@ -185,4 +187,5 @@ For Virtual Machines, the SLA provides a base level of availability. The uptime 
 
 ## Related resource
 
+- [Reliability in Azure Disk Storage](./reliability-storage-disk.md)
 - [Reliability in Azure](./overview.md)
