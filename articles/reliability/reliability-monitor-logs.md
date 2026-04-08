@@ -12,7 +12,7 @@ ms.date: 04/08/2026
 
 # Reliability in Azure Monitor Logs
 
-[Azure Monitor Logs](/azure/azure-monitor/logs/data-platform-logs) is a centralized software as a service (SaaS) platform for collecting, analyzing, and acting on system generated data by Azure and non-Azure resources and applications.
+[Azure Monitor Logs](/azure/azure-monitor/logs/data-platform-logs) is a centralized software as a service (SaaS) platform for collecting, analyzing, and acting on system-generated data by Azure and non-Azure resources and applications.
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
@@ -20,20 +20,19 @@ Azure Monitor Logs provides built-in resilience features that protect your data 
 
 ## Production deployment recommendations
 
-Azure Monitor Logs offers several features that you can use individually or in combination to help enhance workspaces resilience to various types of issues.
+Azure Monitor Logs offers several features that you can use individually or in combination to help enhance workspace resilience to various types of issues.
 
 | Capability    | Description    | Cost impact |
 |----|----|----|
 | [Availability zones](/azure/azure-monitor/logs/availability-zones)    | Protect your Log Analytics workspace from datacenter failures through redundancy between zones in your region.    | No extra charge. Included with standard workspace pricing. Dedicated clusters must meet commitment tier minimums. |
-| [Workspace replication](/azure/azure-monitor/logs/workspace-replication)    | Protect your Log Analytics workspace against entire region failures in Log Analytics or downstream services through redundancy between regions.    | All ingested data is replicated, which adds replication charges. You can reduce costs by choosing which DCRs participate in replication. |
+| [Workspace replication](/azure/azure-monitor/logs/workspace-replication)    | Protect your Log Analytics workspace against entire region failures in Log Analytics or downstream services through redundancy between regions.    | All ingested data is replicated, which adds replication charges. Reduce costs by choosing which DCRs participate in replication. |
 | [Data export](/azure/azure-monitor/logs/logs-data-export)    | Back up ingested logs against entire region failures by continuously exporting logs to a geo-redundant storage account.    | Storage costs vary by volume and redundancy tier (GRS). No extra Azure Monitor charge for export itself. |
 
 For detailed pricing information, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
 
+:::image type="content" source="media/reliability-monitor-logs/resiliency-features.png" lightbox="media/reliability-monitor-logs/resiliency-features.png" alt-text="Diagram summarizing the three resiliency features of Azure Monitor Logs: availability zones, workspace replication, and data export." border="false":::
 
-:::image type="content" source="media/reliability-monitor-logs/resiliency-features.png" lightbox="media/reliability-monitor-logs/resiliency-features.png" alt-text="An image showing the resiliency features of Azure Monitor Log Analytics based on the previous table." border="false":::
-
-Certain Log Analytics features aren't compatible with all reliability features. For example, Auxiliary tables aren't supported with workspace replication. For more information, review the [Reliability best practices for Log Analytics](/azure/azure-monitor/logs/best-practices-logs#reliability) for details on feature compatibility.
+Certain Log Analytics features aren't compatible with all reliability features. For example, Auxiliary tables aren't supported with workspace replication. For details on feature compatibility, see [Reliability best practices for Log Analytics](/azure/azure-monitor/logs/best-practices-logs#reliability).
 
 ## Reliability architecture overview
 
@@ -95,7 +94,7 @@ Azure Monitor Logs offers two types of availability zone support, depending on t
 
     Data resilience is available in all regions that support availability zones. Most regions that support availability zones require your workspace to be deployed in a [dedicated cluster](/azure/azure-monitor/logs/logs-dedicated-clusters). However, some regions support it with the default workspace configuration of a shared cluster. Moving to a dedicated cluster in a region that supports availability zones protects data ingested after the move, not historical data.
 
-- **Service resilience** provide zone redundancy for ingestion and query continuity during an availability zone outage.
+- **Service resilience** provides zone redundancy for ingestion and query continuity during an availability zone outage.
 
     Only some regions offer service resilience.
 
@@ -103,7 +102,7 @@ If an incident affects one zone, Microsoft manages failover to a different avail
 
 ### Requirements
 
-- **Region support:** Consult the availability zones [supported regions](/azure/azure-monitor/logs/availability-zones#supported-regions) for the list of regions that support data resilence and service resilience, and whether data resilience is supported in shared or dedicated clusters.
+- **Region support:** Consult the availability zones [supported regions](/azure/azure-monitor/logs/availability-zones#supported-regions) for the list of regions that support data resilience and service resilience, and whether data resilience is supported in shared or dedicated clusters.
 
 - **Dedicated cluster:** Some regions require a [dedicated cluster](/azure/azure-monitor/logs/logs-dedicated-clusters) for data resilience.
 
@@ -111,7 +110,7 @@ If an incident affects one zone, Microsoft manages failover to a different avail
 
 - **Event Hubs ingestion:** In some regions, Event Hubs ingestion into the workspace isn't resilient to a zone outage. For a list of these regions, see the footnotes in the [supported regions list](/azure/azure-monitor/logs/availability-zones#supported-regions). Evaluate alternate ingestion paths for critical data.
 
-- **Move to dedicated clusters:** Dedicated clusters only protect new data. When a workspace is moved to a dedicated cluster, previously ingested data remains in the shared cluster. Under normal operations everything is available, but during a zone outage only the new data in the dedicated cluster might be accessible.
+- **Move to dedicated clusters:** Dedicated clusters only protect new data. When a workspace is moved to a dedicated cluster, previously ingested data remains in the shared cluster. Under normal operations, everything is available, but during a zone outage only the new data in the dedicated cluster might be accessible.
 
 ### Cost
 
@@ -212,15 +211,15 @@ For more considerations, see [Deployment considerations](/azure/azure-monitor/lo
 
 #### Cost
 
-When you enable workspace replication, you're charged for the replication of all data you ingest to your workspace. For more information about pricing, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
+When you enable workspace replication, you're charged for the replication of all data you ingest to your workspace. Replication costs are affected by which DCRs participate in replication. For more information about pricing, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
 
 #### Configure multi-region support
 
 - **Enable workspace replication:** The general steps required to enable workspace replication are:
 
-    1. [Enable replication and specify the secondary region.](/azure/azure-monitor/logs/workspace-replication#enable-and-disable-workspace-replication).
+    1. [Enable replication and specify the secondary region](/azure/azure-monitor/logs/workspace-replication#enable-and-disable-workspace-replication).
 
-    1. [Validate the provisioning state.](/azure/azure-monitor/logs/workspace-replication#check-workspace-provisioning-state)
+    1. [Validate the provisioning state](/azure/azure-monitor/logs/workspace-replication#check-workspace-provisioning-state).
 
         > [!TIP]
         > Even when the provisioning state is *Succeeded*, table schemas might still be replicating. To verify when table schemas are fully replicated, [audit the secondary workspace](/azure/azure-monitor/logs/workspace-replication#audit-the-inactive-workspace).
@@ -243,10 +242,7 @@ This section describes what to expect when you configure a Log Analytics workspa
 
 - **Cross-zone data replication:** New logs, schema, and configuration updates are replicated asynchronously in batches to the secondary. Because it's asynchronous, this replication process doesn't affect ingestion latency.
 
-    > [!WARNING]
-    > **Note to PG:** can we give an idea of the replication lag (even if it's vague, like "a few minutes")?
-
-    Replication costs are affected by which DCRs participate in replication. Workspace replication applies at the workspace level, so you can't select individual tables to replicate. However, you control costs by associating only the DCRs that carry critical data streams with the workspace's data collection endpoint. DCRs that aren't associated with the workspace DCE don't replicate their data. For more information, see [Associate data collection rules](/azure/azure-monitor/logs/workspace-replication#associate-data-collection-rules-with-the-workspace-data-collection-endpoint).
+Workspace replication applies at the workspace level, so you can't select individual tables to replicate. However, you control replication by associating only the DCRs that carry critical data streams with the workspace's data collection endpoint. DCRs that aren't associated with the workspace DCE don't replicate their data. For more information, see [Associate data collection rules](/azure/azure-monitor/logs/workspace-replication#associate-data-collection-rules-with-the-workspace-data-collection-endpoint).
 
 #### Behavior during a region failure
 
@@ -266,22 +262,19 @@ This section describes what to expect when you configure a Log Analytics workspa
 
     After the switchover process changes the DNS entries for the workspace, the secondary workspace is available for ingestion and query. Microsoft's agents automatically retry failed log ingestion attempts. Applications using the log ingestion API should also retry.
 
-- **Expected data loss:** Any logs or other changes that haven't yet been replicated is unavailable in the secondary region.
+- **Expected data loss:** Any logs or other changes that haven't yet been replicated are unavailable in the secondary region.
 
     After you switch over to the secondary region, if the primary region can't process incoming log data, Azure Monitor buffers the data in the secondary region for up to 11 days. During the first four days, Azure Monitor automatically reattempts to replicate the data periodically.
 
     The total amount of data loss is sometimes called the recovery point objective (RPO).
 
-- **Expected downtime:** Thew switchover process involves ingestion to the secondary workspace being activated, and an update to the workspace's DNS records.
+- **Expected downtime:** The switchover process involves ingestion to the secondary workspace being activated, and an update to the workspace's DNS records.
 
     Although the DNS record change happens quickly, DNS propagation can take longer. If agents or other clients don't honor the DNS time-to-live (TTL), they might continue to attempt ingestion against the primary workspace. Ensure clients don't cache DNS entries for longer than their TTL.
 
     Queries resume against the secondary after the switchover completes.
 
     The total time it takes before the secondary workspace is available is sometimes called the recovery time objective (RTO).
-
-    > [!WARNING]
-    > **Note to PG:** Can we give an approximate idea of how long this takes (understanding DNS propagation will be an unknown factor)?
 
 - **Redistribution:** The switchover process updates the DNS records for the ingestion endpoints to point to the secondary region. The platform routes queries internally to the active region.
 
@@ -320,7 +313,7 @@ If workspace replication isn't available for your region, or you must use a tabl
 
 Azure Monitor Logs doesn't provide a traditional point-in-time backup or restore capability. Instead, durability and recovery rely on intra-region replication (including zone redundancy), optional workspace replication, and data export to maintain an external copy. For rapid analytics recovery after a failure, rely on platform replication rather than restore operations.
 
-You can enable [data export](/azure/azure-monitor/logs/logs-data-export), which automatically exports copies of your logs to Azure Storage. If your Azure region is paired, you can consider enabling geo-redundant storage (GRS)to replicate the log data to the paired region.
+You can enable [data export](/azure/azure-monitor/logs/logs-data-export), which automatically exports copies of your logs to Azure Storage. If your Azure region is paired, you can consider enabling geo-redundant storage (GRS) to replicate the log data to the paired region.
 
 To meet stringent compliance requirements and for tamper protection, consider using [immutability policies](/azure/storage/blobs/immutable-storage-overview) to prevent log data deletion from the storage account.
 
