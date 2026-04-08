@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-monitor
 ms.subservice: logs
-ms.date: 03/09/2026
+ms.date: 04/08/2026
 ---
 
 # Reliability in Azure Monitor Logs
@@ -16,17 +16,20 @@ ms.date: 03/09/2026
 
 [!INCLUDE [Shared responsibility description](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Monitor Logs resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
+Azure Monitor Logs provides built-in resilience features that protect your data and minimize disruptions. This article describes those features and how you can use them to make your Log Analytics workspaces resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages.
 
 ## Production deployment recommendations
 
 Azure Monitor Logs offers several features that you can use individually or in combination to help enhance workspaces resilience to various types of issues.
 
-| Capability    | Description    | Relative cost |
+| Capability    | Description    | Cost impact |
 |----|----|----|
-| [Availability zones](/azure/azure-monitor/logs/availability-zones)    | Protect your Log Analytics workspace from datacenter failures through redundancy between zones in your region.    | Least expensive |
-| [Data export](/azure/azure-monitor/logs/logs-data-export)    | Back up ingested logs against entire region failures by continuously exporting logs to a geo-redundant storage account.    | Somewhat expensive |
-| [Workspace replication](/azure/azure-monitor/logs/workspace-replication)    | Protect your Log Analytics workspace against entire region failures in Log Analytics or downstream services through redundancy between regions.    | Most expensive |
+| [Availability zones](/azure/azure-monitor/logs/availability-zones)    | Protect your Log Analytics workspace from datacenter failures through redundancy between zones in your region.    | No extra charge. Included with standard workspace pricing. Dedicated clusters must meet commitment tier minimums. |
+| [Workspace replication](/azure/azure-monitor/logs/workspace-replication)    | Protect your Log Analytics workspace against entire region failures in Log Analytics or downstream services through redundancy between regions.    | All ingested data is replicated, which adds replication charges. You can reduce costs by choosing which DCRs participate in replication. |
+| [Data export](/azure/azure-monitor/logs/logs-data-export)    | Back up ingested logs against entire region failures by continuously exporting logs to a geo-redundant storage account.    | Storage costs vary by volume and redundancy tier (GRS). No extra Azure Monitor charge for export itself. |
+
+For detailed pricing information, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
+
 
 :::image type="content" source="media/reliability-monitor-logs/resiliency-features.png" lightbox="media/reliability-monitor-logs/resiliency-features.png" alt-text="An image showing the resiliency features of Azure Monitor Log Analytics based on the previous table." border="false":::
 
@@ -243,13 +246,13 @@ This section describes what to expect when you configure a Log Analytics workspa
     > [!WARNING]
     > **Note to PG:** can we give an idea of the replication lag (even if it's vague, like "a few minutes")?
 
-    You can save on replication costs by choosing which DCRs participate in replication.
+    Replication costs are affected by which DCRs participate in replication. Workspace replication applies at the workspace level, so you can't select individual tables to replicate. However, you control costs by associating only the DCRs that carry critical data streams with the workspace's data collection endpoint. DCRs that aren't associated with the workspace DCE don't replicate their data. For more information, see [Associate data collection rules](/azure/azure-monitor/logs/workspace-replication#associate-data-collection-rules-with-the-workspace-data-collection-endpoint).
 
 #### Behavior during a region failure
 
 This section describes what to expect when you configure a Log Analytics workspace for workspace replication, and there's an outage in one of the regions.
 
-- **Detection and response:** You're responsible for deciding when to switch the secondary workspace to become the new primary. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. Switchover and switchbakc are manual actions.
+- **Detection and response:** You're responsible for deciding when to switch the secondary workspace to become the new primary. Microsoft doesn't make this decision or initiate the process for you, even if there's a region outage. Switchover and switchback are manual actions.
 
     For information about how to decide when to switch over, see [When should I switch over?](/azure/azure-monitor/logs/workspace-replication#when-should-i-switch-over), and for information about how to monitor the health of your workspace when making the decision to switch over, see [Monitor workspace performance using queries](/azure/azure-monitor/logs/workspace-replication#monitor-workspace-performance-using-queries).
 
