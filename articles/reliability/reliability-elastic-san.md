@@ -29,25 +29,13 @@ For production workloads, we recommend that you:
 
 ## Reliability architecture overview
 
-[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
-
-### Logical architecture
-
 Elastic SAN has a three-level resource hierarchy:
 
 - **Elastic SAN**: The top-level resource where you configure redundancy (LRS or ZRS), allocate storage capacity, and set performance limits. The storage capacity you allocate determines the total IOPS and throughput available across the entire SAN.
 - **Volume groups**: Management constructs used to manage volumes at scale. Network access settings (such as private endpoints or service endpoints) are configured at the volume group level and inherited by all volumes in the group.
 - **Volumes**: Individual storage volumes partitioned from the SAN's total capacity. Volumes are connected to compute resources via the iSCSI protocol.
 
-### Physical architecture
-
-<!-- TODO redo -->
-Depending on the redundancy option you select when you create the Elastic SAN, the platform manages the underlying storage infrastructure:
-
-- **LRS (locally redundant storage)**: The SAN is replicated three times within a single storage cluster in one datacenter.
-- **ZRS (zone-redundant storage)**: Three copies of the SAN are stored synchronously across three distinct availability zones, each in a physically isolated datacenter.
-
-You don't manage or see the underlying storage clusters or availability zone placement directly. Microsoft handles replication and zone distribution automatically based on your redundancy selection.
+Internally, Elastic SAN uses storage clusters. When you configure your Elastic SAN to use locally redundant storage (LRS), your data is replicated three times within a single storage cluster in one datacenter. You can configure zone-redundant storage (ZRS) to store copies of the data across three availability zones. For more information, see [Resilience to availability zone failures](#resilience-to-availability-zone-failures).
 
 ## Resilience to transient faults
 
@@ -63,7 +51,7 @@ If your iSCSI connection to an Elastic SAN volume is interrupted, the iSCSI init
 
 Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which means your data is replicated synchronously across three availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
 
-<!-- TODO diagram -->
+:::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.png" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability eones." border="false":::
 
 If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your Elastic SAN is *nonzonal*, and data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
 
