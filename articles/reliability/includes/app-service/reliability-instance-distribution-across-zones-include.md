@@ -15,6 +15,9 @@ Instance distribution in a zone-redundant deployment follows specific rules. The
 
 - **Maximum availability zones supported by your plan:** Azure determines the number of availability zones that your plan can use, which is referred to as *maximumNumberOfZones*. To view the number of availability zones that your specific plan can use, see [Check zone redundancy support for an App Service plan](/azure/app-service/configure-zone-redundancy#check-for-zone-redundancy-support-on-an-app-service-plan).
 
+    > [!NOTE]
+    > The number of availability zones available to your plan (*maximumNumberOfZones*) varies by scale unit and region. A zone-redundant deployment always uses at least two availability zones, and might use more depending on your scale unit. Regardless of the number of zones, a zone-redundant deployment provides resilience to a single zone failure and offers the same SLA.
+
 - **Instance distribution:** When zone redundancy is enabled, Azure distributes plan instances across multiple availability zones automatically. The distribution is based on the following rules:
 
     - If the number of instances exceeds *maximumNumberOfZones* and divides evenly, Azure distributes the instances evenly across zones.
