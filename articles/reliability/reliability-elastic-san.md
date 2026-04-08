@@ -26,7 +26,6 @@ For production workloads, we recommend that you:
 > - Use private endpoints for network access to enable automatic zone failover without manual intervention.
 > - Create snapshots of your volumes regularly and export them to managed disk snapshots for data protection.
 > - For workloads that require disaster recovery, copy snapshots to a secondary region that is geographically distant from your primary region.
-> - Plan your base capacity and additional capacity to balance performance requirements and cost.
 
 ## Reliability architecture overview
 
@@ -42,6 +41,7 @@ Elastic SAN has a three-level resource hierarchy:
 
 ### Physical architecture
 
+<!-- TODO redo -->
 Depending on the redundancy option you select when you create the Elastic SAN, the platform manages the underlying storage infrastructure:
 
 - **LRS (locally redundant storage)**: The SAN is replicated three times within a single storage cluster in one datacenter.
@@ -51,9 +51,9 @@ You don't manage or see the underlying storage clusters or availability zone pla
 
 ## Resilience to transient faults
 
-[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
+<!-- TODO check if the iSCSI protocol/clients require anything to handle TFs effectively -->
 
-Azure Elastic SAN is designed to provide high availability and low-latency access to storage. The platform automatically handles transient faults such as temporary network failures or storage node issues. iSCSI connections to Elastic SAN volumes are resilient to brief interruptions.
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 If your iSCSI connection to an Elastic SAN volume is interrupted, the iSCSI initiator on the client automatically attempts to reconnect. You might experience a brief pause in I/O operations during the reconnection. Configure your iSCSI initiator with appropriate retry and timeout settings to handle transient interruptions.
 
@@ -63,21 +63,18 @@ If your iSCSI connection to an Elastic SAN volume is interrupted, the iSCSI init
 
 Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which means your data is replicated synchronously across three availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
 
-If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
+<!-- TODO diagram -->
+
+If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your Elastic SAN is *nonzonal*, and data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
 
 ### Requirements
 
-- **Region support:** Zone-redundant Elastic SAN resources can be deployed into a subset of regions. For a list of regions, see [Scale targets for Elastic SAN](/azure/storage/elastic-san/elastic-san-scale-targets).
-
-- **Redundancy selection:** You must select ZRS as the redundancy option when you create the Elastic SAN. The redundancy option can't be changed after the Elastic SAN is created.
+**Region support:** Zone-redundant Elastic SAN resources can be deployed into a subset of regions. For a list of regions, see [Scale targets for Elastic SAN](/azure/storage/elastic-san/elastic-san-scale-targets).
 
 ### Considerations
 
-- **Private endpoints for automatic failover:** To ensure automatic zone failover without manual intervention, use private endpoints to connect to your Elastic SAN. When you use service endpoints instead of private endpoints, you might need to restart the iSCSI initiator manually to initiate a failover to a healthy zone.
-
-- **Write latency:** ZRS provides higher reliability than LRS, but adds more write latency because data must be written synchronously to three availability zones. Benchmark your Elastic SAN and simulate the workload of your application to compare the latency between LRS and ZRS, to determine whether the latency is acceptable for your workload.
-
-- **Migrating from LRS to ZRS:** You can't convert an LRS Elastic SAN to ZRS in place. To migrate, snapshot your Elastic SAN volumes, export them to managed disk snapshots, deploy a new Elastic SAN on ZRS, and then create volumes on the new Elastic SAN using those disk snapshots. For more information, see [Snapshot Azure Elastic SAN volumes](/azure/storage/elastic-san/elastic-san-snapshots).
+<!-- TODO move -->
+- **Connectivity for automatic failover:** To ensure automatic zone failover without manual intervention, use private endpoints to connect to your Elastic SAN. When you use service endpoints instead of private endpoints, you might need to restart the iSCSI initiator manually to initiate a failover to a healthy zone.
 
 ### Cost
 
@@ -85,17 +82,17 @@ When you create an Elastic SAN with ZRS, the cost is higher than LRS. For more i
 
 ### Configure availability zone support
 
-When you create an Elastic SAN and select ZRS as the redundancy option, your Elastic SAN is automatically zone-redundant. You can't change the redundancy option after the Elastic SAN is created.
+- **Create a new Elastic SAN with ZRS:** When you create an Elastic SAN and select ZRS as the redundancy option, your Elastic SAN is automatically zone-redundant. You can't change the redundancy option after the Elastic SAN is created. For more information about creating a new Elastic SAN resource, see [Deploy an Elastic SAN](/azure/storage/elastic-san/elastic-san-create).
 
-For more information about creating a new Elastic SAN resource, see [Deploy an Elastic SAN](/azure/storage/elastic-san/elastic-san-create).
+- **Enable zone redundancy on an existing LRS Elastic SAN:** You can't convert an LRS Elastic SAN to ZRS in place. To migrate, snapshot your Elastic SAN volumes, export them to managed disk snapshots, deploy a new Elastic SAN on ZRS, and then create volumes on the new Elastic SAN using those disk snapshots. For more information, see [Snapshot Azure Elastic SAN volumes](/azure/storage/elastic-san/elastic-san-snapshots).
 
 ### Behavior when all zones are healthy
 
 This section describes what to expect when you configure an Elastic SAN for zone redundancy, and all zones are operational.
 
-- **Cross-zone operation:** When you connect to an Elastic SAN volume, your iSCSI connection is routed to one of the three availability zones. The zone that handles your traffic might change over time as the platform balances load across zones.
+- **Cross-zone operation:** When you connect to an Elastic SAN volume, your iSCSI connection is routed to a cluster in one of the availability zones. The platform automatically routes traffic between zones.
 
-- **Cross-zone data replication:** When a client writes data to an Elastic SAN volume, that data is written synchronously to all three availability zones before the write operation is acknowledged. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure.
+- **Cross-zone data replication:** When a client writes data to an Elastic SAN volume, that data is written synchronously to clusters within three availability zones before the write operation is acknowledged. Synchronous replication ensures a high level of data consistency and ensures there's no data loss during a zone failure.
 
 ### Behavior during a zone failure
 
@@ -103,11 +100,11 @@ This section describes what to expect when you configure an Elastic SAN for zone
 
 - **Detection and response:** The Elastic SAN platform is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover for ZRS Elastic SANs.
 
-- **Notification:** You might experience an interruption in traffic to your Elastic SAN volumes during a zone outage. You can find outage declarations in [Azure Service Health](https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues).
+- **Notification:** TODO
 
 - **Active requests:** When an availability zone is unavailable, any in-progress I/O operations connected to a replica in the faulty availability zone might be terminated and need to be retried. If you use private endpoints, the failover happens automatically. If you use service endpoints, you might need to restart the iSCSI initiator to fail over to a healthy zone.
 
-- **Expected data loss:** A zone failure isn't expected to cause any data loss because data is synchronously replicated across all three availability zones.
+- **Expected data loss:** A zone failure isn't expected to cause any data loss because data is synchronously replicated across three availability zones.
 
 - **Expected downtime:** When you use private endpoints, zone failover happens automatically. You might experience availability and performance degradation for a few minutes after a failover while the SAN rebalances itself. When you use service endpoints, your volumes might be unavailable until you restart the iSCSI initiator.
 
@@ -115,7 +112,7 @@ This section describes what to expect when you configure an Elastic SAN for zone
 
 ### Zone recovery
 
-When the availability zone recovers, the Elastic SAN platform automatically restores normal operations and resumes replication across all three zones. You don't need to take any action.
+When the availability zone recovers, the Elastic SAN platform automatically restores normal operations and resumes replication across three zones. You don't need to take any action.
 
 ### Test for zone failures
 
@@ -123,57 +120,33 @@ The Azure Elastic SAN platform manages traffic routing, failover, and zone recov
 
 ## Resilience to region-wide failures
 
-<!-- Note: The include file below references "disaster recovery" terminology which is still appropriate in context. The H2 heading uses the template-standard "Resilience to region-wide failures" wording. -->
-
-[!INCLUDE [reliability-disaster-recovery-description-include](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
-
 Azure Elastic SAN is a single-region service. If the region becomes unavailable, your Elastic SAN resource is also unavailable. There's no built-in cross-region replication or failover for Elastic SAN. You're responsible for architecting your own multi-region disaster recovery solution if your workload requires region-level resiliency.
 
 ### Custom multi-region solutions for resiliency
 
-You're responsible for implementing disaster recovery for your Elastic SAN data. The recommended approach is to use volume snapshots:
+You're responsible for implementing multi-region disaster recovery for your Elastic SAN data. The recommended approach is to use volume snapshots:
 
 1. **Create snapshots regularly.** Use [volume snapshots](/azure/storage/elastic-san/elastic-san-snapshots) to capture point-in-time copies of your Elastic SAN volumes.
+
+    Your recovery point objective (RPO) depends on how frequently you create and copy snapshots to the secondary region. The more frequently you create snapshots and copy them, the lower your potential data loss during a disaster.
 
 1. **Export snapshots to managed disk snapshots.** [Export your volume snapshots](/azure/storage/elastic-san/elastic-san-snapshots#export-volume-snapshot) to managed disk snapshots, which can be copied to other regions.
 
 1. **Copy snapshots to a secondary region.** [Copy the incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions) that is geographically distant from your primary region. This reduces the risk of multiple regions being affected by a single disaster.
 
-1. **Pre-deploy resources in the secondary region.** To reduce recovery time, consider deploying a secondary Elastic SAN in your recovery region before a disaster occurs. This also helps avoid capacity constraints during an outage.
-
 1. **Restore from snapshots.** In a disaster recovery scenario, create new volumes on the secondary Elastic SAN from the copied managed disk snapshots.
 
-#### Recovery point objective (RPO)
-
-Your RPO depends on how frequently you create and copy snapshots to the secondary region. The more frequently you create snapshots and copy them, the lower your potential data loss during a disaster.
-
-#### Recovery time objective (RTO)
-
-Your RTO depends on the size of your data, the time it takes to copy snapshots across regions, and the time needed to deploy and configure a new Elastic SAN in the secondary region. Pre-deploying a secondary Elastic SAN can reduce your RTO.
-
-#### Outage detection and notification
-
-You can monitor Azure region status and find outage declarations in [Azure Service Health](https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues).
+Your recovery time objective (RTO) depends on the size of your data, the time it takes to copy snapshots across regions, and the time needed to deploy and configure a new Elastic SAN in the secondary region. To reduce recovery time, consider deploying a secondary Elastic SAN in your recovery region before a disaster occurs. This also helps avoid capacity constraints during an outage.
 
 ## Backup and restore
 
 [!INCLUDE [Backups description](includes/reliability-backups-include.md)]
 
-Azure Elastic SAN supports volume snapshots for data protection. Snapshots are incremental, point-in-time copies of your volumes that consume space from the total capacity of your Elastic SAN.
-
 Microsoft doesn't provide automatic backups for Elastic SAN. You're responsible for creating and managing snapshots based on your data protection requirements.
 
-### Create and manage snapshots
-
-To protect your data, create snapshots regularly. The frequency depends on how much data you can afford to lose (your RPO). You can create snapshots manually or use automation to create them on a schedule.
-
-For more information, see [Snapshot Azure Elastic SAN volumes](/azure/storage/elastic-san/elastic-san-snapshots).
-
-### Store snapshots in another region
+Azure Elastic SAN supports volume snapshots for data protection. Snapshots are incremental, point-in-time copies of your volumes that consume space from the total capacity of your Elastic SAN. To protect your data, create snapshots regularly. The frequency depends on how much data you can afford to lose (your RPO). You can create snapshots manually or build your own automation to create them on a schedule.
 
 Snapshots are stored within the same Elastic SAN as your volumes and use the same redundancy setting. To protect against region-wide failures, export your snapshots to managed disk snapshots and copy them to a different region. For more information, see [Export volume snapshot](/azure/storage/elastic-san/elastic-san-snapshots#export-volume-snapshot) and [Copy an incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions).
-
-### Restore from snapshots
 
 You can create a new Elastic SAN volume from a snapshot or from a managed disk snapshot. For more information, see [Create a volume from a snapshot](/azure/storage/elastic-san/elastic-san-snapshots#create-a-volume-from-a-snapshot).
 
@@ -181,16 +154,12 @@ You can create a new Elastic SAN volume from a snapshot or from a managed disk s
 
 [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
 
+> [!WARNING]
+> **Note to PG:** Please verify whether there are any other recommendations for customers to follow to be resilient to service maintenance.
+
 ## Service-level agreement
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
-
-The SLA for Azure Elastic SAN depends on the redundancy option you select:
-
-- ZRS Elastic SAN has a higher availability SLA than LRS Elastic SAN.
-- The SLA applies to read and write requests to your Elastic SAN volumes.
-
-For the specific SLA terms and availability percentages, see [SLA for Azure Elastic SAN](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services).
 
 ## Related content
 
