@@ -7,6 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-machine-scale-sets
 ms.date: 01/23/2026
+ms.update-cycle: 1095-days
 ---
 
 # Reliability in Azure Virtual Machine Scale Sets

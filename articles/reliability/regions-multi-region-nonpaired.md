@@ -39,7 +39,7 @@ If your solution requires continuous uptime during region outages, you can confi
 
 ## Azure Database for MySQL
 
-Choose any [Azure Database for MySQL available Azure regions](/azure/mysql/flexible-server/overview#azure-regions) to create your [read replicas](/azure/mysql/flexible-server/concepts-read-replicas#cross-region-replication).
+To learn about how to create multi-region solutions by using Azure Database for MySQL, see [Reliability in Azure Database for MySQL](./reliability-database-mysql.md).
 
 ## Azure Database for PostgreSQL
 
