@@ -236,7 +236,10 @@ If your solution requires continuous uptime during region outages, you can confi
 <!-- TODO single write region and multiple read regions; or multiple write regions -->
 
 > [!NOTE]
-> Single-region accounts might lose accessibility after a regional outage. To ensure business continuity at all times, we recommend that you set up your Azure Cosmos DB account with *a single write region and at least a second (read) region* and enable *service-managed failover*.
+> Single-region accounts might lose accessibility after a regional outage. To ensure business continuity at all times, we recommend that you set up your Azure Cosmos DB account with the following configuration:
+> - Configure at least one write region
+> - Configure at least two read regions (the write region and one or more other read regoins)
+> - Enable service-managed failover
 
 #### Failover types
 
