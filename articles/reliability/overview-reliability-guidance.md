@@ -96,7 +96,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Managed Redis|[Reliability in Azure Managed Redis](./reliability-managed-redis.md) ||
 |Azure Media Services|| [High availability by using Media Services and video on demand (VOD)](/azure/media-services/latest/architecture-high-availability-encoding-concept)|
 |Azure Migrate | | [Azure Migrate and backup and disaster recovery](/azure/migrate/resources-faq#does-azure-migrate-offer-backup-and-disaster-recovery)|
-|Azure Monitor Logs | | [Enhance data and service resilience in Azure Monitor Logs by using availability zones](/azure/azure-monitor/logs/availability-zones) </p> [Azure Monitor Logs workspace replication](/azure/azure-monitor/logs/workspace-replication) |
+|Azure Monitor Logs | [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md) ||
 |Azure NAT Gateway | [Reliability in Azure NAT Gateway](./reliability-nat-gateway.md) ||
 |Azure NetApp Files| [Reliability in Azure NetApp Files](reliability-netapp-files.md)||
 |Azure Network Watcher|| [Network Watcher service availability and redundancy](/azure/network-watcher/frequently-asked-questions#service-availability-and-redundancy)|
