@@ -6,7 +6,7 @@ ms.author: sidandrews
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-cosmos-db
-ms.date: 03/13/2026
+ms.date: 04/09/2026
 ---
 
 # Reliability in Azure Cosmos DB
@@ -29,12 +29,9 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 The primary resource you deploy is an Azure Cosmos DB *account*. Each account can have multiple *databases*, and databases can have multiple *containers*. Containers serve as the logical units of distribution and scalability. You create collections, tables, and graphs, depending on the API you use to interact with Azure Cosmos DB. These entities are internally represented as containers. For more information about the resource model, see [Databases, containers, and items in Azure Cosmos DB](/azure/cosmos-db/resource-model). Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
 
-A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-data-globally), which increases your resiliency to region outages. You can configure multiple regions for reading or [for writing](/azure/cosmos-db/multi-region-writes). Azure Cosmos DB automatically geo-replicates your data. Geo-replication behavior is affected by the configuration you use, such as the [consistency level](/azure/cosmos-db/consistency-levels), which indicates how you wish to make tradeoffs between data consistency, availability, latency, and throughput. Different consistency levels optimize for different concerns, support different guarantees, and provide different types of cross-region replication.
+You can configure throughput, which represents the resources available. You can [manually provision throughput](/azure/cosmos-db/set-throughput), [use autoscale](/azure/cosmos-db/provision-throughput-autoscale) to match your workload's requirements, or use the [serverless account type](/azure/cosmos-db/serverless) to be charged for your actual usage.
 
-<!-- TODO
-- RUs, and throughput types - provisioned, autoscale, serverless
-- Tiers (Business Critical etc)
--->
+A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-data-globally), which increases your resiliency to region outages. You can configure multiple regions for reading, and if you use the [Business Critical tier](/azure/cosmos-db/multi-region-writes), you can use multiple regions for writing. Azure Cosmos DB automatically geo-replicates your data. Geo-replication behavior is affected by the configuration you use, such as the [consistency level](/azure/cosmos-db/consistency-levels), which indicates how you wish to make tradeoffs between data consistency, availability, latency, and throughput. Different consistency levels optimize for different concerns, support different guarantees, and provide different types of cross-region replication.
 
 ### Physical architecture
 
@@ -348,7 +345,7 @@ The availability SLAs are different depending on whether you use any of the foll
 - Provisioned throughput
 - Single-region account with availability zone support (zone redundancy)
 - Accounts that use multiple read regions
-- Accounts that use multiple write regions
+- Accounts that use multiple write regions (Business Critical tier)
 
 ## Related content
 
