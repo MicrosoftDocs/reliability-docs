@@ -37,8 +37,6 @@ When you create an IoT hub, you deploy an *IoT hub* resource that includes all o
 
 - **Device identity registry:** A database that stores information about the devices and modules that can connect to your IoT hub. Each device must have an entry in the identity registry before it can connect. For more information, see [Understand the identity registry in your IoT hub](/azure/iot-hub/iot-hub-devguide-identity-registry).
 
-  You can [integrate IoT Hub with Azure Device Registry](/azure/iot-hub/iot-hub-device-registry-overview). If you use this approach, review [Reliability in Azure Device Registry](./reliability-device-registry.md) to understand reliability across both services.
-
 - **Messaging components:** IoT Hub handles bidirectional messaging between devices and your back-end applications, including device-to-cloud telemetry, cloud-to-device commands, and direct method invocations.
 
 - **Device twins:** JSON documents that store device state information, including metadata, configurations, and conditions. Devices and back-end applications can read and update device twins.
@@ -50,6 +48,10 @@ For reliability purposes, IoT Hub components are categorized into two groups:
 - **Data components:** Store the device identity registry, device twins, and device-to-cloud messages. These components determine data availability and durability.
 
 This distinction is important because [different regions support different types of redundancy](#requirements) for these components.
+
+### Integration with other services
+
+You can [integrate IoT Hub with Azure Device Registry](/azure/iot-hub/iot-hub-device-registry-overview). If you use this approach, review [Reliability in Azure Device Registry](./reliability-device-registry.md) to understand reliability across both services.
 
 If you use [IoT Hub Device Provisioning Service (DPS)](/azure/iot-dps/about-iot-dps) for device provisioning, your solution's reliability also depends on DPS. For more information, see [IoT Hub Device Provisioning Service high availability and disaster recovery](/azure/iot-dps/iot-dps-ha-dr).
 
