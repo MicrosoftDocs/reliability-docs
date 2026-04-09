@@ -80,7 +80,7 @@ When you create an Elastic SAN with ZRS, the cost is higher than LRS. For more i
 
 This section describes what to expect when you configure an Elastic SAN for zone redundancy, and all zones are operational.
 
-- **Cross-zone operation:** When you connect to an Elastic SAN volume, your iSCSI connection is routed to a cluster in one of the availability zones. The platform automatically routes traffic between zones.
+- **Cross-zone operation:** When you connect to an Elastic SAN volume, your iSCSI connection routes to a cluster in one of the availability zones. The platform automatically routes traffic between zones.
 
 - **Cross-zone data replication:** When a client writes data to an Elastic SAN volume, that data is written synchronously to clusters within three availability zones before the write operation is acknowledged. Synchronous replication ensures a high level of data consistency and ensures there's no data loss during a zone failure.
 
@@ -90,13 +90,13 @@ This section describes what to expect when you configure an Elastic SAN for zone
 
 This section describes what to expect when you configure an Elastic SAN for zone redundancy, and there's an outage in one of the zones.
 
-- **Detection and response:** The Elastic SAN platform is responsible for detecting a failure in an availability zone. You don't need to do anything to initiate a zone failover for ZRS Elastic SANs.
+- **Detection and response:** The Elastic SAN platform detects any failures in an availability zone. You don't need to do anything to initiate a zone failover for ZRS Elastic SANs.
 
 - **Notification:** [!INCLUDE [Availability zone down notification partial bullet (Azure Service Health only)](./includes/reliability-availability-zone-down-notification-service-partial-include.md)]
 
-- **Active requests:** When an availability zone is unavailable, any in-progress I/O operations connected to a replica in the faulty availability zone might be terminated and need to be retried. If you use private endpoints, the failover happens automatically. If you use service endpoints, you might need to restart the iSCSI initiator to fail over to a healthy zone.
+- **Active requests:** When an availability zone becomes unavailable, the service may terminate in‑progress I/O operations that connect to replicas in the affected zone, and you must retry those operations. If you use private endpoints, the service fails over automatically. If you use service endpoints, you may need to restart the iSCSI initiator to fail over to a healthy zone.
 
-- **Expected data loss:** A zone failure isn't expected to cause any data loss because data is synchronously replicated across three availability zones.
+- **Expected data loss:** Elastic SAN prevents data loss during a zone failure by synchronously replicating data across three availability zones.
 
 - **Expected downtime:** When you use private endpoints, zone failover happens automatically. You might experience availability and performance degradation for a few minutes after a failover while the SAN rebalances itself.
 
