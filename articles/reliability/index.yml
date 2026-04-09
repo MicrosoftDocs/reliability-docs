@@ -597,7 +597,7 @@ productDirectory:
         - networking
     # Card
     - title: Azure Monitor Logs
-      summary: Full observability into your applications, infrastructure, and network # TODO is there a better description?
+      summary: Full observability into your applications, infrastructure, and network
       imageSrc: /azure/media/index/monitor.svg
       url: reliability-monitor-logs.md
       azureCategories:
