@@ -315,6 +315,9 @@ Azure Monitor Logs doesn't provide a traditional point-in-time backup or restore
 
 You can enable [data export](/azure/azure-monitor/logs/logs-data-export), which automatically exports copies of your logs to Azure Storage. If your Azure region is paired, you can consider enabling geo-redundant storage (GRS) to replicate the log data to the paired region.
 
+
+## Resilience to accidental deletions
+
 To meet stringent compliance requirements and for tamper protection, consider using [immutability policies](/azure/storage/blobs/immutable-storage-overview) to prevent log data deletion from the storage account.
 
 ## Resilience to service maintenance
