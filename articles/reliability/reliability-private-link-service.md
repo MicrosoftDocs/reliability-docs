@@ -52,7 +52,7 @@ When you deploy a Private Link service with Standard Load Balancer, review the [
 Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. Service providers don't need to configure anything to turn on this behavior.
 
 :::image type="complex" source="./media/reliability-private-link-service/zone-redundant.svg" border="false" alt-text="Diagram that shows three availability zones with a public load balancer and Private Link service distributed across all zones. The load balancer directs traffic to VMs."::: 
-    Diagram that shows three vertical sections arranged side by side that represent three separate availability zones. A zone-redundant internal load balancer and Private Link service span all three zones. Each zone has a backend intance. Private Link service connects to the load balancer, which connects to all backend instances. 
+    Diagram that shows three vertical sections arranged side by side that represent three separate availability zones. A zone-redundant internal load balancer and Private Link service span all three zones. Each zone has a backend instance. Private Link service connects to the load balancer, which connects to all backend instances. 
 :::image-end::: 
 
 Private endpoints are automatically distributed across availability zones in the region. Service consumers don't need to create separate private endpoints in different zones.
