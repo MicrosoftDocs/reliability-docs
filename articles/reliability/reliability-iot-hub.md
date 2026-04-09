@@ -8,7 +8,7 @@ ms.custom:
   - subject-reliability
   - references_regions
 ms.service: azure-iot-hub
-ms.date: 03/26/2026
+ms.date: 04/09/2026
 ---
 
 # Reliability in Azure IoT Hub
@@ -36,6 +36,8 @@ For production workloads, we recommend that you:
 When you create an IoT hub, you deploy an *IoT hub* resource that includes all of the functionality required to manage and communicate with your devices. The major components of an IoT hub include:
 
 - **Device identity registry:** A database that stores information about the devices and modules that can connect to your IoT hub. Each device must have an entry in the identity registry before it can connect. For more information, see [Understand the identity registry in your IoT hub](/azure/iot-hub/iot-hub-devguide-identity-registry).
+
+  You can [integrate IoT Hub with Azure Device Registry](/azure/iot-hub/iot-hub-device-registry-overview). If you use this approach, review [Reliability in Azure Device Registry](./reliability-device-registry.md) to understand reliability across both services.
 
 - **Messaging components:** IoT Hub handles bidirectional messaging between devices and your back-end applications, including device-to-cloud telemetry, cloud-to-device commands, and direct method invocations.
 
@@ -319,5 +321,6 @@ You can also export an existing IoT hub's Azure Resource Manager template (ARM t
 
 ## Related content
 
-- [Reliability in Azure](./overview.md)
 - [IoT solution scalability, high availability, and DR](/azure/iot/iot-overview-scalability-high-availability)
+- [Reliability in Azure Device Registry](./reliability-device-registry.md)
+- [Reliability in Azure](./overview.md)
