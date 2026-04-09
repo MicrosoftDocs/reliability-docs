@@ -48,7 +48,7 @@ Internally, Elastic SAN stores your data within *storage clusters*. When you con
 If your iSCSI connection to an Elastic SAN volume is interrupted, the iSCSI initiator on the client automatically attempts to reconnect. You might experience a brief pause in I/O operations during the reconnection. Configure your iSCSI initiator with appropriate retry and timeout settings to handle transient interruptions.
 
 > [!WARNING]
-> **Note to PG:** Are there any actions or configurations that we recommend customers take to be resilient to transient connectivity problems with Elastic SAN?
+> **Note to PG:** The statement above is fairly generic. Are there any specific actions or configurations that we recommend customers take to be resilient to transient connectivity problems with Elastic SAN? For example, do we have particular retry/timeout settings we recommend, or other configurations that are generally a good practice?
 
 ## Resilience to availability zone failures
 
@@ -60,7 +60,7 @@ Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which m
 
 Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using private endpoints to connect to your volumes. Private endpoints support automatic failover. If you use service endpoints, failover requires manual intervention. For more information about the connectivity approaches, see [Learn about networking configurations for Elastic SAN](/azure/storage/elastic-san/elastic-san-networking).
 
-If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your Elastic SAN is *nonzonal*, and data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
+Using locally redundant storage (LRS) leaves your Elastic SAN unprotected against availability zone failures. LRS makes the Elastic SAN *nonzonal* by storing data in a single availability zone rather than distributing it across zones with ZRS.
 
 ### Requirements
 
