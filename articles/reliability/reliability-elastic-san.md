@@ -58,6 +58,8 @@ Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which m
 
 :::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.png" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability eones." border="false":::
 
+Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using [private endpoints](TODO) to connect to your volumes. Private endpoints support automatic failover. If you use [service endpoints](TODO), failover requires manual intervention.
+
 If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your Elastic SAN is *nonzonal*, and data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
 
 ### Requirements
@@ -96,7 +98,9 @@ This section describes what to expect when you configure an Elastic SAN for zone
 
 - **Expected data loss:** A zone failure isn't expected to cause any data loss because data is synchronously replicated across three availability zones.
 
-- **Expected downtime:** When you use private endpoints, zone failover happens automatically. You might experience availability and performance degradation for a few minutes after a failover while the SAN rebalances itself. When you use service endpoints, your volumes might be unavailable until you restart the iSCSI initiator.
+- **Expected downtime:** When you use private endpoints, zone failover happens automatically. You might experience availability and performance degradation for a few minutes after a failover while the SAN rebalances itself.
+
+    When you use service endpoints, Elastic SAN doesn't switch to a healthy zone automatically. You might need to restart the iSCSI initiator to initiate a failover to a different, healthy zone.
 
 - **Traffic rerouting:** When a zone is unavailable, the Elastic SAN platform detects the loss of the zone and routes traffic to the remaining healthy zones.
 
