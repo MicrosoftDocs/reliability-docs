@@ -596,6 +596,14 @@ productDirectory:
       azureCategories:
         - networking
     # Card
+    - title: Azure Monitor Logs
+      summary: Full observability into your applications, infrastructure, and network
+      imageSrc: /azure/media/index/monitor.svg
+      url: reliability-monitor-logs.md
+      azureCategories:
+        - devops
+        - management-and-governance
+    # Card
     - title: Azure Site Recovery
       summary: Keep your business running with built-in disaster recovery service
       imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
