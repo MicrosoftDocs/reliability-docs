@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure IoT Hub
 description: Learn about resiliency in Azure IoT Hub, including resilience to transient faults, availability zone failures, and region-wide failures. Understand backup options and SLA details.
-author: kgremban
-ms.author: kgremban
+author: cwatson-cat
+ms.author: cwatson
 ms.topic: reliability-article
 ms.custom:
   - subject-reliability
