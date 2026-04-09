@@ -58,7 +58,7 @@ Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which m
 
 :::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.png" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability eones." border="false":::
 
-Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using [private endpoints](TODO) to connect to your volumes. Private endpoints support automatic failover. If you use [service endpoints](TODO), failover requires manual intervention.
+Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using private endpoints to connect to your volumes. Private endpoints support automatic failover. If you use service endpoints, failover requires manual intervention. For more information about the connectivity approaches, see [Learn about networking configurations for Elastic SAN](/azure/storage/elastic-san/elastic-san-networking).
 
 If you configure your Elastic SAN with locally redundant storage (LRS) instead of ZRS, your Elastic SAN is *nonzonal*, and data is stored in a single availability zone. LRS Elastic SANs aren't protected against availability zone failures.
 
