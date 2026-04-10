@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ai.usage: ai-assisted
 ms.service: azure-app-configuration
-ms.date: 04/09/2026
+ms.date: 02/23/2026
 ---
 
 # Reliability in Azure App Configuration
@@ -30,7 +30,7 @@ For most production deployments of App Configuration, consider the following rec
 >
 > - **For mission-critical scenarios:** Use the Premium SKU and configure the included replica to replicate across multiple regions. This approach improves high availability and resilience to region outages.
 
-For a list of recommended practices and configuration for production workloads, see [Build applications with high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
+For a list of recommended practices and configuration for production workloads, see [Build applications that have high resiliency](/azure/azure-app-configuration/howto-best-practices#building-applications-with-high-resiliency).
 
 ## Reliability architecture overview
 
@@ -62,7 +62,7 @@ For other application configuration guidance, see [App Configuration FAQ](/azure
 
 App Configuration automatically provides zone redundancy in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
 
-:::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant App Configuration store that spans three zones in the region." lightbox="media/reliability-app-configuration/zone-redundant.svg":::
+:::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant App Configuration store that spans three zones in the region.":::
    The diagram shows availability zones 1, 2, and 3. The App Configuration store spans all three zones in the region.
 :::image-end:::
 
@@ -70,7 +70,7 @@ When an availability zone becomes unavailable, App Configuration automatically r
 
 ### Requirements
 
-**Region support:** Stores deployed into the following regions are automatically zone-redundant:
+**Region support:** Stores deployed into the following regions are automatically zone redundant.
 
 [!INCLUDE [Azure App Configuration availability zones table](~/reusable-content/ce-skilling/azure/includes/azure-app-configuration-availability-zones.md)]
 
@@ -134,7 +134,7 @@ With geo-replication, you can replicate a store across multiple Azure regions. E
 
 When you enable geo-replication, consider the following factors:
 
-- **Zone-redundant replicas:** Any replica that you create in a region in which App Configuration supports availability zones is automatically zone-redundant.
+- **Zone-redundant replicas:** Any replica that you create in a region in which App Configuration supports availability zones is automatically zone redundant.
 
 - **Azure Front Door:** To enable geo-redundant configuration delivery with Azure Front Door, configure App Configuration replicas as origins within an origin group. Correctly configured origins are required for Azure Front Door to perform health-based routing, load balancing, and automatic failover across regions. For more information, see [Traffic routing methods to origin](/azure/frontdoor/routing-methods).
 
@@ -150,9 +150,9 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 
 This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
-- **Cross-zone operation:** Each replica is individually addressable and has its own DNS name. All replicas can accept both read and write operations.
+- **Cross-zone operation:** Each replica is individually addressable and has its own Domain Name System (DNS) name. All replicas can accept both read and write operations.
     
-    App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This approach gives your application control over which replica it uses.
+    App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This approach enables your application to control which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
@@ -171,7 +171,7 @@ This section describes what to expect when you configure an App Configuration st
 
 - **Notification:** [!INCLUDE [Region down notification partial bullet (Azure Service Health only)](./includes/reliability-region-down-notification-service-partial-include.md)]
 
-- **Active requests:** Active requests against a replica in the region might be dropped. Client applications should retry the requests against a different replica.
+- **Active requests:** Active requests against a replica in the region might fail. Client applications should retry the requests against a different replica.
 
 - **Expected data loss:** If a replica fails, recent changes made on that replica might not yet be replicated to other replicas. Those changes can remain unavailable until the replica recovers. To estimate potential data loss, monitor the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring).
 
@@ -191,7 +191,7 @@ You're responsible for reconfiguring your application to route traffic back to t
 
 #### Test for region failures
 
-You can't directly simulate a replica failover in App Configuration today. However, because applications control replica selection, you can test failover behavior by forcing the application into a state where it must switch replicas.
+You can't directly simulate a replica failover in App Configuration. However, because applications control replica selection, you can test failover behavior by forcing the application into a state where it must switch replicas.
 
 To validate your application's replica failover behavior, you can introduce a controlled connectivity failure in a nonproduction environment and observe how the application responds.
 
