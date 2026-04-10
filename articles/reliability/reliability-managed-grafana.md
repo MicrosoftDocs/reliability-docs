@@ -48,7 +48,7 @@ When you create a workspace, the Azure platform provisions the following underly
 The load balancer tracks which Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions that the failed server previously handled, based on information in the shared database. Meanwhile, Azure Managed Grafana repairs or replaces the unhealthy server.
 
 :::image type="complex" source="media/reliability-managed-grafana/workspace-virtual-machines.svg" alt-text="Diagram that shows an Azure Managed Grafana workspace that consists of two VMs and a load balancer deployed by the service." border="false":::
-Architecture diagram that shows an Azure Managed Grafana workspace behind a shared gateway. A load balancer distributes traffic to two Grafana servers that connect to a shared database.
+  Architecture diagram that shows an Azure Managed Grafana workspace behind a shared gateway. A load balancer distributes traffic to two Grafana servers that connect to a shared database.
 :::image-end:::
 
 ## Resilience to transient faults
@@ -64,7 +64,7 @@ You can build client applications to interact with your Grafana workspace throug
 Azure Managed Grafana workspaces support zone redundancy in supported Azure regions. When zone redundancy is enabled, the workspace's Grafana servers are distributed across multiple availability zones. Microsoft selects the zones that your workspace uses. Other resources, such as the network load balancer, database, and shared gateway, are also configured to use multiple availability zones.
 
 :::image type="complex" source="media/reliability-managed-grafana/zone-redundant.svg" alt-text="Diagram that shows an Azure Managed Grafana workspace with two instances, each in a separate availability zone, and a zone-redundant load balancer." border="false":::
-Architecture diagram that shows an Azure Managed Grafana workspace deployed across three availability zones. A load balancer routes traffic to Grafana servers in zone 1 and 2 and a shared database that spans all zones.
+    Architecture diagram that shows an Azure Managed Grafana workspace deployed across three availability zones. A load balancer routes traffic to Grafana servers in zone 1 and 2 and a shared database that spans all zones.
 :::image-end:::
 
 If you don't enable zone redundancy, the workspace is *nonzonal* or *regional*, which means that the servers and other components might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your workspace might experience downtime.
