@@ -19,7 +19,7 @@ ms.date: 04/06/2026
 This article focuses on Private Link service and the associated private endpoints as a connectivity mechanism. It describes platform-level and control-plane behavior during transient faults, availability zone outages, and region-wide outages.
 
 > [!NOTE]
-> This article focuses on Private Link service, which facilitates private connectivity to applications that you run on your own VMs. If you use private endpoints with other Azure services, for example Azure Storage or Azure SQL Database, you should review the reliability guides for those services for reliability information about their private endpoints.
+> This article focuses on Private Link service, which facilitates private connectivity to applications that you run on your own VMs. If you use private endpoints with other Azure services, for example Azure Storage or Azure SQL Database, you should instead review the reliability guides for those services for reliability information about their private endpoints.
 
 > [!IMPORTANT]
 > The reliability of your overall solution depends on the configuration of the backend servers that Private Link service connects to. These backend servers might be Azure VMs, Azure virtual machine scale sets, or external endpoints. The reliability of your solution also depends on the configuration of load balancers and other network components.
@@ -49,7 +49,7 @@ When you deploy a Private Link service with Standard Load Balancer, review the [
 
 ## Resilience to availability zone failures
 
-Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. Service providers don't need to configure anything to turn on this behavior.
+Private Link service is automatically resilient to availability zone failures when deployed in a region that supports availability zones. Service providers don't need to configure anything to enable this behavior.
 
 :::image type="complex" source="./media/reliability-private-link-service/zone-redundant.svg" border="false" alt-text="Diagram that shows three availability zones with a public load balancer and Private Link service distributed across all zones. The load balancer directs traffic to VMs."::: 
     Diagram that shows three vertical sections arranged side by side that represent three separate availability zones. A zone-redundant internal load balancer and Private Link service span all three zones. Each zone has a backend instance. Private Link service connects to the load balancer, which connects to all backend instances. 
@@ -69,11 +69,11 @@ There's no extra cost associated with availability zone support for Private Link
 
 ### Configure availability zone support
 
-Availability zone support is automatically turned on when you deploy Private Link service in a region that supports availability zones.
+Availability zone support is automatically enabled when you deploy Private Link service in a region that supports availability zones.
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when you configure Private Link services and private endpoints for availability zone support, and all zones are operational.
+This section describes what to expect when Private Link services and private endpoints support availability zones, and all zones are operational.
 
 - **Cross-zone operation:** Traffic through a private endpoint and Private Link service might be routed through any availability zone.
 
@@ -81,7 +81,7 @@ This section describes what to expect when you configure Private Link services a
 
 ### Behavior during a zone failure
 
-This section describes what to expect when you configure Private Link services and private endpoints for availability zone support, and there’s an outage in one of the zones.
+This section describes what to expect when you Private Link services and private endpoints support availability zones, and there’s an outage in one of the zones.
 
 - **Detection and response:** Microsoft is responsible for detecting availability zone failures and managing the service response.
 
@@ -93,7 +93,9 @@ This section describes what to expect when you configure Private Link services a
 
 - **Expected downtime:** Existing connections that connect through the failed zone might fail. If backend components such as the load balancer and application servers remain available, service consumers can immediately retry the connection, and requests are routed through infrastructure in another zone.
 
-- **Redistribution:** When a single availability zone fails, the service routes new traffic through healthy zones, which continues operation. VMs in the affected availability zone are unlikely to remain operational. However, if a partial zone failure makes Private Link unavailable in the affected zone while VMs in that zone continue to operate, outbound connections to VMs in the affected zone are routed through Private Link infrastructure in another zone.
+- **Redistribution:** When a single availability zone fails, the service routes new traffic through healthy zones, which continues operation.
+
+  VMs in the affected availability zone are unlikely to remain operational during a zone outage. However, if a partial zone failure makes Private Link unavailable in the affected zone while VMs in that zone continue to operate, outbound connections to VMs in the affected zone are routed through Private Link infrastructure in another zone.
 
 Application downtime can also occur if dependent components, such as load balancers or backend VMs, aren't zone resilient.
 
