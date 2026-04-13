@@ -21,14 +21,14 @@ This article describes how Backup can be resilient to a variety of potential out
 > [!NOTE]
 > This article describes how the Backup service itself is resilient to various problems and how you can make it more resilient. It doesn't explain how to use Backup to protect your VMs, data, or other assets. To learn about how to use Backup, see [Overview of Backup](/azure/backup/backup-overview).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
-To back up your production workloads, we recommend that you set up your vault in the following ways:
+To back up your production workloads, we recommend that you configure your vault in the following ways:
 
 > [!div class="checklist"]
 > - Use zone-redundant storage (ZRS) as the minimum redundancy tier for your backups. ZRS replicates your backups across multiple availability zones so that you can restore your backups during an availability zone outage.
 >
-> - If you use geo-redundant storage (GRS) to replicate your backups to a paired Azure region, turn on cross-region restore (CRR) for supported data sources. CRR lets you restore the backups into the paired region at any time.
+> - If you use geo-redundant storage (GRS) to replicate your backups to a paired Azure region, enable cross-region restore (CRR) for supported data sources. CRR lets you restore the backups into the paired region at any time.
 
 The following sections of this article provide more detail about these configurations.
 
@@ -43,7 +43,7 @@ For a list of other recommendations for Backup, including reliability-focused re
 
 ### Logical architecture
 
-Backup can back up and restore a variety of data sources. You set up backups differently depending on the data source that you work with. The following data sources are common:
+Backup can back up and restore a variety of *data sources*. You configure backups differently depending on the data source that you work with. The following data sources are common:
 
 - Azure VMs
 - Various databases
@@ -74,7 +74,7 @@ Backup stores backups in the vault. Vaults are built on top of Azure Storage. Va
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-When you use Backup, both backup and restore workflows are resilient to intermittent failures. The service automatically retries when it encounters transient network faults or temporary service interruptions. You don't set up any retry logic. If you experience repeated faults, see [Troubleshoot Backup vault management operations](/azure/backup/backup-vault-troubleshoot).
+When you use Backup, both backup and restore workflows are resilient to intermittent failures. The service automatically retries when it encounters transient network faults or temporary service interruptions. You don't configure any retry logic. If you experience repeated faults, see [Troubleshoot Backup vault management operations](/azure/backup/backup-vault-troubleshoot).
 
 ## Resilience to availability zone failures
 
@@ -82,13 +82,13 @@ When you use Backup, both backup and restore workflows are resilient to intermit
 
 Backup separately manages the availability zone configuration of the service and for your data.
 
-- **Service:** Backup is automatically zone resilient in supported regions. However, this built-in zone resiliency doesn't apply to your backed-up data.
+- **Service:** The Backup service is automatically zone resilient in supported regions. However, this built-in zone resiliency doesn't apply to your backed-up data.
 
 - **Backup storage redundancy:** Select the level of redundancy that you want for your backup data by configuring your Recovery Services vault or Backup vault. If you select ZRS, copies of your backup data are automatically stored across multiple availability zones in the Azure region that you use.
 
     If you don't use ZRS, your backup data is considered *nonzonal* and might be stored in any zone. If any zone in the region has a problem, nonzonal backup data might be unavailable.
 
-:::image type="complex" source="./media/reliability-backup/zone-redundant.svg" alt-text="Diagram that shows the Backup core service, which is automatically zone-resilient, and zone-redundant backup storage." border="false" lightbox="./media/reliability-backup/zone-redundant.svg":::
+:::image type="complex" source="./media/reliability-backup/zone-redundant.svg" alt-text="Diagram that shows the Backup core service, which is automatically zone-resilient, and zone-redundant backup storage." border="false":::
    The diagram shows the zone-resilient architecture of Backup across three availability zones. Three columns represent availability zone 1, availability zone 2, and availability zone 3. A box labeled Backup core service spans all three zones. Below this box, the diagram shows a single row labeled ZRS that also spans all three availability zones. Below the ZRS row, another box spans all three availability zones. This box contains two cloud icons that represent a Backup vault and a Recovery Services vault.
 :::image-end:::
 
@@ -96,22 +96,22 @@ Backup separately manages the availability zone configuration of the service and
 
 - **Region support:** The service is automatically zone-resilient in [all regions that have availability zones](./regions-list.md). ZRS vaults are supported in the same regions.
 
-- **New vaults only:** Set up ZRS on your vault before the first backup.
+- **New vaults only:** Configure ZRS on your vault before the first backup.
 
 ### Cost
 
-When you turn on ZRS for your backups, you're charged at a different rate than LRS because of the extra replication and storage overhead. For more information, see [Backup pricing](https://azure.microsoft.com/pricing/details/backup/).
+When you enable ZRS for your backups, you're charged at a different rate than LRS because of the extra replication and storage overhead. For more information, see [Backup pricing](https://azure.microsoft.com/pricing/details/backup/).
 
 ### Configure availability zone support
 
-- **Create a new vault that uses ZRS:** Set up storage redundancy when you create a vault. You follow different steps depending on the vault type. For more information, see the following articles:
+- **Create a new vault that uses ZRS:** Configure storage redundancy when you create a vault. You follow different steps depending on the vault type. For more information, see the following articles:
 
     - [Create and delete Backup vaults](/azure/backup/create-manage-backup-vault)
-    - [Create and set up a Recovery Services vault](/azure/backup/backup-create-recovery-services-vault)
+    - [Create and configure a Recovery Services vault](/azure/backup/backup-create-recovery-services-vault)
 
-- **Set up ZRS on existing vaults:** For Backup vaults, set up storage redundancy when you create the vault. After you create a Backup vault, the setting is locked and you can't change it.
+- **Configure ZRS on existing vaults:** For Backup vaults, configure storage redundancy when you create the vault. After you create a Backup vault, the setting is locked and you can't change it.
 
-    For Recovery Services vaults, you must set up storage redundancy before you protect any workloads. After you protect a workload, the setting is locked and you can't change it.
+    For Recovery Services vaults, you must configure storage redundancy before you protect any workloads. After you protect a workload, the setting is locked and you can't change it.
     
     You can create a new vault configured to use ZRS and reassign your workloads to the new vault. However, this approach requires downtime. For more information, see [Modify default settings](/azure/backup/backup-create-recovery-services-vault#modify-default-settings). You're also responsible for manually deleting existing recovery points and other data because the old vault's retention policies no longer apply. For more information, see [Delete a Backup vault](/azure/backup/create-manage-backup-vault#delete-a-backup-vault) or [Delete a Recovery Services vault](/azure/backup/backup-azure-delete-vault#delete-protected-items-in-the-cloud).
 
@@ -167,7 +167,7 @@ Backup supports geo-redundancy and failover through GRS and CRR.
 > [!IMPORTANT]
 > GRS for Backup only works within [paired Azure regions](/azure/reliability/regions-paired).
 
-### GRS and CRR
+### Geo-redundant storage and cross-region restore
 
 To achieve regional redundancy for your backup data, use Backup to replicate your backups to an [Azure paired region](./regions-paired.md) by using [GRS](/azure/storage/common/storage-redundancy#geo-redundant-storage). GRS protects your backups from regional outages.
 
@@ -181,7 +181,7 @@ The paired region is also known as the *secondary region*.
 
 If you don't configure GRS and an outage occurs in the vault's region, you might be able to access the vault and view backup items. However, without regional redundancy, the underlying backup data remains unavailable for restore operations.
 
-#### CRR
+#### Cross-region restore
 
 When you configure GRS on a vault, Microsoft makes backups in the paired region available after an outage in the primary region occurs. If your data source supports [CRR](/azure/backup/backup-create-recovery-services-vault#set-cross-region-restore), you can restore from secondary region recovery points even when no outage occurs in the primary region. CRR also lets you run drills to assess resiliency against regional outages. When you turn on CRR, Microsoft upgrades your backup storage from GRS to read-access geo-redundant storage (RA-GRS).
 
@@ -189,7 +189,7 @@ When you configure GRS on a vault, Microsoft makes backups in the paired region 
 
 - **Region support:** GRS for Backup only works within [paired Azure regions](/azure/reliability/regions-paired).
 
-- **New vaults only:** You must set up GRS on your vault before the first backup takes place.
+- **New vaults only:** You must configure GRS on your vault before the first backup takes place.
 
 #### Considerations
 
@@ -201,16 +201,16 @@ GRS vaults incur extra costs for cross-region replication and storage in the sec
 
 #### Configure multi-region support
 
-- **Create a new vault that uses GRS and CRR:** When you create a vault, you should also set up storage redundancy. After you select GRS, you can optionally turn on CRR on the vault. The steps that you follow depend on the vault type. For more information, see the following articles:
+- **Create a new vault that uses GRS and CRR:** When you create a vault, you should also configure storage redundancy. After you select GRS, you can optionally enable CRR on the vault. The steps that you follow depend on the vault type. For more information, see the following articles:
 
     - [Create and delete Backup vaults](/azure/backup/create-manage-backup-vault)
-    - [Create and set up a Recovery Services vault](/azure/backup/backup-create-recovery-services-vault)
+    - [Create and configure a Recovery Services vault](/azure/backup/backup-create-recovery-services-vault)
 
-- **Set up GRS and CRR on existing vaults:** For Backup vaults, you must set up storage redundancy when you create the vault.
+- **Configure GRS and CRR on existing vaults:** For Backup vaults, you must configure storage redundancy when you create the vault.
 
-    For Recovery Services vaults, you must set up storage redundancy before you protect any workloads. After a workload is protected, the setting is locked and you can't change it.
+    For Recovery Services vaults, you must configure storage redundancy before you protect any workloads. After a workload is protected, the setting is locked and you can't change it.
 
-    You can turn on CRR on existing GRS vaults. After you turn on CRR, you can't turn it off.
+    You can enable CRR on existing GRS vaults. After you enable CRR, you can't disable it.
 
 #### Behavior when all regions are healthy
 
@@ -218,13 +218,13 @@ This section describes what to expect when you configure vaults to use GRS and a
 
 - **Cross-region operation:** Backups are always completed in the primary region, which is the region where the vault and data source are deployed.
 
-- **Cross-region data replication:** When you set up the vault to use GRS, backups are first committed to the primary region by using LRS. After successful completion in the primary region, data is asynchronously replicated to the secondary region. The secondary region uses LRS to store data. The backup data can take up to 12 hours to replicate from the primary region to the secondary region.
+- **Cross-region data replication:** When you configure the vault to use GRS, backups are first committed to the primary region by using LRS. After successful completion in the primary region, data is asynchronously replicated to the secondary region. The secondary region uses LRS to store data. The backup data can take up to 12 hours to replicate from the primary region to the secondary region.
 
 #### Behavior during a region failure
 
 This section describes what to expect when you configure vaults to use GRS and an outage occurs in the primary region.
 
-- **Detection and response:** For data sources that support [CRR](/azure/backup/backup-support-matrix#cross-region-restore) and where CRR is set up on the vault, you can initiate your own CRR to the paired region at any time, including during a region outage or disaster. You're responsible for detecting the outage and taking recovery actions, including restoring backups to a healthy region.
+- **Detection and response:** For data sources that support [CRR](/azure/backup/backup-support-matrix#cross-region-restore) and where CRR is enabled on the vault, you can initiate your own CRR to the paired region at any time, including during a region outage or disaster. You're responsible for detecting the outage and taking recovery actions, including restoring backups to a healthy region.
 
     For all other scenarios, the data replicated to the secondary region is available to restore in the secondary region only if Azure declares a disaster in the primary region. Microsoft is responsible for declaring a disaster. The amount of time it takes to declare a disaster depends on the severity of the incident and the time required to assess the situation. Microsoft typically declares a disaster only after an extended period of time.
 
@@ -264,4 +264,11 @@ Backup provides two key recovery features to prevent accidental or malicious del
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
-The Backup SLA covers the availability of the service for both backup and restore operations. To be covered by the SLA, you need to retry failed backup or restore jobs at least once every thirty minutes.
+The Backup SLA covers the availability of the service for both backup and restore operations. To be covered by the SLA, you need to retry failed backup or restore jobs at least once every 30 minutes.
+
+## Related content
+
+- [Reliability in Azure](overview.md)
+- [Reliability in Azure Virtual Machines](reliability-virtual-machines.md)
+- [Reliability in Azure Disk Storage](reliability-storage-disk.md)
+- [Reliability in Azure Site Recovery](reliability-site-recovery.md)
