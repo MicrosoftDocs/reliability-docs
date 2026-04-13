@@ -226,7 +226,7 @@ Your applications can partially simulate the zone outage behavior by using the A
 When an Azure Cosmos DB account is deployed in a single region and the region has an outage that affects all of its Azure Cosmos DB nodes, generally no data loss occurs, but your application can't access your data. Data access is restored after Azure Cosmos DB services recover in the affected region. Data loss might occur only with an unrecoverable disaster in the Azure Cosmos DB region.
 
 To prepare for the rare cases of region outages, you can configure Azure Cosmos DB to support various levels of durability and availability by using one of these approaches:
-- Multiple read regions, optionally with per-partition automatic failover (PPAF) enabled
+- Multiple read regions, optionally with service-managed failover or per-partition automatic failover (PPAF) enabled
 - Multiple write regions
 
 This section focuses on the reliability aspects of these capabilities, but there are other benefits to multiple read and write regions, such as higher performance and scale for globally distributed applications. You should evaluate your whole solution architecture and consider all of the benefits of using these capabilities.
@@ -278,7 +278,7 @@ Azure Cosmos DB provides multiple types of failover:
 
     After a service-managed failover, Microsoft must bring a region back online. Microsoft automatically brings the region online but this process can take several days.
 
-- **Per-partition automatic failover (PPAF):** Internally, Azure Cosmos DB spreads your data across multiple physical partitions. If a problem occurs with the infrastructure supporting a partition, other partitions might not be affected. PPAF enables single-write region accounts to automatically fail over individual partitions to a secondary region while keeping healthy partitions in the primary region. PPAF can help to minimize downtime and enable faster recovery during a partial region failure. For more information, see TODO.
+- **Per-partition automatic failover (PPAF):** Internally, Azure Cosmos DB spreads your data across multiple physical partitions. If a problem occurs with the infrastructure supporting a partition, other partitions might not be affected. PPAF enables single-write region accounts to automatically fail over individual partitions to a secondary region while keeping healthy partitions in the primary region. PPAF can help to minimize downtime and enable faster recovery during a partial region failure. For more information, see [How to onboard and adopt Per-Partition Automatic Failover (PPAF) for Azure Cosmos DB](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover).
 
     > [!NOTE]
     > Per Partition Automatic Failover is in public preview. This feature is provided without a service level agreement. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
@@ -293,7 +293,7 @@ Azure Cosmos DB provides multiple types of failover:
 
     <!-- TODO metrics you can watch -->
 
-    Steps: [Perform forced failover for your Azure Cosmos DB Account](how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account)
+    Steps: [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account)
 
 - **Switch write region:** When the regions are healthy, you can switch your account's write region. This change is effectively a planned failover of the write region for your account.
 
@@ -333,7 +333,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
     All write operations are directed to your account's write region.
 
-- **Cross-region data replication:** All write operations occur in your account's primary region. Writes are replicated asynchronously to the other read regions. TODO delay
+- **Cross-region data replication:** All write operations occur in your account's primary region. Writes are replicated asynchronously to the other read regions. For information about the maximum replication lag, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
 #### Behavior during a region failure
 
@@ -341,11 +341,11 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Detection and response:** Responsibility for detecting the outage and responding depends on the type of failover your account uses.
 
-    - *Service-managed failover:* TODO
+    - *Service-managed failover:* Microsoft automatically detects the outage and initiates a failover of your account. Your application doesn't need to take any action.
 
-    - *PPAF:* TODO
+    - *PPAF:* Microsoft automatically detects the outage and initiates a failover of some partitions, if appropriate. Your application doesn't need to take any action.
 
-    - *Manual failover:* Your application detects the loss of the region. Azure Cosmos DB SDKs provide automatic region selection capabilities that route read and write operations to healthy regions.
+    - *Manual failover:* Your application detects the loss of the region. You can perform a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If there's an outage of your account's write region, avoid performing a *switch write region* operation. Write region switches don't succeed if there's an outage of the source or destination region. The reason is that the switch procedure includes a consistency check that requires connectivity between the regions.
 
@@ -353,12 +353,28 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Active requests:** Any active requests might be terminated and need to be retried by the client after failover completes. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** TODO
+- **Expected data loss:** If the account's write region experiences an outage, any unreplicated writes might be lost after the failover completes. For information about the maximum data loss expected during a region outage, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
-    <!-- TODO repeated -->
-    [Potential data loss during region outages](#potential-data-loss-during-region-outages)
+    An outage in a read region doesn't cause data loss.
 
-- **Expected downtime:** <!-- TODO -->
+- **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
+
+    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover.
+
+        > [!WARNING]
+        > **Note to PG:** Can we give an approximate indication of how long this is expected to take (e.g. "a few minutes")?
+
+    - *PPAF:*
+
+        > [!WARNING]
+        > **Note to PG:** Is there anything we can say here about how long downtime might be when PPAF is enabled?
+
+    - *Forced failover:* Downtime depends on:
+        - How long it takes you to discover the outage and initiate a failover
+        - How long the failover takes, which is usually a few seconds.
+
+            > [!WARNING]
+            > **Note to PG:** Please verify that a forced failover is likely to take a few seconds.
 
 - **Redistribution:** <!-- TODO -->
 
