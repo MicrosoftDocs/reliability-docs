@@ -95,11 +95,7 @@ items:
     - name: Azure Cosmos DB for NoSQL
       href: reliability-cosmos-db-nosql.md
     - name: Azure Database for MySQL
-      items: 
-      - name: Availability zones
-        href: /azure/mysql/flexible-server/concepts-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Disaster recovery
-        href: /azure/mysql/flexible-server/how-to-restore-server-portal?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#geo-restore-to-latest-restore-point
+      href: reliability-database-mysql.md
     - name: Azure Database for PostgreSQL
       href: reliability-database-postgresql.md
     - name: Azure DocumentDB
@@ -118,12 +114,8 @@ items:
     items:
     - name: Azure DevOps
       href: /azure/devops/organizations/security/data-protection?view=azure-devops.md&preserve-view=true#data-availability&toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Data export
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -154,12 +146,8 @@ items:
       href: reliability-backup.md
     - name: Azure Managed Grafana
       href: reliability-managed-grafana.md
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Data export
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
   - name: Migration
@@ -179,7 +167,7 @@ items:
     - name: Azure DNS 
       href: reliability-dns.md
     - name: Azure DDoS Protection
-      href: reliability-ddos.md
+      href: reliability-ddos-protection.md
     - name: Azure ExpressRoute gateway
       href: reliability-virtual-network-gateway.md?pivots=expressroute
     - name: Azure Firewall
@@ -222,6 +210,8 @@ items:
       href: reliability-storage-blob.md
     - name: Azure Data Box
       href: /azure/databox/data-box-disk-faq?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#how-can-i-recover-my-data-if-an-entire-region-fails-
+    - name: Azure Disk Storage
+      href: reliability-storage-disk.md
     - name: Azure Elastic SAN
       href: reliability-elastic-san.md
     - name: Azure Files
@@ -232,8 +222,6 @@ items:
       href: reliability-storage-queue.md
     - name: Azure Storage Actions
       href: reliability-storage-actions.md
-    - name: Azure Storage-Disk Storage
-      href: /azure/virtual-machines/disks-high-availability?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Storage Mover
       href: reliability-azure-storage-mover.md
     - name: Azure Table Storage
@@ -309,7 +297,7 @@ items:
       - name: Azure Cosmos DB for NoSQL
         href: migrate-cosmos-nosql.md
       - name: Azure Database for MySQL
-        href: migrate-database-mysql-flex.md
+        href: reliability-database-mysql.md#configure-availability-zone-support
       - name: Azure Database for PostgreSQL
         href: reliability-database-postgresql.md
       - name: Azure Elastic SAN
@@ -322,8 +310,6 @@ items:
         href: reliability-aks.md
       - name: Azure Load Balancer 
         href: reliability-load-balancer.md#configure-availability-zone-support
-      - name: Log Analytics Dedicated Cluster workspaces
-        href: migrate-monitor-log-analytics.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database

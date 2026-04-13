@@ -175,7 +175,7 @@ Most SLAs impose a deadline to submit claims after an incident. If you miss the 
 
 To illustrate how to read an SLA in practice, this section uses a fictional service, *Pigeon Post as a Service (PPaaS)*. PPaaS is a hypothetical managed messaging service that delivers messages through trained carrier pigeons. An API accepts a message and sends it to a dispatcher that's responsible for releasing the pigeon and sending the message to the recipient.
 
-:::image type="content" border="false" source="media/concept-service-level-agreements/pigeon-posted-service.svg" alt-text="Diagram that shows the pigeon post service architecture. A client sends messages to an API, which then connects to a dispatcher. The dispatcher sends a carrier pigeon to the recipient.":::
+:::image type="content" border="false" source="media/concept-service-level-agreements/pigeon-post-service.svg" alt-text="Diagram that shows the pigeon post service architecture. A client sends messages to an API, which then connects to a dispatcher. The dispatcher sends a carrier pigeon to the recipient.":::
 
 PPaaS is intentionally absurd, but the structure of its SLA reflects many real-world SLAs. This example illustrates the five-pass approach.
 

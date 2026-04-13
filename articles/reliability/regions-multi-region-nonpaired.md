@@ -39,7 +39,7 @@ If your solution requires continuous uptime during region outages, you can confi
 
 ## Azure Database for MySQL
 
-Choose any [Azure Database for MySQL available Azure regions](/azure/mysql/flexible-server/overview#azure-regions) to create your [read replicas](/azure/mysql/flexible-server/concepts-read-replicas#cross-region-replication).
+To learn about how to create multi-region solutions by using Azure Database for MySQL, see [Reliability in Azure Database for MySQL](./reliability-database-mysql.md).
 
 ## Azure Database for PostgreSQL
 
@@ -63,9 +63,7 @@ To learn about how to create multi-region solutions by using Azure Kubernetes Se
 
 ## Azure Monitor Logs
 
-Log Analytics workspaces in Azure Monitor Logs don't use paired regions. To ensure business continuity and protect against data loss, enable cross-region workspace replication.
-
-For more information, see [Enhance resilience by replicating your Log Analytics workspace across regions](/azure/azure-monitor/logs/workspace-replication).
+To learn about how to create multi-region solutions by using Azure Monitor Logs, see [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md).
 
 ## Azure Service Bus 
 
