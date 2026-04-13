@@ -78,7 +78,8 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. T
 
 - **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects only one availability zone. However, if multiple availability zones or the entire region is impacted, single-region accounts lose read and write access until service is restored.
 
-<!-- TODO interactions between multi-region and AZ support -->
+> [!WARNING]
+> **Note to PG:** In the legacy document, [we have a table](https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql#zone-redundancy-and-multi-region-accounts) that gives an opinionated benefit of using zone redundancy depending on the account's configuration. As I understand it, this was written to try to dissuade unnecessary use of zone redundancy because capacity was at a premium. Is this still necessary and valuable or should we omit it?
 
 ### Cost
 
