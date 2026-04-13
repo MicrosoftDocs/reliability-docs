@@ -86,7 +86,7 @@ Azure Database for MySQL supports two availability zone configuration types when
 
     A local redundant deployment gives you high availability within a single availability zone. It protects you against node-level failures and also helps with reducing application downtime during planned and unplanned downtime events. However, it doesn't protect against an outage in that zone. In regions with availability zones, this kind of configuration is also sometimes called *zonal* or *single-zone*.
 
-    :::image type="content" source="./media/reliability-database-mysql/local-redundant.svg" alt-text="Diagram showing a local-redundant server, with the primary and standby servers in different availability zones." border="false" lightbox="./media/reliability-database-mysql/local-redundant.svg" :::
+    :::image type="content" source="./media/reliability-database-mysql/local-redundant.svg" alt-text="Diagram showing a local-redundant server, with the primary and standby servers in the same availability zone." border="false" lightbox="./media/reliability-database-mysql/local-redundant.svg" :::
     
     We recommend local-redundant high availability only in specific scenarios:
     - When you have unusually latency-sensitive applications, you have validated the need to minimize latency between your primary and secondary replica, and you have planned for zone resilience yourself by using other architectural approaches.
