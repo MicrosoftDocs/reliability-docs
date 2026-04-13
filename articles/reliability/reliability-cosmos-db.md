@@ -253,20 +253,16 @@ For more information on the differences between consistency levels, see [Consist
 
 ### Multiple read regions with a single write region
  
-If your solution requires continuous uptime during region outages, you can configure Azure Cosmos DB to replicate your data across multiple regions and to transparently fail over to operating regions when required.
+If your solution requires continuous uptime during region outages, you can configure Azure Cosmos DB to replicate your data across multiple regions and to transparently fail over to operating regions when required. You can optionally configure your applications to connect to specific read regions, which can help to improve their performance.
 
-<!-- TODO diagram
-- Client apps, each doing reads and writes. Show where writes and reads go
-- Region A - write + read
-- Region B - read only
--->
+![Diagram showing an Azure Cosmos DB account. Region A is a write and read region, and region B is a read region. An application in region A performs reads and writes against the Azure Cosmos DB account in region A. An application in region B performs reads against the account in region B, but writes against region A.](./media/reliability-cosmos-db/multiple-read-regions.png)
 
 #### Failover types
 
 Failover is the process of making one of your account's regions unavailable. The effect of a failover depends on whether the region is a write region or a read region:
 
 - If a write region becomes unavailable, another region becomes the write region.
-- If a read region becomes unavailable, that region can't serve read requests and other regions are used instead.
+- If a read region becomes unavailable, that region can't serve read requests and other regions are used for read operations instead.
 
 Azure Cosmos DB provides multiple types of failover:
 
