@@ -144,6 +144,8 @@ items:
     items:
     - name: Azure Backup
       href: reliability-backup.md
+    - name: Azure Chaos Studio
+      href: reliability-chaos-studio.md
     - name: Azure Managed Grafana
       href: reliability-managed-grafana.md
     - name: Azure Monitor Logs
