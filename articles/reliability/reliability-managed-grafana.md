@@ -18,14 +18,14 @@ ai-usage: ai-assisted
 
 This article describes how to make Azure Managed Grafana resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also describes how you can back up and recover from other types of problems and highlights key information about the Azure Managed Grafana service-level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 To increase the reliability of production deployments by using Azure Managed Grafana, we recommend that you take the following actions:
 
 >[!div class="checklist"]
 > - **Enable zone redundancy** when you create a workspace to provide resilience to availability zone failures.
 >
-> - **Store dashboards and other Grafana resources as code**, such as by exporting them from the Grafana API or CLI, and storing them in a source control repository like GitHub. Use continuous integration and continuous delivery (CI/CD) pipelines to deploy dashboards to Azure Managed Grafana. This approach supports recovery scenarios. It also enables deployment to multiple Grafana instances, including instances in different Azure regions if required.
+> - **Store dashboards and other Grafana resources as code**, such as by exporting them from the Grafana API or CLI and storing them in a source control repository like GitHub. Use continuous integration and continuous delivery (CI/CD) pipelines to deploy dashboards to Azure Managed Grafana. This approach supports recovery scenarios. It also enables deployment to multiple Grafana instances, including instances in different Azure regions if required.
 
 ## Reliability architecture overview
 
