@@ -81,7 +81,7 @@ This section describes what to expect when Private Link services and private end
 
 ### Behavior during a zone failure
 
-This section describes what to expect when you Private Link services and private endpoints support availability zones, and there’s an outage in one of the zones.
+This section describes what to expect when your Private Link services and private endpoints support availability zones, and there's an outage in one of the zones.
 
 - **Detection and response:** Microsoft is responsible for detecting availability zone failures and managing the service response.
 
