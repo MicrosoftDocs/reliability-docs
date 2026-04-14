@@ -18,7 +18,7 @@ ms.date: 02/23/2026
 
 This article describes the reliability architecture of App Configuration and how the service is designed to remain available during transient faults, availability zone failures, and region outages.
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 For most production deployments of App Configuration, consider the following recommendations:
 
@@ -86,7 +86,7 @@ If App Configuration adds availability zone support to an existing region, you d
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when you configure an App Configuration store for zone redundancy, and all zones are operational.
+This section describes what to expect when you have a zone-redundant App Configuration store, and all zones are operational.
 
 - **Cross-zone operation:** App Configuration automatically manages traffic routing between availability zones. During normal operations, it transparently distributes requests across zones.
 
@@ -94,7 +94,7 @@ This section describes what to expect when you configure an App Configuration st
 
 ### Behavior during a zone failure
 
-This section describes what to expect when you configure an App Configuration store for zone redundancy, and there's an outage in one of the zones.
+This section describes what to expect when you have a zone-redundant App Configuration store, and there's an outage in one of the zones.
 
 - **Detection and response:** The App Configuration service detects zone failures and automatically responds to them. You don't need to take any action during a zone failure.
 
@@ -165,7 +165,7 @@ This section describes what to expect when you configure an App Configuration st
 
 - **Detection and response:** Microsoft is responsible for detecting region or replica failures and initiating recovery processes.
 
-    When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview) and perform [automatic replica discovery](/azure/azure-app-configuration/howto-geo-replication#automatic-replica-discovery) or with a list of multiple replicas, your application automatically fails over to another healthy replica.
+    When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview) with [automatic replica discovery](/azure/azure-app-configuration/howto-geo-replication#automatic-replica-discovery) or a list of multiple replicas, your application automatically detects failures and fails over to a healthy replica.
 
     If you don't use App Configuration providers, you're responsible for switching your application to a healthy replica.
 
@@ -233,7 +233,7 @@ Use both features for production environments. For more information, see [Soft-d
 
 ## Resilience to service maintenance
 
-Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, which makes maintenance simple and transparent to you. No downtime is expected during maintenance events unless [Azure Service Health](/azure/service-health/service-health-planned-maintenance) provides a planned maintenance notice.
+Microsoft regularly performs service updates and other maintenance. The service handles these activities automatically, which makes maintenance seamless and transparent to you. No downtime is expected during maintenance events unless [Azure Service Health](/azure/service-health/service-health-planned-maintenance) provides a planned maintenance notice.
 
 ## Resilience to configuration problems
 
