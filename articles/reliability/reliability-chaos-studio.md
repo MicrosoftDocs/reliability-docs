@@ -23,16 +23,15 @@ Azure Chaos Studio supports zone redundancy as the default configuration within 
 
 The following regions support availability zones for Chaos Studio:
 
-| Americas         | Europe               | Asia Pacific   |
-|------------------|----------------------|----------------|
-| Brazil South     | France Central       | Australia East |
-| Canada Central   | Germany West Central | East Asia      |
-| Central US       | Italy North          | Japan East     |
-| East US          | North Europe         | Southeast Asia |
-| East US 2        | Sweden Central       | UAE North      |
-| South Central US | UK South             |                |
-| West US 2        | West Europe          |                |
-| West US 3        |                      |                |
+| Americas       | Europe               | Asia Pacific   |
+|----------------|----------------------|----------------|
+| Brazil South   | France Central       | Australia East |
+| Canada Central | Germany West Central | Japan East     |
+| Central US     | Italy North          | Southeast Asia |
+| East US        | North Europe         | UAE North      |
+| East US 2      | Sweden Central       |                |
+| West US 2      | UK South             |                |
+| West US 3      | West Europe          |                |
 
 For detailed information on the regional availability model for Azure Chaos Studio see [Regional availability of Azure Chaos Studio](/azure/chaos-studio/chaos-studio-region-availability).
 
