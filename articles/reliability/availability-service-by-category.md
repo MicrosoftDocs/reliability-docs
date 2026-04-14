@@ -126,6 +126,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Analysis Services
 - Azure API for FHIR
 - Azure Automation
+- Azure Chaos Studio
 - Azure Container Apps
 - Azure Data Share
 - Azure Database for MariaDB
