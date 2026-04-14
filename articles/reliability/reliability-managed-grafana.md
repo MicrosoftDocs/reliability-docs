@@ -37,13 +37,15 @@ The primary Azure resource that you deploy is a *workspace*. After you deploy yo
 
 ### Physical architecture
 
-When you create a workspace, the Azure platform provisions the following underlying components:
+When you create a workspace, internally, the Azure platform provisions the following underlying components:
 
 - **Grafana servers:** Dedicated virtual machines (VMs) that run the Grafana application. By default, two servers are provisioned for high availability and redundancy. Microsoft fully manages these servers. You don't see them in your subscription, you can't access them, and you aren't responsible for patching, scaling, or maintaining them.
 
 - **Load balancer:** A network load balancer that distributes incoming browser requests across the Grafana servers. The load balancer monitors server health and automatically routes traffic away from unhealthy servers.
 
 - **Backend database:** An Azure Database for PostgreSQL database that stores workspace configuration and other persistent data. All Grafana servers in the workspace share this database. For more information about database resiliency, see [Reliability in Azure Database for PostgreSQL](./reliability-database-postgresql.md).
+
+You don't see or manage these components. Microsoft deploys and manages them on your behalf.
 
 The load balancer tracks which Grafana servers are available. In a dual-server setup, if one server becomes unhealthy, the load balancer sends all requests to the remaining server. That server picks up the browser sessions that the failed server previously handled, based on information in the shared database. Meanwhile, Azure Managed Grafana repairs or replaces the unhealthy server.
 
@@ -85,7 +87,7 @@ Zone redundancy adds extra cost. For more information, see [Azure Managed Grafan
 
 ### Configure availability zone support
 
-- **Create a new workspace with availability zones enabled:** Enable zone redundancy during workspace creation through the Azure portal, the Azure CLI, Azure Resource Manager templates (ARM templates), or Bicep templates.
+- **Create a new workspace with availability zones enabled:** Enable zone redundancy during workspace creation through the Azure portal, the Azure CLI, Bicep, or Azure Resource Manager templates (ARM templates).
 
   For more information, see [Enable zone redundancy in Azure Managed Grafana](/azure/managed-grafana/how-to-enable-zone-redundancy).
 
