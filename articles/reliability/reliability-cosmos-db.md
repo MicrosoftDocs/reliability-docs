@@ -234,7 +234,7 @@ The following table summarizes the different configurations, outage types, and e
 
 | Configuration | Outage type | Availability impact | Durability impact | What to do |
 | -- | -- | -- | -- | -- |
-| Multiple read regions, single write region  | Read region outage | **For most account configurations:** Client SDK automatically redirects reads to other regions. There's no read or write availability loss. <br /><br /> **If the account uses strong consistency and there are fewer than two healthy regions remaining:** Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). <br /><br /> <ul><li>If you enable service-managed failover, the service marks the region as failed and a failover occurs.</li> <li>You can also perform a manual failover to another region used by your account.</li> <li>If you don't fail over, the account loses write availability until restoration of the service.</li></ul> <br /><br />**If the account uses bounded staleness consistency:** Similarly, bounded staleness consistency relies on maintaining a specific staleness threshold between regions. If the length of region outage exceeds the threshold, the system can't maintain consistency between writes. <br /> <ul><li>If you enable service-managed failover, the service marks the region as failed and a failover occurs.</li> <li>You can also perform a manual failover to another region used by your account.</li> <li>If you don't fail over, the account loses write availability until restoration of the service.</li></ul> | No data loss. | During the outage, ensure that there are enough provisioned Request Units (RUs) in the remaining regions to support read traffic. <br/><br/> If the account uses strong consistency or bounded staleness consistency, decide whether to fail over. <br/><br/> When the outage is over, readjust provisioned RUs as appropriate. |
+| Multiple read regions, single write region  | Read region outage | For most account configurations, the client SDK automatically redirects reads to other regions. There's no read or write availability loss. <br /><br /> However, in the following situations, there can be availability loss: <ul><li>The account uses strong consistency and there are fewer than two healthy regions remaining.</li> <li>The account uses bounded staleness consistency.</li></ul> In these situations, if the account doesn't fail over, it loses write availability until restoration of the service. | No data loss. | During the outage, ensure that there are enough provisioned Request Units (RUs) in the remaining regions to support read traffic. <br/><br/> If the account uses strong consistency or bounded staleness consistency, decide whether to fail over. <br/><br/> When the outage is over, readjust provisioned RUs as appropriate. |
 | Multiple read regions, single write region | Write region outage | **Read requests:** Client SDK automatically redirect reads to other healthy regions. <br /><br /> **If PPAF is enabled:** Azure Cosmos DB automatically fails over unhealthy partitions to a healthy region. <br/><br/> **If service-managed failover is enabled:** Clients experience write availability loss until the service manages a failover to a new write region that you previously selected. <br/><br/> **Without PPAF or service-managed failover:** Clients experience write availability loss. You can perform a manual failover to another region used by your account. If you don't, the account loses write availability until restoration of the service. | **If you don't select the strong consistency level:** The service might not replicate some data to the remaining active regions. This replication depends on the [consistency level](/azure/cosmos-db/consistency-levels#rto) that you select. If the affected region suffers permanent data loss, you could lose unreplicated data. | During the outage, ensure that there are enough provisioned RUs in the remaining regions to support read traffic. <br/><br/> *Don't* switch the write region during the outage, because that operation can't succeed when the region is unhealthy. <br/><br/> When the outage is over: <ul><li>You can move the write region back ot the original region if you choose.</li><li>Readjust provisioned RUs as appropriate.</li><li><!-- TODO check this: --> After region recovery. you can recover the unreplicated data in the failed region from your [conflict feed](/azure/cosmos-db/how-to-manage-conflicts#read-from-conflict-feed).</li></ul> |
 
 <!-- TODO redo this row and merge back in -->
@@ -337,7 +337,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
     All write operations are directed to your account's write region.
 
-- **Cross-region data replication:** All write operations occur in your account's primary region. Writes are replicated asynchronously to the other read regions. For information about the maximum replication lag, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
+- **Cross-region data replication:** All write operations occur in your account's primary region. Writes are replicated to the other read regions based on the account's configured consistency level. For information about the maximum replication lag, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
 #### Behavior during a read region failure
 
@@ -352,9 +352,8 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
     - *Manual failover:* You're responsible for performing a manual (forced) failover if you need to. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the behavior of your account depends on its consistency level:
-            TODO
-            - Strong consistency: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum).
-            - Bounded staleness consistency: TODO
+        - *Strong consistency*: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). If there are fewer than two regions availlable and you don't perform a failover, the account loses write availability until restoration of the service.
+        - *Bounded staleness consistency:* Bounded staleness consistency relies on maintaining a specific staleness threshold between regions. If the length of region outage exceeds the threshold, the system can't maintain consistency between writes. If you don't perform a failover, the account loses write availability until restoration of the service.
 
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
@@ -364,10 +363,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover.
-
-        > [!WARNING]
-        > **Note to PG:** Can we give an approximate indication of how long this is expected to take (e.g. "a few minutes")?
+    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. If your account experiences disruption to writes and you need to quickly restore write availability, perform a forced failover.
 
     - *PPAF:*
 
@@ -395,7 +391,6 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
     > [!NOTE]
     > If you use private endpoints with an Azure Cosmos DB account, ensure that the private DNS is routing correctly after the offline region operation. For detailed guidance, see [Failover considerations for private endpoints](/azure/cosmos-db/failover-considerations-for-private-endpoints).
 
-
 #### Behavior during a write region failure
 
 This section describes what to expect when you configure an Azure Cosmos DB account with multiple read regions, and there's an outage in the account's write region.
@@ -408,7 +403,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
     - *Manual failover:* You're responsible for performing a manual (forced) failover if you need to. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
-        If you don't perform a failover, TODO
+        If you don't perform a failover, the account loses write availability until restoration of the service.
 
         If there's an outage of your account's write region, avoid performing a *switch write region* operation. Write region switches don't succeed if there's an outage of the source or destination region. The reason is that the switch procedure includes a consistency check that requires connectivity between the regions.
 
@@ -420,7 +415,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover.
+    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. To quickly restore write availability, perform a forced failover.
 
         > [!WARNING]
         > **Note to PG:** Can we give an approximate indication of how long this is expected to take (e.g. "a few minutes")?
