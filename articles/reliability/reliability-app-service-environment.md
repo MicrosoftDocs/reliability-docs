@@ -56,9 +56,7 @@ To use an App Service Environment, your plans must use the [Isolated v2 pricing 
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-You can configure your App Service Environment as *zone redundant*. You can also configure your App Service plans to be zone redundant, which distributes them across multiple availability zones.
-
-However, you can enable or disable zone redundancy on each plan. This means that you can have some plans in your environment that are zone redundant and others that aren't.
+You can configure your App Service Environment as *zone redundant*. Then, you can configure the App Service plans in the environment to be zone redundant, which distributes the that plan's instances across multiple availability zones. You can enable or disable zone redundancy on each plan, which means that you can have some plans in your environment that are zone redundant and others that aren't.
 
 When you create a zone-redundant App Service plan in your environment, the instances of your App Service plan are distributed across the availability zones in the region. For more information, see [Instance distribution across zones](../reliability/reliability-app-service.md#instance-distribution-across-zones).
 
@@ -74,7 +72,9 @@ To enable zone redundancy for your App Service Environment, you must meet the fo
 
 - **Plan type:** Use [Isolated v2 plan types](/azure/app-service/overview-hosting-plans).
 
-- **Minimum number of instances:** Deploy a minimum of two instances in your plan.
+- **Minimum number of instances:** Deploy a minimum of two instances in your plan for it to be zone-redundant.
+    
+    Nonzonal plans in your environment can be deployed with a single instance.
 
 - **Scale unit:** Your environment must be deployed to a scale unit that supports availability zones. You don't directly control the scale unit that your environment uses. Instead, when you create an App Service environment, the environment is assigned to a scale unit based on the environment's resource group. To determine whether the scale unit for your App Service Environment supports zone redundancy, [Check for zone redundancy support for an App Service Environment](/azure/app-service/environment/configure-zone-redundancy-environment#check-for-zone-redundancy-support-for-an-app-service-environment).
 
