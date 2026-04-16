@@ -6,7 +6,7 @@ ms.author: rogarana
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-elastic-san-storage
-ms.date: 04/09/2026
+ms.date: 04/17/2026
 ---
 
 # Reliability in Azure Elastic SAN
@@ -56,7 +56,7 @@ If your iSCSI connection to an Elastic SAN volume is interrupted, the iSCSI init
 
 Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which means your data is replicated synchronously across three availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
 
-:::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.png" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability eones." border="false":::
+:::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.svg" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability eones." border="false":::
 
 Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using private endpoints to connect to your volumes. Private endpoints support automatic failover. If you use service endpoints, failover requires manual intervention. For more information about the connectivity approaches, see [Learn about networking configurations for Elastic SAN](/azure/storage/elastic-san/elastic-san-networking).
 
