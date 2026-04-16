@@ -21,15 +21,15 @@ This article describes how to make IoT Hub resilient to a variety of potential o
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+For production workloads, we recommend that you follow these recommendations:
 
 > [!div class="checklist"]
 > - Deploy your IoT hub in a region that supports zone redundancy for both compute and data components. For more information, see [Requirements](#requirements).
 > - Implement appropriate [retry patterns](/azure/iot/concepts-manage-device-reconnections#retry-patterns) in all devices and applications that communicate with IoT Hub.
 > - Design your device reconnection logic to handle transient faults and service failovers. For more information, see [Manage device reconnections to create resilient applications](/azure/iot/concepts-manage-device-reconnections).
-> - For larger scale deployments:
->   -  Implement exponential backoff and jitter‑based retry patterns in devices and applications when reconnecting to IoT Hub. These approaches help toavoid reconnect storms during service‑side failovers or network disruptions. Designing device reconnection logic with randomized retry intervals helps distribute load across hub partitions and reduces the likelihood of throttling during large‑scale reconnect events.
->   - Inderstand IoT Hub service quotas and limits and plan how your solution handles them. By considering service‑side throttling behavior, connection limits, and throughput unit considerations early, you can design your solution to enable predictable scalability and avoid architectural refactoring as your fleet grows. For additional guidance, see [IoT Hub scaling and quotas](/azure/iot-hub/iot-hub-scaling).
+> - For larger scale deployments, follow these recommendations:
+>   - Implement exponential backoff and jitter‑based retry patterns in devices and applications when reconnecting to IoT Hub, which help to avoid reconnect storms during service‑side failovers or network disruptions.
+>   - Understand IoT Hub service quotas and limits and plan how your solution handles them. By considering service‑side throttling behavior, connection limits, and throughput unit considerations early, you can design your solution to enable predictable scalability and avoid architectural refactoring as your fleet grows. For additional guidance, see [IoT Hub scaling and quotas](/azure/iot-hub/iot-hub-scaling).
 >    - Use Azure IoT Hub in conjunction with Azure IoT Hub Device Provisioning Service (DPS). DPS enables secure, zero‑touch onboarding and device allocation across one or more hubs. Even if you don't anticipate having a large fleet, by incorporating DPS from the outset, yourdevice manufacturing and onboarding workflows can scale without requiring firmware or infrastructure changes later. For more information, see [Deploy IoT solutions at scale with DPS](/azure/iot-dps/concepts-deploy-at-scale).
 >    - Consider using [DPS allocation policies](/azure/iot-dps/concepts-custom-allocation) to distribute devices across multiple IoT Hub instances for improved availability and region resiliency. This approach enables horizontal scaling of ingestion capacity, and supports future fleet growth without requiring device reprovisioning.
 
@@ -62,6 +62,8 @@ If you use [IoT Hub Device Provisioning Service (DPS)](/azure/iot-dps/about-iot-
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
 IoT Hub provides a reasonably high uptime guarantee, but transient failures can occur in any distributed computing platform. To handle transient failures, build the appropriate [retry patterns](/azure/iot/concepts-manage-device-reconnections#retry-patterns) in components that interact with cloud applications.
+
+For high-scale deployments, it's a good practice to use randomized retry jitter. Jitter helps distribute load across hub partitions and reduces the likelihood of throttling during large‑scale reconnect events.
 
 ## Resilience to availability zone failures
 
