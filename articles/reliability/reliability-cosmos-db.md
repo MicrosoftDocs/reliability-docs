@@ -27,7 +27,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 ### Logical architecture
 
-The primary resource you deploy is an Azure Cosmos DB *account*. Each account can have multiple *databases*, and databases can have multiple *containers*. Containers serve as the logical units of distribution and scalability. You create collections, tables, and graphs, depending on the API you use to interact with Azure Cosmos DB. These entities are internally represented as containers. For more information about the resource model, see [Databases, containers, and items in Azure Cosmos DB](/azure/cosmos-db/resource-model). Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
+The primary resource you deploy is an Azure Cosmos DB *account*. Each account can have multiple *databases* with multiple *containers*. Containers serve as the logical units of distribution and scalability. You can create containers such as collections, tables, and graphs, depending on the API you use to interact with Azure Cosmos DB. For more information about the resource model, see [Databases, containers, and items in Azure Cosmos DB](/azure/cosmos-db/resource-model). Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
 
 You can configure throughput, which represents the resources available. You can [manually provision throughput](/azure/cosmos-db/set-throughput), [use autoscale](/azure/cosmos-db/provision-throughput-autoscale) to match your workload's requirements, or use the [serverless account type](/azure/cosmos-db/serverless) to be charged for your actual usage.
 
@@ -70,13 +70,13 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. T
 
 - **Region support:** You can enable zone redundancy in Azure regions that supports availability zones. To see if your region supports availability zones, see [the list of supported regions](./regions-list.md).
 
-    Enabling zone redundancy isn't an account-wide choice. A single Azure Cosmos DB account can span an arbitrary number of Azure regions, each of which can independently be configured to use zone redundancy. Some regions don't yet support availability zones, but adding them to an Azure Cosmos DB account won't prevent enabling zone redundancy in other regions configured for that account.
+    Zone redundancy isn't an account-wide setting. Azure Cosmos DB accounts can span multiple regions, and each region can be configured independently to use availability zones. Regions that don't support availability zones don't prevent you from enabling zone redundancy in other regions within the same account.
 
-- **Serverless:** Serverless accounts can use zone redundancy, but this choice is only available during account creation. Existing serverless accounts without availability zones can;t be converted to an availability zone configuration. For mission critical workloads, we recommend you use provisioned throughput.
+- **Serverless:** You can only configure zone redundant serverless accounts when creating them. You can't convert existing serverless accounts without availability zones to an availability zone configuration. For mission critical workloads, we recommend you use provisioned throughput.
 
 ### Considerations
 
-- **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects only one availability zone. However, if multiple availability zones or the entire region is impacted, single-region accounts lose read and write access until service is restored.
+- **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects a single availability zone. However, if the outage affects multiple availability zones or the entire region, single-region accounts lose read and write access until service is restored.
 
 > [!WARNING]
 > **Note to PG:** In the legacy document, [we have a table](https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql#zone-redundancy-and-multi-region-accounts) that gives an opinionated benefit of using zone redundancy depending on the account's configuration. As I understand it, this was written to try to dissuade unnecessary use of zone redundancy because capacity was at a premium. Is this still necessary and valuable or should we omit it?
@@ -208,7 +208,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
-- **Expected data loss:** A zone failure isn't expected to cause any data loss.
+- **Expected data loss:** There is no expected data loss from a zone failure.
 
 - **Expected downtime:** During zone outages, connections might experience brief interruptions that typically last a few seconds as traffic is redistributed. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
@@ -224,7 +224,7 @@ Your applications can partially simulate the zone outage behavior by using the A
 
 ## Resilience to region-wide failures
 
-When an Azure Cosmos DB account is deployed in a single region and the region has an outage that affects all of its Azure Cosmos DB nodes, generally no data loss occurs, but your application can't access your data. Data access is restored after Azure Cosmos DB services recover in the affected region. Data loss might occur only with an unrecoverable disaster in the Azure Cosmos DB region.
+When you deploy an Azure Cosmos DB account in a single region, a region-wide outage that affects all Azure Cosmos DB nodes typically doesn't cause data loss, but it does prevent your application from accessing data. Azure Cosmos DB restores data access after the service recovers in the affected region. Data loss occurs only if the region experiences an unrecoverable disaster.
 
 To prepare for the rare cases of region outages, you can configure Azure Cosmos DB to support various levels of durability and availability by using one of these approaches:
 - Multiple read regions, optionally with service-managed failover or per-partition automatic failover (PPAF) enabled
@@ -243,7 +243,7 @@ The following table summarizes the different configurations, outage types, and e
 
 #### Potential data loss during region outages
 
-When an Azure Cosmos DB account is deployed in multiple regions, data durability depends on the consistency level that you configure on the account. The following table details, for all consistency levels, the RPO of an Azure Cosmos DB account that's deployed in at least two regions.
+When you deploy a Azure Cosmos DB account in multiple regions, data durability depends on the consistency level that you configure on the account. The following table details, for all consistency levels, the RPO of an Azure Cosmos DB account that's deployed in at least two regions.
 
 |**Consistency level**|**RPO for region outage**|
 |---------|---------|
@@ -267,7 +267,7 @@ If your solution requires continuous uptime during region outages, you can confi
 
 #### Failover between regions
 
-The Azure Cosmos DB SDK can be configured with a prioritized list of read regions. The SDK connects your application to the first available region in the list. During a read region outage, the SDK detects the region outage through backend response codes, marks it as unavailable, and routes future operations to the next available region in the preference list. Ensure that the preferred regions list is set correctly and aligns with your business and latency requirements. For detailed guidance, see [Troubleshoot Azure Cosmos DB SDK availability](/azure/cosmos-db/troubleshoot-sdk-availability).
+You can configure the Azure Cosmos DB SDK with a prioritized list of read regions. The SDK connects your application to the first available region in the list. During a read region outage, the SDK detects the region outage through backend response codes, marks it as unavailable, and routes future operations to the next available region in the preference list. Ensure that the preferred regions list is set correctly and aligns with your business and latency requirements. For detailed guidance, see [Troubleshoot Azure Cosmos DB SDK availability](/azure/cosmos-db/troubleshoot-sdk-availability).
 
 Failover is the process of making one of your account's regions unavailable, either completely or in part. The effect of a failover depends on whether the region is a write region or a read region:
 
@@ -345,7 +345,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
     - *PPAF:* Microsoft automatically detects the outage and initiates a failover of some partitions, if appropriate. Your application doesn't need to take any action.
 
-    - *Manual failover:* You're responsible for performing a manual (forced) failover if you need to. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
+    - *Manual failover:* You're responsible for performing a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the behavior of your account depends on its consistency level:
         - *Strong consistency*: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). If there are fewer than two regions availlable and you don't perform a failover, the account loses write availability until restoration of the service.
@@ -397,7 +397,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
     - *PPAF:* Microsoft automatically detects the outage and initiates a failover of some partitions, if appropriate. Your application doesn't need to take any action.
 
-    - *Manual failover:* You're responsible for performing a manual (forced) failover if you need to. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
+    - *Manual failover:* You're responsible for performing a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the account loses write availability until restoration of the service.
 
