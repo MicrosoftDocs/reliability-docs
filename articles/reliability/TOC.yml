@@ -132,6 +132,8 @@ items:
       href: reliability-logic-apps.md
     - name: Azure Service Bus
       href: reliability-service-bus.md
+    - name: Azure Web PubSub Service
+      href: reliability-web-pubsub.md
   - name: Internet of Things
     items:
     - name: Azure Device Registry
