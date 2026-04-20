@@ -32,7 +32,7 @@ For production workloads, follow these recommendations:
 
 ### Logical architecture
 
-The resource you create is a *Web PubSub resource*, which has a globally unique endpoint such as `contoso.webpubsub.azure.com`. Clients establish WebSocket connections to this endpoint. Application servers connect to the same endpoint to send messages and receive events from clients.
+The resource you create is a *Web PubSub resource*, which has a globally unique endpoint similar to `contoso.webpubsub.azure.com`. Clients establish WebSocket connections to this endpoint. Application servers connect to the same endpoint to send messages and receive events from clients.
 
 Azure Web PubSub Service supports two primary messaging patterns:
 
