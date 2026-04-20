@@ -89,7 +89,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Route Server](/azure/route-server/route-server-faq) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Service Bus](./reliability-service-bus.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Service Fabric](/azure/service-fabric/service-fabric-cross-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
-| [Azure SignalR Service](/azure/azure-signalr/availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure SignalR Service](./reliability-signalr.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Site Recovery](./reliability-site-recovery.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure SQL Database](./reliability-sql-database.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure SQL Managed Instance](./reliability-sql-managed-instance.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |

@@ -5,7 +5,7 @@ author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ms.service: azure-signalr
+ms.service: azure-signalr-service
 ms.date: 04/20/2026
 ai-usage: ai-assisted
 ---
