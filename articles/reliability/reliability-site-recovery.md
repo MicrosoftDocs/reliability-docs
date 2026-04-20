@@ -146,7 +146,7 @@ This section describes what to expect when you use Site Recovery in a region wit
 > - [Fail over VMware VMs](/azure/site-recovery/vmware-azure-tutorial-failover-failback-modernized)
 > - [Fail over Hyper-V VMs to Azure](/azure/site-recovery/hyper-v-azure-failover-failback-tutorial)
 
-- **Detection and response:** The Site Recovery platform automatically detects failures in an availability zone and initiates a response. Site Recovery doesn't require manual intervention to initiate a zone failover. However, if the zone outage affects your source VM, you might need to [initiate failover of your VM](/azure/site-recovery/azure-to-azure-tutorial-failover-failback).
+- **Detection and response:** The Site Recovery platform automatically detects failures in an availability zone and initiates a response. No manual intervention is required to initiate a zone failover for the core Site Recovery service. However, if the zone outage affects your source VM, you might need to [initiate failover of your VM](/azure/site-recovery/azure-to-azure-tutorial-failover-failback).
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
@@ -172,7 +172,7 @@ This section describes what to expect when you use Site Recovery in a region wit
 
 ### Zone recovery
 
-When the affected availability zone recovers, Site Recovery automatically resumes replication jobs that stop during the zone outage.
+When the affected availability zone recovers, Site Recovery automatically resumes replication jobs that stopped during the zone outage.
 
 You're responsible for initiating failback for servers or VMs that you failed over during the zone outage. For more information, see the following articles:
 
@@ -239,7 +239,7 @@ The specific behavior of the Site Recovery core service during a region failure 
 
 - **Failure in the target region:** Because the target region is unavailable, replication stops, and you can't fail over to the target until the region is healthy.
 
-    :::image type="complex" border="false" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers." lightbox="media/reliability-site-recovery/site-recovery-denied.svg":::
+    :::image type="complex" border="false" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers." lightbox="media/reliability-site-recovery/source-available-site-recovery-denied.svg":::
       The diagram shows the source region and the target region. Two failures are shown in the source VM. An arrow labeled Site Recovery replication points to the target region. An X indicates a replication failure. The target region includes the target VM and the Recovery Services vault. Failures are indicated in the target VM and Recovery Services vault.
     :::image-end:::
 
