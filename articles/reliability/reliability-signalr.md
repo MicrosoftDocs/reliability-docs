@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure SignalR Service
-description: Learn how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
+description: Learn how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
@@ -12,11 +12,11 @@ ai-usage: ai-assisted
 
 # Reliability in Azure SignalR Service
 
-[Azure SignalR Service](/azure/azure-signalr/signalr-overview) is a fully managed service that enables real-time bidirectional communication in web and mobile applications. It handles WebSocket connections and other transport protocols, pushing content updates from your application servers to connected clients without requiring clients to poll for updates. The service supports a server-based default mode and a serverless mode that integrates with Azure Functions.
+[Azure SignalR Service](/azure/azure-signalr/signalr-overview) is a fully managed service that enables real-time bidirectional communication in web and mobile applications. It's built on ASP.NET Core SignalR, which abstracts the underlying transport mechanism. When WebSockets are available, the service uses them. When they aren't, it falls back to Server-Sent Events or Long Polling. This abstraction means your client and server code can communicate in real time without being tied to a specific transport protocol. The service supports a server-based default mode and a serverless mode that integrates with Azure Functions.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
+This article describes how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
 
 ## Production deployment recommendations for reliability
 
@@ -43,9 +43,11 @@ Internally, the service distributes its compute capacity across multiple nodes. 
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-Azure SignalR Service uses long-lived WebSocket connections between clients, app servers, and the service. Transient faults can cause these connections to drop. Design your client applications and app servers to handle connection drops and reconnect automatically.
+Azure SignalR Service uses long-lived connections between clients, app servers, and the service. These connections can be dropped due to transient faults such as network instability, load balancer reconfigurations, or browser tab suspensions. Design your client applications and app servers to handle connection drops and reconnect automatically.
 
-The Azure SignalR Service SDKs include built-in reconnection handling for server connections to the service. Client-side reconnection depends on the client library you use. ASP.NET Core SignalR clients include automatic retry functionality that you can configure to control retry behavior.
+The Azure SignalR Service SDKs include built-in reconnection handling for server connections to the service. Client-side reconnection depends on the client library you use. ASP.NET Core SignalR clients support stateful reconnect, which allows a client to resume its previous connection without losing state if it reconnects quickly using the same connection ID. If the reconnection results in a new connection ID—for example, after a longer outage—the service treats the client as a new connection. In this case, the client needs to rejoin any groups it was previously in and restore any session state.
+
+For detailed guidance on designing your application to handle client disconnections and reconnections, see [Understanding client disconnections and reconnection in Azure SignalR Service](/azure/azure-signalr/signalr-concept-client-disconnections).
 
 ## Resilience to availability zone failures
 
@@ -183,6 +185,12 @@ This approach requires you to manage the deployment and reliability of your app 
 
 For more information, see [Resiliency and disaster recovery in Azure SignalR Service](/azure/azure-signalr/signalr-concept-disaster-recovery).
 
+## Resilience to service maintenance
+
+The Azure SignalR Service team regularly performs maintenance for improvements in performance, reliability, security, and features. During planned maintenance, Azure SignalR Service uses a graceful shutdown strategy to reduce the impact on connected clients. Connections are gradually disconnected over a set time window, allowing clients to reconnect progressively rather than all at once.
+
+Maintenance events are surfaced to your clients as connection drops. Ensure that your client applications implement reconnection logic so they can recover from maintenance-related disconnections without user-visible interruption. For more information, see [Understanding client disconnections and reconnection in Azure SignalR Service](/azure/azure-signalr/signalr-concept-client-disconnections#disconnections-during-service-maintenance).
+
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
@@ -202,3 +210,4 @@ For more information, see the [SLA for Azure SignalR Service](https://azure.micr
 - [Geo-replication in Azure SignalR Service](/azure/azure-signalr/howto-enable-geo-replication)
 - [Resiliency and disaster recovery in Azure SignalR Service](/azure/azure-signalr/signalr-concept-disaster-recovery)
 - [Availability zones support in Azure SignalR Service](/azure/azure-signalr/availability-zones)
+- [Understanding client disconnections and reconnection in Azure SignalR Service](/azure/azure-signalr/signalr-concept-client-disconnections)
