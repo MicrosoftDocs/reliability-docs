@@ -62,13 +62,13 @@ Azure Web PubSub Service exposes a health check endpoint at `https://<resource-n
 
 ## Resilience to availability zone failures
 
-<!-- TODO: Include a diagram from the service team showing how a zone-redundant Web PubSub resource distributes compute nodes across availability zones. Store in media/reliability-web-pubsub/. -->
-
 <!-- TODO: Ask the Web PubSub service team about deprecating https://learn.microsoft.com/azure/azure-web-pubsub/concept-availability-zones and redirecting to this article, since this guide covers the same content in greater depth. -->
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Web PubSub Service supports zone-redundant deployments, but only in the Premium P1 and Premium P2 tiers. When you create or upgrade a Web PubSub resource to one of those tiers in a region that supports availability zones, zone redundancy is automatically enabled. You don't need to configure anything beyond selecting the Premium tier. The service distributes its compute nodes across all availability zones in the region. If one zone fails, the service routes traffic to nodes in the healthy zones.
+
+:::image type="content" source="./media/reliability-web-pubsub/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant Azure Web PubSub service, spread across multiple availability zones." border="false":::
 
 ### Requirements
 
@@ -129,6 +129,8 @@ To protect your application against a region-wide failure, you can use *geo-repl
 ### Geo-replication
 
 Geo-replication enables you to add replicas of your Web PubSub resource in other Azure regions. All replicas share a single endpoint (`contoso.webpubsub.azure.com`). Behind this endpoint, Azure Traffic Manager uses DNS-based routing to direct each client to the nearest healthy regional replica. If a region fails, the Traffic Manager detects the failure through health checks and stops directing clients to that replica. After the DNS TTL of 90 seconds, clients that reconnect are routed to the nearest healthy replica.
+
+:::image type="content" source="./media/reliability-web-pubsub/geo-replication.svg" alt-text="Diagram that shows Azure Web PubSub configured for geo-replication across two regions." border="false":::
 
 Geo-replication is a Premium tier feature. For the client-client pub/sub pattern, geo-replication is the only supported approach for cross-region resiliency. For the client-server pattern, both geo-replication and the custom multi-region approach are options.
 
