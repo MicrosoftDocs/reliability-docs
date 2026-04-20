@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-site-recovery
-ms.date: 04/22/2026
+ms.date: 03/03/2026
 ai-usage: ai-assisted
 ---
 
