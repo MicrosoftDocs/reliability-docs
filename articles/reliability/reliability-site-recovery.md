@@ -27,7 +27,7 @@ When you use Site Recovery with production workloads, we recommend that you take
 
 > [!div class="checklist"]
 > - Deploy your Recovery Services vault in your target region for replication.
-> - For Azure-to-Azure DR, use the [high churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) feature for VMs that have a high rate of data change. High churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
+> - For Azure-to-Azure DR, use the Site Recovery [high churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) feature for VMs that have a high rate of data change. High churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
 > - For Azure-to-Azure DR, configure the cache storage account to use zone-redundant storage (ZRS).
 > - Perform test failovers on a regular basis as part of DR drills. Run DR drills every quarter or biannually to verify that your replication and failover processes are healthy.
 > - Use [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview) to ensure that compute resources are available in your target region for failover.
@@ -279,7 +279,7 @@ It's important to perform regular DR drills that test your VM failover and overa
 
 ## Resilience to configuration and replication problems
 
-A DR solution is only reliable when you know it works before a disaster occurs. It's important to monitor Site Recovery in case problems occur, such as configuration problems or problems with the health of your VM replication. For more information, see [Monitor Site Recovery](/azure/site-recovery/monitor-site-recovery).
+A DR solution is only reliable when you know it works before a disaster occurs. Monitor Site Recovery to detect problems such as configuration errors or VM replication health problems. For more information, see [Monitor Site Recovery](/azure/site-recovery/monitor-site-recovery).
 
 We recommend that you configure Azure Monitor alerts so that you're informed about problems with replication health. For more information, see [Built-in Azure Monitor alerts for Site Recovery](/azure/site-recovery/site-recovery-monitor-and-troubleshoot#built-in-azure-monitor-alerts-for-azure-site-recovery).
 
