@@ -304,7 +304,7 @@ For Site Recovery, separate SLAs cover the following:
 
 - **Recovery time objective (RTO)**, which is the time from when you trigger a failover (or your scripts trigger it) to when the target VM runs. This time excludes manual actions or script execution.
 
-The SLA only provides for service credits when there's sufficient capacity available in the secondary region.
+The SLA provides service credits only when the secondary region has sufficient compute capacity.
 
 ## Related content
 
