@@ -16,7 +16,7 @@ ai-usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Site Recovery resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights some key information about the Site Recovery service-level agreement (SLA).
+This article describes how to make Site Recovery resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights key information about the Site Recovery service-level agreement (SLA).
 
 > [!NOTE]
 > This article describes how the core Site Recovery service is resilient, or how you can make it resilient, to various problems. It doesn't explain how to use Site Recovery to protect your VMs or other assets. For more information, see [About Site Recovery](/azure/site-recovery/site-recovery-overview).
@@ -27,11 +27,17 @@ When you use Site Recovery with production workloads, we recommend that you take
 
 > [!div class="checklist"]
 > - Deploy your Recovery Services vault in your target region for replication.
+>
 > - For Azure-to-Azure DR, use the Site Recovery [high churn](/azure/site-recovery/concepts-azure-to-azure-high-churn-support) feature for VMs that have a high rate of data change. High churn support improves your recovery point objective (RPO) and enables replication for many high-scale database workloads.
+>
 > - For Azure-to-Azure DR, configure the cache storage account to use zone-redundant storage (ZRS).
+>
 > - Perform test failovers on a regular basis as part of DR drills. Run DR drills every quarter or biannually to verify that your replication and failover processes are healthy.
+>
 > - Use [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview) to ensure that compute resources are available in your target region for failover.
+>
 > - Enable automatic updates for mobility agents.
+>
 > - Monitor the health of your replication, and configure alerts so that you're notified if a problem occurs.
 
 ## Reliability architecture overview
@@ -64,9 +70,9 @@ You're responsible for deploying and configuring other resources, including:
 For more information about the components that you deploy, see the following articles:
 
 - [Azure-to-Azure DR architecture](/azure/site-recovery/azure-to-azure-architecture)
-- [Hyper-V to Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture)
-- [VMware to Azure DR architecture](/azure/site-recovery/vmware-azure-architecture-modernized)
-- [Physical server to Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
+- [Hyper-V-to-Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture)
+- [VMware-to-Azure DR architecture](/azure/site-recovery/vmware-azure-architecture-modernized)
+- [Physical-server-to-Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
 
 The core Site Recovery service runs on infrastructure that Microsoft manages. This article refers to these components collectively as the *core Site Recovery service*.
 
@@ -82,7 +88,7 @@ Site Recovery automatically handles transient faults that occur during the repli
 
 To understand how Site Recovery replication behaves during availability zone failures, you need to consider the following service components:
 
-- **The core Site Recovery service:** The core Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service support zone redundancy automatically with no customer configuration required.
+- **Core Site Recovery service:** The core Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service support zone redundancy automatically with no customer configuration required.
 
 - **Recovery Services vault:** The vault stores configuration data. In regions where Site Recovery supports zone resilience, configuration data in the vault is also zone resilient.
 
@@ -97,7 +103,7 @@ To understand how Site Recovery replication behaves during availability zone fai
 
 **Region support:**
 
-- **The core Site Recovery service and Recovery Services vaults:** Site Recovery is zone resilient in the following regions.
+- **Core Site Recovery service and Recovery Services vaults:** Site Recovery is zone resilient in the following regions.
 
     | Americas       | Europe         | Middle East    | Asia Pacific      |
     |----------------|----------------|----------------|-------------------|
@@ -116,7 +122,7 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 ### Configure availability zone support
 
-- **The core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft provides zone resiliency in supported regions.
+- **Core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft provides zone resiliency in supported regions.
 
     If Microsoft enables zone resiliency in a region at a later time, your Site Recovery resources automatically benefit from zone resilience. You don't need to take any action.
 
