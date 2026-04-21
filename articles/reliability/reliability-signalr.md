@@ -18,6 +18,9 @@ ai-usage: ai-assisted
 
 This article describes how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
 
+> [!IMPORTANT]
+> In Default mode, the reliability of your app servers determines whether clients can connect and communicate. Plan the reliability of your app servers alongside your Azure SignalR Service configuration. To match the resiliency of your Azure SignalR Service resource, deploy your app servers with the same level of redundancy—for example, in availability zones or across multiple regions.
+
 ## Production deployment recommendations for reliability
 
 For production workloads, we recommend that you:
@@ -35,9 +38,6 @@ In Default mode, you deploy *app servers* that act as SignalR hubs. Your app ser
 In Serverless mode, the service integrates with Azure Functions. Azure Functions act as event-driven message handlers, and you don't manage app servers directly.
 
 Internally, the service distributes its compute capacity across multiple nodes. The platform manages these nodes directly, including creation, health monitoring, and replacement of unhealthy nodes. You don't see or manage these nodes.
-
-> [!IMPORTANT]
-> In Default mode, the reliability of your app servers determines whether clients can connect and communicate. Plan the reliability of your app servers alongside your Azure SignalR Service configuration. To match the resiliency of your Azure SignalR Service resource, deploy your app servers with the same level of redundancy—for example, in availability zones or across multiple regions.
 
 ## Resilience to transient faults
 
@@ -193,13 +193,9 @@ Maintenance events are surfaced to your clients as connection drops. Ensure that
 
 ## Service-level agreement
 
-[!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
+[!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
-The SLA for Azure SignalR Service varies by tier:
-
-- **Standard tier:** 99.9% availability
-- **Premium tier:** 99.95% availability
-- **Free tier:** No SLA
+The SLA for Azure SignalR Service varies by tier. The Premium tier provides a higher availability commitment than the Standard tier. The Free tier has no SLA guarantee.
 
 For more information, see the [SLA for Azure SignalR Service](https://azure.microsoft.com/support/legal/sla/signalr-service/).
 
