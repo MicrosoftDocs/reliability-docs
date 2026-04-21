@@ -48,13 +48,13 @@ You're responsible for deploying and configuring other resources, including:
 
     A vault can include extra configuration, such as:
 
-    - *Replication policy*, which configures the snapshot frequency and retention length.
+    - *A replication policy*, which configures the snapshot frequency and retention length.
 
-    - *[Recovery plan](/azure/site-recovery/recovery-plan-overview)*, which coordinates the order in which machines fail over and can include scripts and manual actions. Recovery plans are especially useful for workloads that have multiple tiers, such as application and database tiers, that need to fail over in a specific order.
+    - *[A recovery plan](/azure/site-recovery/recovery-plan-overview)*, which coordinates the order in which machines fail over and can include scripts and manual actions. Recovery plans are especially useful for workloads that have multiple tiers, such as application and database tiers, that need to fail over in a specific order.
 
 - For Azure-to-Azure replication, a *cache storage account* that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
-:::image type="complex" border="false" source="media/reliability-site-recovery/recovery-vault-storage.svg" alt-text="Diagram that shows the relationship between the Recovery Services vault, cache storage account, source, and target in Site Recovery." lightbox="media/reliability-site-recovery/recovery-vault-storage.svg":::
+:::image type="complex" border="false" source="media/reliability-site-recovery/recovery-vault-storage.svg" alt-text="Diagram that shows the relationship between the Recovery Services vault, cache storage account, source, and target in Site Recovery.":::
    The diagram shows three availability zones. Zone 1 includes a VM. The following sections span all three zones: Site Recovery core components, the Recovery Services vault, and the cache storage account for ZRS.
 :::image-end:::
 
@@ -84,7 +84,7 @@ To understand how Site Recovery replication behaves during availability zone fai
 
 - **The core Site Recovery service:** The core Site Recovery service is designed to be resilient to availability zone failures in supported regions. The internal components of the service support zone redundancy automatically with no customer configuration required.
 
-- **Recovery Services vault:** The vault stores configuration data. In regions where Site Recovery supports zone resilience, configuration data in the vault is also zone-resilient.
+- **Recovery Services vault:** The vault stores configuration data. In regions where Site Recovery supports zone resilience, configuration data in the vault is also zone resilient.
 
 - **Cache storage account:** For Azure-to-Azure replication, you're responsible for making the cache storage account zone redundant by deploying it using the ZRS tier.
 
@@ -97,7 +97,7 @@ To understand how Site Recovery replication behaves during availability zone fai
 
 **Region support:**
 
-- **The core Site Recovery service and Recovery Services vaults:** Site Recovery is zone-resilient in the following regions.
+- **The core Site Recovery service and Recovery Services vaults:** Site Recovery is zone resilient in the following regions.
 
     | Americas       | Europe         | Middle East    | Asia Pacific      |
     |----------------|----------------|----------------|-------------------|
@@ -106,7 +106,7 @@ To understand how Site Recovery replication behaves during availability zone fai
     | West US 3      | Poland Central |                | Malaysia West     |
     |                | Spain Central  |                | New Zealand North |
 
-     Site Recovery deploys support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't zone-resilient, zone failures might affect operations.
+     Site Recovery deploys support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't zone resilient, zone failures might affect operations.
 
 - **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
@@ -118,11 +118,11 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
 - **The core Site Recovery service:** You don't configure zone resiliency on the core Site Recovery service. Microsoft provides zone resiliency in supported regions.
 
-    If Microsoft enables zone resiliency in a region at a later time, your Site Recovery resources automatically benefit from the zone resilience. You don't need to take any action.
+    If Microsoft enables zone resiliency in a region at a later time, your Site Recovery resources automatically benefit from zone resilience. You don't need to take any action.
 
 - **Recovery Services vault:** Recovery Services vaults let you configure a level of redundancy, but Site Recovery doesn't use this configuration setting. You don't need to configure your vault for zone redundancy when you use Site Recovery.
 
-- **Cache storage account:** When you use Azure-to-Azure replication, you're responsible for creating the cache storage account and for configuring it with the appropriate level of redundancy. To make it zone-redundant, configure it for the ZRS replication type. For more information, see [Reliability in Azure Blob Storage](./reliability-storage-blob.md).
+- **Cache storage account:** When you use Azure-to-Azure replication, you're responsible for creating the cache storage account and for configuring it with the appropriate level of redundancy. To make it zone redundant, configure it for the ZRS replication type. For more information, see [Reliability in Azure Blob Storage](./reliability-storage-blob.md).
 
 ### Behavior when all zones are healthy
 
@@ -146,7 +146,7 @@ This section describes what to expect when you use Site Recovery in a region wit
 > - [Fail over VMware VMs](/azure/site-recovery/vmware-azure-tutorial-failover-failback-modernized)
 > - [Fail over Hyper-V VMs to Azure](/azure/site-recovery/hyper-v-azure-failover-failback-tutorial)
 
-- **Detection and response:** The Site Recovery platform automatically detects failures in an availability zone and initiates a response. No manual intervention is required to initiate a zone failover for the core Site Recovery service. However, if the zone outage affects your source VM, you might need to [initiate failover of your VM](/azure/site-recovery/azure-to-azure-tutorial-failover-failback).
+- **Detection and response:** The Site Recovery platform automatically detects failures in an availability zone and initiates a response. You don't need to manually initiate a zone failover for the core Site Recovery service. However, if the zone outage affects your source VM, you might need to [initiate failover of your VM](/azure/site-recovery/azure-to-azure-tutorial-failover-failback).
 
 [!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
 
@@ -166,7 +166,7 @@ This section describes what to expect when you use Site Recovery in a region wit
 
 - **Redistribution:** Site Recovery and Storage automatically adapt to zone failures:
 
-    - *Site Recovery core service:* The core Site Recovery service automatically uses infrastructure in healthy availability zones to perform replication. You don't need to take any action.
+    - *Core Site Recovery service:* The core Site Recovery service automatically uses infrastructure in healthy availability zones to perform replication. You don't need to take any action.
 
     - *Cache storage account:* Storage automatically routes requests for cache data to healthy zones.
 
@@ -176,15 +176,15 @@ When the affected availability zone recovers, Site Recovery automatically resume
 
 You're responsible for initiating failback for servers or VMs that you failed over during the zone outage. For more information, see the following articles:
 
-- *Zone-to-zone and region-to-region replication of Azure VMs:* [Fail back Azure VM to the primary region](/azure/site-recovery/azure-to-azure-tutorial-failback)
+- *Zone-to-zone and region-to-region replication of Azure VMs:* [Fail back an Azure VM to the primary region](/azure/site-recovery/azure-to-azure-tutorial-failback)
 
-- *On-premises to Azure replication:*
+- *On-premises-to-Azure replication:*
 
-    - *Physical to Azure replication:* [Physical server to Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
+    - *Physical-to-Azure replication:* [Physical-server-to-Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
 
-    - *Hyper-V to Azure replication:* [Hyper-V to Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture#failover-and-failback-process)
+    - *Hyper-V-to-Azure replication:* [Hyper-V-to-Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture#failover-and-failback-process)
 
-    - *VMware to Azure replication:* [About on-premises DR failover and failback](/azure/site-recovery/failover-failback-overview-modernized)
+    - *VMware-to-Azure replication:* [About on-premises DR failover and failback](/azure/site-recovery/failover-failback-overview-modernized)
 
 ### Test for zone failures
 
@@ -194,13 +194,13 @@ It's important to perform regular DR drills, which should test your VM failover 
 
 - *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a DR drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
 
-- *On-premises to Azure replication:*
+- *On-premises-to-Azure replication:*
 
-    - *Physical to Azure replication:* [Run a test failover (DR drill) to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
+    - *Physical-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
 
-    - *Hyper-V to Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *Hyper-V-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
-    - *VMware to Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *VMware-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
 ## Resilience to region-wide failures
 
@@ -210,7 +210,7 @@ For Azure-to-Azure replication, Site Recovery provides resilience to region fail
 
 - **Vault region:** You deploy a Recovery Services vault into a specific Azure region that you select. The vault's region is important. Replication continues during an outage in the vault's region. However, you can't perform Site Recovery management operations, including failover and failback, until the region recovers.
 
-    Deploying the vault in the target region helps ensure that failover and recovery operations remain accessible during a source-region outage. It also prevents an outage in a third region from affecting failover and recovery operations.
+    Deploying the vault in the target region helps ensure that failover and recovery operations remain available during a source-region outage. It also prevents an outage in a third region from affecting failover and recovery operations.
 
     > [!NOTE]
     > If your vault is in the region that you typically use as your target region, then after you fail over and reestablish replication, that region becomes your new source region. If that region subsequently experiences a problem, you might not be able to perform failback until both regions are healthy.
@@ -233,20 +233,20 @@ The specific behavior of the Site Recovery core service during a region failure 
 
     Because the source region is unavailable, replication stops until the VM in the source region is healthy.
 
-    :::image type="complex" border="false" source="media/reliability-site-recovery/site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the source region fails. The source is unavailable, and replication stops until the source region recovers." lightbox="media/reliability-site-recovery/site-recovery-denied.svg":::
+    :::image type="complex" border="false" source="media/reliability-site-recovery/site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the source region fails. The source is unavailable, and replication stops until the source region recovers.":::
       The diagram shows the source region and the target region. Two failures are shown in the source VM. An arrow labeled Site Recovery replication points to the target region. The target region includes the target VM and the Recovery Services vault.
     :::image-end:::
 
 - **Failure in the target region:** Because the target region is unavailable, replication stops, and you can't fail over to the target until the region is healthy.
 
-    :::image type="complex" border="false" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers." lightbox="media/reliability-site-recovery/source-available-site-recovery-denied.svg":::
-      The diagram shows the source region and the target region. Two failures are shown in the source VM. An arrow labeled Site Recovery replication points to the target region. An X indicates a replication failure. The target region includes the target VM and the Recovery Services vault. Failures are indicated in the target VM and Recovery Services vault.
+    :::image type="complex" border="false" source="media/reliability-site-recovery/source-available-site-recovery-denied.svg" alt-text="Diagram that shows the behavior when the target region fails. Replication stops, and failover is unavailable until the target region recovers.":::
+      The diagram shows the source region and the target region. The source region contains the source VM. An arrow labeled Site Recovery replication points to the target region. An X indicates a replication failure. The target region includes the target VM and the Recovery Services vault. Failures are indicated in the target VM and Recovery Services vault.
     :::image-end:::
 
 - **Failure in the region that contains the vault:** If you deploy the vault into a third region (not the source or target region) and that region experiences a failure, Site Recovery continues to replicate your data. However, you can't initiate any operations, including failover or failback, until the vault is healthy.
 
-    :::image type="complex" border="false" source="media/reliability-site-recovery/replication-available-failover-denied.svg" alt-text="Diagram that shows the behavior when the vault region fails. Replication continues, but failover and failback operations are unavailable until the vault region recovers." lightbox="media/reliability-site-recovery/replication-available-failover-denied.svg":::
-      The diagram shows the source region, target region, and the vault region. An arrow labeled Site Recovery replication to points from the source VM to the VM in the target region. An arrow labeled failover, failback, and other operations blocked but replication continues points from the Services Recovery vault to Site Recovery replication.
+    :::image type="complex" border="false" source="media/reliability-site-recovery/replication-available-failover-denied.svg" alt-text="Diagram that shows the behavior when the vault region fails. Replication continues, but failover and failback operations are unavailable until the vault region recovers.":::
+      The diagram shows the source region, target region, and the vault region. An arrow labeled Site Recovery replication to points from the source VM to the VM in the target region. A failure is indicated in the Recovery Services vault. An arrow labeled failover, failback, and other operations blocked but replication continues points from the Services Recovery vault to Site Recovery replication.
     :::image-end:::
 
 ### Region recovery
@@ -255,13 +255,13 @@ You're responsible for initiating failback for servers or VMs that you failed ov
 
 - *Zone-to-zone and region-to-region replication of Azure VMs:* [Fail back Azure VM to the primary region](/azure/site-recovery/azure-to-azure-tutorial-failback)
 
-- *On-premises to Azure replication:*
+- *On-premises-to-Azure replication:*
 
-    - *Physical to Azure replication:* [Physical server to Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
+    - *Physical-to-Azure replication:* [Physical-server-to-Azure DR architecture](/azure/site-recovery/physical-server-azure-architecture-modernized)
 
-    - *Hyper-V to Azure replication:* [Hyper-V to Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture#failover-and-failback-process)
+    - *Hyper-V-to-Azure replication:* [Hyper-V-to-Azure DR architecture](/azure/site-recovery/hyper-v-azure-architecture#failover-and-failback-process)
 
-    - *VMware to Azure replication:* [On-premises DR failover and failback](/azure/site-recovery/failover-failback-overview-modernized)
+    - *VMware-to-Azure replication:* [On-premises DR failover and failback](/azure/site-recovery/failover-failback-overview-modernized)
 
 ### Test for region failures
 
@@ -269,17 +269,17 @@ It's important to perform regular DR drills that test your VM failover and overa
 
 - *Zone-to-zone and region-to-region replication of Azure VMs:* [Run a DR drill for Azure VMs](/azure/site-recovery/azure-to-azure-tutorial-dr-drill)
 
-- *On-premises to Azure replication:*
+- *On-premises-to-Azure replication:*
 
-    - *Physical to Azure replication:* [Run a test failover (DR drill) to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
+    - *Physical-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/site-recovery-test-failover-to-azure)
 
-    - *Hyper-V to Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *Hyper-V-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
-    - *VMware to Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
+    - *VMware-to-Azure replication:* [Run a DR drill to Azure](/azure/site-recovery/tutorial-dr-drill-azure)
 
 ## Resilience to configuration and replication problems
 
-A DR solution is only reliable when you know it works before a disaster occurs. Monitor Site Recovery to detect problems such as configuration errors or VM replication health problems. For more information, see [Monitor Site Recovery](/azure/site-recovery/monitor-site-recovery).
+A DR solution is only reliable when you know that it works before a disaster occurs. Monitor Site Recovery to detect problems such as configuration errors or VM replication health problems. For more information, see [Monitor Site Recovery](/azure/site-recovery/monitor-site-recovery).
 
 We recommend that you configure Azure Monitor alerts so that you're informed about problems with replication health. For more information, see [Built-in Azure Monitor alerts for Site Recovery](/azure/site-recovery/site-recovery-monitor-and-troubleshoot#built-in-azure-monitor-alerts-for-azure-site-recovery).
 
@@ -298,7 +298,7 @@ For more information, see [Service updates in Site Recovery](/azure/site-recover
 
 [!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
 
-For Site Recovery, separate SLAs cover the following:
+For Site Recovery, separate SLAs cover:
 
 - **Service availability**, which means that Site Recovery is available to fail over protected instances. A protected instance is a VM or physical server that replicates to a secondary location. To be eligible for this SLA, you must retry failed failover attempts at least every 30 minutes.
 
