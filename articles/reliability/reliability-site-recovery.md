@@ -48,7 +48,7 @@ When you use Site Recovery, you define a *source* and *target*, which represent 
 
 - The *target* is always an Azure VM. For Azure-to-Azure VM replication, the target can be a different region or availability zone from the source VM.
 
-You're responsible for deploying and configuring other resources, including:
+You're responsible for deploying and configuring resources and related settings, including:
 
 - *Recovery Services vault*, which Site Recovery uses to store your replication configuration settings. The vault doesn't store your replicated data. The redundancy configuration of the vault isn't important for Site Recovery, but it's important if you use the same vault for Azure Backup.
 
