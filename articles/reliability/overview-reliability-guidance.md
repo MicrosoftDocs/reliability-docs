@@ -87,6 +87,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure HDInsight| [Reliability in HDInsight](reliability-hdinsight.md)||
 |Azure IoT Hub| [Reliability in IoT Hub](reliability-iot-hub.md) ||
 |Azure Key Vault| [Reliability in Key Vault](./reliability-key-vault.md) ||
+|Azure Key Vault Managed HSM| [Reliability in Azure Key Vault Managed HSM](reliability-managed-hsm.md) ||
 |Azure Kubernetes Service (AKS)| [Reliability in AKS](reliability-aks.md)||
 |Azure Load Balancer| [Reliability in Load Balancer](reliability-load-balancer.md)||
 |Azure Logic Apps|[Reliability in Logic Apps](reliability-logic-apps.md) ||
