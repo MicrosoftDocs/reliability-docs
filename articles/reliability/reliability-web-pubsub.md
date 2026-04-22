@@ -51,7 +51,7 @@ WebSocket is a long-lived connection protocol. Transient network events, back-en
 
 Azure Web PubSub Service addresses this issue through *reliable subprotocols* that sit on top of the raw WebSocket connection. The subprotocols track message sequence and connection state so that, when a connection drops, the client renegotiates with the service and resumes from where it left off - without losing messages.
 
-- **Where possible, use the Azure Web PubSub client SDK.** The SDK implements the reliable subprotocol automatically. No additional configuration is required. For more information, see:
+- **Where possible, use an Azure Web PubSub client SDK.** The SDK implements the reliable subprotocol automatically. No additional configuration is required. For more information, see:
   - [Web PubSub client-side SDK for JavaScript](/azure/azure-web-pubsub/reference-client-sdk-javascript)
   - [Azure Web PubSub client library for .NET](/azure/azure-web-pubsub/reference-client-sdk-csharp)
   - [Azure Web PubSub client library for Python](/azure/azure-web-pubsub/reference-client-sdk-python)
@@ -98,7 +98,7 @@ This section describes what to expect when you configure an Azure Web PubSub res
   > [!WARNING]
   > **Note to PG:** Do all zones process traffic in an active-active model?
 
-- **Cross-zone data replication:** Azure Web PubSub Service doesn't persist customer data. The service does maintain session metadata, such as connection state and message sequence information for active connections. This metadata is synchronously replicated across availability zones.\
+- **Cross-zone data replication:** Azure Web PubSub Service doesn't persist customer data. The service does maintain session metadata, such as connection state and message sequence information for active connections. This metadata is synchronously replicated across availability zones.
 
 ### Behavior during a zone failure
 
@@ -110,7 +110,7 @@ This section describes what to expect when you configure an Azure Web PubSub res
 
 - **Active requests:** During a zone failure, active WebSocket connections to nodes in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by reconnecting after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost. If publishers use the Client SDK or implement the reliable subprotocols, their messages must be acknowledged by the service before they're considered to be successfully published, which prevents data loss during a zone failure or another problem.
+- **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost. If publishers use an Azure Web PubSub Client SDK or implement the reliable subprotocols, their messages must be acknowledged by the service before they're considered to be successfully published, which prevents data loss during a zone failure or another problem.
 
   > [!WARNING]
   > **Note to PG:** Please verify the above statement.
