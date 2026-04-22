@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-web-pubsub
-ms.date: 04/17/2026
+ms.date: 04/23/2026
 ---
 
 # Reliability in Azure Web PubSub Service
@@ -33,19 +33,15 @@ For production workloads, follow these recommendations:
 
 ### Logical architecture
 
-The resource you create is a *Web PubSub resource*, which has a globally unique endpoint similar to `contoso.webpubsub.azure.com`. Clients establish WebSocket connections to this endpoint. Application servers connect to the same endpoint to send messages and receive events from clients.
+The resource you create is a *Web PubSub resource*. You configure a resource with a number of *units*, which represents the capacity of the resource, including the maximum number of concurrent connections. For more information, see [Performance guide for Azure Web PubSub Service](/azure/azure-web-pubsub/concept-performance).
 
-Azure Web PubSub Service supports two primary messaging patterns:
-
-- **Client-server pattern:** Application servers push messages to clients, and clients send events to application servers through the service. Your application server controls message delivery and routing logic.
-- **Client-client pattern:** Clients publish and subscribe to messages through the service directly, without involving an application server. The service handles group membership and message fan-out.
-
-<!-- TODO verify this -->
-The messaging pattern you use affects which multiregion resiliency approaches are available. For more information, see [Resilience to region-wide failures](#resilience-to-region-wide-failures).
+A Web PubSub resource has a globally unique endpoint similar to `contoso.webpubsub.azure.com`. Clients establish WebSocket connections to this endpoint. Application servers connect to the same endpoint to send messages and receive events from clients.
 
 ### Physical architecture
 
-Azure Web PubSub Service manages WebSocket connection state and message routing across a set of compute nodes. Microsoft manages the underlying infrastructure. You don't directly see or interact with individual nodes.
+Azure Web PubSub Service manages WebSocket connection state and message routing across a set of compute resources. Microsoft manages the underlying infrastructure. You don't directly see or interact with individual VMs that the service uses, or other infrastructure components.
+
+For more information, see [Azure Web PubSub service internals](/azure/azure-web-pubsub/concept-service-internals).
 
 ## Resilience to transient faults
 
@@ -63,12 +59,7 @@ Azure Web PubSub Service addresses this issue through *reliable subprotocols* th
 
 - **If you can't use the SDK, implement one of the reliable subprotocols** directly in your WebSocket client code. For the full specification and implementation guidance, see [Create reliable WebSocket clients](/azure/azure-web-pubsub/howto-develop-reliable-clients).
 
-<!-- TODO verify this, and maybe add to RAO -->
-Azure Web PubSub Service exposes a health check endpoint at `https://<resource-name>.webpubsub.azure.com/api/health` that returns HTTP 200 when the service is healthy. Application servers can use this endpoint to monitor service health and decide which Web PubSub endpoint to return during the WebSocket negotiate step.
-
 ## Resilience to availability zone failures
-
-<!-- TODO: Ask the Web PubSub service team about deprecating https://learn.microsoft.com/azure/azure-web-pubsub/concept-availability-zones and redirecting to this article, since this guide covers the same content in greater depth. -->
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
@@ -79,8 +70,8 @@ Azure Web PubSub Service supports zone-redundant deployments when you use the Pr
 ### Requirements
 
 - **Region support:** Zone redundancy is supported in most regions where both of these conditions apply:
-  - Azure Web PubSub Service is available. For a list of regions where the service is available, see TODO.
-  - The region supports availability zones. For a list of regions with availability zones, see [TODO](./regions-list.md).
+  - Azure Web PubSub Service is available. For a list of regions where the service is available, see [Product Availability by Region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
+  - The region supports availability zones. For a list of regions with availability zones, see [Azure regions list](./regions-list.md).
 
   However, Japan West doesn't currently support zone redundancy for Azure Web PubSub.
 
@@ -94,7 +85,7 @@ Zone redundancy doesn't add cost, and you pay the standard Premium tier rate. Fo
 
 Zone redundancy requires no configuration beyond selecting the Premium tier. It's automatically enabled in both of these cases:
 
-- **Create a new zone-redundant Web PubSub resource.** Select a Premium tier SKU (TODO) when you create the resource. For more information, see [Create an Azure Web PubSub resource](/azure/azure-web-pubsub/howto-develop-create-instance).
+- **Create a new zone-redundant Web PubSub resource.** Select a Premium tier SKU when you create the resource. For more information, see [Create an Azure Web PubSub resource](/azure/azure-web-pubsub/howto-develop-create-instance).
 
 - **Upgrade an existing resource to Premium tier.** Zone redundancy is automatically enabled when you upgrade an existing resource to a Premium tier SKU. Upgrading from Standard to Premium doesn't cause service downtime. For more information, see [Scale an Azure Web PubSub Service instance](/azure/azure-web-pubsub/howto-scale-manual-scale).
 
@@ -117,9 +108,12 @@ This section describes what to expect when you configure an Azure Web PubSub res
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** During a zone failure, active WebSocket connections to nodes in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by reconnecting after a short period of time, they typically avoid significant impact.
+- **Active requests:** During a zone failure, active WebSocket connections to nodes in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by reconnecting after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** A zone failure isn't expected to cause data loss. TODO UPDATE
+- **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost. If publishers use the Client SDK or implement the reliable subprotocols, their messages must be acknowledged by the service before they're considered to be successfully published, which prevents data loss during a zone failure or another problem.
+
+  > [!WARNING]
+  > **Note to PG:** Please verify the above statement.
 
 - **Expected downtime:** The reconnect of dropped active connections typically takes a few seconds. Clients that implement reconnect logic experience minimal disruption.
 
@@ -141,7 +135,7 @@ To protect your application against a region-wide failure, you can use *geo-repl
 
 ### Geo-replication
 
-Geo-replication enables you to add replicas of your Web PubSub resource in other Azure regions. All replicas share a single endpoint (`contoso.webpubsub.azure.com`). Behind this endpoint, Azure Traffic Manager uses DNS-based routing to direct each client to the nearest healthy regional replica. If a region fails, the Traffic Manager detects the failure through health checks and stops directing clients to that replica. New client connections are automatically routed to the nearest healthy replica.
+Geo-replication enables you to add *replicas* of your Web PubSub resource in other Azure regions. All replicas share a single endpoint (`contoso.webpubsub.azure.com`). Behind this endpoint, Azure Traffic Manager uses DNS-based routing to direct each client to the nearest healthy regional replica. If a region fails, the Traffic Manager detects the failure through health checks and stops directing clients to that replica. New client connections are automatically routed to the nearest healthy replica.
 
 :::image type="content" source="./media/reliability-web-pubsub/geo-replication.png" alt-text="Diagram that shows Azure Web PubSub configured for geo-replication across two regions." border="false":::
 
@@ -149,8 +143,6 @@ The region you created the Web PubSub resource in is called the *primary region*
 
 > [!WARNING]
 > **Note to PG:** If the primary region is offline, are there other effects? I imagine that the control plane would be unavailable and therefore config changes wouldn't be possible - is that right?
-
-Geo-replication is a Premium tier feature. For the client-client pub/sub pattern, geo-replication is the only supported approach for cross-region resiliency. For the client-server pattern, both geo-replication and the custom multi-region approach are options. TODO verify this
 
 #### Requirements
 
@@ -192,17 +184,19 @@ This section describes what to expect when you configure Azure Web PubSub Servic
 
 This section describes what to expect when you configure Azure Web PubSub Service for geo-replication and there's an outage in one of the replica regions.
 
-- **Detection and response:** Azure Traffic Manager performs health checks against each replica. When a regional outage causes a replica to fail its health check, the Traffic Manager removes that replica's endpoint from its DNS resolution results. After removing the endpoint, the DNS TTL of 90 seconds must elapse before clients see updated DNS records. In total, the transition typically takes a few minutes. <!-- TODO: Confirm with the Web PubSub product team: (1) What is the Traffic Manager health check interval configured for this service? (2) What is the typical end-to-end detection and DNS propagation time as observed by clients? --> You don't need to initiate anything.
+- **Detection and response:** Web PubSub Service is responsible for detecting a failure in a region and automatically rerouting incoming traffic to a replica in one of the other regions that you configure.
 
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
-- **Active requests:** Active WebSocket connections to the replica in the failed region are dropped. Clients must reconnect. If a client attempts to reconnect before the DNS TTL of 90 seconds elapses and DNS records are updated, the reconnect attempt might fail or continue to reach the unavailable region. After the DNS update propagates, reconnecting clients are automatically routed to the nearest healthy replica. <!-- TODO -->
+- **Active requests:** Active WebSocket connections to the replica in the failed region are dropped. Clients must reconnect after the replica fails over.
 
-- **Expected data loss:** Azure Web PubSub Service doesn't persist messages. Messages that were in transit to clients in the failed region at the time of the failure might not be delivered. No persistent data loss is expected because the service doesn't store customer data. <!-- TODO -->
+- **Expected data loss:** Azure Web PubSub Service doesn't persist messages. Messages that were in transit to clients in the failed region at the time of the failure might be lost. No persistent data loss is expected because the service doesn't store customer data.
 
-- **Expected downtime:** After Traffic Manager detects the failure and removes the failed replica from DNS resolution, clients that reconnect are routed to a healthy replica. This process typically takes a few minutes. <!-- TODO: Confirm the typical end-to-end failover time with the Web PubSub product team and update this statement with a more precise range if available. --> Well-designed clients that implement reconnect logic can resume normal operation after reconnecting to the healthy replica.
+- **Expected downtime:** Azure Traffic Manager performs health checks against each replica. When a region outage causes a replica to fail its health check, the Traffic Manager removes that replica's endpoint from its DNS resolution results. After removing the endpoint, the DNS TTL of 90 seconds must elapse before clients see updated DNS records. In total, the transition typically takes a few minutes. Well-designed clients that implement reconnect logic can resume normal operation after reconnecting to the healthy replica.
 
-- **Traffic rerouting:** After the DNS TTL period, Azure Traffic Manager excludes the failed replica from DNS resolution. Clients that reconnect are directed to the nearest healthy replica.
+- **Traffic rerouting:** Azure Traffic Manager directs incoming request to healthy replicas. However, if a client attempts to reconnect before Azure Traffic Manager has detected the replica failover and the updated DNS entries have propagated to the client, then a client's reconnect attempt might continue to target the unavailable region and could fail.
+   
+   After the DNS update propagates, reconnecting clients are automatically routed to the nearest healthy replica.
 
 #### Region recovery
 
@@ -210,11 +204,11 @@ When the failed region recovers, the Traffic Manager health check detects the re
 
 #### Test for region failures
 
-To simulate a regional failover and test your client application's reconnect behavior, you can disable a replica's endpoint. This action causes Traffic Manager to stop routing traffic to that replica, which lets you observe how your clients behave when the replica they connect to becomes unavailable. For detailed steps, see [Resiliency and disaster recovery in Azure Web PubSub Service](/azure/azure-web-pubsub/concept-disaster-recovery#how-to-test-a-failover). <!-- TODO check if the geo-replication doc is better -->
+To simulate a regional failover and test your client application's reconnect behavior, you can disable a replica's endpoint. This action causes Traffic Manager to stop routing traffic to that replica, which lets you observe how your clients behave when the replica they connect to becomes unavailable. For detailed steps, see [Disable or enable the replica endpoint](/azure/azure-web-pubsub/howto-enable-geo-replication#disable-or-enable-the-replica-endpoint).
 
 ### Custom multiregion solutions for resiliency
 
-If you need cross-region resiliency but aren't using geo-replication - for example, because you're using the Standard_S1 tier - you can deploy and manage separate Web PubSub resources in multiple regions and implement your own failover logic in your application server. This approach is more complex than geo-replication and doesn't support zero-downtime failover for the client-client (pub/sub) pattern. For a detailed architecture overview, failover patterns, and testing guidance, see [Resiliency and disaster recovery in Azure Web PubSub Service](/azure/azure-web-pubsub/concept-disaster-recovery).
+If you need cross-region resiliency but aren't using geo-replication, you can deploy and manage separate Web PubSub resources in multiple regions and implement your own failover logic in your application server. This approach is more complex than geo-replication and doesn't support zero-downtime failover for client-to-client connectivity. For a detailed architecture overview, failover patterns, and testing guidance, see [Resiliency and disaster recovery in Azure Web PubSub Service](/azure/azure-web-pubsub/concept-disaster-recovery).
 
 ## Backup and restore
 
@@ -233,7 +227,7 @@ To protect your resource configuration, define your Web PubSub resources using i
 <!-- For Azure Web PubSub, the availability SLA percentage increases when you use the Premium tier. -->
 
 > [!WARNING]
-> **Note to PG:** The portal shows the availability SLA as being 99.95% for Premium, but the actual SLA document does NOT say that. Are you in the process of updating the SLA? If so, do you know when it will be updated?
+> **Note to PG:** The portal shows the availability SLA as being 99.95% for Premium, as does a reference in the "what's new" page in your documentation, but the actual SLA document does NOT say that. It only refers to a single 99.9% SLA regardless of tier. Are you in the process of updating the SLA? If so, do you know when it will be updated?
 
 ## Related content
 
