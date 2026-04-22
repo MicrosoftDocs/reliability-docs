@@ -48,7 +48,7 @@ When you deploy Functions, it's important to familiarize yourself with these con
 
 Consider the following recommendations for handling transient faults in your function apps:
 
-- **Triggers and bindings:** The Functions platform includes built-in transient fault handling for triggers and bindings. When a transient fault occurs while a supported trigger fires or a supported binding reads or writes data, the platform can automatically retry the operation. This built-in retry behavior ensures that temporary connectivity problems or service blips don't prevent your function from running. For more information, see [Functions error handling and retries](/azure/azure-functions/functions-bindings-error-pages#retries).
+- **Triggers and bindings:** The Functions platform includes built-in transient fault handling for triggers and bindings. When a transient fault occurs while a supported trigger fires or a supported binding reads or writes data, the platform can automatically retry the operation. This built-in retry behavior ensures that temporary connectivity problems or service interruptions don't prevent your function from running. For more information, see [Functions error handling and retries](/azure/azure-functions/functions-bindings-error-pages#retries).
 
     This protection only covers transient faults. The platform doesn't retry persistent failures, such as a misconfigured connection string or a deleted resource.
 
@@ -342,7 +342,7 @@ Consider an example topology that uses an Event Hubs trigger, where your Event H
 
 Before failover, publishers that send events to the shared alias route traffic to the primary event hub. The primary function app listens exclusively to the primary event hub. The secondary function app remains passive and idle.
 
-When failover starts, publishers that send events to the shared alias route traffic to the secondary event hub. The secondary function app becomes active and starts to trigger automatically. The event hub drives the entire failover process, and each function app runs only when its corresponding event hub is active.
+When failover starts, publishers that send events to the shared alias route traffic to the secondary event hub. The secondary function app becomes active and triggers automatically. The event hub drives the entire failover process, and each function app runs only when its corresponding event hub is active.
 
 #### Durable functions
 
@@ -382,7 +382,7 @@ Application deployments introduce the risk of problems in a production environme
 
 ::: zone pivot="flex-consumption"
 
-Flex Consumption plans support [site update strategies](/azure/azure-functions/flex-consumption-site-updates), which provide multiple ways to deploy your app updates, including rolling updates for zero-downtime deployments.
+Flex Consumption plans support [site update strategies](/azure/azure-functions/flex-consumption-site-updates), which provide multiple ways to deploy your app updates. These strategies include rolling updates for zero-downtime deployments.
 
 ::: zone-end
 
