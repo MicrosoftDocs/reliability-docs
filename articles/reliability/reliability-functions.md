@@ -38,9 +38,9 @@ When you deploy Functions, it's important to familiarize yourself with these con
 
 - **[Triggers and bindings](/azure/azure-functions/functions-triggers-bindings):** Triggers and bindings let your function respond to events, receive data from other services, and write data to other services.
 
-- **[Durable functions](/azure/azure-functions/durable/durable-functions-overview):** Durable functions is a feature of Functions. It provides stateful functions such as long-running orchestrations and stateful entities.
+- **[Durable functions](/azure/azure-functions/durable-functions/durable-functions-overview):** Durable functions is a feature of Functions. It provides stateful functions such as long-running orchestrations and stateful entities.
 
-    When you use durable functions, you configure a [storage provider](/azure/azure-functions/durable/durable-functions-storage-providers) that stores the state. Evaluate the reliability characteristics of the state store that you choose and configure it to meet your resiliency requirements.
+    When you use durable functions, you configure a [storage provider](/azure/durable-task/common/durable-task-storage-providers) that stores the state. Evaluate the reliability characteristics of the state store that you choose and configure it to meet your resiliency requirements.
 
 ## Resilience to transient faults
 
@@ -108,7 +108,7 @@ Your plan is *nonzonal* or *regional* when you don't enable zone redundancy. The
 
 ::: zone pivot="flex-consumption"
 
-- **Region support:** You can deploy zone-redundant Flex Consumption plans into a specific set of regions. You can retrieve the current list of supported regions by using the Azure CLI. For more information, see [View regions that support availability zones](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan##view-regions-that-support-availability-zones).
+- **Region support:** You can deploy zone-redundant Flex Consumption plans into a specific set of regions. You can retrieve the current list of supported regions by using the Azure CLI. For more information, see [View regions that support availability zones](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#view-regions-that-support-availability-zones).
 
 ::: zone-end
 
@@ -346,7 +346,7 @@ When failover starts, publishers that send events to the shared alias route traf
 
 #### Durable functions
 
-For multi-region disaster recovery for durable functions, see [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution).
+For multi-region disaster recovery for durable functions, see [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable-functions/durable-functions-disaster-recovery-geo-distribution).
 
 ## Resilience to service maintenance
 
@@ -400,9 +400,9 @@ Functions provides distinct availability SLAs for the Consumption plan and for o
 
 ## Related content
 
-- [Configure availability zones for Functions](/azure/azure-functions/functions-premium-plan#availability-zones)
-- [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable/durable-functions-disaster-recovery-geo-distribution)
+- [Functions Premium plan](/azure/azure-functions/functions-premium-plan)
+- [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable-functions/durable-functions-disaster-recovery-geo-distribution)
 - [Create Azure Front Door](/azure/frontdoor/quickstart-create-front-door)
 - [Event Hubs failover considerations](/azure/event-hubs/event-hubs-geo-dr#considerations)
-- [Architecture strategies for how to use availability zones and regions](/azure/architecture/high-availability/building-solutions-for-high-availability)
+- [Architecture strategies for how to use availability zones and regions](/azure/well-architected/design-guides/regions-availability-zones)
 - [Reliability in Azure](./overview.md)
