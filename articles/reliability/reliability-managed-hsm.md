@@ -64,7 +64,7 @@ For more information, see [Security domain in Managed HSM overview](/azure/key-v
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-When you Azure services that integrate with Managed HSM, those services handle transient faults automatically.
+When you use Azure services that integrate with Managed HSM, those services handle transient faults automatically.
 
 If you build custom applications that integrate with Managed HSM, consider the following best practices to handle any transient faults that might occur:
 
