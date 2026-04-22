@@ -176,7 +176,7 @@ When you configure Elastic Premium function app plans as zone redundant, the pla
 
 - When you specify a capacity larger than the number of zones, instances are spread evenly only when the capacity is a multiple of the number of zones.
 
-- For a capacity value more than Number of Zones *Number of instances, extra instances are spread across the remaining zones.
+- For a capacity value greater than the number of zones multiplied by the number of instances, extra instances are spread across the remaining zones.
 
 When Functions allocates instances to a zone-redundant Premium plan, it uses [best-effort zone balancing](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-zone-balancing), which the underlying Azure Virtual Machine Scale Sets provides. Azure considers a Premium plan *balanced* when each zone has the same number of virtual machines (VMs) as the other zones in the plan, plus or minus one VM.
 
@@ -202,7 +202,7 @@ When you enable availability zones in an app with an always-ready instance confi
 
 ::: zone pivot="premium"
 
-If you enable availability zones on a plan that have fewer than two instances, the platform enforces a minimum instance count of two for that plan, and you're charged for both instances.
+If you enable availability zones on a plan that has fewer than two instances, the platform enforces a minimum instance count of two for that plan, and you're charged for both instances.
 
 ::: zone-end
 
@@ -337,7 +337,7 @@ Consider an example topology that uses an Event Hubs trigger, where your Event H
 - Publishers to the Event Hubs namespace publish to the alias connection string.
 
 :::image type="complex" border="false" source="./media/reliability-functions/active-passive.svg" alt-text="Diagram that shows an example active-passive architecture. Event Hubs geo-disaster recovery spans multiple regions and separate function apps and databases in each region.":::
-   The diagram shows a primary region on the left and a secondary region on the right. The primary region contains an active Event Hubs namespace, a Functions app, and a database. The secondary region contains a passive Event Hubs namespace, a Functions app, and a database. An arrow points from the alias to the Events Hubs geo-disaster recovery. That arrow connects the primary and secondary Event Hubs namespaces. Arrows point from each event hub to its respective function app. An arrow points from each function app to its respective database.
+   The diagram shows a primary region on the left and a secondary region on the right. The primary region contains an active Event Hubs namespace, a Functions app, and a database. The secondary region contains a passive Event Hubs namespace, a Functions app, and a database. An arrow points from the alias to the Event Hubs geo-disaster recovery. That arrow connects the primary and secondary Event Hubs namespaces. Arrows point from each event hub to its respective function app. An arrow points from each function app to its respective database.
 :::image-end:::
 
 Before failover, publishers that send events to the shared alias route traffic to the primary event hub. The primary function app listens exclusively to the primary event hub. The secondary function app remains passive and idle.
