@@ -13,7 +13,7 @@ zone_pivot_groups: azure-functions-hosting-plans
 
 # Reliability in Azure Functions
 
-[Azure Functions](/azure/azure-functions/functions-overview) is an event-driven compute service that runs small blocks of code, or *functions*, without explicit infrastructure provisioning or management. Functions can respond to events such as HTTP requests, timers, queue messages, and changes in other Azure services. This capability makes Functions well-suited for data processing, system integration, and background checks.
+[Azure Functions](/azure/azure-functions/functions-overview) is an event-driven compute service that runs small blocks of code, or *functions*, without explicit infrastructure provisioning or management. Functions can respond to events such as HTTP requests, timers, queue messages, and changes in other Azure services. This capability makes Functions well-suited for data processing, system integration, and background tasks.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
