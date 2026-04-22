@@ -633,6 +633,13 @@ productDirectory:
       azureCategories:
         - databases
     # Card
+    - title: Azure Key Vault Managed HSM
+      summary: Managed hardware security module (HSM) for cryptographic key management
+      imageSrc: /azure/media/index/key-vault-managed-hsm.svg
+      url: reliability-managed-hsm.md
+      azureCategories:
+        - security
+    # Card
     - title: Azure Web PubSub
       summary: Easily build real-time messaging web applications using WebSockets and the publish-subscribe pattern
       imageSrc: /azure/media/index/web-pubsub.svg

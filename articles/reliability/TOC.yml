@@ -206,6 +206,8 @@ items:
       href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
+    - name: Azure Key Vault Managed HSM
+      href: reliability-managed-hsm.md
   - name: Storage
     items:
     - name: Azure Backup
