@@ -342,7 +342,7 @@ Consider an example topology that uses an Event Hubs trigger, where your Event H
 
 Before failover, publishers that send events to the shared alias route traffic to the primary event hub. The primary function app listens exclusively to the primary event hub. The secondary function app remains passive and idle.
 
-When failover starts, publishers that send events to the shared alias route traffic to the secondary event hub. The secondary function app becomes active and triggers automatically. The event hub can drive the entire failover process, and each function app runs only when its corresponding event hub is active.
+When failover starts, publishers that send events to the shared alias are routed to the secondary event hub. The secondary function app becomes active and triggers automatically. The event hub can drive the entire failover process, and each function app runs only when its corresponding event hub is active.
 
 #### Durable functions
 
