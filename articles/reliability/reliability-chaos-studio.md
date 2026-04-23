@@ -1,12 +1,12 @@
 ---
 title: Reliability in Azure Chaos Studio
 description: Learn how to improve reliability in Azure Chaos Studio by using availability zones and zone redundancy. Understand disaster recovery and zone outage experiences.
-author: prasha-microsoft 
+author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-chaos-studio
-ms.date: 01/23/2024 
+ms.date: 04/14/2026
 ---
 
 # Reliability in Azure Chaos Studio
@@ -17,27 +17,27 @@ This article describes reliability support in [Azure Chaos Studio](/azure/chaos-
 
 [!INCLUDE [Availability zone description](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Azure Chaos Studio supports zone redundancy as the default configuration within a region. Chaos Studio resources are automatically duplicated or distributed across different zones. 
+Azure Chaos Studio supports zone redundancy as the default configuration within a region. Chaos Studio resources are automatically duplicated or distributed across different zones.
 
 ### Prerequisites
 
 The following regions support availability zones for Chaos Studio:
 
-| Americas         | Europe               | Asia Pacific   |
-|------------------|----------------------|----------------|
-| Brazil South     | Sweden Central  | Australia East      |
-| Central US       | UK South        | Japan East          |
-| East US          |                 | Southeast Asia      |
-| East US 2        |                 |                     |
-| West US 2        |                 |                     |
-| West US 3        |                 |                     |
-
+| Americas       | Europe               | Asia Pacific   |
+|----------------|----------------------|----------------|
+| Brazil South   | France Central       | Australia East |
+| Canada Central | Germany West Central | Japan East     |
+| Central US     | Italy North          | Southeast Asia |
+| East US        | North Europe         | UAE North      |
+| East US 2      | Sweden Central       |                |
+| West US 2      | UK South             |                |
+| West US 3      | West Europe          |                |
 
 For detailed information on the regional availability model for Azure Chaos Studio see [Regional availability of Azure Chaos Studio](/azure/chaos-studio/chaos-studio-region-availability).
 
 ### Zone down experience
 
-In the event of a zone-wide outage, you should anticipate a brief degradation in performance and availability as the service transitions to a functioning zone. This interruption does not depend on the restoration of the affected zone, as Microsoft-managed services mitigate zone losses by using capacity from alternative zones. In the event of an availability zone outage, it's possible that a chaos experiment could encounter errors or disruptions, but crucial experiment metadata, historical data, and specific details should remain accessible, and the service should not experience a complete outage. 
+In the event of a zone-wide outage, you should anticipate a brief degradation in performance and availability as the service transitions to a functioning zone. This interruption does not depend on the restoration of the affected zone, as Microsoft-managed services mitigate zone losses by using capacity from alternative zones. In the event of an availability zone outage, it's possible that a chaos experiment could encounter errors or disruptions, but crucial experiment metadata, historical data, and specific details should remain accessible, and the service should not experience a complete outage.
 
 ## Cross-region disaster recovery and business continuity
 
