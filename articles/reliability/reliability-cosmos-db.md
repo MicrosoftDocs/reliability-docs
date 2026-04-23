@@ -131,8 +131,8 @@ Your applications can partially simulate the zone outage behavior by using the A
 When you deploy an Azure Cosmos DB account in a single region, a region-wide outage that affects all Azure Cosmos DB nodes typically doesn't cause data loss, but it does prevent your application from accessing data. Azure Cosmos DB restores data access after the service recovers in the affected region. Data loss occurs only if the region experiences an unrecoverable disaster.
 
 To prepare for the rare cases of region outages, you can configure Azure Cosmos DB to support various levels of durability and availability by using one of these approaches:
-- Multiple read regions with a single write region. You can optionally enable service-managed failover or per-partition automatic failover (PPAF).
-- Multiple write regions.
+- [Multiple read regions with a single write region.](#multiple-read-regions-with-a-single-write-region) You can optionally enable service-managed failover or per-partition automatic failover (PPAF).
+- [Multiple write regions.](#multiple-write-regions)
 
 The following table summarizes the different configurations, outage types, and effects, which are described in later sections of this article.
 
