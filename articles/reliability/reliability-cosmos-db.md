@@ -64,7 +64,7 @@ We recommend using zone redundancy in regions where it's supported, especially f
 > [!TIP]
 > Enabling zone redundancy is a great way to increase the resilience of your Azure Cosmos DB database without introducing additional application complexities, affecting performance, or even incurring additional costs (if autoscale is also used).
 
-If you don't enable zone redundancy, the account is *nonzonal* in that region. That means that all of the replicas could be located in a single availability zone, leading to potential downtime if that specific zone experiences an issue.
+If you don't enable zone redundancy, the account is *nonzonal* in that region. Nonzonal accounts could locate replicas in a single availability zone, leading to potential downtime if that specific zone experiences an issue.
 
 ### Requirements
 
@@ -87,7 +87,7 @@ Regions where zone redundancy is enabled are charged at a premium. However, the 
 
 ### Configure availability zone support
 
-You can enable zone redundancy only when you add a new region to an Azure Cosmos DB account. To enable availability zone support on an existing account, you need to add a region and enable zone redundancy on it. You can follow a process to add a temporary region so that you can configure zone redundancy in your original region.
+You can only enable zone redundancy when you add a new region to an Azure Cosmos DB account. To enable availability zone support on an existing account, add a region and enable zone redundancy on it. You can follow a process to add a temporary region so that you can configure zone redundancy in your original region.
 
 For detailed steps, see [Enable zone redundancy on an Azure Cosmos DB account](/azure/cosmos-db/enable-zone-redundancy).
 
@@ -95,7 +95,7 @@ For detailed steps, see [Enable zone redundancy on an Azure Cosmos DB account](/
 
 This section describes what to expect when you configure an Azure Cosmos DB account for zone redundancy, and all zones are operational.
 
-- **Cross-zone operation:** Requests are automatically spread across the replicas in each availability zone. A request might go to a replica in any availability zone.
+- **Cross-zone operation:** Azure Cosmos DB routes requests to replicas across availability zones, so any replica can serve a request.
 
 - **Cross-zone data replication:** When a client makes a change to any data, that change is applied to multiple replicas in different zones to achieve quorum. This approach is referred to as *synchronous replication*. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput.
 
@@ -107,7 +107,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
+- **Active requests:** When an availability zone becomes unavailable, Azure Cosmos DB terminates any in‑progress requests connected to replicas in the affected zone, and the application must retry those requests. Ensure that your application is prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
 
 - **Expected data loss:** There is no expected data loss from a zone failure.
 
@@ -252,7 +252,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
     - *Manual failover:* You're responsible for performing a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the behavior of your account depends on its consistency level:
-        - *Strong consistency*: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). If there are fewer than two regions availlable and you don't perform a failover, the account loses write availability until restoration of the service.
+        - *Strong consistency*: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). If there are fewer than two regions available and you don't perform a failover, the account loses write availability until restoration of the service.
         - *Bounded staleness consistency:* Bounded staleness consistency relies on maintaining a specific staleness threshold between regions. If the length of region outage exceeds the threshold, the system can't maintain consistency between writes. If you don't perform a failover, the account loses write availability until restoration of the service.
 
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
@@ -311,7 +311,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Active requests:** Any active requests might be terminated and need to be retried by the client after failover completes. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** If your account is configured with strong consistency, no data loss occurs. Otherwise, any unreplicated writes might be lost after the failover completes. For information about the maximum data loss expected during a region outage, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
+- **Expected data loss:** If you configure your account with strong consistency, no data loss occurs. Otherwise, any unreplicated writes might be lost after the failover completes. For information about the maximum data loss expected during a region outage, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
 - **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
 
@@ -374,7 +374,7 @@ After the region is online, the actions you take are different depending on whet
 
 #### Test for region failures
 
-Even if your Azure Cosmos DB account is highly available, your application might not be correctly designed to remain highly available when a region failover occurs. To test the end-to-end high availability of your application as a part of your application testing or disaster recovery (DR) drills, temporarily disable service-managed failover for the account. Invoke [manual (forced) failover by using PowerShell, the Azure CLI, or the Azure portal](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account), and then monitor your application. After you complete the test, you can fail back over to the primary region by opening a support case, and then restore service-managed failover for the account.
+Your application might not handle region failovers correctly, even if your Azure Cosmos DB account is highly available. To test the end-to-end high availability of your application as a part of your application testing or disaster recovery (DR) drills, temporarily disable service-managed failover for the account. Invoke [manual (forced) failover by using PowerShell, the Azure CLI, or the Azure portal](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account), and then monitor your application. After you complete the test, you can fail back over to the primary region by opening a support case, and then restore service-managed failover for the account.
 
 ### Multiple write regions
 
