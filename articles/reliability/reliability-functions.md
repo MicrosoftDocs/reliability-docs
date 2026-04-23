@@ -64,7 +64,7 @@ Consider the following recommendations for handling transient faults in your fun
 
 ::: zone pivot="consumption"
 
-Consumption plans don't support availability zones. If zone redundancy is a requirement for your workload, consider using the Flex Consumption, Premium, or Dedicated (App Service) plans instead.
+Consumption plans don't support availability zones. If zone redundancy is a requirement for your workload, consider using the Flex Consumption, Premium, or Dedicated (Azure App Service) plans instead.
 
 ::: zone-end
 
@@ -162,7 +162,7 @@ When you configure Flex Consumption plan apps as zone redundant, the platform au
 
 - **Always-ready instances** are distributed across at least two zones by using round-robin distribution.
 
-    To ensure zone resiliency, the platform automatically maintains at least two always-ready instances for each [per-function scaling function or group](/azure/azure-functions/flex-consumption-plan#per-function-scaling), regardless of the always-ready configuration for the app. Instances that the platform creates are platform-managed, billed as always-ready instances, and don't change the always-ready configuration settings.
+    To ensure zone resiliency, the platform automatically maintains at least two always-ready instances for each [per-function scaling function or group](/azure/azure-functions/flex-consumption-plan#per-function-scaling), regardless of the always-ready configuration for the app. Instances that the platform creates are platform managed, billed as always-ready instances, and don't change the always-ready configuration settings.
 
 - **On-demand instances** result from event source volumes as the app scales beyond the always-ready instance count. On-demand instances are distributed across availability zones on a best-effort basis. The platform prioritizes faster scale-out over even distribution across zones. The platform attempts to even out the distribution over time.
 
@@ -216,7 +216,7 @@ For full pricing details, see [Functions pricing](https://azure.microsoft.com/pr
 
 ::: zone pivot="flex-consumption"
 
-- **Create a new zone-redundant Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#create-a-zone-redundant-function-app).
+- **Create a new zone-redundant Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see [Create a zone-redundant function app](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#create-a-zone-redundant-function-app).
 
 - **Enable zone redundancy on an existing plan:** You can update an existing Flex Consumption plan to enable zone redundancy. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#enable-zone-redundancy-on-an-existing-plan).
 
@@ -224,9 +224,9 @@ For full pricing details, see [Functions pricing](https://azure.microsoft.com/pr
 
 ::: zone pivot="premium"
 
-- **Create a new zone-redundant Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
+- **Create a new zone-redundant Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see [Create a zone-redundant function app](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
 
-- **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone redundant. Instead, migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
+- **Enable zone redundancy on an existing plan:** For Premium plans, you can enable zone redundancy only during plan creation. You can't convert an existing Premium plan to be zone redundant. Instead, migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
 
 ::: zone-end
 
@@ -317,32 +317,32 @@ In an active-active pattern, functions in both regions actively run and process 
 
 #### Active-passive pattern for non-HTTP trigger functions
 
-For event-driven, non-HTTP-triggered functions (such as Service Bus and Event Hubs triggers), use an active-passive pattern. In an active-passive pattern, function instances run in the region that receives events, while the instances in the secondary region remain idle. This pattern ensures that only one function processes each message, which helps maintain data consistency. It also provides a way to fail over to the secondary region during a disaster such as a region outage.
+For event-driven, non-HTTP-triggered functions (such as Azure Service Bus and Azure Event Hubs triggers), use an active-passive pattern. In an active-passive pattern, function instances run in the region that receives events, while the instances in the secondary region remain idle. This pattern ensures that only one function processes each message, which helps maintain data consistency. It also provides a way to fail over to the secondary region during a disaster such as a region outage.
 
-Consider Function app failover with the failover behaviors of other services such as:
+Consider function app failover with the failover behaviors of other services such as:
 
-- [Azure Service Bus geo-replication and geo-disaster recovery](./reliability-service-bus.md#resilience-to-region-wide-failures)
-- [Azure Event Hubs geo-replication and geo-disaster recovery](./reliability-event-hubs.md#resilience-to-region-wide-failures)
+- [Service Bus geo-replication and geo-disaster recovery](./reliability-service-bus.md#resilience-to-region-wide-failures)
+- [Event Hubs geo-replication and geo-disaster recovery](./reliability-event-hubs.md#resilience-to-region-wide-failures)
 
 Consider an example topology that uses an Event Hubs trigger, where your Event Hubs namespace is configured for geo-disaster recovery. In this case, the active-passive pattern requires the following components:
 
-- Event Hubs deployed to both a primary and secondary region.
+- Event Hubs namespaces deployed to both a primary and secondary region.
 
-- [Geo-disaster recovery enabled](/azure/service-bus-messaging/service-bus-geo-dr) to pair the primary and secondary event hubs. This configuration also creates an *alias* that you can use to connect to the Event Hubs namespace, and switch the alias from the primary to the secondary without changes to the connection info.
+- [Geo-disaster recovery enabled](/azure/service-bus-messaging/service-bus-geo-dr) to pair the primary and secondary event hubs. This configuration also creates an *alias* that you can use to connect to the Event Hubs namespace and switch the alias from the primary to the secondary without changes to the connection info.
 
 - Function apps deployed to both the primary and secondary region. The app in the secondary region remains idle because it doesn't receive messages.
 
-- Function app triggers on the *direct* (nonalias) connection string for its respective Event Hubs namespace.
+- Each function app triggers on the *direct* (nonalias) connection string for its respective Event Hubs namespace.
 
 - Publishers to the Event Hubs namespace publish to the alias connection string.
 
 :::image type="complex" border="false" source="./media/reliability-functions/active-passive.svg" alt-text="Diagram that shows an example active-passive architecture. Event Hubs geo-disaster recovery spans multiple regions and separate function apps and databases in each region.":::
-   The diagram shows a primary region on the left and a secondary region on the right. The primary region contains an active Event Hubs namespace, a Functions app, and a database. The secondary region contains a passive Event Hubs namespace, a Functions app, and a database. An arrow points from the alias to the Event Hubs geo-disaster recovery. That arrow connects the primary and secondary Event Hubs namespaces. Arrows point from each event hub to its respective function app. An arrow points from each function app to its respective database.
+   The diagram shows a primary region on the left and a secondary region on the right. The primary region contains an active Event Hubs namespace, a function app, and a database. The secondary region contains a passive Event Hubs namespace, a function app, and a database. An arrow points from the alias to Event Hubs geo-disaster recovery, which connects the primary and secondary Event Hubs namespaces. Arrows point from each event hub to its respective function app. An arrow points from each function app to its respective database.
 :::image-end:::
 
 Before failover, publishers that send events to the shared alias route traffic to the primary event hub. The primary function app listens exclusively to the primary event hub. The secondary function app remains passive and idle.
 
-When failover starts, publishers that send events to the shared alias route traffic to the secondary event hub. The secondary function app becomes active and triggers automatically. The event hub drives the entire failover process, and each function app runs only when its corresponding event hub is active.
+When failover starts, publishers that send events to the shared alias route traffic to the secondary event hub. The secondary function app becomes active and triggers automatically. The event hub can drive the entire failover process, and each function app runs only when its corresponding event hub is active.
 
 #### Durable functions
 
@@ -370,7 +370,7 @@ To maintain your expected capacity during an upgrade, the platform automatically
 
 ::: zone pivot="dedicated"
 
-- **App Service Environment:** If you host your function app on an App Service Environment, you can customize the upgrade cycle. If you must validate the effect of upgrades on your workload, enable manual upgrades. This approach lets you validate and test on a nonproduction instance before you apply the upgrades to your production instance.
+- **App Service Environment:** If you host your function app on an App Service Environment, you can customize the upgrade cycle. If you must validate the effect of upgrades on your workload, enable manual upgrades. Use this approach to validate and test a nonproduction instance before you apply the upgrades to your production instance.
 
     For more information about maintenance preferences, see [Upgrade preferences for App Service Environment planned maintenance](/azure/app-service/environment/how-to-upgrade-preference).
 
