@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-signalr-service
-ms.date: 04/20/2026
+ms.date: 04/24/2026
 ai-usage: ai-assisted
 ---
 
@@ -54,6 +54,8 @@ For detailed guidance on designing your application to handle client disconnecti
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure SignalR Service supports zone-redundant deployments in the Premium tier. When you create a Premium tier resource in a region that supports availability zones, Azure SignalR Service automatically distributes its compute capacity evenly across all availability zones in the region. If an availability zone fails, Azure SignalR Service routes new connections to instances in the remaining healthy zones.
+
+:::image type="content" source="./media/reliability-signalr/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant Azure SignalR service, spread across multiple availability zones." border="false":::
 
 ### Requirements
 
@@ -116,6 +118,10 @@ Azure SignalR Service is a single-region service. If the region becomes unavaila
 ### Geo-replication
 
 With geo-replication, you create replicas of your Azure SignalR Service resource in other Azure regions. Azure Traffic Manager routes clients to the nearest healthy replica based on the client's location. If a region becomes unavailable, Traffic Manager detects the failure through health checks and automatically reroutes new and reconnecting clients to a healthy replica in another region after a DNS time-to-live (TTL) period of 90 seconds.
+
+:::image type="content" source="./media/reliability-signalr/geo-replication.svg" alt-text="Diagram that shows Azure SignalR Service configured for geo-replication across two regions." border="false":::
+
+The region you created the Azure SignalR Service resource in is called the *primary region*, and its replica is the *primary replica*. The primary replica manages the configuration of your Azure SignalR Service resource.
 
 #### Requirements
 
