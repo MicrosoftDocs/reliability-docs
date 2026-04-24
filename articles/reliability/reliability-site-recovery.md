@@ -19,7 +19,7 @@ ai-usage: ai-assisted
 This article describes how to make Site Recovery resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages. It also highlights key information about the Site Recovery service-level agreement (SLA).
 
 > [!NOTE]
-> This article describes how the core Site Recovery service is resilient, or how you can make it resilient, to various problems. It doesn't explain how to use Site Recovery to protect your VMs or other assets. For more information, see [About Site Recovery](/azure/site-recovery/site-recovery-overview).
+> This article describes how the Site Recovery service is resilient, or how you can make it resilient, to various problems. It doesn't explain how to use Site Recovery to protect your VMs or other assets. For more information, see [About Site Recovery](/azure/site-recovery/site-recovery-overview).
 
 ## Production deployment recommendations for reliability
 
@@ -112,7 +112,7 @@ To understand how Site Recovery replication behaves during availability zone fai
     | West US 3      | Poland Central |                | Malaysia West     |
     |                | Spain Central  |                | New Zealand North |
 
-     Site Recovery deploys support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't zone resilient, zone failures might affect operations.
+     Site Recovery is deploying support for availability zones in [all availability zone-enabled regions](./regions-list.md). In regions that aren't listed in the previous table as being zone resilient, zone failures might affect operations.
 
 - **Cache storage account:** You can deploy a ZRS storage account in all availability zone-enabled regions.
 
@@ -126,7 +126,7 @@ Site Recovery is billed based on the number of VM instances protected, regardles
 
     If Microsoft enables zone resiliency in a region at a later time, your Site Recovery resources automatically benefit from zone resilience. You don't need to take any action.
 
-- **Recovery Services vault:** Recovery Services vaults let you configure a level of redundancy, but Site Recovery doesn't use this configuration setting. You don't need to configure your vault for zone redundancy when you use Site Recovery.
+- **Recovery Services vault:** Recovery Services vaults have a redundancy setting, but Site Recovery doesn't use the vault's redundancy configuration. You don't need to configure your vault for zone redundancy when you use Site Recovery.
 
 - **Cache storage account:** When you use Azure-to-Azure replication, you're responsible for creating the cache storage account and for configuring it with the appropriate level of redundancy. To make it zone redundant, configure it for the ZRS replication type. For more information, see [Reliability in Azure Blob Storage](./reliability-storage-blob.md).
 
@@ -158,17 +158,17 @@ This section describes what to expect when you use Site Recovery in a region wit
 
 - **Active requests:** The effect on active replication jobs depends on the replication type:
 
-    - *Zone-to-zone and region-to-region replication of Azure VMs:* If either the source or target instance is in the failed zone, replication stops until both instances are available again.
+    - *Zone-to-zone and region-to-region replication of Azure VMs:* If either the source or target instance is in the failed zone, replication pauses until both instances are available again.
 
-        If the failed zone doesn't contain the source or target VM, and you configure the cache storage account to use ZRS, replication continues to run.
+        If the failed zone doesn't contain the source or target VM, and you configured the cache storage account to use ZRS, replication continues to run.
 
-    - *On-premises to Azure:* If the target instance is in the failed zone, replication stops until the instance is available again.
+    - *On-premises to Azure:* If the target instance is in the failed zone, replication pauses until the instance is available again.
 
         If the failed zone doesn't contain the target VM, replication continues to run.
 
 - **Expected data loss:** No data loss is expected during a zone failure.
 
-- **Expected downtime:** If the failed zone contains either the source or target VM, replication stops until both instances are available again.
+- **Expected downtime:** If the failed zone contains either the source or target VM, replication pauses until both instances are available again.
 
 - **Redistribution:** Site Recovery and Storage automatically adapt to zone failures:
 
@@ -178,7 +178,7 @@ This section describes what to expect when you use Site Recovery in a region wit
 
 ### Zone recovery
 
-When the affected availability zone recovers, Site Recovery automatically resumes replication jobs that stopped during the zone outage.
+When the affected availability zone recovers, Site Recovery automatically resumes replication jobs that paused during the zone outage.
 
 You're responsible for initiating failback for servers or VMs that you failed over during the zone outage. For more information, see the following articles:
 
@@ -227,7 +227,7 @@ For Azure-to-Azure replication, Site Recovery provides resilience to region fail
 
 - **Recovery Services vault:** You need to select the vault's region. For more information, see [Considerations](#considerations).
 
-    Recovery Services vaults let you configure a level of redundancy, but Site Recovery doesn't use this configuration setting. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
+    Recovery Services vaults have a redundancy setting, but Site Recovery doesn't use the vault's redundancy configuration. You don't need to configure your vault for geo-redundancy when you use Site Recovery.
 
 - **Cache storage account:** The cache storage account is only used as a temporary location for data before it's replicated, so you shouldn't configure it to use geo-redundant storage (GRS).
 
