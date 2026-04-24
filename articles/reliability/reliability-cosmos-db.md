@@ -29,7 +29,7 @@ The Azure Well-Architected Framework provides recommendations across reliability
 
 The primary resource you deploy is an Azure Cosmos DB *account*. Each account can have multiple *databases* with multiple *containers*. Containers serve as the logical units of distribution and scalability. You can create containers such as collections, tables, and graphs, depending on the API you use to interact with Azure Cosmos DB. For more information about the resource model, see [Databases, containers, and items in Azure Cosmos DB](/azure/cosmos-db/resource-model). Each container uses [partitioning](/azure/cosmos-db/partitioning), which supports high scale and high performance.
 
-You can configure *throughput*, which represents the amount of system resources that you can use for querying and working with your data. You can [manually provision throughput](/azure/cosmos-db/set-throughput), [use autoscale](/azure/cosmos-db/provision-throughput-autoscale) to to dynamically adjust capacity based on your workload's requirements, or use the [serverless account type](/azure/cosmos-db/serverless) to be charged for your actual usage.
+You configure *throughput*, which represents the amount of system resources that you can use for querying and working with your data. You can [manually provision throughput](/azure/cosmos-db/set-throughput), [use autoscale](/azure/cosmos-db/provision-throughput-autoscale) to to dynamically adjust capacity based on your workload's requirements, or use the [serverless account type](/azure/cosmos-db/serverless) to be charged for your actual usage.
 
 A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-data-globally), which increases your resiliency to region outages. You can configure multiple regions for reading, and if you use the [Business Critical tier](/azure/cosmos-db/multi-region-writes), you can use multiple regions for writing. Azure Cosmos DB automatically geo-replicates your data. Geo-replication behavior is affected by the configuration you use, such as the [consistency level](/azure/cosmos-db/consistency-levels), which indicates how you wish to make tradeoffs between data consistency, availability, latency, and throughput. Different consistency levels optimize for different concerns, support different guarantees, and provide different types of cross-region replication.
 
@@ -43,7 +43,7 @@ Internally, Azure Cosmos DB manages your data through various constructs includi
 
 [!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-The Azure Cosmos DB SDKs automatically implement support for a range of resiliency considerations, including transient fault handling through automatic retries, and honoring rate limit responses sent by the service. For more information, see [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications).
+We recommend you use the Azure Cosmos DB SDKs. The SDKs automatically implement support for a range of resiliency considerations, including transient fault handling through automatic retries, and honoring rate limit responses sent by the service. For more information, see [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications).
 
 <a name="availability-zone-support"></a>
 
@@ -55,16 +55,16 @@ Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azu
 
 ![Diagram showing an Azure Cosmos DB account with a replica set that contains four replicas, which are distributed across the zones.](./media/reliability-cosmos-db/zone-redundant.png)
 
-An Azure Cosmos DB account might use multiple regions (locations) for global distribution, scale, and failover. You configure zone redundancy separately for each region in your account. For example, you might choose to enable zone redundancy in some regions but not others to reduce your cost.
+An Azure Cosmos DB account might use multiple regions (locations) for global distribution, scale, and failover. You configure zone redundancy separately for each region in your account. For example, to reduce your cost, you might choose to enable zone redundancy in some regions but not others.
 
-Using zone redundancy in Azure Cosmos DB has no discernible impact on performance or latency. It doesn't require any adjustments to the selected consistency mode, and also doesn't require any modification to application code.
+Using zone redundancy in Azure Cosmos DB has no discernible impact on performance or latency. It doesn't require any adjustments to the selected consistency mode, and doesn't require any modification to application code.
 
 We recommend using zone redundancy in regions where it's supported, especially for single-region accounts. Because availability zones are physically separate and provide distinct power source, network, and cooling, the availability SLAs for Azure Cosmos DB are higher for zone-redundant accounts than accounts that don't use availability zones.
 
 > [!TIP]
-> Enabling zone redundancy is a great way to increase the resilience of your Azure Cosmos DB database without introducing additional application complexities, affecting performance, or even incurring additional costs (if autoscale is also used).
+> Enabling zone redundancy is a great way to increase the resilience of your Azure Cosmos DB database without introducing additional application complexities or affecting performance. Depending on your account configuration, it might not even incurr additional costs.
 
-If you don't enable zone redundancy, the account is *nonzonal* in that region. That means that all of the replicas could be located in a single availability zone, leading to potential downtime if that specific zone experiences an issue.
+If you don't enable zone redundancy, the account is *nonzonal* in that region. That means that all of the replicas could be located in a single availability zone, leading to potential downtime if that zone experiences an issue.
 
 ### Requirements
 
@@ -72,14 +72,14 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. T
 
     Zone redundancy isn't an account-wide setting. Azure Cosmos DB accounts can span multiple regions, and each region can be configured independently to use availability zones. Regions that don't support availability zones don't prevent you from enabling zone redundancy in other regions within the same account.
 
-- **Serverless:** You can only configure zone redundant serverless accounts when creating them. You can't convert existing serverless accounts without availability zones to an availability zone configuration. For mission critical workloads, we recommend you use provisioned throughput.
+- **Serverless accounts:** You can only configure zone redundant serverless accounts when you create them. You can't convert existing serverless accounts without availability zones to an availability zone configuration. For mission critical workloads, we recommend you use provisioned throughput.
 
 ### Considerations
 
-- **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects a single availability zone. However, if the outage affects multiple availability zones or the entire region, single-region accounts lose read and write access until service is restored.
+- **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects a single availability zone. However, if the outage affects multiple availability zones or the entire region, single-region accounts lose read and write access until service is restored. Consider deploying a multi-region account if you need to be resilient to multiple zones failing at the same time.
 
 > [!WARNING]
-> **Note to PG:** In the legacy document, [we have a table](https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql#zone-redundancy-and-multi-region-accounts) that gives an opinionated benefit of using zone redundancy depending on the account's configuration. As I understand it, this was written to try to dissuade unnecessary use of zone redundancy because capacity was at a premium. Is this still necessary and valuable or should we omit it?
+> **Note to PG:** In the legacy document, [we have a table](https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql#zone-redundancy-and-multi-region-accounts) that gives an opinionated benefit of using zone redundancy depending on the account's configuration. As I understand it, this was written to try to dissuade unnecessary use of zone redundancy because capacity was at a premium. We've omitted it for simplicity, but let me know if you think it's still necessary and valuable.
 
 ### Cost
 
@@ -87,9 +87,9 @@ Regions where zone redundancy is enabled are charged at a premium. However, the 
 
 ### Configure availability zone support
 
-You can enable zone redundancy only when you add a new region to an Azure Cosmos DB account. To enable availability zone support on an existing account, you need to add a region and enable zone redundancy on it. You can follow a process to add a temporary region so that you can configure zone redundancy in your original region.
+For most accounts, you enable zone redundancy only when you add a new region to an Azure Cosmos DB account. To enable availability zone support on an existing account, you need to add a region and enable zone redundancy on it. You can follow a process to add a temporary region so that you can configure zone redundancy in your original region. For detailed steps, see [Enable zone redundancy on an Azure Cosmos DB account](/azure/cosmos-db/enable-zone-redundancy).
 
-For detailed steps, see [Enable zone redundancy on an Azure Cosmos DB account](/azure/cosmos-db/enable-zone-redundancy).
+For serverless accounts, you must enable zone redundancy when you create the account. TODO link
 
 ### Behavior when all zones are healthy
 
