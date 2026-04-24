@@ -633,6 +633,13 @@ productDirectory:
       azureCategories:
         - databases
     # Card
+    - title: Azure Key Vault Managed HSM
+      summary: Managed hardware security module (HSM) for cryptographic key management
+      imageSrc: /azure/media/index/key-vault-managed-hsm.svg
+      url: reliability-managed-hsm.md
+      azureCategories:
+        - security
+    # Card
     - title: Azure SignalR Service
       summary: Add real-time web functionality easily
       imageSrc: /azure/media/index/signalr-service.svg
