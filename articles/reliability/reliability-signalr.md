@@ -133,7 +133,7 @@ Geo-replication enables you to add *replicas* of your SignalR Service resource i
 
 :::image type="content" source="./media/reliability-signalr/geo-replication.svg" alt-text="Diagram that shows Azure SignalR Service configured for geo-replication across two regions." border="false":::
 
-The region you created the Azure SignalR Service resource in is called the *primary region*, and its replica is the *primary replica*. The primary replica manages the configuration of your Azure SignalR Service resource.
+The region you created the Azure SignalR Service resource in is called the *primary region*, and its replica is the *primary replica*. The *control plane* of the primary resource manages the configuration of your Azure SignalR Service resource.
 
 #### Requirements
 
@@ -145,7 +145,7 @@ The region you created the Azure SignalR Service resource in is called the *prim
 
 - **Configuration inheritance:** Replicas inherit most configuration settings from the primary resource. Certain settings must be configured separately on each replica. For the complete list of settings that aren't inherited, see [Geo-replication in Azure SignalR Service](/azure/azure-signalr/howto-enable-geo-replication).
 
-- **Configuration changes:** The primary replica processes any configuration changes to the SignalR Service resource. If the primary replica is unavailable, other replicas continue to work but you can't apply configuration changes.
+- **Configuration changes:** The primary control plane, in the primary region, processes any configuration changes to the SignalR Service resource. If the primary control plane is unavailable, you will be unable to update the resource configuration, though existing replicas will continue to process data traffic without interruption.
 
 #### Cost
 
@@ -159,7 +159,7 @@ To add or remove a replica to a SignalR Service resource, see [Geo-replication i
 
 Each replica handles traffic independently. During a regional failover, clients from the failed region reconnect to the nearest healthy replica. To ensure that the surviving replicas have enough capacity to absorb this extra load, configure each replica with units that can handle the full expected traffic of the workload, not just the portion it normally serves.
 
-Alternatively, enable autoscaling on each replica so units can scale out automatically in response to higher load. Autoscaling continues to work when a secondary replica is unavailable, but autoscaling doesn't work if the primary replica is unavailable. For more information about autoscaling, see [Autoscaling in Azure SignalR Service](/azure/azure-signalr/signalr-howto-scale-autoscale).
+Alternatively, enable autoscaling on each replica so units can scale out automatically in response to higher load. Autoscaling continues to work when a secondary replica is unavailable, but autoscaling doesn't work if the primary control plane is unavailable. For more information about autoscaling, see [Autoscaling in Azure SignalR Service](/azure/azure-signalr/signalr-howto-scale-autoscale).
 
 For general guidance on overprovisioning as a strategy, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning).
 
@@ -187,7 +187,7 @@ This section describes what to expect when you configure Azure SignalR Service f
 
 - **Expected downtime:** Azure Traffic Manager performs health checks against each replica. When a region outage causes a replica to fail its health check, the Traffic Manager removes that replica's endpoint from its DNS resolution results. After removing the endpoint, the DNS TTL of 90 seconds must elapse before clients see updated DNS records. In total, the transition typically takes a few minutes. Well-designed clients that implement reconnect logic can resume normal operation after reconnecting to the healthy replica.
 
-  If the primary replica is unavailable, you can't make any changes to the configuration of your SignalR Service resource or its replicas. However, connections continue to work in healthy replicas.
+  If the primary control plane is unavailable, you can't make any changes to the configuration of your SignalR Service resource or its replicas. However, connections continue to work in healthy replicas.
 
 - **Redistribution:** Azure Traffic Manager directs incoming request to healthy replicas. However, if a client attempts to reconnect before Azure Traffic Manager has detected the replica failover and the updated DNS entries have propagated to the client, then a client's reconnect attempt might continue to target the unavailable region and could fail.
 
