@@ -128,7 +128,7 @@ Your plan is *nonzonal* or *regional* when you don't enable zone redundancy. The
     | West US 3        | UK South             |                |                    |                |
     |                  | West Europe          |                |                    |                |
 
-- **Operating systems:** The platform supports both Windows and Linux plans.
+- **Operating systems:** The platform supports deploying zone-redundant Windows and Linux plans.
 
 - **Minimum instance count:** Zone redundancy for Premium plans requires a minimum of two always-ready instances.
 
@@ -150,7 +150,7 @@ Your plan is *nonzonal* or *regional* when you don't enable zone redundancy. The
 
 ### Considerations
 
-Zone redundancy only guarantees continued uptime for deployed applications. An availability zone outage might affect aspects of Functions, even though the application continues to serve traffic. These behaviors include plan scaling, application creation, application configuration, and application publishing.
+**Nonruntime behaviors:** Zone redundancy only guarantees continued uptime for deployed applications. An availability zone outage might affect aspects of Functions, even though the application continues to serve traffic. These behaviors include plan scaling, application creation, application configuration, and application publishing.
 
 ### Instance distribution across zones
 
@@ -190,7 +190,7 @@ When Functions allocates instances to a zone-redundant Premium plan, it uses [be
 
 ::: zone pivot="flex-consumption,premium"
 
-You incur no extra cost when you enable zone redundancy. Pricing for a zone-redundant plan is the same as a single-zone plan.
+You incur no extra cost when you enable zone redundancy. Pricing for a zone-redundant plan is the same as a single-zone plan. However, enabling zone redundancy affects the minimum number of instances in your plan.
 
 ::: zone-end
 
@@ -291,7 +291,7 @@ Functions is a single-region service. If the region becomes unavailable, your Fu
 
 ### Custom multi-region solutions for resiliency
 
-To avoid interrupted executions during outages, you can redundantly deploy the same functions to function apps in multiple regions.
+To avoid interruptions to your service during region-wide outages, you can redundantly deploy the same functions to function apps in multiple regions.
 
 You're responsible for:
 
@@ -305,7 +305,7 @@ You're responsible for:
 
 - Monitoring and managing cross-region deployments.
 
-When you run the same function code in multiple regions, consider the active-active and active-passive patterns. The following sections introduce these patterns but don't provide detailed guidance or configuration steps.
+When you run the same function code in multiple regions, consider the *active-active* and *active-passive* patterns. The following sections introduce these patterns but don't provide detailed guidance or configuration steps.
 
 #### Active-active pattern for HTTP trigger functions
 
@@ -319,7 +319,7 @@ In an active-active pattern, functions in both regions actively run and process 
 
 For event-driven, non-HTTP-triggered functions (such as Azure Service Bus and Azure Event Hubs triggers), use an active-passive pattern. In an active-passive pattern, function instances run in the region that receives events, while the instances in the secondary region remain idle. This pattern ensures that only one function processes each message, which helps maintain data consistency. It also provides a way to fail over to the secondary region during a disaster such as a region outage.
 
-Consider function app failover with the failover behaviors of other services such as:
+Consider function app failover together with the failover behaviors of other services that you use, such as:
 
 - [Service Bus geo-replication and geo-disaster recovery](./reliability-service-bus.md#resilience-to-region-wide-failures)
 - [Event Hubs geo-replication and geo-disaster recovery](./reliability-event-hubs.md#resilience-to-region-wide-failures)
@@ -332,7 +332,7 @@ Consider an example topology that uses an Event Hubs trigger, where your Event H
 
 - Function apps deployed to both the primary and secondary region. The app in the secondary region remains idle because it doesn't receive messages.
 
-- Each function app triggers on the *direct* (nonalias) connection string for its respective Event Hubs namespace.
+- Each function app's triggers use the *direct* (nonalias) connection string for its respective Event Hubs namespace.
 
 - Publishers to the Event Hubs namespace publish to the alias connection string.
 
@@ -362,7 +362,7 @@ Functions performs regular service upgrades and other maintenance tasks.
 
 ::: zone pivot="premium,dedicated"
 
-To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
+- **Extra temporary instances:** To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of the plan during the upgrade process.
 
 - **Enable zone redundancy:** When you enable zone redundancy on your plan, you also improve resiliency during platform updates. *Update domains* consist of collections of VMs that go offline during an update, and they map to availability zones. Deploying multiple instances in your plan and enabling zone redundancy for your plan adds an extra layer of resiliency if an instance or a zone becomes unhealthy during an upgrade.
 
@@ -400,9 +400,8 @@ Functions provides distinct availability SLAs for the Consumption plan and for o
 
 ## Related content
 
-- [Functions Premium plan](/azure/azure-functions/functions-premium-plan)
 - [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable-functions/durable-functions-disaster-recovery-geo-distribution)
-- [Create Azure Front Door](/azure/frontdoor/quickstart-create-front-door)
+- [Create Azure Front Door](/azure/frontdoor/create-front-door-portal)
 - [Event Hubs failover considerations](/azure/event-hubs/event-hubs-geo-dr#considerations)
 - [Architecture strategies for how to use availability zones and regions](/azure/well-architected/design-guides/regions-availability-zones)
 - [Reliability in Azure](./overview.md)
