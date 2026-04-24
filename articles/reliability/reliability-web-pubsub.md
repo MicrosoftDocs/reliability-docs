@@ -48,7 +48,7 @@ For more information, see [Azure Web PubSub service internals](/azure/azure-web-
 
 [!INCLUDE [Transient fault description - resilience](includes/reliability-transient-fault-description-include.md)]
 
-WebSocket is a long-lived connection protocol. Transient network events, back-end node restarts, and service maintenance operations can drop an active connection. A basic reconnect restores the connection, but without additional logic the client loses messages that were in flight or queued during the outage.
+WebSocket is a long-lived connection protocol. Transient network events, back-end infrastructure restarts, and service maintenance operations can drop an active connection. A basic reconnect restores the connection, but without additional logic the client loses messages that were in flight or queued during the outage.
 
 Azure Web PubSub Service addresses this issue through *reliable subprotocols* that sit on top of the raw WebSocket connection. The subprotocols track message sequence and connection state so that, when a connection drops, the client renegotiates with the service and resumes from where it left off.
 
@@ -68,7 +68,7 @@ To take advantage of the reliable subprotocols, follow these recommendations:
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Azure Web PubSub Service supports zone-redundant deployments when you use the Premium tier. When you create or upgrade a Web PubSub resource to one of those tiers in a region that supports availability zones, zone redundancy is automatically enabled. The service distributes its infrastructure across multiple availability zones in the region. If one zone fails, the service routes traffic to infrastructure in a the healthy zone.
+Azure Web PubSub Service supports zone-redundant deployments when you use the Premium tier. When you create or upgrade a Premium tier Web PubSub resource in a region that supports availability zones, zone redundancy is automatically enabled. The service distributes its infrastructure across multiple availability zones in the region. If one zone fails, the service routes traffic to infrastructure in a the healthy zone.
 
 :::image type="content" source="./media/reliability-web-pubsub/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant Azure Web PubSub service, spread across multiple availability zones." border="false":::
 
@@ -98,7 +98,7 @@ Zone redundancy requires no configuration beyond selecting the Premium tier. It'
 
 This section describes what to expect when you configure an Azure Web PubSub resource for zone redundancy and all availability zones are operational.
 
-- **Cross-zone operation:** Azure Web PubSub Service automatically manages how connections and operations are distributed across availability zones. Infrastructure in multiple zones process traffic in an active-active model. You don't need to configure anything to take advantage of this behavior.
+- **Cross-zone operation:** Azure Web PubSub Service automatically manages how connections and operations are distributed across availability zones. Infrastructure in multiple zones process traffic in an active-active model. You don't need to configure anything to take advantage of this behavior. The service routes messages between instances across zones automatically, so a message sent by a client in one zone is delivered to clients connected in any other zone.
 
 - **Cross-zone data replication:** Azure Web PubSub Service doesn't persist customer data. The service does maintain session metadata, such as connection state and message sequence information for active connections. This metadata is synchronously replicated across availability zones.
 
@@ -110,7 +110,7 @@ This section describes what to expect when you configure an Azure Web PubSub res
 
 [!INCLUDE [Availability zone down notification (Service Health and Resource Health)](./includes/reliability-availability-zone-down-notification-service-resource-include.md)]
 
-- **Active requests:** During a zone failure, active WebSocket connections to nodes in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by reconnecting after a short period of time, they typically avoid significant impact.
+- **Active requests:** During a zone failure, active WebSocket connections to infrastructure in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by reconnecting after a short period of time, they typically avoid significant impact.
 
 - **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost. If publishers use an Azure Web PubSub Client SDK or implement the reliable subprotocols, their messages must be acknowledged by the service before they're considered to be successfully published, which prevents data loss during a zone failure or another problem.
 
@@ -196,7 +196,7 @@ This section describes what to expect when you configure Azure Web PubSub Servic
 
   If the primary replica is unavailable, you can't make any changes to the configuration of your Web PubSub resource or its replicas. However, WebSocket connections continue to work in healthy replicas.
 
-- **Traffic rerouting:** Azure Traffic Manager directs incoming request to healthy replicas. However, if a client attempts to reconnect before Azure Traffic Manager has detected the replica failover and the updated DNS entries have propagated to the client, then a client's reconnect attempt might continue to target the unavailable region and could fail.
+- **Redistribution:** Azure Traffic Manager directs incoming request to healthy replicas. However, if a client attempts to reconnect before Azure Traffic Manager has detected the replica failover and the updated DNS entries have propagated to the client, then a client's reconnect attempt might continue to target the unavailable region and could fail.
    
    After the DNS update propagates, reconnecting clients are automatically routed to the nearest healthy replica.
 
@@ -206,7 +206,7 @@ When the failed region recovers, the Traffic Manager health check detects the re
 
 #### Test for region failures
 
-To simulate a regional failover and test your client application's reconnect behavior, you can disable a replica's endpoint. This action causes Traffic Manager to stop routing traffic to that replica, which lets you observe how your clients behave when the replica they connect to becomes unavailable. For detailed steps, see [Disable or enable the replica endpoint](/azure/azure-web-pubsub/howto-enable-geo-replication#disable-or-enable-the-replica-endpoint).
+To simulate a region failover and test your client application's reconnect behavior, you can disable a replica's endpoint. This action causes Traffic Manager to stop routing traffic to that replica, which lets you observe how your clients behave when the replica they connect to becomes unavailable. For detailed steps, see [Disable or enable the replica endpoint](/azure/azure-web-pubsub/howto-enable-geo-replication#disable-or-enable-the-replica-endpoint).
 
 ### Custom multiregion solutions for resiliency
 
