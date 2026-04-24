@@ -38,11 +38,11 @@ The resource you create is a *Web PubSub resource*. You configure a resource wit
 
 A Web PubSub resource has a globally unique endpoint similar to `contoso.webpubsub.azure.com`. Clients establish WebSocket connections to this endpoint. Application servers connect to the same endpoint to send messages and receive events from clients.
 
+For more information, see [Azure Web PubSub service internals](/azure/azure-web-pubsub/concept-service-internals).
+
 ### Physical architecture
 
 Azure Web PubSub Service manages WebSocket connection state and message routing across a set of compute resources. Microsoft manages the underlying infrastructure. You don't directly see or interact with individual VMs that the service uses, or other infrastructure components.
-
-For more information, see [Azure Web PubSub service internals](/azure/azure-web-pubsub/concept-service-internals).
 
 ## Resilience to transient faults
 
@@ -140,7 +140,7 @@ Geo-replication enables you to add *replicas* of your Web PubSub resource in oth
 
 :::image type="content" source="./media/reliability-web-pubsub/geo-replication.png" alt-text="Diagram that shows Azure Web PubSub configured for geo-replication across two regions." border="false":::
 
-The region you created the Web PubSub resource in is called the *primary region*, and its replica is the *primary replica*. The primary replica manages the configuration of your Web PubSub resource.
+The region you created the Web PubSub resource in is called the *primary region*, and its replica is the *primary replica*. The control plane of the primary resource manages the configuration of your Web PubSub resource.
 
 #### Requirements
 
@@ -152,7 +152,7 @@ The region you created the Web PubSub resource in is called the *primary region*
 
 - **Configuration inheritance:** Replicas inherit most configuration settings from the primary resource. Certain settings must be configured separately on each replica. For the complete list of settings that aren't inherited, see [Geo-replication in Azure Web PubSub](/azure/azure-web-pubsub/howto-enable-geo-replication).
 
-- **Configuration changes:** The primary replica processes any configuration changes to the Web PubSub resource. If the primary replica is unavailable, other replicas continue to work but you can't apply configuration changes.
+- **Configuration changes:** The primary control plane, in the primary region, processes any configuration changes to the Web PubSub resource. If the primary control plane is unavailable, you will be unable to update the resource configuration, though existing replicas will continue to process data traffic without interruption.
 
 #### Cost
 
@@ -166,7 +166,7 @@ To add or remove a replica to a Web PubSub resource, see [Geo-replication in Azu
 
 Each replica handles traffic independently. During a regional failover, clients from the failed region reconnect to the nearest healthy replica. To ensure that the surviving replicas have enough capacity to absorb this extra load, configure each replica with units that can handle the full expected traffic of the workload, not just the portion it normally serves.
 
-Alternatively, enable autoscaling on each replica so units can scale out automatically in response to higher load. Autoscaling continues to work when a secondary replica is unavailable, but autoscaling doesn't work if the primary replica is unavailable. For more information about autoscaling, see [Automatically scale units of an Azure Web PubSub service](/azure/azure-web-pubsub/howto-scale-autoscale).
+Alternatively, enable autoscaling on each replica so units can scale out automatically in response to higher load. Autoscaling continues to work when a secondary replica is unavailable, but autoscaling doesn't work if the primary control plane is unavailable. For more information about autoscaling, see [Automatically scale units of an Azure Web PubSub service](/azure/azure-web-pubsub/howto-scale-autoscale).
 
 For general guidance on overprovisioning as a strategy, see [Manage capacity by overprovisioning](/azure/reliability/concept-redundancy-replication-backup#manage-capacity-with-over-provisioning).
 
@@ -194,7 +194,7 @@ This section describes what to expect when you configure Azure Web PubSub Servic
 
 - **Expected downtime:** Azure Traffic Manager performs health checks against each replica. When a region outage causes a replica to fail its health check, the Traffic Manager removes that replica's endpoint from its DNS resolution results. After removing the endpoint, the DNS TTL of 90 seconds must elapse before clients see updated DNS records. In total, the transition typically takes a few minutes. Well-designed clients that implement reconnect logic can resume normal operation after reconnecting to the healthy replica.
 
-  If the primary replica is unavailable, you can't make any changes to the configuration of your Web PubSub resource or its replicas. However, WebSocket connections continue to work in healthy replicas.
+  If the primary control plane is unavailable, you can't make any changes to the configuration of your Web PubSub resource or its replicas. However, WebSocket connections continue to work in healthy replicas.
 
 - **Redistribution:** Azure Traffic Manager directs incoming request to healthy replicas. However, if a client attempts to reconnect before Azure Traffic Manager has detected the replica failover and the updated DNS entries have propagated to the client, then a client's reconnect attempt might continue to target the unavailable region and could fail.
    
