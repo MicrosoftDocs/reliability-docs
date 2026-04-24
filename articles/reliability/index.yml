@@ -357,14 +357,6 @@ productDirectory:
       azureCategories:
         - integration
     # Card
-    - title: Azure SignalR Service
-      summary: Add real-time web functionality with a fully managed WebSocket service
-      imageSrc: /azure/media/index/signalr.svg
-      url: reliability-signalr.md
-      azureCategories:
-        - web
-        - integration
-    # Card
     - title: Azure Cosmos DB
       summary: Fast NoSQL database with SLA-backed speed and availability
       imageSrc: https://static.docs.com/ui/media/product/azure/cosmos-db.svg
@@ -640,6 +632,14 @@ productDirectory:
       url: reliability-database-mysql.md
       azureCategories:
         - databases
+    # Card
+    - title: Azure SignalR Service
+      summary: Add real-time web functionality easily
+      imageSrc: /azure/media/index/signalr-service.svg
+      url: reliability-signalr.md
+      azureCategories:
+        - web
+        - integration
 
 tools:
   title: Reliability services and capabilities
