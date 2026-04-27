@@ -138,7 +138,7 @@ To protect your application against a region-wide failure, you can use *geo-repl
 
 Geo-replication enables you to add *replicas* of your Web PubSub resource in other Azure regions. All replicas share a single endpoint (`contoso.webpubsub.azure.com`). Behind this endpoint, Azure Traffic Manager uses DNS-based routing to direct each client to the nearest healthy regional replica. If a region fails, the Traffic Manager detects the failure through health checks and stops directing clients to that replica. New client connections are automatically routed to the nearest healthy replica.
 
-:::image type="content" source="./media/reliability-web-pubsub/geo-replication.png" alt-text="Diagram that shows Azure Web PubSub configured for geo-replication across two regions." border="false":::
+:::image type="content" source="./media/reliability-web-pubsub/geo-replication.svg" alt-text="Diagram that shows Azure Web PubSub configured for geo-replication across two regions." border="false":::
 
 The region you created the Web PubSub resource in is called the *primary region*, and its replica is the *primary replica*. The control plane of the primary resource manages the configuration of your Web PubSub resource.
 
