@@ -5,7 +5,7 @@ description: Find out about reliability in Azure Storage Discovery
 author: pthippeswamy
 ms.service: azure-storage-discovery
 ms.author: fauhse
-ms.topic: overview
+ms.topic: reliability-article
 ms.date: 10/02/2025
 ---
 

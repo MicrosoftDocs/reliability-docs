@@ -114,12 +114,8 @@ items:
     items:
     - name: Azure DevOps
       href: /azure/devops/organizations/security/data-protection?view=azure-devops.md&preserve-view=true#data-availability&toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Data export
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export 
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
   - name: Integration
     items:
     - name: Azure API Management
@@ -148,14 +144,12 @@ items:
     items:
     - name: Azure Backup
       href: reliability-backup.md
+    - name: Azure Chaos Studio
+      href: reliability-chaos-studio.md
     - name: Azure Managed Grafana
       href: reliability-managed-grafana.md
-    - name: Azure Monitor - Log Analytics
-      items:
-      - name: Availability zones
-        href: /azure/azure-monitor/logs/availability-zones?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
-      - name: Data export
-        href: /azure/azure-monitor/logs/logs-data-export?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json&tabs=portal#enable-data-export
+    - name: Azure Monitor Logs
+      href: reliability-monitor-logs.md
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
   - name: Migration
@@ -210,6 +204,8 @@ items:
       href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
+    - name: Azure Key Vault Managed HSM
+      href: reliability-managed-hsm.md
   - name: Storage
     items:
     - name: Azure Backup
@@ -318,8 +314,6 @@ items:
         href: reliability-aks.md
       - name: Azure Load Balancer 
         href: reliability-load-balancer.md#configure-availability-zone-support
-      - name: Log Analytics Dedicated Cluster workspaces
-        href: migrate-monitor-log-analytics.md
       - name: Azure Service Bus
         href: reliability-service-bus.md#configure-availability-zone-support
       - name: Azure SQL Database

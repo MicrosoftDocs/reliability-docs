@@ -236,6 +236,11 @@
       "redirect_document_id": false
     },
     {
+      "source_path": "articles/reliability/migrate-monitor-log-analytics.md",
+      "redirect_url": "/azure/reliability/reliability-monitor-logs",
+      "redirect_document_id": false
+    },
+    {
       "source_path": "articles/reliability/reliability-ddos.md",
       "redirect_url": "/azure/reliability/reliability-ddos-protection",
       "redirect_document_id": true
