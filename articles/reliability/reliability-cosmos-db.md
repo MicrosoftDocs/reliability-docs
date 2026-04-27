@@ -46,6 +46,8 @@ Internally, Azure Cosmos DB manages your data through various constructs includi
 
 We recommend you use the Azure Cosmos DB SDKs. The SDKs automatically implement support for a range of resiliency considerations, including transient fault handling through automatic retries, and honoring rate limit responses sent by the service. For more information, see [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications).
 
+When working with a multiregion account, the SDK also supports a [threshold-based availability strategy](/azure/cosmos-db/performance-tips-dotnet-sdk-v3#threshold-based-availability-strategy), also called *hedging*, where it sends parallel read requests to multiple regions and accept the fastest response. This approach can improve application performance when a region temporarily experiences higher latency than usual.
+
 <a name="availability-zone-support"></a>
 
 ## Resilience to availability zone failures
@@ -191,6 +193,9 @@ Azure Cosmos DB provides multiple types of failover:
 
 - **Per-partition automatic failover (PPAF):** Internally, Azure Cosmos DB spreads your data across multiple physical partitions. If a problem occurs with the infrastructure supporting a partition, other partitions might not be affected. PPAF enables single-write region accounts to automatically fail over individual partitions to a secondary region while keeping healthy partitions in the primary region. PPAF can help to minimize downtime and enable faster recovery during a partial region failure. For more information, see [How to onboard and adopt Per-Partition Automatic Failover (PPAF) for Azure Cosmos DB](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover).
 
+    > [!WARNING]
+    > **Note to PG:** Should we also discuss partition-level circuit breaker (PPCB)? If so, how do you typically position this in relation to PPAF?
+
     > [!NOTE]
     > Per Partition Automatic Failover is in public preview. This feature is provided without a service level agreement. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 
@@ -234,7 +239,7 @@ If your application spreads requests across regions and one region goes offline,
 
 This section describes what to expect when you configure an Azure Cosmos DB account with multiple read regions, and all regions are operational.
 
-- **Cross-region operation:** Your application configures the region that should receive read operations. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability). To learn how to configure your application, see [Configure multi-region writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
+- **Cross-region operation:** Your application configures the region that should receive read operations. You can configure your application with a prioritized list of regions, or to exclude some regions. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability).
 
     All write operations are directed to your account's write region.
 
@@ -412,7 +417,7 @@ If your application spreads requests across regions and one region goes offline,
 
 This section describes what to expect when you configure an Azure Cosmos DB account with multiple write regions, and all regions are operational.
 
-- **Cross-region operation:** When an account is configured with multiple write regions, your application configures the region that should be used for read and write operations. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability). To learn how to configure your application, see [Configure multi-region writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
+- **Cross-region operation:** When an account is configured with multiple write regions, your application configures the region that should be used for read and write operations. You can configure your application with a prioritized list of regions, or to exclude some regions. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability). To learn how to configure your application, see [Configure multi-region writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
 
 - **Cross-region data replication:** Data is replicated between regions asynchronously. The replication lag depends on the account's consistency level. You can't use strong consistency for multi-region writes. For more information, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
