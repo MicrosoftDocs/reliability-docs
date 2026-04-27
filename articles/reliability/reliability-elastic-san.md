@@ -23,12 +23,9 @@ This article describes how to make Azure Elastic SAN resilient to a variety of p
 For production workloads, we recommend that you:
 
 > [!div class="checklist"]
-> - Use zone-redundant storage (ZRS) to spread copies of your data across three availability zones.
-> - Use private endpoints for network access to enable automatic zone failover without manual intervention.
-> - For workloads that require cross-region disaster recovery, create snapshots of your volumes regularly, and export them to managed disk snapshots for data protection. Copy the snapshots to a secondary region that is geographically distant from your primary region.
-
-> [!WARNING]
-> **Note to PG:** Please verify that the recommendations listed above are reasonable. Are there any others you typically suggest?
+> - **Use zone-redundant storage (ZRS):** ZRS spreads copies of your data across three availability zones.
+> - **Configure your network access to reduce manual intervention during zone failures:** Private endpoints enable automatic zone failover without manual intervention, while service endpoints might require manual intervention.
+> - **For workloads that require cross-region disaster recovery:** Create snapshots of your volumes regularly, and export them to managed disk snapshots for data protection. Copy the snapshots to a secondary region that is geographically distant from your primary region.
 
 ## Reliability architecture overview
 
@@ -154,9 +151,6 @@ Elastic SAN supports two types of backup:
 ## Resilience to service maintenance
 
 [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
-
-> [!WARNING]
-> **Note to PG:** Please verify whether there are any other recommendations for customers to follow to be resilient to service maintenance.
 
 ## Service-level agreement
 
