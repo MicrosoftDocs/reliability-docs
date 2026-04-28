@@ -204,6 +204,8 @@ items:
       href: reliability-firewall.md
     - name: Azure Key Vault
       href: reliability-key-vault.md
+    - name: Azure Key Vault Managed HSM
+      href: reliability-managed-hsm.md
   - name: Storage
     items:
     - name: Azure Backup
@@ -303,7 +305,7 @@ items:
       - name: Azure Database for PostgreSQL
         href: reliability-database-postgresql.md
       - name: Azure Elastic SAN
-        href: reliability-elastic-san.md#availability-zone-migration
+        href: reliability-elastic-san.md#configure-availability-zone-support
       - name: Azure Functions
         href: reliability-functions.md#configure-availability-zone-support
       - name: Azure HDInsight

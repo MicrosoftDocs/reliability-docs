@@ -134,12 +134,13 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Databricks
 - Azure Dedicated HSM
 - Azure Digital Twins
+- Azure Elastic SAN
 - Azure HPC Cache
+- Azure Key Vault Managed HSM
 - Azure Kubernetes Fleet Manager
 - Azure Lab Services
 - Azure Machine Learning
 - Azure Managed Grafana
-- Azure Managed HSM
 - Azure Managed Instance for Apache Cassandra
 - Azure NetApp Files
 - Azure Red Hat OpenShift

@@ -218,7 +218,7 @@ For full pricing details, see [Functions pricing](https://azure.microsoft.com/pr
 
 - **Create a new zone-redundant Functions plan.** You can enable zone redundancy when you create a new plan. For more information, see [Create a zone-redundant function app](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#create-a-zone-redundant-function-app).
 
-- **Enable zone redundancy on an existing plan:** You can update an existing Flex Consumption plan to enable zone redundancy. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=flex-consumption-plan#enable-zone-redundancy-on-an-existing-plan).
+- **Enable zone redundancy on an existing plan:** You can turn availability zones on or off for existing Elastic Premium plans. Elastic Premium plans have specific capacity behavior that differs from Dedicated (App Service) plans and requires extra configuration steps. For detailed steps, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan&tabs=azure-portal#enable-zone-redundancy-on-an-existing-plan).
 
 ::: zone-end
 
