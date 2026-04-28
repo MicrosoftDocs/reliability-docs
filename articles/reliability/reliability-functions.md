@@ -222,7 +222,7 @@ For full pricing details, see [Azure Functions pricing](https://azure.microsoft.
 
 - **Create a new zone-redundant Azure Functions plan.** You can enable zone redundancy when you create a new plan. For detailed steps, see [Create a zone-redundant Function App](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#create-a-zone-redundant-function-app).
 
-- **Enable zone redundancy on an existing plan:** For Premium plans, you can only enable zone redundancy during plan creation. You can't convert an existing Premium plan to be zone-redundant. You must instead migrate your app by creating a side-by-side deployment on a new Premium plan app. For more information, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
+- **Enable zone redundancy on an existing plan:** You can enable or disable availability zones on existing Elastic Premium plans. Elastic Premium plans have specific capacity behavior that differs from Dedicated (App Service) plans and requires additional configuration steps. For detailed steps, see [Enable zone redundancy on an existing plan](/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan).
 
 ::: zone-end
 
