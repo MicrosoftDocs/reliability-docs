@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Event Grid
 description: Learn how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
-author: glynnniall
-ms.author: pnp
+author: spelluru
+ms.author: spelluru
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-grid
@@ -71,6 +71,10 @@ When you use Event Grid, consider the following practices to ensure your solutio
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Azure Event Grid resources are zone-redundant in regions that support availability zones. Zone redundancy means that even when an availability zone has a problem, your Event Grid resources continue to work by using infrastructure in other zones. Event data is automatically replicated across three availability zones for intra-region resiliency, and Event Grid self-heals during a zone-wide outage. You don't need to enable or configure this capability.
+
+:::image type="complex" source="./media/reliability-event-grid/zone-redundant.svg" alt-text="Diagram that shows zone-redundant Event Grid resources in a region with three availability zones." border="false":::
+  The diagram shows a various Event Grid resources, each distributed across three availability zones.
+:::image-end:::
 
 ### Requirements
 

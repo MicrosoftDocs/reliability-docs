@@ -81,6 +81,9 @@ conceptualContent:
             - text: Failover and failback
               url: concept-failover-failback.md
               itemType: concept
+            - text: How to read a service-level agreement (SLA)
+              url: concept-service-level-agreements.md
+              itemType: concept
 
       - title: Reliability on the Azure platform
         links:
@@ -435,7 +438,7 @@ productDirectory:
     - title: Azure Database for PostgreSQL
       summary: Managed PostgreSQL database service for app developers
       imageSrc: /azure/media/index/database-postgresql-server.svg
-      url: reliability-azure-database-postgresql.md
+      url: reliability-database-postgresql.md
       azureCategories:
         - databases
         - hybrid
@@ -479,7 +482,7 @@ productDirectory:
     - title: Azure DDoS Protection
       summary: Protect your applications from Distributed Denial of Service (DDoS) attacks
       imageSrc: /azure/media/index/ddos-protection.svg
-      url: reliability-ddos.md
+      url: reliability-ddos-protection.md
       azureCategories:
         - networking
         - security
@@ -593,6 +596,14 @@ productDirectory:
       azureCategories:
         - networking
     # Card
+    - title: Azure Monitor Logs
+      summary: Full observability into your applications, infrastructure, and network
+      imageSrc: /azure/media/index/monitor.svg
+      url: reliability-monitor-logs.md
+      azureCategories:
+        - devops
+        - management-and-governance
+    # Card
     - title: Azure Site Recovery
       summary: Keep your business running with built-in disaster recovery service
       imageSrc: https://static.docs.com/ui/media/product/azure/recovery-services-vaults.svg
@@ -600,6 +611,34 @@ productDirectory:
       azureCategories:
         - management-and-governance
         - migration
+    # Card
+    - title: Azure Data Explorer
+      summary: Fast and highly scalable data exploration service
+      imageSrc: /azure/media/index/data-explorer.svg
+      url: reliability-data-explorer.md
+      azureCategories:
+        - analytics
+    # Card
+    - title: Azure Disk Storage
+      summary: High-performance, highly durable block storage for Azure Virtual Machines
+      imageSrc: /azure/media/index/disk-storage.svg
+      url: reliability-storage-disk.md
+      azureCategories:
+        - storage
+    # Card
+    - title: Azure Database for MySQL
+      summary: Managed MySQL database service for app developers
+      imageSrc: /azure/media/index/database-mysql-server.svg
+      url: reliability-database-mysql.md
+      azureCategories:
+        - databases
+    # Card
+    - title: Azure Key Vault Managed HSM
+      summary: Managed hardware security module (HSM) for cryptographic key management
+      imageSrc: /azure/media/index/key-vault-managed-hsm.svg
+      url: reliability-managed-hsm.md
+      azureCategories:
+        - security
 
 tools:
   title: Reliability services and capabilities

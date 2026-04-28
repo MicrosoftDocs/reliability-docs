@@ -62,7 +62,12 @@
     },
     {
       "source_path_from_root": "/articles/reliability/reliability-postgresql-flexible-server.md",
-      "redirect_url": "/azure/reliability/reliability-azure-database-postgresql",
+      "redirect_url": "/azure/reliability/reliability-database-postgresql",
+      "redirect_document_id": false
+    },
+    {
+      "source_path_from_root": "/articles/reliability/reliability-azure-database-postgresql.md",
+      "redirect_url": "/azure/reliability/reliability-database-postgresql",
       "redirect_document_id": true
     },
     {
@@ -228,6 +233,21 @@
     {
       "source_path": "articles/reliability/migrate-functions.md",
       "redirect_url": "/azure/azure-functions/functions-zone-redundancy?pivots=premium-plan#enable-zone-redundancy-on-an-existing-plan",
+      "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/migrate-monitor-log-analytics.md",
+      "redirect_url": "/azure/reliability/reliability-monitor-logs",
+      "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-ddos.md",
+      "redirect_url": "/azure/reliability/reliability-ddos-protection",
+      "redirect_document_id": true
+    },
+    {
+      "source_path": "articles/reliability/migrate-database-mysql-flex.md",
+      "redirect_url": "/azure/reliability/reliability-database-mysql#configure-availability-zone-support",
       "redirect_document_id": false
     }
   ]

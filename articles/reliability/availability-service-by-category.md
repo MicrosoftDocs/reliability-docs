@@ -6,6 +6,7 @@ ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: reference
 ms.date: 04/11/2025
+ms.update-cycle: 1095-days
 ms.author: pnp
 ms.custom: subject-reliability
 ---
@@ -125,6 +126,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Analysis Services
 - Azure API for FHIR
 - Azure Automation
+- Azure Chaos Studio
 - Azure Container Apps
 - Azure Data Share
 - Azure Database for MariaDB
@@ -133,11 +135,11 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Dedicated HSM
 - Azure Digital Twins
 - Azure HPC Cache
+- Azure Key Vault Managed HSM
 - Azure Kubernetes Fleet Manager
 - Azure Lab Services
 - Azure Machine Learning
 - Azure Managed Grafana
-- Azure Managed HSM
 - Azure Managed Instance for Apache Cassandra
 - Azure NetApp Files
 - Azure Red Hat OpenShift

@@ -4,6 +4,7 @@ description: Learn about geographic and global Azure services. See a list of non
 ms.service: azure
 ms.topic: reference
 ms.date: 03/25/2025
+ms.update-cycle: 1095-days
 ms.author: pnp
 author: glynnniall
 ms.custom: subject-reliability

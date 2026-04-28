@@ -1,6 +1,5 @@
 ---
 title: Reliability in Azure AI Search
-titleSuffix: Azure AI Search
 description: Learn how to make Azure AI Search resilient to transient faults, availability zone outages, and region outages using replicas and multi-region deployments.
 author: mattwojo
 ms.author: mattwoj
