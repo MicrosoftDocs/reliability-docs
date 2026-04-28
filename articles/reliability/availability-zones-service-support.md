@@ -13,7 +13,7 @@ ms.custom: subject-reliability
 
 # Azure services that support availability zones
 
-Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the type of offerings that they support.
+Azure continually increases the number of services that support [availability zones](./availability-zones-overview.md), including both zonal and zone-redundant offerings. This article lists which services support availability zones and the types of offerings that they support.
 
 Some Azure services are *nonregional*, which means that you don't deploy the service into a specific Azure region or configure availability zone support. For more information, see [Nonregional Azure services](./regions-nonregional-services.md).
 
@@ -47,7 +47,6 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Data Explorer](/azure/data-explorer/migrate-cluster-to-multiple-availability-zone) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Data Factory](./reliability-data-factory.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Data Lake Storage Gen2](./reliability-storage-blob.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Databricks](./reliability-databricks.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Database for MySQL](./reliability-database-mysql.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Database for PostgreSQL](./reliability-database-postgresql.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure Databricks](/azure/databricks/admin/disaster-recovery) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
