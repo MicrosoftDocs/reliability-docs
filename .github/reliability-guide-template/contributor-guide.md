@@ -3,7 +3,7 @@ title: "Write a Reliability Guide"
 description: Learn how to write reliability guides for Azure services. Understand the structure, required sections, and best practices for documenting resilience to transient faults, availability zone failures, and region-wide failures.
 author: glynnniall
 ms.author: glynnniall
-ms.date: 02/04/2026
+ms.date: 04/28/2026
 ms.service: learn
 ms.topic: contributor-guide
 ms.custom: internal-contributor-guide
