@@ -70,9 +70,6 @@ Azure SignalR Service supports zone-redundant deployments in the Premium tier. W
 
   However, Japan West doesn't currently support zone redundancy for Azure SignalR Service.
 
-  > [!WARNING]
-  > **Note to PG:** Please confirm Japan West is an exception, like it is for Web PubSub?
-
 - **Tier:** Zone redundancy is available on the Premium tier.
 
 ### Cost
