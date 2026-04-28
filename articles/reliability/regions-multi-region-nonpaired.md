@@ -19,19 +19,19 @@ Some Azure services support geo-redundancy and geo-replication by using paired r
 
 ## Azure AI Search
 
-To learn about how to create multi-region solutions using Azure AI Search, see [Reliability in AI Search](./reliability-ai-search.md).
+To learn about how to create multi-region solutions by using AI Search, see [Reliability in AI Search](./reliability-ai-search.md).
 
 ## Azure API Management
 
-To learn about how to create multi-region solutions by using Azure API Management, see [Reliability in API Management](./reliability-api-management.md).
+To learn about how to create multi-region solutions by using API Management, see [Reliability in API Management](./reliability-api-management.md).
 
 ## Azure App Service
 
-To learn about how to create multi-region solutions by using Azure App Service, see [Reliability in App Service](./reliability-app-service.md).
+To learn about how to create multi-region solutions by using App Service, see [Reliability in App Service](./reliability-app-service.md).
 
 ## Azure Container Registry
 
-To learn about how to create multi-region solutions by using Azure Container Registry, see [Reliability in Container Registry](./reliability-container-registry.md).
+To learn about how to create multi-region solutions by using Container Registry, see [Reliability in Container Registry](./reliability-container-registry.md).
 
 ## Azure Cosmos DB
 
