@@ -112,7 +112,9 @@ This section describes what to expect when you configure an Azure Web PubSub res
 
 - **Active requests:** During a zone failure, active WebSocket connections to infrastructure in the affected zone are dropped. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately, such as by reconnecting after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost. If publishers use an Azure Web PubSub Client SDK or implement the reliable subprotocols, their messages must be acknowledged by the service before they're considered to be successfully published, which prevents data loss during a zone failure or another problem.
+- **Expected data loss:** Azure Web PubSub Service doesn't persist messages, so a zone failure isn't expected to cause data loss within the Azure Web PubSub service. However, any active connections are dropped during a zone-down event and so any data that's actively being transmitted might be lost.
+
+  If publishers use an Azure Web PubSub Client SDK or implement the reliable subprotocols, their messages are acknowledged by the service after the service receives them. When a message is acknowledged, it's replicated across all availability zones, so the publisher's zone failing doesn't cause the message to be lost. However, if a subscriber doesn't receive the message before it's dropped, it might not receive the message.
 
 - **Expected downtime:** The reconnect of dropped active connections typically takes a few seconds. Clients that implement reconnect logic experience minimal disruption.
 
