@@ -3,7 +3,7 @@ title: "Write a Reliability Guide"
 description: Learn how to write reliability guides for Azure services. Understand the structure, required sections, and best practices for documenting resilience to transient faults, availability zone failures, and region-wide failures.
 author: glynnniall
 ms.author: glynnniall
-ms.date: 02/04/2026
+ms.date: 04/28/2026
 ms.service: learn
 ms.topic: contributor-guide
 ms.custom: internal-contributor-guide
@@ -187,9 +187,11 @@ This section contains production deployment recommendations for your service.
 
 *Required section:* This section focuses on important elements of the service architecture that's relevant to the reliability. It doesn't provide a comprehensive review of the entire service architecture but introduces important reliability elements. Common items to include in this section are:
 
-- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components.
+- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components. Explain what the reader does with a resource after deployment, not just that it exists.
 
-- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, please explicitly mention that.
+- **SKUs and tiers:** If your service offers multiple tiers or SKUs, briefly explain the key differences and when a customer might choose each tier, especially if some tiers support different reliability features than others. Link to the relevant documentation for more information about the pricing tiers.
+
+- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, explicitly mention that.
 
   For example, you might need a customer to deploy a storage account to use the service, and that storage account's redundancy model (LRS/ZRS/GRS) will affect how resilient their overall solution is.
 
@@ -304,14 +306,17 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - Some services don't fit neatly into these categories. Please speak to the Reliability Hub team about how best to handle these situations.
 
-   - If the service also supports nonzonal deployments, include a statement similar to this:
-
-      ```markdown
-      If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
-      ```
-
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
+
+3. **Nonzonal deployments:** If the service also supports nonzonal deployments, where no zone guarantees are made, include a statement similar to this:
+
+  ```markdown
+  If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
+  ```
+
+  > [!IMPORTANT]
+  > Explain what happens when zone redundancy is *not* enabled. Customers need to understand the implications of not configuring zone redundancy so they can make informed decisions.
 
 #### Requirements
 
@@ -358,6 +363,8 @@ Region support must be the FIRST bullet point.
         | West US 2        |                      |               |                    |                |
         | West US 3        |                      |               |                    |                |
         ```
+
+        If a column has no entries, remove it from the table.
 
     1. In this section, include that file within the **Region support** bullet.
 
@@ -491,7 +498,7 @@ Include this section to explain normal operations when all availability zones ar
 
 **Include two bullets:**
 
-- **Cross-region operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
+- **Cross-zone operation**: Explain how traffic, requests, or work is distributed across zones during normal operations.
 
   - *For zone-redundant services*, work distribution typically services fall into one of these models:
     - *Active/active*: Work is automatically spread across instances in every availability zone
@@ -500,7 +507,7 @@ Include this section to explain normal operations when all availability zones ar
      **Example:**
 
       ```markdown
-      - **Cross-region operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
+      - **Cross-zone operation:** When you configure zone redundancy on \[service-name\], requests are automatically spread across the instances in each availability zone. A request might go to any instance in any availability zone.
       ```
 
   - *For zonal services*, clarify that customers are responsible for configuring their solution to route work between the availability zones.
@@ -508,10 +515,10 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
+      - **Cross-zone operation:** When you deploy multiple X resources in different availability zones, you need to decide how to route traffic between those resources. Commonly, you use a zone-redundant Azure Load Balancer to send traffic to resources in each zone.
       ```
 
-- **Cross-region data replication**:
+- **Cross-zone data replication**:
 
   - *For zone-redundant services where the service replicates data across zones*, explain:
     - Replication method: synchronous, asynchronous, or hybrid. Most zone-redundant Azure services replicate data synchronously across zones.
@@ -523,7 +530,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput
+      - **Cross-zone data replication:** When a client makes a change to any data in your  \[service-name\] resource, that change is applied to all instances in all zones simultaneously. This approach is referred to as synchronous replication. Synchronous replication ensures a high level of data consistency, which reduces the likelihood of data loss during a zone failure. Availability zones are located relatively close together, which means there's minimal effect on latency or throughput.
       ```
 
     Some services replicate their data asynchronously, where changes are applied in a single zone and then propagated after some time to the other zones. Use wording similar to this to explain this approach and its tradeoffs.
@@ -531,7 +538,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
+      - **Cross-zone data replication:** When a client makes a changes to any data in your \[service-name\] resource, that change is applied to the primary zone. At that point, the write is considered to be complete. At some point later in time, the X resource in the secondary zone is automatically updated with the change. This approach is referred to as asynchronous replication. Asynchronous replication ensures high performance and throughput. However, any data that hasn't been replicated between availability zones could be lost if the primary zone experiences a failure.
       ```
 
   - *For stateless services*, clarify that no data is synchronized.
@@ -539,7 +546,7 @@ Include this section to explain normal operations when all availability zones ar
     **Example:**
 
       ```markdown
-      - **Cross-region data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
+      - **Cross-zone data replication:** Because \[service-name\] doesn't store state, there's no data to replicate between zones.
       ```
 
 > [!NOTE]
@@ -594,7 +601,7 @@ Explain what happens when an availability zone fails. Be precise and clear, as c
     **Example:**
 
     ```markdown
-    - **Active requests**: When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried.
+    - **Active requests**: When an availability zone is unavailable, any requests in progress that are connected to a replica in the faulty availability zone are terminated and need to be retried. Ensure that your applications are prepared by following [transient fault handling guidance](#resilience-to-transient-faults).
     ```
 
 - **Expected data loss:** Explain if the customer should expect any data loss during a zone failover.

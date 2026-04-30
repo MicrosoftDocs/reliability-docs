@@ -132,3 +132,33 @@ The following items must be addressed during a freshness update (when explicitly
 - For reliability service guides, the data aligns with the template.
 - The data is edited for quality.
 - The `author` and `ms.author` reflect the correct durable owner of this data.
+
+## Writing style
+
+When writing or editing content in this repository, use the following style guidelines:
+
+- **Use active voice and "you" as the subject.** Address the reader directly. Prefer "you" as the subject instead of passive constructions.
+- **Prefer descriptive over prescriptive language.** Use "you can" and "you're responsible for" rather than "you must" where appropriate.
+- **Add cross-references between sections.** When discussing content that's related to another section, link to it. For example, when discussing expected downtime during failover, link to the transient fault handling section.
+- **Remove unnecessary qualifiers.** Avoid phrases like "in any way" or other padding words that don't add meaning.
+
+### Formatting and terminology
+
+Follow these formatting conventions:
+
+- **Italics for introducing terms.** When introducing a term for the first time, use *italics* (for example, *workspace*). Don't use bold for term introductions.
+- **Bold for labels in structured lists.** Use bold for labels at the beginning of list items (for example, "**Region support:**"). Don't use bold for inline references to tools, APIs, or features.
+- **Official service names.** Use official Azure service names throughout the document. For example, use "Azure Database for PostgreSQL" rather than informal names. Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) for correct naming conventions.
+
+## Flagging facts for product group review
+
+When drafting a reliability guide, you might include facts or technical details that need to be verified by the product group (PG). Use a `> [!WARNING]` block with a "**Note to PG:**" prefix to flag these items for review. Remove these warning blocks before publication.
+
+**Example:**
+
+```markdown
+> [!WARNING]
+> **Note to PG:** Please verify whether synchronous replication is used between zones, and confirm the expected failover time.
+```
+
+Also flag any disclosed implementation details that might need PG approval before publication.

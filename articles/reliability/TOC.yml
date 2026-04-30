@@ -305,7 +305,7 @@ items:
       - name: Azure Database for PostgreSQL
         href: reliability-database-postgresql.md
       - name: Azure Elastic SAN
-        href: reliability-elastic-san.md#availability-zone-migration
+        href: reliability-elastic-san.md#configure-availability-zone-support
       - name: Azure Functions
         href: reliability-functions.md#configure-availability-zone-support
       - name: Azure HDInsight
