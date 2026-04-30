@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Event Grid
-description: Learn how to make Azure Event Grid resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
+description: Learn how to make Azure Event Grid resilient to potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
 author: spelluru
 ms.author: spelluru
 ms.topic: reliability-article
@@ -58,7 +58,7 @@ When you use Event Grid, consider the following practices to ensure your solutio
 
   We recommend you use the [Event Grid data plane SDKs](/azure/event-grid/sdk-overview#data-plane-sdks), which automatically provide transient fault handling.
 
-- **Event consumers.** Event Grid delivers events to configured destinations. For these outbound connections, you configure retry policies on event subscriptions. These policies define how often and for how long Event Grid retries delivery when failures occur, including transient faults. For more information see [Message push delivery and retry with namespace topics](/azure/event-grid/namespace-delivery-retry).
+- **Event consumers.** Event Grid delivers events to configured destinations. For these outbound connections, you configure retry policies on event subscriptions. These policies define how often and for how long Event Grid retries delivery when failures occur, including transient faults. For more information, see [Message push delivery and retry with namespace topics](/azure/event-grid/namespace-delivery-retry).
 
 - **Idempotency.** It's a good practice to design your eventing architecture for *idempotency*, which means that events can safely be received and processed multiple times. For example, if a transient fault or another problem happens when your application is processing an event, with an idempotent approach, your application can reprocess the message and recover.
 
@@ -149,7 +149,7 @@ Geo-disaster recovery is designed as a best-effort, Microsoft-managed fallback f
 >
 > If you need to be resilient to region outages, consider using one of the custom multi-region solutions for resiliency.
 
-You can optionally disable geo-disaster recovery and use your own [custom multi-region solution](#custom-multi-region-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, no event data is replicated to another region by Microsoft.
+You can optionally disable geo-disaster recovery and use your own [custom multi-region solution](#custom-multi-region-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, Microsoft doesn't replicate any event data to another region.
 
 This feature isn't available in regions that don't have a paired region.
 
