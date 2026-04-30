@@ -639,6 +639,14 @@ productDirectory:
       url: reliability-managed-hsm.md
       azureCategories:
         - security
+    # Card
+    - title: Azure Web PubSub
+      summary: Easily build real-time messaging web applications using WebSockets and the publish-subscribe pattern
+      imageSrc: /azure/media/index/web-pubsub.svg
+      url: reliability-web-pubsub.md
+      azureCategories:
+        - integration
+        - web
 
 tools:
   title: Reliability services and capabilities

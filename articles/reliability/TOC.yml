@@ -132,6 +132,8 @@ items:
       href: reliability-logic-apps.md
     - name: Azure Service Bus
       href: reliability-service-bus.md
+    - name: Azure Web PubSub
+      href: reliability-web-pubsub.md
   - name: Internet of Things
     items:
     - name: Azure Device Registry
@@ -250,6 +252,8 @@ items:
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
       href: /azure/azure-signalr/signalr-concept-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+    - name: Azure Web PubSub
+      href: reliability-web-pubsub.md
 - name: Azure regions
   items:
   - name: What are Azure regions?
