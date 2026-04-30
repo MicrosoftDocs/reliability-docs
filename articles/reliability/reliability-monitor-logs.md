@@ -240,7 +240,7 @@ This section describes what to expect when you configure a Log Analytics workspa
 
 - **Cross-region operation:** All ingestion and queries target the primary region's workspace while healthy. The secondary region's workspace holds a passive replica of data, schemas, and configuration until switchover.
 
-- **Cross-zone data replication:** New logs, schema, and configuration updates are replicated asynchronously in batches to the secondary. Because it's asynchronous, this replication process doesn't affect ingestion latency.
+- **Cross-zone data replication:** New logs, schema, and configuration updates are replicated asynchronously in batches to the secondary. Because it's asynchronous, this replication process doesn't affect ingestion latency. Data is typically replicated within about two minutes, but this timeframe isn't guaranteed.
 
 Workspace replication applies at the workspace level, so you can't select individual tables to replicate. However, you control replication by associating only the DCRs that carry critical data streams with the workspace's data collection endpoint. DCRs that aren't associated with the workspace DCE don't replicate their data. For more information, see [Associate data collection rules](/azure/azure-monitor/logs/workspace-replication#associate-data-collection-rules-with-the-workspace-data-collection-endpoint).
 
@@ -262,7 +262,7 @@ This section describes what to expect when you configure a Log Analytics workspa
 
     After the switchover process changes the DNS entries for the workspace, the secondary workspace is available for ingestion and query. Microsoft's agents automatically retry failed log ingestion attempts. Applications using the log ingestion API should also retry.
 
-- **Expected data loss:** Any logs or other changes that haven't yet been replicated are unavailable in the secondary region.
+- **Expected data loss:** Any logs or other changes that haven't yet been replicated are unavailable in the secondary region. Data is typically replicated within about two minutes, but this timeframe isn't guaranteed.
 
     After you switch over to the secondary region, if the primary region can't process incoming log data, Azure Monitor buffers the data in the secondary region for up to 11 days. During the first four days, Azure Monitor automatically reattempts to replicate the data periodically.
 
