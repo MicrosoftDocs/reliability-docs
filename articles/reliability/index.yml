@@ -647,6 +647,14 @@ productDirectory:
       azureCategories:
         - integration
         - web
+    # Card
+    - title: Azure SignalR Service
+      summary: Add real-time web functionality easily
+      imageSrc: /azure/media/index/signalr-service.svg
+      url: reliability-signalr.md
+      azureCategories:
+        - web
+        - integration
 
 tools:
   title: Reliability services and capabilities
