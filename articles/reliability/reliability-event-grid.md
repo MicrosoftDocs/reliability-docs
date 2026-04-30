@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Event Grid
-description: Learn how to make Azure Event Grid resilient to potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
+description: Learn how to make Event Grid resilient to potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
 author: spelluru
 ms.author: spelluru
 ms.topic: reliability-article
