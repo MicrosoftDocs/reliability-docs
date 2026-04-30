@@ -7,7 +7,7 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-event-grid
 ms.date: 03/17/2026
-ai-usage: ai-assisted
+ai-usage: ai-assistedgi
 ---
 
 # Reliability in Azure Event Grid
