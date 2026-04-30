@@ -640,6 +640,14 @@ productDirectory:
       azureCategories:
         - security
     # Card
+    - title: Azure Web PubSub
+      summary: Easily build real-time messaging web applications using WebSockets and the publish-subscribe pattern
+      imageSrc: /azure/media/index/web-pubsub.svg
+      url: reliability-web-pubsub.md
+      azureCategories:
+        - integration
+        - web
+    # Card
     - title: Azure SignalR Service
       summary: Add real-time web functionality easily
       imageSrc: /azure/media/index/signalr-service.svg

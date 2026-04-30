@@ -151,6 +151,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Synapse Analytics
 - Azure Ultra Disk Storage
 - Azure VMware Solution
+- Azure Web PubSub
 - Microsoft Azure Attestation
 - Microsoft Purview
 - SQL Server on Azure Virtual Machines
