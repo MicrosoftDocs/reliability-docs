@@ -56,7 +56,7 @@ When working with a multiregion account, the SDK also supports a [threshold-base
 
 Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azure distributes the replicas of your data across multiple availability zones, providing resiliency to datacenter problems and outages. Microsoft selects the availability zones to use.
 
-![Diagram showing an Azure Cosmos DB account with a replica set that contains four replicas, which are distributed across the zones.](./media/reliability-cosmos-db/zone-redundant.png)
+![Diagram showing an Azure Cosmos DB account with a replica set that contains four replicas, which are distributed across the zones.](./media/reliability-cosmos-db/zone-redundant.svg)
 
 An Azure Cosmos DB account might use multiple regions (locations) for global distribution, scale, and failover. You configure zone redundancy separately for each region in your account. For example, to reduce your cost, you might choose to enable zone redundancy in some regions but not others.
 
@@ -170,7 +170,7 @@ For more information on the differences between consistency levels, see [Consist
  
 If your solution requires continuous uptime during region outages, you can configure Azure Cosmos DB to replicate your data across multiple regions, with writes handled by your primary region. You can optionally configure your applications to connect to specific read regions, which can help to improve their performance. If a region has an outage, the account can continue to operate from healthy regions.
 
-![Diagram showing an Azure Cosmos DB account. Region A is a write and read region, and region B is a read region. An application in region A performs reads and writes against the Azure Cosmos DB account in region A. An application in region B performs reads against the account in region B, but writes against region A. Internally, Azure Cosmos DB replicates changes between the regions.](./media/reliability-cosmos-db/multiple-read-regions.png)
+![Diagram showing an Azure Cosmos DB account. Region A is a write and read region, and region B is a read region. An application in region A performs reads and writes against the Azure Cosmos DB account in region A. An application in region B performs reads against the account in region B, but writes against region A. Internally, Azure Cosmos DB replicates changes between the regions.](./media/reliability-cosmos-db/multiple-read-regions.svg)
 
 #### Failover between regions
 
@@ -389,7 +389,7 @@ If your account uses PPAF, you can simulate a partition failover. For more infor
 
 You can configure Azure Cosmos DB to accept writes in multiple regions. This configuration can provide very high resiliency to region outages. It's also useful for reducing write latency in geographically distributed applications.
 
-![Diagram showing an Azure Cosmos DB account. Region A and region B both are write and read regions. An application in region A performs reads and writes against the Azure Cosmos DB account in region A. An application in region B performs reads and writes against the Azure Cosmos DB account in region B. Internally, Azure Cosmos DB asynchronously replicates changes between the regions.](./media/reliability-cosmos-db/multiple-write-regions.png)
+![Diagram showing an Azure Cosmos DB account. Region A and region B both are write and read regions. An application in region A performs reads and writes against the Azure Cosmos DB account in region A. An application in region B performs reads and writes against the Azure Cosmos DB account in region B. Internally, Azure Cosmos DB asynchronously replicates changes between the regions.](./media/reliability-cosmos-db/multiple-write-regions.svg)
 
 When you configure an Azure Cosmos DB account for multiple write regions, strong consistency isn't supported and write conflicts might arise. The [hub region](/azure/cosmos-db/multi-region-writes#hub-region) acts as an arbiter in write conflicts. For more information on how to resolve these conflicts, see [Conflict types and resolution policies when using multiple write regions](/azure/cosmos-db/conflict-resolution-policies).
 
