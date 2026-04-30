@@ -227,20 +227,20 @@ You might want to disable, or not rely on, Microsoft-initiated failover for any 
 
 For higher levels of control and predictability, you can implement custom multi-region architectures. This approach involves deploying separate Event Grid resources in multiple regions and managing failover at the application level. When you use this model, you're responsible for deploying and configuring resources and keeping them in sync across regions.
 
-Consider the following factors when designing a multi-region solution:
+Consider the following factors when you design a multi-region solution:
 
 - **Replication.** You should implement a custom process to replicate your Event Grid resources and their configuration between primary and secondary regions. Remember to replicate client identities, CA certificates, client groups, topic spaces, and permission bindings, where applicable. You can decide whether to implement manual or automated replication.
 
 - **Failover approaches.** You can choose whether to create an active-active or active-passive solution:
 
   - *Active-active solutions* can be achieved by replicating the metadata and balancing load across the namespaces.
-  - *Active-passive solutions* can be achieved by replicating the metadata to keep the secondary namespace ready so that when the primary namespace is unavailable, the traffic can be directed to secondary namespace.
+  - *Active-passive solutions* can be achieved by replicating the metadata to keep the secondary namespace ready so that, when the primary namespace is unavailable, the traffic can be directed to secondary namespace.
 
 - **Health monitoring.** You can use built-in health APIs provided by Event Grid to monitor the health of topics.
 
   Your client applications must detect failures of a region and route events to another appropriate region.
 
-  Alternatively, you can implement a *concierge service* that directs clients to the primary or secondary endpoints for their topics or namespaces by performing health checks on those endpoints. The concierge service can be a web application that is geo-replicated and kept reachable using DNS-redirection techniques or services like Azure Traffic Manager.
+  Alternatively, you can implement a *concierge service* that directs clients to the primary or secondary endpoints for their topics or namespaces by performing health checks on those endpoints. The concierge service can be a web application that's geo-replicated and kept reachable via DNS-redirection techniques or services like Azure Traffic Manager.
 
 For more information about one approach, including example code, see [Client-side failover implementation in Azure Event Grid](/azure/event-grid/custom-disaster-recovery-client-side).
 
@@ -248,7 +248,7 @@ For more information about one approach, including example code, see [Client-sid
 
 Event Grid is primarily an event routing service and doesn't have native backup or restore features.
 
-If you need to implement backup capabilities, or if you have long-term retention needs, we recommend you perform archiving in your application. To do so, you should build logic to route or copy your events to a durable store, such as Azure Blob Storage, in parallel with the primary delivery path. If downstream systems are unavailable, your application can use the archive to replay the events.
+If you need to implement backup capabilities, or if you have long-term retention needs, we recommend that you perform archiving in your application. To do so, you should create logic to route or copy your events to a durable store, such as Azure Blob Storage, in parallel with the primary delivery path. If downstream systems are unavailable, your application can use the archive to replay the events.
 
 ## Resilience to service maintenance
 
