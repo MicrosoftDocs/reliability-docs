@@ -251,7 +251,7 @@ items:
     - name: Azure Notification Hubs
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
-      href: /azure/azure-signalr/signalr-concept-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-signalr.md
     - name: Azure Web PubSub
       href: reliability-web-pubsub.md
 - name: Azure regions
