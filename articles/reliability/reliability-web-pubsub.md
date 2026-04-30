@@ -6,7 +6,7 @@ ms.author: glynnniall
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-web-pubsub
-ms.date: 04/24/2026
+ms.date: 04/30/2026
 ai-usage: ai-assisted
 ---
 
