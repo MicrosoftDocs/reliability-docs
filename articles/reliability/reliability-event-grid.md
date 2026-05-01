@@ -238,7 +238,7 @@ Consider the following factors when you design a multi-region solution:
 
   - *Active-active solutions* can be achieved by replicating the metadata and balancing load across the namespaces.
   
-  - *Active-passive solutions* can be achieved by replicating the metadata to keep the secondary namespace ready so that, when the primary namespace is unavailable, the traffic can be directed to secondary namespace.
+  - *Active-passive solutions* can be achieved by replicating the metadata to keep the secondary namespace ready so that, when the primary namespace is unavailable, the traffic can be directed to the secondary namespace.
 
 - **Health monitoring.** You can use built-in health APIs provided by Event Grid to monitor the health of topics.
 
