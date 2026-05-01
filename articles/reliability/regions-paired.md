@@ -48,6 +48,7 @@ Most region pairs are *symmetrical*, which means that each region is bidirection
 
 - Brazil South is paired with South Central US, which is outside of the Brazil geography. South Central US isn't paired with Brazil South.
 - West India is paired with South India, but South India is paired with Central India.
+- India South Central is paired with Central India, but Central India is paired with South India.
 - West US 3 is paired in one direction with East US. East US is bidirectionally paired with West US.
 
 To see a list of regions that includes all asymmetrical region pairs, see [Azure region pairs](./regions-list.md).
