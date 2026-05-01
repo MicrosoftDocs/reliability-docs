@@ -187,11 +187,11 @@ This section contains production deployment recommendations for your service.
 
 *Required section:* This section focuses on important elements of the service architecture that's relevant to the reliability. It doesn't provide a comprehensive review of the entire service architecture but introduces important reliability elements. Common items to include in this section are:
 
-- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This is especially important where there might be different capabilities or guidance in different components. Explain what the reader does with a resource after deployment, not just that it exists.
+- **Resource model:** If there are multiple resources that a customer creates or manages, consider giving a brief description of the resources and link to more information in the product documentation. This description is especially important when different components offer different capabilities or guidance. Explain what the reader does with a resource after deployment, not just that it exists.
 
 - **SKUs and tiers:** If your service offers multiple tiers or SKUs, briefly explain the key differences and when a customer might choose each tier, especially if some tiers support different reliability features than others. Link to the relevant documentation for more information about the pricing tiers.
 
-- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, explicitly mention that.
+- **Dependencies:** If your service requires the customer to deploy dependent resources, and the configuration of those dependent resources might affect the customer's reliability, explicitly mention that dependency.
 
   For example, you might need a customer to deploy a storage account to use the service, and that storage account's redundancy model (LRS/ZRS/GRS) will affect how resilient their overall solution is.
 
@@ -309,14 +309,14 @@ This is a key section. It describes how the service works with Azure's availabil
 > [!NOTE]
 > You may be asked to provide an image here if it helps to explain how resources are distributed across availability zones. We will work with you to design and prepare the image.
 
-3. **Nonzonal deployments:** If the service also supports nonzonal deployments, where no zone guarantees are made, include a statement similar to this:
+1. **Nonzonal deployments:** If the service also supports nonzonal deployments, where no zone guarantees are made, include a statement similar to this:
 
   ```markdown
   If you don't specify availability zones to use for your resource, it's *nonzonal* or *regional*, which means that it might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your resource might experience downtime.
   ```
 
   > [!IMPORTANT]
-  > Explain what happens when zone redundancy is *not* enabled. Customers need to understand the implications of not configuring zone redundancy so they can make informed decisions.
+  > Explain what happens when zone redundancy isn't enabled. Customers need to understand the implications of not configuring zone redundancy so they can make informed decisions.
 
 #### Requirements
 

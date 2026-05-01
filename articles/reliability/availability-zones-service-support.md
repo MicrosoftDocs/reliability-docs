@@ -90,7 +90,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Route Server](/azure/route-server/route-server-faq) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Service Bus](./reliability-service-bus.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Service Fabric](/azure/service-fabric/service-fabric-cross-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
-| [Azure SignalR Service](/azure/azure-signalr/availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure SignalR Service](./reliability-signalr.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure Site Recovery](./reliability-site-recovery.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure SQL Database](./reliability-sql-database.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure SQL Managed Instance](./reliability-sql-managed-instance.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
@@ -105,7 +105,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 | [Azure Virtual WAN: Site-to-site VPN gateways](/azure/vpn-gateway/about-zone-redundant-vnet-gateways) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Azure VMware Solution](./reliability-vmware-solution.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 | [Azure VPN Gateway](reliability-virtual-network-gateway.md?pivots=vpn#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
-| [Azure Web PubSub](/azure/azure-web-pubsub/concept-availability-zones) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
+| [Azure Web PubSub](./reliability-web-pubsub.md#resilience-to-availability-zone-failures) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Microsoft Entra Domain Services](/azure/active-directory-domain-services/overview) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Microsoft Fabric](reliability-fabric.md#availability-zone-support) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
 | [Power BI Embedded](/power-bi/admin/service-admin-failover#what-does-high-availability) | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | |
