@@ -60,7 +60,7 @@ When you use Event Grid, consider the following practices to ensure your solutio
 
 - **Event consumers.** Event Grid delivers events to configured destinations. For these outbound connections, you configure retry policies on event subscriptions. These policies define how often and for how long Event Grid retries delivery when failures occur, including transient faults. For more information, see [Message push delivery and retry with namespace topics](/azure/event-grid/namespace-delivery-retry).
 
-- **Idempotency.** It's a good practice to design your eventing architecture for *idempotency*, which means that your application can safely receive and process events multiple times. For example, if a transient fault or another problem happens while your application processes an event, with an idempotent approach, your application can reprocess the message and recover.
+- **Idempotency.** It's a good practice to design your eventing architecture for *idempotency*, which means that your application can safely receive and process the same event multiple times. For example, if a transient fault or another problem happens while your application processes an event, with an idempotent approach, your application can reprocess the message and recover.
 
   You're responsible for designing your eventing architecture and application to support idempotency. For general information, see [Idempotency](/azure/architecture/serverless/event-hubs-functions/resilient-design#idempotency).
 
