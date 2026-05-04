@@ -44,9 +44,13 @@ Azure services are presented in the following lists by category. Note that some 
 ## ![An icon that signifies this service is foundational.](media/icon-foundational.svg) Foundational services
 - Azure Application Gateway
 - Azure Backup
+- Azure Blob Storage
 - Azure Cosmos DB for NoSQL
+- Azure Data Lake Storage Gen2
+- Azure Disk Storage
 - Azure Event Hubs
 - Azure ExpressRoute
+- Azure Files
 - Azure Key Vault
 - Azure Kubernetes Service (AKS)
 - Azure Load Balancer
@@ -57,13 +61,9 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Site Recovery
 - Azure SQL Database
 - Azure SQL Managed Instance
-- Azure Storage Accounts
-- Azure Storage Data Lake Storage
-- Azure Storage: Blob Storage
-- Azure Storage: Disk Storage
 - Azure Stream Analytics
 - Azure Virtual Machine Scale Sets
-- Azure Virtual Machines
+- Azure Virtual Machines (see individual virtual machine series)
 - Azure Virtual Network
 - Azure VPN Gateway
 - Virtual Machines: Av2-series
@@ -84,7 +84,6 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure App Service
 - Azure Bastion
 - Azure Batch
-- Azure Cache for Redis
 - Azure Container Instances
 - Azure Container Registry
 - Azure Data Explorer
@@ -100,12 +99,11 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure HDInsight
 - Azure IoT Hub
 - Azure Logic Apps
-- Azure Media Services
+- Azure Managed Redis
 - Azure Monitor: Application Insights
-- Azure Monitor: Log Analytics
+- Azure Monitor Logs
 - Azure Network Watcher
 - Azure Private Link
-- Azure Storage: Files Storage
 - Azure Storage: Premium Blob Storage
 - Azure Virtual WAN
 - Microsoft Entra Domain Services
@@ -124,12 +122,11 @@ Azure services are presented in the following lists by category. Note that some 
 
 - Azure AI services
 - Azure Analysis Services
-- Azure API for FHIR
+- Azure Attestation
 - Azure Automation
 - Azure Chaos Studio
 - Azure Container Apps
 - Azure Data Share
-- Azure Database for MariaDB
 - Azure Database Migration Service
 - Azure Databricks
 - Azure Dedicated HSM
@@ -138,7 +135,6 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure HPC Cache
 - Azure Key Vault Managed HSM
 - Azure Kubernetes Fleet Manager
-- Azure Lab Services
 - Azure Machine Learning
 - Azure Managed Grafana
 - Azure Managed Instance for Apache Cassandra
@@ -152,10 +148,9 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Ultra Disk Storage
 - Azure VMware Solution
 - Azure Web PubSub
-- Microsoft Azure Attestation
+- Durable Task Scheduler
 - Microsoft Purview
 - SQL Server on Azure Virtual Machines
-- SQL Server Stretch Database
 - Virtual Machines: Bsv2-series
 - Virtual Machines: Dasv5 and Dadsv5-series
 - Virtual Machines: Dav4 and Dasv4-series
