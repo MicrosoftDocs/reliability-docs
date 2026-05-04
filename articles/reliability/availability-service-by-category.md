@@ -123,6 +123,7 @@ Azure services are presented in the following lists by category. Note that some 
 
 - Azure AI services
 - Azure Analysis Services
+- Azure App Testing
 - Azure Attestation
 - Azure Automation
 - Azure Chaos Studio
