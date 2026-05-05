@@ -6,7 +6,7 @@ ms.author: sidandrews
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-cosmos-db
-ms.date: 04/24/2026
+ms.date: 05/05/2026
 ai.usage: ai-assisted
 ---
 
@@ -36,7 +36,7 @@ A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-d
 
 ### Physical architecture
 
-Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by guaranteeing at least three replicas of your data in each Azure region for your account within a four-replica quorum. This guarantee results in zero downtime and zero data loss during individual node outages, without requiring application changes or configurations.
+Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by maintaining quorum across replicas within each region. This approach guarantees high availability and protects against data loss during individual node failures, without requiring application changes or configuration.
 
 Internally, Azure Cosmos DB manages your data through various constructs including *physical partitions*, *partition sets*, and *replica sets*. For more detailed information on how Azure Cosmos DB works, see [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-distribution).
 
@@ -56,9 +56,9 @@ When working with a multiregion account, the SDK also supports a [threshold-base
 
 Azure Cosmos DB supports *zone redundancy*. When you enable zone redundancy, Azure distributes the replicas of your data across multiple availability zones, providing resiliency to datacenter problems and outages. Microsoft selects the availability zones to use.
 
-![Diagram showing an Azure Cosmos DB account with a replica set that contains four replicas, which are distributed across the zones.](./media/reliability-cosmos-db/zone-redundant.svg)
+![Diagram showing an Azure Cosmos DB account with a replica set that contains three replicas, which are distributed across three separate availability zones.](./media/reliability-cosmos-db/zone-redundant.svg)
 
-An Azure Cosmos DB account might use multiple regions (locations) for global distribution, scale, and failover. You configure zone redundancy separately for each region in your account. For example, to reduce your cost, you might choose to enable zone redundancy in some regions but not others.
+An Azure Cosmos DB account might use multiple regions (locations) for global distribution, scale, and failover. You configure zone redundancy separately for each region in your account.
 
 Using zone redundancy in Azure Cosmos DB has no discernible impact on performance or latency. It doesn't require any adjustments to the selected consistency mode, and doesn't require any modification to application code.
 
@@ -81,8 +81,7 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. N
 
 - **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects a single availability zone. However, if the outage affects multiple availability zones or the entire region, single-region accounts lose read and write access until service is restored. Consider deploying a multi-region account if you need to be resilient to multiple zones failing at the same time.
 
-> [!WARNING]
-> **Note to PG:** In the legacy document, [we have a table](https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql#zone-redundancy-and-multi-region-accounts) that gives an opinionated benefit of using zone redundancy depending on the account's configuration. As I understand it, this was written to try to dissuade unnecessary use of zone redundancy because capacity was at a premium. We've omitted it for simplicity, but let me know if you think it's still necessary and valuable.
+- **Multi-region accounts:** If you have a multi-region account, you can optionally enable zone redundancy on any or all of the account regions that support availability zones. We highly recommend enabling zone redundancy when your account is configured to use a single region, or if it's configured to use a single write region with multiple read regions.
 
 ### Cost
 
@@ -124,10 +123,7 @@ When the availability zone recovers, Azure Cosmos DB automatically restores repl
 
 ### Test for zone failures
 
-Your applications can partially simulate the zone outage behavior by using the Azure Cosmos DB Fault Injection library for Java. The [Server Return Gone](/java/api/overview/azure/cosmos-test-readme#server-return-gone-scenario) scenario lets you inject `GONE` errors into specific replicas. This approach helps you to exercise the same SDK retry logic, and re-routes to use the code paths that activate during a real zone outage.
-
-> [!WARNING]
-> **Note to PG:** Is there anything else we should say about this approach for zone-down simulation, such as limitations?
+Availability zone failover and recovery for Azure Cosmos DB are fully managed by Microsoft. You don’t need to initiate or validate availability zone failure processes.
 
 ## Resilience to region-wide failures
 
