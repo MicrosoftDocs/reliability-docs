@@ -6,7 +6,7 @@ ms.author: sidandrews
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-cosmos-db
-ms.date: 05/05/2026
+ms.date: 04/24/2026
 ai.usage: ai-assisted
 ---
 
@@ -36,7 +36,7 @@ A single account can [span multiple Azure regions](/azure/cosmos-db/distribute-d
 
 ### Physical architecture
 
-Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by maintaining quorum across replicas within each region. This approach guarantees high availability and protects against data loss during individual node failures, without requiring application changes or configuration.
+Azure Cosmos DB stores multiple *replicas* of your data for redundancy. The service automatically mitigates replica outages by maintaining quorum across replicas in each region. This approach guarantees high availability and protects against data loss during individual node failures, without requiring application changes or configuration.
 
 Internally, Azure Cosmos DB manages your data through various constructs including *physical partitions*, *partition sets*, and *replica sets*. For more detailed information on how Azure Cosmos DB works, see [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-distribution).
 
@@ -124,7 +124,6 @@ When the availability zone recovers, Azure Cosmos DB automatically restores repl
 ### Test for zone failures
 
 Availability zone failover and recovery for Azure Cosmos DB are fully managed by Microsoft. You don’t need to initiate or validate availability zone failure processes.
-
 ## Resilience to region-wide failures
 
 When you deploy an Azure Cosmos DB account in a single region, a region-wide outage that affects all Azure Cosmos DB nodes typically doesn't cause data loss, but it does prevent your application from accessing data. Azure Cosmos DB restores data access after the service recovers in the affected region. Data loss occurs only if the region experiences an unrecoverable disaster.
@@ -133,13 +132,16 @@ To prepare for the rare cases of region outages, you can configure Azure Cosmos 
 - [Multiple read regions with a single write region.](#multiple-read-regions-with-a-single-write-region) You can optionally enable service-managed failover or per-partition automatic failover (PPAF).
 - [Multiple write regions.](#multiple-write-regions)
 
-The following table summarizes the different configurations, outage types, and effects, which are described in later sections of this article.
+The following table summarizes the recovery options available based on the account configuration and the type of outage. For detailed disaster recovery guidance, see [Disaster recovery guidance for Azure Cosmos DB](/azure/cosmos-db/disaster-recovery-guidance).
 
 | Configuration | Outage type | Availability impact | Durability impact | What to do |
 | -- | -- | -- | -- | -- |
-| Multiple read regions, single write region  | Read region outage | For most account configurations, the client SDK automatically redirects reads to other regions. There's no read or write availability loss. <br /><br /> However, in the following situations, there can be availability loss: <ul><li>The account uses strong consistency and there are fewer than two healthy regions remaining.</li> <li>The account uses bounded staleness consistency.</li></ul> In these situations, if the account doesn't fail over, it loses write availability until restoration of the service. | No data loss. | During the outage, ensure that there is enough provisioned throughput in the remaining regions to support read traffic. <br/><br/> If the account uses strong consistency or bounded staleness consistency, decide whether to fail over. <br/><br/> When the outage is over, readjust throughput as appropriate. |
-| Multiple read regions, single write region | Write region outage | **Read requests:** Client SDK automatically redirect reads to other healthy regions. <br /><br /> **If PPAF is enabled:** Azure Cosmos DB automatically fails over unhealthy partitions to a healthy region. <br/><br/> **If service-managed failover is enabled:** Clients experience write availability loss until the service manages a failover to a new write region that you previously selected. <br/><br/> **Without PPAF or service-managed failover:** Clients experience write availability loss. You can perform a manual failover to another region used by your account. If you don't, the account loses write availability until restoration of the service. | **If you don't select the strong consistency level:** The service might not replicate some data to the remaining active regions. This replication depends on the [consistency level](/azure/cosmos-db/consistency-levels#rto) that you select. If the affected region suffers permanent data loss, you could lose unreplicated data. | During the outage, ensure that there is enough throughput in the remaining regions to support read traffic. <br/><br/> *Don't* switch the write region during the outage, because that operation can't succeed when the region is unhealthy. <br/><br/> When the outage is over: <ul><li>You can move the write region back to the original region if you choose.</li> <li>Readjust throughput as appropriate.</li> <li>After region recovery. you can recover the unreplicated data in the failed region from your [conflict feed](/azure/cosmos-db/how-to-manage-conflicts#read-from-conflict-feed).</li></ul> |
-| Multiple write regions | Outage of any region used by the account | There's a possibility of temporary loss of write availability, which is analogous to a single write region with service-managed failover. The failover of the hub region might also cause a loss of write availability if a high number of conflicting writes happen at the time of the outage. | Recently updated data in the failed region might be unavailable in the remaining active regions, depending on the account's [consistency level](/azure/cosmos-db/consistency-levels). If the affected region suffers permanent data loss, you might lose unreplicated data. | During the outage, ensure that there is enough throughput in the remaining regions to support more traffic. <br/><br/> When the outage is over, you can readjust throughput as appropriate. If possible, Azure Cosmos DB automatically recovers unreplicated data in the failed region. This automatic recovery uses the conflict resolution method that you configure for accounts that use the API for NoSQL. For accounts that use other APIs, this automatic recovery uses *last write wins*. |
+| Single-region account | Region outage | Read and write access is lost until service is restored. | No data loss unless the region experiences an unrecoverable disaster. | Wait for service restoration or request account restore from backup to another region. |
+| Single-write region, multiple-region account | Read region outage | SDK reroutes to available regions based on preferred regions configuration. <br/><br/> For accounts using strong consistency with only two regions, or bounded staleness exceeding the staleness window, write availability is also lost unless you take the affected [region offline](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). | No data loss. | Ensure sufficient throughput in remaining regions. For strong or bounded staleness consistency, consider taking the affected [region offline](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). |
+| Single-write region, multiple-region account | Write region outage (with PPAF enabled) | Automatic partition-level failover; no manual intervention required. | If the account doesn't use strong consistency, unreplicated data could be lost in the unlikely event that the region suffers permanent data loss. | No action required. PPAF manages failover automatically. |
+| Single-write region, multiple-region account | Write region outage (without PPAF) | Write availability is lost until a region offline operation or service-managed failover completes. Reads continue from healthy regions. | If the account doesn't use strong consistency, unreplicated data could be lost in the unlikely event that the region suffers permanent data loss. | Perform a [region offline operation](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). If service-managed failover is enabled, Azure Cosmos DB initiates failover automatically, but this might take one hour or more. Don't switch the write region during the outage. |
+| Multiple-write region account | Any region outage | Automatic routing to healthy regions via SDK configuration; no manual intervention required. | Recently updated data in the failed region might be unavailable in remaining regions. In the unlikely event that the region suffers permanent data loss, unreplicated data could be lost. | Ensure sufficient throughput in remaining regions. After recovery, Azure Cosmos DB automatically recovers unreplicated data using the configured conflict resolution method. |
+| Any account configuration | Data corruption or accidental deletion | No availability impact. | Potential data loss depending on when the corruption or deletion is detected. | Point-in-time restore (continuous backup) or restore from periodic backup. |
 
 > [!NOTE]
 > This article focuses on the reliability aspects of the multi-region features of Azure Cosmos DB. There are other benefits to multiple read and write regions, such as higher performance and scale for globally distributed applications. You should evaluate your whole solution architecture and consider all of the benefits of using these capabilities.
@@ -179,35 +181,30 @@ Failover is the process of making one of your account's regions unavailable, eit
 
 Azure Cosmos DB provides multiple types of failover:
 
-- **Service-managed failover:** When your account uses service-managed failover, Microsoft is responsible for deciding when to fail over between regions. To enable service-managed failover, you specify priorities for each region. In ordinary operations, traffic goes to the highest priority region.
-
-    If Microsoft detects a failure and declares an outage or disruption, it can trigger service-managed failover to use the next highest priority region. The process of declaring an outage and triggering service-managed failover can take some time.
-
-    If Microsoft triggers service-managed failover for the account's write region, any unreplicated writes could be lost.
-
-    After a service-managed failover, Microsoft must bring a region back online. Microsoft automatically brings the region online but this process can take several days.
-
 - **Per-partition automatic failover (PPAF):** Internally, Azure Cosmos DB spreads your data across multiple physical partitions. If a problem occurs with the infrastructure supporting a partition, other partitions might not be affected. PPAF enables single-write region accounts to automatically fail over individual partitions to a secondary region while keeping healthy partitions in the primary region. PPAF can help to minimize downtime and enable faster recovery during a partial region failure. For more information, see [How to onboard and adopt Per-Partition Automatic Failover (PPAF) for Azure Cosmos DB](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover).
-
-    > [!WARNING]
-    > **Note to PG:** Should we also discuss partition-level circuit breaker (PPCB)? If so, how do you typically position this in relation to PPAF?
 
     > [!NOTE]
     > Per Partition Automatic Failover is in public preview. This feature is provided without a service level agreement. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 
-- **Forced (manual) failover:** You can manually take one of your account's region offline. This is referred to as a *forced failover*, a *manual failover*, or an *offline region* operation. If you need to rapidly respond during an outage, before Microsoft declares an outage or disruption, you can trigger a forced failover. You're responsible for detecting the outage and triggering the failover. You can also use forced failovers to simulate region-down scenarios for testing, like during a disaster recovery drill.
+- **Forced failover:** You can take one of your account's regions offline. This is referred to as a *forced failover*, a *customer managed failover*, or an *offline region* operation. This is the recommended approach for quickly restoring availability during an outage. You're responsible for detecting the outage and triggering the failover. You can also use forced failovers to simulate region-down scenarios for testing, like during a disaster recovery drill.
 
     If you take the write region offline, the read region with the next highest priority becomes the new write region. If you take a read region offline, your applications can connect to any other read region in the account.
 
     A forced failover of your write region carries the possibility of data loss for any unreplicated writes.
 
-    After a forced failover, Microsoft must bring a region back online. During a real region outage, Microsoft automatically brings the region online but this process can take several days. If you use this approach for a failover drill, open a support case to ask Microsoft to bring the region online.
+    After a forced failover, Microsoft must bring the region back online. For healthy regions, this process is automated but can take up to several days. If the region doesn't come back online within a day or two, open a support case to request assistance.
 
-- **Switch write region:** When the regions are healthy, you can switch your account's write region. This change is effectively a planned failover of the write region for your account.
+- **Change write region:** When the regions are healthy, you can switch your account's write region. This change is effectively a planned failover of the write region for your account.
 
-    Switching the write region results in no data loss, because the data replication catches up before the new write region is promoted. There might be a small amount of downtime, but clients that use retry logic and other transient fault handling don't typically experience significant impact.
+    Switching the write region results in no data loss, because the data replication catches up before the new write region is promoted. There might be a brief interruption, but clients that use retry logic and other transient fault handling don't typically experience significant impact.
 
-    This operation requires the regions to be healthy, so it can't be used during a region outage.
+    This operation requires the regions to be healthy, **so it can't be used during a region outage.**
+
+- **Service-managed failover:** When your account uses service-managed failover, Microsoft is responsible for deciding when to fail over between regions. To enable service-managed failover, you specify priorities for each region. However, the process of declaring an outage and triggering service-managed failover can take significant time, potentially one hour or more. For faster recovery, perform a forced failover instead of waiting for service-managed failover to trigger.
+
+    If Microsoft triggers service-managed failover for the account's write region, any unreplicated writes could be lost.
+
+    After a service-managed failover, Microsoft must bring a region back online. Microsoft automatically brings the region online but this process can take several days.
 
 #### Requirements
 
@@ -223,9 +220,9 @@ Adding an additional read region to an Azure Cosmos DB account increases your ex
 
 - **Enable failover:** Some types of failover must be configured in advance:
 
-    - *Service-managed failover:* First, [enable service-managed failover](/azure/cosmos-db/how-to-manage-database-account#enable-service-managed-failover-for-your-azure-cosmos-db-account). Next, [set failover priorities for each region in your account](/azure/cosmos-db/how-to-manage-database-account#set-failover-priorities-for-your-azure-cosmos-db-account).
-
     - *Per-partition automatic failover*: For more information, see [How to onboard and adopt Per-Partition Automatic Failover (PPAF) for Azure Cosmos DB](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover).
+  
+    - *Service-managed failover:* First, [enable service-managed failover](/azure/cosmos-db/how-to-manage-database-account#enable-service-managed-failover-for-your-azure-cosmos-db-account). Next, [set failover priorities for each region in your account](/azure/cosmos-db/how-to-manage-database-account#set-failover-priorities-for-your-azure-cosmos-db-account).
 
 #### Capacity planning and management
 
@@ -245,20 +242,18 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 This section describes what to expect when you configure an Azure Cosmos DB account with multiple read regions, and there's an outage in one of the account's read regions.
 
+Ideally, read region outages should be handled at the client level by correctly configuring the [preferred regions list](/azure/cosmos-db/troubleshoot-sdk-availability) in the SDK configuration. When configured correctly, the SDK automatically detects the outage and reroutes read operations to the next available region without requiring any service-side failover.
+
 - **Detection and response:** Responsibility for detecting the outage and responding depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft automatically detects the outage and initiates a failover of your account. Your application doesn't need to take any action.
+    - *PPAF:* PPAF typically doesn't apply for read region outages. However, for accounts with strong consistency and only two regions, losing the read region reduces the account to a single region, which can't maintain dynamic quorum. In this scenario, PPAF can activate to preserve availability by downshifting the affected partitions.
 
-    - *PPAF:* PPAF doesn't apply for read region outages.
-
-        > [!WARNING]
-        > **Note to PG:** Please verify that the statement above is accurate.
-
-    - *Manual failover:* You're responsible for performing a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
+    - *Forced failover:* You're responsible for performing a forced failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the behavior of your account depends on its consistency level:
         - *Strong consistency*: Strong consistency requires two or more regions to maintain [dynamic quorum](/azure/cosmos-db/consistency-levels#dynamic-quorum). If there are fewer than two regions available and you don't perform a failover, the account loses write availability until restoration of the service.
         - *Bounded staleness consistency:* Bounded staleness consistency relies on maintaining a specific staleness threshold between regions. If the length of region outage exceeds the threshold, the system can't maintain consistency between writes. If you don't perform a failover, the account loses write availability until restoration of the service.
+    -   *Service-managed failover:* If service-managed failover is enabled, Microsoft eventually detects the outage and initiates a failover of your account. However, this process can take significant time, potentially one hour or more. For faster recovery, perform a forced failover instead of waiting for service-managed failover to trigger.
 
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
@@ -268,30 +263,24 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. If your account experiences disruption to writes and you need to quickly restore write availability, perform a forced failover.
-
-    - *PPAF:*
-
-        > [!WARNING]
-        > **Note to PG:** Is there anything we can say here about how long downtime might be when PPAF is enabled?
+    - *PPAF:* When PPAF is enabled, the system automatically detects and recovers from the failure, typically within 3 minutes, without any manual intervention.
 
     - *Forced failover:* Downtime depends on:
         - How long it takes you to discover the outage and initiate a failover.
         - How long the failover takes, which is usually a few seconds.
 
             > [!WARNING]
-            > **Note to PG:** Please verify that a forced failover is likely to take a few seconds.
+            > Don't perform any configuration (control plane) operations on the affected region during outage scenarios, as they result in account inconsistency and delay recovery. Some of the example of control plane operations to avoid include:
+            > - Change write region or modify failover priority
+            > - Update the account to multi-write configuration
+            > - Updating consistency levels or other account settings
+            > - Updating private endpoint configurations or network settings
+            > - Updating account throughput or scaling operations
+            > - Any other operation that modifies the account configuration or region settings
 
-    > [!WARNING]
-    > Don't perform any configuration (control plane) operations on the affected region during outage scenarios, as they result in account inconsistency and delay recovery. Some of the example of control plane operations to avoid include:
-    > - Change write region (manual failover) or modify failover priority
-    > - Update the account to multi-write configuration
-    > - Updating consistency levels or other account settings
-    > - Updating private endpoint configurations or network settings
-    > - Updating account throughput or scaling operations
-    > - Any other operation that modifies the account configuration or region settings
+    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. If your account experiences disruption to writes and you need to quickly restore write availability, perform a forced failover.
 
-- **Redistribution:** The affected region is disconnected and marked as offline. No changes are required in your application code to handle read region outages. The [Azure Cosmos DB SDKs](/azure/cosmos-db/nosql/sdk-dotnet-v3) redirect read operations to the next available region in the preferred region list. If none of the regions in the preferred region list are available, read operations automatically fall back to the account's current write region as configured in the service.
+- **Redistribution:** The affected region is disconnected and marked as offline for forced failover or service-managed failover. No changes are required in your application code to handle read region outages. The [Azure Cosmos DB SDKs](/azure/cosmos-db/nosql/sdk-dotnet-v3) redirect read operations to the next available region in the preferred region list. If none of the regions in the preferred region list are available, read operations automatically fall back to the account's current write region as configured in the service.
 
     > [!NOTE]
     > If you use private endpoints with an Azure Cosmos DB account, ensure that the private DNS is routing correctly after the offline region operation. For detailed guidance, see [Failover considerations for private endpoints](/azure/cosmos-db/failover-considerations-for-private-endpoints).
@@ -302,15 +291,15 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Detection and response:** Responsibility for detecting the outage and responding depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft automatically detects the outage and initiates a failover of your account. Your application doesn't need to take any action.
-
     - *PPAF:* Microsoft automatically detects the outage and initiates a failover of some partitions, if appropriate. Your application doesn't need to take any action.
 
-    - *Manual failover:* You're responsible for performing a manual (forced) failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
+    - *Forced failover:* You're responsible for performing a forced failover. For detailed steps, see [Perform forced failover for your Azure Cosmos DB Account](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account).
 
         If you don't perform a failover, the account loses write availability until restoration of the service.
 
         If there's an outage of your account's write region, avoid performing a *switch write region* operation. Write region switches don't succeed if there's an outage of the source or destination region. The reason is that the switch procedure includes a consistency check that requires connectivity between the regions.
+
+    - *Service-managed failover:* Microsoft automatically detects the outage and initiates a failover of your account. Your application doesn't need to take any action.
 
 [!INCLUDE [Region down notification (Service Health and Resource Health)](./includes/reliability-region-down-notification-service-resource-include.md)]
 
@@ -320,46 +309,41 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Expected downtime:** The amount of downtime your account experiences depends on the type of failover your account uses.
 
-    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. To quickly restore write availability, perform a forced failover.
-
-    - *PPAF:*
-
-        > [!WARNING]
-        > **Note to PG:** Is there anything we can say here about how long downtime might be when PPAF is enabled?
+    - *PPAF:* When PPAF is enabled, the expected brief interruption is usually around 3 minutes at p99.
 
     - *Forced failover:* Downtime depends on:
         - How long it takes you to discover the outage and initiate a failover.
         - How long the failover takes, which is usually a few seconds.
 
-            > [!WARNING]
-            > **Note to PG:** Please verify that a forced failover is likely to take a few seconds.
-
     > [!WARNING]
     > Don't perform any control plane operations on the affected region during outage scenarios, as they result in account inconsistency and delay recovery. Some of the example of control plane operations to avoid include:
-    > - Change write region (manual failover) or modify failover priority
+    > - Change write region or modify failover priority
     > - Update the account to multi-write configuration
     > - Updating consistency levels or other account settings
     > - Updating private endpoint configurations or network settings
     > - Updating account throughput or scaling operations
     > - Any other operation that modifies the account configuration or region settings
 
+    - *Service-managed failover:* Microsoft is responsible for initiating service-managed failover, and the downtime your account experiences is based on the time it takes Microsoft to declare the outage and initiate failover. In some situations, it might take one hour or more. To quickly restore write availability, perform a forced failover.
+
 - **Redistribution:** Write traffic redistribution depends on the type of failover your account uses.
     
-    - *Service-managed failover:* Azure Cosmos DB automatically promotes one of the account's secondary regions to be the new primary write region. The failover occurs to another region in the order of region priority that you specify.
-
     - *PPAF:* Azure Cosmos DB automatically fails over the unhealthy partition to a healthy region.
 
-    - *Manual failover:* When you perform a manual failover, the write region of your account changes to the region you specify.
+    - *Forced failover:* When you perform a forced failover, the write region of your account changes to the region you specify.
 
     > [!NOTE]
     > If you use private endpoints with an Azure Cosmos DB account, ensure that the private DNS is routing correctly after the offline region operation. For detailed guidance, see [Failover considerations for private endpoints](/azure/cosmos-db/failover-considerations-for-private-endpoints).
+
+    - *Service-managed failover:* Azure Cosmos DB automatically promotes one of the account's secondary regions to be the new primary write region. The failover occurs to another region in the order of region priority that you specify.
+
 
 #### Region recovery
 
 Microsoft must bring a region back online. When a region recovers after an outage, Microsoft automatically brings the region online. However, this process can take several days.
 
 > [!IMPORTANT]
-> If you use a forced failover, such as when you run a failover drill, you must open a support case to ask Microsoft to bring the region online.
+> After a forced failover, Microsoft automatically brings the region back online for healthy regions. If the region doesn't come back online within a day or two, open a support case to request assistance.
 
 After the region is online, the actions you take are different depending on whether the outage was in a read region or a write region.
 
@@ -372,12 +356,11 @@ After the region is online, the actions you take are different depending on whet
 
     There is *no data or availability loss* before, while, or after you switch the write region. Your application continues to be highly available.
 
-    > [!WARNING]
-    > **Note to PG:** The old reliability document refers to using the conflict feed to read write data that wasn't replicated when the region failed. Is that accurate for single-write region accounts? I can't see any reference to using the conflict feed outside of multi-write region accounts.
+    If any writes weren't replicated before the region went offline, you can read the unreplicated writes from the [conflict feed](/azure/cosmos-db/how-to-manage-conflicts#read-from-conflict-feed). Your application can read the conflict feed, resolve any conflicts based on application-specific logic, and write the updated data back to the container as appropriate.
 
 #### Test for region failures
 
-Your application might not handle region failovers correctly, even if your Azure Cosmos DB account is highly available. To test the end-to-end high availability of your application as a part of your application testing or disaster recovery (DR) drills, temporarily disable service-managed failover for the account. Invoke [manual (forced) failover by using PowerShell, the Azure CLI, or the Azure portal](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account), and then monitor your application. After you complete the test, you can fail back over to the primary region by opening a support case, and then restore service-managed failover for the account.
+Your application might not handle region failovers correctly, even if your Azure Cosmos DB account is highly available. To test the end-to-end high availability of your application as a part of your application testing or disaster recovery (DR) drills, temporarily disable service-managed failover for the account. Invoke [forced failover by using PowerShell, the Azure CLI, or the Azure portal](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account), and then monitor your application. After you complete the test, you can fail back over to the primary region once the region comes back online automatically, and then restore service-managed failover for the account. If the region doesn't come back online within a day or two, open a support case to request assistance.
 
 If your account uses PPAF, you can simulate a partition failover. For more information, see [Test the PPAF setup (simulate fault)](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover#test-the-ppaf-setup-simulate-fault).
 
@@ -432,14 +415,11 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 - **Active requests:** Any active requests might be terminated and need to be retried by the client after failover completes. If your clients handle [transient faults](#resilience-to-transient-faults) appropriately by retrying after a short period of time, they typically avoid significant impact.
 
-- **Expected data loss:** Recently updated data might become unavailable in other regions. For information about the maximum data loss expected during a region outage, see [Potential data loss during region outages](#potential-data-loss-during-region-outages). If the affected region suffers permanent data loss, you might lose unreplicated data.
+- **Expected data loss:** Recently updated data might become unavailable in other regions. For information about the maximum data loss expected during a region outage, see [Potential data loss during region outages](#potential-data-loss-during-region-outages). In the unlikely event that the affected region suffers permanent data loss, you might lose unreplicated data.
 
-- **Expected downtime:**
+- **Expected downtime:** There is no expected downtime in multi-write configurations, provided SDKs are correctly configured with `ApplicationRegions` or `PreferredRegions`. For best results, applications should be fronted by a service such as Azure Front Door or Traffic Manager to detect regional degradation and automatically route traffic to a healthy region.
 
-    > [!WARNING]
-    > **Note to PG:** Can you help me to understand the situations in which an account with multiple write regions might experience a loss of write availability? Is that when the hub region has an outage? We have this statement in the old reliability guide: "The failover of the hub region might also cause a loss of write availability if a high number of conflicting writes happen at the time of the outage."
-
-- **Redistribution:** The affected region is disconnected and marked as offline. No changes are required in your application code to read region outages. The [Azure Cosmos DB SDKs](/azure/cosmos-db/nosql/sdk-dotnet-v3) redirect read and write operations to the next available region in the preferred region list.
+- **Redistribution:** The Azure Cosmos DB SDKs automatically detect that the region is unhealthy and redirect read and write operations to the next available region in the preferred region list. No changes are required in your application code. If your application is fronted by Azure Front Door or Traffic Manager, those services also detect regional degradation and route traffic to a healthy region.
 
 #### Region recovery
 
@@ -452,8 +432,10 @@ Any write data that wasn't replicated when the region failed is made available t
 
 #### Test for region failures
 
-> [!WARNING]
-> **Note to PG:** Is there a way to simulate a write region outage when using multi-region writes?
+To test multi-region write failover scenarios, you can use the following approaches:
+
+- **Client-side fault injection:** Use the Azure Cosmos DB SDK's fault injection capabilities to simulate region unavailability at the client level. This lets you validate that your application correctly handles region failures and routes operations to healthy regions.
+- **Region offline operation:** Take a write region offline using a [forced failover](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account) to simulate a region outage and observe how your application responds.
 
 ## Backup and restore
 
