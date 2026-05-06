@@ -42,11 +42,16 @@ Azure assigns service categories as foundational, mainstream, and strategic at g
 Azure services are presented in the following lists by category. Note that some services are non-regional, which means that they're available globally regardless of region. For information and a complete list of non-regional services, see [Products available by region](https://azure.microsoft.com/global-infrastructure/services/).
 
 ## ![An icon that signifies this service is foundational.](media/icon-foundational.svg) Foundational services
+
 - Azure Application Gateway
 - Azure Backup
+- Azure Blob Storage
 - Azure Cosmos DB for NoSQL
+- Azure Data Lake Storage Gen2
+- Azure Disk Storage
 - Azure Event Hubs
 - Azure ExpressRoute
+- Azure Files
 - Azure Key Vault
 - Azure Kubernetes Service (AKS)
 - Azure Load Balancer
@@ -57,24 +62,20 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Site Recovery
 - Azure SQL Database
 - Azure SQL Managed Instance
-- Azure Storage Accounts
-- Azure Storage Data Lake Storage
-- Azure Storage: Blob Storage
-- Azure Storage: Disk Storage
 - Azure Stream Analytics
 - Azure Virtual Machine Scale Sets
-- Azure Virtual Machines
+- Azure Virtual Machines (see individual virtual machine series)
+- Azure Virtual Machines: Av2-series
+- Azure Virtual Machines: Bs-series
+- Azure Virtual Machines: Ddv5 and Ddsv5-series
+- Azure Virtual Machines: Dv2 and DSv2-series
+- Azure Virtual Machines: Dv3 and DSv3-series
+- Azure Virtual Machines: Dv5 and DSv5-series
+- Azure Virtual Machines: Edv5 and Edsv5-series
+- Azure Virtual Machines: Ev3 and Esv3-series
+- Azure Virtual Machines: Ev5 and Esv5-series
 - Azure Virtual Network
 - Azure VPN Gateway
-- Virtual Machines: Av2-series
-- Virtual Machines: Bs-series
-- Virtual Machines: Ddv5 and Ddsv5-series
-- Virtual Machines: Dv2 and DSv2-series
-- Virtual Machines: Dv3 and DSv3-series
-- Virtual Machines: Dv5 and DSv5-series
-- Virtual Machines: Edv5 and Edsv5-series
-- Virtual Machines: Ev3 and Esv3-series
-- Virtual Machines: Ev5 and Esv5-series
 
 ## ![An icon that signifies this service is mainstream.](media/icon-mainstream.svg) Mainstream services 
 
@@ -84,7 +85,6 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure App Service
 - Azure Bastion
 - Azure Batch
-- Azure Cache for Redis
 - Azure Container Instances
 - Azure Container Registry
 - Azure Data Explorer
@@ -100,36 +100,35 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure HDInsight
 - Azure IoT Hub
 - Azure Logic Apps
-- Azure Media Services
+- Azure Managed Redis
+- Azure Monitor Logs
 - Azure Monitor: Application Insights
-- Azure Monitor: Log Analytics
 - Azure Network Watcher
 - Azure Private Link
-- Azure Storage: Files Storage
 - Azure Storage: Premium Blob Storage
+- Azure Virtual Machines: Ddsv4-series
+- Azure Virtual Machines: Ddv4-series
+- Azure Virtual Machines: Dsv4-series
+- Azure Virtual Machines: Dv4-series
+- Azure Virtual Machines: Edsv4-series
+- Azure Virtual Machines: Edv4-series
+- Azure Virtual Machines: Esv4-series
+- Azure Virtual Machines: Ev4-series
+- Azure Virtual Machines: Fsv2-series
+- Azure Virtual Machines: M-series
 - Azure Virtual WAN
 - Microsoft Entra Domain Services
-- Virtual Machines: Ddsv4-series
-- Virtual Machines: Ddv4-series
-- Virtual Machines: Dsv4-series
-- Virtual Machines: Dv4-series
-- Virtual Machines: Edsv4-series
-- Virtual Machines: Edv4-series
-- Virtual Machines: Esv4-series
-- Virtual Machines: Ev4-series
-- Virtual Machines: Fsv2-series
-- Virtual Machines: M-series
 
 ### ![An icon that signifies this service is strategic.](media/icon-strategic.svg) Strategic services
 
 - Azure AI services
 - Azure Analysis Services
-- Azure API for FHIR
+- Azure App Testing
+- Azure Attestation
 - Azure Automation
 - Azure Chaos Studio
 - Azure Container Apps
 - Azure Data Share
-- Azure Database for MariaDB
 - Azure Database Migration Service
 - Azure Databricks
 - Azure Dedicated HSM
@@ -138,7 +137,6 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure HPC Cache
 - Azure Key Vault Managed HSM
 - Azure Kubernetes Fleet Manager
-- Azure Lab Services
 - Azure Machine Learning
 - Azure Managed Grafana
 - Azure Managed Instance for Apache Cassandra
@@ -150,35 +148,34 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Storage: Azure File Sync
 - Azure Synapse Analytics
 - Azure Ultra Disk Storage
+- Azure Virtual Machines: Bsv2-series
+- Azure Virtual Machines: Dasv5 and Dadsv5-series
+- Azure Virtual Machines: Dav4 and Dasv4-series
+- Azure Virtual Machines: DCsv2-series
+- Azure Virtual Machines: Easv5 and Eadsv5-series
+- Azure Virtual Machines: Eav4 and Easv4-series
+- Azure Virtual Machines: FX-series
+- Azure Virtual Machines: HBv2-series
+- Azure Virtual Machines: HBv3-series
+- Azure Virtual Machines: HCv1-series
+- Azure Virtual Machines: Lsv2-series
+- Azure Virtual Machines: Lsv3-series
+- Azure Virtual Machines: Lsv4, Lasv4, and Laosv4-series
+- Azure Virtual Machines: Mv2-series
+- Azure Virtual Machines: NCasT4_v3-series
+- Azure Virtual Machines: NCv3-series
+- Azure Virtual Machines: NDasrA100_v4-Series
+- Azure Virtual Machines: NDm_A100_v4-Series
+- Azure Virtual Machines: NDv2-series
+- Azure Virtual Machines: NP-series
+- Azure Virtual Machines: NVv3-series
+- Azure Virtual Machines: NVv4-series
+- Azure Virtual Machines: SAP HANA on Azure Large Instances
 - Azure VMware Solution
 - Azure Web PubSub
-- Microsoft Azure Attestation
+- Durable Task Scheduler
 - Microsoft Purview
 - SQL Server on Azure Virtual Machines
-- SQL Server Stretch Database
-- Virtual Machines: Bsv2-series
-- Virtual Machines: Dasv5 and Dadsv5-series
-- Virtual Machines: Dav4 and Dasv4-series
-- Virtual Machines: DCsv2-series
-- Virtual Machines: Easv5 and Eadsv5-series
-- Virtual Machines: Eav4 and Easv4-series
-- Virtual Machines: FX-series
-- Virtual Machines: HBv2-series
-- Virtual Machines: HBv3-series
-- Virtual Machines: HCv1-series
-- Virtual Machines: Lsv2-series
-- Virtual Machines: Lsv3-series
-- Virtual Machines: Lsv4, Lasv4, and Laosv4-series
-- Virtual Machines: Mv2-series
-- Virtual Machines: NCasT4_v3-series
-- Virtual Machines: NCv3-series
-- Virtual Machines: NDasrA100_v4-Series
-- Virtual Machines: NDm_A100_v4-Series
-- Virtual Machines: NDv2-series
-- Virtual Machines: NP-series
-- Virtual Machines: NVv3-series
-- Virtual Machines: NVv4-series
-- Virtual Machines: SAP HANA on Azure Large Instances
 
 Older generations of services or virtual machines aren't listed. For more information, see [Previous generations of virtual machine sizes](/azure/virtual-machines/sizes-previous-gen).
 

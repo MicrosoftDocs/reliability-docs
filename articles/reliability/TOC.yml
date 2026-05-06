@@ -33,7 +33,7 @@ items:
     - name: Azure Event Hubs
       href: ./reliability-event-hubs.md
     - name: Azure HDInsight
-      href: reliability-hdinsight.md
+      href: /azure/hdinsight/reliability-hdinsight#availability-zone-migration
     - name: Azure Machine Learning
       href: /azure/machine-learning/how-to-high-availability-machine-learning?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
     - name: Azure Stream Analytics
@@ -251,7 +251,7 @@ items:
     - name: Azure Notification Hubs
       href: reliability-notification-hubs.md
     - name: Azure SignalR Service
-      href: /azure/azure-signalr/signalr-concept-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
+      href: reliability-signalr.md
     - name: Azure Web PubSub
       href: reliability-web-pubsub.md
 - name: Azure regions
@@ -313,7 +313,7 @@ items:
       - name: Azure Functions
         href: reliability-functions.md#configure-availability-zone-support
       - name: Azure HDInsight
-        href: reliability-hdinsight.md#availability-zone-migration
+        href: /azure/hdinsight/reliability-hdinsight#availability-zone-migration
       - name: Azure Kubernetes Service
         href: reliability-aks.md
       - name: Azure Load Balancer 

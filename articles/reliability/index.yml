@@ -461,7 +461,7 @@ productDirectory:
     - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
       imageSrc: /azure/media/index/hdinsight.svg
-      url: reliability-hdinsight.md
+      url: /azure/hdinsight/reliability-hdinsight
       azureCategories:
         - analytics
     # Card
@@ -648,6 +648,14 @@ productDirectory:
       azureCategories:
         - integration
         - web
+    # Card
+    - title: Azure SignalR Service
+      summary: Add real-time web functionality easily
+      imageSrc: /azure/media/index/signalr-service.svg
+      url: reliability-signalr.md
+      azureCategories:
+        - web
+        - integration
 
 tools:
   title: Reliability services and capabilities
