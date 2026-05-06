@@ -147,6 +147,16 @@ The following table summarizes the recovery options available based on the accou
 > [!NOTE]
 > This article focuses on the reliability aspects of the multi-region features of Azure Cosmos DB. There are other benefits to multiple read and write regions, such as higher performance and scale for globally distributed applications. You should evaluate your whole solution architecture and consider all of the benefits of using these capabilities.
 
+#### SDKs and resiliency
+
+The Azure Cosmos DB SDKs are an important part of your application's resiliency strategy. When you have a multi-region account, the SDK configuration affects how requests are routed between regions, including the preferred regions to connect to, and regions that should be excluded. SDKs monitor the availability of regions and partitions, and can dynamically reconfigure themselves to use healthy regions and partitions, such as through the partition-level circuit breaker.
+
+For more information about how the SDK supports high availability, see the high availability documentation for the SDK you use:
+
+- [Azure Cosmos DB .NET SDK v3](/azure/cosmos-db/performance-tips-dotnet-sdk-v3?tabs=trace-net-core#high-availability)
+- [Azure Cosmos DB Java SDK v4](/azure/cosmos-db/performance-tips-java-sdk-v4#high-availability)
+- [Azure Cosmos DB Python SDK](/azure/cosmos-db/performance-tips-python-sdk#high-availability)
+
 #### Potential data loss during region outages
 
 When you deploy a Azure Cosmos DB account in multiple regions, data durability depends on the consistency level that you configure on the account. The following table details, for all consistency levels, the recovery point objective (RPO) of an Azure Cosmos DB account that's deployed in at least two regions. The RPO represents the potential data loss during a region outage.
@@ -440,10 +450,7 @@ Any write data that wasn't replicated when the region failed is made available t
 
 #### Test for region failures
 
-To test multi-region write failover scenarios, you can use the following approaches:
-
-- **Client-side fault injection:** Use the Azure Cosmos DB SDK's fault injection capabilities to simulate region unavailability at the client level. This lets you validate that your application correctly handles region failures and routes operations to healthy regions.
-- **Region offline operation:** Take a write region offline using a [forced failover](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account) to simulate a region outage and observe how your application responds.
+To test multi-region write failover scenarios, you can take a write region offline using a [forced failover](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). This process simulates a region outage, and you can observe how your application responds.
 
 ## Backup and restore
 
