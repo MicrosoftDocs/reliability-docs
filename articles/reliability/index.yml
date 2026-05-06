@@ -460,7 +460,7 @@ productDirectory:
     - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
       imageSrc: /azure/media/index/hdinsight.svg
-      url: reliability-hdinsight.md
+      url: /azure/hdinsight/reliability-hdinsight
       azureCategories:
         - analytics
     # Card
