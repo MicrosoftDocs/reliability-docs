@@ -42,7 +42,7 @@ Traffic Manager monitors the health of your endpoints, and routes incoming reque
 
 Traffic Manager operates as a nonregional service, which means its infrastructure is deployed across multiple availability zones in multiple Azure regions worldwide. Traffic Manager is automatically resilient to an availability zone outage because the infrastructure in another zone or region continues to respond to resolution requests.
 
-Incoming DNS resolution requests are automatically routed to the nearest healthy Traffic Manager infrastructure by global internet protocols like DNS and BGP.
+Global internet protocols like DNS and BGP automatically route incoming DNS resolution requests to the nearest healthy Traffic Manager infrastructure.
 
 ## Resilience to transient faults
 
@@ -56,7 +56,7 @@ When you use Traffic Manager, consider the following types of transient faults s
 
 - **Transient faults affecting your back-end endpoints:** [Traffic Manager endpoint monitoring](/azure/traffic-manager/traffic-manager-monitoring) checks the health of your endpoints regularly. A transient fault within an endpoint, or in the network path to an endpoint, might be detected as an unhealthy endpoint. Configure endpoint monitoring to look for consecutive problems over a period of time.
 
-The time to live (TTL) of your DNS CNAME record affects how faults are handled throughout your solution. If the TTL is very low, clients need to make more requests to Traffic Manager and there are more potential opportunities for transient faults to arise. If the TTL is very high, in the event of a true fault in an endpoint, failover might be delayed until the TTL expires. Configure TTLs carefully to balance availability, latency, and responsiveness. For more information, see [Performance considerations for Traffic Manager](/azure/traffic-manager/traffic-manager-performance-considerations).
+Your DNS CNAME record’s time to live (TTL) determines how your solution handles faults. If the TTL is very low, clients need to make more requests to Traffic Manager and there are more potential opportunities for transient faults to arise. If the TTL is very high, in the event of a true fault in an endpoint, clients might experience delays in failover until the TTL expires. Configure TTLs carefully to balance availability, latency, and responsiveness. For more information, see [Performance considerations for Traffic Manager](/azure/traffic-manager/traffic-manager-performance-considerations).
 
 ## Resilience to availability zone failures
 
@@ -83,7 +83,7 @@ Traffic Manager operates as a nonregional service, which means its infrastructur
 
 If you rely on the Azure portal for management of your Traffic Manager profile, it's prudent to be prepared in case you can't access the Azure portal. This is especially important if you need to reconfigure your Traffic Manager profile as part of your response to a platform outage or problem.
 
-Like other Azure services, Traffic Manager supports deployment and management through a variety of tools. We recommend you familiarize yourself with how to use a tool like the [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
+Like other Azure services, Traffic Manager supports deployment and management through a variety of tools. We recommend you familiarize yourself with how to use [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
 
 ## Backup and restore
 
