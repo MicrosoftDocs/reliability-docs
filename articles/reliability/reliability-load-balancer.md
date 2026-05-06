@@ -22,7 +22,7 @@ This article describes how to make Load Balancer resilient to a variety of poten
 > [!IMPORTANT]
 > The reliability of your overall solution depends on the configuration of the back-end instances (servers) like Azure virtual machines (VMs) or virtual machine scale sets that your load balancer routes traffic to.
 >
-> This article doesn't cover your back-end instances, but their availability configurations directly affect your application's resilience. Review the [reliability guides for Azure services in your solution](./overview-reliability-guidance.md) to learn how each service supports your reliability requirements. When you configure your back-end instances for high availability and zone redundancy, you can achieve complete reliability for your application.
+> This article doesn't cover your back-end instances, but their availability configurations directly affect your application's resilience. Review the [reliability guides for Azure services in your solution](./overview-reliability-guidance.md) to learn how each service supports your reliability requirements.
 
 ## Production deployment recommendations
 

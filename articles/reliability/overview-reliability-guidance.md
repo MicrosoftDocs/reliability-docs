@@ -84,7 +84,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Health Data Services||[Disaster recovery for Health Data Services](/azure/healthcare-apis/azure-api-for-fhir/disaster-recovery) |
 |Azure Health Data Services: De-identification service|[Reliability in the Health Data Services de-identification service](reliability-health-data-services-deidentification.md)||
 |Azure Health Data Services: Workspace services (FHIR®, DICOM®, medtech) | | [Business continuity and disaster recovery considerations](/azure/healthcare-apis/business-continuity-disaster-recovery) |
-|Azure HDInsight| [Reliability in HDInsight](reliability-hdinsight.md)||
+|Azure HDInsight| [Reliability in HDInsight](/azure/hdinsight/reliability-hdinsight)||
 |Azure IoT Hub| [Reliability in IoT Hub](reliability-iot-hub.md) ||
 |Azure Key Vault| [Reliability in Key Vault](./reliability-key-vault.md) ||
 |Azure Key Vault Managed HSM| [Reliability in Azure Key Vault Managed HSM](reliability-managed-hsm.md) ||
