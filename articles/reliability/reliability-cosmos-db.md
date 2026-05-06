@@ -434,10 +434,7 @@ This section describes what to expect when you configure an Azure Cosmos DB acco
 
 #### Region recovery
 
-When the affected region is back online, the region shows as "online" in the Azure portal, and becomes available as a read region. At this point, it is safe to enable writes on the region again.
-
-> [!WARNING]
-> **Note to PG:** For multi-region writes, if a region fails and then recovers, is it brought back as a read-only region or a write region?
+When the affected region is back online, the region shows as "online" in the Azure portal, and becomes available again.
 
 Any write data that wasn't replicated when the region failed is made available through the [conflict feed](/azure/cosmos-db/how-to-manage-conflicts#read-from-conflict-feed). Applications can read the conflict feed, resolve the conflicts based on the application-specific logic, and write the updated data back to the Azure Cosmos DB container as appropriate.
 
