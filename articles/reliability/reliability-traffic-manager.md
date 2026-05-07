@@ -15,7 +15,7 @@ ms.date: 05/05/2026
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Traffic Manager resilient to a variety of potential outages and problems, including transient faults and region-wide failures. It also highlights key information about the Azure Traffic Manager service-level agreement (SLA).
+This article describes the reliability capabilities of Azure Traffic Manager in response to a range of potential outages, including transient faults and region-wide failures. It also highlights key considerations for maintaining resilience and preparing for recovery, and provides an overview of the Azure Traffic Manager service-level agreement (SLA).
 
 > [!IMPORTANT]
 > The reliability of your overall solution depends on the configuration of the endpoints that your traffic manager routes traffic to.
