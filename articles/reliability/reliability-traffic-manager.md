@@ -68,7 +68,7 @@ Traffic Manager operates as a nonregional service and deploys its infrastructure
 > **Note to PG:** Can you please confirm that configuration changes are replicated synchronously?
 
 > [!WARNING]
-> **Note to PG:** Could a zone/region outage cause Traffic View data and/or RUM data to be lost?
+> **Note to PG:** Could a zone/region outage cause Traffic View data and/or RUM data to be lost, or at least temporarily unavailable?
 
 ## Resilience to region-wide failures
 
