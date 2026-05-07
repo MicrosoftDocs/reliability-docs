@@ -40,7 +40,7 @@ Traffic Manager monitors the health of your endpoints, and routes incoming reque
 
 ### Physical architecture
 
-Traffic Manager operates as a nonregional service, which means its infrastructure is deployed across multiple availability zones in multiple Azure regions worldwide. Traffic Manager is automatically resilient to an availability zone outage because the infrastructure in another zone or region continues to respond to resolution requests.
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during an availability zone or region outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
 Global internet protocols like DNS and BGP automatically route incoming DNS resolution requests to the nearest healthy Traffic Manager infrastructure.
 
@@ -62,7 +62,7 @@ Your DNS CNAME record’s time to live (TTL) determines how your solution handle
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-Traffic Manager operates as a nonregional service, which means its infrastructure is deployed across multiple availability zones in multiple Azure regions worldwide. Changes to your profile are replicated synchronously across multiple zones and regions. Traffic Manager is automatically resilient to an availability zone outage because the infrastructure in another zone or region continues to respond to resolution requests.
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. It replicates changes to your profile synchronously across these zones and regions. This design enables Traffic Manager to remain resilient during an availability zone outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
 > [!WARNING]
 > **Note to PG:** Can you please confirm that configuration changes are replicated synchronously?
@@ -72,7 +72,7 @@ Traffic Manager operates as a nonregional service, which means its infrastructur
 
 ## Resilience to region-wide failures
 
-Traffic Manager operates as a nonregional service, which means its infrastructure is deployed across multiple Azure regions worldwide. Changes to your profile are replicated synchronously across multiple zones and regions. Traffic Manager is automatically resilient to an region outage because the infrastructure in another region continues to respond to resolution requests.
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during a region outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
 ## Resilience to service outages
 
@@ -81,7 +81,7 @@ Traffic Manager operates as a nonregional service, which means its infrastructur
 
 ## Resilience to portal and management tool outages
 
-If you rely on the Azure portal for management of your Traffic Manager profile, it's prudent to be prepared in case you can't access the Azure portal. This is especially important if you need to reconfigure your Traffic Manager profile as part of your response to a platform outage or problem.
+If you manage your Traffic Manager profile in the Azure portal, prepare for scenarios where you can’t access it, especially if you need to reconfigure your profile during a platform outage.
 
 Like other Azure services, Traffic Manager supports deployment and management through a variety of tools. We recommend you familiarize yourself with how to use [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
 
