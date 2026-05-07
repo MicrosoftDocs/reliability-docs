@@ -17,10 +17,8 @@ ms.date: 05/05/2026
 
 This article describes the reliability capabilities of Azure Traffic Manager in response to a range of potential outages, including transient faults and region-wide failures. It also highlights key considerations for maintaining resilience and preparing for recovery, and provides an overview of the Azure Traffic Manager service-level agreement (SLA).
 
-> [!IMPORTANT]
-> The reliability of your overall solution depends on the configuration of the endpoints that your traffic manager routes traffic to.
->
-> This article doesn't cover your endpoints, but their availability configurations directly affect your application's resilience. Review the [reliability guides for Azure services in your solution](./overview-reliability-guidance.md) to learn how each service supports your reliability requirements.
+> [!NOTE]
+> This article describes how the Traffic Manager service is resilient, or how you can make it resilient, to various problems. It doesn't explain how to use Traffic Manager to perform failover between applications or regions. For an example failover architecture, see [Multitier web application built for high availability and disaster recovery](/azure/architecture/example-scenario/infrastructure/multi-tier-app-disaster-recovery).
 
 ## Production deployment recommendations
 
@@ -37,6 +35,11 @@ When you use Traffic Manager, you deploy a *profile*, which specifies your appli
 A Traffic Manager profile presents as a DNS CNAME record. When it receives a resolution request from a client or DNS resolver, Traffic Manager dynamically resolves the IP address based on rules you specify in the profile. Traffic Manager's responsibility is to provide clients with the IP address of an endpoint to reach your service. After name resolution, none of your application's traffic flows through Traffic Manager. For more information, see [How Traffic Manager Works](/azure/traffic-manager/traffic-manager-how-it-works).
 
 Traffic Manager monitors the health of your endpoints, and routes incoming requests to healthy endpoints while avoiding unhealthy endpoints. For more information, see [Traffic Manager endpoint monitoring](/azure/traffic-manager/traffic-manager-monitoring).
+
+> [!IMPORTANT]
+> The reliability of your overall solution depends on the configuration of the endpoints that your traffic manager routes traffic to.
+>
+> This article doesn't cover your endpoints, but their availability configurations directly affect your application's resilience. Review the [reliability guides for Azure services in your solution](./overview-reliability-guidance.md) to learn how each service supports your reliability requirements.
 
 ### Physical architecture
 
