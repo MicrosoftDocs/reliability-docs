@@ -92,8 +92,8 @@ items:
         href: /azure/service-fabric/service-fabric-disaster-recovery?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json#availability-of-the-service-fabric-cluster
   - name: Databases
     items:
-    - name: Azure Cosmos DB for NoSQL
-      href: reliability-cosmos-db-nosql.md
+    - name: Azure Cosmos DB
+      href: reliability-cosmos-db.md
     - name: Azure Database for MySQL
       href: reliability-database-mysql.md
     - name: Azure Database for PostgreSQL
@@ -302,8 +302,8 @@ items:
         href: migrate-container-instances.md#configure-availability-zone-support
       - name: Azure Container Registry
         href: reliability-container-registry.md#configure-availability-zone-support
-      - name: Azure Cosmos DB for NoSQL
-        href: migrate-cosmos-nosql.md
+      - name: Azure Cosmos DB
+        href: reliability-cosmos-db.md#configure-availability-zone-support
       - name: Azure Database for MySQL
         href: reliability-database-mysql.md#configure-availability-zone-support
       - name: Azure Database for PostgreSQL
