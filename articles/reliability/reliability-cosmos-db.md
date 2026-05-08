@@ -159,7 +159,7 @@ For more information about how the SDK supports high availability, see the high 
 
 #### Potential data loss during region outages
 
-When you deploy a Azure Cosmos DB account in multiple regions, data durability depends on the consistency level that you configure on the account. The following table details, for all consistency levels, the recovery point objective (RPO) of an Azure Cosmos DB account that's deployed in at least two regions. The RPO represents the potential data loss during a region outage.
+When you deploy an Azure Cosmos DB account in multiple regions, data durability depends on the consistency level that you configure on the account. The following table details, for all consistency levels, the recovery point objective (RPO) of an Azure Cosmos DB account that's deployed in at least two regions. The RPO represents the potential data loss during a region outage.
 
 |**Consistency level**|**RPO for region outage**|
 |---------|---------|
