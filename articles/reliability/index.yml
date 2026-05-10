@@ -360,9 +360,10 @@ productDirectory:
     - title: Azure Cosmos DB
       summary: Fast NoSQL database with SLA-backed speed and availability
       imageSrc: https://static.docs.com/ui/media/product/azure/cosmos-db.svg
-      url: reliability-cosmos-db-nosql.md
+      url: reliability-cosmos-db.md
       azureCategories:
         - databases
+        - featured
     # Card
     - title: Azure Functions
       summary: Execute event-driven serverless code functions with an end-to-end development experience
@@ -460,7 +461,7 @@ productDirectory:
     - title: Azure HDInsight
       summary: Provision cloud Hadoop, Spark, R Server, HBase, and Storm clusters
       imageSrc: /azure/media/index/hdinsight.svg
-      url: reliability-hdinsight.md
+      url: /azure/hdinsight/reliability-hdinsight
       azureCategories:
         - analytics
     # Card
