@@ -45,7 +45,7 @@ Traffic Manager monitors the health of your endpoints, and routes incoming reque
 
 Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during an availability zone or region outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
-Global internet protocols like DNS and BGP automatically route incoming DNS resolution requests to the nearest healthy Traffic Manager infrastructure.
+Global internet protocols like Anycast, DNS, and BGP automatically route incoming DNS resolution requests to the nearest healthy Traffic Manager infrastructure.
 
 ## Resilience to transient faults
 
@@ -76,11 +76,6 @@ Traffic Manager operates as a nonregional service and deploys its infrastructure
 ## Resilience to region-wide failures
 
 Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during a region outage, because infrastructure in another zone or region continues to respond to resolution requests.
-
-## Resilience to service outages
-
-> [!WARNING]
-> **Note to PG:** Do you typically recommend that customers have a plan for a service-wide outage of Traffic Manager? I know Front Door explicitly recommends this, but given you have a 100% SLA I'm not sure if this is applicable here.
 
 ## Resilience to portal and management tool outages
 
