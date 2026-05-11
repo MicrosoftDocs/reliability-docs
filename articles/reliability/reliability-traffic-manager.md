@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-traffic-manager
-ms.date: 05/05/2026
+ms.date: 05/12/2026
 ---
 
 # Reliability in Azure Traffic Manager
@@ -66,12 +66,6 @@ Your DNS record’s time to live (TTL) determines how your solution handles faul
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
 Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. It replicates changes to your profile synchronously across these zones and regions. This design enables Traffic Manager to remain resilient during an availability zone outage, because infrastructure in another zone or region continues to respond to resolution requests.
-
-> [!WARNING]
-> **Note to PG:** Can you please confirm that configuration changes are replicated synchronously?
-
-> [!WARNING]
-> **Note to PG:** Could a zone/region outage cause Traffic View data and/or RUM data to be lost, or at least temporarily unavailable?
 
 ## Resilience to region-wide failures
 
