@@ -1,110 +1,99 @@
 ---
 title: Reliability in Azure Traffic Manager
-description: Learn how to ensure reliability in Azure Traffic Manager by using failover, disaster recovery, DNS health checks, and high availability for global load balancing.
+description: Learn how to make Azure Traffic Manager resilient to a variety of potential outages and problems, including transient faults and region-wide failures, and learn about the service-level agreement.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-traffic-manager
-ms.date: 10/31/2024
+ms.date: 05/12/2026
 ---
-
 
 # Reliability in Azure Traffic Manager
 
-This article contains [cross-region disaster recovery and business continuity](#cross-region-disaster-recovery-and-business-continuity) support for Azure Traffic Manager. 
+[Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview) is a DNS-based traffic load balancer that distributes traffic optimally across globally distributed backends. Traffic Manager provides high availability and quick responsiveness for your public-facing applications by using DNS to direct client requests to appropriate service endpoints based on traffic-routing methods and endpoint health monitoring.
 
+[!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-## Cross-region disaster recovery and business continuity
+This article describes the reliability capabilities of Azure Traffic Manager in response to a range of potential outages, including transient faults and region-wide failures. It also highlights key considerations for maintaining resilience and preparing for recovery, and provides an overview of the Azure Traffic Manager service-level agreement (SLA).
 
-[!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
+> [!NOTE]
+> This article describes how the Traffic Manager service is resilient, or how you can make it resilient, to various problems. It doesn't explain how to use Traffic Manager to perform failover between applications or regions. For an example failover architecture, see [Multitier web application built for high availability and disaster recovery](/azure/architecture/example-scenario/infrastructure/multi-tier-app-disaster-recovery).
 
-Azure Traffic Manager is a DNS-based traffic load balancer that lets you  distribute traffic to your public facing applications across global Azure regions. Traffic Manager also provides your public endpoints with high availability and quick responsiveness.
+## Production deployment recommendations
 
-Traffic Manager uses DNS to direct client requests to the appropriate service endpoint based on a traffic-routing method. Traffic manager also provides health monitoring for every endpoint. The endpoint can be any Internet-facing service hosted inside or outside of Azure. Traffic Manager provides a range of traffic-routing methods and endpoint monitoring options to suit different application needs and automatic failover models. Traffic Manager is resilient to failure, including the failure of an entire Azure region.
+The Azure Well-Architected Framework provides recommendations for reliability, performance, security, cost, and operations. To learn how these areas influence each other and contribute to a reliable Traffic Manager solution, see [Architecture best practices for Azure Traffic Manager in the Well-Architected Framework](/azure/well-architected/service-guides/azure-traffic-manager).
 
-### Disaster recovery in multi-region geography
+## Reliability architecture overview
 
-DNS is one of the most efficient mechanisms to divert network traffic. DNS is efficient because DNS is often global and external to the data center. DNS is also insulated from any regional or availability zone (AZ) level failures. 
+[!INCLUDE [Introduction to reliability architecture overview section](includes/reliability-architecture-overview-introduction-include.md)]
 
-There are two technical aspects towards setting up your disaster recovery architecture:
+### Logical architecture
 
--  Using a deployment mechanism to replicate instances, data, and configurations between primary and standby environments. This type of disaster recovery can be done natively viaAzure Site Recovery, see [Azure Site Recovery Documentation](/azure/site-recovery/) via Microsoft Azure partner appliances/services like Veritas or NetApp. 
+When you use Traffic Manager, you deploy a *profile*, which specifies your application's back-end endpoints and configures how Traffic Manager should route requests to those endpoints. For more information, see [Traffic Manager endpoints](/azure/traffic-manager/traffic-manager-endpoint-types) and [Traffic Manager routing methods](/azure/traffic-manager/traffic-manager-routing-methods).
 
-- Developing a solution to divert network/web traffic from the primary site to the standby site. This type of disaster recovery can be achieved via [Azure DNS](reliability-dns.md), Azure Traffic Manager(DNS), or third-party global load balancers. 
+A Traffic Manager profile presents as a DNS CNAME record. When it receives a resolution request from a client or DNS resolver, Traffic Manager dynamically resolves the IP address based on rules you specify in the profile. Traffic Manager's responsibility is to provide clients with the IP address of an endpoint to reach your service. After name resolution, none of your application's traffic flows through Traffic Manager. For more information, see [How Traffic Manager Works](/azure/traffic-manager/traffic-manager-how-it-works).
 
-This article focuses specifically on Azure Traffic Manager disaster recovery planning.
+Traffic Manager monitors the health of your endpoints, and routes incoming requests to healthy endpoints while avoiding unhealthy endpoints. For more information, see [Traffic Manager endpoint monitoring](/azure/traffic-manager/traffic-manager-monitoring).
 
-#### Outage detection, notification, and management
+> [!IMPORTANT]
+> The reliability of your overall solution depends on the configuration of the endpoints that your traffic manager routes traffic to.
+>
+> This article doesn't cover your endpoints, but their availability configurations directly affect your application's resilience. Review the [reliability guides for Azure services in your solution](./overview-reliability-guidance.md) to learn how each service supports your reliability requirements.
 
-During a disaster, the primary endpoint gets probed and the status changes to **degraded** and the disaster recovery site remains **Online**. By default, Traffic Manager sends all traffic to the primary (highest-priority) endpoint. If the primary endpoint appears degraded, Traffic Manager routes the traffic to the second endpoint as long as it remains healthy. One can configure more endpoints within Traffic Manager that can serve as extra failover endpoints, or, as load balancers sharing the load between endpoints.
+### Physical architecture
 
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during an availability zone or region outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
-#### Set up disaster recovery and outage detection 
+Global internet protocols like Anycast, DNS, and BGP automatically route incoming DNS resolution requests to the nearest healthy Traffic Manager infrastructure.
 
-When you have complex architectures and multiple sets of resources capable of performing the same function, you can configure Azure Traffic Manager (based on DNS) to check the health of your resources and route the traffic from the non-healthy resource to the healthy resource.
+## Resilience to transient faults
 
-In the following example, both the primary region and the secondary region have a full deployment. This deployment includes the cloud services and a synchronized database. 
+[!INCLUDE [Resilience to transient faults](includes/reliability-transient-fault-description-include.md)]
 
-![Diagram of automatic failover using Azure Traffic Manager.](/azure/networking/media/disaster-recovery-dns-traffic-manager/automatic-failover-using-traffic-manager.png)
+Traffic Manager operates at the DNS level and uses health probes to monitor endpoint availability. The service handles transient faults through its global DNS infrastructure and endpoint monitoring capabilities.
 
-*Figure - Automatic failover using Azure Traffic Manager*
+When you use Traffic Manager, consider the following types of transient faults separately:
 
-However, only the primary region is actively handling network requests from the users. The secondary region becomes active only when the primary region experiences a service disruption. In that case, all new network requests route to the secondary region. Since the backup of the database is near instantaneous, both the load balancers have IPs that can be health checked, and the instances are always up and running, this topology provides an option for going in for a low RTO and failover without any manual intervention. The secondary failover region must be ready to go-live immediately after failure of the primary region.
+- **Transient faults during DNS resolution:** If a transient fault occurs during DNS resolution, the client or intermediate resolver should retry.
 
-This scenario is ideal for the use of Azure Traffic Manager that has inbuilt probes for various types of health checks including http / https and TCP. Azure Traffic manager also has a rule engine that can be configured to fail over when a failure occurs as described below. Let’s consider the following solution using Traffic Manager:
+- **Transient faults affecting your back-end endpoints:** [Traffic Manager endpoint monitoring](/azure/traffic-manager/traffic-manager-monitoring) checks the health of your endpoints regularly. A transient fault within an endpoint, or in the network path to an endpoint, might be detected as an unhealthy endpoint. Configure endpoint monitoring to look for consecutive problems over a period of time.
 
-- Customer has the Region #1 endpoint known as prod.contoso.com with a static IP as 100.168.124.44 and a Region #2 endpoint known as dr.contoso.com with a static IP as 100.168.124.43. 
--	Each of these environments is fronted via a public facing property like a load balancer. The load balancer can be configured to have a DNS-based endpoint or a fully qualified domain name (FQDN) as shown above.
--	All the instances in Region 2 are in near real-time replication with Region 1. Furthermore, the machine images are up to date, and all software/configuration data is patched and are in line with Region 1.  
--	Autoscaling is preconfigured in advance. 
+Your DNS record’s time to live (TTL) determines how your solution handles faults. If the TTL is very low, clients need to make more requests to Traffic Manager and there are more potential opportunities for transient faults to arise. If the TTL is very high, in the event of a true fault in an endpoint, clients might experience delays in failover until the TTL expires. Configure TTLs carefully to balance availability, latency, and responsiveness. When you use Azure DNS, it can automatically configure your record's TTL to match the profile's TTL value, which is 60 seconds by default. For more information, see [Performance considerations for Traffic Manager](/azure/traffic-manager/traffic-manager-performance-considerations).
 
+## Resilience to availability zone failures
 
-**To configure the failover with Azure Traffic Manager:**
+[!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-1. Create a new Azure Traffic Manager profile
-    Create a new Azure Traffic manager profile with the name contoso123 and select the Routing method as Priority. 
-    If you have a preexisting resource group that you want to associate with, then you can select an existing resource group, otherwise, create a new resource group.
-    
-    ![Screenshot of creating Traffic Manager profile.](/azure/networking/media/disaster-recovery-dns-traffic-manager/create-traffic-manager-profile.png)
-    
-    *Figure - Create a Traffic Manager profile*
-    
-1. Create endpoints within the Traffic Manager profile
-    
-    In this step, you create endpoints that point to the production and disaster recovery sites. Here, choose the **Type** as an external endpoint, but if the resource is hosted in Azure, then you can choose **Azure endpoint** as well. If you choose **Azure endpoint**, then select a **Target resource** that is either an **App Service** or a **Public IP** that is allocated by Azure. The priority is set as **1** since it's the primary service for Region 1.
-    Similarly, create the disaster recovery endpoint within Traffic Manager as well.
-    
-    ![Screenshot of creating disaster recovery endpoints.](/azure/networking/media/disaster-recovery-dns-traffic-manager/create-disaster-recovery-endpoint.png)
-    
-    *Figure - Create disaster recovery endpoints*
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. It replicates changes to your profile synchronously across these zones and regions. This design enables Traffic Manager to remain resilient during an availability zone outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
-1. Set up health check and failover configuration
+## Resilience to region-wide failures
 
-    In this step, you set the DNS TTL to 10 seconds, which is honored by most internet-facing recursive resolvers. This configuration means that no DNS resolver will cache the information for more than 10 seconds.
+Traffic Manager operates as a nonregional service and deploys its infrastructure across multiple availability zones in multiple Azure regions worldwide. This design enables Traffic Manager to remain resilient during a region outage, because infrastructure in another zone or region continues to respond to resolution requests.
 
-    For the endpoint monitor settings, the path is current set at / or root, but you can customize the endpoint settings to evaluate a path, for example, prod.contoso.com/index.
-   
-    The example below shows the **https** as the probing protocol. However, you can choose **http** or **tcp** as well. The choice of protocol depends upon the end application. The probing interval is set to 10 seconds, which enables fast probing, and the retry is set to 3. As a result, Traffic Manager will fail over to the second endpoint if three consecutive intervals register a failure.
+## Resilience to portal and management tool outages
 
-    The following formula defines the total time for an automated failover:
-   
-    `Time for failover = TTL + Retry * Probing interval`
-   
-    And in this case, the value is 10 + 3 * 10 = 40 seconds (Max).
-   
-    If the Retry is set to 1 and TTL is set to 10 secs, then the time for failover 10 + 1 * 10 = 20 seconds.
+If you manage your Traffic Manager profile in the Azure portal, prepare for scenarios where you can’t access it, especially if you need to reconfigure your profile during a platform outage.
 
-    Set the Retry to a value greater than **1** to eliminate chances of failovers due to false positives or any minor network blips. 
-    
+Like other Azure services, Traffic Manager supports deployment and management through a variety of tools. We recommend you familiarize yourself with how to use [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
 
-    ![Screenshot of setting up health check.](/azure/networking/media/disaster-recovery-dns-traffic-manager/set-up-health-check.png)
-    
-    *Figure - Set up health check and failover configuration*
+## Backup and restore
 
-## Next steps
+Traffic Manager is a stateless DNS service. It doesn't persist your data and has no backup or restore capability.
 
-- [Reliability in Azure](/azure/reliability/availability-zones-overview)
+To protect your resource configuration, define your Traffic Manager profiles and other resources using infrastructure as code (such as Bicep or ARM templates) and store those definitions in source control. If you need to recreate a resource, redeploy it from the stored configuration.
 
-- Learn more about [Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview).
-- Learn more about [Azure DNS](/azure/dns/dns-overview).
+## Resilience to service maintenance
+
+[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
+
+## Service-level agreement
+
+[!INCLUDE [Service-level agreement](includes/reliability-service-level-agreement-include.md)]
+
+Azure Traffic Manager provides a 100% availability SLA for DNS query responses, as long as clients retry failed requests repeatedly.
+
+## Related content
+
+- [Azure Traffic Manager overview](/azure/traffic-manager/traffic-manager-overview)
+- [Azure reliability documentation](./overview.md)
