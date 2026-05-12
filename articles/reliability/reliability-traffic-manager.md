@@ -11,7 +11,7 @@ ms.date: 05/12/2026
 
 # Reliability in Azure Traffic Manager
 
-[Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview) is a DNS-based traffic load balancer that distributes traffic optimally across globaly distributed backends. Traffic Manager provides high availability and quick responsiveness for your public-facing applications by using DNS to direct client requests to appropriate service endpoints based on traffic-routing methods and endpoint health monitoring.
+[Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview) is a DNS-based traffic load balancer that distributes traffic optimally across globally distributed backends. Traffic Manager provides high availability and quick responsiveness for your public-facing applications by using DNS to direct client requests to appropriate service endpoints based on traffic-routing methods and endpoint health monitoring.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
