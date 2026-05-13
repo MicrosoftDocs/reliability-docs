@@ -48,7 +48,7 @@ This section describes a disaster recovery plan for Fabric that's designed to he
 
 Power BI, now a part of the Fabric, has a solid disaster recovery system in place and offers the following features:
 
-* **BCDR as default**: Power BI automatically includes disaster recovery capabilities in its default offering. You don't need to opt in or activate this feature separately. 
+* **BCDR as default**:  If a region is [paired](/azure/reliability/regions-list) with a [region that supports Power BI](/fabric/admin/region-availability), disaster recovery capabilities are included by default. You don't need to opt in or activate this feature separately. 
 
 * **Cross-region replication**: Power BI uses [Azure storage geo-redundant replication](/azure/storage/common/storage-redundancy-grs/) and [Azure SQL geo-redundant replication](/azure/sql-database/sql-database-active-geo-replication/) to guarantee that backup instances exist in other regions and can be used. This means that data is duplicated across different regions, enhancing its availability, and reducing the risks associated with regional outages.
 
