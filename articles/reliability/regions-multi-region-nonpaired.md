@@ -35,7 +35,7 @@ To learn about how to create multi-region solutions by using Azure Container Reg
 
 ## Azure Cosmos DB
 
-If your solution requires continuous uptime during region outages, you can configure Azure Cosmos DB to replicate your data across [multiple regions](/azure/cosmos-db/how-to-manage-database-account#add-remove-regions-from-your-database-account) and to transparently fail over to operating regions when required. Azure Cosmos DB supports [multi-region writes](/azure/cosmos-db/multi-region-writes) and can distribute your data globally to provide low-latency access to your data from any region without any pairing restrictions.
+To learn about how to create multi-region solutions by using Azure Cosmos DB, see [Reliability in Azure Cosmos DB](./reliability-cosmos-db.md).
 
 ## Azure Database for MySQL
 

@@ -57,8 +57,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Container Apps| [Reliability in Container Apps](reliability-azure-container-apps.md)||
 |Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 |Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
-|Azure Cosmos DB for NoSQL| [Reliability in Azure Cosmos DB for NoSQL](reliability-cosmos-db-nosql.md) ||
-|Azure Cosmos DB for PostgreSQL| | [Availability zone outage resiliency in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-availability-zones) </p> [High availability in Azure Cosmos DB for PostgreSQL](/azure/cosmos-db/postgresql/concepts-high-availability)|
+|Azure Cosmos DB| [Reliability in Azure Cosmos DB](reliability-cosmos-db.md) ||
 |Azure Data Box|| [Recover data if an entire region fails](/azure/databox/data-box-disk-faq#how-can-i-recover-my-data-if-an-entire-region-fails-)|
 |Azure Data Explorer| [Reliability in Azure Data Explorer](./reliability-data-explorer.md) ||
 |Azure Data Factory| [Reliability in Azure Data Factory](reliability-data-factory.md)||
@@ -84,7 +83,7 @@ The following table provides links to reliability guidance for Azure services. E
 |Azure Health Data Services||[Disaster recovery for Health Data Services](/azure/healthcare-apis/azure-api-for-fhir/disaster-recovery) |
 |Azure Health Data Services: De-identification service|[Reliability in the Health Data Services de-identification service](reliability-health-data-services-deidentification.md)||
 |Azure Health Data Services: Workspace services (FHIR®, DICOM®, medtech) | | [Business continuity and disaster recovery considerations](/azure/healthcare-apis/business-continuity-disaster-recovery) |
-|Azure HDInsight| [Reliability in HDInsight](reliability-hdinsight.md)||
+|Azure HDInsight| [Reliability in HDInsight](/azure/hdinsight/reliability-hdinsight)||
 |Azure IoT Hub| [Reliability in IoT Hub](reliability-iot-hub.md) ||
 |Azure Key Vault| [Reliability in Key Vault](./reliability-key-vault.md) ||
 |Azure Key Vault Managed HSM| [Reliability in Azure Key Vault Managed HSM](reliability-managed-hsm.md) ||
