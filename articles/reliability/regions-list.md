@@ -184,7 +184,7 @@ To retrieve a list of regions, including the names that can be used for programm
 
 For information about regions in Azure's sovereign clouds, see the following resources:
 
-- [Azure for US Government regions](/azure/azure-government/documentation-government-welcome#region-pairing)
+- [Azure for US Government regions](/azure/azure-government/documentation-government-welcome#list-of-regions)
 - [Azure in China regions](/azure/china/overview-regions)
 
 ## Related content
