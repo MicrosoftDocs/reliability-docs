@@ -150,14 +150,14 @@ To set up replication for a newly created configuration store, see [Enable geo-r
 
 This section describes what to expect when you configure an App Configuration store for geo-replication, and all regions are operational.
 
-- **Cross-zone operation:** Each replica is individually addressable and has its own Domain Name System (DNS) name. All replicas can accept both read and write operations.
+- **Cross-region operation:** Each replica is individually addressable and has its own Domain Name System (DNS) name. All replicas can accept both read and write operations.
     
     App Configuration doesn't automatically route traffic between regions. When you use [App Configuration configuration providers](/azure/azure-app-configuration/configuration-provider-overview), your application can optionally use automatic replica discovery. Alternatively, you can specify a prioritized list of replicas, and App Configuration selects the first healthy replica. This approach enables your application to control which replica it uses.
 
     > [!NOTE]
     > If you use Azure Front Door, traffic routing behavior is different. For more information, see [Failover and load balancing](/azure/azure-app-configuration/concept-hyperscale-client-configuration#failover-and-load-balancing).
 
-- **Cross-zone data replication:** Data replicates asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
+- **Cross-region data replication:** Data replicates asynchronously and is eventually consistent. You can use the [replication latency metric in Azure Monitor](/azure/azure-app-configuration/concept-geo-replication#monitoring) to monitor the current replication latency between replicas.
 
 #### Behavior during a region failure
 
