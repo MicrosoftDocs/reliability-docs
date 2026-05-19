@@ -94,7 +94,7 @@ This section describes what to expect when you have a zone-redundant App Configu
 
 ### Behavior during a zone failure
 
-This section describes what to expect when you have a zone-redundant App Configuration store, and there's an outage in one of the zones.
+This section describes what to expect when you use a zone-redundant App Configuration store and there's an outage in one of the zones.
 
 - **Detection and response:** The App Configuration service detects zone failures and automatically responds to them. You don't need to take any action during a zone failure.
 
