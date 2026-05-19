@@ -138,7 +138,7 @@ In [paired Azure regions](./regions-paired.md), Event Grid provides limited geo-
 | Namespaces | Not supported | Supported |
 | Partner namespaces | Not supported | Supported |
 
-### Geo-disaster recovery
+### Metadata geo-disaster recovery
 
 Geo-disaster recovery replicates Event Grid metadata to your primary region's paired region for supported resources. Event data isn't replicated.
 
