@@ -90,7 +90,7 @@ Device Registry is a single-region service. If the region becomes unavailable, y
 
 ### Microsoft-managed failover to a paired region
 
-Your registry's data is replicated to the paired Azure region automatically. In the event of a prolonged region outage, Microsoft might elect to fail over to the paired region. If this happens, your registry continues to be available in the paired region.
+Your registry's data is automatically replicated to the paired Azure region. In the event of a prolonged region outage, Microsoft might elect to fail over to the paired region. If this happens, your registry continues to be available in the paired region.
 
 #### Requirements
 
