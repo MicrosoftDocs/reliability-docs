@@ -86,7 +86,7 @@ The Device Registry platform manages traffic routing, failover, and failback acr
 
 ## Resilience to region-wide failures
 
-Device Registry is a single-region service. If the region becomes unavailable, your Device Registry resources are also unavailable. However, your registry's data is replicated to the paired Azure region.
+Device Registry is a single-region service. If the region becomes unavailable, your Device Registry resources are also unavailable. However, your registry's data is replicated to the paired Azure region to support automatic failover in some situations.
 
 ### Microsoft-managed failover to a paired region
 
