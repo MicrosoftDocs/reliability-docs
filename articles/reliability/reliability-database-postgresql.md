@@ -107,7 +107,7 @@ If you configure your server without high availability, then it runs on a single
 
     | Pricing tier | Zone-redundant | Zonal (same-zone) |
     |---|---|---|
-    | Burstable | Not supported | Supported |
+    | Burstable | Not supported | Not supported |
     | General Purpose | Supported | Supported |
     | Memory Optimized | Supported | Supported |
 
