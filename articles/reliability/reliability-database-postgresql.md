@@ -111,9 +111,7 @@ If you configure your server without high availability, then it runs on a single
     | General Purpose | Supported | Supported |
     | Memory Optimized | Supported | Supported |
 
-- **Service tier:** Zone redundancy requires General Purpose or Memory Optimized tiers.
-
-    Zonal (same-zone) deployments are supported on all pricing tiers. 
+- **Service tier:** Both types of high availability require General Purpose or Memory Optimized tiers.
 
 ### Considerations
 
