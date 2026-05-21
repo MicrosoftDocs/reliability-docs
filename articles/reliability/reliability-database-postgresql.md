@@ -314,7 +314,7 @@ As part of your disaster recovery strategy, regularly run full recovery drills. 
 
 Azure Database for PostgreSQL automatically performs backups that provide point-in-time recovery capabilities, and help to protect you against accidental corruption and deletion of data. Backups are fully managed by Microsoft, don't interrupt the availability of the server, and include both full backups and transaction log backups.
 
-- **Backup storage:** If the server is configured with zone-redundant high availability, backups are stored in zone-redundant storage (ZRS). For servers configured without high availability, or with zonal (single-zone) high availability, backups are stored in locally redundant storage (LRS).
+- **Backup storage:** If you deploy the server in a region with availability zones, the service stores backups in zone-redundant storage (ZRS), regardless of the server's high availability configuration. For servers deployed in regions without availability zones, the service stores backups in locally redundant storage (LRS).
 
     In Azure regions with pairs, you can configure [geo-redundant (GRS) backup storage](/azure/postgresql/backup-restore/concepts-backup-restore#geo-redundant-backup-and-restore) at server creation time to replicate backups to the Azure paired region for additional protection against region failures. Backups are replicated asynchronously.
 
