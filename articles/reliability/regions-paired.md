@@ -42,23 +42,23 @@ To see a list of regions that includes all region pairs, see [List of Azure regi
 
 ### Asymmetrically paired regions
 
-Most region pairs are *symmetrical*, which means that each region is bidirectionally paired with another region. For example, West US is paired with East US and East US is paired with West US.
+Most region pairs are *symmetrical*, which means that each region is bidirectionally paired with another region. For example, West US is paired with East US, and East US is paired with West US.
 
-*Asymmetrical region pairs* involve regions that are not bidirectionally paired. The list below includes public asymmetrical regions pairs:
+*Asymmetrical region pairs* involve regions that aren't bidirectionally paired. The following list includes public asymmetrical region pairs:
 
 - Brazil South is paired with South Central US, which is outside of the Brazil geography. South Central US isn't paired with Brazil South.
 - West India is paired with South India, but South India is paired with Central India.
 - West US 3 is paired in one direction with East US. East US is bidirectionally paired with West US.
 
-To see a list of regions that includes all asymmetrical region pairs, see [Azure region pairs](./regions-list.md).
+For a list of regions that includes all asymmetrical region pairs, see [Azure region pairs](./regions-list.md).
 
 ## Nonpaired regions
 
-Azure continues to expand globally, and many of our newer regions provide multiple [availability zones](./availability-zones-overview.md) for higher resiliency, and don't have a region pair.
+Azure continues to expand globally. Many of the newer regions provide multiple [availability zones](./availability-zones-overview.md) for higher resiliency and don't have a region pair.
 
-Many Azure services support geo-replication and geo-redundancy between any arbitrary set of regions, and don't rely on region pairs. It's important to understand how multi-region support works for the particular services you use. To learn about the details of each service, see [Azure service reliability guides](./overview-reliability-guidance.md).
+Many Azure services support geo-replication and geo-redundancy between any arbitrary set of regions, and don't rely on region pairs. It's important to understand how multi-region support works for the particular services you use. For details about each service, see [Azure service reliability guides](./overview-reliability-guidance.md).
 
-To see a list of regions that includes all nonpaired regions, see [Azure region pairs](./regions-list.md).
+For a list of regions that includes all nonpaired regions, see [Azure region pairs](./regions-list.md).
 
 ### Choosing a secondary region for compliance-driven scenarios
 
