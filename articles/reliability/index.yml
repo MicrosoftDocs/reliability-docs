@@ -72,6 +72,9 @@ conceptualContent:
       items:
       - title: Reliability concepts
         links:
+            - text: Shared responsibility for reliability
+              url: concept-shared-responsibility.md
+              itemType: concept
             - text: Business continuity, high availability, and disaster recovery
               url: concept-business-continuity-high-availability-disaster-recovery.md
               itemType: concept
@@ -81,15 +84,15 @@ conceptualContent:
             - text: Failover and failback
               url: concept-failover-failback.md
               itemType: concept
+            - text: Reliability and sovereignty in Azure
+              url: concept-reliability-sovereignty.md
+              itemType: concept
             - text: How to read a service-level agreement (SLA)
               url: concept-service-level-agreements.md
               itemType: concept
 
       - title: Reliability on the Azure platform
         links:
-            - text: Shared responsibility for reliability
-              url: concept-shared-responsibility.md
-              itemType: concept
             - text: Azure service incident response
               url: incident-response.md
               itemType: concept

@@ -24,6 +24,7 @@ In addition to the reliability service guides, Azure reliability documentation a
     - Redundancy, replication, and backup.
     - Failover and failback.
     - Shared responsibility between Microsoft and you.
+    - Sovereignty and data residency considerations.
 
 ## What is reliability?
 
@@ -102,6 +103,10 @@ For more information on failover and failback, see [What is failover and failbac
 Azure services are built to be resilient to many common failures, and each product provides a service level agreement (SLA) that describes the uptime you can expect. However, the overall reliability of your workload depends on how you have designed your solution to meet your business needs. Some business continuity plans may consider certain failure risks to be unimportant, while others may consider them critical.
 
 In the Azure public cloud platform, reliability is a shared responsibility between Microsoft and you. Because there are different levels of reliability in each workload that you design and deploy, it's important that you understand who has primary responsibility for each one of those levels from a reliability perspective. To better understand how shared responsibility works, especially when confronting an outage or disaster, see [Shared responsibility for reliability](concept-shared-responsibility.md).
+
+### Sovereignty and data residency
+
+When you design reliability, include sovereignty and data residency requirements early because they affect your region selection, replication strategy, and failover paths. A resilient architecture can still fail compliance requirements if failover or data movement crosses restricted boundaries. For more information, see [Reliability and sovereignty](./concept-reliability-sovereignty.md).
 
 ## Related content
 
