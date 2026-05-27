@@ -1,5 +1,5 @@
 ---
-title: Azure region pairs and nonpaired regions
+title: Azure Region Pairs and Nonpaired Regions
 description: Learn about Azure region pairs and regions without a pair.
 author: glynnniall
 ms.service: azure

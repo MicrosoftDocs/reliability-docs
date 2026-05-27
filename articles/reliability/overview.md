@@ -1,5 +1,5 @@
 ---
-title: Azure reliability documentation
+title: Azure Reliability Documentation
 description: Overview of Azure reliability documentation, including platform capabilities, guides for how each Azure service supports reliability, and reliability concepts.
 author: glynnniall
 ms.topic: concept-article

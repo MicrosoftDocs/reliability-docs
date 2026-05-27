@@ -1,5 +1,5 @@
 ---
-title: Shared responsibility for reliability
+title: Shared Responsibility for Reliability
 description: Learn about the shared responsibility model for reliability on the Azure cloud platform.
 ms.service: azure
 ms.subservice: azure-reliability

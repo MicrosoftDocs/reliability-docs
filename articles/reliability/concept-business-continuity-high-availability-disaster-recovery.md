@@ -1,5 +1,5 @@
 ---
-title: What are business continuity, high availability, and disaster recovery?
+title: What are Business Continuity, High Availability, and Disaster Recovery?
 description: Understand business continuity, high availability, and disaster recovery for your Microsoft Azure-based solutions.
 author: glynnniall
 ms.service: azure
