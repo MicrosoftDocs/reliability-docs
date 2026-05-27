@@ -36,7 +36,7 @@ The service category you choose - SaaS, PaaS, or IaaS - determines what kind of 
 >
 > The [reliability guides](./overview-reliability-guidance.md) provide an overview of how each service works from a reliability perspective and help you make informed decisions about how to configure your services to meet your needs.
 
-You're also responsible for your application and workload design, and for defining your reliability requirements, which helps you decide how to design and configure your solution. It's your responsibility to respect any applicable regulatory or contractual requirements, like the geographic location where data is stored, within your reliability design.
+You're also responsible for your application and workload design, and for defining your reliability requirements, which helps you decide how to design and configure your solution. You must ensure that your design respects any applicable regulatory or contractual requirements, such as the geographic location where data is stored.
 
 ### Core platform reliability
 
@@ -59,7 +59,7 @@ Azure provides many different reliability-enhancing capabilities. Although Micro
 
 - **Regions.** Azure has over 70 regions, and you can use multiple regions in a single solution to achieve geo-redundancy, meet your data residency needs, and enable low-latency communication to users globally. To learn more about regions, see [What are Azure regions?](./regions-overview.md)
 
-- **Availability zones.** Many Azure regions support availability zones, which enable you to distribute your workloads across multiple independent sets of datacenters. Azure services support availability zones in a way that suits their intended purpose, usually by supporting zonal deployments (pinned to a single zone) and zone-redundant deployments (spread across multiple zones). To learn more about availability zones, see [What are availability zones?](./availability-zones-overview.md)
+- **Availability zones.** Many Azure regions support availability zones, which enable you to distribute your workloads across multiple independent sets of datacenters. Azure services support availability zones in a way that suits their intended purpose, usually by supporting zonal deployments (pinned to a single zone) or zone-redundant deployments (spread across multiple zones). To learn more about availability zones, see [What are availability zones?](./availability-zones-overview.md)
 
 - **Service tiers.** Services provide a range of offerings and tiers that suit different requirements. You're responsible for choosing the appropriate tier based on your reliability goals and other needs. For example, when you create a virtual machine, you can choose between a standard disk, which provides a low-cost option, or a premium disk to achieve a higher level of availability.
 

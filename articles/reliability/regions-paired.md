@@ -19,7 +19,7 @@ Azure regions are independent of each other. However, Microsoft associates some 
 
 However, many regions aren't paired, and instead use availability zones as their primary means of redundancy. In addition, many Azure services support geo-redundancy whether regions are paired or not.
 
-You can design a highly resilient solution whether you use paired regions, nonpaired regions, or a combination. 
+You can design a highly resilient solution whether you use paired regions, nonpaired regions, or a combination.
 
 ## Paired regions
 
@@ -63,10 +63,10 @@ For a list of regions that includes all nonpaired regions, see [Azure region pai
 ### Choosing a secondary region for compliance-driven scenarios
 
 When you choose a secondary region for geo-redundancy or disaster recovery, consider data residency and regulatory requirements alongside your reliability goals. Because most Azure services support replication to a region of your choice rather than only to a paired region, you can select a secondary region that meets your compliance requirements even when that region isn't within a Microsoft-defined pair. If no in-boundary secondary region is available, plan in-region redundancy and backup-based recovery instead, and adjust your recovery objectives to reflect the longer recovery time.
- 
-When you use your own encryption keys, also called customer-managed keys, with replication or backup to a region of your choice, consider how encryption keys are managed and distributed. By using Azure Key Vault Managed HSM you can deploy keys across selected regions, align key availability with the regions where data is replicated, and improve availability during regional disruptions.  
 
-When backups or replicated data are stored outside of the primary compliance boundary, ensure that data is encrypted and that key placement is carefully planned. If encryption keys are stored only in the primary region, they might not be accessible during a regional outage. Conversely, storing keys in secondary regions can improve availability but must be evaluated against compliance and security requirements. 
+When you use your own encryption keys, also called *customer-managed keys*, with replication or backup to a region of your choice, consider how to manage and distribute the keys. By using Azure Key Vault Managed HSM, you can deploy and replicate keys across a selected set of Azure regions, align key availability with the regions where data is replicated, and improve availability during regional disruptions.
+
+When backups or replicated data are stored outside of the primary compliance boundary, ensure that data is encrypted and that key placement is carefully planned. If encryption keys are stored only in the primary region, they might not be accessible during a regional outage. Conversely, storing keys in secondary regions can improve availability but must be evaluated against compliance and security requirements.
 
 ## Related content
 
