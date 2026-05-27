@@ -6,7 +6,7 @@ ms.author: wiassaf
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-sql-database
-ms.date: 10/08/2025
+ms.date: 05/27/2026
 zone_pivot_groups: sql-database-tiers
 ---
 
@@ -208,7 +208,7 @@ For the General Purpose service tier:
 
 - **Traffic routing between zones:** Requests are routed to a node that runs your SQL database compute layer. When zone redundancy is enabled, this node might be located in any availability zone.
 
-- **Data replication between zones:** Data and log files are synchronously replicated across availability zones by using ZRS. Write operations aren't considered complete until the data is successfully replicated across all of the availability zones. This synchronous replication ensures strong consistency and zero data loss during zone failures. However, it might result in slightly higher write latency compared to locally redundant storage (LRS).
+- **Data replication between zones:** Zone-redundant storage (ZRS) synchronously replicates data and log files across availability zones. Write operations aren't complete until the system replicates the data across all of the availability zones. This synchronous replication ensures strong consistency and zero data loss during zone failures. However, it might result in slightly higher write latency compared to locally redundant storage (LRS).
 
 :::zone-end
 
@@ -218,7 +218,7 @@ For the Premium and Business Critical service tiers:
 
 - **Traffic routing between zones:** Replicas are distributed across availability zones, and one of those replicas is designated as the *primary* replica. Requests are routed to your database's primary replica.
 
-- **Data replication between zones:** The primary replica constantly pushes changes to the secondary replicas sequentially to ensure that data is persisted on a sufficient number of secondary replicas before committing each transaction. This process guarantees that if the primary replica or a readable secondary replica become unavailable for any reason, a fully synchronized replica is always available for failover. When zone redundancy is enabled, those replicas are located in different availability zones. However, the process might result in slightly higher write latency because of the network latency in traversing zones.
+- **Data replication between zones:** The primary replica constantly pushes changes to the secondary replicas sequentially to ensure that data is persisted on a sufficient number of secondary replicas before committing each transaction. This process guarantees that if the primary replica or a readable secondary replica becomes unavailable for any reason, a fully synchronized replica is always available for failover. When you enable zone redundancy, those replicas are in different availability zones. However, the process might result in slightly higher write latency because of the network latency in traversing zones.
 
 :::zone-end
 
@@ -495,6 +495,26 @@ Even if Microsoft initiated the original failover, you're still responsible for 
 
 You can simulate a region outage by triggering a manual failover at any time. You can trigger a failover (no data loss) or a forced failover.
 
+## Resilience to accidental logical server deletion
+
+In addition to resilience against infrastructure failures, Azure SQL Database provides protection against the accidental or unintended deletion of [logical servers](/azure/azure-sql/database/logical-servers?view=azuresql-db&preserve-view=true).
+
+
+Azure SQL Database supports [soft delete retention for logical servers (preview)](/azure/azure-sql/database/deleted-logical-server-restore). When you enable this feature, a deleted logical server isn't immediately permanently removed. Instead, it's retained in a soft-deleted state for a configurable retention period, during which you can discover and restore it.
+
+Logical server retention helps mitigate risks from:
+
+- Accidental deletion through the Azure portal, APIs, or scripts
+- Automation or deployment errors
+- Operational mistakes during testing or cleanup activities
+
+Azure retains the metadata when a logical server is soft-deleted. This retention allows you to restore the server to its previous state and recover its databases, provided they are still within the backup retention period.
+
+Soft delete retention complements existing backup and restore capabilities, such as point-in-time restore and long-term retention, by providing a logical server-level recovery path. This recovery path can reduce recovery time and operational complexity compared to recreating resources and restoring individual databases.
+
+> [!NOTE]
+> The ability to configure a soft delete retention period and restore a deleted logical server is currently in [preview](/azure/azure-sql/database/doc-changes-updates-release-notes-whats-new#preview). Any logical server older than two years automatically has a soft delete retention period of seven days. Logical servers less than two years old have soft delete retention disabled by default.
+
 ## Backup and restore
 
 Take backups of your databases to protect against various risks, including loss of data. Backups can be restored to recover from accidental data loss, corruption, or other problems. Backups differ from zone redundancy, active geo-replication, or failover groups, and they have different purposes. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
@@ -506,6 +526,8 @@ SQL Database provides automatic backups of your databases. For more information 
 You can choose to store your automated backups in LRS or ZRS. If you use a region that's paired, you can choose to replicate your automated backups to the paired region by using geo-redundant storage. This capability enables geo-restore of your backups into the paired region. For more information, see [Automated backups in SQL Database](/azure/azure-sql/database/automated-backups-overview).
 
 If you use a nonpaired region, or if you need to replicate backups to a region other than the paired region, consider exporting the database and storing the exported file in a storage account that uses [blob object replication](/azure/storage/blobs/object-replication-overview) to replicate to a storage account in another region. For more information, see [Export a database](/azure/azure-sql/database/automated-backups-overview#export-a-database).
+
+For more robust protection, you can enable backup immutability for long-term retention (LTR) backups. Backup immutability ensures that LTR backups for a database are stored in a **Write Once, Read Many (WORM)** state, making them non-modifiable and non-erasable for a user-defined retention period. Backup immutability protects against accidental or malicious deletion or modification, even by privileged administrators. To learn more, review [Backup immutability for LTR backups in Azure SQL Database](/azure/azure-sql/database/backup-immutability).
 
 ## Resilience to service maintenance
 
