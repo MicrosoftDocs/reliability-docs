@@ -86,23 +86,25 @@ The Device Registry platform manages traffic routing, failover, and failback acr
 
 ## Resilience to region-wide failures
 
-Device Registry is a single-region service. If the region becomes unavailable, your Device Registry resources are also unavailable.
+Device Registry is a single-region service. If the region becomes unavailable, your Device Registry resources are also unavailable. However, your registry's data is replicated to the paired Azure region to support automatic failover in some situations.
 
-However, your registry's data is replicated to the paired region. In the event of a prolonged region outage, Microsoft might elect to fail over to the paired region. If this happens, your registry continues to be available in the paired region.
+### Microsoft-managed failover to a paired region
 
-### Requirements
+Your registry's data is automatically replicated to the paired Azure region. In the event of a prolonged region outage, Microsoft might elect to fail over to the paired region. If this happens, your registry continues to be available in the paired region.
+
+#### Requirements
 
 **Region support:** Default replication and failover is supported in all regions that Device Registry is available in, because [all of these regions are paired](./regions-paired.md).
 
-### Cost
+#### Cost
 
 There's no extra cost for cross-region data replication or failover.
 
-### Configure replication and prepare for failover
+#### Configure replication and prepare for failover
 
 By default, cross-region data replication is automatically configured when you create Device Registry resources in a region with a pair. This process is a default option and requires no intervention from you.
 
-### Behavior when all regions are healthy
+#### Behavior when all regions are healthy
 
 This section describes what to expect when a device registry is configured for cross-region replication and failover, and the primary region is operational.
 
@@ -110,7 +112,7 @@ This section describes what to expect when a device registry is configured for c
 
 - **Traffic routing between regions:** In normal operations, traffic only flows to the primary region.
 
-### Behavior during a region failure
+#### Behavior during a region failure
 
 This section describes what to expect when a device registry is configured for cross-region replication and failover and there's an outage in the primary region.
 
@@ -128,11 +130,11 @@ This section describes what to expect when a device registry is configured for c
 
     After the failover operation for the registry completes, all operations from the device and back-end applications are expected to continue working without requiring manual intervention.
 
-### Region recovery
+#### Region recovery
 
 When the primary region recovers, Device Registry automatically restores operations in the region.
 
-### Test for region failures
+#### Test for region failures
 
 The Device Registry platform manages traffic routing, failover, and failback across paired regions. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate paired region failure processes.
 
