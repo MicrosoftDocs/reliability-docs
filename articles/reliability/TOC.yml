@@ -260,6 +260,8 @@ items:
     href: regions-overview.md
   - name: Paired and nonpaired regions
     href: regions-paired.md
+  - name: Services with multi-region support
+    href: regions-multi-region-support.md
   - name: Multi-region solutions in nonpaired regions
     href: regions-multi-region-nonpaired.md
   - name: Nonregional Azure services
