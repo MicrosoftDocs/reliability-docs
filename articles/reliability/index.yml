@@ -61,7 +61,7 @@ conceptualContent:
             url: regions-paired.md
             itemType: concept
           - text: Services with multi-region support
-            url: regions-multi-region-support.md
+            url: regions-multiregion-support.md
             itemType: reference
           - text: Nonregional Azure services
             url: regions-nonregional-services.md

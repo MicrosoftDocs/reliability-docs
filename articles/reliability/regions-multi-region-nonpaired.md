@@ -17,7 +17,7 @@ ms.custom:
 
 Some Azure services support geo-redundancy and geo-replication across Azure regions, [even when those regions aren't paired](./regions-paired.md).
 
-This article lists some of the services and possible configurations for multi-region solutions that don't require paired regions. For a list of service multi-region capabilities, see [Azure services that support multiple regions](./regions-multi-region-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
+This article lists some of the services and possible configurations for multi-region solutions that don't require paired regions. For a list of service multi-region capabilities, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
 
 ## Azure AI Search
 

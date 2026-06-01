@@ -111,7 +111,7 @@ The following table lists zonal and zone-redundant Azure services. Some services
 ## Related content
 
 - [Enable zone resiliency for Azure workloads](availability-zones-enable-zone-resiliency.md)
-- [Azure services that support multiple regions](./regions-multi-region-support.md)
+- [Azure services that support multiple regions](./regions-multiregion-support.md)
 - [Nonregional Azure services](./regions-nonregional-services.md)
 - [List of Azure regions](regions-list.md)
 - [Availability of service by category](availability-service-by-category.md)
