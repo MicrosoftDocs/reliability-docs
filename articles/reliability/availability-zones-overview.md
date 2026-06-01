@@ -1,5 +1,5 @@
 ---
-title: What are Azure availability zones?
+title: What are Azure Availability Zones?
 description: Learn about availability zones and how to use them to design resilient solutions.
 ms.service: azure
 ms.subservice: azure-reliability
@@ -131,6 +131,10 @@ To achieve reliable workloads:
 
 - Production workloads should be configured to use multiple availability zones if the region they are in supports availability zones.
 - For mission-critical workloads, you should consider a solution that is *both* multi-region and multi-zone.
+
+For workloads constrained to a single region by data residency or sovereignty requirements, deploying across multiple availability zones is the primary recommended way to maximize availability without moving data outside the region. A zone-resilient configuration keeps replicas inside the regional boundary while maintaining continuity if a single zone fails.
+
+Availability zones don't protect against a full-region outage. If your compliance requirements don't permit you to use a secondary Azure region, plan in-region redundancy together with backup and restore procedures, such as by using Azure Backup and other backup approaches. Set recovery objectives that reflect the time required to recover from a region-wide disruption.
 
 For more detailed information on how to use regions and availability zones in a solution architecture, see [Recommendations for using availability zones and regions](/azure/well-architected/resiliency/regions-availability-zones).
 

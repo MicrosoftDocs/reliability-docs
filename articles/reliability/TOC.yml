@@ -332,14 +332,16 @@ items:
         href: reliability-virtual-machines.md#configure-availability-zone-support
 - name: Reliability concepts
   items:
+  - name: Shared responsibility for reliability
+    href: concept-shared-responsibility.md
   - name: Business continuity, high availability, and disaster recovery
     href: concept-business-continuity-high-availability-disaster-recovery.md
   - name: Redundancy, replication, and backup
     href: concept-redundancy-replication-backup.md
   - name: Failover and failback
     href: concept-failover-failback.md
-  - name: Shared responsibility for reliability
-    href: concept-shared-responsibility.md
+  - name: Reliability and sovereignty in Azure
+    href: concept-reliability-sovereignty.md
   - name: How to read a service-level agreement (SLA)
     href: concept-service-level-agreements.md
 - name: Resources
