@@ -1,5 +1,5 @@
 ---
-title: What are business continuity, high availability, and disaster recovery?
+title: What are Business Continuity, High Availability, and Disaster Recovery?
 description: Understand business continuity, high availability, and disaster recovery for your Microsoft Azure-based solutions.
 author: glynnniall
 ms.service: azure
@@ -337,6 +337,20 @@ It's critical to routinely validate and test your DR plans, as well as your wide
 If you haven't tested your recovery processes in a disaster simulation, you're more likely to face major problems when using them in an actual disaster. Also, by testing your DR plans and required processes, you can validate the feasibility of your RTO.
 
 To learn more, see [Recommendations for designing a reliability testing strategy](/azure/well-architected/reliability/testing-strategy).
+
+### Disaster recovery for sovereignty and residency-bound workloads
+
+Your disaster recovery planning should reflect any sovereignty or data residency obligations that apply to your workload. The following patterns help you align a DR strategy with common compliance constraints:
+
+- **Cross-region DR within a compliance boundary.** When cross-region failover is permitted, select a secondary region inside the same data residency boundary as the primary region. This approach helps you preserve compliance while still protecting against region-wide disruptions. Most Azure services support replication to a region of your choice, so you aren't limited to Azure-defined region pairs. For more information, see [Azure region pairs and nonpaired regions](./regions-paired.md).
+
+- **In-region-only resilience.** If your requirements don't permit cross-region replication or failover, rely on availability zones, in-region redundancy, and backup and restore. Set recovery objectives that account for longer recovery times during a region-wide event, and document acceptance of the residual risk.
+
+- **Compliant backup placement.** Store backup copies in regions that are allowed by your compliance boundary, encrypt backup data at rest, and routinely test restores within those allowed regions to confirm recovery is feasible under the same constraints. For encrypted backups, plan where you store keys so they're accessible when you need them while meeting any data sovereignty requirements.
+
+- **Restore after regional recovery.** For workloads where cross-region data movement isn't allowed, plan to restore from backup after the primary region recovers instead of failing over. You only need to restore when your existing resources don't survive the regional outage. This approach increases your recovery time, but it enables strict residency compliance.
+
+- **Workloads that span Azure and on-premises environments:** Integrate both environments into your disaster recovery plan. For example, [Azure Site Recovery](/azure/site-recovery/site-recovery-overview) supports replicating VM-based workloads between on-premises infrastructure, including Azure Local, and Azure regions. This approach can enable site-to-cloud and site-to-site failover paths that align to your residency boundary. Some organizations also design for cloud-to-site failover as part of a cloud exit or sovereignty strategy. Azure Site Recovery doesn't natively support this configuration. You can still achieve it through intentional workload design, where applications are deployed across Azure and Azure Local with application-level data replication and failover orchestration.
 
 ## Related content
 
