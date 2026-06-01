@@ -23,6 +23,8 @@ For each service that offers built-in multi-region support, the table shows the 
 
 Services without built-in support require you to design your own multi-region solution, including replication, failover, and other aspects of recovery. To see services that don't provide built-in multi-region support, select the **No built-in multi-region support** tab.
 
+## List of Azure services
+
 # [Built-in multi-region support](#tab/built-in-multi-region-support)
 
 | Service | Multi-region support type | Paired regions | Nonpaired regions | Description |
