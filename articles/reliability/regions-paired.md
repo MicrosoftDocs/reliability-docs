@@ -19,7 +19,7 @@ Azure regions are independent of each other. However, Microsoft associates some 
 
 However, many regions aren't paired, and instead use availability zones as their primary means of redundancy. In addition, many Azure services support geo-redundancy whether regions are paired or not.
 
-You can design a highly resilient solution whether you use paired regions, nonpaired regions, or a combination. 
+You can design a highly resilient solution whether you use paired regions, nonpaired regions, or a combination.
 
 ## Paired regions
 
@@ -57,7 +57,7 @@ For a list of regions that includes all asymmetrical region pairs, see [Azure re
 
 Azure continues to expand globally. Many of the newer regions provide multiple [availability zones](./availability-zones-overview.md) for higher resiliency and don't have a region pair.
 
-Many Azure services support geo-replication and geo-redundancy between any arbitrary set of regions, and don't rely on region pairs. It's important to understand how multi-region support works for the particular services you use. For details about each service, see [Azure service reliability guides](./overview-reliability-guidance.md).
+Many Azure services support geo-replication and geo-redundancy between any arbitrary set of regions and don't rely on region pairs. Others might require that you design and implement your own multiregion approaches. For a list of service multiregion capabilities, including those that work between nonpaired regions, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
 
 For a list of regions that includes all nonpaired regions, see [Azure region pairs](./regions-list.md).
 
