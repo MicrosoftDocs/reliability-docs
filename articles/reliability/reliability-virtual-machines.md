@@ -87,7 +87,7 @@ This section explains how to configure availability zone support for your VM ins
     - [Create a VM in an availability zone by using the Azure CLI](/azure/virtual-machines/linux/create-cli-availability-zone)
     - [Create a VM in an availability zone by using Azure PowerShell](/azure/virtual-machines/windows/create-powershell-availability-zone)
 
-- **Moving existing VMs to a zonal configuration.** You can move from a nonzonal VM to a zonal VM. This process creates a new VM in the target availability zone and requires that the VM be stopped during the move process. For more information, see [Move Azure single instance VMs from regional to zonal target availability zones](/azure/virtual-machines/move-virtual-machines-regional-zonal-portal).
+- **Move existing VMs to a zonal configuration.** Move from a nonzonal VM to a zonal VM. This process creates a new VM in the target availability zone and requires that you stop the VM during the move process. For more information, see [Move Azure single instance VMs from regional to zonal target availability zones](/azure/virtual-machines/move-virtual-machines-regional-zonal-portal).
 
 - **Migrate existing VMs to a zonal configuration.** Migrate from a nonzonal VM to a zonal VM. This process requires shutting down the virtual machine, updating the zone properties, and starting it again. This feature is currently in preview. For more information, see [migrate to availability zones (preview)](/azure/virtual-machines/migrate-to-availability-zone).
 
