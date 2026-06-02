@@ -13,7 +13,7 @@ ms.custom: subject-reliability
 
 # Azure services that support multiple regions
 
-This article provides a reference list of Azure services, grouped by whether they offer built-in multiregion capabilities like geo-replication, cross-region backup, and failover. Some capabilities operate automatically, while others require explicit configuration.
+This article provides a reference list of Azure services. Some services offer built-in multiregion capabilities like geo-replication, cross-region backup, failover, or connectivity across Azure regions. Some capabilities operate automatically, while others require explicit configuration.
 
 For each service that offers built-in multiregion support, the table shows the following information:
 
