@@ -15,7 +15,9 @@ ms.custom:
 
 # Multi-region solutions in nonpaired regions
 
-Some Azure services support geo-redundancy and geo-replication by using paired regions, but you can create solutions that support multiple regions [even when those regions aren't paired](./regions-paired.md). This article lists some of the services and possible configurations for multi-region solutions that don't require paired regions. To learn more about each Azure service and how it supports reliability, see the [Azure service reliability guides](./overview-reliability-guidance.md).
+Some Azure services support geo-redundancy and geo-replication across Azure regions, [even when those regions aren't paired](./regions-paired.md).
+
+This article lists some of the services and possible configurations for multi-region solutions that don't require paired regions. For a list of service multiregion capabilities, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
 
 ## Azure AI Search
 
@@ -53,7 +55,7 @@ To learn about how to create multi-region solutions by using Azure Data Factory,
 
 To learn about how to create multi-region solutions by using Azure Event Grid, see [Reliability in Azure Event Grid](./reliability-event-grid.md).
 
-## Azure IoT Hub 
+## Azure IoT Hub
 
 To learn about how to create multi-region solutions by using Azure IoT Hub, see [Reliability in IoT Hub](./reliability-iot-hub.md).
 
@@ -65,7 +67,7 @@ To learn about how to create multi-region solutions by using Azure Kubernetes Se
 
 To learn about how to create multi-region solutions by using Azure Monitor Logs, see [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md).
 
-## Azure Service Bus 
+## Azure Service Bus
 
 Azure Service Bus can provide regional resiliency without a dependency on region pairs. For more information, see [Reliability in Service Bus](./reliability-service-bus.md).
 
@@ -73,7 +75,7 @@ Azure Service Bus can provide regional resiliency without a dependency on region
 
 To learn about how to create multi-region solutions using Azure SQL Database, see [Reliability in Azure SQL Database](./reliability-sql-database.md).
 
-## Azure SQL Managed Instance 
+## Azure SQL Managed Instance
 
 To learn about how to create multi-region solutions using Azure SQL Managed Instance, see [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md).
 
