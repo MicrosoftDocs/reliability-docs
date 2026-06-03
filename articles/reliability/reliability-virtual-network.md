@@ -76,7 +76,7 @@ Zone redundancy is configured automatically when a virtual network is deployed i
 
 This section describes what to expect when you deploy a virtual network in a region that supports availability zones, and all zones are operational.
 
-- **Cross-zone operation:** A virtual network and its subnets span all availability zones in the region. Resources deployed in any zone use the same virtual network and address space. Private IP traffic flows directly between resources across zones.
+- **Cross-zone operation:** A virtual network and its subnets span all availability zones in the region. Resources deployed in any zone use the same virtual network and address space. Private IP traffic flows directly between resources, even when the resources are in different availability zones.
 
 - **Cross-zone data replication:** Virtual Network is a stateless networking service. Configuration is replicated synchronously across zones, which ensures consistent configuration in every zone.
 
