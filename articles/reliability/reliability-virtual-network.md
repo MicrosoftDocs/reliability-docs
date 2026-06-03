@@ -56,13 +56,13 @@ Transient faults don't usually affect virtual networks. However, transient fault
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-A virtual network and its subnets span all availability zones within the region where it's deployed, which means it's automatically zone-redundant. You don't have to configure anything to enable zone redundancy.
+A virtual network and its subnets span all availability zones within the region where you deploy them, so they're automatically zone redundant. You don't need to configure anything to enable zone redundancy.
 
 You don't need to divide your virtual networks or subnets by availability zones to accommodate zonal resources. For example, if you configure a zonal VM, you don't have to consider the virtual network when you select the availability zone for the VM. The same is true for other zonal resources.
 
 ### Requirements
 
-**Region support:** Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
+**Region support:** You can deploy zone-redundant virtual networks into any [region that supports availability zones](./regions-list.md).
 
 ### Cost
 
@@ -74,18 +74,18 @@ Zone redundancy is configured automatically when a virtual network is deployed i
 
 ### Behavior when all zones are healthy
 
-This section describes what to expect when a virtual network is deployed in a region that supports availability zones, and all zones are operational.
+This section describes what to expect when you deploy a virtual network in a region that supports availability zones, and all zones are operational.
 
-- **Cross-zone operation:** A virtual network and its subnets span all availability zones in the region. Resources deployed in any zone use the same virtual network and address space, and private IP traffic flows directly between resources across zones.
+- **Cross-zone operation:** A virtual network and its subnets span all availability zones in the region. Resources deployed in any zone use the same virtual network and address space. Private IP traffic flows directly between resources across zones.
 
 - **Cross-zone data replication:** Virtual Network is a stateless networking service. Configuration is replicated synchronously across zones, which ensures consistent configuration in every zone.
 
 ### Behavior during a zone failure
 
-This section describes what to expect when a virtual network is deployed in a region that supports availability zones, and there's an outage in one of the zones.
+This section describes what to expect when you deploy a virtual network in a region that supports availability zones and there's an outage in one of the zones.
 
 > [!IMPORTANT]
-> Consider any resources within the virtual network individually, because each resource might have a different set of behaviors during the loss of an availability zone. Review the [reliability guide for each resource](./overview-reliability-guidance.md) that you use to understand their availability zone support and behavior when a zone is unavailable.
+> Consider each resource within the virtual network individually, because each resource might have a different set of behaviors during the loss of an availability zone. Review the [reliability guide for each resource](./overview-reliability-guidance.md) that you use to understand their availability zone support and behavior when a zone is unavailable.
 
 - **Detection and response:** The Azure platform detects availability zone failures and responds automatically. You don't need to do anything to initiate a zone failover for the virtual network itself.
 
