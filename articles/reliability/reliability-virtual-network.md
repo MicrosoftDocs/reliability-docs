@@ -6,9 +6,9 @@ ms.author: allensu
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-virtual-network
-ms.date: 05/20/2025
-#Customer intent: As an engineer responsible for business continuity, I want to understand who needs to understand the details of how Azure Virtual Network works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations.
-
+ms.date: 06/10/2026
+ms.update-cycle: 1095-days
+ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Virtual Network
@@ -57,13 +57,13 @@ Transient faults don't usually affect virtual networks. However, transient fault
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-A virtual network and its subnets span all availability zones within the region where it's deployed. You don't have to configure anything to enable this support.
+A virtual network and its subnets span all availability zones within the region where you deploy them, so they're automatically zone redundant. You don't need to configure anything to enable zone redundancy.
 
 You don't need to divide your virtual networks or subnets by availability zones to accommodate zonal resources. For example, if you configure a zonal VM, you don't have to consider the virtual network when you select the availability zone for the VM. The same is true for other zonal resources.
 
 ### Requirements
 
-- **Region support:** Zone-redundant virtual networks can be deployed into any [region that supports availability zones](./regions-list.md).
+**Region support:** You can deploy zone-redundant virtual networks into any [region that supports availability zones](./regions-list.md).
 
 ### Cost
 
@@ -73,11 +73,36 @@ There's no extra cost for zone redundancy for Azure virtual networks.
 
 Zone redundancy is configured automatically when a virtual network is deployed in a region that supports availability zones.
 
+### Behavior when all zones are healthy
+
+This section describes what to expect when you deploy a virtual network in a region that supports availability zones, and all zones are operational.
+
+- **Cross-zone operation:** A virtual network and its subnets span all availability zones in the region. Resources deployed in any zone use the same virtual network and address space. Private IP traffic flows directly between resources, even when the resources are in different availability zones.
+
+- **Cross-zone data replication:** Virtual Network is a stateless networking service. Configuration is replicated synchronously across zones, which ensures consistent configuration in every zone.
+
 ### Behavior during a zone failure
 
-Virtual Network is designed to be resilient to zone failures. When a zone becomes unavailable, Virtual Network automatically reroutes virtual network requests to the remaining zones. This process is seamless and doesn't require any action from you.
+This section describes what to expect when you deploy a virtual network in a region that supports availability zones and there's an outage in one of the zones.
 
-However, any resources within the virtual network need to be considered individually, because each resource might have a different set of behaviors during the loss of an availability zone. Review the [reliability guide for each resource](./overview-reliability-guidance.md) that you use to understand their availability zone support and behavior when a zone is unavailable.
+> [!IMPORTANT]
+> Consider each resource within the virtual network individually, because each resource might have a different set of behaviors during the loss of an availability zone. Review the [reliability guide for each resource](./overview-reliability-guidance.md) that you use to understand their availability zone support and behavior when a zone is unavailable.
+
+- **Detection and response:** The Azure platform detects availability zone failures and responds automatically. You don't need to do anything to initiate a zone failover for the virtual network itself.
+
+[!INCLUDE [Availability zone down notification (Service Health only)](./includes/reliability-availability-zone-down-notification-service-include.md)]
+
+- **Active requests:** Virtual Network is a logical construct and doesn't terminate connections. Active flows between resources in healthy zones continue to operate. Flows to or from resources in the affected zone are interrupted because the underlying resources are unavailable, not because of the virtual network. Clients should implement [transient fault handling](#resilience-to-transient-faults), including automated retries.
+
+- **Expected data loss:** Virtual Network doesn't store data, so no data loss occurs at the virtual network layer.
+
+- **Expected downtime:** No downtime is expected for the virtual network itself. The virtual network continues to operate from the healthy zones, and its configuration remains available.
+
+    However, resources deployed within the virtual network might be unavailable depending on their own availability zone configuration.
+
+- **Redistribution:** When a zone becomes unavailable, Virtual Network automatically reroutes virtual network requests to the remaining zones. This process doesn't require any action from you.
+
+    Redistribution behavior for resources deployed within the virtual network depends on each resource type. For more information, see the [reliability guide for each resource](./overview-reliability-guidance.md).
 
 ### Zone recovery
 
@@ -114,6 +139,10 @@ For more information about a multi-region networking architecture for web applic
 ## Backup and restore
 
 Virtual networks don't store any data that requires backup. However, you can use Bicep, Azure Resource Manager templates, or Terraform to take a snapshot of the configuration of a virtual network if you need to recreate it. For more information, see [Create an Azure virtual network](/azure/virtual-network/quickstart-create-virtual-network).
+
+## Resilience to service maintenance
+
+[!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]
 
 ## Service-level agreement
 
