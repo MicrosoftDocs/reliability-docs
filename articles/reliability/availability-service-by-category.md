@@ -32,8 +32,8 @@ If a service offering isn't available in a region, contact your Microsoft sales 
 
 | Region type | Non-regional | Foundational | Mainstream | Strategic | Availability zones | Data residency |
 | --- | --- | --- | --- | --- | --- | --- |
-| Recommended | **Y** | **Y** | **Y** | Demand-driven | **Y** | **Y** |
-| Alternate | **Y** | **Y** | Demand-driven | Demand-driven | N/A | **Y** |
+| Recommended | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Demand-driven | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| Alternate | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Demand-driven | Demand-driven | N/A | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
 
 ## Available services by region category
 
@@ -46,7 +46,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Application Gateway
 - Azure Backup
 - Azure Blob Storage
-- Azure Cosmos DB for NoSQL
+- Azure Cosmos DB
 - Azure Data Lake Storage Gen2
 - Azure Disk Storage
 - Azure Event Hubs
@@ -56,7 +56,6 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Kubernetes Service (AKS)
 - Azure Load Balancer
 - Azure NAT Gateway
-- Azure Public IP
 - Azure Service Bus
 - Azure Service Fabric
 - Azure Site Recovery
@@ -64,18 +63,19 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure SQL Managed Instance
 - Azure Stream Analytics
 - Azure Virtual Machine Scale Sets
-- Azure Virtual Machines (see individual virtual machine series)
-- Azure Virtual Machines: Av2-series
-- Azure Virtual Machines: Bs-series
-- Azure Virtual Machines: Ddv5 and Ddsv5-series
-- Azure Virtual Machines: Dv2 and DSv2-series
-- Azure Virtual Machines: Dv3 and DSv3-series
-- Azure Virtual Machines: Dv5 and DSv5-series
-- Azure Virtual Machines: Edv5 and Edsv5-series
-- Azure Virtual Machines: Ev3 and Esv3-series
-- Azure Virtual Machines: Ev5 and Esv5-series
+- Azure Virtual Machines
+   - Av2-series
+   - Bs-series
+   - Ddv5 and Ddsv5-series
+   - Dv2 and DSv2-series
+   - Dv3 and DSv3-series
+   - Dv5 and DSv5-series
+   - Edv5 and Edsv5-series
+   - Ev3 and Esv3-series
+   - Ev5 and Esv5-series
 - Azure Virtual Network
 - Azure VPN Gateway
+- Public IP addresses
 
 ## ![An icon that signifies this service is mainstream.](media/icon-mainstream.svg) Mainstream services 
 
@@ -106,16 +106,17 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Network Watcher
 - Azure Private Link
 - Azure Storage: Premium Blob Storage
-- Azure Virtual Machines: Ddsv4-series
-- Azure Virtual Machines: Ddv4-series
-- Azure Virtual Machines: Dsv4-series
-- Azure Virtual Machines: Dv4-series
-- Azure Virtual Machines: Edsv4-series
-- Azure Virtual Machines: Edv4-series
-- Azure Virtual Machines: Esv4-series
-- Azure Virtual Machines: Ev4-series
-- Azure Virtual Machines: Fsv2-series
-- Azure Virtual Machines: M-series
+- Azure Virtual Machines
+   - Ddsv4-series
+   - Ddv4-series
+   - Dsv4-series
+   - Dv4-series
+   - Edsv4-series
+   - Edv4-series
+   - Esv4-series
+   - Ev4-series
+   - Fsv2-series
+   - M-series
 - Azure Virtual WAN
 - Microsoft Entra Domain Services
 
@@ -148,29 +149,30 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Storage: Azure File Sync
 - Azure Synapse Analytics
 - Azure Ultra Disk Storage
-- Azure Virtual Machines: Bsv2-series
-- Azure Virtual Machines: Dasv5 and Dadsv5-series
-- Azure Virtual Machines: Dav4 and Dasv4-series
-- Azure Virtual Machines: DCsv2-series
-- Azure Virtual Machines: Easv5 and Eadsv5-series
-- Azure Virtual Machines: Eav4 and Easv4-series
-- Azure Virtual Machines: FX-series
-- Azure Virtual Machines: HBv2-series
-- Azure Virtual Machines: HBv3-series
-- Azure Virtual Machines: HCv1-series
-- Azure Virtual Machines: Lsv2-series
-- Azure Virtual Machines: Lsv3-series
-- Azure Virtual Machines: Lsv4, Lasv4, and Laosv4-series
-- Azure Virtual Machines: Mv2-series
-- Azure Virtual Machines: NCasT4_v3-series
-- Azure Virtual Machines: NCv3-series
-- Azure Virtual Machines: NDasrA100_v4-Series
-- Azure Virtual Machines: NDm_A100_v4-Series
-- Azure Virtual Machines: NDv2-series
-- Azure Virtual Machines: NP-series
-- Azure Virtual Machines: NVv3-series
-- Azure Virtual Machines: NVv4-series
-- Azure Virtual Machines: SAP HANA on Azure Large Instances
+- Azure Virtual Machines
+   - Bsv2-series
+   - Dasv5 and Dadsv5-series
+   - Dav4 and Dasv4-series
+   - DCsv2-series
+   - Easv5 and Eadsv5-series
+   - Eav4 and Easv4-series
+   - FX-series
+   - HBv2-series
+   - HBv3-series
+   - HCv1-series
+   - Lsv2-series
+   - Lsv3-series
+   - Lsv4, Lasv4, and Laosv4-series
+   - Mv2-series
+   - NCasT4_v3-series
+   - NCv3-series
+   - NDasrA100_v4-Series
+   - NDm_A100_v4-Series
+   - NDv2-series
+   - NP-series
+   - NVv3-series
+   - NVv4-series
+   - SAP HANA on Azure Large Instances
 - Azure VMware Solution
 - Azure Web PubSub
 - Durable Task Scheduler
