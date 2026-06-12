@@ -190,13 +190,15 @@ When Functions allocates instances to a zone-redundant Premium plan, it uses [be
 
 ::: zone pivot="flex-consumption,premium"
 
-You incur no extra cost when you enable zone redundancy. Pricing for a zone-redundant plan is the same as a single-zone plan. However, enabling zone redundancy affects the minimum number of instances in your plan.
+Enabling zone redundancy doesn't add a separate charge. There's no extra meter for the zone redundancy feature itself, and the per-instance price for a zone-redundant plan is the same as for a single-zone plan. However, enabling zone redundancy increases the minimum number of instances your plan must run, which can increase your bill. Review the plan-specific details that follow before you enable zone redundancy in production.
 
 ::: zone-end
 
 ::: zone pivot="flex-consumption"
 
 When you enable availability zones in an app with an always-ready instance configuration of fewer than two instances for each [per-function scaling function or group](/azure/azure-functions/flex-consumption-plan#per-function-scaling), the platform automatically creates two instances of the [always-ready type](/azure/azure-functions/flex-consumption-plan#always-ready-instances) for each per-function scaling function or group. These new instances are also billed as always-ready instances.
+
+Because at least two always-ready instances are required for each per-function scaling function or group while zone redundancy is enabled, a zone-redundant Flex Consumption app doesn't scale to zero. Apps that were previously idle most of the time can see a cost increase after you enable zone redundancy, because the required instances incur the nominal always-ready baseline meter continuously (even when idle), and add the always-ready execution time meter on top while actively executing. For meter definitions and rates, see [Azure Functions pricing](https://azure.microsoft.com/pricing/details/functions/).
 
 ::: zone-end
 
