@@ -510,6 +510,13 @@ productDirectory:
       azureCategories:
         - networking
     # Card
+    - title: Azure DNS Private Resolver
+      summary: Resolve private DNS names across Azure and on-premises networks
+      imageSrc: /azure/media/index/dns-private-resolver.svg
+      url: reliability-dns-private-resolver.md
+      azureCategories:
+        - networking
+    # Card
     - title: Azure Chaos Studio
       summary: Improve application resilience by introducing faults and simulating outages
       imageSrc: /azure/media/index/chaos-studio.svg
