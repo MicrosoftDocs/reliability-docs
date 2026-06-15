@@ -101,6 +101,7 @@ The following services don't provide built-in multiregion support. However, you 
 - <img src="https://static.docs.com/ui/media/product/azure/databricks.svg" alt="Azure Databricks" width="24" /> [Azure Databricks](./reliability-databricks.md#custom-multi-region-solutions-for-resiliency)
 - <img src="/azure/media/index/disk-storage.svg" alt="Azure Disk Storage" width="24" /> [Azure Disk Storage](./reliability-storage-disk.md#custom-multi-region-solutions-for-resiliency)
 - <img src="/azure/media/index/documentdb.svg" alt="Azure DocumentDB" width="24" /> [Azure DocumentDB](./reliability-documentdb.md)
+- <img src="/azure/media/index/dns-private-resolver.svg" alt="Azure DNS Private Resolver" width="24" /> [Azure DNS Private Resolver](./reliability-dns-private-resolver.md)
 - <img src="/azure/media/index/elastic-san.svg" alt="Azure Elastic SAN" width="24" /> [Azure Elastic SAN](./reliability-elastic-san.md#custom-multi-region-solutions-for-resiliency)
 - <img src="https://static.docs.com/ui/media/product/azure/expressroute.svg" alt="Azure ExpressRoute" width="24" /> [Azure ExpressRoute](./reliability-virtual-network-gateway.md?pivots=expressroute#custom-multi-region-solutions-for-resiliency)
 - <img src="https://static.docs.com/ui/media/product/azure/firewall.svg" alt="Azure Firewall" width="24" /> [Azure Firewall](./reliability-firewall.md#custom-multi-region-solutions-for-resiliency)

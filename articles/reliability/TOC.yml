@@ -170,6 +170,8 @@ items:
       href: reliability-bastion.md
     - name: Azure DNS 
       href: reliability-dns.md
+    - name: Azure DNS Private Resolver
+      href: reliability-dns-private-resolver.md
     - name: Azure DDoS Protection
       href: reliability-ddos-protection.md
     - name: Azure ExpressRoute gateway
