@@ -9,7 +9,6 @@ services: logic-apps
 ms.service: azure-logic-apps
 ms.date: 12/03/2025
 zone_pivot_groups: logic-app-hosting-types
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Logic Apps

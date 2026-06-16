@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-backup
 ms.date: 02/23/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Backup

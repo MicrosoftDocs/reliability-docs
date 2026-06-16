@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-site-recovery
 ms.date: 03/03/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Site Recovery

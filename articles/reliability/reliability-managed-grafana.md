@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-managed-grafana
 ms.date: 03/02/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Managed Grafana

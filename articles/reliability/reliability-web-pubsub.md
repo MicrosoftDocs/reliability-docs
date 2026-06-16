@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-web-pubsub
 ms.date: 04/30/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Web PubSub Service

@@ -8,7 +8,6 @@ ms.custom: subject-reliability
 ms.service: azure-virtual-network
 ms.date: 06/10/2026
 ms.update-cycle: 1095-days
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Virtual Network

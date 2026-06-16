@@ -7,7 +7,6 @@ ms.service: azure-ai-search
 ms.topic: reliability-article
 ms.date: 10/31/2025
 ms.custom: subject-reliability
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure AI Search

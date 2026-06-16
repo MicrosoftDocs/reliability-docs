@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis
 ms.date: 01/12/2026
-ai-usage: ai-assisted
 
 ---
 

@@ -132,7 +132,8 @@
       "uhfHeaderId": "azure",
       "ms.suite": "office",
       "adobe-target": true,
-      "zone_pivot_group_filename": "zone-pivots/reliability/zone-pivot-groups.json"
+      "zone_pivot_group_filename": "zone-pivots/reliability/zone-pivot-groups.json",
+      "ai-usage": "ai-assisted"
     },
     "fileMetadata": {
       "featureFlags": {

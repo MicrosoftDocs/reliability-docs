@@ -5,7 +5,6 @@ author: duongau
 ms.author: duau
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ai-usage: ai-assisted
 ms.service: azure-firewall
 ms.date: 02/10/2026
 # Customer intent: As a cloud architect designing a high-availability solution, I want to understand Azure Firewall reliability features to ensure that my network security infrastructure meets our 99.99% uptime requirements.
