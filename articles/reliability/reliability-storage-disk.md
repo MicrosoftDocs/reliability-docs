@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-disk-storage
 ms.date: 04/07/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure Disk Storage

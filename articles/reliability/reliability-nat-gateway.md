@@ -7,7 +7,6 @@ ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-nat-gateway
 ms.date: 01/06/2026
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure NAT Gateway

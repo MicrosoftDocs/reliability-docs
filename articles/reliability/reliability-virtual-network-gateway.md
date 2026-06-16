@@ -8,7 +8,6 @@ ms.custom: subject-reliability
 ms.service: azure-vpn-gateway
 ms.date: 11/18/2025
 zone_pivot_groups: virtual-network-gateway-types
-ai-usage: ai-assisted
 ---
 
 # Reliability in Azure virtual network gateways

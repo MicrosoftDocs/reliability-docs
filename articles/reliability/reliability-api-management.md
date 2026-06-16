@@ -6,7 +6,6 @@ ms.author: danlep
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
-ai-usage: ai-assisted
 ms.date: 01/09/2026
 zone_pivot_groups: api-management-tiers
 ---

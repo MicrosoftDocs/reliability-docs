@@ -5,7 +5,6 @@ author: AbdullahBell
 ms.author: abell
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ai-usage: ai-assisted
 ms.service: azure-private-link
 ms.date: 02/20/2026
 ---
