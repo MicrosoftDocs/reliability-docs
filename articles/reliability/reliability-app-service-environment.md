@@ -99,7 +99,7 @@ Enabling zone redundancy doesn't add a separate charge. There's no extra meter f
 If you enable availability zones but specify a capacity of less than two, the platform enforces a minimum instance count of two. The platform charges you for those two instances.
 
 > [!IMPORTANT]
-> When you enable availability zones for an App Service Environment, all App Service plans with fewer than 2 instances are scaled to 2 instances. Any plan with 2 or more instances remains unchanged. Once the operation to enable availability zones completes, you can scale your App Service plans as needed, including to fewer than 2 instances.
+> When you enable availability zones for an App Service Environment, the platform scales all App Service plans with fewer than two instances to have two instances. Any plan with two or more instances remains unchanged. Once the operation to enable availability zones completes, you can scale your App Service plans as needed, including to fewer than two instances.
 
 Charges are based on your App Service plan SKU, the capacity that you specify, and any instances that you scale to based on your autoscale criteria. For more information, see [Azure App Service on Linux pricing](https://azure.microsoft.com/pricing/details/app-service/linux/) and [Azure App Service on Windows pricing](https://azure.microsoft.com/pricing/details/app-service/windows/).
 
