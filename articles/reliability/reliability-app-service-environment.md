@@ -94,12 +94,14 @@ To enable zone redundancy for your App Service Environment, you must meet the fo
 
 ### Cost
 
-You can enable zone redundancy on an App Service Environment or its plans at no extra cost. However, zone redundancy for a plan requires that it has two or more instances. You're charged based on your App Service plan SKU, the capacity that you specify, and any instances that you scale to based on your autoscale criteria.
+Enabling zone redundancy doesn't add a separate charge. There's no extra meter for the zone redundancy feature itself, and the per-instance price for a zone-redundant plan is the same as for a single-zone plan. However, enabling zone redundancy increases the minimum number of instances your plan must run, which can increase your bill.
 
-If you enable availability zones but specify a capacity of fewer than two instances, the platform enforces a minimum instance of two. The platform charges you for those two instances.
+If you enable availability zones but specify a capacity of less than two, the platform enforces a minimum instance count of two. The platform charges you for those two instances.
 
 > [!IMPORTANT]
-> When you enable availability zones for an App Service Environment, all App Service plans with fewer than 3 instances are scaled to 3 instances. Any plan with 3 or more instances remains unchanged. Once the operation to enable availability zones completes, you can scale your App Service plans as needed, including to fewer than 3 instances.
+> When you enable availability zones for an App Service Environment, all App Service plans with fewer than 2 instances are scaled to 2 instances. Any plan with 2 or more instances remains unchanged. Once the operation to enable availability zones completes, you can scale your App Service plans as needed, including to fewer than 2 instances.
+
+Charges are based on your App Service plan SKU, the capacity that you specify, and any instances that you scale to based on your autoscale criteria. For more information, see [Azure App Service on Linux pricing](https://azure.microsoft.com/pricing/details/app-service/linux/) and [Azure App Service on Windows pricing](https://azure.microsoft.com/pricing/details/app-service/windows/).
 
 ### Configure availability zone support
 
