@@ -153,7 +153,11 @@ No extra cost applies to use zone redundancy. All new and existing Consumption l
 
 ::: zone pivot="standard-workflow-service-plan"
 
-When you have Standard logic apps with the Workflow Service Plan in single-tenant Azure Logic Apps, no extra cost applies to enabling zone redundancy if you have two or more plan instances. You're charged based on your plan SKU, the specified capacity, and any instances that you scale up or down, based on your autoscale criteria. If you enable availability zones but specify fewer than two instances, the platform enforces the minimum two instances and charges you for these two instances.
+Enabling zone redundancy doesn't add a separate charge. There's no extra meter for the zone redundancy feature itself, and the per-instance price for a zone-redundant plan is the same as for a single-zone plan. However, enabling zone redundancy increases the minimum number of instances your plan must run, which can increase your bill.
+
+If you enable availability zones but specify a capacity of less than two, the platform enforces a minimum instance count of two. The platform charges you for those two instances.
+
+You're charged based on your plan SKU, the specified capacity, and any instances that you scale up or down, based on your autoscale criteria. For more information, see [Logic Apps pricing](https://azure.microsoft.com/pricing/details/logic-apps/).
 
 ::: zone-end
 
