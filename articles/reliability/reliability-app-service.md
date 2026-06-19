@@ -79,9 +79,11 @@ To enable zone redundancy, you must meet the following requirements:
 
 ### Cost
 
-When you use App Service **Premium v2 to v4 plans**, enabling availability zones doesn't add cost if you have two or more instances. Charges are based on your App Service plan SKU, the capacity that you specify, and any instances that you scale to based on your autoscale criteria.
+When you use App Service **Premium v2 to v4 plans**, enabling zone redundancy doesn't add a separate charge. There's no extra meter for the zone redundancy feature itself, and the per-instance price for a zone-redundant plan is the same as for a single-zone plan. However, enabling zone redundancy increases the minimum number of instances your plan must run, which can increase your bill.
 
 If you enable availability zones but specify a capacity of less than two, the platform enforces a minimum instance count of two. The platform charges you for those two instances.
+
+Charges are based on your App Service plan SKU, the capacity that you specify, and any instances that you scale to based on your autoscale criteria. For more information, see [Azure App Service on Linux pricing](https://azure.microsoft.com/pricing/details/app-service/linux/) and [Azure App Service on Windows pricing](https://azure.microsoft.com/pricing/details/app-service/windows/).
 
 ### Configure availability zone support
 
