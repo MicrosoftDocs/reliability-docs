@@ -53,6 +53,157 @@ Most region pairs are *symmetrical*, which means that each region is bidirection
 
 For a list of regions that includes all asymmetrical region pairs, see [Azure region pairs](./regions-list.md).
 
+## Azure region pairs list
+
+The following tables list Azure regions and their corresponding paired region, organized by geography. Regions without a pair show **N/A** in the paired region column.
+
+> [!NOTE]
+> The :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: icon indicates a restricted-access region. To request access, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
+
+#### [All](#tab/all)
+
+| Region | Paired region |
+|--------|---------------|
+| Australia Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Australia Central 2 |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Australia Central 2 | Australia Central |
+| Australia East | Australia Southeast |
+| Australia Southeast | Australia East |
+| Austria East | N/A |
+| Belgium Central | N/A |
+| Brazil South | South Central US |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Brazil Southeast | Brazil South |
+| Canada Central | Canada East |
+| Canada East | Canada Central |
+| Central India | South India |
+| Central US | East US 2 |
+| Chile Central | N/A |
+| Denmark East | N/A |
+| East Asia | Southeast Asia |
+| East US | West US |
+| East US 2 | Central US |
+| France Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: France South |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: France South | France Central |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North | Germany West Central |
+| Germany West Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North |
+| Indonesia Central | N/A |
+| Israel Central | N/A |
+| Italy North | N/A |
+| Japan East | Japan West |
+| Japan West | Japan East |
+| Korea Central | Korea South |
+| Korea South | Korea Central |
+| Malaysia West | N/A |
+| Mexico Central | N/A |
+| New Zealand North | N/A |
+| North Central US | South Central US |
+| North Europe | West Europe |
+| Norway East | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | Norway East |
+| Poland Central | N/A |
+| Qatar Central | N/A |
+| South Africa North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West | South Africa North |
+| South Central US | North Central US |
+| South India | Central India |
+| Southeast Asia | East Asia |
+| Spain Central | N/A |
+| Sweden Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Sweden South |
+| Switzerland North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Switzerland West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Switzerland West | Switzerland North |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central | UAE North |
+| UAE North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central |
+| UK South | UK West |
+| UK West | UK South |
+| West Central US | West US 2 |
+| West Europe | North Europe |
+| West India | South India |
+| West US | East US |
+| West US 2 | West Central US |
+| West US 3 | East US |
+
+#### [Americas](#tab/americas)
+
+| Region | Paired region |
+|--------|---------------|
+| Brazil South | South Central US |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Brazil Southeast | Brazil South |
+| Canada Central | Canada East |
+| Canada East | Canada Central |
+| Central US | East US 2 |
+| Chile Central | N/A |
+| East US | West US |
+| East US 2 | Central US |
+| Mexico Central | N/A |
+| North Central US | South Central US |
+| South Central US | North Central US |
+| West Central US | West US 2 |
+| West US | East US |
+| West US 2 | West Central US |
+| West US 3 | East US |
+
+#### [Europe](#tab/europe)
+
+| Region | Paired region |
+|--------|---------------|
+| Austria East | N/A |
+| Belgium Central | N/A |
+| Denmark East | N/A |
+| France Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: France South |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: France South | France Central |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North | Germany West Central |
+| Germany West Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North |
+| Italy North | N/A |
+| North Europe | West Europe |
+| Norway East | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | Norway East |
+| Poland Central | N/A |
+| Spain Central | N/A |
+| Sweden Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Sweden South |
+| Switzerland North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Switzerland West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Switzerland West | Switzerland North |
+| UK South | UK West |
+| UK West | UK South |
+| West Europe | North Europe |
+
+#### [Middle East](#tab/middle-east)
+
+| Region | Paired region |
+|--------|---------------|
+| Israel Central | N/A |
+| Qatar Central | N/A |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central | UAE North |
+| UAE North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central |
+
+#### [Africa](#tab/africa)
+
+| Region | Paired region |
+|--------|---------------|
+| South Africa North | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West | South Africa North |
+
+#### [Asia Pacific](#tab/asia-pacific)
+
+| Region | Paired region |
+|--------|---------------|
+| Australia Central | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Australia Central 2 |
+| :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Australia Central 2 | Australia Central |
+| Australia East | Australia Southeast |
+| Australia Southeast | Australia East |
+| Central India | South India |
+| East Asia | Southeast Asia |
+| Indonesia Central | N/A |
+| Japan East | Japan West |
+| Japan West | Japan East |
+| Korea Central | Korea South |
+| Korea South | Korea Central |
+| Malaysia West | N/A |
+| New Zealand North | N/A |
+| South India | Central India |
+| Southeast Asia | East Asia |
+| West India | South India |
+
+---
+
 ## Nonpaired regions
 
 Azure continues to expand globally. Many of the newer regions provide multiple [availability zones](./availability-zones-overview.md) for higher resiliency and don't have a region pair.
