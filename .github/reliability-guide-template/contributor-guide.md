@@ -280,7 +280,7 @@ This is a key section. It describes how the service works with Azure's availabil
 
       For zone-redundant services, you must explicitly state:
       - **Who selects the zones**: Is it Microsoft (the customer has no choice) or the customer (who picks which zones to use)?
-      - **How many zones**: Does the resource use all available zones in the region, a minimumu number (usually at least 2), a fixed number (such as 3), or a customer-specified number?
+      - **How many zones**: Does the resource use all available zones in the region, a minimum number (usually at least two), a fixed number (such as three), or a customer-specified number?
 
       **Example (Microsoft selects all zones):**
 
@@ -730,13 +730,13 @@ This section describes any *native* multiregion capabilities the service might h
 
 **Organizing multiregion features:** The organization of this section is important for consistency and tooling support.
 
-- *If the service offers any multiregion capabilities that are relevant for reliability*, such as cross-region replication, create an H3 with the name of that capability. Provide the complete set of H4 subsections (Requirements, Considerations, Cost, Configure multiregion support, etc.) under the H3 heading.
+- *If the service offers any multiregion capabilities that are relevant for reliability*, such as cross-region replication, create an H3 with the name of that capability. Provide the complete set of H4 subsections (Requirements, Considerations, Cost, Configure multiregion support, and so on) under the H3 heading.
 - *If the service offers multiple distinct multiregion capabilities*, such as geo-replication and cross-region read replicas, create an H3 heading for each solution and add the H4 subsections into each.
-- *For all service*, then add an H3 called *Custom multiregion solutions for resiliency*. This section doesn't need to follow the subsection structure.
+- *For all services*, add an H3 called *Custom multiregion solutions for resiliency*. This section doesn't need to follow the subsection structure.
 
 **Introductory paragraph:**
 
-- *Single-region services:* Most Azure services have no native multiregion support at all. Customers can manually deploy separate resources into multiple regions, but they would have to handle replication, traffic distribution, failover, etc., which is described in the *custom multiregion solutions for resiliency* section.
+- *Single-region services:* Most Azure services have no native multiregion support at all. Customers can manually deploy separate resources into multiple regions, but they must handle replication, traffic distribution, failover, and other challenges. The *custom multiregion solutions for resiliency* section describes these challenges.
 
   For single-region services, introduce this H2 section with something like this:
 
@@ -835,7 +835,7 @@ Include information about any expected downtime or effects if you enable multire
 
 #### Cost
 
-Give an idea of what this does to the customer's billing meters. For example, is there an additional charge for enabling multiregion support? Do they need to deploy additional instances of the service in each region?
+Give an idea of what this change does to the customer's billing meters. For example, is there an extra charge for enabling multiregion support? Do they need to deploy extra instances of the service in each region?
 
 Don't specify prices. Link to the Azure pricing information if needed.
 
@@ -869,7 +869,7 @@ If your service supports disabling multiregion support, provide links to the rel
 
 *Optional section*: Include this section only for services where customers directly configure capacity by purchasing instances, nodes, or abstract capacity units (such as throughput units or processing units). Don't include this section for fully managed services where Microsoft controls all capacity decisions.
 
-Include this section if a region failover can cause instances in the healthy regions to become overloaded with requests. If that's a risk for your service's customers, explain that here, and whether they can mitigate that risk by overprovisioning capacity.
+Include this section if a region failover can cause instances in the healthy regions to become overloaded with requests. If that's a risk for your service's customers, explain that risk and whether they can mitigate it by overprovisioning capacity.
 
 ### Behavior when all regions are healthy
 
@@ -1022,7 +1022,7 @@ The Azure \[service-name\] platform manages traffic routing, failover, and regio
 
 #### Custom multiregion solutions for resiliency
 
-*Optional but strongly recommended section:* Describes how a customer might approach deploying independent instances of the service into different regions and coordinating replication, failover, etc. It needs to be clear that the customer is the one who is managing the whole process, and that there are no built-in multiregion features being used.
+*Optional but strongly recommended section:* Describes how a customer might approach deploying independent instances of the service into different regions and coordinating replication, failover, and other tasks. It needs to be clear that the customer is managing the whole process, and that there are no built-in multiregion features being used.
 
 Consider adding this section if any of these applies to the service:
 
@@ -1030,7 +1030,7 @@ Consider adding this section if any of these applies to the service:
 - The service provides built-in multiregion support, but:
   - That support relies on paired regions, which means customers in nonpaired regions can't use it.
   - The service provides Microsoft-managed replication and failover, but Microsoft decides when to fail over, which means customers with strict failover policies or stringent reliability requirements might not be well-served by the capability.
-  - The built-in multiregion support only works for subset of the functionality of the service, which means customers needing regional resiliency for the other capabilities might need to use another solution as well.
+  - The built-in multiregion support only works for a subset of the functionality of the service, which means customers needing regional resiliency for the other capabilities might need to use another solution as well.
 
 You can provide multiple approaches if required.
 
@@ -1052,9 +1052,9 @@ If you have any approaches documented in the Azure Architecture Center, summariz
 
 ### Backup and restore
 
-This is a required section.
+This section is required.
 
-- **For services that store customer data**, describe any backup features the service provides. Clearly explain whether they are fully managed by Microsoft, or if customers have any control over backups. Explain where backups are stored and how they can be recovered. Note whether the backups are only accessible within the region or if they're accessible across regions, such as after a region failure.
+- **For services that store customer data**, describe any backup features the service provides. Clearly explain whether Microsoft fully manages the backups or if customers have any control over them. Explain where backups are stored and how customers can recover them. Note whether the backups are only accessible within the region or if they're accessible across regions, such as after a region failure.
 
   We recommend (but don't require) adding the following include file, which adds an explanation about the role of backups:
 
@@ -1072,7 +1072,7 @@ This is a required section.
 
 ### Resilience to service maintenance
 
-This is a required section. Describe how the service maintains reliability during maintenance operations.
+This section is required. Describe how the service maintains reliability during maintenance operations.
 
 If the service has no special requirements for customers to maintain reliability during service maintenance, the section only needs to contain the include file:
 
