@@ -136,7 +136,7 @@ You don't see or manage the gateway VMs directly. The platform automatically man
 
 ::: zone pivot="expressroute"
 
-You configure the gateway SKU. Each SKU supports a different level of throughput and a different number of circuits. When you use the ErGwScale SKU (preview), ExpressRoute automatically scales the gateway by adding more gateway VMs. For more information, see [ExpressRoute virtual network gateways](/azure/expressroute/expressroute-about-virtual-network-gateways).
+You configure the gateway SKU. Each SKU supports a different level of throughput and a different number of circuits. When you use the ErGwScale SKU, ExpressRoute automatically scales the gateway by adding more gateway VMs. For more information, see [ExpressRoute virtual network gateways](/azure/expressroute/expressroute-about-virtual-network-gateways).
 
 A gateway runs in *active-active* mode by default, which supports high availability of your circuit. You can optionally switch to *active-passive* mode, but this configuration increases the risk of a failure affecting your connectivity. For more information, see [Active-active connections](/azure/expressroute/designing-for-high-availability-with-expressroute#active-active-connections).
 
@@ -248,7 +248,7 @@ When you use a [supported SKU](#requirements), newly created gateways are automa
     | ErGw1Az | Yes |
     | ErGw2Az | Yes |
     | ErGw3Az | Yes |
-    | ErGwScale (Preview) | Yes |
+    | ErGwScale | Yes |
 
 ::: zone-end
 
