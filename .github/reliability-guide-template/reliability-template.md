@@ -75,7 +75,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 ## Resilience to region-wide failures
 
-### Multi-region support type 1
+### Multiregion support type 1
 
 #### Requirements
 
@@ -85,13 +85,13 @@ This section describes what to expect when you configure a [resource name] for [
 
 #### Cost
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 #### Capacity planning and management
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when you configure a [resource name] for [multi-region support type], and all regions are operational.
+This section describes what to expect when you configure a [resource name] for [multiregion support type], and all regions are operational.
 
 - **Cross-region operation:**
 
@@ -99,7 +99,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 #### Behavior during a region failure
 
-This section describes what to expect when you configure a [resource name] for [multi-region support type], and there's an outage in one of the replica regions.
+This section describes what to expect when you configure a [resource name] for [multiregion support type], and there's an outage in one of the replica regions.
 
 - **Detection and response:**
 
@@ -117,7 +117,7 @@ This section describes what to expect when you configure a [resource name] for [
 
 #### Test for region failures
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 ## Backup and restore
 
