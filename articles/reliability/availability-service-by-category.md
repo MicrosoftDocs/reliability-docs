@@ -173,6 +173,7 @@ Azure services are presented in the following lists by category. Note that some 
    - NVv3-series
    - NVv4-series
    - SAP HANA on Azure Large Instances
+- Azure Virtual Network Manager
 - Azure VMware Solution
 - Azure Web PubSub
 - Durable Task Scheduler

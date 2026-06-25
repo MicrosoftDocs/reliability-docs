@@ -356,6 +356,13 @@ productDirectory:
       azureCategories:
         - networking
     # Card
+    - title: Azure Virtual Network Manager
+      summary: Centrally manage connectivity, routing, and security across large virtual network estates
+      imageSrc: /azure/media/index/virtual-network-manager.svg
+      url: reliability-virtual-network-manager.md
+      azureCategories:
+        - networking
+    # Card
     - title: Azure Service Bus
       summary: Reliable cloud messaging as a service (MaaS) and simple hybrid integration
       imageSrc: https://static.docs.com/ui/media/product/azure/service-bus.svg

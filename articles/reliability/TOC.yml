@@ -194,6 +194,8 @@ items:
       href: reliability-traffic-manager.md
     - name: Azure Virtual Network
       href: reliability-virtual-network.md
+    - name: Azure Virtual Network Manager
+      href: reliability-virtual-network-manager.md
     - name: Azure Virtual WAN
       items:
       - name: Availability zones
