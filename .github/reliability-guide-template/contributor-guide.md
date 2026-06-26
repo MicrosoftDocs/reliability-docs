@@ -21,7 +21,7 @@ This guide helps you:
 
 ## What is this pattern?
 
-*Reliability* guides provide the customer with information about how a product works from a platform reliability perspective. The concept of reliability includes such topics as availability zone support, multi-region deployments, outage scenarios, backups, service maintenance, proactive preparation for disasters, and testing for different kinds of outages.
+*Reliability* guides provide the customer with information about how a product works from a platform reliability perspective. The concept of reliability includes such topics as availability zone support, multiregion deployments, outage scenarios, backups, service maintenance, proactive preparation for disasters, and testing for different kinds of outages.
 
 Portions of this document can link to other documents, such as articles that provide guidance about availability zone migration. But we recommend that you keep all reliability information inside one document. If a section becomes too large and difficult to include, you can move that information into a new document and provide a link to it from an appropriate section.
 
@@ -61,7 +61,7 @@ Use this pattern to inform the customer about:
 | [Reliability in Azure Bastion](/azure/reliability/reliability-bastion) |  The article meets all template requirements and it's a good example of a basic service guide. The service supports zone-redundant and zonal deployments with customer-selected zones, and is a single-region service.  |
 | [Reliability in Azure App Service](/azure/reliability/reliability-app-service) | The article meets all template requirements. The service supports zone-redundant deployments with Microsoft-selected zones, and is a single-region service. |
 | [Reliability in Azure Kubernetes Service (AKS)](/azure/reliability/reliability-aks) | The article meets all template requirements. The service supports zone-redundant and zonal deployments at different layers, and is a single-region service. |
-| [Reliability in Azure API Management](/azure/reliability/reliability-api-management) | This article meets all template requirements and it's a good example of a complex service guide. The service supports multiple types of availability zone support, and it's a multi-region service that has Microsoft-managed multi-region support. |
+| [Reliability in Azure API Management](/azure/reliability/reliability-api-management) | This article meets all template requirements and it's a good example of a complex service guide. The service supports multiple types of availability zone support, and it's a multiregion service that has Microsoft-managed multiregion support. |
 
 ## Summary of how to use this pattern
 
@@ -80,8 +80,8 @@ Here's a quick summary of all pattern elements:
 > - Include an H2 section that discusses [resilience to transient faults](#resilience-to-transient-faults).
 > - Include an H2 section that discusses [resilience to availability zone failures](#resilience-to-availability-zone-failures).
 > - Include an H2 section that discusses [resilience to region-wide failures](#resilience-to-region-wide-failures).
-> - (Optional) Include an H2 section for [backup and restore](#backup-and-restore) if your service supports backups.
-> - (Optional) Include an H2 section for [resilience to service maintenance](#resilience-to-service-maintenance) if your service has special maintenance requirements.
+> - Include an H2 section for [backup and restore](#backup-and-restore).
+> - Include an H2 section for [resilience to service maintenance](#resilience-to-service-maintenance).
 > - Include an H2 section for [service-level agreement](#service-level-agreement).
 > - Include a [related content](#related-content) section with a list of links to articles or actions to take.
 
@@ -108,16 +108,10 @@ To promote consistency, start with a template:
 - Set the value for `ms.custom` to be `subject-reliability`.
 - Set the `description` metadata to summarize what the article covers. List only the H2 sections that are actually included in your article. Use this format:
 
-  **Example (article with all optional sections):**
+  **Example:**
 
   ```yaml
   description: Learn how to make [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
-  ```
-
-  **Example (article without backup/restore and service maintenance sections):**
-
-  ```yaml
-  description: Learn how to make [service-name] resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages.
   ```
 
 ### H1 (headline) and introduction
@@ -284,14 +278,32 @@ This is a key section. It describes how the service works with Azure's availabil
 
    - **Zone redundancy**, which automatically spreads resources across multiple zones.
 
-      For zone-redundant services, ensure the following information is clear:
-      - Who picks the zones (the customer or Microsoft)
-      - How many zones the resource uses (all zones in region, a specific number of zones, or a minimum number of zones)
+      For zone-redundant services, you must explicitly state:
+      - **Who selects the zones**: Is it Microsoft (the customer has no choice) or the customer (who picks which zones to use)?
+      - **How many zones**: Does the resource use all available zones in the region, a minimum number (usually at least two), a fixed number (such as three), or a customer-specified number?
 
-      **Example:**
+      **Example (Microsoft selects all zones):**
 
         ```markdown
-        \[service-name\] can be configured to be *zone redundant*, which means your resources are spread across all of the availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
+        \[service-name\] can be configured to be *zone redundant*. When you enable zone redundancy, Microsoft automatically spreads your resources across all of the availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
+        ```
+
+      **Example (Microsoft selects a minimum number of zones):**
+
+        ```markdown
+        \[service-name\] can be configured to be *zone redundant*. When you enable zone redundancy, Microsoft automatically distributes your resources across multiple availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
+        ```
+
+      **Example (Microsoft selects a fixed number of zones):**
+
+        ```markdown
+        \[service-name\] can be configured to be *zone redundant*. When you enable zone redundancy, Microsoft automatically distributes your resources across three availability zones in the region. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
+        ```
+
+      **Example (customer selects zones):**
+
+        ```markdown
+        \[service-name\] can be configured to be *zone redundant*. When you enable zone redundancy, you choose which availability zones to use. Your resources are then spread across those zones. Zone redundancy helps you achieve resiliency and reliability for your production workloads.
         ```
 
    - **Zonal**, in which the customer picks a single zone to use.
@@ -475,7 +487,9 @@ Provide links to documentation that shows customers how to work with availabilit
 
 #### Capacity planning and management
 
-*Optional section*: Include this section if there's a risk that a zone failover can cause resource in the healthy zones to become overloaded, which could then cause problems for the customer's workload.
+*Optional section*: Include this section only for services where customers directly configure capacity by purchasing instances, nodes, or abstract capacity units (such as throughput units or processing units). Don't include this section for fully managed services where Microsoft controls all capacity decisions.
+
+Include this section if a zone failover can cause resources in the healthy zones to become overloaded, which could then cause problems for the customer's workload.
 
 **Include:**
 - How zone failures affect capacity in surviving zones
@@ -712,17 +726,17 @@ Explain how customers can test their resilience to zone failures.
 
 ### Resilience to region-wide failures
 
-This section describes any *native* multi-region capabilities the service might have, such as Microsoft-managed geo-replication and failover. It also contains a subsection that describes approaches or architectural patterns for creating custom multi-region solutions, which are referred to as *custom multi-region solutions for resiliency*.
+This section describes any *native* multiregion capabilities the service might have, such as Microsoft-managed geo-replication and failover. It also contains a subsection that describes approaches or architectural patterns for creating custom multiregion solutions, which are referred to as *custom multiregion solutions for resiliency*.
 
-**Organizing multi-region features:** The organization of this section is important for consistency and tooling support.
+**Organizing multiregion features:** The organization of this section is important for consistency and tooling support.
 
-- *If the service offers any multi-region capabilities that are relevant for reliability*, such as cross-region replication, create an H3 with the name of that capability. Provide the complete set of H4 subsections (Requirements, Considerations, Cost, Configure multi-region support, etc.) under the H3 heading.
-- *If the service offers multiple distinct multi-region capabilities*, such as geo-replication and cross-region read replicas, create an H3 heading for each solution and add the H4 subsections into each.
-- *For all service*, then add an H3 called *Custom multi-region solutions for resiliency*. This section doesn't need to follow the subsection structure.
+- *If the service offers any multiregion capabilities that are relevant for reliability*, such as cross-region replication, create an H3 with the name of that capability. Provide the complete set of H4 subsections (Requirements, Considerations, Cost, Configure multiregion support, and so on) under the H3 heading.
+- *If the service offers multiple distinct multiregion capabilities*, such as geo-replication and cross-region read replicas, create an H3 heading for each solution and add the H4 subsections into each.
+- *For all services*, add an H3 called *Custom multiregion solutions for resiliency*. This section doesn't need to follow the subsection structure.
 
 **Introductory paragraph:**
 
-- *Single-region services:* Most Azure services have no native multi-region support at all. Customers can manually deploy separate resources into multiple regions, but they would have to handle replication, traffic distribution, failover, etc., which is described in the *custom multi-region solutions for resiliency* section.
+- *Single-region services:* Most Azure services have no native multiregion support at all. Customers can manually deploy separate resources into multiple regions, but they must handle replication, traffic distribution, failover, and other challenges. The *custom multiregion solutions for resiliency* section describes these challenges.
 
   For single-region services, introduce this H2 section with something like this:
 
@@ -731,7 +745,7 @@ This section describes any *native* multi-region capabilities the service might 
   ```markdown
   ## Resilience to region-wide failures
 
-  \[service-name\] is a single-region service. If the region becomes unavailable, your \[service-name\] resource is also unavailable. However, you can deploy separate resources into multiple regions and it is your responsibility to manage replication, traffic distribution, failover, etc. For more information on how to deploy across multiple regions, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+  \[service-name\] is a single-region service. If the region becomes unavailable, your \[service-name\] resource is also unavailable. However, you can deploy separate resources into multiple regions and it is your responsibility to manage replication, traffic distribution, failover, etc. For more information on how to deploy across multiple regions, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
   ```
 
 - *Single-region services that provide failover to a paired region:* These services are deployed into a single region (the *home* region). However, when they are deployed into a home region that has a paired region, Microsoft replicates configuration and data to the paired region. Services might only replicate certain types of data.
@@ -754,7 +768,7 @@ This section describes any *native* multi-region capabilities the service might 
         > \[!IMPORTANT]
         > If your resources are in a region that's paired, you can choose to let Microsoft replicate configuration and data to the paired region. In the event of a region outage, Microsoft may perform a failover to the paired region. However, Microsoft is unlikely to initiate failover except after a significant delay and is done on a best-effort basis. Failover of \[service-name\] resources might happen at a different time to any failover of other Azure services. This process is a default option and requires no intervention from you.
         >
-        > If the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency] to plan for and initiate your failovers.
+        > If the default replication and failover behavior doesn't meet your needs, you can use [custom multiregion solutions for resiliency] to plan for and initiate your failovers.
         ```
 
       Notice that we include some of the information in an IMPORTANT box, because Microsoft-managed failover is often misunderstood and customers make incorrect assumptions based on how they think the capability should work.
@@ -777,10 +791,10 @@ This section describes any *native* multi-region capabilities the service might 
 
           If resources are in a *nonpaired region*, Microsoft doesn’t replicate configuration and data across regions, and there’s no built-in cross-region failover. However, you can deploy separate resources into  multiple regions and it is your responsibility to manage replication, traffic distribution, failover, etc.
 
-          If you use a nonpaired region, or the default replication and failover behavior doesn't meet your needs, you can use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate regional failover.
+          If you use a nonpaired region, or the default replication and failover behavior doesn't meet your needs, you can use [custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency) to plan for and initiate regional failover.
         ```
 
-- *Multi-region support*: These services are deployed to a single region (the *home region*), which is where the configuration and metadata of the service is located. However, a customer can explicitly replicate some parts of the service or its data into an arbitrary number of other regions, regardless of the region's pairing status.
+- *Multiregion support*: These services are deployed to a single region (the *home region*), which is where the configuration and metadata of the service is located. However, a customer can explicitly replicate some parts of the service or its data into an arbitrary number of other regions, regardless of the region's pairing status.
 
     If there's a region outage in the home region, the parts of the service that are geo-replicated should continue to work. However, some other aspects of the service might have problems. For example, a customer might not be able to reconfigure the resource because the metadata can't be updated in the faulty region. Different services handle this differently.
 
@@ -791,10 +805,10 @@ This section describes any *native* multi-region capabilities the service might 
     ```markdown
     ## Resilience to region-wide failures
 
-    \[service-name\] can be configured to use multiple Azure regions. When you configure multi-region support, you choose the primary region, and \[service-name\] automatically replicates changes in your data to each selected secondary region.
+    \[service-name\] can be configured to use multiple Azure regions. When you configure multiregion support, you choose the primary region, and \[service-name\] automatically replicates changes in your data to each selected secondary region.
     ```
 
-The H4 sections below mirror the sections for availability zones, but have a slightly different focus for multi-region capabilities.
+The H4 sections below mirror the sections for availability zones, but have a slightly different focus for multiregion capabilities.
 
 #### Requirements
 
@@ -804,56 +818,58 @@ List any requirements that must be met to use multiple regions with this service
 
   ```markdown
   - You can select any Azure region for your secondary instances.
-  - You must use the Premium tier to enable multi-region support.
+  - You must use the Premium tier to enable multiregion support.
   ```
 
 #### Considerations
 
 Describe any workflows or scenarios that aren't supported, as well as any gotchas. For example, some services replicate only parts of the solution across regions.
 
-Include information about any expected downtime or effects if you enable multi-region support after deployment. Provide links to any relevant information.
+Include information about any expected downtime or effects if you enable multiregion support after deployment. Provide links to any relevant information.
 
 **Example:**
 
   ```markdown
-  When you enable multi-region support, component Z is replicated across regions, but other components aren't replicated. After a region failover, your resource continues to work, but feature A might be unavailable until the region recovers and full service is restored.
+  When you enable multiregion support, component Z is replicated across regions, but other components aren't replicated. After a region failover, your resource continues to work, but feature A might be unavailable until the region recovers and full service is restored.
   ```
 
 #### Cost
 
-Give an idea of what this does to the customer's billing meters. For example, is there an additional charge for enabling multi-region support? Do they need to deploy additional instances of the service in each region?
+Give an idea of what this change does to the customer's billing meters. For example, is there an extra charge for enabling multiregion support? Do they need to deploy extra instances of the service in each region?
 
 Don't specify prices. Link to the Azure pricing information if needed.
 
 **Example:**
 
   ```markdown
-  When you enable multi-region support, you're billed for each region that you select. For more information, see [Service pricing information].
+  When you enable multiregion support, you're billed for each region that you select. For more information, see [Service pricing information].
   ```
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 In this section, link to deployment guidance. If you don't have the required document, you'll need to create one.
 
 DO NOT provide detailed how-to guidance in this article.
 
-Provide links to documents that show how to create a resource or instance with multi-region support. Ideally, the documents should contain examples using the Azure portal, Azure CLI, Azure PowerShell, and Bicep.
+Provide links to documents that show how to create a resource or instance with multiregion support. Ideally, the documents should contain examples using the Azure portal, Azure CLI, Azure PowerShell, and Bicep.
 
 **Example:**
 
   ```markdown
-  To deploy a new multi-region \[service-name\] resource, see [Create an \[service-name\] resource with multi-region support].
+  To deploy a new multiregion \[service-name\] resource, see [Create an \[service-name\] resource with multiregion support].
 
-  To enable multi-region support for an existing \[service-name\] resource, see [Enable multi-region support in an \[service-name\] resource].
+  To enable multiregion support for an existing \[service-name\] resource, see [Enable multiregion support in an \[service-name\] resource].
   ```
 
-If your service does NOT support enabling multi-region support after deployment, add an explicit statement to indicate that.
+If your service does NOT support enabling multiregion support after deployment, add an explicit statement to indicate that.
 
-If your service supports disabling multi-region support, provide links to the relevant how-to guides for that scenario.
+If your service supports disabling multiregion support, provide links to the relevant how-to guides for that scenario.
 
 #### Capacity planning and management
 
-*Optional section.* In some services, a region failover can cause instances in the surviving regions to become overloaded with requests. If that's a risk for your service's customers, explain that here, and whether they can mitigate that risk by overprovisioning capacity.
+*Optional section*: Include this section only for services where customers directly configure capacity by purchasing instances, nodes, or abstract capacity units (such as throughput units or processing units). Don't include this section for fully managed services where Microsoft controls all capacity decisions.
+
+Include this section if a region failover can cause instances in the healthy regions to become overloaded with requests. If that's a risk for your service's customers, explain that risk and whether they can mitigate it by overprovisioning capacity.
 
 ### Behavior when all regions are healthy
 
@@ -868,7 +884,7 @@ Add information about normal operations. Break the content down into two bullets
     **Example:**
 
     ```markdown
-    - **Cross-region operation:** When you configure multi-region support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
+    - **Cross-region operation:** When you configure multiregion support, all requests are routed to an instance in the primary region. The secondary regions are used only in the event of a failover.
     ```
 
 - **Cross-region data replication:** Only required for services that perform data replication across regions.
@@ -900,7 +916,7 @@ Explain what happens when a region is down. Be precise and clear. Avoid ambiguit
 
 - **Detection and response.** Explain who is responsible for detecting that a region is down and for responding, such as by initiating a region failover. Whether your service has customer-managed failover or the service manages it itself, describe it here.
 
-  If your multi-region support depends on another service, commonly Azure Storage, detecting and failing over, explicitly state that, and link to the relevant Reliability guide to understand the conditions under which that happens. Be careful with talking about GRS because that doesn't apply in nonpaired regions, so explain how things work in that case.
+  If your multiregion support depends on another service, commonly Azure Storage, detecting and failing over, explicitly state that, and link to the relevant Reliability guide to understand the conditions under which that happens. Be careful with talking about GRS because that doesn't apply in nonpaired regions, so explain how things work in that case.
 
   *For customer initiated detection:*
 
@@ -996,25 +1012,25 @@ Can you trigger a fault to simulate a region failure, such as by using Azure Cha
 You can simulate a region failure by using Azure Chaos Studio. Inject the XXX fault to simulate the loss of an entire region. Regularly test your responses to region failures so that you can be ready for unexpected region outages.
 ```
 
-For Microsoft-managed multi-region services, is there a way for the customer to test a region failover? If that's not possible, use wording like this:
+For Microsoft-managed multiregion services, is there a way for the customer to test a region failover? If that's not possible, use wording like this:
 
 **Example:**
 
 ```markdown
-The Azure \[service-name\] platform manages traffic routing, failover, and region recovery for multi-region X resources. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate region failure processes.
+The Azure \[service-name\] platform manages traffic routing, failover, and region recovery for multiregion X resources. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate region failure processes.
 ```
 
-#### Custom multi-region solutions for resiliency
+#### Custom multiregion solutions for resiliency
 
-*Optional but strongly recommended section:* Describes how a customer might approach deploying independent instances of the service into different regions and coordinating replication, failover, etc. It needs to be clear that the customer is the one who is managing the whole process, and that there are no built-in multi-region features being used.
+*Optional but strongly recommended section:* Describes how a customer might approach deploying independent instances of the service into different regions and coordinating replication, failover, and other tasks. It needs to be clear that the customer is managing the whole process, and that there are no built-in multiregion features being used.
 
 Consider adding this section if any of these applies to the service:
 
-- The service does NOT have built-in multi-region support.
-- The service provides built-in multi-region support, but:
+- The service does NOT have built-in multiregion support.
+- The service provides built-in multiregion support, but:
   - That support relies on paired regions, which means customers in nonpaired regions can't use it.
   - The service provides Microsoft-managed replication and failover, but Microsoft decides when to fail over, which means customers with strict failover policies or stringent reliability requirements might not be well-served by the capability.
-  - The built-in multi-region support only works for subset of the functionality of the service, which means customers needing regional resiliency for the other capabilities might need to use another solution as well.
+  - The built-in multiregion support only works for a subset of the functionality of the service, which means customers needing regional resiliency for the other capabilities might need to use another solution as well.
 
 You can provide multiple approaches if required.
 
@@ -1025,32 +1041,40 @@ If you have any approaches documented in the Azure Architecture Center, summariz
 **Example:**
 
   ```markdown
-  If you need to use \[service-name\] in multiple regions, you need to deploy separate resources in each region. If you create an identical deployment in a secondary Azure region using a multi-region geography architecture, your application becomes less susceptible to a single-region disaster. When you follow this approach, you need to configure load balancing and failover policies. You also need to replicate your data across the regions so that you can recover your last application state.
+  If you need to use \[service-name\] in multiple regions, you need to deploy separate resources in each region. If you create an identical deployment in a secondary Azure region using a multiregion geography architecture, your application becomes less susceptible to a single-region disaster. When you follow this approach, you need to configure load balancing and failover policies. You also need to replicate your data across the regions so that you can recover your last application state.
 
   For example approaches that illustrates this architecture, see:
 
-  - [Multi-region load balancing with Traffic Manager, Azure Firewall, and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway)
-  - [Highly available multi-region web application](/azure/architecture/web-apps/app-service/architectures/multi-region)
-  - [Deploy Azure Spring Apps to multiple regions](/azure/architecture/web-apps/spring-apps/architectures/spring-apps-multi-region)
+  - [Multiregion load balancing with Traffic Manager, Azure Firewall, and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway)
+  - [Highly available multiregion web application](/azure/architecture/web-apps/app-service/architectures/multiregion)
+  - [Deploy Azure Spring Apps to multiple regions](/azure/architecture/web-apps/spring-apps/architectures/spring-apps-multiregion)
   ```
 
 ### Backup and restore
 
-Required only if the service provides backup capabilities or similar functionality (like exporting data).
+This section is required.
 
-Describe any backup features the service provides. Clearly explain whether they are fully managed by Microsoft, or if customers have any control over backups. Explain where backups are stored and how they can be recovered. Note whether the backups are only accessible within the region or if they're accessible across regions, such as after a region failure.
+- **For services that store customer data**, describe any backup features the service provides. Clearly explain whether Microsoft fully manages the backups or if customers have any control over them. Explain where backups are stored and how customers can recover them. Note whether the backups are only accessible within the region or if they're accessible across regions, such as after a region failure.
 
-We recommend adding the following include file, which adds an explanation about the role of backups:
+  We recommend (but don't require) adding the following include file, which adds an explanation about the role of backups:
 
-```markdown
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
-```
+  ```markdown
+  [!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+  ```
+
+- **For services that don't store customer data**, explain how customers can back up and restore their configuration, such as by using Infrastructure as Code (IaC) templates. For example:
+
+  ```markdown
+  ## Backup and restore
+
+  \[service-name\] doesn't store customer data. To ensure that you can restore your configuration after an outage or accidental deletion, define and store your \[service-name\] configuration in infrastructure as code (IaC) templates, such as Bicep or Terraform. Store those templates in source control so that you can redeploy your configuration at any time.
+  ```
 
 ### Resilience to service maintenance
 
-Describe how the service maintains reliability during maintenance operations.
+This section is required. Describe how the service maintains reliability during maintenance operations.
 
-If the service has no special requirements for customers to maintain reliability during service maintenance, the section only contains am include file:
+If the service has no special requirements for customers to maintain reliability during service maintenance, the section only needs to contain the include file:
 
   **Example:**
 
