@@ -73,3 +73,4 @@ For regulated workloads, Customer Lockbox helps ensure Microsoft support enginee
 - [Azure Key Vault Managed HSM overview](/azure/key-vault/managed-hsm/overview)
 - [Customer Lockbox for Microsoft Azure](/azure/security/fundamentals/customer-lockbox-overview)
 - [Azure Backup overview](/azure/backup/backup-overview)
+- [Data residency in Azure](https://azure.microsoft.com/explore/global-infrastructure/data-residency/).
