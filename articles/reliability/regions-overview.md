@@ -2,11 +2,12 @@
 title: What are Azure regions?
 description: Learn about Azure regions, and how to use them to design resilient solutions.
 author: glynnniall
+ms.author: pnp
 ms.service: azure
 ms.subservice: azure-reliability
 ms.topic: concept-article
-ms.date: 07/03/2025
-ms.author: pnp
+ms.date: 06/26/2026
+ms.update-cycle: 1095-days
 ms.custom: subject-reliability, ai-video-concept
 ---
 
@@ -22,12 +23,17 @@ Regions provide certain types of resiliency options. Many regions provide [avail
 
 An Azure region consists of one or more datacenters, connected by a high-capacity, fault-tolerant, low-latency network connection. Azure datacenters are typically located within a large metropolitan area.
 
-![Image depicting high availability via asynchronous replication of applications and data across other Azure regions for disaster recovery protection.](./media/cross-region-replication.png)
+:::image type="complex" source="./media/regions-overview/regions.svg" border="false" lightbox="./media/regions-overview/regions.svg" alt-text="Diagram that shows a geography with two Azure regions, each with three availability zones, and connectivity between all zones and regions.":::
+   The diagram is titled Azure geography and shows two large, side-by-side boxes, each representing an Azure region. Inside each region are three availability zones: Availability zone 1 and Availability zone 2 near the top, and Availability zone 3 below them. Each zone contains a smaller panel labeled One or more datacenters. In both regions, short connector lines link zone 1 and zone 2 to zone 3, and text below the top zones says Diverse fiber paths connecting availability zones.
+
+    Between the two regions, a dashed horizontal line runs from the right edge of the left region to the left edge of the right region. Above this line, centered text reads Inter-region networking through the Azure global network. The layout emphasizes two levels of connectivity: local zone-to-zone connectivity inside each region and cross-region connectivity through the global network path in the middle.
+:::image-end:::
 
 Every region is contained within a single *geography* that serves as a fixed data residency boundary. If you have data residency requirements, it's important that you select regions within the required geography. Each geography has at least one region equipped with availability zones. For a list of all Azure geographies, see [Azure geographies](https://azure.microsoft.com/explore/global-infrastructure/geographies).
 
 > [!NOTE]
-> Most regions are available to all Azure customers. However, some regions belong to *sovereign cloud* geographies, which are available to some customers in specific geographic areas with stringent data residency regulations. Sovereign cloud regions work the same way as other regions, however they're often limited in the services and features of services that they provide. For more examples of limited service availability in sovereign cloud regions, see [Compare Azure Government and global Azure](/azure/azure-government/compare-azure-government-global-azure)) or [Availability of services for Microsoft Azure operated by 21Vianet](/azure/reliability/sovereign-cloud-china).
+> Most regions are available to all Azure customers. However, some regions belong to *sovereign cloud* geographies. Customers in specific geographic areas with stringent data residency regulations can access these regions. Sovereign cloud regions work the same way as other regions, but they often have limited services and features. For more examples of limited service availability in sovereign cloud regions, see [Compare Azure Government and global Azure](/azure/azure-government/compare-azure-government-global-azure) or [Service availability and roadmaps for Microsoft Azure operated by 21Vianet](/azure/china/concepts-service-availability).
+
 
 ## List of regions
 
@@ -49,7 +55,7 @@ For more detailed information on how to select regions, see [Select Azure region
 
 While all Azure regions provide high-quality services such as data residency and latency optimization, they can differ in the types of resiliency options they support.
 
-This section summarizes the two resiliency options that may or may not be available in the regions you choose.
+This section summarizes two resiliency options that might be available in the regions you choose.
 
 ### Availability zones
 
@@ -59,7 +65,7 @@ To learn more about availability zones, see [What are availability zones?](./ava
 
 ### Paired and nonpaired regions
 
-Some Azure regions are *paired* with another Azure region in order to form *region pairs*. Region pairs are selected by Microsoft and can't be chosen by the customer. There are some Azure services that use region pairs to support geo-replication and geo-redundancy. Some also use region pairs to support aspects of disaster recovery, in the unlikely event that a region experiences a catastrophic and unrecoverable failure.
+Microsoft pairs some Azure regions with another Azure region to form *region pairs*. You can't choose your own pairs. Some Azure services use region pairs to support geo-replication and geo-redundancy. Some also use region pairs to support aspects of disaster recovery, in the unlikely event that a region experiences a catastrophic and unrecoverable failure.
 
 Many newer regions aren't paired, and instead use availability zones as their primary means of redundancy. Many Azure services support geo-redundancy whether the regions are paired or not, and you can design a highly resilient solution whether you use paired regions, nonpaired regions, or a combination of both.
 
@@ -67,7 +73,7 @@ To learn more about paired and nonpaired regions and how to use them, see [Azure
 
 ## Using multiple Azure regions
 
-It's common to use multiple Azure regions, paired or nonpaired, when you design a solution. By using multiple regions, you can increase workload resilience to many types of failures, and you have many options for disaster recovery. Also, some Azure services are available in specific regions, so by designing a multiregion solution you can take advantage of the global and distributed nature of the cloud.
+It's common to use multiple Azure regions, whether they're paired or nonpaired, when you design a solution. By using multiple regions, you can increase workload resilience to many types of failures, and you have many options for disaster recovery. Also, some Azure services are available in specific regions, so by designing a multiregion solution you can take advantage of the global and distributed nature of the cloud.
 
 Some Azure services provide built-in capabilities for cross-region replication and failover. Others might require that you design and implement your own multiregion approaches. For a list of service multiregion capabilities, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
 
@@ -77,17 +83,15 @@ If you're using multiple regions together, you need to consider tradeoffs betwee
 
 - **Latency:** When you select physically isolated regions, the latency of network connections between those regions increases. Latency can affect how you design a multiregion solution, and it can restrict the types of geo-replication and geo-redundancy you can use. To learn more about latency between Azure regions, see [Azure network round-trip latency statistics](/azure/networking/azure-network-latency). For more information about how to select regions, see [Recommendations for using availability zones and regions](/azure/well-architected/reliability/regions-availability-zones).
 
-- **Data residency:** Ensure that any regions you select are within a data residency boundary that your organization requires.
+- **Data residency:** Ensure that any regions you select are within a data residency boundary that your organization requires. For more information, see [Reliability and sovereignty in Azure](./concept-reliability-sovereignty.md).
 
 ## Nonregional services
 
-Most Azure services are deployed to a specific region. However, there are some services that aren't tied to a single Azure region. It's important to recognize how *nonregional* services operate in the case of a regional failure, and to take them into account when you design your solutions and business continuity plan.
+You deploy instances of most Azure services to a specific region. However, some services aren't tied to a single Azure region. It's important to recognize how *nonregional* services operate in the case of a regional failure, and to take them into account when you design your solutions and business continuity plan. Microsoft deploys nonregional services across two or more regions. If there's a regional failure, the instance of the service in a healthy region can continue servicing requests.
 
-Microsoft deploys nonregional services across two or more regions. If there's a regional failure, the instance of the service in a healthy region can continue servicing requests. For a list of nonregional services, see [Azure nonregional services](./regions-nonregional-services.md).
+Some nonregional services allow you to specify a region or geography in which your data is stored. For example, with [Microsoft Entra ID](https://www.microsoft.com/security/business/identity-access/microsoft-entra-id/), you can select the geographic area for your data, such as Europe or North America. Some nonregional services also support you specifying the region where certain components are deployed to, such as which region [Azure Virtual Desktop](https://azure.microsoft.com/products/virtual-desktop/) VMs are to reside.
 
-Some Azure services allow you to specify a region or geography in which your data is stored. For example, with [Microsoft Entra ID](https://www.microsoft.com/security/business/identity-access/microsoft-entra-id/), you can select the geographic area for your data, such as Europe or North America. For more information about data residency, see [Data residency in Azure](https://azure.microsoft.com/explore/global-infrastructure/data-residency/).
-
-With some nonregional services you can specify the region where certain components are deployed. For example, you can choose which region [Azure Virtual Desktop](https://azure.microsoft.com/products/virtual-desktop/) VMs are to reside.
+For more information, and a list of nonregional services, see [Azure nonregional services](./regions-nonregional-services.md).
 
 ## Related resources
 
