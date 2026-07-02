@@ -62,8 +62,7 @@ There are several main types of content in this repository:
 These are structured documents that describe the reliability features of specific Azure services.
 
 - **Filename pattern:** `reliability-{service-name}.md` files in the `articles/` folder. For example, `reliability-storage-blob.md`.
-- They follow the template defined in #file:./reliability-guide-template/reliability-template.md
-- When drafting these files, they follow the instructions defined in #file:./reliability-guide-template/contributor-guide.md
+- They follow the template defined in the reliability guide template, and the instructions defined in the contributor guide. These files aren't in this repo - ask the user if you need them. They might be in a different repo in the Visual Studio Code workspace that's open.
 - Note that some older reliability guides don't follow the current template, and don't meet the current quality bar. These are being progressively updated, but if you are asked to update or create a reliability guide, prefer the template-based guides and use the template for guidance on content and structure.
 
 #### Platform reliability documentation
@@ -149,16 +148,3 @@ Follow these formatting conventions:
 - **Italics for introducing terms.** When introducing a term for the first time, use *italics* (for example, *workspace*). Don't use bold for term introductions.
 - **Bold for labels in structured lists.** Use bold for labels at the beginning of list items (for example, "**Region support:**"). Don't use bold for inline references to tools, APIs, or features.
 - **Official service names.** Use official Azure service names throughout the document. For example, use "Azure Database for PostgreSQL" rather than informal names. Refer to the [Microsoft Product Style Guide](https://aka.ms/MPSG) for correct naming conventions.
-
-## Flagging facts for product group review
-
-When drafting a reliability guide, you might include facts or technical details that need to be verified by the product group (PG). Use a `> [!WARNING]` block with a "**Note to PG:**" prefix to flag these items for review. Remove these warning blocks before publication.
-
-**Example:**
-
-```markdown
-> [!WARNING]
-> **Note to PG:** Please verify whether synchronous replication is used between zones, and confirm the expected failover time.
-```
-
-Also flag any disclosed implementation details that might need PG approval before publication.
