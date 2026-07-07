@@ -47,6 +47,7 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="https://static.docs.com/ui/media/product/azure/app-service.svg" alt="Azure App Service - App Service Environment" width="24" /> Azure App Service - App Service Environment| [Reliability in App Service Environment](reliability-app-service-environment.md)||
 | <img src="/azure/media/index/application-gateway-containers.svg" alt="Azure Application Gateway for Containers" width="24" /> Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md )    ||
 | <img src="https://static.docs.com/ui/media/product/azure/application-gateway.svg" alt="Azure Application Gateway v2" width="24" /> Azure Application Gateway v2|[Reliability in Azure Application Gateway](./reliability-application-gateway-v2.md)||
+| <img src="/azure/media/index/automation.svg" alt="Azure Application Automation" width="24" /> Azure Automation|[Reliability in Azure Automation](./reliability-automation.md)||
 | <img src="/azure/media/index/recovery-services-vaults.svg" alt="Azure Backup" width="24" /> Azure Backup| [Reliability in Backup](reliability-backup.md)||
 | <img src="/azure/media/index/bastion.svg" alt="Azure Bastion" width="24" /> Azure Bastion| [Reliability in Azure Bastion](reliability-bastion.md)||
 | <img src="/azure/media/index/batch-accounts.svg" alt="Azure Batch" width="24" /> Azure Batch| [Reliability in Batch](reliability-batch.md)||

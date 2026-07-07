@@ -676,6 +676,13 @@ productDirectory:
       azureCategories:
         - web
         - integration
+    # Card
+    - title: Azure Automation
+      summary: Simplify cloud management with process automation
+      imageSrc: /azure/media/index/automation.svg
+      azureCategories:
+        - management-and-governance
+      url: reliability-automation.md
 
 tools:
   title: Reliability services and capabilities

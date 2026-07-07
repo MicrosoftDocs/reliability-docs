@@ -95,6 +95,7 @@ The following services don't provide built-in multiregion support. However, you 
 - <img src="/azure/media/index/api-center.svg" alt="Azure API Center" width="24" /> [Azure API Center](./reliability-api-center.md)
 - <img src="https://static.docs.com/ui/media/product/azure/application-gateway.svg" alt="Azure Application Gateway" width="24" /> [Azure Application Gateway](./reliability-application-gateway-v2.md#custom-multi-region-solutions-for-resiliency)
 - <img src="/azure/media/index/application-gateway-containers.svg" alt="Azure Application Gateway for Containers" width="24" /> [Azure Application Gateway for Containers](./reliability-app-gateway-containers.md)
+- <img src="/azure/media/index/automation.svg" alt="Azure Automation" width="24" /> [Azure Automation](./reliability-automation.md)
 - <img src="/azure/media/index/bastion.svg" alt="Azure Bastion" width="24" /> [Azure Bastion](./reliability-bastion.md)
 - <img src="/azure/media/index/batch-accounts.svg" alt="Azure Batch" width="24" /> [Azure Batch](./reliability-batch.md)
 - <img src="/azure/media/index/chaos-studio.svg" alt="Azure Chaos Studio" width="24" /> [Azure Chaos Studio](./reliability-chaos-studio.md)
