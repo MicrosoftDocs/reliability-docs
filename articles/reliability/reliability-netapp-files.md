@@ -61,13 +61,13 @@ If an availability zone fails, you're responsible for detecting the failure and 
 
 - **Region support:** Cross-zone replication is available in all [availability zone-enabled regions](regions-list.md) that support [Azure NetApp Files](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=netapp&regions=all&rar=true).
 
-### Considerations
+- **Microsoft Entra tenant:** Replication is permitted between different Azure subscriptions only if they're within the same Microsoft Entra tenant.
 
-- Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You'll see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
+## Considerations
 
-- Replication is permitted between different Azure subscriptions only if they're within the same Microsoft Entra tenant.
+Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You'll see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
 
-- For more considerations about availability zones in Azure NetApp Files, see [Requirements and considerations for using cross-zone replication](/azure/azure-netapp-files/replication-requirements) and [Manage availability zone volume placement](/azure/azure-netapp-files/manage-availability-zone-volume-placement#requirements-and-considerations).
+For more considerations about availability zones in Azure NetApp Files, see [Requirements and considerations for using cross-zone replication](/azure/azure-netapp-files/replication-requirements) and [Manage availability zone volume placement](/azure/azure-netapp-files/manage-availability-zone-volume-placement#requirements-and-considerations).
 
 ### Cost
 
