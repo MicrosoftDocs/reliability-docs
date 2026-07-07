@@ -225,7 +225,7 @@ For further security, Azure NetApp Files [snapshots](/azure/azure-netapp-files/d
 
 ## Resilience to service maintenance
 
-During service or platform maintenance, there might be short interruptions to I/O operations. Your workloads should be resilient to these types of interruptions. For more information, see [Application resilience - Maintenance events](/azure/azure-netapp-files/faq-application-resilience#what-do-you-recommend-for-handling-potential-application-disruptions-due-to-storage-service-maintenance-events).
+During service or platform maintenance, short interruptions to I/O operations might occur. Your workloads should be resilient to these types of interruptions. For more information, see [Application resilience - Maintenance events](/azure/azure-netapp-files/faq-application-resilience#what-do-you-recommend-for-handling-potential-application-disruptions-due-to-storage-service-maintenance-events).
 
 ## Service-level agreement
 
