@@ -1,13 +1,12 @@
 ---
 title: Reliability in Azure NetApp Files
 description: Learn about resiliency in Azure NetApp Files, including resilience to transient faults, availability zone failures, and region-wide failures. Understand backup options and SLA details.
-author: b-ahibbard
+author: netapp-manishc
 ms.author: anfdocs
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-netapp-files
-ms.date: 07/28/2025
-#Customer intent: As an engineer responsible for business continuity, I want to understand the details of how Azure NetApp Files works from a reliability perspective and plan disaster recovery strategies in alignment with the exact processes that Azure services follow during different kinds of situations. 
+ms.date: 07/07/2026
 ---
 
 # Reliability in Azure NetApp Files
@@ -34,7 +33,7 @@ In addition to transient fault types that can affect any cloud-based solution, o
 
 From a file protocol, like NFS and SMB, perspective, transient faults aren't disruptive if the application can handle the input/output (I/O) pauses that might occur during these events. The I/O pauses are typically short, ranging from a few seconds up to 30 seconds. Some applications might require tuning to handle the I/O pauses.
 
-The NFS protocol is robust, and client-server file operations generally continue normally. Some applications might require tuning to handle I/O pauses for as long as 30 to 45 seconds. Ensure that you're aware of the application's resiliency settings to cope with the storage service maintenance events.
+The NFS protocol is robust, and client-server file operations generally continue normally. Some applications might require tuning to handle I/O pauses for as long as 30 to 45 seconds. Ensure that you're aware of the application's resiliency settings to cope with the [storage service maintenance events](/azure/azure-netapp-files/faq-application-resilience#what-do-you-recommend-for-handling-potential-application-disruptions-due-to-storage-service-maintenance-events).
 
 For human-interactive applications that use the SMB protocol, the standard protocol settings are usually sufficient. Azure NetApp Files also supports [SMB continuous availability](/azure/azure-netapp-files/azure-netapp-files-create-volumes-smb#continuous-availability), which enables SMB Transparent Failover. SMB Transparent Failover eliminates disruptions that service maintenance events cause. It also improves reliability and user experience.
 
@@ -61,6 +60,8 @@ If an availability zone fails, you're responsible for detecting the failure and 
 ### Requirements
 
 - **Region support:** Cross-zone replication is available in all [availability zone-enabled regions](regions-list.md) that support [Azure NetApp Files](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=netapp&regions=all&rar=true).
+
+### Considerations
 
 - Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You'll see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
 
@@ -197,12 +198,12 @@ This section describes what to expect when Azure NetApp Files volumes are config
     | Replication schedule | Typical RPO |
     |---|---|
     | Every 10 minutes | Less than 20 minutes|
-    | Hourly | Less than Two hours |
+    | Hourly | Less than two hours |
     | Daily | Less than 48 hours |
 
 - **Expected downtime:** Failover to another region requires you to break the peering relationship to activate the destination volume and provide read and write data access in the second site. After you trigger the peering to break, you can expect failover to complete within one minute.
 
-    However, the total amount of downtime, or RTO, that you can expect during a zone failover depends on multiple factors, including how long it takes for your systems or processes to detect the loss of the zone and to initiate failover processes. It's also important to decide whether to automate your response or whether manual steps are required. For well-prepared configurations, the overall process typically requires a few minutes to an hour to complete.
+    However, the total amount of downtime, or RTO, that you can expect during a region failover depends on multiple factors, including how long it takes for your systems or processes to detect the loss of the region and to initiate failover processes. It's also important to decide whether to automate your response or whether manual steps are required. For well-prepared configurations, the overall process typically requires a few minutes to an hour to complete.
 
 - **Traffic rerouting:** You're responsible for redirecting your application traffic to connect to the newly active destination volume. For more information, see [fail over to the destination volume](/azure/azure-netapp-files/cross-region-replication-manage-disaster-recovery#fail-over-to-destination-volume).
 
@@ -222,6 +223,10 @@ For further security, Azure NetApp Files [snapshots](/azure/azure-netapp-files/d
 
 [!INCLUDE [Backups include](includes/reliability-backups-include.md)] 
 
+## Resilience to service maintenance
+
+During service or platform maintenance, there might be short interruptions to I/O operations. Your workloads should be resilient to these types of interruptions. For more information, see [Application resilience - Maintenance events](/azure/azure-netapp-files/faq-application-resilience#what-do-you-recommend-for-handling-potential-application-disruptions-due-to-storage-service-maintenance-events).
+
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
@@ -229,6 +234,7 @@ For further security, Azure NetApp Files [snapshots](/azure/azure-netapp-files/d
 ## Related content
 
 - [Architecture best practices for Azure NetApp Files](/azure/well-architected/service-guides/azure-netapp-files)
+- [Application resilience FAQs for Azure NetApp Files](/azure/azure-netapp-files/faq-application-resilience)
 - [Requirements and considerations for using Azure NetApp Files replication](/azure/azure-netapp-files/replication-requirements)
 - [Manage availability zone volume placement for Azure NetApp Files](/azure/azure-netapp-files/manage-availability-zone-volume-placement)
 - [Create cross-zone replication relationships for Azure NetApp Files volumes](/azure/azure-netapp-files/create-cross-zone-replication)
