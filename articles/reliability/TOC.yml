@@ -144,6 +144,8 @@ items:
       href: reliability-notification-hubs.md
   - name: Management and governance
     items:
+    - name: Azure Automation
+      href: reliability-automation.md
     - name: Azure Backup
       href: reliability-backup.md
     - name: Azure Chaos Studio
