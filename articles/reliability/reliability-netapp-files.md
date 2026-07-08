@@ -65,7 +65,7 @@ If an availability zone fails, you're responsible for detecting the failure and 
 
 ## Considerations
 
-Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You'll see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
+Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
 
 For more considerations about availability zones in Azure NetApp Files, see [Requirements and considerations for using cross-zone replication](/azure/azure-netapp-files/replication-requirements) and [Manage availability zone volume placement](/azure/azure-netapp-files/manage-availability-zone-volume-placement#requirements-and-considerations).
 
