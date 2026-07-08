@@ -63,7 +63,7 @@ If an availability zone fails, you're responsible for detecting the failure and 
 
 - **Microsoft Entra tenant:** Replication is permitted between different Azure subscriptions only if they're within the same Microsoft Entra tenant.
 
-## Considerations
+### Considerations
 
 Availability zone volume placement in Azure NetApp Files provides zonal volume placement. You see low latency when you connect to VMs within the same availability zone. However, availability zone volume placement doesn't provide proximity placement with VMs or other resources, and the volume might be in a different physical part of the datacenter.
 
