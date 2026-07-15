@@ -110,7 +110,7 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="https://static.docs.com/ui/media/product/azure/sql-managed-instance.svg" alt="Azure SQL Managed Instance" width="24" /> Azure SQL Managed Instance| [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md) ||
 | <img src="/azure/media/index/storage-actions.svg" alt="Azure Storage Actions" width="24" /> Azure Storage Actions| [Reliability in Storage Actions](reliability-storage-actions.md)||
 | <img src="/azure/media/index/storage-discovery.svg" alt="Azure Storage Discovery" width="24" /> Azure Storage Discovery| [Reliability in Storage Discovery](reliability-storage-discovery.md)||
-| <img src="/azure/media/index/storage-mover.svg" alt="Azure Storage Mover" width="24" /> Azure Storage Mover| [Reliability in Storage Mover](reliability-azure-storage-mover.md)||
+| <img src="/azure/media/index/storage-mover.svg" alt="Azure Storage Mover" width="24" /> Azure Storage Mover| [Reliability in Storage Mover](reliability-storage-mover.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/stream-analytics.svg" alt="Azure Stream Analytics" width="24" /> Azure Stream Analytics| [Reliability in Azure Stream Analytics](./reliability-stream-analytics.md) ||
 | <img src="https://static.docs.com/ui/media/product/azure/storage-accounts.svg" alt="Azure Table Storage" width="24" /> Azure Table Storage| [Reliability in Table Storage](reliability-storage-table.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/traffic-manager.svg" alt="Azure Traffic Manager" width="24" /> Azure Traffic Manager| [Reliability in Traffic Manager](reliability-traffic-manager.md)||

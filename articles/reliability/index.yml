@@ -599,7 +599,7 @@ productDirectory:
     - title: Azure Storage Mover
       summary: Accelerate cloud adoption with an end-to-end, managed migration service
       imageSrc: /azure/media/index/storage-mover.svg
-      url: reliability-azure-storage-mover.md
+      url: reliability-storage-mover.md
       azureCategories:
         - storage
     # Card

@@ -264,6 +264,11 @@
       "source_path": "articles/reliability/reliability-cosmos-db-nosql.md",
       "redirect_url": "/azure/reliability/reliability-cosmos-db",
       "redirect_document_id": true
+    },
+    {
+      "source_path": "articles/reliability/reliability-azure-storage-mover.md",
+      "redirect_url": "/azure/reliability/reliability-storage-mover",
+      "redirect_document_id": true
     }
   ]
 }

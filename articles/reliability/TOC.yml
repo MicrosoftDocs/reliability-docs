@@ -235,7 +235,7 @@ items:
     - name: Azure Storage Actions
       href: reliability-storage-actions.md
     - name: Azure Storage Mover
-      href: reliability-azure-storage-mover.md
+      href: reliability-storage-mover.md
     - name: Azure Table Storage
       href: reliability-storage-table.md
   - name: Web
