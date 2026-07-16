@@ -62,7 +62,7 @@ An Azure Cosmos DB account might use multiple regions (locations) for global dis
 
 Using zone redundancy in Azure Cosmos DB has no discernible impact on performance or latency. It doesn't require any adjustments to the selected consistency mode, and doesn't require any modification to application code.
 
-Use zone redundancy in regions where it's supported, especially for single-region accounts. Because availability zones are physically separate and provide distinct power sources, network, and cooling, the availability SLAs for Azure Cosmos DB are higher for zone-redundant accounts than accounts that don't use availability zones.
+Use zone redundancy in regions where it's supported, especially for single-region accounts. Because availability zones are physically separate and provide distinct power sources, networks, and cooling, the availability SLAs for Azure Cosmos DB are higher for zone-redundant accounts than accounts that don't use availability zones.
 
 > [!TIP]
 > Enabling zone redundancy is a great way to increase the resilience of your Azure Cosmos DB database without introducing additional application complexities or affecting performance. Depending on your account configuration, it might not even incur additional costs.

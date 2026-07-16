@@ -17,7 +17,7 @@ ms.date: 04/30/2026
 
 This article describes how to make Azure SignalR Service resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 Use the following recommendations for production workloads:
 

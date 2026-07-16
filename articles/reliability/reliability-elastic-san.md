@@ -18,7 +18,7 @@ ai.usage: ai-assisted
 
 This article describes how to make Azure Elastic SAN resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Elastic SAN service-level agreement (SLA).
 
-## Production deployment recommendations
+## Production deployment recommendations for reliability
 
 Use the following recommendations for production workloads:
 
