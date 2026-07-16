@@ -1,6 +1,6 @@
 ---
 title: "Reliability in Azure Web PubSub Service"
-description: Learn how to make Azure Web PubSub Service resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
+description: Learn how to make Azure Web PubSub Service resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures.
 author: glynnniall
 ms.author: glynnniall
 ms.topic: reliability-article
