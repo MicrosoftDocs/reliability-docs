@@ -19,7 +19,7 @@ This article describes how to make Azure SignalR Service resilient to various po
 
 ## Production deployment recommendations
 
-Use the following for production workloads:
+Use the following recommendations for production workloads:
 
 > [!div class="checklist"]
 >

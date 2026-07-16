@@ -20,7 +20,7 @@ This article describes how to make Azure Elastic SAN resilient to various potent
 
 ## Production deployment recommendations
 
-Use the following for production workloads:
+Use the following recommendations for production workloads:
 
 > [!div class="checklist"]
 > - **Use zone-redundant storage (ZRS):** ZRS spreads copies of your data across three availability zones.
