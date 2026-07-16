@@ -46,7 +46,7 @@ Internally, Azure Cosmos DB manages your data through various constructs includi
 
 Use the Azure Cosmos DB SDKs. The SDKs automatically implement support for a range of resiliency considerations, including transient fault handling through automatic retries, and honoring rate limit responses sent by the service. For more information, see [Design resilient applications with Azure Cosmos DB SDKs](/azure/cosmos-db/conceptual-resilient-sdk-applications).
 
-When working with a multiregion account, the SDK also supports a [threshold-based availability strategy](/azure/cosmos-db/performance-tips-dotnet-sdk-v3#threshold-based-availability-strategy), also called *hedging*, where it sends parallel read requests to multiple regions and accept the fastest response. This approach can improve application performance when a region temporarily experiences higher latency than usual.
+When working with a multiregion account, the SDK also supports a [threshold-based availability strategy](/azure/cosmos-db/performance-tips-dotnet-sdk-v3#threshold-based-availability-strategy), also called *hedging*, where it sends parallel read requests to multiple regions and accepts the fastest response. This approach can improve application performance when a region temporarily experiences higher latency than usual.
 
 <a name="availability-zone-support"></a>
 
