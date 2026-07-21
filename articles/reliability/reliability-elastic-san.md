@@ -1,11 +1,11 @@
 ---
 title: Reliability in Azure Elastic SAN
-description: Learn how to make Azure Elastic SAN resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages, and learn about backup and restore.
+description: Learn how to make Azure Elastic SAN resilient to various potential outages and problems, including transient faults, availability zone outages, and region outages, and learn about backup and restore.
 author: roygara
 ms.author: rogarana
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ms.service: azure-elastic-san-storage
+ms.service: azure-elastic-san
 ms.date: 04/28/2026
 ai.usage: ai-assisted
 ---
@@ -16,11 +16,11 @@ ai.usage: ai-assisted
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure Elastic SAN resilient to a variety of potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Elastic SAN service-level agreement (SLA).
+This article describes how to make Azure Elastic SAN resilient to various potential outages and problems, including transient faults, availability zone failures, and region-wide failures. It also describes backup and recovery options, and highlights key information about the Azure Elastic SAN service-level agreement (SLA).
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+Use the following recommendations for production workloads:
 
 > [!div class="checklist"]
 > - **Use zone-redundant storage (ZRS):** ZRS spreads copies of your data across three availability zones.
@@ -53,7 +53,7 @@ Azure Elastic SAN can be configured to use zone-redundant storage (ZRS), which m
 
 :::image type="content" source="media/reliability-elastic-san/zone-redundant-storage.svg" alt-text="Diagram that shows a zone-redundant Elastic SAN with a volume group containing a single volume. The data in the volume is replicated across three availability zones." border="false":::
 
-Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. We recommend using private endpoints to connect to your volumes. Private endpoints support automatic failover. If you use service endpoints, failover might require manual intervention. For more information about the connectivity approaches, see [Learn about networking configurations for Elastic SAN](/azure/storage/elastic-san/elastic-san-networking).
+Your connectivity approach affects your workload's ability to fail over transparently during a zone failure. Use private endpoints to connect to your volumes. Private endpoints support automatic failover. If you use service endpoints, failover might require manual intervention. For more information about the connectivity approaches, see [Learn about networking configurations for Elastic SAN](/azure/storage/elastic-san/elastic-san-networking).
 
 Using locally redundant storage (LRS) leaves your Elastic SAN unprotected against availability zone failures. LRS makes the Elastic SAN *nonzonal* by storing data in a single availability zone rather than distributing it across zones with ZRS.
 

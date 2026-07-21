@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Traffic Manager
-description: Learn how to make Azure Traffic Manager resilient to a variety of potential outages and problems, including transient faults and region-wide failures, and learn about the service-level agreement.
+description: Learn how to make Azure Traffic Manager resilient to various potential outages and problems, including transient faults and region-wide failures, and learn about the service-level agreement.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
@@ -75,7 +75,7 @@ Traffic Manager operates as a nonregional service and deploys its infrastructure
 
 If you manage your Traffic Manager profile in the Azure portal, prepare for scenarios where you can’t access it, especially if you need to reconfigure your profile during a platform outage.
 
-Like other Azure services, Traffic Manager supports deployment and management through a variety of tools. We recommend you familiarize yourself with how to use [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
+Like other Azure services, Traffic Manager supports deployment and management through various tools. Familiarize yourself with how to use [Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli) or [Azure PowerShell](/azure/traffic-manager/quickstart-create-traffic-manager-profile-powershell) to manage your profile. Alternatively, deploy and configure your profile by using infrastructure as code technologies like [Bicep](/azure/traffic-manager/quickstart-create-traffic-manager-profile-bicep) or [Terraform](/azure/traffic-manager/quickstart-create-traffic-manager-profile-terraform). These tools remain operational even if the Azure portal is degraded.
 
 ## Backup and restore
 

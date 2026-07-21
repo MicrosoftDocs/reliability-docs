@@ -4,7 +4,7 @@ description: Learn how to improve reliability in Azure Application Gateway for C
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
-ms.service: azure-appgw-for-containers
+ms.service: azure-application-gateway-containers
 ms.custom: subject-reliability
 ms.date: 02/07/2024 
 ---

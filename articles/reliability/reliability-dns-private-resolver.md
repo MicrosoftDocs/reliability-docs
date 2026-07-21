@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure DNS Private Resolver
-description: Learn how to make Azure DNS Private Resolver resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
+description: Learn how to make Azure DNS Private Resolver resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 author: asudbring
 ms.author: allensu
 ms.topic: reliability-article
