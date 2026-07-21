@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure SignalR Service
-description: Learn how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
+description: Learn how to make Azure SignalR Service resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance.
 author: glynnniall
 ms.author: pnp
 ms.topic: reliability-article
@@ -15,11 +15,11 @@ ms.date: 04/30/2026
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
-This article describes how to make Azure SignalR Service resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
+This article describes how to make Azure SignalR Service resilient to various potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance. It also highlights key information about the Azure SignalR Service service-level agreement (SLA).
 
 ## Production deployment recommendations for reliability
 
-For production workloads, we recommend that you:
+Use the following recommendations for production workloads:
 
 > [!div class="checklist"]
 >
