@@ -5,7 +5,7 @@ author: roygara
 ms.author: rogarana
 ms.topic: reliability-article
 ms.custom: subject-reliability
-ms.service: azure-elastic-san-storage
+ms.service: azure-elastic-san
 ms.date: 04/28/2026
 ai.usage: ai-assisted
 ---
