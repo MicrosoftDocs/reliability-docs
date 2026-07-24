@@ -39,7 +39,7 @@ items:
     - name: Azure Stream Analytics
       href: reliability-stream-analytics.md
     - name: Microsoft Fabric
-      href: reliability-fabric.md
+      href: /fabric/security/reliability-fabric?toc=/azure/reliability/toc.json&bc=/azure/reliability/breadcrumb/toc.json
   - name: Compute
     items:
     - name: Azure App Service

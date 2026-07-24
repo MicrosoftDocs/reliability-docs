@@ -269,6 +269,11 @@
       "source_path": "articles/reliability/reliability-azure-storage-mover.md",
       "redirect_url": "/azure/reliability/reliability-storage-mover",
       "redirect_document_id": true
+    },
+    {
+      "source_path": "articles/reliability/reliability-fabric.md",
+      "redirect_url": "/fabric/security/reliability-fabric",
+      "redirect_document_id": false
     }
   ]
 }
