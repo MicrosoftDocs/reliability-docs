@@ -36,7 +36,7 @@ ms.custom: include file
 | :::image type="content" source="../media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: France South | France Central |
 | :::image type="content" source="../media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North | Germany West Central |
 | Germany West Central | :::image type="content" source="../media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Germany North |
-| :::image type="content" source="../media/icon-region-coming-soon.svg" alt-text="Icon that shows that this region is coming soon." border="false"::: India South Central | Central India |
+| India South Central | Central India |
 | Indonesia Central | N/A |
 | Israel Central | N/A |
 | Italy North | N/A |
@@ -143,7 +143,7 @@ ms.custom: include file
 | Australia Southeast | Australia East |
 | Central India | South India |
 | East Asia | Southeast Asia |
-| :::image type="content" source="../media/icon-region-coming-soon.svg" alt-text="Icon that shows that this region is coming soon." border="false"::: India South Central | Central India |
+| India South Central | Central India |
 | Indonesia Central | N/A |
 | Japan East | Japan West |
 | Japan West | Japan East |
