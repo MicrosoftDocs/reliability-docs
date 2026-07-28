@@ -149,7 +149,7 @@ The regions in the following table support availability zones. For more comprehe
 | Brazil South | Austria East | Israel Central | South Africa North | Australia East |
 | Canada Central | Belgium Central | Qatar Central | | Central India |
 | Central US | Denmark East | UAE North | | East Asia |
-| Chile Central | France Central | | | :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that this region is coming soon." border="false"::: India South Central |
+| Chile Central | France Central | | | India South Central |
 | East US | Germany West Central | | | Indonesia Central |
 | East US 2 | Italy North | | | Japan East |
 | Mexico Central | North Europe | | | Japan West |
