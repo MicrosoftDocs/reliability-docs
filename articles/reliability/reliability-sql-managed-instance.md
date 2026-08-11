@@ -227,7 +227,7 @@ However, if your secondary instance doesn't have any read workloads or applicati
 
 For more information about SQL Managed Instance pricing, see [Service pricing information](https://azure.microsoft.com/pricing/details/azure-sql-managed-instance/single/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 To learn how to configure a failover group, see [Configure a failover group for SQL Managed Instance](/azure/azure-sql/managed-instance/failover-group-configure-sql-mi).
 
@@ -239,7 +239,7 @@ For more information about scaling SQL managed instances in a failover group, se
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when SQL managed instances are configured to use multi-region failover groups and all regions are operational:
+This section describes what to expect when SQL managed instances are configured to use multiregion failover groups and all regions are operational:
 
 - **Traffic routing between regions:** During normal operations, read-write requests go to the single primary instance in the primary region.
 
@@ -255,7 +255,7 @@ This section describes what to expect when SQL managed instances are configured 
 
 #### Behavior during a region failure
 
-This section describes what to expect when SQL managed instances are configured to use multi-region failover groups and there's an outage in the primary region:
+This section describes what to expect when SQL managed instances are configured to use multiregion failover groups and there's an outage in the primary region:
 
 - **Detection and response:** Responsibility for detection and response depends on the failover policy that your failover group uses.
   

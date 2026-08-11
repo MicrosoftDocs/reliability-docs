@@ -198,7 +198,7 @@ When you configure GRS on a vault, Microsoft makes backups in the paired region 
 
 GRS vaults incur extra costs for cross-region replication and storage in the secondary region. Data transfer between Azure regions is charged based on standard interregion bandwidth rates. CRR is charged at a different rate because Microsoft upgrades your vault storage from GRS to RA-GRS. For more information, see [Backup pricing](https://azure.microsoft.com/pricing/details/backup/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Create a new vault that uses GRS and CRR:** When you create a vault, you should also configure storage redundancy. After you select GRS, you can optionally enable CRR on the vault. The steps that you follow depend on the vault type. For more information, see the following articles:
 

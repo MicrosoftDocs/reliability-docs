@@ -126,7 +126,7 @@ Event Hubs manages traffic routing, failover, and zone recovery for zone failure
 
 ## Resilience to region-wide failures
 
-Event Hubs provides two types of multi-region support:
+Event Hubs provides two types of multiregion support:
 
 - [Geo-replication (Premium and Dedicated tiers)](#geo-replication) provides active-active replication of both metadata and event data between a primary region and one or more secondary regions. Use geo-replication for most applications that need to remain resilient to region outages and have a low tolerance for event data loss.
 
@@ -168,7 +168,7 @@ When you enable geo-replication, consider the following factors:
 
 To understand how pricing works for geo-replication, see [Pricing](/azure/event-hubs/geo-replication#pricing).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Enable geo-replication on a new or existing namespace.** To set up active-active replication for a newly created namespace, see [Enable geo-replication on a new namespace](/azure/event-hubs/use-geo-replication#enable-geo-replication-on-a-new-namespace). To set up active-active replication on an existing namespace, see [Enable geo-replication on an existing namespace](/azure/event-hubs/use-geo-replication#enable-geo-replication-on-an-existing-namespace).
 
@@ -305,7 +305,7 @@ This section summarizes important aspects of geo-disaster recovery. Review the f
 
 When you enable metadata geo-disaster recovery, you pay for both the primary and secondary namespaces.
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Create metadata geo-disaster recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](/azure/event-hubs/event-hubs-geo-dr#setup).
 
@@ -313,7 +313,7 @@ When you enable metadata geo-disaster recovery, you pay for both the primary and
 
 #### Capacity planning and management
 
-When you plan for multi-region deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, you might choose to scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
+When you plan for multiregion deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, you might choose to scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
 
 #### Behavior when all regions are healthy
 
@@ -369,11 +369,11 @@ Monitor the failover duration and validate that your runbooks and automation wor
 
 Understand the potential downtime and data loss that you might experience during and after the failover process. Test geo-replication in a nonproduction environment that mirrors the configuration of your production namespace.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 Geo-replication and metadata geo-disaster recovery provide resiliency to region outages and other problems, and they support most workloads. Some Event Hubs tiers don't support these features, or you might require custom replication or need to maintain multiple active regions simultaneously.
 
-Various design patterns can achieve different types of multi-region support in Event Hubs. Many of the patterns require deploying multiple namespaces and using services like Azure Functions to replicate events between them. For more information, see [Multi-site and multi-region federation](/azure/event-hubs/event-hubs-federation-overview).
+Various design patterns can achieve different types of multiregion support in Event Hubs. Many of the patterns require deploying multiple namespaces and using services like Azure Functions to replicate events between them. For more information, see [Multi-site and multiregion federation](/azure/event-hubs/event-hubs-federation-overview).
 
 ## Backup and restore
 

@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Container Instances
-description: Find out about resiliency in Azure Container Instances, including transient faults, availability zones, multi-region support, and backups.
+description: Find out about resiliency in Azure Container Instances, including transient faults, availability zones, multiregion support, and backups.
 author: tomvcassidy
 ms.author: tomcassidy
 ms.topic: reliability-article
@@ -230,7 +230,7 @@ There's no way to simulate an outage of the availability zone that contains your
 
 Container Instances is a single-region service. If the region becomes unavailable, your container groups and its containers are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 You can optionally deploy separate container groups in multiple regions. You're responsible for deploying and configuring the container groups in each region. You also need to configure load balancing by using a service like Azure Traffic Manager or Azure Front Door. You're responsible for any data synchronization, failover, and failback.
 

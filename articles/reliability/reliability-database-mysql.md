@@ -269,7 +269,7 @@ If your primary region fails, you can manually fail over to make your secondary 
 
 Read replicas incur compute and storage costs, as well as cross-region data transfer charges for replication. For detailed pricing information, see [Azure Database for MySQL pricing](https://azure.microsoft.com/pricing/details/mysql/) and [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Create a read replica:** To learn how to create a read replica, see the following articles:
 

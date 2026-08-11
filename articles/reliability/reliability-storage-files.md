@@ -194,13 +194,13 @@ Zone-down testing options depend on the type of replication the file storage acc
 
 [!INCLUDE [Storage - Multi-region support region support](includes/storage/reliability-storage-multi-region-region-support-include.md)]
 
-- **Standard file shares only:** Azure Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. Premium (SSD) file shares must use LRS or ZRS. If you have premium file shares and you want to replicate the data across regions for higher resiliency, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+- **Standard file shares only:** Azure Files only supports geo-redundancy (GRS or GZRS) for standard (HDD) file shares. Premium (SSD) file shares must use LRS or ZRS. If you have premium file shares and you want to replicate the data across regions for higher resiliency, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 - **GRS and GZRS only:** Azure Files doesn't support read-access geo-redundant storage (RA-GRS) or read-access geo-zone-redundant storage (RA-GZRS). If a storage account is configured to use RA-GRS or RA-GZRS, the standard (HDD) file shares are configured and billed as GRS or GZRS.
 
 #### Considerations
 
-When you implement multi-region Azure Files, consider the following important factors:
+When you implement multiregion Azure Files, consider the following important factors:
 
 [!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
@@ -218,9 +218,9 @@ When you implement multi-region Azure Files, consider the following important fa
 
 For detailed pricing information, see [Azure Files pricing](https://azure.microsoft.com/pricing/details/storage/files/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
-[!INCLUDE [Storage - Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
 - **Enable geo-redundancy on an existing file storage account.** To convert an existing file storage account to GRS, see [Change redundancy configuration for Azure Files](/azure/storage/files/files-change-redundancy-configuration?tabs=portal).
 
@@ -253,13 +253,13 @@ This section describes what to expect when a storage account is configured for g
 
 For GRS accounts, you can perform planned failover operations during maintenance windows to test the complete failover and failback process. Planned failover doesn't require data loss, but it does require downtime during both failover and failback.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
 - You use file share types that don't support geo-redundancy.
 
-[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
 Consider the following common high-level approaches:
 
@@ -271,7 +271,7 @@ Consider the following common high-level approaches:
 
   This approach requires you to deploy multiple file shares and a VM to coordinate the synchronization process.
 
-  If you use this approach for multi-region file replication:
+  If you use this approach for multiregion file replication:
 
   - Disable cloud tiering to ensure that all data is present locally on the file server.
 

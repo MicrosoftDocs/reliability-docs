@@ -12,7 +12,7 @@
 Azure Storage, including Azure Blob Storage, Azure Files, Azure Table Storage, and Azure Queue Storage, provides a range of geo-redundancy and failover capabilities to suit different requirements.
 
 > [!IMPORTANT]
-> Geo-redundant storage (GRS) only works within [Azure paired regions](/azure/reliability/regions-paired). If your storage account's region isn't paired, consider using the [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+> Geo-redundant storage (GRS) only works within [Azure paired regions](/azure/reliability/regions-paired). If your storage account's region isn't paired, consider using the [custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 ### Geo-redundant storage for paired regions
 

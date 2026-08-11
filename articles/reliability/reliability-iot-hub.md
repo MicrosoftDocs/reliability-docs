@@ -151,7 +151,7 @@ IoT Hub is a single-region service. If the region becomes unavailable, your IoT 
 
 If resources are in a *nonpaired region*, Microsoft doesn’t replicate configuration and data across regions, and there’s no built-in cross-region failover. However, you can deploy separate resources into multiple regions. In this scenario, it's your responsibility to manage replication, traffic distribution, and failover.
  
-If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you design and implement a [custom multi-region failover strategy](#custom-multi-region-solutions-for-resiliency), including the following steps:
+If your IoT hub is in a nonpaired region, or if the default replication and failover behavior doesn't meet your needs, you design and implement a [custom multiregion failover strategy](#custom-multiregion-solutions-for-resiliency), including the following steps:
 
 - Provisioning a secondary IoT Hub in a different Azure region.
 - Implementing an endpoint redirection mechanism to direct devices to the alternate region when required. For example, you might provision each device in both hubs ahead of time, and configure both of the connection strings on the devices so they can switch between hubs when required.
@@ -181,7 +181,7 @@ Don't use customer-initiated failover to permanently migrate your hub between th
 
 For hubs in regions that are paired, there's no extra cost for cross-region data replication or failover.
 
-If your IoT hub is in a nonpaired region, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) for possible cost information.
+If your IoT hub is in a nonpaired region, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency) for possible cost information.
 
 #### Configure replication and prepare for failover
 
@@ -189,7 +189,7 @@ By default, cross-region data replication is automatically configured when you c
 
 If your IoT hub is in the Brazil South or Southeast Asia (Singapore) regions, you can disable data replication and opt out of failover. For more information, see [Disable disaster recovery (DR)](/azure/iot-hub/how-to-disable-dr).
 
-If your IoT hub is in a nonpaired region, you need to plan your own cross-region replication and failover approach. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+If your IoT hub is in a nonpaired region, you need to plan your own cross-region replication and failover approach. For more information, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 #### Behavior when all regions are healthy
 
@@ -279,7 +279,7 @@ If the original failover operation was performed to recover from an extended out
 
 To simulate a failure during a region outage, you can trigger a manual failover of your IoT hub. However, because regional failover causes both downtime and data loss, you should only perform test failovers in nonproduction environments. For more information, see [Behavior during a region failure](#behavior-during-a-region-failure). Consider setting up a test IoT Hub instance to initiate the planned failover option periodically. Periodic testing can help you build confidence in your ability to restore and operate your end-to-end solutions effectively when a real disaster occurs.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 The cross-region failover capabilities of IoT Hub aren't suitable for the following scenarios:
 
@@ -289,7 +289,7 @@ The cross-region failover capabilities of IoT Hub aren't suitable for the follow
 
 - You need to fail over to a region that isn't your primary region's pair.
 
-You can design a cross-region failover solution tailored to each individual device. A complete treatment of deployment topologies in IoT solutions is outside the scope of this article, but you can consider a multi-region deployment model. In this model, your primary IoT hub and solution back end run primarily in one Azure region. A secondary IoT hub and back end are deployed in another Azure region. If the IoT hub in the primary region experiences an outage or the network connectivity from the device to the primary region is interrupted, devices use a secondary service endpoint.
+You can design a cross-region failover solution tailored to each individual device. A complete treatment of deployment topologies in IoT solutions is outside the scope of this article, but you can consider a multiregion deployment model. In this model, your primary IoT hub and solution back end run primarily in one Azure region. A secondary IoT hub and back end are deployed in another Azure region. If the IoT hub in the primary region experiences an outage or the network connectivity from the device to the primary region is interrupted, devices use a secondary service endpoint.
 
 - **Expected downtime:** This approach has less than one minute of downtime but can be complex to implement.
 

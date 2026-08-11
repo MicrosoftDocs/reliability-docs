@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Service Bus
-description: Learn about reliability in Azure Service Bus, including availability zones and multi-region deployments.
+description: Learn about reliability in Azure Service Bus, including availability zones and multiregion deployments.
 ms.author: spelluru
 author: spelluru
 ms.topic: reliability-article
@@ -119,7 +119,7 @@ Service Bus manages traffic routing, failover, and zone recovery for zone failur
 
 ## Resilience to region-wide failures
 
-Service Bus provides two types of multi-region support, both of which require Premium tier namespaces:
+Service Bus provides two types of multiregion support, both of which require Premium tier namespaces:
 
 - [Geo-Replication](#geo-replication) provides active-passive replication of both metadata and message data between a primary region and a secondary region. Use Geo-Replication for most applications that must remain resilient to region outages and have a low tolerance for message data loss.
 
@@ -139,7 +139,7 @@ For most disaster recovery scenarios, Geo-Replication is the recommended choice 
 
 Both Geo-Replication and metadata Geo-Disaster Recovery require you to manually initiate failover or promotion of a secondary region to become the new primary region. Microsoft doesn't automatically initiate failover or promotion, even if your primary region is down.
 
-Namespaces in the Basic and Standard tiers don't include native multi-region features, but you can implement application-level replication patterns by using multiple namespaces across regions. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+Namespaces in the Basic and Standard tiers don't include native multiregion features, but you can implement application-level replication patterns by using multiple namespaces across regions. For more information, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 ### Geo-Replication
 
@@ -178,7 +178,7 @@ This section summarizes important aspects of Geo-Replication. Review the full do
 
 To learn how pricing works for Geo-Replication, see [Pricing](/azure/service-bus-messaging/service-bus-geo-replication#pricing).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Enable Geo-Replication on a new namespace.** To enable Geo-Replication on a namespace during creation, see [Set up Geo-Replication](/azure/service-bus-messaging/service-bus-geo-replication#setup).
 
@@ -323,7 +323,7 @@ This section summarizes important aspects of Geo-Disaster Recovery. Review the f
 
 When you enable metadata Geo-Disaster Recovery, you pay for both the primary and secondary namespaces.
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Create a metadata Geo-Disaster Recovery pairing.** To configure disaster recovery between primary and secondary namespaces, see [Setup and failover flow](/azure/service-bus-messaging/service-bus-geo-dr#setup).
 
@@ -331,7 +331,7 @@ When you enable metadata Geo-Disaster Recovery, you pay for both the primary and
 
 #### Capacity planning and management
 
-When you plan for multi-region deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, you might scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
+When you plan for multiregion deployments, ensure that both regions have sufficient capacity to handle the full load if one region fails. The secondary region remains passive during normal operations, but it must immediately handle traffic after failover. Plan how to scale the secondary namespace capacity so that it can receive production traffic without delay. If you can tolerate extra downtime during the failover process, you might scale the secondary namespace capacity during or after failover. To reduce downtime, provision capacity in the secondary namespace in advance so that it remains ready to receive production load.
 
 #### Behavior when all regions are healthy
 
@@ -389,7 +389,7 @@ Monitor the failover duration and validate that your runbooks and automation wor
 
 Understand the potential downtime and data loss that you might experience during and after the failover process. Test metadata Geo-Disaster Recovery in a nonproduction environment that mirrors the configuration of your production namespace.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 Geo-Replication and metadata Geo-Disaster Recovery provide resiliency to region outages and other problems, and are suitable for most workloads. These capabilities might not suit your needs in the following situations:
 
@@ -397,7 +397,7 @@ Geo-Replication and metadata Geo-Disaster Recovery provide resiliency to region 
 
 - You use a Service Bus tier that doesn't support these features.
 
-There are several design patterns that provide different types of multi-region support in Service Bus. Many of these patterns require you to deploy multiple namespaces and configure your application to use them appropriately. For more information, see the following resources:
+There are several design patterns that provide different types of multiregion support in Service Bus. Many of these patterns require you to deploy multiple namespaces and configure your application to use them appropriately. For more information, see the following resources:
 
 - [Insulate Service Bus applications against outages and disasters](/azure/service-bus-messaging/service-bus-outages-disasters)
 - [Message replication and cross-region federation](/azure/service-bus-messaging/service-bus-federation-overview)

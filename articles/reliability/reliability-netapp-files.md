@@ -163,7 +163,7 @@ For other considerations related to cross-region replication in Azure NetApp Fil
 
 Cross-region replication charges are based on the amount of data that you replicate. For more information and some example scenarios, see [Cost model for cross-region replication](/azure/azure-netapp-files/replication#cost-model-for-cross-region-replication).
 
-### Configure multi-region support
+### Configure multiregion support
 
 - **Enable cross-region replication:** To improve the resiliency of your solution, [configure cross-region replication](/azure/azure-netapp-files/cross-region-replication-create-peering).
 

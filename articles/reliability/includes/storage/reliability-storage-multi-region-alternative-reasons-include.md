@@ -1,6 +1,6 @@
 ---
- title: Description of Azure Storage alternative multi-region deployment reasons
- description: Description of Azure Storage alternative multi-region deployment reasons
+ title: Description of Azure Storage alternative multiregion deployment reasons
+ description: Description of Azure Storage alternative multiregion deployment reasons
  author: glynnniall
  ms.service: azure
  ms.topic: include

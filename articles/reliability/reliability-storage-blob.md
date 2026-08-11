@@ -107,7 +107,7 @@ This section describes what to expect when a blob storage account is configured 
 
 #### Considerations
 
-When you implement multi-region Blob Storage, consider the following key factors:
+When you implement multiregion Blob Storage, consider the following key factors:
 
 [!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
@@ -121,11 +121,11 @@ When you implement multi-region Blob Storage, consider the following key factors
 
 For more information, see [Blob Storage pricing](https://azure.microsoft.com/pricing/details/storage/blobs/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
-[!INCLUDE [Storage - Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
-[!INCLUDE [Storage - Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
 #### Behavior when all regions are healthy
 
@@ -143,17 +143,17 @@ For more information, see [Blob Storage pricing](https://azure.microsoft.com/pri
 
 [!INCLUDE [Storage - Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
-[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
-[!INCLUDE [Storage - Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
 
 **Object replication** provides an extra option for cross-region data replication that provides asynchronous copying of block blobs between storage accounts. Unlike the built-in geo-redundant storage options that use fixed paired regions, object replication allows you to replicate data between storage accounts in any Azure region, including nonpaired regions. This approach gives you full control over source and destination regions, replication policies, and the specific containers and blob prefixes to replicate.
 
-You can configure object replication to replicate all blobs within a container or specific subsets based on blob prefixes and tags. The replication is asynchronous and occurs in the background. You can configure multiple replication policies and even chain replication across multiple storage accounts to create sophisticated multi-region topologies.
+You can configure object replication to replicate all blobs within a container or specific subsets based on blob prefixes and tags. The replication is asynchronous and occurs in the background. You can configure multiple replication policies and even chain replication across multiple storage accounts to create sophisticated multiregion topologies.
 
 Object replication isn't compatible with all storage accounts. For example, it doesn't work with storage accounts that use hierarchical namespaces (also known as *Azure Data Lake Storage Gen2 accounts*).
 

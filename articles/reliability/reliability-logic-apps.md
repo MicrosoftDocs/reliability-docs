@@ -259,7 +259,7 @@ Azure Logic Apps manages traffic routing, failover, and failback for zone-redund
 
 Each logic app is deployed into a single Azure region. If the region becomes unavailable, your logic app is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 For higher resiliency, you can deploy a standby or backup logic app in a secondary region and fail over to that other region if the primary region is unavailable. To set up this capability, complete the following tasks:
 
@@ -268,7 +268,7 @@ For higher resiliency, you can deploy a standby or backup logic app in a seconda
 - Configure load balancing and failover policies. 
 - Plan to monitor the primary instance health and initiate failover.
 
-For more information about multi-region deployments for your logic app workflows, see the following articles:
+For more information about multiregion deployments for your logic app workflows, see the following articles:
 
 - [Multi-region deployments in Azure Logic Apps](/azure/logic-apps/multi-region-disaster-recovery)
 - [Set up cross-region disaster recovery for integration accounts in Azure Logic Apps](/azure/logic-apps/logic-apps-enterprise-integration-b2b-business-continuity)

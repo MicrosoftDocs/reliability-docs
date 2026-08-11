@@ -198,7 +198,7 @@ The options for testing for zone failures depend on the availability zone config
 
 ## Resilience to region-wide failures
 
-Azure NAT Gateway is a single-region service that operates within the boundaries of a specific Azure region. The service doesn't provide native multi-region capabilities or automatic failover between regions. If a region becomes unavailable, NAT gateways in that region are also unavailable.
+Azure NAT Gateway is a single-region service that operates within the boundaries of a specific Azure region. The service doesn't provide native multiregion capabilities or automatic failover between regions. If a region becomes unavailable, NAT gateways in that region are also unavailable.
 
 If you design a networking approach that spans multiple regions, deploy independent NAT gateways in each region.
 

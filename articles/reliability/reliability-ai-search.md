@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure AI Search
-description: Learn how to make Azure AI Search resilient to transient faults, availability zone outages, and region outages using replicas and multi-region deployments.
+description: Learn how to make Azure AI Search resilient to transient faults, availability zone outages, and region outages using replicas and multiregion deployments.
 author: mattwojo
 ms.author: mattwoj
 ms.service: azure-ai-search
@@ -149,9 +149,9 @@ AI Search manages traffic routing for zone-redundant services. You don't need to
 
 AI Search is a single-region service. If the region becomes unavailable, your search service also becomes unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-You can optionally deploy multiple AI Search services in different regions. You're responsible for deploying and configuring separate services in each region. If you create an identical deployment in a secondary Azure region that uses a multi-region architecture, your application becomes less susceptible to a single-region disaster.
+You can optionally deploy multiple AI Search services in different regions. You're responsible for deploying and configuring separate services in each region. If you create an identical deployment in a secondary Azure region that uses a multiregion architecture, your application becomes less susceptible to a single-region disaster.
 
 When you follow this approach, you must synchronize indexes across regions to recover the last application state. You must also configure load balancing and failover policies. 
 

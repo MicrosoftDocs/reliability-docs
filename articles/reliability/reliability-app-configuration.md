@@ -142,7 +142,7 @@ When you enable geo-replication, consider the following factors:
 
 Each geo-replicated region is billed separately according to the pricing for the respective tier and region. No data egress charges apply for cross-region replication. For pricing details, see [App Configuration pricing](https://azure.microsoft.com/pricing/details/app-configuration/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 To set up replication for a newly created configuration store, see [Enable geo-replication](/azure/azure-app-configuration/howto-geo-replication).
 

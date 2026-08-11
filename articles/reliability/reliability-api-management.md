@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure API Management
-description: Learn about resiliency features in Azure API Management, including availability zones, multi-region deployments, transient fault handling, and service maintenance to achieve high availability and meet SLA requirements.
-author: dlepow
-ms.author: danlep
+description: Learn about resiliency features in Azure API Management, including availability zones, multiregion deployments, transient fault handling, and service maintenance to achieve high availability and meet SLA requirements.
+author: PatAltimore
+ms.author: patricka
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
@@ -39,13 +39,13 @@ API Management service tiers provide different levels of reliability:
 
 - **Premium (classic) tier:** Supports multiple units that can be distributed across availability zones and regions for maximum resilience.
 
-- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multi-region deployments. 
+- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multiregion deployments. 
 
-- **Basic v2, Standard, and Standard v2 tiers:** All support multiple units within a single datacenter. They don't support availability zones or multi-region deployments.
+- **Basic v2, Standard, and Standard v2 tiers:** All support multiple units within a single datacenter. They don't support availability zones or multiregion deployments.
 
-- **Developer tier:** Supports only a single unit and provides no availability zone or multi-region support. This tier is designed for development and testing scenarios. It isn't suitable for production workloads.
+- **Developer tier:** Supports only a single unit and provides no availability zone or multiregion support. This tier is designed for development and testing scenarios. It isn't suitable for production workloads.
 
-- **Consumption tier:** Has built-in resiliency capabilities and is resilient to a range of faults within a single Azure datacenter. However, the Consumption tier doesn't provide support for availability zones or multi-region deployments. To understand the expected uptime of a Consumption tier API Management instance, review the [service-level agreement (SLA)](#service-level-agreement).
+- **Consumption tier:** Has built-in resiliency capabilities and is resilient to a range of faults within a single Azure datacenter. However, the Consumption tier doesn't provide support for availability zones or multiregion deployments. To understand the expected uptime of a Consumption tier API Management instance, review the [service-level agreement (SLA)](#service-level-agreement).
 
 > [!NOTE]
 > The Developer and Premium tiers of API Management support [self-hosted gateways](/azure/api-management/self-hosted-gateway-overview), which you can run on your own infrastructure. When you use self-hosted gateways, you're responsible for configuring them to meet your reliability requirements. Self-hosted gateways are outside the scope of this article.
@@ -356,20 +356,20 @@ In the Premium v2 tier, the API Management platform manages traffic routing, fai
 
 ## Resilience to region-wide failures 
 
-By using a multi-region deployment, you can add regional API gateways to an existing API Management instance in one or more supported Azure regions. Multi-region deployment helps reduce any request latency that's perceived by geographically distributed API consumers. A multi-region deployment also improves service availability if one region goes offline.
+By using a multiregion deployment, you can add regional API gateways to an existing API Management instance in one or more supported Azure regions. A multiregion deployment helps reduce any request latency that's perceived by geographically distributed API consumers. A multiregion deployment also improves service availability if one region goes offline.
 
 > [!IMPORTANT]
-> Multi-region deployments are supported only in the Premium (classic) tier of API Management. 
+> Multiregion deployments are supported only in the Premium (classic) tier of API Management.
 
 :::zone pivot="other-tiers,premium-v2"
 
-To view information about multi-region support, be sure to select the Premium (classic) tier at the beginning of this page.
+To view information about multiregion support, be sure to select the Premium (classic) tier at the beginning of this page.
 
 :::zone-end
 
 :::zone pivot="premium-classic"
 
-### Microsoft-managed multi-region deployment
+### Microsoft-managed multiregion deployment
 
 When you add a region, you configure:
 
@@ -381,9 +381,9 @@ When you add a region, you configure:
 
 #### Requirements
 
-- **Region support:** You can create multi-region deployments in the Premium (classic) tier with any Azure region that supports API Management. To see which regions support multi-region deployments, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
+- **Region support:** You can create multiregion deployments in the Premium (classic) tier with any Azure region that supports API Management. To see which regions support multiregion deployments, see [Product availability by region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table).
 
-- **Tier requirement:** You must use the Premium (classic) tier to configure multi-region support. To upgrade your instance to the Premium (classic) tier, see [Upgrade to the Premium tier](/azure/api-management/upgrade-and-scale#change-your-api-management-service-tier).
+- **Tier requirement:** You must use the Premium (classic) tier to configure multiregion support. To upgrade your instance to the Premium (classic) tier, see [Upgrade to the Premium tier](/azure/api-management/upgrade-and-scale#change-your-api-management-service-tier).
 
 #### Considerations
 
@@ -397,9 +397,9 @@ When you add a region, you configure:
 
 Adding regions incurs costs. For information, see [API Management pricing](https://azure.microsoft.com/pricing/details/api-management/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
-To configure multi-region support on an API Management instance, see [Deploy an API Management instance to multiple Azure regions](/azure/api-management/api-management-howto-deploy-multi-region#deploy-api-management-service-to-an-additional-region).
+To configure multiregion support on an API Management instance, see [Deploy an API Management instance to multiple Azure regions](/azure/api-management/api-management-howto-deploy-multi-region#deploy-api-management-service-to-an-additional-region).
 
 To remove a region from an API Management instance, see [Remove an API Management service region](/azure/api-management/api-management-howto-deploy-multi-region#remove-an-api-management-service-region).
 
@@ -407,15 +407,15 @@ To remove a region from an API Management instance, see [Remove an API Managemen
 
 In a region-down scenario, there's no guarantee that requests for more capacity in another region succeed. If you need guaranteed capacity when a region fails, you should create and configure your API Management instance to account for losing a region. You can do that by over-provisioning the capacity of your API Management instance. To learn more about the principle of over-provisioning, see [Manage capacity with over-provisioning](./concept-redundancy-replication-backup.md#manage-capacity-with-over-provisioning).
 
-In multi-region deployments, autoscaling applies only to the primary region. Secondary regions require manual scaling adjustments or custom tools that you control.
+In multiregion deployments, autoscaling applies only to the primary region. Secondary regions require manual scaling adjustments or custom tools that you control.
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when API Management instances are configured with multi-region support and all regions are operational.
+This section describes what to expect when API Management instances are configured with multiregion support and all regions are operational.
 
 - **Traffic routing between regions:** API Management automatically routes incoming requests to a regional gateway. A request is routed to the regional gateway with the lowest latency from the client. If you need to use a different routing approach, you can configure your own Traffic Manager with custom routing rules. For more information, see [Use custom routing to API Management regional gateways](/azure/api-management/api-management-howto-deploy-multi-region#use-custom-routing-to-api-management-regional-gateways).
 
-    When a request reaches an API Management regional gateway, it's routed to the backend API unless a policy returns a response directly from the gateway, such as a cached response or an error code. In a multi-region solution, you need to take care to route to an instance of the backend API that meets your performance requirements. For more information, see [Route API calls to regional backend services](/azure/api-management/api-management-howto-deploy-multi-region#route-api-calls-to-regional-backend-services).
+    When a request reaches an API Management regional gateway, it's routed to the backend API unless a policy returns a response directly from the gateway, such as a cached response or an error code. In a multiregion solution, you need to take care to route to an instance of the backend API that meets your performance requirements. For more information, see [Route API calls to regional backend services](/azure/api-management/api-management-howto-deploy-multi-region#route-api-calls-to-regional-backend-services).
 
 - **Data replication between regions:** Gateway configuration, such as APIs and policy definitions, are regularly synchronized between the primary and secondary regions you add. Propagation of updates to the regional gateways normally takes less than 10 seconds.
 
@@ -423,7 +423,7 @@ This section describes what to expect when API Management instances are configur
 
 #### Behavior during a region failure
 
-This section describes what to expect when API Management instances are configured with multi-region support and there's an outage in one of the regions that you use.
+This section describes what to expect when API Management instances are configured with multiregion support and there's an outage in one of the regions that you use.
 
 - **Detection and response:** API Management is responsible for detecting a failure in a region and automatically failing over to a gateway in one of the other regions that you configure.
 

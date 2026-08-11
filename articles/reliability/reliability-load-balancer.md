@@ -172,7 +172,7 @@ You can use Azure Chaos Studio to simulate the failure of a VM in a single zone.
 
 ## Resilience to region-wide failures
 
-Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multi-region support through a global load balancer, which supports load balancing across Azure regions. You can also deploy other load-balancing services to route and fail over across Azure regions.
+Public and internal load balancers are deployed into a single Azure region. If the region becomes unavailable, your load balancers in that region also become unavailable. Load Balancer provides native multiregion support through a global load balancer, which supports load balancing across Azure regions. You can also deploy other load-balancing services to route and fail over across Azure regions.
 
 ### Global load balancers
 
@@ -182,7 +182,7 @@ With global load balancers, you deploy multiple public load balancers in differe
 
 For more information, see [Global load balancer](/azure/load-balancer/cross-region-overview).
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 Azure provides a range of load-balancing services that suit different requirements. Choose a load balancer that meets your resiliency requirements and suits your application type. For more information, see [Load-balancing options](/azure/architecture/guide/technology-choices/load-balancing-overview).
 

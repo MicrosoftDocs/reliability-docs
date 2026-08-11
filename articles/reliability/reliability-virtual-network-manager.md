@@ -97,7 +97,7 @@ Virtual Network Manager can manage virtual networks that are spread across multi
 
 - *Target region:* You can connect your virtual network resources in any Azure region.
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 When you create a Virtual Network Manager instance, you select the region where the instance is hosted. You then add virtual networks to the network groups that the instance manages, and those virtual networks can be in any Azure region.
 

@@ -115,7 +115,7 @@ Charges are based on your App Service plan SKU, the capacity that you specify, a
 
 App Service is a single-region service. If the region becomes unavailable, your application is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 To reduce the risk of a single-region failure affecting your application, you can deploy plans across multiple regions. The following steps help strengthen resilience:
 

@@ -139,7 +139,7 @@ Azure Automation manages traffic routing, failover, and zone recovery for zone-r
 
 Azure Automation is a single-region service. If the region becomes unavailable, your Automation account is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 You can deploy separate Automation accounts into multiple regions and switch between them when needed. You're responsible for deploying the accounts to each region, configuring them appropriately, distributing requests among the accounts, and handling failover if a region is unavailable. For detailed information about approaches you can consider, see [Disaster recovery for Azure Automation](/azure/automation/automation-disaster-recovery).
 

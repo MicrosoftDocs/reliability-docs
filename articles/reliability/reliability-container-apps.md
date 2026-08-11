@@ -172,7 +172,7 @@ To validate your application's resilience to zone failures, simulate zone-level 
 
 Container Apps is a single-region service. If the region becomes unavailable, your environment and apps are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 To reduce the risk of a single-region failure affecting your application, you can deploy environments across multiple regions. The following steps help strengthen resilience:
 

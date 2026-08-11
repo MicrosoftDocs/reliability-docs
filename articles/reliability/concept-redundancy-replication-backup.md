@@ -192,7 +192,7 @@ As an example, Azure Storage can provide both synchronous and asynchronous repli
 
 For more information, see [Azure Storage redundancy](/azure/storage/common/storage-redundancy).
 
-Another example is Azure Cosmos DB, which also provides replication. All Azure Cosmos DB databases have multiple replicas. When you distribute replicas globally, it supports multi-region writes, where clients can write to a replica in any of the regions you use. Those write operations are synchronously replicated within the region, and then replicated asynchronously across other regions. Azure Cosmos DB provides a conflict resolution mechanism in case there are write conflicts across the different replicas. To learn more, see [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-dist-under-the-hood).
+Another example is Azure Cosmos DB, which also provides replication. All Azure Cosmos DB databases have multiple replicas. When you distribute replicas globally, it supports multiregion writes, where clients can write to a replica in any of the regions you use. Those write operations are synchronously replicated within the region, and then replicated asynchronously across other regions. Azure Cosmos DB provides a conflict resolution mechanism in case there are write conflicts across the different replicas. To learn more, see [Global data distribution with Azure Cosmos DB - under the hood](/azure/cosmos-db/global-dist-under-the-hood).
 
 If you use virtual machines, you can use [Azure Site Recovery](/azure/site-recovery/site-recovery-overview) to replicate virtual machines and their disks between availability zones or to another Azure region.
 

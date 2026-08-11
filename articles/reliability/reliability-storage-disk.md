@@ -214,11 +214,11 @@ You should test your application's resilience to zone failures and managed disk 
 
 ## Resilience to region-wide failures
 
-Azure Disk Storage is a single-region service that operates within the boundaries of a specific Azure region. The service doesn't provide native multi-region capabilities or automatic failover between regions. If a region becomes unavailable, managed disk resources in that region are also unavailable.
+Azure Disk Storage is a single-region service that operates within the boundaries of a specific Azure region. The service doesn't provide native multiregion capabilities or automatic failover between regions. If a region becomes unavailable, managed disk resources in that region are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-You can create a multi-region solution by deploying VMs and disks in each region, replicating or backing up data across regions, and failing over or restoring from backups when needed. You're responsible for managing resources in every region, coordinating and synchronizing data, and handling failover or restoration. Some common approaches include:
+You can create a multiregion solution by deploying VMs and disks in each region, replicating or backing up data across regions, and failing over or restoring from backups when needed. You're responsible for managing resources in every region, coordinating and synchronizing data, and handling failover or restoration. Some common approaches include:
 
 - [Azure Site Recovery](/azure/site-recovery/azure-to-azure-tutorial-enable-replication), which provides cross-region replication of your VMs and disks.
 - [Azure Backup](/azure/backup/disk-backup-overview), which provides managed backup services, including disk backup services. You can use [cross-region restore](/azure/backup/backup-azure-arm-restore-vms#cross-region-restore) to restore VMs in another region.

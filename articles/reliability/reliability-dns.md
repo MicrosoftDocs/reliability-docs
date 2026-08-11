@@ -37,7 +37,7 @@ To create an Azure DNS Private Resolver using Azure portal, see [Quickstart: Cre
 
 
 
-## Disaster recovery in multi-region geography
+## Disaster recovery in multiregion geography
 
 There are two technical aspects towards setting up your disaster recovery architecture:
 

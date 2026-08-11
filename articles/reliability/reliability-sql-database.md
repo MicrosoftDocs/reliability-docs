@@ -292,7 +292,7 @@ The SQL Database platform manages traffic routing, failover, and zone recovery p
 
 ## Resilience to region-wide failures
 
-This section provides an overview of two related but separate features that can be used for multi-region geo-replication of SQL Database:
+This section provides an overview of two related but separate features that can be used for multiregion geo-replication of SQL Database:
 
 - [Active geo-replication](#active-geo-replication) replicates a single database to a synchronized secondary database.
 
@@ -335,7 +335,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 :::zone-end
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Enable active geo-replication:** For more information about how to enable active geo-replication in the Azure portal, see [Configure active geo-replication for SQL Database](/azure/azure-sql/database/active-geo-replication-configure-portal) or [Active geo-replication](/azure/azure-sql/database/active-geo-replication-overview).
 
@@ -426,7 +426,7 @@ If you don't use a secondary database for any read or write workloads, consider 
 
 :::zone-end
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Enable failover groups:** You configure a failover group on a logical server. You can add all the databases in the logical server to the failover group, or you can select a subset of databases to add.
 

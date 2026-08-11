@@ -230,11 +230,11 @@ You're responsible for any infrastructure response to zone failures, such as fai
 
 Each Azure VMware Solution cluster is deployed within a single Azure region. If the region becomes unavailable, your private cloud and all resources within it become unavailable.
 
-However, you can also design custom multi-region solutions that combine different approaches or integrate with your existing infrastructure to meet your specific business requirements and recovery objectives.
+However, you can also design custom multiregion solutions that combine different approaches or integrate with your existing infrastructure to meet your specific business requirements and recovery objectives.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-To achieve multi-region resilience with Azure VMware Solution, you need to deploy separate private clouds in multiple regions and implement failover and other disaster recovery (DR) solutions.
+To achieve multiregion resilience with Azure VMware Solution, you need to deploy separate private clouds in multiple regions and implement failover and other disaster recovery (DR) solutions.
 
 A range of options support different resilience requirements. For more information, see [Disaster recovery solutions for Azure VMware Solution virtual machines](/azure/azure-vmware/ecosystem-disaster-recovery-vms).
 

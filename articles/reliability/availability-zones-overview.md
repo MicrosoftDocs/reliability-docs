@@ -130,7 +130,7 @@ Azure doesn't charge for data transfer between availability zones in the same re
 To achieve reliable workloads:
 
 - Production workloads should be configured to use multiple availability zones if the region they are in supports availability zones.
-- For mission-critical workloads, you should consider a solution that is *both* multi-region and multi-zone.
+- For mission-critical workloads, you should consider a solution that is *both* multiregion and multi-zone.
 
 For workloads constrained to a single region by data residency or sovereignty requirements, deploying across multiple availability zones is the primary recommended way to maximize availability without moving data outside the region. A zone-resilient configuration keeps replicas inside the regional boundary while maintaining continuity if a single zone fails.
 
