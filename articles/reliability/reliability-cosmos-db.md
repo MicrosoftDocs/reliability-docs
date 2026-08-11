@@ -194,9 +194,6 @@ Azure Cosmos DB provides multiple types of failover:
 
 - **Per-partition automatic failover (PPAF):** Internally, Azure Cosmos DB spreads your data across multiple physical partitions. If a problem occurs with the infrastructure supporting a partition, other partitions might not be affected. PPAF enables single-write region accounts to automatically fail over individual partitions to a secondary region while keeping healthy partitions in the primary region. PPAF can help to minimize downtime and enable faster recovery during a partial region failure. For more information, see [How to onboard and adopt Per-Partition Automatic Failover (PPAF) for Azure Cosmos DB](/azure/cosmos-db/how-to-configure-per-partition-automatic-failover).
 
-    > [!NOTE]
-    > Per Partition Automatic Failover is in public preview. This feature is provided without a service level agreement. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
-
 - **Forced failover:** You can take one of your account's regions offline. This is also referred to as a *customer managed failover*, or an *offline region* operation. This is the recommended approach for quickly restoring availability during an outage. You're responsible for detecting the outage and triggering the failover. You can also use forced failovers to simulate region-down scenarios for testing, like during a disaster recovery drill.
 
     If you take the write region offline, the read region with the next highest priority becomes the new write region. If you take a read region offline, your applications can connect to any other read region in the account.
