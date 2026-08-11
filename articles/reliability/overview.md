@@ -1,115 +1,105 @@
 ---
-title: Azure Reliability Documentation
-description: Overview of Azure reliability documentation, including platform capabilities, guides for how each Azure service supports reliability, and reliability concepts.
+title: Reliability in Azure
+description: Understand what reliability means in Azure, why it matters for your business, and the principles and platform capabilities that help you design reliable workloads.
 author: glynnniall
-ms.topic: concept-article
-ms.date: 06/23/2025
-ms.author: pnp
+ms.topic: overview
+ms.date: 08/12/2026
+ms.author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
 ms.custom: subject-reliability
-CustomerIntent: As a cloud architect/engineer, I want to learn about Azure Reliability.
+CustomerIntent: As a cloud architect, SRE, or engineer, I want to understand how reliability works in Azure so that I can design and operate workloads that meet my availability and recovery objectives using the right combination of platform capabilities, services, and architectural patterns.
 ---
 
-# What is Azure reliability documentation?
+# Reliability in Azure
 
-Azure provides a comprehensive set of reliability capabilities to help you meet your workload requirements.  The Azure reliability documentation provides service-specific guides on how each Azure service supports those platform reliability capabilities, such as transient fault handling, availability zones, multiregion support, and backup support. To see the current list of reliability service guides, see [Reliability guides by service](./reliability-guidance-overview.md).
+In cloud environments, failures are inevitable. Hardware faults, software defects, configuration errors, traffic spikes, data center outages, and even region-wide outages can occur. *Reliability* is the ability of a workload to keep meeting business expectations, even during failures or disruptions. With the right architecture and operations, failures don't need to result in downtime.
 
-In addition to the reliability service guides, Azure reliability documentation also includes general information, such as:
+Unplanned downtime can have a huge impact. It carries financial cost and damages customer and user trust. Beyond these immediate impacts, poor reliability affects compliance obligations and competitive positioning. Your teams spend more time firefighting and less time delivering value. It might even trigger contractual service-level penalties.
 
-- **Azure regions**: Information on Azure regions, paired and nonpaired regions, and different region configurations.
-- **Azure availability zones**: Information on availability zones, including how they support high availability and disaster recovery. This section also includes lists of Azure services and regions that support availability zones.
-- **Reliability concepts**: Fundamental reliability concepts, such as:
-    - Business continuity, high availability, and disaster recovery.
-    - Redundancy, replication, and backup.
-    - Failover and failback.
-    - Shared responsibility between Microsoft and you.
-    - Sovereignty and data residency considerations.
+Azure provides resilient infrastructure and managed services, but your workload's reliability depends on design and operational decisions you make: how you design your architecture, configure services, manage dependencies, automate responses to problems, and test software and processes. Designing for reliability early helps you minimize failures and ensures that, when they do occur, your workload degrades in predictable and controlled ways that align with business priorities.
 
-## What is reliability?
+A reliable workload has two essential properties:
 
-*Reliability* refers to the ability of a workload to perform consistently at an acceptable service level, and in accordance with business continuity requirements. Reliability is a key concept in cloud computing. In Azure, reliability is achieved through a combination of factors, including the design of the platform itself, its services, the architecture of your applications, and the implementation of best practices.
+- It's *resilient*, meaning it can absorb failures and changes in the environment while continuing to operate at an acceptable service level.
+- It's also *recoverable*, meaning that when disruption occurs, the workload can restore normal operations within defined time and data-loss limits.
 
-Two key approaches to achieving reliability in a workload are:
+You need both properties to meet real-world availability expectations and maintain business continuity.
 
-- *Resiliency:* the ability to withstand and continue operating when things go wrong, such as temporary errors, infrastructure outages, or unexpected spikes in demand. Resiliency helps you to avoid disruptions.
+Reliability in Azure works across three interconnected layers:
 
-- *Recoverability:* the ability to restore normal operations after a disruption. If a disruption does occur, recoverability helps you to restore back to a reliable state.
+- **Your application**: Your architectural choices, practices, and processes, including dependency management, runbooks, automation, and testing
+- **Reliability features**, including:
+  - **Workload services and configuration**: How you configure the Azure services that run your workload, and the reliability capabilities you configure within those services
+  - **Azure platform services:** Azure services that specifically support workload reliability, such as load balancing, DNS, traffic routing, and monitoring
+- **Reliability foundations**: Azure's built-in resilience, such as availability zones, regions, and safe deployment practices
 
-The Azure platform and services offer a number of reliability features such as availability zones, multiregion support, data replication, and backup and restore. These features must be considered when designing a workload to meet its business continuity requirements.
+These layers work together to determine overall workload reliability. Understanding them helps you distinguish between what Azure provides by default and what you need to design, configure, and operate.
 
-> [!TIP]
-> Reliability also incorporates other elements of your solution design too, including how you deploy changes safely, how you manage your performance to avoid downtime due to high load, and how you test and validate each part of your solution. To learn more, see the [Azure Well-Architected Framework](/azure/well-architected).
+This model helps you leverage what Azure provides while taking responsibility for what only you can design. This article focuses on what Azure provides across these layers. For comprehensive guidance on the workload design and operations layer (designing resilient solutions and architectural patterns), see the [Azure Well-Architected Framework](/azure/well-architected/) and especially the [reliability pillar](/azure/well-architected/reliability/).
 
-## Reliability guides for Azure services
+## Shared responsibility for reliability
 
-Azure provides a comprehensive set of reliability capabilities to help you meet your workload requirements.  Reliability guides for Azure services are service-specific guides on how each Azure service supports those platform reliability capabilities, such as transient fault handling, resiliency to availability zone and regional outages, and backup and restore. To see the current list of reliability service guides, see [Reliability guides for Azure services](./reliability-guidance-overview.md).
+Reliability in Azure follows a shared responsibility model. Microsoft provides the resilient platform through Azure. You design the resilient workload.
 
-## Azure regions
+![Diagram showing the layers of reliability in Azure.](./media/overview/reliability-shared.svg)
 
-Azure provides over 60 regions globally, that are located across many different geographies. Each region is a set of physical facilities that include datacenters and networking infrastructure. All regions may be divided into geographical areas called geographies. Each geography is a data residency boundary, and may contain one or more regions.
+- **Microsoft** owns the platform foundations and platform reliability services. This ownership includes the resilient infrastructure (physical redundancy, fault isolation, and healing), availability zones, regional distribution, safe deployment practices, and platform-level services like load balancing, traffic routing, and monitoring. Microsoft is responsible for the reliability of the Azure platform, and for the reliability of services as defined by each service's published SLA and documentation such as their [reliability guide](overview-reliability-guidance.md).
 
-[Azure regions](./regions-overview.md) provide certain types of resiliency options. Many regions provide [availability zones](./availability-zones-overview.md), and some have a [paired region while other regions are nonpaired](./regions-overview.md). When you choose a region for your services, it's important to pay attention to the resiliency options that are available in that region. 
+- **You** own the workload design and operations. You're responsible for translating Azure's capabilities into reliable workload behavior through architecture decisions, configuration choices, operational practices, and testing.
 
-- To view the list of Azure regions, see [List of Azure regions](./regions-list.md).
-- To see the list of services that are deployed to Azure regions, see [Product Availability by Region](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/table) 
+    Azure can't know your availability targets, acceptable tradeoffs, business context, or application-specific requirements. Only you can define those requirements and design accordingly. Azure provides capabilities, while you select and configure them. For example, you configure failover behavior for services like databases, and you define load balancer health probes that accurately represent application health so traffic routing decisions are correct, even during failures.
 
-## Azure availability zones
+    > [!IMPORTANT]
+    > The platform provides building blocks, not end-to-end guarantees. Your design and operational choices determine whether those capabilities translate into a reliable workload. For a full breakdown of the shared responsibility model, see [Shared responsibility in the cloud](concept-shared-responsibility.md).
 
-Many Azure regions provide availability zones, which are separated groups of datacenters within a region. Availability zones are an important way to achieve reliability on the Azure platform because they provide some level of physical isolation within a region.
+Service level agreements (SLAs) define reliability commitments and expectations across Azure services. Understanding SLAs is essential when evaluating services and designing for specific availability targets. [Azure services publish SLA commitments](https://aka.ms/csla) that can vary by configuration and redundancy level. Other services you use from other providers might also publish SLAs. For comprehensive guidance on how SLAs work and relate to your workload's availability expectations, see [Service level agreements](concept-service-level-agreements.md).
 
-Availability zones are close enough to have low-latency connections to other availability zones, but are far enough apart to reduce the likelihood that more than one will be affected by local outages or weather. Availability zones have independent power, cooling, and networking infrastructure. They're designed so that if one zone experiences an outage, then regional services, capacity, and high availability are supported by the remaining zones. 
+## Resilient foundations in Azure
 
-- For more information on availability zones, see [What are availability zones?](./availability-zones-overview.md).
-- To view which regions support availability zones, see [List of Azure regions](./regions-list.md).
+Azure is designed with multiple layers of resilience built into the platform itself. These foundations provide the base capabilities upon which reliable workloads are built:
 
-## Reliability concepts
+- **Physical infrastructure resilience:** Azure datacenters are designed with redundant infrastructure like power, cooling, and network connectivity. The Azure fabric controller automatically isolates and manages hardware failures. It detects faults and orchestrates workload migration to healthy hardware without customer intervention.
 
-The reliability concepts section provides an overview of some of the key concepts and principles that underpin reliability in Azure. 
+- **Regions:** Azure operates in over 70 regions worldwide. This geographic distribution enables workloads to withstand region-wide disruptions and outages through planned failover capabilities, while following your data residency requirements. For more information, see [Azure regions overview](./regions-overview.md).
 
-### Business continuity, high availability, and disaster recovery
+- **Availability zones:** Many Azure regions include physically separate datacenters within the same region. These availability zones are connected by high-speed, low-latency networks. Each zone has independent power, cooling, and networking to protect against datacenter-level failures while maintaining synchronous replication capabilities for many Azure services. For more information, see [What are availability zones?](./availability-zones-overview.md)
 
-Business continuity planning can be understood as the ongoing process of risk management through high availability and disaster recovery design. 
+- **Safe deployments:** Azure implements controlled, staggered deployment processes for platform updates and service changes to minimize the risk of widespread service disruption. The platform rolls out updates gradually, such as across fault domains, availability zones, and regions, with automated rollback capabilities when it detects problems. This approach ensures that platform changes don't introduce reliability risks to customer workloads.
 
-When considering business continuity, it's important to understand the following terms:
+Azure provides these platform-level foundations automatically. They form the base layer upon which you build reliable workloads. However, you must still configure your services correctly and combine these capabilities in ways that meet your specific business requirements.
 
-- *Business continuity* is the state in which a business can continue operations during failures, outages, or disasters. Business continuity requires proactive planning, preparation, and the implementation of resilient systems and processes.
+## Azure services that support your reliability
 
-- *High availability* is about designing a solution to meet the business needs for availability, and being resilient to day-to-day issues that might affect the uptime requirements.
+Azure provides platform capabilities that translate reliability concepts into actionable building blocks for your architecture. These capabilities work together to enable resilient architectures, and many Azure services include built-in implementations of these patterns:
 
-- *Disaster recovery* is about planning how to deal with uncommon risks and the catastrophic outages that can result.
+| Capability | Description |
+| --- | --- |
+| <img src="./media/overview/azure-open-artificial-intelligence-machine-learning.svg" alt="AI-powered reliability optimization" width="32" /> **AI-powered reliability optimization** | Uses AI-driven capabilities to assess and improve reliability. These capabilities analyze workload patterns, identify potential risks, and provide recommendations that help teams move from reactive troubleshooting to proactive reliability management. These capabilities surface reliability signals and translate them into actionable recommendations that help teams prioritize and improve reliability over time.<br><br>Azure provides several AI-driven reliability services, including:<br>- [Azure Resiliency capabilities](/azure/resiliency/)<br>- [Resiliency capabilities in Agents (preview) in Azure Copilot](/azure/copilot/resiliency-agent)<br>- [Azure SRE Agent](/azure/sre-agent/)<br><br>These services analyze workload patterns and suggest improvements to optimize your reliability posture across the board. |
+| <img src="./media/overview/load-balancer-hub-networking.svg" alt="Load balancing and traffic management" width="32" /> **Load balancing and traffic management** | Enables reliability by routing traffic between redundant instances and handling failover automatically. This capability is essential for maintaining service availability when individual components fail.<br><br>Azure provides load balancing at multiple layers, including:<br>- [Azure Load Balancer](/azure/load-balancer/load-balancer-overview) for Layer-4 TCP/UDP traffic distribution<br>- [Azure Application Gateway](/azure/application-gateway/overview) for Layer-7 HTTP routing with application-aware health checks<br>- [Azure Front Door](/azure/frontdoor/front-door-overview) for global HTTP load balancing with rapid failover<br>- [Azure Traffic Manager](/azure/traffic-manager/traffic-manager-overview) for DNS-based global endpoint distribution<br><br>If you need help deciding which load balancer to use for your scenario, see [Load balancing options](/azure/architecture/guide/technology-choices/load-balancing-overview). |
+| <img src="./media/overview/backup-vault-other.svg" alt="Backup and data protection" width="32" /> **Backup and data protection** | Safeguards against data loss and corruption, and enables recovery after a problem occurs.<br><br>Azure provides several backup and recovery capabilities, including:<br>- [Azure Backup](/azure/backup/backup-overview) for centralized backup with configurable retention for virtual machines, blob containers, files, and some databases<br>- Native backup and restore features in many Azure services, including most database services<br>- [Bicep](/azure/azure-resource-manager/bicep/overview) and other infrastructure as code tools for configuration backup, drift protection, and rapid environment recreation<br><br>Review each Azure service's reliability guide to understand the backup approaches that the service supports. |
+| <img src="./media/overview/object-replication-menu.svg" alt="Geographic replication and failover" width="32" /> **Geographic replication and failover** | Enables recovery from regional failures through cross-region data replication and automated failover capabilities.<br><br>[Azure Site Recovery](/azure/site-recovery/site-recovery-overview) orchestrates disaster recovery for virtual machine workloads with automated replication and failover sequencing. Many Azure services also provide built-in geo-replication features, including:<br>- [Azure Cosmos DB](/azure/cosmos-db/) with native cross-region data replication and failover capabilities<br>- [Azure API Management](/azure/api-management/) with native cross-region failover capabilities<br><br>Service reliability guides detail any geo-replication options available for each service. |
+| <img src="./media/overview/monitoring-accounts-other.svg" alt="Monitoring and observability" width="32" /> **Monitoring and observability** | Provides comprehensive visibility into reliability posture and enables proactive response to issues.<br><br>Azure provides multiple observability services, including:<br>- [Azure Monitor](/azure/azure-monitor/overview) and [Application Insights](/azure/azure-monitor/app/app-insights-overview) for real-time monitoring, alerting, and dependency tracking<br>- [Health models in Azure Monitor](/azure/azure-monitor/health-models/overview) to monitor the health of a whole workload<br>- [Azure Service Health](/azure/service-health/overview) for personalized alerts and guidance for Azure service issues that may affect your workloads<br><br>Together, these capabilities help you understand whether you're meeting reliability requirements and respond quickly when issues arise. |
+| <img src="./media/overview/json-web-token-validation-menu.svg" alt="Reliability testing and validation" width="32" /> **Reliability testing and validation** | Helps verify that workloads behave as expected under failure conditions and helps ensure your solution meets reliability requirements before issues affect users.<br><br>Azure provides reliability testing services, including:<br>- [Azure Chaos Studio](/azure/chaos-studio/chaos-studio-overview) for controlled fault injection experiments to validate self-healing behavior and resilience to real-world failures<br>- [Azure App Testing](/azure/app-testing/overview-what-is-azure-app-testing) for performance and functional testing to understand how applications behave, including under stress |
 
-For information on business continuity and business continuity planning through high availability and disaster recovery design, see [What are business continuity, high availability, and disaster recovery?](./concept-business-continuity-high-availability-disaster-recovery.md).
-### Redundancy, replication, and backup
+## Enable reliability in Azure services
 
-We often think about the cloud as a globally distributed, ubiquitous system. However, in reality the cloud is made up of hardware running in datacenters. Resiliency requires that you account for some of the risks associated with the physical locations in which your cloud-hosted components run.
+The platform provides service-layer reliability capabilities through dozens of Azure services, each with specific strengths and use cases. Each service's reliability guide provides details on how the service can remain available during different scenarios, for example:
 
-*Redundancy* is the ability to maintain multiple identical copies of a service component, and to use those copies in a way that prevents any one component from becoming a single point of failure.
+- **Transient faults**, which are short intermittent failures. The service guides provide recommendations for best practices to minimize their impact, such as retrying and using Microsoft-provided SDKs.
+- **Availability zone failures**, so the service can automatically redirect requests to maintain high availability.
+- **Region-wide failures**, so the service can fail over to a secondary region and continue operating during a region disruption.
 
-*Replication* or data redundancy is the ability to maintain multiple copies of data, called replicas.
+To view the reliability guides for many Azure services, see [Reliability guides by service](./overview-reliability-guidance.md).
 
-*Backup* is the ability to maintain a timestamped copy of data that can be used to restore data that has been lost.
+## Designing reliable workloads
 
-For an introduction to redundancy, replication, and backup, see [What is redundancy, replication, and backup?](./concept-redundancy-replication-backup.md).
+Reliability emerges from a continuous cycle of defining targets, designing for failure and fast recovery, testing assumptions, and improving through operational learning. Use the Azure Well-Architected Framework and service reliability guides to understand what each service provides by default and what requires explicit configuration. For a structured approach to implementing reliability, see the [Azure Well-Architected Framework reliability maturity model](/azure/well-architected/reliability/maturity-model).
 
-### Failover and failback
-
-A common reason for maintaining redundant copies of both applications and data replicas is to be able to perform a failover. With failover, you can redirect traffic and requests from unhealthy instances to healthy ones. Then, once the original instances become healthy again, you can perform a failback to return to the original configuration.
-
-For more information on failover and failback, see [What is failover and failback?](./concept-failover-failback.md).
-
-### Shared responsibility
-
-Azure services are built to be resilient to many common failures, and each product provides a service level agreement (SLA) that describes the uptime you can expect. However, the overall reliability of your workload depends on how you have designed your solution to meet your business needs. Some business continuity plans may consider certain failure risks to be unimportant, while others may consider them critical.
-
-In the Azure public cloud platform, reliability is a shared responsibility between Microsoft and you. Because there are different levels of reliability in each workload that you design and deploy, it's important that you understand who has primary responsibility for each one of those levels from a reliability perspective. To better understand how shared responsibility works, especially when confronting an outage or disaster, see [Shared responsibility for reliability](concept-shared-responsibility.md).
+As you design, connect *foundational concepts* with *technical concepts*. Foundational concepts such as [business continuity](concept-business-continuity-high-availability-disaster-recovery.md) and [shared responsibility](concept-shared-responsibility.md) define what outcomes you need to achieve. Technical concepts such as [redundancy](concept-redundancy-replication-backup.md), [replication](concept-redundancy-replication-backup.md), [backup](concept-redundancy-replication-backup.md), [failover](concept-failover-failback.md), and [failback](concept-failover-failback.md) define how you implement those outcomes in your architecture and operations. [Service level agreements](concept-service-level-agreements.md) help you to understand the guarantees you receive from your service providers.
 
 ### Sovereignty and data residency
 
-When you design reliability, include sovereignty and data residency requirements early because they affect your region selection, replication strategy, and failover paths. A resilient architecture can still fail compliance requirements if failover or data movement crosses restricted boundaries. For more information, see [Reliability and sovereignty](./concept-reliability-sovereignty.md).
+When you design reliability, include sovereignty and data residency requirements early because they affect region selection, replication strategy, and failover paths. A resilient architecture can still fail compliance requirements if failover or data movement crosses restricted boundaries. For more information, see [Reliability and sovereignty](./concept-reliability-sovereignty.md).
 
-## Related content
-
-- [Availability of service by category](availability-service-by-category.md)
-- [Build solutions for high availability using availability zones](/azure/architecture/high-availability/building-solutions-for-high-availability)
-- [Training: Describe high availability and disaster recovery strategies](/training/modules/describe-high-availability-disaster-recovery-strategies/) 
+Reliability in Azure is achieved by combining resilient platform foundations with thoughtful workload design and operations. By understanding what Azure provides and where you need to make design and configuration decisions, you can build systems that continue to meet business expectations, even in the presence of failures.
