@@ -79,7 +79,7 @@ Azure Files provides two types of availability zone support:
 
     - *LRS with zonal placement:* LRS with zonal placement is available for storage accounts that meet the following requirements:
       - Must use the premium storage tier (SSD media tier).
-      - Classic Azure file shares only (using the Microsoft.Storage resource provider). Zonal placement isn't currently possible for file shares created with the Microsoft.FileShares resource provider (preview).
+      - Classic Azure file shares only (use the Microsoft.Storage resource provider). You can't use zonal placement for file shares created with the Microsoft.FileShares resource provider.
 
 ### Cost
 

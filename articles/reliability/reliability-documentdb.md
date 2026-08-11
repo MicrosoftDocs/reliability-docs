@@ -37,7 +37,7 @@ To enable availability zones, you must enable High availability (HA) when [creat
 
 [!INCLUDE [introduction to disaster recovery](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-disaster-recovery-description-include.md)]
 
-Azure DocumentDB doesn't provide built-in automatic failover or disaster recovery. Planning for high availability is a critical step as your solution scales.
+Azure DocumentDB supports service-managed automatic failover for multiregion clusters. For single-region deployments, planning for high availability and disaster recovery is a critical step as your solution scales.
 
 ### Disaster recovery in single-region geography
 
