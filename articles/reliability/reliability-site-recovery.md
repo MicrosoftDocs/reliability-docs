@@ -222,7 +222,7 @@ For Azure-to-Azure replication, Site Recovery provides resilience to region fail
 
 - **Capacity reservations:** You're responsible for verifying that your target region supports the VM types that you need and that it has available capacity for your workload. We recommend that you use [on-demand capacity reservations](/azure/virtual-machines/capacity-reservation-overview) to ensure that compute resources are available for your workload if a failover occurs.
 
-### Configure multi-region support
+### Configure multiregion support
 
 - **Recovery Services vault:** You need to select the vault's region. For more information, see [Considerations](#considerations).
 

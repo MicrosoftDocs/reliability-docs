@@ -111,7 +111,7 @@ Azure Storage Mover is a single-region service. When you deploy an Azure Storage
 
 If your storage mover is in an Azure region with a pair, its configuration metadata is [replicated to the paired Azure region](#microsoft-managed-failover-to-a-paired-region) for disaster recovery purposes, and Microsoft can trigger failover to the paired region during a disaster affecting your primary region.
 
-If your storage mover is in a *nonpaired region*, Microsoft doesn't replicate configuration metadata, and there's no built-in failover to another region. However, you can deploy separate resources into multiple regions. In this scenario, it's your responsibility to manage replication, traffic distribution, and failover. If you use a nonpaired region, or if the built-in metadata replication doesn't meet your needs, you can create a [custom multi-region failover strategy](#custom-multi-region-solutions-for-resiliency).
+If your storage mover is in a *nonpaired region*, Microsoft doesn't replicate configuration metadata, and there's no built-in failover to another region. However, you can deploy separate resources into multiple regions. In this scenario, it's your responsibility to manage replication, traffic distribution, and failover. If you use a nonpaired region, or if the built-in metadata replication doesn't meet your needs, you can create a [custom multiregion failover strategy](#custom-multiregion-solutions-for-resiliency).
 
 > [!NOTE]
 > You're responsible for disaster recovery for your data sources (including Azure and on-premises data sources), targets, and agents.
@@ -129,19 +129,19 @@ In the event of a region outage, Microsoft might perform a failover to the paire
 Failover of Storage Mover resources might happen at a different time than any failover of other Azure services.
 
 > [!IMPORTANT]
-> Microsoft is unlikely to initiate failover except after a significant delay and is done on a best-effort basis. If you need to meet specific timeframes for Storage Mover's recovery, or if the default replication and failover behavior doesn't meet your needs, use [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency) to plan for and initiate your own failover.
+> Microsoft is unlikely to initiate failover except after a significant delay and is done on a best-effort basis. If you need to meet specific timeframes for Storage Mover's recovery, or if the default replication and failover behavior doesn't meet your needs, use [custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency) to plan for and initiate your own failover.
 
 Cross-region replication applies to configuration metadata only. It doesn't apply to the source data or to the target storage account, which has its own reliability and replication options. For more information, see [Reliability in Azure Blob Storage](reliability-storage-blob.md) and [Reliability in Azure Files](reliability-storage-files.md).
 
 #### Requirements
 
-**Region support:** Microsoft-managed cross-region replication is available only for Storage Mover resources that you deploy into a region that has a [paired region](regions-paired.md). For resources in nonpaired regions, no cross-region replication or failover is provided. To achieve cross-region resilience in nonpaired regions, use a [custom multi-region solution](#custom-multi-region-solutions-for-resiliency).
+**Region support:** Microsoft-managed cross-region replication is available only for Storage Mover resources that you deploy into a region that has a [paired region](regions-paired.md). For resources in nonpaired regions, no cross-region replication or failover is provided. To achieve cross-region resilience in nonpaired regions, use a [custom multiregion solution](#custom-multiregion-solutions-for-resiliency).
 
 #### Cost
 
 Storage Mover doesn't charge for Microsoft-managed cross-region replication of your storage mover's configuration. However, there might be a small charge for cross-region replication. For more information, see [Bandwidth pricing](https://azure.microsoft.com/pricing/details/bandwidth/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 Microsoft-managed cross-region replication is automatically enabled for Storage Mover resources in paired regions. You don't configure or opt into this behavior.
 
@@ -179,7 +179,7 @@ When the original primary region recovers, Microsoft coordinates failback. You n
 
 The Azure Storage Mover platform manages cross-region replication, failover, and region recovery. Because Microsoft fully manages this feature, you can't initiate or test a region failover.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 If you need to control when failover occurs, or if you're in a nonpaired region but still need your storage mover to be resilient to region outages, deploy independent Storage Mover resources in multiple Azure regions. You're responsible for all aspects of this approach, including:
 

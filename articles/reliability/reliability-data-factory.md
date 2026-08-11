@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Data Factory
 description: Learn how to make Azure Data Factory resilient to a variety of potential outages and problems, including transient faults, availability zone outages, and region outages. Also, learn about backup and the Data Factory service-level agreement.
-author: jonburchel
-ms.author: jburchel
+author: whhender
+ms.author: whhender
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-data-factory
@@ -181,7 +181,7 @@ For data factories in nonpaired regions, or in Brazil South or Southeast Asia, M
 > [!IMPORTANT]
 > Microsoft triggers Microsoft-managed failover. It's likely to occur after a significant delay and is done on a best-effort basis. There are also some exceptions to this process. You might experience some loss of your data factory metadata. The failover of Data Factory resources might occur at a time that's different from the failover time of other Azure services.
 >
-> If you need to be resilient to region outages, consider using one of the [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+> If you need to be resilient to region outages, consider using one of the [custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 #### Failover of IRs
 
@@ -189,15 +189,15 @@ To prepare for a failover, there might be some extra considerations, depending o
 
 - You can configure the *Azure IR* to automatically resolve the region that it uses. If the region is set to *auto resolve* and there's an outage in the primary region, the Azure IR automatically fails over to the paired region. This failover is subject to [limitations](#microsoft-managed-failover-to-a-paired-region). To configure the Azure IR region for your activity implementation or dispatch in the IR setup, set the region to *auto resolve*.
 
-- *Azure-SSIS IR* failover is managed separately from a Microsoft-managed failover of the data factory. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+- *Azure-SSIS IR* failover is managed separately from a Microsoft-managed failover of the data factory. For more information, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
-- *A SHIR* runs on infrastructure that you're responsible for, so a Microsoft-managed failover doesn't apply to SHIRs. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+- *A SHIR* runs on infrastructure that you're responsible for, so a Microsoft-managed failover doesn't apply to SHIRs. For more information, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 #### Post-failover reconfiguration
 
 After a Microsoft-managed failover is complete, you can access your Data Factory pipeline in the paired region. However, after the failover completes, you might need to perform some reconfiguration for IRs or other components. This process includes re-establishing the networking configuration.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 If you need your pipelines to be resilient to regional outages and you need control over the failover process, consider using a metadata-driven pipeline.
 

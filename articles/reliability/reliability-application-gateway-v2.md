@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Application Gateway v2
-description: Learn how to make Azure Application Gateway v2 resilient to transient faults, availability zone outages, and region outages through availability zones and multi-region deployment patterns.
+description: Learn how to make Azure Application Gateway v2 resilient to transient faults, availability zone outages, and region outages through availability zones and multiregion deployment patterns.
 author: mbender-ms
 ms.author: mbender
 ms.topic: reliability-article
@@ -222,15 +222,15 @@ The options for testing for zone failures depend on the availability zone config
 
 Application Gateway v2 is a single-region service. If the region becomes unavailable, your gateway is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-To achieve multi-region resilience by using Application Gateway v2, you need to deploy separate gateways in each desired region and implement traffic management across regions. You're responsible for deploying and configuring each of the gateways, as well as traffic routing and failover. Consider the following points:
+To achieve multiregion resilience by using Application Gateway v2, you need to deploy separate gateways in each desired region and implement traffic management across regions. You're responsible for deploying and configuring each of the gateways, as well as traffic routing and failover. Consider the following points:
 
 - Configure consistent Application Gateway rules and policies across regions. You can define infrastructure as code (IaC) by using tools like Bicep or Terraform to simplify your deployments and configurations across regions.
 
 - Deploy a global load balancing solution that can send traffic between your regional gateways. The global load balancing services in Azure are Azure Traffic Manager and Azure Front Door. Each service routes traffic based on health checks, geographic proximity, or performance metrics. Azure Front Door also provides a range of other capabilities, including distributed denial-of-service (DDoS) attack protection, WAF capabilities, and advanced rules and routing features.
 
-- Beyond the gateway, consider replicating backend applications and data across regions. Consult the reliability guides for each Azure service to understand multi-region deployment approaches.
+- Beyond the gateway, consider replicating backend applications and data across regions. Consult the reliability guides for each Azure service to understand multiregion deployment approaches.
 
 For an example approach, see [Use Application Gateway with Traffic Manager](/azure/traffic-manager/traffic-manager-use-with-application-gateway).
 

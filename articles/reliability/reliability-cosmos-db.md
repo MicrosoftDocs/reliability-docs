@@ -12,7 +12,7 @@ ai.usage: ai-assisted
 
 # Reliability in Azure Cosmos DB
 
-Azure Cosmos DB for NoSQL is a globally distributed, multi-model database service that supports document data models with flexible schemas. Azure Cosmos DB offers comprehensive reliability features including multiple consistency levels that let you balance performance and availability, zone-redundant deployments that protect against availability zone failures, multi-region replication with service-managed or customer-managed failover, and continuous and periodic backup options for data protection.
+Azure Cosmos DB for NoSQL is a globally distributed, multi-model database service that supports document data models with flexible schemas. Azure Cosmos DB offers comprehensive reliability features including multiple consistency levels that let you balance performance and availability, zone-redundant deployments that protect against availability zone failures, multiregion replication with service-managed or customer-managed failover, and continuous and periodic backup options for data protection.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
@@ -81,11 +81,11 @@ If you don't enable zone redundancy, the account is *nonzonal* in that region. N
 
 - **Multiple simultaneous zone outages:** A single-region account with zone redundancy can maintain read-write availability when an outage affects a single availability zone. However, if the outage affects multiple availability zones or the entire region, single-region accounts lose read and write access until service is restored. Consider deploying a multiregion account if you need to be resilient to multiple zones failing at the same time.
 
-- **Multiregion accounts:** If you have a multiregion account, you can optionally enable zone redundancy on any or all of the account regions that support availability zones. Enable zone redundancy when your account is configured to use a single region, or if it's configured to use a single write region with multiple read regions.
+- **Multiregion accounts:** If you have a multiregion account, you can optionally enable zone redundancy on any or all of the account regions that support availability zones. We highly recommend enabling zone redundancy when your account is configured to use a single region, or if it's configured to use a single write region with multiple read regions.
 
 ### Cost
 
-Regions where zone redundancy is enabled are charged at a premium. However, the premium pricing for availability zones is waived for accounts configured with multi-region writes, and for collections configured to use autoscale throughput mode. For more information, see [Azure Cosmos DB pricing](https://azure.microsoft.com/pricing/details/cosmos-db/).
+Regions where zone redundancy is enabled are charged at a premium. However, the premium pricing for availability zones is waived for accounts configured with multiregion writes, and for collections configured to use autoscale throughput mode. For more information, see [Azure Cosmos DB pricing](https://azure.microsoft.com/pricing/details/cosmos-db/).
 
 ### Configure availability zone support
 
@@ -145,11 +145,11 @@ The following table summarizes the recovery options available based on the accou
 | Any account configuration | Data corruption or accidental deletion | No availability impact. | Potential data loss depending on when the corruption or deletion is detected. | Point-in-time restore (continuous backup) or restore from periodic backup. |
 
 > [!NOTE]
-> This article focuses on the reliability aspects of the multiregion features of Azure Cosmos DB. There are other benefits to multiple read and write regions, such as higher performance and scale for globally distributed applications. Evaluate your whole solution architecture and consider all the benefits of using these capabilities.
+> This article focuses on the reliability aspects of the multiregion features of Azure Cosmos DB. There are other benefits to multiple read and write regions, such as higher performance and scale for globally distributed applications. You should evaluate your whole solution architecture and consider all of the benefits of using these capabilities.
 
 #### SDKs and resiliency
 
-The Azure Cosmos DB SDKs are an important part of your application's resiliency strategy. When you have a multiregion account, the SDK configuration affects how requests are routed between regions, including the preferred regions to connect to and regions that should be excluded. The SDKs monitor the availability of regions and partitions and can dynamically reconfigure themselves to use healthy regions and partitions, such as through the partition-level circuit breaker.
+The Azure Cosmos DB SDKs are an important part of your application's resiliency strategy. When you have a multiregion account, the SDK configuration affects how requests are routed between regions, including the preferred regions to connect to, and regions that should be excluded. SDKs monitor the availability of regions and partitions, and can dynamically reconfigure themselves to use healthy regions and partitions, such as through the partition-level circuit breaker.
 
 For more information about how the SDK supports high availability, see the high availability documentation for the SDK you use:
 
@@ -384,7 +384,7 @@ You can configure Azure Cosmos DB to accept writes in multiple regions. This con
 
 When you configure an Azure Cosmos DB account for multiple write regions, strong consistency isn't supported and write conflicts might arise. The [hub region](/azure/cosmos-db/multi-region-writes#hub-region) acts as an arbiter in write conflicts. For more information on how to resolve these conflicts, see [Conflict types and resolution policies when using multiple write regions](/azure/cosmos-db/conflict-resolution-policies).
 
-It's important to consider your application's design and how it works with multiple write regions. Review the [best practices for multi-region writes](/azure/cosmos-db/multi-region-writes#best-practices-for-multi-region-writes).
+It's important to consider your application's design and how it works with multiple write regions. Review the [best practices for multiregion writes](/azure/cosmos-db/multi-region-writes#best-practices-for-multi-region-writes).
 
 #### Requirements
 
@@ -398,7 +398,7 @@ Adding an additional write region to an Azure Cosmos DB account increases your e
 
 You can configure multiple write regions on your account when you create the account or at any time after the account is created. For more information, see [Configure multiple write regions](/azure/cosmos-db/how-to-manage-database-account#configure-multiple-write-regions).
 
-To effectively use multiple write regions, your app also needs to be configured appropriately. See [Configure multi-region writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
+To effectively use multiple write regions, your app also needs to be configured appropriately. See [Configure multiregion writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
 
 #### Capacity planning and management
 
@@ -408,9 +408,9 @@ If your application spreads requests across regions and one region goes offline,
 
 This section describes what to expect when you configure an Azure Cosmos DB account with multiple write regions, and all regions are operational.
 
-- **Cross-region operation:** When an account is configured with multiple write regions, your application configures the region that should be used for read and write operations. You can configure your application with a prioritized list of regions, or to exclude some regions. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability). To learn how to configure your application, see [Configure multi-region writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
+- **Cross-region operation:** When an account is configured with multiple write regions, your application configures the region that should be used for read and write operations. You can configure your application with a prioritized list of regions, or to exclude some regions. For more information about how region selection works, see [Diagnose and troubleshoot the availability of Azure Cosmos DB SDKs in multiregional environments](/azure/cosmos-db/troubleshoot-sdk-availability). To learn how to configure your application, see [Configure multiregion writes in applications that use Azure Cosmos DB](/azure/cosmos-db/how-to-multi-master).
 
-- **Cross-region data replication:** Data is replicated between regions asynchronously. The replication lag depends on the account's consistency level. You can't use strong consistency for multi-region writes. For more information, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
+- **Cross-region data replication:** Data is replicated between regions asynchronously. The replication lag depends on the account's consistency level. You can't use strong consistency for multiregion writes. For more information, see [Potential data loss during region outages](#potential-data-loss-during-region-outages).
 
     When an account is configured for multiple write regions, applications in different regions might make changes that conflict with each other. Azure Cosmos DB provides conflict resolution capabilities. For more information, see [Conflict types and resolution policies when using multiple write regions](/azure/cosmos-db/conflict-resolution-policies). To learn about how to configure your own conflict resolution policy, see [Manage conflict resolution policies in Azure Cosmos DB](/azure/cosmos-db/how-to-manage-conflicts).
 
@@ -447,7 +447,7 @@ Any write data that wasn't replicated when the region failed is made available t
 
 #### Test for region failures
 
-To test multi-region write failover scenarios, you can take a write region offline using a [forced failover](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). This process simulates a region outage, and you can observe how your application responds.
+To test multiregion write failover scenarios, you can take a write region offline using a [forced failover](/azure/cosmos-db/how-to-manage-database-account#perform-forced-failover-for-your-azure-cosmos-db-account). This process simulates a region outage, and you can observe how your application responds.
 
 ## Backup and restore
 

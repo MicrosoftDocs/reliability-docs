@@ -13,7 +13,7 @@ CustomerIntent: As a cloud architect/engineer, I want to learn about Azure Relia
 
 # What is Azure reliability documentation?
 
-Azure provides a comprehensive set of reliability capabilities to help you meet your workload requirements.  The Azure reliability documentation provides service-specific guides on how each Azure service supports those platform reliability capabilities, such as transient fault handling, availability zones, multi-region support, and backup support. To see the current list of reliability service guides, see [Reliability guides by service](./reliability-guidance-overview.md).
+Azure provides a comprehensive set of reliability capabilities to help you meet your workload requirements.  The Azure reliability documentation provides service-specific guides on how each Azure service supports those platform reliability capabilities, such as transient fault handling, availability zones, multiregion support, and backup support. To see the current list of reliability service guides, see [Reliability guides by service](./reliability-guidance-overview.md).
 
 In addition to the reliability service guides, Azure reliability documentation also includes general information, such as:
 
@@ -36,7 +36,7 @@ Two key approaches to achieving reliability in a workload are:
 
 - *Recoverability:* the ability to restore normal operations after a disruption. If a disruption does occur, recoverability helps you to restore back to a reliable state.
 
-The Azure platform and services offer a number of reliability features such as availability zones, multi-region support, data replication, and backup and restore. These features must be considered when designing a workload to meet its business continuity requirements.
+The Azure platform and services offer a number of reliability features such as availability zones, multiregion support, data replication, and backup and restore. These features must be considered when designing a workload to meet its business continuity requirements.
 
 > [!TIP]
 > Reliability also incorporates other elements of your solution design too, including how you deploy changes safely, how you manage your performance to avoid downtime due to high load, and how you test and validate each part of your solution. To learn more, see the [Azure Well-Architected Framework](/azure/well-architected).

@@ -217,7 +217,7 @@ For more considerations, see [Deployment considerations](/azure/azure-monitor/lo
 
 When you enable workspace replication, you pay for the replication of all data you ingest to your workspace. The DCRs you associate with replication directly determine your replication costs. For more information about pricing, see [Azure Monitor pricing](https://azure.microsoft.com/pricing/details/monitor/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Enable workspace replication:** The general steps required to enable workspace replication are:
 
@@ -301,9 +301,9 @@ If you perform drills, we recommend that you follow these best practices:
 > - If possible, simulate the criteria that triggers your region failover criteria based on your own policies. This approach enables you to test your detection and automation as well as the switchover and switchback process.
 > - Measure the RTO (switchover completion) and RPO (maximum unreplicated interval). Use exported datasets to validate sample record parity between the primary and secondary workspaces.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-If workspace replication isn't available for your region, or if you must use a table type that workspace replication doesn't support, consider these alternative approaches for multi-region resilience:
+If workspace replication isn't available for your region, or if you must use a table type that workspace replication doesn't support, consider these alternative approaches for multiregion resilience:
 
 - **Dual write:** Configure sources, such as diagnostic settings, agents, and DCR-based ingestion, to send logs to two independent workspaces in different regions.
 

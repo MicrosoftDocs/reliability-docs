@@ -1,6 +1,6 @@
 ---
 title: Reliability in Azure Kubernetes Service (AKS)
-description: Find out about resiliency in Azure Kubernetes Service (AKS), including transient faults, availability zones, multi-region support, backups, and service maintenance.
+description: Find out about resiliency in Azure Kubernetes Service (AKS), including transient faults, availability zones, multiregion support, backups, and service maintenance.
 author: schaffererin
 ms.author: schaffererin
 ms.topic: reliability-article
@@ -155,7 +155,7 @@ You can test your resiliency to availability zone failures by using the followin
 
 AKS clusters are single-region resources. If the region is unavailable, your AKS cluster is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 If you need to deploy your Kubernetes workload to multiple Azure regions, you have two options to manage the orchestration of these clusters.
 

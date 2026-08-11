@@ -111,11 +111,11 @@ The Azure Elastic SAN platform manages traffic routing, failover, and zone recov
 
 ## Resilience to region-wide failures
 
-Azure Elastic SAN is a single-region service. If the region becomes unavailable, your Elastic SAN resource is also unavailable. There's no built-in cross-region replication or failover for Elastic SAN. You're responsible for architecting your own multi-region disaster recovery solution if your workload requires region-level resiliency.
+Azure Elastic SAN is a single-region service. If the region becomes unavailable, your Elastic SAN resource is also unavailable. There's no built-in cross-region replication or failover for Elastic SAN. You're responsible for architecting your own multiregion disaster recovery solution if your workload requires region-level resiliency.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-You're responsible for implementing multi-region disaster recovery for your Elastic SAN data. The recommended approach is to use volume snapshots:
+You're responsible for implementing multiregion disaster recovery for your Elastic SAN data. The recommended approach is to use volume snapshots:
 
 1. **Create snapshots regularly.** Use [volume snapshots](/azure/storage/elastic-san/elastic-san-snapshots) to capture point-in-time copies of your Elastic SAN volumes.
 

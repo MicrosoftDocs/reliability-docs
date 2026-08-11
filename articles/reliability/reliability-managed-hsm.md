@@ -27,7 +27,7 @@ For production workloads, we recommend that you:
 > - Establish a multiperson quorum for the security domain with at least three key holders.
 > - Enable [purge protection](/azure/key-vault/managed-hsm/recovery) to prevent accidental or malicious deletion.
 > - Implement regular [backups](/azure/key-vault/managed-hsm/backup-restore) to an Azure Storage account, and use geo-redundant storage in supported regions.
-> - Enable [multi-region replication](/azure/key-vault/managed-hsm/multi-region-replication) for mission-critical workloads that require a higher SLA.
+> - Enable [multiregion replication](/azure/key-vault/managed-hsm/multi-region-replication) for mission-critical workloads that require a higher SLA.
 
 ## Reliability architecture overview
 
@@ -138,9 +138,9 @@ To protect against datacenter-wide or availability zone-wide outages, use one of
 
 Managed HSM resources are deployed into a single Azure region. If the region becomes unavailable, your Managed HSM is also unavailable. However, there are approaches you can use to help ensure resilience to region outages.
 
-### Multi-region replication
+### Multiregion replication
 
-Managed HSM supports optional [multi-region replication](/azure/key-vault/managed-hsm/multi-region-replication), which you can use to extend a Managed HSM pool from one Azure region (the *primary region*) to a second Azure region (the *extended region*). When you configure this feature:
+Managed HSM supports optional [multiregion replication](/azure/key-vault/managed-hsm/multi-region-replication), which you can use to extend a Managed HSM pool from one Azure region (the *primary region*) to a second Azure region (the *extended region*). When you configure this feature:
 
 - Both regions are active and can serve requests.
 - Key material, roles, and permissions automatically replicate between regions.
@@ -157,9 +157,9 @@ Managed HSM supports optional [multi-region replication](/azure/key-vault/manage
 
 #### Cost
 
-Multi-region replication incurs extra billing because the extended region consumes a second HSM pool. For more information, see [Azure Managed HSM pricing](https://azure.microsoft.com/pricing/details/key-vault).
+Multiregion replication incurs extra billing because the extended region consumes a second HSM pool. For more information, see [Azure Managed HSM pricing](https://azure.microsoft.com/pricing/details/key-vault).
 
-#### Configure multi-region replication
+#### Configure multiregion replication
 
 - **Add an extended region:** For details about adding an extended region to an existing primary region, see [Extend a primary HSM into an extended region](/azure/key-vault/managed-hsm/multi-region-replication#azure-cli-commands).
 
@@ -169,17 +169,17 @@ Multi-region replication incurs extra billing because the extended region consum
 
 #### Behavior when all regions are healthy
 
-This section describes what to expect when you configure multi-region replication, and both regions are operational.
+This section describes what to expect when you configure multiregion replication, and both regions are operational.
 
 - **Traffic routing:** All regions can serve requests. Azure Traffic Manager routes requests to the region with the closest geographical proximity or lowest latency.
 
-    If you use Azure Private Link to access Managed HSM, configure private endpoints in both regions for optimal routing during failover. For more information, see [Private link behavior with multi-region replication](/azure/key-vault/managed-hsm/multi-region-replication#private-link-behavior-with-multi-region-replication).
+    If you use Azure Private Link to access Managed HSM, configure private endpoints in both regions for optimal routing during failover. For more information, see [Private link behavior with multiregion replication](/azure/key-vault/managed-hsm/multi-region-replication#private-link-behavior-with-multi-region-replication).
 
 - **Data replication:** All changes to keys, role definitions, and role assignments are replicated asynchronously to the extended region within six minutes. Wait six minutes after creating or updating a key before using it in the extended region.
 
 #### Behavior during a region failure
 
-This section describes what to expect when you configure multi-region replication, and there's an outage in one of the replica regions.
+This section describes what to expect when you configure multiregion replication, and there's an outage in one of the replica regions.
 
 - **Detection and response:** Azure Traffic Manager detects the unhealthy region and routes future requests to the healthy region. DNS records have a five-second time to live (TTL), though clients caching DNS lookups might experience slightly longer failover times.
 
@@ -203,9 +203,9 @@ When the affected region recovers, Managed HSM automatically resumes operations.
 
 Managed HSM fully manages traffic routing, failover, and failback for region failures, so you don't need to validate region failure processes or provide any further input.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-If multi-region replication isn't suitable for your needs, you can implement manual disaster recovery. This approach requires:
+If multiregion replication isn't suitable for your needs, you can implement manual disaster recovery. This approach requires:
 
 - **The security domain** of the source HSM.
 - **The private keys** (at least the quorum number) that encrypt the security domain.
@@ -262,12 +262,12 @@ The confidential service healing process ensures that the service never exposes 
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
 
-Managed HSM provides a standard availability SLA for single-region deployments. Enabling [multi-region replication](/azure/key-vault/managed-hsm/multi-region-replication) raises the overall expected uptime, because requests can be served from either region if one becomes unavailable.
+Managed HSM provides a standard availability SLA for single-region deployments. Enabling [multiregion replication](/azure/key-vault/managed-hsm/multi-region-replication) raises the overall expected uptime, because requests can be served from either region if one becomes unavailable.
 
 ## Related content
 
 - [What is Azure Key Vault Managed HSM?](/azure/key-vault/managed-hsm/overview)
-- [Enable multi-region replication](/azure/key-vault/managed-hsm/multi-region-replication)
+- [Enable multiregion replication](/azure/key-vault/managed-hsm/multi-region-replication)
 - [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
 - [Full backup and restore](/azure/key-vault/managed-hsm/backup-restore)
 - [Security domain in Managed HSM overview](/azure/key-vault/managed-hsm/security-domain)

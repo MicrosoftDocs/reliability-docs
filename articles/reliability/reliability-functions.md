@@ -291,7 +291,7 @@ The Functions platform manages traffic routing, failover, and zone recovery for 
 
 Functions is a single-region service. If the region becomes unavailable, your Functions resource is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 To avoid interruptions to your service during region-wide outages, you can redundantly deploy the same functions to function apps in multiple regions.
 
@@ -348,7 +348,7 @@ When failover starts, publishers that send events to the shared alias are routed
 
 #### Durable functions
 
-For multi-region disaster recovery for durable functions, see [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable-functions/durable-functions-disaster-recovery-geo-distribution).
+For multiregion disaster recovery for durable functions, see [Disaster recovery and geo-distribution in Azure durable functions](/azure/azure-functions/durable-functions/durable-functions-disaster-recovery-geo-distribution).
 
 ## Resilience to service maintenance
 

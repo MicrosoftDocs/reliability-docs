@@ -127,7 +127,7 @@ Event Grid manages traffic routing, failover, and zone recovery for zone failure
 
 Event Grid resources are deployed into a single region. If there's a region-wide failure, your Event Grid resources are unavailable.
 
-In [paired Azure regions](./regions-paired.md), Event Grid provides limited geo-disaster recovery for your Event Grid resources' metadata. You can also design and build your own multi-region solution, which can support your disaster recovery planning. The following table shows how different Event Grid resource types support each model.
+In [paired Azure regions](./regions-paired.md), Event Grid provides limited geo-disaster recovery for your Event Grid resources' metadata. You can also design and build your own multiregion solution, which can support your disaster recovery planning. The following table shows how different Event Grid resource types support each model.
 
 | Event Grid resource | Supports geo-disaster recovery | Supports custom solution |
 | --- | --- | --- |
@@ -146,9 +146,9 @@ Geo-disaster recovery is designed as a best-effort, Microsoft-managed fallback f
 > [!IMPORTANT]
 > Microsoft triggers Microsoft-managed failover. It's likely to occur after a significant delay and is done on a best-effort basis. The failover of Event Grid resources might occur at a time that's different from the failover time of other Azure services.
 >
-> If you need to be resilient to region outages, consider using one of the custom multi-region solutions for resiliency.
+> If you need to be resilient to region outages, consider using one of the custom multiregion solutions for resiliency.
 
-You can optionally disable geo-disaster recovery and use your own [custom multi-region solution](#custom-multi-region-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, Microsoft doesn't replicate any event data to another region.
+You can optionally disable geo-disaster recovery and use your own [custom multiregion solution](#custom-multiregion-solutions-for-resiliency) that meets your requirements for region selection, failover time, and more. When you disable geo-disaster recovery, Microsoft doesn't replicate any event data to another region.
 
 This feature isn't available in regions that don't have a paired region.
 
@@ -162,7 +162,7 @@ This feature isn't available in regions that don't have a paired region.
 
 There's no additional cost for geo-disaster recovery.
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 In supported regions, system topics are automatically configured for geo-disaster recovery. For other Event Grid resource types:
 
@@ -215,7 +215,7 @@ Microsoft manages region recovery, and the recovery process depends on the speci
 
 Event Grid manages traffic routing, failover, and recovery for geo-disaster recovery. You don't need to initiate anything. Because this feature is fully managed, you don't need to validate region failure processes.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 You might want to disable, or not rely on, Microsoft-initiated failover for any of these reasons:
 
@@ -227,9 +227,9 @@ You might want to disable, or not rely on, Microsoft-initiated failover for any 
 
 - Your region's pair doesn't meet your organization's data residency requirements.
 
-For higher levels of control and predictability, you can implement custom multi-region architectures. This approach involves deploying separate Event Grid resources in multiple regions and managing failover at the application level. When you use this model, you're responsible for deploying and configuring resources and keeping them in sync across regions.
+For higher levels of control and predictability, you can implement custom multiregion architectures. This approach involves deploying separate Event Grid resources in multiple regions and managing failover at the application level. When you use this model, you're responsible for deploying and configuring resources and keeping them in sync across regions.
 
-Consider the following factors when you design a multi-region solution:
+Consider the following factors when you design a multiregion solution:
 
 - **Replication.** You should implement a custom process to replicate your Event Grid resources and their configuration between primary and secondary regions. Remember to replicate client identities, CA certificates, client groups, topic spaces, and permission bindings, where applicable. You can decide whether to implement manual or automated replication.
 

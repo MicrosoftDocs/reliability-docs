@@ -26,7 +26,7 @@ For production workloads, we recommend that you take the following actions:
 
 - Provision your Container Registry in a region that supports availability zones.
 
-- For multi-region scenarios, configure geo-replication to distribute your registry across multiple regions based on your specific geographic and compliance requirements.
+- For multiregion scenarios, configure geo-replication to distribute your registry across multiple regions based on your specific geographic and compliance requirements.
 
 ## Reliability architecture overview
 
@@ -146,7 +146,7 @@ The Container Registry platform manages traffic routing, failover, and failback 
 
 ## Resilience to region-wide failures
 
-Container Registry provides native multi-region support through geo-replication when your registry uses the Premium tier. Geo-replication creates registry replicas in multiple regions of your choice. The region that you deploy the registry resource is known as the *home region*.
+Container Registry provides native multiregion support through geo-replication when your registry uses the Premium tier. Geo-replication creates registry replicas in multiple regions of your choice. The region that you deploy the registry resource is known as the *home region*.
 
 Geo-replication enables resiliency to regional outages. If your registry is geo-replicated and a regional outage occurs, the registry data continues to be available from the other regions that you selected. If you don't enable geo-replication, then your data might become unavailable during a region outage.
 
@@ -176,7 +176,7 @@ This section summarizes information about geo-replication as it relates to relia
 
 Each geo-replicated region is billed separately according to Premium tier pricing for the respective region. Egress charges also apply for data transfer between regions during initial replication and ongoing synchronization.
 
-### Configure multi-region support
+### Configure multiregion support
 
 Geo-replication can be configured during registry creation or added to existing Premium registries. Geo-replication can be configured through the Azure portal, the Azure CLI, Azure PowerShell, or Azure Resource Manager templates.
 
@@ -190,7 +190,7 @@ Geo-replication can be configured during registry creation or added to existing 
 
 This section describes what to expect when a registry is configured for geo-replication and all regions are operational.
 
-:::image type="content" source="./media/reliability-container-registry/multi-region-normal-operations.svg" alt-text="Diagram showing Container Registry multi-region operations. Global clients connect via Traffic Manager to registry endpoints across multiple regions." border="false":::
+:::image type="content" source="./media/reliability-container-registry/multi-region-normal-operations.svg" alt-text="Diagram showing Container Registry multiregion operations. Global clients connect via Traffic Manager to registry endpoints across multiple regions." border="false":::
 
 - **Traffic routing between regions:** Container Registry operates in an active-active configuration where each regional endpoint can serve all data plane operations independently, including reads and writes. Data plane operations, such as container push and pull operations, are automatically routed by using Traffic Manager with performance-based criteria to determine the optimal regional endpoint for performance.
 

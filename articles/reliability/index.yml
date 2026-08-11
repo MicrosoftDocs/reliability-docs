@@ -6,8 +6,8 @@ brand: azure
 
 metadata:
   title: Azure reliability documentation
-  description: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multi-region support, and fundamental cloud reliability concepts.
-  keywords: Azure reliability, business continuity, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multi-region support.
+  description: Azure reliability documentation, which includes guidance for reliability in Azure services, Azure platform reliability such as availability zones and multiregion support, and fundamental cloud reliability concepts.
+  keywords: Azure reliability, business continuity, high availability, disaster recovery, redundancy, replication, backup, failover, failback, shared responsibility, availability zones, paired regions, nonpaired regions, multiregion support.
   ms.topic: hub-page
   ms.author: pnp
   author: glynnniall
@@ -60,7 +60,7 @@ conceptualContent:
           - text: Paired and nonpaired regions
             url: regions-paired.md
             itemType: concept
-          - text: Services with multi-region support
+          - text: Services with multiregion support
             url: regions-multiregion-support.md
             itemType: reference
           - text: Nonregional Azure services

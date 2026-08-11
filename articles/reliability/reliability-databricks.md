@@ -151,13 +151,13 @@ For your applications that run on Azure Databricks, test job resilience by simul
 
 ## Resilience to region-wide failures
 
-Azure Databricks is a single-region service. If the region is unavailable, your workspace is also unavailable. If you require multi-region deployments, see [Azure Databricks disaster recovery](/azure/databricks/admin/disaster-recovery).
+Azure Databricks is a single-region service. If the region is unavailable, your workspace is also unavailable. If you require multiregion deployments, see [Azure Databricks disaster recovery](/azure/databricks/admin/disaster-recovery).
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-Azure Databricks doesn't provide built-in multi-region capabilities. For comprehensive multi-region protection of your analytics workloads, you must implement your own approach.
+Azure Databricks doesn't provide built-in multiregion capabilities. For comprehensive multiregion protection of your analytics workloads, you must implement your own approach.
 
-Typical multi-region solutions involve two or more workspaces. You can choose from several strategies, including active-passive and active-active architectures.
+Typical multiregion solutions involve two or more workspaces. You can choose from several strategies, including active-passive and active-active architectures.
 
 To choose an architecture, consider the following factors:
 
@@ -166,7 +166,7 @@ To choose an architecture, consider the following factors:
 - The effort required to make the workspace fully operational
 - The effort required to restore or fail back to the primary region
 
-For workloads that require multi-region protection, see [Azure Databricks disaster recovery](/azure/databricks/admin/disaster-recovery).
+For workloads that require multiregion protection, see [Azure Databricks disaster recovery](/azure/databricks/admin/disaster-recovery).
 
 ## Backup and recovery
 

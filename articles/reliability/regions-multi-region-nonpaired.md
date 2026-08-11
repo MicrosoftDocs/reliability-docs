@@ -1,6 +1,6 @@
 ---
-title: Multi-Region Solutions in Nonpaired Regions
-description: Learn about how to create multi-region solutions even when the regions aren't paired. See Azure services and configurations for multi-region solutions.
+title: Multiregion Solutions in Nonpaired Regions
+description: Learn about how to create multiregion solutions even when the regions aren't paired. See Azure services and configurations for multiregion solutions.
 author: glynnniall
 ms.service: azure
 ms.subservice: azure-reliability
@@ -13,59 +13,59 @@ ms.custom:
   - build-2025
 ---
 
-# Multi-region solutions in nonpaired regions
+# Multiregion solutions in nonpaired regions
 
 Some Azure services support geo-redundancy and geo-replication across Azure regions, [even when those regions aren't paired](./regions-paired.md).
 
-This article lists some of the services and possible configurations for multi-region solutions that don't require paired regions. For a list of service multiregion capabilities, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
+This article lists some of the services and possible configurations for multiregion solutions that don't require paired regions. For a list of service multiregion capabilities, see [Azure services that support multiple regions](./regions-multiregion-support.md). For detailed information about each service, see its [reliability guide](./overview-reliability-guidance.md).
 
 ## Azure AI Search
 
-To learn about how to create multi-region solutions using Azure AI Search, see [Reliability in AI Search](./reliability-ai-search.md).
+To learn about how to create multiregion solutions using Azure AI Search, see [Reliability in AI Search](./reliability-ai-search.md).
 
 ## Azure API Management
 
-To learn about how to create multi-region solutions by using Azure API Management, see [Reliability in API Management](./reliability-api-management.md).
+To learn about how to create multiregion solutions by using Azure API Management, see [Reliability in API Management](./reliability-api-management.md).
 
 ## Azure App Service
 
-To learn about how to create multi-region solutions by using Azure App Service, see [Reliability in App Service](./reliability-app-service.md).
+To learn about how to create multiregion solutions by using Azure App Service, see [Reliability in App Service](./reliability-app-service.md).
 
 ## Azure Container Registry
 
-To learn about how to create multi-region solutions by using Azure Container Registry, see [Reliability in Container Registry](./reliability-container-registry.md).
+To learn about how to create multiregion solutions by using Azure Container Registry, see [Reliability in Container Registry](./reliability-container-registry.md).
 
 ## Azure Cosmos DB
 
-To learn about how to create multi-region solutions by using Azure Cosmos DB, see [Reliability in Azure Cosmos DB](./reliability-cosmos-db.md).
+To learn about how to create multiregion solutions by using Azure Cosmos DB, see [Reliability in Azure Cosmos DB](./reliability-cosmos-db.md).
 
 ## Azure Database for MySQL
 
-To learn about how to create multi-region solutions by using Azure Database for MySQL, see [Reliability in Azure Database for MySQL](./reliability-database-mysql.md).
+To learn about how to create multiregion solutions by using Azure Database for MySQL, see [Reliability in Azure Database for MySQL](./reliability-database-mysql.md).
 
 ## Azure Database for PostgreSQL
 
-To learn about how to create multi-region solutions by using Azure Database for PostgreSQL, see [Reliability in Azure Database for PostgreSQL](./reliability-database-postgresql.md).
+To learn about how to create multiregion solutions by using Azure Database for PostgreSQL, see [Reliability in Azure Database for PostgreSQL](./reliability-database-postgresql.md).
 
 ## Azure Data Factory
 
-To learn about how to create multi-region solutions by using Azure Data Factory, see [Reliability in Azure Data Factory](./reliability-data-factory.md).
+To learn about how to create multiregion solutions by using Azure Data Factory, see [Reliability in Azure Data Factory](./reliability-data-factory.md).
 
 ## Azure Event Grid
 
-To learn about how to create multi-region solutions by using Azure Event Grid, see [Reliability in Azure Event Grid](./reliability-event-grid.md).
+To learn about how to create multiregion solutions by using Azure Event Grid, see [Reliability in Azure Event Grid](./reliability-event-grid.md).
 
 ## Azure IoT Hub
 
-To learn about how to create multi-region solutions by using Azure IoT Hub, see [Reliability in IoT Hub](./reliability-iot-hub.md).
+To learn about how to create multiregion solutions by using Azure IoT Hub, see [Reliability in IoT Hub](./reliability-iot-hub.md).
 
 ## Azure Kubernetes Service (AKS)
 
-To learn about how to create multi-region solutions by using Azure Kubernetes Service (AKS), see [Reliability in AKS](./reliability-aks.md).
+To learn about how to create multiregion solutions by using Azure Kubernetes Service (AKS), see [Reliability in AKS](./reliability-aks.md).
 
 ## Azure Monitor Logs
 
-To learn about how to create multi-region solutions by using Azure Monitor Logs, see [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md).
+To learn about how to create multiregion solutions by using Azure Monitor Logs, see [Reliability in Azure Monitor Logs](./reliability-monitor-logs.md).
 
 ## Azure Service Bus
 
@@ -73,25 +73,25 @@ Azure Service Bus can provide regional resiliency without a dependency on region
 
 ## Azure SQL Database
 
-To learn about how to create multi-region solutions using Azure SQL Database, see [Reliability in Azure SQL Database](./reliability-sql-database.md).
+To learn about how to create multiregion solutions using Azure SQL Database, see [Reliability in Azure SQL Database](./reliability-sql-database.md).
 
 ## Azure SQL Managed Instance
 
-To learn about how to create multi-region solutions using Azure SQL Managed Instance, see [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md).
+To learn about how to create multiregion solutions using Azure SQL Managed Instance, see [Reliability in Azure SQL Managed Instance](./reliability-sql-managed-instance.md).
 
 ## Azure Storage
 
 To achieve geo-replication in nonpaired regions:
 
-- **For Azure Blob Storage (object storage):** To learn about how to create multi-region solutions by using Azure Blob Storage, see [Reliability in Blob Storage](./reliability-storage-blob.md).
+- **For Azure Blob Storage (object storage):** To learn about how to create multiregion solutions by using Azure Blob Storage, see [Reliability in Blob Storage](./reliability-storage-blob.md).
 
-- **For Azure NetApp Files:** To learn about how to create multi-region solutions using Azure NetApp Files, see [Reliability in Azure NetApp Files](reliability-netapp-files.md).
+- **For Azure NetApp Files:** To learn about how to create multiregion solutions using Azure NetApp Files, see [Reliability in Azure NetApp Files](reliability-netapp-files.md).
 
-- **For Azure Files:** To learn about how to create multi-region solutions using Azure Files, see [Reliability in Azure Files](./reliability-storage-files.md).
+- **For Azure Files:** To learn about how to create multiregion solutions using Azure Files, see [Reliability in Azure Files](./reliability-storage-files.md).
 
-- **For Queue Storage:** To learn about how to create multi-region solutions by using Azure Queue Storage, see [Reliability in Queue Storage](./reliability-storage-queue.md).
+- **For Queue Storage:** To learn about how to create multiregion solutions by using Azure Queue Storage, see [Reliability in Queue Storage](./reliability-storage-queue.md).
 
-- **For Azure Table Storage:** To learn about how to create multi-region solutions using Azure Table Storage, see [Reliability in Azure Table Storage](./reliability-storage-table.md).
+- **For Azure Table Storage:** To learn about how to create multiregion solutions using Azure Table Storage, see [Reliability in Azure Table Storage](./reliability-storage-table.md).
 
 ## Azure Virtual Desktop
 
@@ -105,7 +105,7 @@ For more information, see [Multiregion business continuity and disaster recovery
 
 ## Azure Virtual Machines
 
-To learn about how to create multi-region solutions using Azure Virtual Machines, see [Reliability in Azure Virtual Machines](./reliability-virtual-machines.md).
+To learn about how to create multiregion solutions using Azure Virtual Machines, see [Reliability in Azure Virtual Machines](./reliability-virtual-machines.md).
 
 ## Next steps
 

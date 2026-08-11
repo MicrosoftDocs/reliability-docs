@@ -92,7 +92,7 @@ The duration of time to recover from a disaster depends on the setup you choose.
 
 
 ### Single-region disaster recovery
-How you implement disaster recovery in Batch is the same, whether you're working in a single-region or multi-region geography. The only differences are which SKU you use for storage, and whether you intend to use the same or different storage account across all regions.
+How you implement disaster recovery in Batch is the same, whether you're working in a single-region or multiregion geography. The only differences are which SKU you use for storage, and whether you intend to use the same or different storage account across all regions.
 
 ### Disaster recovery testing 
 
@@ -129,7 +129,7 @@ You can associate a storage account with your Batch account when you create the 
 
 If you're setting up a separate storage account for each region your service is available in, you must use zone-redundant storage (ZRS) accounts. Use geo-zone-redundant storage (GZRS) accounts if you're using the same storage account across multiple paired regions. For geographies that contain a single region, you must create a zone-redundant storage (ZRS) account because GZRS isn't available.
 
-Capacity planning is another important consideration with storage and should be addressed proactively. Consider your cost and performance requirements when choosing a storage account. For example, the GPv2 and blob storage account options support greater [capacity and scalability limits](https://azure.microsoft.com/blog/announcing-larger-higher-scale-storage-accounts/) compared with GPv1. (Contact Azure Support to request an increase in a storage limit.) These account options can improve the performance of Batch solutions that contain a large number of parallel tasks that read from or write to the storage account.
+Capacity planning is another important consideration with storage and should be addressed proactively. Consider your cost and performance requirements when choosing a storage account. (Contact Azure Support to request an increase in a storage limit.) GPv2 and Blob storage accounts can improve the performance of Batch solutions that contain a large number of parallel tasks that read from or write to the storage account.
 
 When a storage account is linked to a Batch account, think of it as the autostorage account. An autostorage account is required if you plan to use the [application packages](/azure/batch/batch-application-packages) capability, as it's used to store the application package .zip files. An autostorage account can also be used for [task resource files](/azure/batch/resource-files#storage-container-name-autostorage); since the autostorage account is already linked to the Batch account, this avoids the need for shared access signature (SAS) URLs to access the resource files.
 

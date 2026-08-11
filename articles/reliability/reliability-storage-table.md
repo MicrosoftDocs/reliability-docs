@@ -123,7 +123,7 @@ When an availability zone becomes unavailable, Table Storage automatically handl
 
 #### Considerations
 
-When you implement multi-region Table Storage, consider the following important factors:
+When you implement multiregion Table Storage, consider the following important factors:
 
 [!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
@@ -137,11 +137,11 @@ When you implement multi-region Table Storage, consider the following important 
 
 For detailed pricing information, see [Table Storage pricing](https://azure.microsoft.com/pricing/details/storage/tables/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
-[!INCLUDE [Storage - Configure multi-region support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - Create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
-[!INCLUDE [Storage - Configure multi-region support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - Enable/disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
 #### Behavior when all regions are healthy
 
@@ -159,16 +159,16 @@ For detailed pricing information, see [Table Storage pricing](https://azure.micr
 
 [!INCLUDE [Storage - Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
-[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
 > [!NOTE]
-> For applications built to use Table Storage, consider using [Azure Cosmos DB for Table](/azure/cosmos-db/table/overview). Azure Cosmos DB for Table supports advanced multi-region requirements, including support for nonpaired regions. It's also designed for compatibility with applications built for Table Storage.
+> For applications built to use Table Storage, consider using [Azure Cosmos DB for Table](/azure/cosmos-db/table/overview). Azure Cosmos DB for Table supports advanced multiregion requirements, including support for nonpaired regions. It's also designed for compatibility with applications built for Table Storage.
 
-[!INCLUDE [Storage - Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
 
 For Table Storage, a multiple-account approach requires you to manage data distribution, handle synchronization between tables across regions including conflict resolution, and implement custom failover logic.
 

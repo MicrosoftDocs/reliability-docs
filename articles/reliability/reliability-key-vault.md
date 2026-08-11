@@ -25,7 +25,7 @@ For production workloads, we recommend that you:
 > [!div class="checklist"]
 > - Use Standard or Premium tier key vaults.
 > - [Enable soft delete and purge protection](/azure/key-vault/general/key-vault-recovery) to prevent accidental or malicious deletion.
-> - For critical workloads, consider implementing multi-region strategies that are described in this guide.
+> - For critical workloads, consider implementing multiregion strategies that are described in this guide.
 
 ## Reliability architecture overview
 
@@ -133,7 +133,7 @@ The following regions don't support Microsoft-managed replication or failover ac
 > [!IMPORTANT]
 > Microsoft triggers Microsoft-managed failover. It's likely to occur after a significant delay and is done on a best-effort basis. There are also some exceptions to this process. The failover of key vaults might occur at a time that's different from the failover time of other Azure services.
 >
-> If you need to be resilient to region outages, consider using one of the [custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+> If you need to be resilient to region outages, consider using one of the [custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 You can also use the [backup and restore](#backup-and-restore) feature to replicate the contents of your vault to another region of your choice.
 
@@ -160,7 +160,7 @@ You can also use the [backup and restore](#backup-and-restore) feature to replic
 
 #### Cost
 
-There are no extra costs for the built-in multi-region replication capabilities of Key Vault. 
+There are no extra costs for the built-in multiregion replication capabilities of Key Vault. 
 
 #### Behavior when all regions are healthy
 
@@ -188,7 +188,7 @@ The following section describes what to expect when a key vault is located in a 
 
 - **Traffic rerouting:** After a region failover completes, requests are automatically routed to the paired region without requiring any customer intervention.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 There are scenarios where the Microsoft-managed cross-region failover capabilities of Key Vault aren't suitable:
 

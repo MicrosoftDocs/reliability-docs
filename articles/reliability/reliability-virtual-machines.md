@@ -145,13 +145,15 @@ You can consider using [Azure Site Recovery zone-to-zone disaster recovery (DR)]
 
 VMs are single-region resources. If the region becomes unavailable, your VM is also unavailable.
 
-### Custom multi-region solutions for resiliency
+<a name="custom-multi-region-solutions-for-resiliency"></a>
+
+### Custom multiregion solutions for resiliency
 
 You can deploy multiple VMs into different regions, but you need to implement replication, load balancing, and failover processes.
 
 Site Recovery is a service that enables DR by replicating VMs and their data to a secondary region. You can select almost any Azure region as your secondary region, including nonpaired region combinations. For more information, see [Azure to Azure DR architecture](/azure/site-recovery/azure-to-azure-architecture).
 
-Some applications create clusters or other constructs to replicate data and distribute work across multiple VMs, including in different regions. These applications can simplify the configuration of a multi-region solution.
+Some applications create clusters or other constructs to replicate data and distribute work across multiple VMs, including in different regions. These applications can simplify the configuration of a multiregion solution.
 
 For an example architecture that illustrates using VMs across multiple regions, see [Multi-region load balancing with Azure Traffic Manager, Azure Firewall, and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
 

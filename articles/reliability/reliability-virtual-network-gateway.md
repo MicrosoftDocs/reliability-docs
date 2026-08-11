@@ -373,7 +373,7 @@ A virtual network gateway is a single-region resource. If the region becomes una
 
 ::: zone-end
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 ::: zone pivot="expressroute"
 

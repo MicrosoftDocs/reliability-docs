@@ -127,7 +127,7 @@ When an availability zone becomes unavailable, Queue Storage automatically handl
 
 #### Considerations
 
-When you implement multi-region Queue Storage, consider the following important factors.
+When you implement multiregion Queue Storage, consider the following important factors.
 
 [!INCLUDE [Storage - Considerations - Latency](includes/storage/reliability-storage-multi-region-considerations-latency-include.md)]
 
@@ -141,11 +141,11 @@ When you implement multi-region Queue Storage, consider the following important 
 
 For detailed pricing information, see [Queue Storage pricing](https://azure.microsoft.com/pricing/details/storage/queues/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
-[!INCLUDE [Storage - Configure multi-region support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - create](includes/storage/reliability-storage-multi-region-configure-create-include.md)]
 
-[!INCLUDE [Storage - Configure multi-region support - enable-disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
+[!INCLUDE [Storage - Configure multiregion support - enable-disable](includes/storage/reliability-storage-multi-region-configure-enable-disable-include.md)]
 
 #### Behavior when all regions are healthy
 
@@ -163,16 +163,16 @@ For detailed pricing information, see [Queue Storage pricing](https://azure.micr
 
 [!INCLUDE [Storage - Test for region failures](includes/storage/reliability-storage-multi-region-testing-include.md)]
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-[!INCLUDE [Storage - Custom multi-region solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - reasons](includes/storage/reliability-storage-multi-region-alternative-reasons-include.md)]
 
-[!INCLUDE [Storage - Custom multi-region solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - introduction](includes/storage/reliability-storage-multi-region-alternative-introduction-include.md)]
 
 > [!NOTE]
-> For advanced multi-region requirements, consider using Service Bus instead, which includes support for nonpaired regions.
+> For advanced multiregion requirements, consider using Service Bus instead, which includes support for nonpaired regions.
 
-[!INCLUDE [Storage - Custom multi-region solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
+[!INCLUDE [Storage - Custom multiregion solutions - approach overview](includes/storage/reliability-storage-multi-region-alternative-approach-include.md)]
 
 This approach requires you to manage message distribution, handle data synchronization between queues in the different storage accounts, and implement custom failover logic.
 

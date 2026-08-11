@@ -197,7 +197,7 @@ When the failed region recovers, the Traffic Manager health check detects the re
 
 To simulate a region failover and test your client application's reconnect behavior, you can disable a replica's endpoint. This action causes Traffic Manager to stop routing traffic to that replica, which lets you observe how your clients behave when the replica they connect to becomes unavailable. For detailed steps, see [Disable or enable the replica endpoint](/azure/azure-signalr/howto-enable-geo-replication#disable-or-enable-the-replica-endpoint).
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 If you need cross-region resiliency but aren't using geo-replication, you can deploy and manage separate SignalR Service resources in multiple regions and implement your own failover logic in your application server. This approach is more complex than geo-replication and doesn't support zero-downtime failover for client-to-client connectivity. For a detailed architecture overview, failover patterns, and testing guidance, see [Resiliency and disaster recovery in Azure SignalR Service](/azure/azure-signalr/signalr-concept-disaster-recovery).
 

@@ -108,9 +108,9 @@ The Private Link platform manages traffic routing, failover, and failback for Pr
 
 ## Resilience to region-wide failures
 
-Private Link service is a single-region service. The service doesn't provide native multi-region capabilities or automatic failover between regions. If an Azure region becomes unavailable, Private Link services in that region are also unavailable.
+Private Link service is a single-region service. The service doesn't provide native multiregion capabilities or automatic failover between regions. If an Azure region becomes unavailable, Private Link services in that region are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 If you design a networking approach that spans multiple regions, you should deploy independent Private Link services into each region. You're responsible for Private Link service deployment and management. Service consumers are responsible for private endpoint configuration on each region's Private Link services. Service consumers are also responsible for routing traffic to the appropriate Private Link service.
 

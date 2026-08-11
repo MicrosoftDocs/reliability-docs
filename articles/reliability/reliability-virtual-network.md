@@ -117,7 +117,7 @@ The Virtual Network platform manages traffic routing, failover, and failback for
 
 Virtual Network is a single-region service. If the region becomes unavailable, your virtual network is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 You can create virtual networks in multiple regions. You can also choose to connect those networks by *peering* them together.
 
@@ -133,7 +133,7 @@ By creating virtual networks and other resources in multiple regions, you can be
 
 Virtual networks don't require a lot of resources to run. You can invoke Azure APIs to create a virtual network with the same address space in a different region. However, to recreate a similar environment to the one that exists in the affected region, you must redeploy the VMs and other resources. If you have on-premises connectivity, such as in a hybrid deployment, you have to deploy a new VPN Gateway instance and connect to your on-premises network.
 
-For more information about a multi-region networking architecture for web applications, see [Multi-region load balancing with Traffic Manager, Azure Firewall, and Azure Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
+For more information about a multiregion networking architecture for web applications, see [Multi-region load balancing with Traffic Manager, Azure Firewall, and Azure Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
 
 ## Backup and restore
 

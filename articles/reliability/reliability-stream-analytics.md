@@ -28,7 +28,7 @@ To ensure high reliability in production environments that use Stream Analytics,
 > - **Use regions that support availability zones.** Deploy your streaming jobs and other resources in regions that support availability zones.
 > - **Deploy sufficient capacity.** Set your streaming units (SUs) based on your expected throughput and additional capacity to handle peak loads. Add a buffer above your baseline requirements to handle sudden increases.
 > - **Monitor health.** Implement comprehensive monitoring by using Azure Monitor metrics and diagnostic logs to track job health, input and output events, and resource utilization. Set up alerts for critical metrics like watermark delay and runtime errors to detect problems before they affect data processing. For more information, see [Monitor Stream Analytics](/azure/stream-analytics/monitor-azure-stream-analytics).
-> - **Implement multi-region redundancy for mission-critical workloads.** Deploy identical Stream Analytics jobs across multiple regions. Replicate their configurations and ensure appropriate data routing to achieve regional resiliency. Stream Analytics doesn't provide native multi-region replication, but this approach enables failover and continuity. For more information, see [Custom multi-region solutions for resiliency](#custom-multi-region-solutions-for-resiliency).
+> - **Implement multiregion redundancy for mission-critical workloads.** Deploy identical Stream Analytics jobs across multiple regions. Replicate their configurations and ensure appropriate data routing to achieve regional resiliency. Stream Analytics doesn't provide native multiregion replication, but this approach enables failover and continuity. For more information, see [Custom multiregion solutions for resiliency](#custom-multiregion-solutions-for-resiliency).
 
 ## Reliability architecture overview
 
@@ -148,9 +148,9 @@ The Stream Analytics platform manages traffic routing, failover, and zone recove
 
 Stream Analytics deploys resources into a single Azure region. If the region becomes unavailable, your jobs (and dedicated clusters, if applicable) are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-To achieve multi-region resilience for your streaming workloads, consider deploying separate jobs in multiple regions. When you take this approach, you're responsible for deploying and managing the jobs and for setting up the appropriate data routing and replication strategies. The Stream Analytics jobs are two separate entities. It's your application's responsibility to send input data into both regional inputs and to reconcile the regional outputs. For more information, see [Achieve geo-redundancy for Stream Analytics jobs](/azure/stream-analytics/geo-redundancy).
+To achieve multiregion resilience for your streaming workloads, consider deploying separate jobs in multiple regions. When you take this approach, you're responsible for deploying and managing the jobs and for setting up the appropriate data routing and replication strategies. The Stream Analytics jobs are two separate entities. It's your application's responsibility to send input data into both regional inputs and to reconcile the regional outputs. For more information, see [Achieve geo-redundancy for Stream Analytics jobs](/azure/stream-analytics/geo-redundancy).
 
 ## Backup and recovery
 

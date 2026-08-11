@@ -126,7 +126,7 @@ The Azure platform manages traffic routing, failover, and failback for zone-redu
 
 Azure Managed Grafana is a single-region service. If the region is unavailable, your workspace is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 To achieve resilience to regional outages, you can deploy multiple Grafana workspaces in different regions. In this type of solution, you're responsible for:
 

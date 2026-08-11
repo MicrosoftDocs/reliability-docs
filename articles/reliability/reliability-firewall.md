@@ -172,15 +172,15 @@ The options for zone failure testing depend on your firewall's availability zone
 
 Azure Firewall is a single-region service. If the region is unavailable, your Firewall resource is also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
-To implement a multi-region architecture, use separate firewalls. This approach requires you to deploy an independent firewall into each region, route traffic to the appropriate regional firewall, and implement custom failover logic. Consider the following points:
+To implement a multiregion architecture, use separate firewalls. This approach requires you to deploy an independent firewall into each region, route traffic to the appropriate regional firewall, and implement custom failover logic. Consider the following points:
 
 - **Use Azure Firewall Manager** for centralized policy management across multiple firewalls. Use the [Firewall Policy](/azure/firewall-manager/policy-overview) method for centralized rule management across multiple firewall instances.
 
 - **Implement traffic routing** by using Traffic Manager or Azure Front Door.
 
-For an example architecture that illustrates multi-region network security architectures, see [Multi-region load balancing by using Traffic Manager, Azure Firewall, and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
+For an example architecture that illustrates multiregion network security architectures, see [Multi-region load balancing by using Traffic Manager, Azure Firewall, and Application Gateway](/azure/architecture/high-availability/reference-architecture-traffic-manager-application-gateway).
 
 ## Resilience to service maintenance
 

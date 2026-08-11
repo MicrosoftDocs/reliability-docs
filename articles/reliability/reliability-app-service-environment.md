@@ -134,7 +134,7 @@ To learn how to create, enable, or disable a new zone-redundant App Service Envi
 
 App Service is a single-region service. If the region becomes unavailable, your environment and its plans and apps also become unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 To reduce the risk of a single-region failure affecting your application, deploy multiple App Service Environments across multiple regions. The following steps help strengthen resilience:
 

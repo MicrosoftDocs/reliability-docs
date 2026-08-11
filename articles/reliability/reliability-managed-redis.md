@@ -1,8 +1,8 @@
 ---
 title: Reliability in Azure Managed Redis
 description: Learn how to make Azure Managed Redis resilient to a variety of potential outages and problems, including transient faults, availability zone outages, region outages, and service maintenance, and learn about backup and restore.
-ms.author: franlanglois
-author: flang-msft
+ms.author: sidandrews
+author: seesharprun
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-managed-redis
@@ -141,7 +141,7 @@ Azure Managed Redis fully manages traffic routing, failover, and failback for zo
 
 ## Resilience to region-wide failures
 
-Azure Managed Redis provides native multi-region support through *active geo-replication*, which lets you link multiple Azure Managed Redis instances across different Azure regions into a single replication group. You can then set up your own failover approach between the instances.
+Azure Managed Redis provides native multiregion support through *active geo-replication*, which lets you link multiple Azure Managed Redis instances across different Azure regions into a single replication group. You can then set up your own failover approach between the instances.
 
 ### Active geo-replication
 
@@ -177,7 +177,7 @@ You're responsible for setting up your client applications to redirect requests 
 
 When you set up active geo-replication, you pay for each Azure Managed Redis instance in every region within the replication group. You might also incur data transfer charges for cross-region replication traffic between regions. For more information, see [Azure Managed Redis pricing](https://azure.microsoft.com/pricing/details/managed-redis/) and [Bandwidth pricing details](https://azure.microsoft.com/pricing/details/bandwidth/).
 
-#### Configure multi-region support
+#### Configure multiregion support
 
 - **Create a new geo-replicated cache instance.** Set up active geo-replication when you provision the cache by specifying a replication group and linking multiple instances. For more information, see [Create or join an active geo-replication group](/azure/redis/how-to-active-geo-replication#create-or-join-an-active-geo-replication-group).
 

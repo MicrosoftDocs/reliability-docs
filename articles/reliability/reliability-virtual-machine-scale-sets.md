@@ -192,7 +192,7 @@ You can use Azure Chaos Studio to simulate the loss of VMs in one or more availa
 
 Scale sets are single-region resources. If the region is unavailable, any scale sets in the region are also unavailable.
 
-### Custom multi-region solutions for resiliency
+### Custom multiregion solutions for resiliency
 
 You can deploy multiple scale sets into different regions, but you need to implement replication, load balancing, and failover processes. For example, you might deploy identical scale sets in multiple regions and use Azure Front Door or Azure Traffic Manager with health probes to route traffic. You're responsible for replicating state by using application mechanisms or managed data services.
 
