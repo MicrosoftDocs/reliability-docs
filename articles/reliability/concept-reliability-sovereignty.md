@@ -44,6 +44,10 @@ Where you place redundant infrastructure determines both reliability and complia
 
 If you design a disaster recovery-based solution with multiple regions, and your workload must remain within a specific jurisdiction, choose a disaster recovery region in that same boundary. If no compliant secondary region is available, use single-region reliability with backup-based recovery, and document the related recovery tradeoffs.
 
+In addition to multiregion and multizone patterns in Azure public cloud, you can use [Azure Local](/azure/azure-local/overview) for customer-controlled environments such as on-premises datacenters or remote sites. Azure Local supports connected and disconnected operating models, which can help you maintain business continuity for local workloads when cloud connectivity is disrupted.
+
+Azure also provides sovereign offerings for customers with specific jurisdictional and regulatory requirements. Examples include [Azure Government](/azure/azure-government/documentation-government-welcome), [Azure in China](/azure/china/overview-operations), and [Microsoft Sovereign Cloud](/azure/azure-sovereign-clouds/microsoft-sovereign-cloud) (formerly Microsoft Cloud for Sovereignty). These environments have distinct operational and compliance boundaries, so confirm that your reliability architecture aligns with the requirements for the specific cloud environment that you use.
+
 > [!TIP]
 > Availability zones provide an additional reliability layer inside a region without crossing geographic boundaries. Use multizone architecture where supported.
 
