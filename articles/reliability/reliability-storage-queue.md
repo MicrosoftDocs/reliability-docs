@@ -55,6 +55,8 @@ To manage transient faults effectively by using Queue Storage, you can take the 
 
 - **Use visibility timeouts appropriately** when your application receives messages. Visibility timeouts ensure that messages become available for retry if your application encounters failures during processing.
 
+    If processing doesn't finish before the visibility timeout expires, another consumer can receive the same message. Design consumers so that repeated processing doesn't create duplicate side effects. For implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
+
 To learn more about the Azure Table Storage architecture and how to design resilient and high-scale applications, see [Performance and scalability checklist for Queue Storage](/azure/storage/queues/storage-performance-checklist).
 
 ## Resilience to availability zone failures

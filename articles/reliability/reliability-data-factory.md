@@ -43,7 +43,7 @@ When you use Data Factory, it's important to prepare for transient faults, espec
 
 ### Idempotence
 
-Your pipeline activities should be *idempotent*, which means that they can be rerun multiple times without causing any adverse effects. If a transient fault like a network failure or an availability zone outage occurs, Data Factory might rerun pipeline activities. This rerun can create duplicate records.
+Your pipeline activities should be *idempotent*, which means that they can be rerun multiple times without causing any adverse effects. If a transient fault like a network failure or an availability zone outage occurs, Data Factory might rerun pipeline activities. This rerun can create duplicate records. For techniques that help make repeated processing safe, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
 
 To prevent duplicate record insertion because of a transient fault, implement the following best practices:
 
