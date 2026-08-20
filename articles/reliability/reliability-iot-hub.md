@@ -308,7 +308,7 @@ At a high level, to implement a regional failover model with IoT Hub, you need t
 
 - **Merge logic:** When the primary region becomes available again, all the state and data created in the secondary region must be migrated back to the primary region. This state and data mostly relate to device identities and application metadata, which must be merged with the primary IoT hub and any other application-specific stores in the primary region.
 
-  To simplify this step, use *idempotent* operations. Idempotent operations minimize the side effects from the eventual consistent distribution of events and from duplicates or out-of-order delivery of events. Also, the application logic should be designed to tolerate potential inconsistencies or slightly out-of-date state. This scenario can occur because of the extra time that it takes for the system to heal based on RPOs.
+  To simplify this step, use *idempotent* operations. Idempotent operations minimize the side effects from the eventually consistent distribution of events and from duplicates or out-of-order delivery of events. Also, the application logic should be designed to tolerate potential inconsistencies or slightly out-of-date state. This scenario can occur because of the extra time that it takes for the system to heal based on RPOs. For implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
 
 ## Backup and restore
 

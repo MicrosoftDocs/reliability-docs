@@ -58,6 +58,8 @@ Stream Analytics achieves high reliability by applying multiple layers of resili
 
     When processing failures occur, Stream Analytics automatically restarts from the last checkpoint and reprocesses events that fail during processing. This guarantee applies to all built-in functions and user-defined functions within the job. But achieving end-to-end, exactly-once delivery depends on your output destination's capabilities. For more information, see [Checkpoint and replay concepts in Stream Analytics jobs](/azure/stream-analytics/stream-analytics-concepts-checkpoint-replay).
 
+    Design downstream processing and output destinations so that replaying an event doesn't create duplicate side effects. For general implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
+
 > [!NOTE]
 > By using [Stream Analytics on IoT Edge](/azure/stream-analytics/stream-analytics-edge), you can run jobs on your own infrastructure. When you use Stream Analytics on IoT Edge, you're responsible for setting it up to meet your reliability requirements. Stream Analytics on IoT Edge is outside the scope of this article.
 

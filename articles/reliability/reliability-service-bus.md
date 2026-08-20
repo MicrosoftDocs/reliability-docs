@@ -51,6 +51,8 @@ Service Bus infrastructure spans multiple physical machines and racks that are s
 
 The Service Bus SDK includes automatic retry logic with exponential backoff for operations that fail because of transient conditions like network timeouts or temporary service unavailability. When applications experience transient disconnects from Service Bus, the SDK automatically attempts to reconnect by using the configured retry policy.
 
+Service Bus provides at-least-once delivery, so a message might be delivered more than once. Design message consumers to be idempotent so that repeated processing doesn't create duplicate side effects. For implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
+
 To optimize transient fault handling in your applications, use the latest Service Bus SDK, which includes the most current retry logic and connection management features. For more information, see [Service Bus client library for .NET](/dotnet/api/overview/azure/service-bus).
 
 ## Resilience to availability zone failures

@@ -59,6 +59,8 @@ When you design client applications to work with Event Hubs, follow this guidanc
 
 - **Configure appropriate timeout values** based on your application requirements. The default timeout is typically 60 seconds, but you can adjust it based on your scenario.
 - **Implement checkpointing** in your event processor to track progress and enable recovery from the last processed position after transient failures.
+
+    When an event processor resumes from a checkpoint, it might process an event more than once. Design event processing to be idempotent so that repeated processing doesn't create duplicate side effects. For implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
 - **Use batching for send operations** to improve throughput and reduce the impact of transient network problems on individual messages.
 - **Use Apache Kafka SDKs** if you work with the Kafka protocol. The Kafka SDKs also implement retry policies and other best practices that help handle transient faults.
 
