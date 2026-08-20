@@ -61,7 +61,7 @@ When you use Event Grid, consider the following practices to ensure your solutio
 
 - **Idempotency.** It's a good practice to design your eventing architecture for *idempotency*, which means that your application can safely receive and process the same event multiple times. For example, if a transient fault or another problem happens while your application processes an event, with an idempotent approach, your application can reprocess the message and recover.
 
-  You're responsible for designing your eventing architecture and application to support idempotency. For general information, see [Idempotency](/azure/architecture/serverless/event-hubs-functions/resilient-design#idempotency).
+  You're responsible for designing your eventing architecture and application to support idempotency. For general implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
 
 - **Dead-lettering.** Event Grid supports *dead-lettering* for undeliverable events, which helps to persist data during longer-lasting faults in event consumers. For more information, see [Dead lettering for event subscriptions to namespaces topics in Event Grid](/azure/event-grid/dead-letter-event-subscriptions-namespace-topics).
 

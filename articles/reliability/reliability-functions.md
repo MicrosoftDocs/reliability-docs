@@ -54,7 +54,9 @@ Consider the following recommendations for handling transient faults in your fun
 
     The platform treats persistent failures and repeated transient failures as errors. Configure logging to capture information about function execution errors. For more information, see [Configure monitoring for Functions](/azure/azure-functions/configure-monitoring).
 
-- **Your function code:** In your function code, you're responsible for handling transient faults when your function calls external services. Implement retry logic, timeouts, and circuit breaker patterns as appropriate for external service calls made in your function code. Design your functions to be idempotent where possible so that retries don't create duplicate side effects.
+- **Your function code:** In your function code, you're responsible for handling transient faults when your function calls external services. Implement retry logic, timeouts, and circuit breaker patterns as appropriate for external service calls made in your function code.
+
+    Design your functions to be idempotent where possible so that retries don't create duplicate side effects. For implementation guidance, see the [Idempotent Consumer pattern](/azure/architecture/patterns/idempotent-consumer).
 
 - **Clients:** Client applications that connect to functions synchronously, such as through an HTTP connection, should be resilient to transient faults.
 
