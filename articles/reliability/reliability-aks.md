@@ -190,6 +190,8 @@ AKS performs maintenance on your cluster, including updates to the cluster and n
 
 To reduce service disruptions during critical time periods, AKS provides controls so that you can specify planned maintenance times. To learn more, see [Use planned maintenance to schedule and control upgrades for your Azure Kubernetes Service cluster](/azure/aks/planned-maintenance).
 
+AKS also supports automatic upgrade channels for the cluster and node images. Enabling automatic upgrades reduces your exposure to accumulated, unpatched operating system and security changes on your nodes. However, if your workload depends on a specific node image or kernel version, you might need time to validate compatibility before an upgrade. In that case, you can retain manual control over node image upgrades and use planned maintenance windows to schedule them. For more information, see [Automatically upgrade an Azure Kubernetes Service cluster](/azure/aks/auto-upgrade-cluster) and [Automatically upgrade Azure Kubernetes Service cluster node operating system images](/azure/aks/auto-upgrade-node-os-image).
+
 ## Service-level agreement
 
 [!INCLUDE [SLA description](includes/reliability-service-level-agreement-include.md)]
