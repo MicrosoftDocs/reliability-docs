@@ -20,7 +20,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 
 | Symbol | Description |
 |---|---|
-|:::image type="content" source="media/icon-region-coming-soon.svg"  alt-text="Icon that shows that this region is coming soon."  border="false"::: | Region coming soon. To learn more about availability zones and available services support in this region, contact your Microsoft sales or customer representative. For upcoming regions that support availability zones, see [Azure geographies](https://azure.microsoft.com/global-infrastructure/geographies/).
+|:::image type="content" source="media/icon-region-coming-soon.svg"  alt-text="Icon that shows that this region is coming soon."  border="false"::: | Coming soon. To learn more about availability zones and available services support in this region, contact your Microsoft sales or customer representative.
 | :::image type="content"  source="media/icon-region-restricted.svg"  alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: | Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions). |
 
 > [!NOTE]
