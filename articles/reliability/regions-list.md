@@ -24,7 +24,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | :::image type="content"  source="media/icon-region-restricted.svg"  alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: | Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions). |
 
 > [!NOTE]
-> Even when a region provides availability zones, it's possible that some services might not support them in that region. Refer to the [Azure service reliability guides](./overview-reliability-guidance.md) to learn about region support for availability zone-enabled services.
+> Even when a region provides availability zones, some services might not support them in that region. To learn about region support for availability zone-enabled services, refer to the [Azure service reliability guides](./overview-reliability-guidance.md).
  
 ## Azure regions list
 
