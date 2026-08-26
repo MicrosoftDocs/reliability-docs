@@ -70,7 +70,7 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="/azure/media/index/device-registry.svg" alt="Azure Device Registry" width="24" /> Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||
 | <img src="/azure/media/index/devops.svg" alt="Azure DevOps" width="24" /> Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 | <img src="/azure/media/index/disk-storage.svg" alt="Azure Disk Storage" width="24" /> Azure Disk Storage|[Reliability in Azure Disk Storage](./reliability-storage-disk.md)||
-| <img src="/azure/media/index/dns.svg" alt="Azure DNS" width="24" /> Azure DNS| [Reliability in Azure DNS ](reliability-dns.md)||
+| <img src="/azure/media/index/dns.svg" alt="Azure DNS" width="24" /> Azure DNS| [Reliability in Azure DNS](reliability-dns-public.md)||
 | <img src="/azure/media/index/documentdb.svg" alt="Azure DocumentDB" width="24" /> Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||
 | <img src="/azure/media/index/elastic-san.svg" alt="Azure Elastic SAN" width="24" /> Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 | <img src="/azure/media/index/event-grid-domains.svg" alt="Azure Event Grid" width="24" /> Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
