@@ -66,7 +66,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
 | Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
 | New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
-| North Central US | | South Central US | Illinois | United States | northcentralus |
+| North Central US | :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: | South Central US | Illinois | United States | northcentralus |
 | North Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Europe | Ireland | Europe | northeurope |
 | Norway East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | Norway | Norway | norwayeast |
 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | | Norway East | Norway | Norway | norwaywest |
@@ -105,7 +105,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | East US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West US | Virginia | United States | eastus |
 | East US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Central US | Virginia | United States | eastus2 |
 | Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
-| North Central US | | South Central US | Illinois | United States | northcentralus |
+| North Central US | :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: | South Central US | Illinois | United States | northcentralus |
 | South Central US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Central US | Texas | United States | southcentralus |
 | West Central US | | West US 2 | Wyoming | United States | westcentralus |
 | West US | | East US | California | United States | westus |

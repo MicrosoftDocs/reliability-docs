@@ -153,10 +153,10 @@ The regions in the following table support availability zones. For more comprehe
 | East US | Germany West Central | | | Indonesia Central |
 | East US 2 | Italy North | | | Japan East |
 | Mexico Central | North Europe | | | Japan West |
-| South Central US | Norway East | | | Korea Central |
-| West US 2 | Poland Central | | | Malaysia West |
-| West US 3 | Spain Central | | | New Zealand North |
-| | Sweden Central | | | Southeast Asia |
+| :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: North Central US | Norway East | | | Korea Central |
+| South Central US | Poland Central | | | Malaysia West |
+| West US 2 | Spain Central | | | New Zealand North |
+| West US 3 | Sweden Central | | | Southeast Asia |
 | | Switzerland North | | | |
 | | UK South | | | |
 | | West Europe | | | |
