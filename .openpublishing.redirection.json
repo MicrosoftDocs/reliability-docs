@@ -274,6 +274,11 @@
       "source_path": "articles/reliability/reliability-fabric.md",
       "redirect_url": "/fabric/security/reliability-fabric",
       "redirect_document_id": false
+    },
+    {
+      "source_path": "articles/reliability/reliability-dns.md",
+      "redirect_url": "/azure/reliability/reliability-dns-public",
+      "redirect_document_id": true
     }
   ]
 }

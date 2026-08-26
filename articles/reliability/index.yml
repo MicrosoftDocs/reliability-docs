@@ -510,10 +510,10 @@ productDirectory:
         - mobile
         - web
     # Card
-    - title: Azure DNS
-      summary: Host your DNS domain in Azure
+    - title: Azure DNS public zones
+      summary: Host your public DNS domain in Azure
       imageSrc: /azure/media/index/dns.svg
-      url: reliability-dns.md
+      url: reliability-dns-public.md
       azureCategories:
         - networking
     # Card
