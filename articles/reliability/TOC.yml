@@ -156,6 +156,8 @@ items:
       href: reliability-monitor-logs.md
     - name: Azure Site Recovery
       href: reliability-site-recovery.md
+    - name: Azure Storage Discovery
+      href: reliability-storage-discovery.md
   - name: Migration
     items:
     - name: Azure Migrate
@@ -234,6 +236,8 @@ items:
       href: reliability-storage-queue.md
     - name: Azure Storage Actions
       href: reliability-storage-actions.md
+    - name: Azure Storage Discovery
+      href: reliability-storage-discovery.md
     - name: Azure Storage Mover
       href: reliability-storage-mover.md
     - name: Azure Table Storage
