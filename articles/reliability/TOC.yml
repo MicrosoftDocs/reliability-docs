@@ -172,10 +172,12 @@ items:
       href: reliability-app-gateway-containers.md
     - name: Azure Bastion
       href: reliability-bastion.md
-    - name: Azure DNS public zones
-      href: reliability-dns-public.md
     - name: Azure DNS Private Resolver
       href: reliability-dns-private-resolver.md
+    - name: Azure DNS private zones
+      href: reliability-dns-private.md
+    - name: Azure DNS public zones
+      href: reliability-dns-public.md
     - name: Azure DDoS Protection
       href: reliability-ddos-protection.md
     - name: Azure ExpressRoute gateway
