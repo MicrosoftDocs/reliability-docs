@@ -46,6 +46,7 @@ Microsoft publishes a [a list of services, which includes nonregional services](
 | Azure Communication Services | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | [Some data is stored in a geographic area.](/azure/communication-services/concepts/privacy) |
 | Azure Content Delivery Network | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | |
 | Azure DevOps | | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | |
+| Azure DNS private zones | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | |
 | Azure DNS public zones | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | |
 | Azure Front Door | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | |
 | Azure Information Protection | :::image type="content" source="media/icon-checkmark.svg" alt-text="Icon that indicates that this region supports the corresponding column label." border="false"::: | | |

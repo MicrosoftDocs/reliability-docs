@@ -517,6 +517,13 @@ productDirectory:
       azureCategories:
         - networking
     # Card
+    - title: Azure DNS private zones
+      summary: Private name resolution within Azure virtual networks
+      imageSrc: /azure/media/index/dns.svg
+      url: reliability-dns-private.md
+      azureCategories:
+        - networking
+    # Card
     - title: Azure DNS Private Resolver
       summary: Resolve private DNS names across Azure and on-premises networks
       imageSrc: /azure/media/index/dns-private-resolver.svg
