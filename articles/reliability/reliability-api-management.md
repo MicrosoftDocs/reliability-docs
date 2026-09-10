@@ -6,7 +6,7 @@ ms.author: patricka
 ms.topic: reliability-article
 ms.custom: subject-reliability
 ms.service: azure-api-management
-ms.date: 01/09/2026
+ms.date: 09/09/2026
 zone_pivot_groups: api-management-tiers
 ---
 
@@ -37,11 +37,11 @@ To gain higher levels of reliability, API Management supports unit distribution 
 
 API Management service tiers provide different levels of reliability:
 
-- **Premium (classic) tier:** Supports multiple units that can be distributed across availability zones and regions for maximum resilience.
+- **Premium (classic) tier:** Supports multiple units that you can distribute across availability zones and regions for maximum resilience.
 
-- **Premium v2 tier**: Supports multiple units that can be distributed across availability zones. It doesn't currently support multiregion deployments. 
+- **Premium v2 and Standard v2 tiers:** Support multiple units that you can distribute across availability zones. They don't currently support multiregion deployments.
 
-- **Basic v2, Standard, and Standard v2 tiers:** All support multiple units within a single datacenter. They don't support availability zones or multiregion deployments.
+- **Basic v2 and Standard tiers:** All support multiple units within a single datacenter. They don't support availability zones or multiregion deployments.
 
 - **Developer tier:** Supports only a single unit and provides no availability zone or multiregion support. This tier is designed for development and testing scenarios. It isn't suitable for production workloads.
 
@@ -49,6 +49,19 @@ API Management service tiers provide different levels of reliability:
 
 > [!NOTE]
 > The Developer and Premium tiers of API Management support [self-hosted gateways](/azure/api-management/self-hosted-gateway-overview), which you can run on your own infrastructure. When you use self-hosted gateways, you're responsible for configuring them to meet your reliability requirements. Self-hosted gateways are outside the scope of this article.
+
+The following table summarizes the configurable reliability features that each tier supports. A green check mark (:::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false":::) indicates that the tier supports the feature.
+
+| Tier | [Multiple units](#units) | [Resilience to availability zone failures](#resilience-to-availability-zone-failures) | [Resilience to region-wide failures](#resilience-to-region-wide-failures) | [Backup and restore](#backup-and-restore) | [Resilience to service maintenance](#resilience-to-service-maintenance) |
+|:--- |:---:|:---:|:---:|:---:|:---:|
+| Premium (classic) |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| Premium v2 |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |
+| Standard v2 |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |
+| Basic v2 |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |
+| Standard |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| Basic |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |  :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| Developer |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: |
+| Consumption |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |:::image type="content" source="media/icon-x.svg" alt-text="No" border="false"::: |
 
 ## Production deployment recommendations
 
@@ -66,7 +79,7 @@ When you use API Management in front of an API, you might need to retry requests
 
 :::zone pivot="other-tiers"
 
-To view information about availability zone support for the Premium and Premium v2 tiers, be sure to select the appropriate service tier at the beginning of this page.
+To view information about availability zone support for the Premium (classic), Premium v2, and Standard v2 tiers, select the appropriate service tier at the beginning of this article.
 
 :::zone-end
 
@@ -79,11 +92,11 @@ API Management provides two types of availability zone support when you deploy a
     
 - **Manual:** API Management provides manual availability zone support when you explicitly specify which availability zones to use. 
 
-With availability zone support, API Management replicates service components across zones for high availability. In the primary region, these components include the gateway (scale units), management plane, and developer portal. In secondary regions, only the gateway units are replicated. For more information about secondary regions, see [resilience to region-wide failures](#resilience-to-region-wide-failures).
+By using availability zone support, API Management replicates service components across zones for high availability. In the primary region, these components include the gateway (scale units), management plane, and developer portal. In secondary regions, only the gateway units are replicated. For more information about secondary regions, see [resilience to region-wide failures](#resilience-to-region-wide-failures).
 
 ### Automatic availability zone support
 
-You can use automatic availability zone support to choose either a single unit or multiunit instance configuration to achieve zone redundancy:
+Use automatic availability zone support to choose either a single-unit or multi-unit instance configuration to achieve zone redundancy:
 
 - **Multi-unit configuration** (Recommended): If your instance has two or more units, API Management makes a best-effort attempt to spread your instance's units among the region's availability zones. You can't determine which availability zones your units are placed into. Deploy a minimum of two units, which can be distributed across two zones.
 
@@ -122,9 +135,9 @@ If you want to explicitly select the availability zones to use, you can choose b
 
 :::zone pivot="premium-v2"
 
-In the Premium v2 tier, you can enable zone redundancy for an API Management instance in a supported region.
+In the Premium v2 and Standard v2 tiers, you can enable zone redundancy for an API Management instance in a supported region.
 	
-With availability zone support, API Management replicates the gateway (scale units), management plane, and developer portal. You can choose either a single unit or multiunit instance configuration to achieve zone redundancy:
+With availability zone support, API Management replicates the gateway (scale units), management plane, and developer portal. You can choose either a single unit or multi-unit instance configuration to achieve zone redundancy:
 
 - **Multi-unit configuration** (Recommended): If your instance has two or more units, API Management makes a best-effort attempt to spread your instance's units among the region's availability zones. You can't determine which availability zones your units are placed into. Deploy a minimum of two units, which can be distributed across two zones.
 
@@ -144,9 +157,9 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 ### Requirements
 
-- **Region support:** API Management supports availability zones for the Premium (classic) and Premium v2 tiers in regions where the API Management tier is available and the region [supports availability zones](./regions-list.md).
+- **Region support:** API Management supports availability zones for the Premium (classic), Premium v2, and Standard v2 tiers in regions where the API Management tier is available and the region [supports availability zones](./regions-list.md).
 
-- **Tier requirement:** You must use the Premium (classic) or Premium v2 tier to configure availability zone support. API Management doesn't currently support availability zones in the classic Consumption, Developer, Basic, and Standard tiers or in the Basic v2 and Standard v2 tiers. For upgrade options, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
+- **Tier requirement:** You must use the Premium (classic), Premium v2, or Standard v2 tiers to configure availability zone support. API Management doesn't currently support availability zones in the classic Consumption, Developer, Basic, and Standard tiers or in the Basic v2 tier. For upgrade options, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
 :::zone pivot="premium-classic"
 
@@ -168,11 +181,11 @@ With availability zone support, API Management replicates the gateway (scale uni
 
 ### Considerations
 
-- **Number of units for zone-redundant instances:** In the Premium v2 tier, there's no requirement to use a specific number of units. The units that you deploy are distributed among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to provide sufficient capacity so that an availability zone outage doesn't affect your gateway performance. 
+- **Number of units for zone-redundant instances:** In the Premium v2 or Standard v2 tiers, you don't need to use a specific number of units. The deployment distributes units among the availability zones in a best-effort manner. For maximum zone redundancy, use at least two units to provide sufficient capacity so that an availability zone outage doesn't affect your gateway performance. 
     
     To determine the number of units that provide your required gateway performance, use [capacity metrics](/azure/api-management/api-management-capacity) and your own testing. For more information about scaling and upgrading your service instance, see [Upgrade and scale an API Management instance](/azure/api-management/upgrade-and-scale).
 
-- **Autoscaling:** In the Premium v2 tier, you don't need to adjust your autoscale settings when you enable availability zone support. 
+- **Autoscaling:** In the Premium v2 or Standard v2 tiers, you don't need to adjust your autoscale settings when you enable availability zone support. 
 
 :::zone-end
 
@@ -210,7 +223,7 @@ This section explains how to configure availability zone support for your API Ma
 This section explains how to configure availability zone support for your API Management instance. For more information, see [Enable availability zone support on API Management instances](/azure/api-management/enable-availability-zone-support).
 
 
-- **Create an API Management instance that supports availability zones:** In the Premium v2 tier, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. If zone redundancy can't be enabled because of capacity constraints or other issues, the service deployment fails.
+- **Create an API Management instance that supports availability zones:** In the Premium v2 or Standard v2 tiers, optionally enable zone redundancy when you create an API Management instance in a region that supports availability zones. If zone redundancy can't be enabled because of capacity constraints or other issues, the service deployment fails.
 
 - **Enable or reconfigure availability zone support:** You can't change the availability zone configuration after the instance is created.
 
@@ -234,15 +247,15 @@ Use [capacity metrics](/azure/api-management/api-management-capacity) and your o
 
 This section describes what to expect when API Management instances are configured with availability zone support and all availability zones are operational.
 
-- **Traffic routing between zones:** During normal operations, traffic is routed between all of your available API Management units across all selected availability zones.
+- **Traffic routing between zones:** During normal operations, traffic routes between all of your available API Management units across all selected availability zones.
 
 - **Data replication between zones:** API Management stores and replicates the following data.
 
     - *Gateway configuration*, such as APIs and policy definitions, regularly synchronizes between the availability zones that you select for the instance. Propagation of updates between the availability zones normally takes less than 10 seconds.
 
-    - *Data in the internal cache*, if you use the internal cache that API Management provides. Cache entries are distributed among availability zones. The internal cache is volatile and data isn't guaranteed to be persisted. Consider using an external cache if you need to persist cached data.
+    - *Data in the internal cache*, if you use the internal cache that API Management provides. Cache entries distribute among availability zones. The internal cache is volatile and data isn't guaranteed to persist. Consider using an external cache if you need to persist cached data.
 
-    - *Rate limit counters*, if you use the rate limiting capabilities that API Management provides. Rate limit counters are asynchronously replicated between the availability zones that you select for the instance.
+    - *Rate limit counters*, if you use the rate limiting capabilities that API Management provides. Rate limit counters asynchronously replicate between the availability zones that you select for the instance.
 
 :::zone-end
 
@@ -296,7 +309,7 @@ This section describes what to expect when API Management instances are configur
 This section describes what to expect when API Management instances are configured with availability zone support and there's an availability zone outage.
 
 
-- **Detection and response:** In the Premium v2 tier, the API Management platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
+- **Detection and response:** In the Premium v2 or Standard v2 tiers, the API Management platform is responsible for detecting a failure in an availability zone and responding. You don't need to do anything to initiate a zone failover.
 
 - **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to an API Management unit in the faulty availability zone are terminated and need to be retried.
 
@@ -332,7 +345,7 @@ This section describes what to expect when API Management instances are configur
 
 ### Zone recovery
 
-In the Premium v2 tier, when the availability zone recovers, API Management automatically restores units in the availability zone and reroutes traffic between your units as normal.
+In the Premium v2 or Standard v2 tiers, when the availability zone recovers, API Management automatically restores units in the availability zone and reroutes traffic between your units as normal.
 
 :::zone-end
 
@@ -350,20 +363,20 @@ In the Premium v2 tier, when the availability zone recovers, API Management auto
 
 ### Test for zone failures
 
-In the Premium v2 tier, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
+In the Premium v2 or Standard v2 tiers, the API Management platform manages traffic routing, failover, and failback. This feature is fully managed, so you don't need to initiate or validate availability zone failure processes.
 
 :::zone-end
 
 ## Resilience to region-wide failures 
 
-By using a multiregion deployment, you can add regional API gateways to an existing API Management instance in one or more supported Azure regions. A multiregion deployment helps reduce any request latency that's perceived by geographically distributed API consumers. A multiregion deployment also improves service availability if one region goes offline.
+By using a multiregion deployment, you can add regional API gateways to an existing API Management instance in one or more supported Azure regions. A multiregion deployment helps reduce any request latency that geographically distributed API consumers perceive. A multiregion deployment also improves service availability if one region goes offline.
 
 > [!IMPORTANT]
-> Multiregion deployments are supported only in the Premium (classic) tier of API Management.
+> Multiregion deployments are only supported in the Premium (classic) tier of API Management.
 
 :::zone pivot="other-tiers,premium-v2"
 
-To view information about multiregion support, be sure to select the Premium (classic) tier at the beginning of this page.
+To view information about multiregion support, select the Premium (classic) tier at the beginning of this article.
 
 :::zone-end
 
@@ -373,11 +386,11 @@ To view information about multiregion support, be sure to select the Premium (cl
 
 When you add a region, you configure:
 
-- The number of units that region hosts.
+- The number of units that the region hosts.
 
-- [Resilience to availability zone failures](#resilience-to-availability-zone-failures), if that region provides availability zones.
+- [Resilience to availability zone failures](#resilience-to-availability-zone-failures), if the region provides availability zones.
 
-- [Virtual network settings](/azure/api-management/virtual-network-concepts) in the added region, if networking is configured in the existing region or regions.
+- [Virtual network settings](/azure/api-management/virtual-network-concepts) in the added region, if you configure networking in the existing region or regions.
 
 #### Requirements
 
@@ -451,15 +464,14 @@ To be ready for unexpected region outages, regularly test your responses to regi
 
 :::zone-end
 
-
 ## Backup and restore
 
 API Management doesn't store most runtime data. However, you can back up your API Management service configuration. You can also use backup and restore operations to replicate API Management service configurations between operational environments, such as development and staging.
 
 > [!IMPORTANT]
-> In a backup procedure, runtime data such as users and subscriptions are included, which might not always be desirable.
+> A backup procedure includes runtime data such as users and subscriptions, which might not always be desirable.
 
-Backup is supported in Developer, Basic, Standard, and Premium tiers.
+Backup is supported in Developer, Basic, Standard, and Premium (classic) tiers.
 
 For more information, see [How to implement disaster recovery by using service backup and restore in API Management](/azure/api-management/api-management-howto-disaster-recovery-backup-restore).
 
@@ -469,7 +481,7 @@ For backup or restoration of some service components or resources, you can also 
 
 API Management performs regular service upgrades and other forms of maintenance.
 
-In the Basic, Standard, and Premium (classic) tiers, you can customize when in the update process your instance receives an update. If you need to validate the effect of upgrades on your workload, consider configuring a test instance to receive updates early in an update cycle, and set your production instance to receive updates late in the cycle. You can also specify a maintenance window, which is the time of the day that you want the instance to apply service updates.
+In the Basic, Standard, Premium (classic), and Developer tiers, you can customize when in the update process your instance receives an update. If you need to validate the effect of upgrades on your workload, consider configuring a test instance to receive updates early in an update cycle, and set your production instance to receive updates late in the cycle. You can also specify a maintenance window, which is the time of the day that you want the instance to apply service updates.
 
 For more information, see [Configure service update settings for your API Management instances](/azure/api-management/configure-service-update-settings).
 

@@ -65,7 +65,7 @@ groups:
   - id: premium-classic
     title: Premium (classic)
   - id: premium-v2
-    title: Premium v2
+    title: Premium v2 and Standard v2
   - id: other-tiers
     title: Other tiers
 # Owner: glynnniall
