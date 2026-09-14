@@ -217,6 +217,14 @@ productDirectory:
       azureCategories:
         - containers
     # Card
+    - title: Azure Container Apps Sandboxes
+      summary: Run isolated workloads in secure, ephemeral compute environments
+      imageSrc: /azure/media/index/container-apps-sandboxes.svg
+      url: reliability-container-apps-sandboxes.md
+      azureCategories:
+        - compute
+        - containers
+    # Card
     - title: Azure Container Instances
       summary: Easily run containers on Azure without managing servers
       imageSrc: https://static.docs.com/ui/media/product/azure/container-instances.svg

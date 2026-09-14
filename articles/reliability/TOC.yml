@@ -78,6 +78,8 @@ items:
       href: reliability-app-configuration.md
     - name: Azure Container Apps
       href: reliability-container-apps.md
+    - name: Azure Container Apps Sandboxes
+      href: reliability-container-apps-sandboxes.md
     - name: Azure Container Instances
       href: reliability-container-instances.md
     - name: Azure Container Registry

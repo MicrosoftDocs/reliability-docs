@@ -102,6 +102,7 @@ The following services don't provide built-in multiregion support. However, you 
 - <img src="/azure/media/index/batch-accounts.svg" alt="Azure Batch" width="24" /> [Azure Batch](./reliability-batch.md)
 - <img src="/azure/media/index/chaos-studio.svg" alt="Azure Chaos Studio" width="24" /> [Azure Chaos Studio](./reliability-chaos-studio.md)
 - <img src="/azure/media/index/container-apps.svg" alt="Azure Container Apps" width="24" /> [Azure Container Apps](./reliability-container-apps.md#custom-multiregion-solutions-for-resiliency)
+- <img src="/azure/media/index/container-apps-sandboxes.svg" alt="Azure Container Apps Sandboxes" width="24" /> [Azure Container Apps Sandboxes](./reliability-container-apps-sandboxes.md#custom-multiregion-solutions-for-resiliency)
 - <img src="https://static.docs.com/ui/media/product/azure/container-instances.svg" alt="Azure Container Instances" width="24" /> [Azure Container Instances](./reliability-container-instances.md#custom-multiregion-solutions-for-resiliency)
 - <img src="/azure/media/index/data-explorer.svg" alt="Azure Data Explorer" width="24" /> [Azure Data Explorer](./reliability-data-explorer.md#custom-multiregion-solutions-for-resiliency)
 - <img src="/azure/media/index/disk-storage.svg" alt="Azure Disk Storage" width="24" /> [Azure Disk Storage](./reliability-storage-disk.md#custom-multiregion-solutions-for-resiliency)
