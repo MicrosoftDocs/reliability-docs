@@ -55,6 +55,7 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="/azure/media/index/bot-services.svg" alt="Azure Bot Service" width="24" /> Azure Bot Service | [Reliability in Bot Service](reliability-bot.md)||
 | <img src="/azure/media/index/chaos-studio.svg" alt="Azure Chaos Studio" width="24" /> Azure Chaos Studio| [Reliability in Chaos Studio](reliability-chaos-studio.md)||
 | <img src="/azure/media/index/container-apps.svg" alt="Azure Container Apps" width="24" /> Azure Container Apps| [Reliability in Container Apps](reliability-container-apps.md)||
+| <img src="/azure/media/index/container-apps-sandboxes.svg" alt="Azure Container Apps Sandboxes" width="24" /> Azure Container Apps Sandboxes| [Reliability in Container Apps Sandboxes](reliability-container-apps-sandboxes.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/container-instances.svg" alt="Azure Container Instances" width="24" /> Azure Container Instances| [Reliability in Container Instances](reliability-container-instances.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/container-registry.svg" alt="Azure Container Registry" width="24" /> Azure Container Registry|[Reliability in Container Registry](reliability-container-registry.md) ||
 | <img src="https://static.docs.com/ui/media/product/azure/cosmos-db.svg" alt="Azure Cosmos DB" width="24" /> Azure Cosmos DB| [Reliability in Azure Cosmos DB](reliability-cosmos-db.md) ||

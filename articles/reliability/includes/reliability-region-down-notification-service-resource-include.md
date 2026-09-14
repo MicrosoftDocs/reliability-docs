@@ -9,8 +9,4 @@ ms.author: pnp
 ms.custom: include file
 ---
 
-- **Notification**: Microsoft doesn't automatically notify you when a region is down. However:
-
-    - You can use [Azure Resource Health](/azure/service-health/resource-health-overview) to monitor for the health of an individual resource, and you can set up [Resource Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
-    
-    - You can use [Azure Service Health](/azure/service-health/overview) to understand the overall health of the service, including any region failures, and you can set up [Service Health alerts](/azure/service-health/resource-health-alert-arm-template-guide) to notify you of problems.
+- **Notification**: [!INCLUDE [Region down notification partial (Service Health and Resource Health)](./reliability-region-down-notification-service-resource-partial-include.md)]

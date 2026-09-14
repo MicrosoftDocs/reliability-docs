@@ -129,6 +129,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Automation
 - Azure Chaos Studio
 - Azure Container Apps
+- Azure Container Apps Sandboxes
 - Azure Data Share
 - Azure Database Migration Service
 - Azure Databricks
