@@ -16,15 +16,8 @@ ms.custom: references_regions, subject-reliability
 
 Azure provides the most extensive global footprint of any cloud provider and is rapidly opening new regions. This article contains a list of all regions in the Azure public cloud, their paired region status, physical location, geography, and [availability zone](availability-zones-overview.md) support.
 
-## Legend
-
-| Symbol | Description |
-|---|---|
-|:::image type="content" source="media/icon-region-coming-soon.svg"  alt-text="Icon that shows that this region is coming soon."  border="false"::: | Region coming soon. To learn more about availability zones and available services support in this region, contact your Microsoft sales or customer representative. For upcoming regions that support availability zones, see [Azure geographies](https://azure.microsoft.com/global-infrastructure/geographies/).
-| :::image type="content"  source="media/icon-region-restricted.svg"  alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: | Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions). |
-
 > [!NOTE]
-> Even when a region provides availability zones, it's possible that some services might not support them in that region. Refer to the [Azure service reliability guides](./overview-reliability-guidance.md) to learn about region support for availability zone-enabled services.
+> Even when a region provides availability zones, some services might not support them in that region. To learn about region support for availability zone-enabled services, refer to the [Azure service reliability guides](./overview-reliability-guidance.md).
  
 ## Azure regions list
 
@@ -66,7 +59,7 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | Malaysia West | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Kuala Lumpur | Malaysia | malaysiawest |
 | Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
 | New Zealand North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Auckland | New Zealand | newzealandnorth |
-| North Central US | | South Central US | Illinois | United States | northcentralus |
+| North Central US | :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: | South Central US | Illinois | United States | northcentralus |
 | North Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Europe | Ireland | Europe | northeurope |
 | Norway East | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | Norway | Norway | norwayeast |
 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Norway West | | Norway East | Norway | Norway | norwaywest |
@@ -92,6 +85,12 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | West US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Central US | Washington | United States | westus2 |
 | West US 3 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East US | Phoenix | United States | westus3 |
 
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
+
+:::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: In the **Availability zone support** column, this icon indicates that availability zone support is in preview in this region.
+
 #### [Americas](#tab/americas)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
@@ -105,12 +104,18 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | East US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West US | Virginia | United States | eastus |
 | East US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | Central US | Virginia | United States | eastus2 |
 | Mexico Central | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | N/A | Querétaro State | Mexico | mexicocentral |
-| North Central US | | South Central US | Illinois | United States | northcentralus |
+| North Central US | :::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: | South Central US | Illinois | United States | northcentralus |
 | South Central US | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Central US | Texas | United States | southcentralus |
 | West Central US | | West US 2 | Wyoming | United States | westcentralus |
 | West US | | East US | California | United States | westus |
 | West US 2 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | West Central US | Washington | United States | westus2 |
 | West US 3 | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East US | Phoenix | United States | westus3 |
+
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
+
+:::image type="content" source="media/icon-region-coming-soon.svg" alt-text="Icon that shows that availability zone support in this region is coming soon." border="false"::: In the **Availability zone support** column, this icon indicates that availability zone support is in preview in this region.
 
 #### [Europe](#tab/europe)
 
@@ -136,6 +141,10 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | UK West | | UK South | Cardiff | United Kingdom | ukwest |
 | West Europe | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | North Europe | Netherlands | Europe | westeurope |
 
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
+
 #### [Middle East](#tab/middle-east)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
@@ -145,12 +154,20 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central | | UAE North | Abu Dhabi | UAE | uaecentral |
 | UAE North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: UAE Central | Dubai | UAE | uaenorth |
 
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
+
 #### [Africa](#tab/africa)
 
 | Region | Availability zone support | Paired region | Physical location | Geography | Programmatic name |
 |---|---|---|---|---|---|
 | South Africa North | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West | Johannesburg | South Africa | southafricanorth |
 | :::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: South Africa West | | South Africa North | Cape Town | South Africa | southafricawest |
+
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
 
 #### [Asia Pacific](#tab/asia-pacific)
 
@@ -173,6 +190,10 @@ Azure provides the most extensive global footprint of any cloud provider and is 
 | South India | | Central India | Chennai | India | southindia |
 | Southeast Asia | :::image type="content" source="media/icon-checkmark.svg" alt-text="Yes" border="false"::: | East Asia | Singapore | Asia Pacific | southeastasia |
 | West India | | South India | Mumbai | India | westindia |
+
+**Legend:**
+
+:::image type="content" source="media/icon-region-restricted.svg" alt-text="Icon that shows that access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area." border="false"::: Access to this region is restricted to support specific customer scenarios, such as disaster recovery within a specific geographic area. To request access to a restricted region for your Azure subscription, see [Azure region access request process](/troubleshoot/azure/general/region-access-request-process#reserved-access-regions).
 
 <!-- END AUTOGENERATED SECTION -->
 
