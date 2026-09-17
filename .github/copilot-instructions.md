@@ -120,6 +120,13 @@ The following content is considered legacy:
 - Allowed without asking: copyedits that do not change meaning (grammar, spelling, concision), removal of weasel words, and minor structure cleanups (headings, lists) that preserve meaning.
 - Not allowed without request: content rewrites and adding/removing sections
 
+## Product group review notes
+
+- Treat `> [!WARNING]` blocks that begin with `**Note to PG:**` as intentional draft annotations, not content defects.
+- Preserve these notes when drafting, editing, or reviewing content unless the user explicitly asks you to remove the notes.
+- In a review, classify unresolved `**Note to PG:**` notes as low-priority, non-blocking follow-up items. Don't report their presence as errors, blockers, or high-priority findings.
+- When preparing content for publication, flag any remaining `**Note to PG:**` notes for removal. Don't remove a note or change the associated technical claim unless the product group has verified the fact or the user explicitly directs you to do so.
+
 ## Freshness updates
 
 Data in this repository must be periodically updated to reflect modern approaches and modern technology, usually once a year. Data that receives a full freshness pass gets its `ms.date` metadata updated to reflect this. Do not proactively perform a full freshness pass; instead, when you detect content that appears outdated or divergent, leave files unchanged and output a message to the human-in-the-loop indicating that a freshness pass is recommended and why.
