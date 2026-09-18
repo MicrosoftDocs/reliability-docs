@@ -158,6 +158,17 @@ Container Registry geo-replication doesn't rely on Azure paired regions. You can
 
 This section summarizes information about geo-replication as it relates to reliability. For more information, see [Geo-replication in Container Registry](/azure/container-registry/container-registry-geo-replication).
 
+### Registry endpoints and failover behavior
+
+Container Registry exposes more than one endpoint, and the endpoint your clients use determines whether failover is automatic.
+
+- **Global endpoint** (`myregistry.azurecr.io`): Azure routes each request to the geo-replica with the best network performance profile for the client. Failover between geo-replicas is automatic and requires no client changes.
+
+- **Regional endpoints** (`myregistry.<region>.geo.azurecr.io`, currently in preview): Each geo-replica gets a dedicated URL that targets that replica directly, bypassing Azure-managed routing. Regional endpoints give you predictable routing and push/pull consistency, but automatic failover doesn't apply to them. If the target region degrades, you're responsible for switching your clients to a different regional endpoint.
+
+If you adopt regional endpoints, you take on responsibility for detecting regional degradation and failing over. Consider using regional endpoints for workloads that need in-region affinity or push/pull consistency, and the global endpoint for workloads that should fail over automatically.
+
+For more information, see [Azure Container Registry endpoint reference](/azure/container-registry/container-registry-endpoint-reference).
 
 ### Requirements
 
