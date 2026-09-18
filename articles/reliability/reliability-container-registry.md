@@ -166,9 +166,13 @@ Container Registry exposes more than one endpoint, and the endpoint your clients
 
 - **Regional endpoints** (`myregistry.<region>.geo.azurecr.io`, currently in preview): Each geo-replica gets a dedicated URL that targets that replica directly, bypassing Azure-managed routing. Regional endpoints give you predictable routing and push/pull consistency, but automatic failover doesn't apply to them. If the target region degrades, you're responsible for switching your clients to a different regional endpoint.
 
+- **Dedicated data endpoints** (`myregistry.<region>.data.azurecr.io`): When you pull an image, the registry endpoint issues an HTTP 307 redirect to a data endpoint for the layer downloads. Registries that don't use dedicated data endpoints or private endpoints are redirected to `*.blob.core.windows.net` instead. Dedicated data endpoints are automatically enabled when the registry has at least one private endpoint.
+
+    The redirect always stays within the same region as the geo-replica that served the request. The region is chosen when the redirect is issued, and the download stays on that region's data endpoint until it completes. Automatic failover doesn't apply to data endpoints.
+
 If you adopt regional endpoints, you take on responsibility for detecting regional degradation and failing over. Consider using regional endpoints for workloads that need in-region affinity or push/pull consistency, and the global endpoint for workloads that should fail over automatically.
 
-For more information, see [Azure Container Registry endpoint reference](/azure/container-registry/container-registry-endpoint-reference).
+For more information, see [Azure Container Registry endpoint reference](/azure/container-registry/container-registry-endpoint-reference) and [Dedicated data endpoints](/azure/container-registry/container-registry-dedicated-data-endpoints)
 
 ### Requirements
 
