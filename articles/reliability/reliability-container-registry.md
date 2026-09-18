@@ -213,6 +213,8 @@ This section describes what to expect when a registry is configured for geo-repl
 
     Replication typically completes within minutes of changes. However, there's no guarantee on data replication timing. Large container images or high-frequency updates might take longer to replicate across all regions.
 
+    Until replication completes, a pull from another region can fail with `manifest unknown` or return an outdated tag or deleted content. Retry pulls that immediately follow a push, or use a regional endpoint to push and pull from the same geo-replica.
+
 ### Behavior during a region failure
 
 This section describes what to expect when a registry is configured for geo-replication and there's an outage in the primary region.
