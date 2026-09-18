@@ -162,7 +162,7 @@ Container Registry exposes more than one endpoint, and the endpoint your clients
 
 - **Global endpoint** (`myregistry.azurecr.io`): Azure routes each request to the geo-replica with the best network performance profile for the client. Failover between geo-replicas is automatic and requires no client changes.
 
-- **Regional endpoints** (`myregistry.<region>.geo.azurecr.io`, currently in preview): Each geo-replica gets a dedicated URL that targets that replica directly, bypassing Azure-managed routing. Regional endpoints give you predictable routing and push/pull consistency, but automatic failover doesn't apply to them. If the target region degrades, you're responsible for switching your clients to a different regional endpoint.
+- **Regional endpoints** (`myregistry.<region>.geo.azurecr.io`, currently in private preview): Each geo-replica gets a dedicated URL that targets that replica directly, bypassing Azure-managed routing. Regional endpoints give you predictable routing and push/pull consistency, but automatic failover doesn't apply to them. If the target region degrades, you're responsible for switching your clients to a different regional endpoint.
 
 - **Dedicated data endpoints** (`myregistry.<region>.data.azurecr.io`): When you pull an image, the registry endpoint issues an HTTP 307 redirect to a data endpoint for the layer downloads. Registries that don't use dedicated data endpoints or private endpoints are redirected to `*.blob.core.windows.net` instead. Dedicated data endpoints are automatically enabled when the registry has at least one private endpoint.
 
@@ -216,7 +216,7 @@ This section describes what to expect when a registry is configured for geo-repl
 
     Replication typically completes within minutes of changes. However, there's no guarantee on data replication timing. Large container images or high-frequency updates might take longer to replicate across all regions.
 
-    Until replication completes, a pull from another region can fail with `manifest unknown` or return an outdated tag or deleted content. Retry pulls that immediately follow a push, or use a regional endpoint to push and pull from the same geo-replica.
+    Until replication completes, a pull from another region might not yet reflect the latest content or metadata. Retry pulls that immediately follow a push, or use a regional endpoint when push/pull consistency is required.
 
 ### Behavior during a region failure
 
@@ -257,6 +257,16 @@ When you re-enable the replica, Traffic Manager resumes routing traffic to the r
 Container Registry supports exporting container images and artifacts from your registry to external storage or alternative registries. Use Container Registry import and export capabilities or standard Docker commands to create copies of critical container images for disaster recovery scenarios.
 
 [!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+
+## Resilience to service maintenance
+
+Microsoft periodically performs maintenance on the Container Registry service. Maintenance is
+performed in a way that's designed to avoid affecting your registry's availability, and you
+don't configure or schedule maintenance windows for Container Registry.
+
+To receive advance notice of planned maintenance that might affect your registries, configure
+Azure Service Health alerts for the **Planned maintenance** event type. For more information,
+see [Configure service health alerts for Container Registry](/azure/container-registry/set-container-registry-service-health-alerts).
 
 ## Service-level agreement
 
