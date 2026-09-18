@@ -86,8 +86,6 @@ Zone redundancy is enabled by default for all registries in regions that support
 
 - **Region support:** Zone-redundant registries can be deployed into [any region that supports availability zones](./regions-list.md). If your registry is in a region that doesn't support availability zones, then to make it zone-redundant you must create a new registry in a region that supports availability zones. Then, you need to migrate your container images by [creating a transfer pipeline](/azure/container-registry/container-registry-transfer-prerequisites) or by [importing container images](/azure/container-registry/container-registry-import-images).
 
-### Considerations
-
 - **Tasks:** Container Registry tasks don't currently support availability zones. Zone redundancy applies to the registry service itself, but not to tasks or their operations.
 
 - **Geo-replication:** If your registry uses [geo-replication](#resilience-to-region-wide-failures), any replicas created in regions with availability zones are made zone-redundant automatically.
@@ -130,7 +128,7 @@ When a zone becomes unavailable, Container Registry automatically handles the fa
 
 - **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to resources in the faulty availability zone are terminated. They need to be retried.
 
-- **Expected data loss:** Any recent writes made in the faulty zone might not be replicated to other regions, which means that they might be lost until the zone recovers. The data loss is typically expected to be less than 15 minutes, but that's not guaranteed.
+- **Expected data loss:** Any recent writes made in the faulty zone might not be replicated to other zones, which means that they might be lost until the zone recovers. The data loss is typically expected to be less than 15 minutes, but that's not guaranteed.
 
 - **Expected downtime:** A small amount of downtime might occur during automatic failover as traffic is redirected to healthy zones. This downtime is typically a few seconds for most registry operations. We recommend that you follow [transient fault handling best practices](#resilience-to-transient-faults) to minimize the effect of zone failover on your applications.
 
@@ -158,6 +156,21 @@ Container Registry geo-replication doesn't rely on Azure paired regions. You can
 
 This section summarizes information about geo-replication as it relates to reliability. For more information, see [Geo-replication in Container Registry](/azure/container-registry/container-registry-geo-replication).
 
+### Registry endpoints and failover behavior
+
+Container Registry exposes more than one endpoint, and the endpoint your clients use determines whether failover is automatic.
+
+- **Global endpoint** (`myregistry.azurecr.io`): Azure routes each request to the geo-replica with the best network performance profile for the client. Failover between geo-replicas is automatic and requires no client changes.
+
+- **Regional endpoints** (`myregistry.<region>.geo.azurecr.io`, currently in private preview): Each geo-replica gets a dedicated URL that targets that replica directly, bypassing Azure-managed routing. Regional endpoints give you predictable routing and push/pull consistency, but automatic failover doesn't apply to them. If the target region degrades, you're responsible for switching your clients to a different regional endpoint.
+
+- **Dedicated data endpoints** (`myregistry.<region>.data.azurecr.io`): When you pull an image, the registry endpoint issues an HTTP 307 redirect to a data endpoint for the layer downloads. Registries that don't use dedicated data endpoints or private endpoints are redirected to `*.blob.core.windows.net` instead. Dedicated data endpoints are automatically enabled when the registry has at least one private endpoint.
+
+    The redirect always stays within the same region as the geo-replica that served the request. The region is chosen when the redirect is issued, and the download stays on that region's data endpoint until it completes. Automatic failover doesn't apply to data endpoints.
+
+If you adopt regional endpoints, you take on responsibility for detecting regional degradation and failing over. Consider using regional endpoints for workloads that need in-region affinity or push/pull consistency, and the global endpoint for workloads that should fail over automatically.
+
+For more information, see [Azure Container Registry endpoint reference](/azure/container-registry/container-registry-endpoint-reference) and [Dedicated data endpoints](/azure/container-registry/container-registry-dedicated-data-endpoints)
 
 ### Requirements
 
@@ -171,6 +184,8 @@ This section summarizes information about geo-replication as it relates to relia
 - **Control plane:** The control plane runs in the home region. If the home region is unavailable, control plane operations are unavailable, and you might not be able to modify the registry's configuration.
 
 - **Tasks:** Container Registry tasks don't currently support geo-replicas. Tasks always run in the home region. If the home region is unavailable, the task doesn't run.
+
+- **Throttling during failover:** API throttling limits apply to each geo-replica. When a region becomes unavailable, the traffic that it was serving shifts onto the remaining geo-replicas, which can cause them to reach their throttling limits. Failover doesn't reroute traffic in response to throttling (HTTP 429) responses.
 
 ### Cost
 
@@ -186,6 +201,9 @@ Geo-replication can be configured during registry creation or added to existing 
 
 - **Disable geo-replication.** Remove individual regional replicas through the Azure portal or command-line tools. The home region registry can't be removed.
 
+> [!NOTE]
+> If your registry uses private endpoints, each geo-replica needs extra private IP addresses in every connected subnet. Adding a geo-replica fails if any subnet runs out of addresses, and the error doesn't identify which subnet. It also fails if the private endpoint uses static IP allocation.
+
 ### Behavior when all regions are healthy
 
 This section describes what to expect when a registry is configured for geo-replication and all regions are operational.
@@ -197,6 +215,8 @@ This section describes what to expect when a registry is configured for geo-repl
 - **Data replication between regions:** Geo-replication automatically synchronizes container images and artifacts across all configured regions by using asynchronous replication with eventual consistency. The service uses content-addressable storage to efficiently replicate only the unique image layers. This approach minimizes bandwidth usage and replication time. Read and write operations work on all geo-replicated regions. Changes made in any region are replicated to all other regions.
 
     Replication typically completes within minutes of changes. However, there's no guarantee on data replication timing. Large container images or high-frequency updates might take longer to replicate across all regions.
+
+    Until replication completes, a pull from another region might not yet reflect the latest content or metadata. Retry pulls that immediately follow a push, or use a regional endpoint when push/pull consistency is required.
 
 ### Behavior during a region failure
 
@@ -228,7 +248,7 @@ When a region recovers, data plane operations automatically resume for that regi
 
 ### Test for region failures
 
-You can't simulate the failure of one of the regions associated with your registry, but you can test your application's ability to fail over between regions. You can simulate regional failover by temporarily disabling geo-replicas, which removes them from Traffic Manager routing. Then you can verify that container operations successfully fail over to alternative regions without actually experiencing a regional outage. For more information, see [Temporarily disable routing to replication](/azure/container-registry/container-registry-geo-replication#temporarily-disable-routing-to-replication).
+You can't simulate the failure of one of the regions associated with your registry, but you can test your application's ability to fail over between regions. You can simulate regional failover by temporarily disabling geo-replicas, which removes them from Traffic Manager routing. Then you can verify that container operations successfully fail over to alternative regions without actually experiencing a regional outage. For more information, see [Temporarily disable routing to replication](/azure/container-registry/container-registry-geo-replication#temporarily-exclude-a-geo-replica-from-global-endpoint-routing).
 
 When you re-enable the replica, Traffic Manager resumes routing traffic to the re-enabled replica. Also, metadata and images are synchronized with eventual consistency to the re-enabled replica to ensure data consistency across all regions.
 
@@ -237,6 +257,16 @@ When you re-enable the replica, Traffic Manager resumes routing traffic to the r
 Container Registry supports exporting container images and artifacts from your registry to external storage or alternative registries. Use Container Registry import and export capabilities or standard Docker commands to create copies of critical container images for disaster recovery scenarios.
 
 [!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+
+## Resilience to service maintenance
+
+Microsoft periodically performs maintenance on the Container Registry service. Maintenance is
+performed in a way that's designed to avoid affecting your registry's availability, and you
+don't configure or schedule maintenance windows for Container Registry.
+
+To receive advance notice of planned maintenance that might affect your registries, configure
+Azure Service Health alerts for the **Planned maintenance** event type. For more information,
+see [Configure service health alerts for Container Registry](/azure/container-registry/set-container-registry-service-health-alerts).
 
 ## Service-level agreement
 
