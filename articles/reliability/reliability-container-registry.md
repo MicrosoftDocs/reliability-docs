@@ -243,7 +243,7 @@ When a region recovers, data plane operations automatically resume for that regi
 
 ### Test for region failures
 
-You can't simulate the failure of one of the regions associated with your registry, but you can test your application's ability to fail over between regions. You can simulate regional failover by temporarily disabling geo-replicas, which removes them from Traffic Manager routing. Then you can verify that container operations successfully fail over to alternative regions without actually experiencing a regional outage. For more information, see [Temporarily disable routing to replication](/azure/container-registry/container-registry-geo-replication#temporarily-disable-routing-to-replication).
+You can't simulate the failure of one of the regions associated with your registry, but you can test your application's ability to fail over between regions. You can simulate regional failover by temporarily disabling geo-replicas, which removes them from Traffic Manager routing. Then you can verify that container operations successfully fail over to alternative regions without actually experiencing a regional outage. For more information, see [Temporarily disable routing to replication](/azure/container-registry/container-registry-geo-replication#temporarily-exclude-a-geo-replica-from-global-endpoint-routing).
 
 When you re-enable the replica, Traffic Manager resumes routing traffic to the re-enabled replica. Also, metadata and images are synchronized with eventual consistency to the re-enabled replica to ensure data consistency across all regions.
 
