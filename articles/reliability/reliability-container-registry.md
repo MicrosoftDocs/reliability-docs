@@ -128,7 +128,7 @@ When a zone becomes unavailable, Container Registry automatically handles the fa
 
 - **Active requests:** When an availability zone is unavailable, any requests in progress that are connected to resources in the faulty availability zone are terminated. They need to be retried.
 
-- **Expected data loss:** Any recent writes made in the faulty zone might not be replicated to other regions, which means that they might be lost until the zone recovers. The data loss is typically expected to be less than 15 minutes, but that's not guaranteed.
+- **Expected data loss:** Any recent writes made in the faulty zone might not be replicated to other zones, which means that they might be lost until the zone recovers. The data loss is typically expected to be less than 15 minutes, but that's not guaranteed.
 
 - **Expected downtime:** A small amount of downtime might occur during automatic failover as traffic is redirected to healthy zones. This downtime is typically a few seconds for most registry operations. We recommend that you follow [transient fault handling best practices](#resilience-to-transient-faults) to minimize the effect of zone failover on your applications.
 
