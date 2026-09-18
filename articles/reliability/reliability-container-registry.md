@@ -201,6 +201,9 @@ Geo-replication can be configured during registry creation or added to existing 
 
 - **Disable geo-replication.** Remove individual regional replicas through the Azure portal or command-line tools. The home region registry can't be removed.
 
+> [!NOTE]
+> If your registry uses private endpoints, each geo-replica needs extra private IP addresses in every connected subnet. Adding a geo-replica fails if any subnet runs out of addresses, and the error doesn't identify which subnet. It also fails if the private endpoint uses static IP allocation.
+
 ### Behavior when all regions are healthy
 
 This section describes what to expect when a registry is configured for geo-replication and all regions are operational.
