@@ -86,8 +86,6 @@ Zone redundancy is enabled by default for all registries in regions that support
 
 - **Region support:** Zone-redundant registries can be deployed into [any region that supports availability zones](./regions-list.md). If your registry is in a region that doesn't support availability zones, then to make it zone-redundant you must create a new registry in a region that supports availability zones. Then, you need to migrate your container images by [creating a transfer pipeline](/azure/container-registry/container-registry-transfer-prerequisites) or by [importing container images](/azure/container-registry/container-registry-import-images).
 
-### Considerations
-
 - **Tasks:** Container Registry tasks don't currently support availability zones. Zone redundancy applies to the registry service itself, but not to tasks or their operations.
 
 - **Geo-replication:** If your registry uses [geo-replication](#resilience-to-region-wide-failures), any replicas created in regions with availability zones are made zone-redundant automatically.
@@ -186,6 +184,8 @@ For more information, see [Azure Container Registry endpoint reference](/azure/c
 - **Control plane:** The control plane runs in the home region. If the home region is unavailable, control plane operations are unavailable, and you might not be able to modify the registry's configuration.
 
 - **Tasks:** Container Registry tasks don't currently support geo-replicas. Tasks always run in the home region. If the home region is unavailable, the task doesn't run.
+
+- **Throttling during failover:** API throttling limits apply to each geo-replica. When a region becomes unavailable, the traffic that it was serving shifts onto the remaining geo-replicas, which can cause them to reach their throttling limits. Failover doesn't reroute traffic in response to throttling (HTTP 429) responses.
 
 ### Cost
 
