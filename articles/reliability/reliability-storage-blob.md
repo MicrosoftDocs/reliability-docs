@@ -302,11 +302,15 @@ You can deploy Azure Storage across multiple regions by using separate storage a
 
 You can configure object replication to replicate all blobs within a container or specific subsets based on blob prefixes and tags. The replication is asynchronous and occurs in the background. You can configure multiple replication policies and even chain replication across multiple storage accounts to create sophisticated multiregion topologies.
 
+By default, object replication has no guaranteed completion time. If you need a replication time target, you can enable *priority replication* on one replication policy for each source account. When the source and destination accounts are on the same continent, priority replication provides an SLA-backed target of replicating 99% of objects within 15 minutes. Eligibility requirements apply, such as limits on object size and on the account's transfer rate. Priority replication incurs an extra per-GB charge. For more information, see [Priority replication for object replication](/azure/storage/blobs/object-replication-priority-replication).
+
+To monitor replication progress, enable replication metrics on the source account. The metrics report the number of operations and the number of bytes that are pending replication, grouped by how long they've been pending. Replication metrics are enabled automatically when you use priority replication.
+
 Object replication isn't compatible with all storage accounts. For example, it doesn't work with storage accounts that use hierarchical namespaces (also known as *Azure Data Lake Storage Gen2 accounts*).
 
 For more information, see [Object replication for block blobs](/azure/storage/blobs/object-replication-overview) and [Configure object replication](/azure/storage/blobs/object-replication-configure).
 
-## Backup and recovery
+## Backup and restore
 
 Blob Storage provides multiple data protection mechanisms that complement redundancy for comprehensive backup strategies. The service's built-in redundancy protects against infrastructure failures, and extra backup capabilities protect against accidental deletion, corruption, and malicious activities.
 
