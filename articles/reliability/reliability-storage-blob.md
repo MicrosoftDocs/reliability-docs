@@ -146,7 +146,7 @@ Azure Storage supports three types of failover for different scenarios.
 
 - **Microsoft-managed failover:** In exceptional circumstances, Microsoft might initiate failover for all geo-redundant storage (GRS) accounts in a region. However, Microsoft-managed failover is a last resort and is expected to only be performed after an extended period of outage. You shouldn't rely on Microsoft-managed failover.
 
-GRS accounts can use any of these failover types. You don't need to preconfigure a storage account to use any of the failover types ahead of time.
+GRS accounts can use any of these failover types, and you don't need to preconfigure a storage account to use them ahead of time. However, some features block a planned failover. You can't initiate a planned failover on an account that has change feed, object replication, or point-in-time restore enabled, or when the account's last sync time is more than 30 minutes behind. For more information, see [Azure Storage failover FAQ](/azure/storage/common/storage-failover-faq).
 
 #### Requirements
 
@@ -171,6 +171,8 @@ When you implement multiregion Blob Storage, consider the following key factors:
   read-access geo-redundant storage (RA-GRS) and read-access geo-zone-redundant storage (RA-GZRS) configurations provide read access to the secondary region during normal operations, but because of the asynchronous replication latency, they might return slightly outdated data.
 
 - **Feature limitations:** Some Azure Storage features aren't supported or have limitations when you use geo-redundant storage (GRS) or customer-managed failover. Review [feature compatibility](/azure/storage/common/storage-disaster-recovery-guidance#unsupported-features-and-services) before you implement geo-redundancy.
+
+- **Management operations:** The Azure Storage resource provider doesn't fail over. After a failover, clients can read and write data in the new primary region, but management operations on the storage account still take place in the original primary region. If that region is unavailable, you can't perform management operations, such as changing the account's redundancy or network rules. The account's `Location` property also continues to return the original primary region after a failover completes.
 
 #### Cost
 
@@ -233,7 +235,7 @@ This section describes what to expect when a storage account is configured for g
 
     - **Traffic rerouting:** As the failover completes, Azure automatically updates the storage account endpoints so that applications don't need to be reconfigured. If your application keeps Domain Name System (DNS) entries cached, it might be necessary to clear the cache to ensure that the application sends traffic to the new primary region.
 
-    - **Post-failover configuration:** After an unplanned failover completes, your storage account in the destination region uses the locally redundant storage (LRS) tier. If you need to geo-replicate it again, you need to re-enable geo-redundant storage (GRS) and wait for the data to be replicated to the new secondary region. An unplanned failover also disables [geo priority replication](/azure/storage/common/storage-redundancy-priority-replication). If you use it, re-enable it after you restore geo-redundancy.
+    - **Post-failover configuration:** After an unplanned failover completes, your storage account in the destination region uses the locally redundant storage (LRS) tier. If you need to geo-replicate it again, you need to re-enable geo-redundant storage (GRS) and wait for the data to be replicated to the new secondary region. There's no SLA for how long that conversion takes. If the account contains archived blobs, you must rehydrate them to an online tier first. You also can't add zone redundancy until you fail back to the original primary region, so a geo-zone-redundant storage (GZRS) account isn't zone-redundant in the meantime. An unplanned failover also disables [geo priority replication](/azure/storage/common/storage-redundancy-priority-replication). If you use it, re-enable it after you restore geo-redundancy.
 
     For more information about how to initiate customer-managed failover, see [How customer-managed (unplanned) failover works](/azure/storage/common/storage-failover-customer-managed-unplanned) and [Initiate a storage account failover](/azure/storage/common/storage-initiate-account-failover).
 
@@ -245,7 +247,7 @@ This section describes what to expect when a storage account is configured for g
 
   - **Active requests:** During the failover process, both the primary and secondary storage account endpoints become temporarily unavailable for both reads and writes. Any active requests might be dropped, and client applications need to retry after the failover completes.
 
-  - **Expected data loss:** No data loss is expected because the failover process completes only after all data is synchronized, which results in an RPO of zero.
+  - **Expected data loss:** No data loss is expected because the failover process completes only after all data is synchronized, which results in an RPO of zero. This expectation applies as long as both the primary and secondary regions remain available throughout the failover process.
 
   - **Expected downtime:** Failover typically completes within 60 minutes, which means that the expected RTO is 60 minutes, depending on account size and complexity. During the failover process, both the primary and secondary storage account endpoints become temporarily unavailable for both reads and writes.
 
