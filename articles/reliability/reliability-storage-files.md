@@ -61,6 +61,8 @@ Azure Files provides two types of availability zone support:
 
 - **Zone redundant storage (ZRS):** ZRS configurations automatically distribute your data across multiple availability zones within a region. Unlike LRS, ZRS guarantees that Azure synchronously replicates your file data across multiple availability zones. ZRS ensures that your data remains accessible even if one zone experiences an outage.
 
+  The following diagram shows an example ZRS architecture that uses three availability zones. ZRS can use three or more availability zones.
+
     :::image type="complex" source="./media/reliability-storage/zone-redundant-storage.png" alt-text="Diagram that shows how data is replicated in the primary region with zone-redundant storage (ZRS)." lightbox="./media/reliability-storage/zone-redundant-storage.png" border="false":::
         A blue box represents the primary region. It contains a dark purple box that represents ZRS. This box contains three white boxes that represent availability zone 1, availability zone 2, and availability zone 3. Each availability zone box contains a gray box that represents a datacenter. Each datacenter box contains a light purple box that includes the storage account and an icon labeled copy 1, copy 2, and copy 3.
     :::image-end:::
@@ -131,7 +133,7 @@ This section describes what to expect when a file storage account is configured 
 
 - **Data replication between zones:**
   
-  - *ZRS:* All write operations to ZRS are replicated synchronously across all availability zones within the region. When you upload or modify data, the operation isn't considered complete until the data is successfully replicated across all of the availability zones. This synchronous replication ensures strong consistency and zero data loss during zone failures.
+  - *ZRS:* ZRS synchronously replicates write operations across three or more availability zones within the region. A write operation isn't complete until Azure Storage writes the data to all required replicas in those zones. This synchronous replication ensures strong consistency and zero data loss during zone failures.
 
   - *LRS with zonal placement:* All write operations to LRS are replicated synchronously across multiple storage replicas within the zone. When you upload or modify data, the operation isn't considered complete until the data has been successfully replicated across all of the replicas.
 
@@ -175,7 +177,7 @@ This section describes what to expect when a file storage account is configured 
 
 Zone recovery behavior depends on the type of replication the file storage account uses:
 
-- *ZRS:* When the failed availability zone recovers, Azure Storage automatically restores normal operations across all of the availability zones. The service automatically ensures data consistency by synchronizing any operations that occurred during the outage period.
+- *ZRS:* When the failed availability zone recovers, Azure Storage automatically restores normal operations and reestablishes replication across three or more availability zones. The service automatically ensures data consistency by synchronizing any operations that occurred during the outage period.
 
 - *LRS with zonal placement:* After the zone is healthy, file shares in the zone are available again. You're responsible for any zone recovery procedures and data synchronization that your workloads require.
 
@@ -205,6 +207,8 @@ Azure Storage provides several types of GRS in paired regions. Whichever type of
     :::image-end:::
 
 - [Geo-zone-redundant storage (GZRS)](/azure/storage/common/storage-redundancy#geo-zone-redundant-storage) replicates data in multiple availability zones in the primary region and into the paired region.
+
+  The following diagram shows an example GZRS architecture that uses three availability zones in the primary region. GZRS might use three or more availability zones in the primary region.
 
     :::image type="complex" source="./media/reliability-storage/geo-zone-redundant-storage.png" alt-text="Diagram that shows how data is replicated by using GZRS." lightbox="./media/reliability-storage/geo-zone-redundant-storage.png" border="false":::
         A blue box represents the primary region. It contains a dark purple box that represents ZRS. This box contains three white boxes that represent availability zone 1, availability zone 2, and availability zone 3. Each availability zone box contains a gray box that represents a datacenter. Each datacenter box contains a light purple box that includes the storage account and an icon labeled copy 1, copy 2, and copy 3. Another blue box represents the secondary region. That box contains a gray box that represents the datacenter. A dark purple box inside the datacenter box represents LRS. It contains a light purple box that includes the storage account and three icons labeled copy 1, copy 2, and copy 3. A dotted line that represents GZRS encompasses the ZRS and LRS boxes in both regions. An arrow labeled geo-replication points from ZRS in the primary region to the storage account in the secondary region.

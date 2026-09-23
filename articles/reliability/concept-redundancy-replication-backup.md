@@ -259,7 +259,9 @@ A common approach to keeping consistency in your resources is to use infrastruct
 
 ### Manage capacity with over-provisioning
 
-When an instance fails, your overall system capacity might be different from the capacity that's required during healthy operations. For example, suppose you typically have six instances of a web server to process your incoming web traffic, and those instances are spread equally among three Azure availability zones in a region:
+When an instance fails, your overall system capacity might be different from the capacity that's required during healthy operations. The following example uses three availability zones. Some Azure regions provide more than three availability zones, and a workload might use only a subset of the zones provided by its region.
+
+Suppose you typically have six instances of a web server to process your incoming web traffic, and those instances are spread equally among three availability zones:
 
 <!-- Art Library Source# ConceptArt-0-000-042 -->
 :::image type="content" source="media/concept-redundancy-replication-backup/capacity-management.svg" alt-text="Diagram showing three availability zones with two instances of the web server each, for a total of six instances of capacity." border="false":::
@@ -271,24 +273,41 @@ To prepare for failures, you can *over-provision* the capacity of your service. 
 To over-provision instances of your web server to account for the failure of one availability zone, follow these steps:
 
 1. Determine the number of instances your peak workload requires.
-1. Retrieve the over-provision instance count by multiplying the peak workload instance count by a factor of [(zones/(zones-1)].
+1. Multiply the peak workload instance count by `N / (N - 1)`, where `N` is the number of zones across which you distribute the provisioned workload instances and must be at least 2.
 1. Round up the result to the nearest whole number.
 
 > [!NOTE]
-> The following table assumes that you're using three availability zones and you want to account for the loss in capacity of one of those zones. If your requirements are different, adjust the formula accordingly.
+> This formula assumes that you distribute the provisioned instances as evenly as possible across all `N` zones and plan for the loss of one zone. For example, the four-zone result of four instances requires you to place one instance in each zone.
+>
+> `N` represents the number of zones that your workload uses, not the number of availability zones in the region. Over-provisioning within a single zone can't provide resilience to the failure of that zone. To use this calculation, distribute the provisioned instances across at least two zones.
+>
+> If you can't guarantee even placement or need to tolerate multiple simultaneous failures, calculate capacity based on the largest expected capacity loss. The result is the minimum capacity for the modeled failure and doesn't include extra operational headroom.
 
-| Peak workload instance count | Factor of [(zones/(zones-1)] |Formula | Instances to provision (Rounded) |
-|-------|---------|---------|--------|
-|3|3/2 or 1.5|(3 x 1.5 = 4.5)|5 instances|
-|4|3/2 or 1.5|(4 x 1.5 = 6)|6 instances|
-|5|3/2 or 1.5|(5 x 1.5 = 7.5)|8 instances|
-|6|3/2 or 1.5|(6 x 1.5 = 9)|9 instances|
-|7|3/2 or 1.5|(7 x 1.5 = 10.5)|11 instances|
-|8|3/2 or 1.5|(8 x 1.5 = 12)|12 instances|
-|9|3/2 or 1.5|(9 x 1.5 = 13.5)|14 instances|
-|10|3/2 or 1.5|(10 x 1.5 = 15)|15 instances|
+The following tables show how to apply this process when instances are distributed across three or four zones:
 
-In the preceding example, the peak workload requires six instances of the web server, so over-provisioning requires a total of nine instances:
+**Three-zone architecture:**
+
+| Peak workload instance count | Capacity factor | Calculation | Instances to provision (rounded) |
+| ---: | ---: | --- | ---: |
+| 3 | `3 / 2`, or 1.5 | `3 x 1.5 = 4.5` | 5 |
+| 4 | `3 / 2`, or 1.5 | `4 x 1.5 = 6` | 6 |
+| 5 | `3 / 2`, or 1.5 | `5 x 1.5 = 7.5` | 8 |
+| 6 | `3 / 2`, or 1.5 | `6 x 1.5 = 9` | 9 |
+| 7 | `3 / 2`, or 1.5 | `7 x 1.5 = 10.5` | 11 |
+| 8 | `3 / 2`, or 1.5 | `8 x 1.5 = 12` | 12 |
+| 9 | `3 / 2`, or 1.5 | `9 x 1.5 = 13.5` | 14 |
+| 10 | `3 / 2`, or 1.5 | `10 x 1.5 = 15` | 15 |
+
+**Four-zone architecture:**
+
+| Peak workload instance count | Capacity factor | Calculation | Instances to provision (rounded) |
+| ---: | ---: | --- | ---: |
+| 3 | `4 / 3`, or approximately 1.33 | `3 x 4 / 3 = 4` | 4 |
+| 4 | `4 / 3`, or approximately 1.33 | `4 x 4 / 3 = 5.33...` | 6 |
+| 6 | `4 / 3`, or approximately 1.33 | `6 x 4 / 3 = 8` | 8 |
+| 10 | `4 / 3`, or approximately 1.33 | `10 x 4 / 3 = 13.33...` | 14 |
+
+In the three-zone example, the peak workload requires six web server instances. To tolerate the loss of one zone, you provision nine instances across the three zones:
 
 <!-- Art Library Source# ConceptArt-0-000-042 -->
 :::image type="content" source="media/concept-redundancy-replication-backup/capacity-management-over-provisioning.svg" alt-text="Diagram showing over-provisioning the web servers, for a total of nine instances of capacity." border="false":::

@@ -64,8 +64,10 @@ You can build client applications to interact with your Grafana workspace throug
 
 Azure Managed Grafana workspaces support zone redundancy in supported Azure regions. When zone redundancy is enabled, the workspace's Grafana servers are distributed across multiple availability zones. Microsoft selects the zones that your workspace uses. Other resources, such as the network load balancer, database, and shared gateway, are also configured to use multiple availability zones.
 
+The following diagram shows an example placement of the Microsoft-managed components of a zone-redundant workspace in a region with three availability zones:
+
 :::image type="complex" source="media/reliability-managed-grafana/zone-redundant.svg" alt-text="Diagram that shows an Azure Managed Grafana workspace with two instances, each in a separate availability zone, and a zone-redundant load balancer." border="false":::
-    Architecture diagram that shows an Azure Managed Grafana workspace deployed across three availability zones. A load balancer routes traffic to Grafana servers in zone 1 and 2 and a shared database that spans all zones.
+    The diagram shows a zone-redundant Azure Managed Grafana workspace in a region with three availability zones. A zone-redundant load balancer routes traffic to Grafana servers in zones 1 and 2. The servers use a shared database that spans all three zones.
 :::image-end:::
 
 If you don't enable zone redundancy, the workspace is *nonzonal* or *regional*, which means that the servers and other components might be placed in any availability zone within the region or within the same zone. If any availability zone in the region has a problem, your workspace might experience downtime.

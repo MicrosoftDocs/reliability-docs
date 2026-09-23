@@ -62,6 +62,8 @@ For other application configuration guidance, see [App Configuration FAQ](/azure
 
 App Configuration automatically provides zone redundancy in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
 
+The following example shows an App Configuration store that uses three availability zones in a region:
+
 :::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant App Configuration store that spans three zones in the region.":::
    The diagram shows availability zones 1, 2, and 3. The App Configuration store spans all three zones in the region.
 :::image-end:::

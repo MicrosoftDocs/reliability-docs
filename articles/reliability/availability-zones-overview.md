@@ -44,6 +44,16 @@ Azure services can provide different types of availability zone support for thei
 
     For most services, Microsoft selects the zones your resources use, but sometimes you can select the set of zones. Services might use a different number or subset of zones in a region depending on their design. A resource is resilient to a zone failure as long as it uses two or more zones.
 
+    When you plan an architecture that uses availability zones, distinguish between the following counts:
+
+    - **Zones in the region:** The total number of availability zones that the region provides.
+
+    - **Zones used by a service or resource:** The number of zones across which a specific service or resource distributes its components. A service might use only a subset of the zones in the region.
+
+    - **Instances or replicas:** The number of deployed resource instances or data replicas. This number doesn't have to match either zone count. Depending on the service, a zone might contain multiple instances or replicas, and some zones might contain none for that service or resource.
+
+    These counts don't necessarily match. For example, a region might provide four availability zones while a service uses three of those zones and maintains more than three instances or replicas. Review each service's reliability guide to understand its topology.
+
     With zone-redundant deployments, Microsoft manages spreading requests across zones and the replication of data across zones. If an outage occurs in an availability zone, Microsoft manages failover to another zone automatically.
 
     :::image type="content" source="media/availability-zones-overview/zone-redundant.svg" alt-text="Diagram of a zone-redundant resource deployed across multiple zones." border="false":::
@@ -75,6 +85,8 @@ Each datacenter is assigned to a physical zone. Physical zones are mapped to log
 For example, subscription A may have physical zone 1 mapped to logical zone 2, while subscription B has physical zone 1 mapped to logical zone 3:
 
 :::image type="content" source="media/availability-zones-overview/availability-zones-logical-physical.svg" alt-text="Diagram of logical to physical availability zone mapping." border="false":::
+
+When Microsoft adds new availability zones to an existing region, the zone mappings for existing subscriptions don't change. The new zone uses the same logical zone number as its physical zone number in existing subscriptions. New subscriptions created after the zone is added might have a different mapping.
 
 To understand the mapping between logical and physical zones for your subscription, use the [Azure CLI](/cli/azure/install-azure-cli) or [Azure PowerShell](/powershell/azure/what-is-azure-powershell), or the Azure Resource Manager APIs.
 
