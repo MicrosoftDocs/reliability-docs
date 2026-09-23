@@ -59,10 +59,6 @@ You're responsible for deploying and configuring resources and related settings,
 
 - For Azure-to-Azure replication, a *cache storage account* that stores a copy of the source data in its region before it's replicated to the target. The redundancy configuration of your cache storage account can affect your reliability during an availability zone outage.
 
-:::image type="complex" border="false" source="media/reliability-site-recovery/recovery-vault-storage.svg" alt-text="Diagram that shows the relationship between the Recovery Services vault, cache storage account, source, and target in Site Recovery.":::
-   The diagram shows three availability zones. Zone 1 includes a VM. The following sections span all three zones: Site Recovery core components, the Recovery Services vault, and the cache storage account for ZRS.
-:::image-end:::
-
 > [!NOTE]
 > This guide focuses on the reliability of the Azure-based components of Site Recovery and the replication relationship. If you replicate data or VMs from an on-premises environment or another cloud provider, consider the reliability of the components outside of Azure.
 
@@ -94,6 +90,12 @@ To understand how Site Recovery replication behaves during availability zone fai
 - **Cache storage account:** For Azure-to-Azure replication, you're responsible for making the cache storage account zone redundant by deploying it using the ZRS tier.
 
     If you use the locally redundant storage (LRS) Azure Storage replication tier for your cache storage account and a zone fails, Site Recovery might not replicate recently changed data to your target.
+
+The following diagram shows the placement of components for Azure-to-Azure replication in an example region with three availability zones:
+
+:::image type="complex" border="false" source="media/reliability-site-recovery/recovery-vault-storage.svg" alt-text="Diagram that shows the relationship between the Recovery Services vault, cache storage account, source, and target in Site Recovery.":::
+   The diagram shows a region with three availability zones. A VM is in zone 1. The core Site Recovery service and the Site Recovery configuration data stored in the Recovery Services vault span all three zones. A ZRS cache storage account also spans all three zones.
+:::image-end:::
 
 > [!NOTE]
 > Site Recovery can help you fail over between VMs in different availability zones. For more information, see [Enable Azure VM DR between availability zones](/azure/site-recovery/azure-to-azure-how-to-enable-zone-to-zone-disaster-recovery).

@@ -51,7 +51,7 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
 
 - *Zone-redundant:* A zone-redundant bastion host achieves resiliency and reliability by spreading its instances across multiple [availability zones](../reliability/availability-zones-overview.md). You select which availability zones you want to use for your bastion host. 
     
-    The following diagram shows a zone-redundant bastion host, with its instances spread across three zones:
+    The following diagram shows an example zone-redundant bastion host with three instances spread across three selected availability zones:
    
     :::image type="content" source="media/reliability-bastion/zone-redundant.svg" alt-text="Diagram that shows Azure Bastion with three instances distributed across three availability zones to illustrate zone-redundant deployment." border="false":::
 

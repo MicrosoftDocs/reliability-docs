@@ -71,7 +71,7 @@ You can make Azure Managed Redis cache instances *zone redundant*, which automat
 
 To make a cache zone redundant, you must deploy it in a supported region and set it to use the high availability configuration. In regions without availability zones, the high availability configuration still creates at least two nodes, but they aren't placed in separate zones.
 
-The following diagram shows a zone-redundant cache with two nodes, each in a separate zone.
+The following diagram shows a zone-redundant cache deployed to a three-zone region. The cache has two nodes, each in a separate zone:
 
 :::image type="complex" border="false" source="./media/reliability-managed-redis/zone-redundant.svg" alt-text="Diagram that shows a cache with two nodes distributed across separate availability zones for zone redundancy." lightbox="./media/reliability-managed-redis/zone-redundant.svg":::
    Diagram that shows an Azure Managed Redis instance with high availability across two availability zones. An Azure Managed Redis instance section spans all three zones. Zones 1 and 2 each have one node, and zone 3 has no nodes.
