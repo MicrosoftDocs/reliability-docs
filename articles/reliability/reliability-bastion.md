@@ -6,7 +6,7 @@ ms.author: pnp
 ms.topic: reliability-article
 ms.custom: subject-reliability, references_regions
 ms.service: azure-bastion
-ms.date: 10/09/2025
+ms.date: 09/24/2026
 ---
 
 # Reliability in Azure Bastion
@@ -69,11 +69,15 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
     |---|---|---|---|---|
     | Canada Central | North Europe | Israel Central | South Africa North | Australia East |
     | Central US | Sweden Central | | | Korea Central |
-    | East US | UK South
-    | East US 2 | West Europe | | |
-    | West US 2  | Norway East | | |
-    | East US 2 EUAP | Italy North | | |
-    | Mexico Central| Spain Central | | |
+    | East US | UK South | | | East Asia |
+    | East US 2 | West Europe | | | Indonesia Central |
+    | West US 2 | Norway East | | | New Zealand North |
+    | East US 2 EUAP | Italy North | | | Japan West |
+    | Mexico Central | Spain Central | | | Malaysia West |
+    | South Central US | Switzerland North | UAE North | | Taiwan North |
+    | Chile Central | Poland Central | | | |
+    | West US 3 | Austria East | | | |
+    | North Central US | Belgium Central | | | |
 
 - **SKU:** To configure bastion hosts to be zonal or zone redundant, you must deploy with the Basic, Standard, or Premium SKUs.
 
