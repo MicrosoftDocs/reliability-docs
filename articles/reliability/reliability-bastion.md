@@ -67,17 +67,17 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
 
     | Americas | Europe | Middle East | Africa | Asia Pacific |
     |---|---|---|---|---|
-    | Canada Central | North Europe | Israel Central | South Africa North | Australia East |
-    | Central US | Sweden Central | UAE North | | Korea Central |
-    | East US | UK South | | | East Asia |
-    | East US 2 | West Europe | | | Indonesia Central |
-    | West US 2 | Norway East | | | New Zealand North |
-    | East US 2 EUAP | Italy North | | | Japan West |
-    | Mexico Central | Spain Central | | | Malaysia West |
-    | South Central US | Switzerland North | | | Taiwan North |
-    | Chile Central | Poland Central | | | |
-    | West US 3 | Austria East | | | |
-    | North Central US | Belgium Central | | | |
+    | Canada Central | Austria East | Israel Central | South Africa North | Australia East |
+    | Central US | Belgium Central | UAE North | | East Asia |
+    | Chile Central | Italy North | | | Indonesia Central |
+    | East US | North Europe | | | Japan West |
+    | East US 2 | Norway East | | | Korea Central |
+    | East US 2 EUAP | Poland Central | | | Malaysia West |
+    | Mexico Central | Spain Central | | | New Zealand North |
+    | North Central US | Sweden Central | | | Taiwan North |
+    | South Central US | Switzerland North | | | |
+    | West US 2 | UK South | | | |
+    | West US 3 | West Europe | | | |
 
 - **SKU:** To configure bastion hosts to be zonal or zone redundant, you must deploy with the Basic, Standard, or Premium SKUs.
 
