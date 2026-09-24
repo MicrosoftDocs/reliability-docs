@@ -9,17 +9,13 @@ ms.service: azure-container-apps
 ms.date: 09/15/2026
 ---
 
-# Reliability in Azure Container Apps Sandboxes (preview)
+# Reliability in Azure Container Apps Sandboxes
 
 [Azure Container Apps Sandboxes](/azure/container-apps/sandboxes-overview) provide isolated environments for running code. Each sandbox runs in a lightweight virtual machine (microVM) that starts in less than a second and can preserve its in-memory state when suspended. The service supports the reliability of sandbox workloads through capabilities you configure and capabilities the platform manages on your behalf.
 
 [!INCLUDE [Shared responsibility](includes/reliability-shared-responsibility-include.md)]
 
 This article describes how to make Container Apps Sandboxes resilient to transient faults, availability zone failures, region-wide failures, and service maintenance. It also describes backup and restore options and key information about the service-level agreement (SLA).
-
-> [!IMPORTANT]
-> Container Apps Sandboxes is currently in PREVIEW.
-> See the [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/) for legal terms that apply to Azure features that are in beta, preview, or otherwise not yet released into general availability.
 
 ## Production deployment recommendations for reliability
 
