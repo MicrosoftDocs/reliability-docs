@@ -56,12 +56,14 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Kubernetes Service (AKS)
 - Azure Load Balancer
 - Azure NAT Gateway
+- Azure Queue Storage
 - Azure Service Bus
 - Azure Service Fabric
 - Azure Site Recovery
 - Azure SQL Database
 - Azure SQL Managed Instance
 - Azure Stream Analytics
+- Azure Table Storage
 - Azure Virtual Machine Scale Sets
 - Azure Virtual Machines
    - Av2-series
@@ -83,6 +85,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure API Management
 - Azure App Configuration
 - Azure App Service
+- Azure App Service: App Service Environment
 - Azure Bastion
 - Azure Batch
 - Azure Container Instances
@@ -118,13 +121,16 @@ Azure services are presented in the following lists by category. Note that some 
    - Fsv2-series
    - M-series
 - Azure Virtual WAN
+- Azure VM Image Builder
 - Microsoft Entra Domain Services
 
 ### ![An icon that signifies this service is strategic.](media/icon-strategic.svg) Strategic services
 
 - Azure AI services
 - Azure Analysis Services
+- Azure API Center
 - Azure App Testing
+- Azure Application Gateway for Containers
 - Azure Attestation
 - Azure Automation
 - Azure Chaos Studio
@@ -134,6 +140,7 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Database Migration Service
 - Azure Databricks
 - Azure Dedicated HSM
+- Azure Device Registry
 - Azure Digital Twins
 - Azure DocumentDB
 - Azure Elastic SAN
@@ -144,9 +151,13 @@ Azure services are presented in the following lists by category. Note that some 
 - Azure Managed Grafana
 - Azure Managed Instance for Apache Cassandra
 - Azure NetApp Files
+- Azure Notification Hubs
 - Azure Red Hat OpenShift
 - Azure Remote Rendering
 - Azure SignalR Service
+- Azure Storage Actions
+- Azure Storage Discovery
+- Azure Storage Mover
 - Azure Storage: Archive Storage
 - Azure Storage: Azure File Sync
 - Azure Synapse Analytics

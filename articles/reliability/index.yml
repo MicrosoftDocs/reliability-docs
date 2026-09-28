@@ -584,7 +584,7 @@ productDirectory:
     - title: Microsoft Fabric
       summary: Unify your teams and data to accelerate AI innovation with a complete data platform
       imageSrc: /azure/media/index/microsoft-fabric.svg
-      url: reliability-fabric.md
+      url: /fabric/security/reliability-fabric
       azureCategories:
         - analytics
     # Card
@@ -698,6 +698,13 @@ productDirectory:
       azureCategories:
         - management-and-governance
       url: reliability-automation.md
+    # Card
+    - title: Azure Load Balancer
+      summary: Deliver high availability and network performance to your applications
+      imageSrc: /azure/media/index/load-balancer.svg
+      azureCategories:
+        - networking
+      url: reliability-load-balancer.md
 
 tools:
   title: Reliability services and capabilities
