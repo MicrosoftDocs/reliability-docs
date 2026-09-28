@@ -73,10 +73,10 @@ Azure Bastion supports availability zones in both zone-redundant and zonal confi
     | East US | North Europe | | | Japan West |
     | East US 2 | Norway East | | | Korea Central |
     | Mexico Central | Poland Central | | | Malaysia West |
-    | North Central US | Spain Central | | | New Zealand North |
-    | South Central US | Sweden Central | | | |
-    | West US 2 | Switzerland North | | | |
-    | West US 3 | UK South | | | |
+    | South Central US | Spain Central | | | New Zealand North |
+    | West US 2 | Sweden Central | | | |
+    | West US 3 | Switzerland North | | | |
+    | | UK South | | | |
     | | West Europe | | | |
 
 - **SKU:** To configure bastion hosts to be zonal or zone redundant, you must deploy with the Basic, Standard, or Premium SKUs.
