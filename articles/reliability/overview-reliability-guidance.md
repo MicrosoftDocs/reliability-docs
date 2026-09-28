@@ -45,9 +45,9 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="https://static.docs.com/ui/media/product/azure/app-configuration.svg" alt="Azure App Configuration" width="24" /> Azure App Configuration| [Reliability in Azure App Configuration](reliability-app-configuration.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/app-service.svg" alt="Azure App Service" width="24" /> Azure App Service| [Reliability in App Service](reliability-app-service.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/app-service.svg" alt="Azure App Service - App Service Environment" width="24" /> Azure App Service - App Service Environment| [Reliability in App Service Environment](reliability-app-service-environment.md)||
-| <img src="/azure/media/index/application-gateway-containers.svg" alt="Azure Application Gateway for Containers" width="24" /> Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md )    ||
+| <img src="/azure/media/index/application-gateway-containers.svg" alt="Azure Application Gateway for Containers" width="24" /> Azure Application Gateway for Containers| [Reliability in Application Gateway for Containers](reliability-app-gateway-containers.md)    ||
 | <img src="https://static.docs.com/ui/media/product/azure/application-gateway.svg" alt="Azure Application Gateway v2" width="24" /> Azure Application Gateway v2|[Reliability in Azure Application Gateway](./reliability-application-gateway-v2.md)||
-| <img src="/azure/media/index/automation.svg" alt="Azure Application Automation" width="24" /> Azure Automation|[Reliability in Azure Automation](./reliability-automation.md)||
+| <img src="/azure/media/index/automation.svg" alt="Azure Automation" width="24" /> Azure Automation|[Reliability in Azure Automation](./reliability-automation.md)||
 | <img src="/azure/media/index/recovery-services-vaults.svg" alt="Azure Backup" width="24" /> Azure Backup| [Reliability in Backup](reliability-backup.md)||
 | <img src="/azure/media/index/bastion.svg" alt="Azure Bastion" width="24" /> Azure Bastion| [Reliability in Azure Bastion](reliability-bastion.md)||
 | <img src="/azure/media/index/batch-accounts.svg" alt="Azure Batch" width="24" /> Azure Batch| [Reliability in Batch](reliability-batch.md)||
@@ -71,7 +71,9 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="/azure/media/index/device-registry.svg" alt="Azure Device Registry" width="24" /> Azure Device Registry |[Reliability in Device Registry](reliability-device-registry.md)||
 | <img src="/azure/media/index/devops.svg" alt="Azure DevOps" width="24" /> Azure DevOps|| [Data protection overview](/azure/devops/organizations/security/data-protection#data-availability)|
 | <img src="/azure/media/index/disk-storage.svg" alt="Azure Disk Storage" width="24" /> Azure Disk Storage|[Reliability in Azure Disk Storage](./reliability-storage-disk.md)||
-| <img src="/azure/media/index/dns.svg" alt="Azure DNS" width="24" /> Azure DNS| [Reliability in Azure DNS](reliability-dns-public.md)||
+| <img src="/azure/media/index/dns-private-resolver.svg" alt="Azure DNS Private Resolver" width="24" /> Azure DNS Private Resolver| [Reliability in Azure DNS Private Resolver](reliability-dns-private-resolver.md)||
+| <img src="/azure/media/index/dns.svg" alt="Azure DNS private zones" width="24" /> Azure DNS private zones| [Reliability in Azure DNS private zones](reliability-dns-private.md)||
+| <img src="/azure/media/index/dns.svg" alt="Azure DNS public zones" width="24" /> Azure DNS public zones| [Reliability in Azure DNS public zones](reliability-dns-public.md)||
 | <img src="/azure/media/index/documentdb.svg" alt="Azure DocumentDB" width="24" /> Azure DocumentDB| [Reliability in Azure DocumentDB](reliability-documentdb.md)||
 | <img src="/azure/media/index/elastic-san.svg" alt="Azure Elastic SAN" width="24" /> Azure Elastic SAN| [Reliability in Elastic SAN](reliability-elastic-san.md)||
 | <img src="/azure/media/index/event-grid-domains.svg" alt="Azure Event Grid" width="24" /> Azure Event Grid| [Reliability in Event Grid](./reliability-event-grid.md)||
@@ -124,7 +126,7 @@ The following table provides links to reliability guidance for Azure services. E
 | <img src="/azure/media/index/azure-vmware.svg" alt="Azure VMware Solution" width="24" /> Azure VMware Solution| [Reliability in Azure VMware Solution](./reliability-vmware-solution.md)||
 | <img src="https://static.docs.com/ui/media/product/azure/virtual-network-gateways.svg" alt="Azure VPN Gateway" width="24" /> Azure VPN Gateway| [Reliability in VPN Gateway](reliability-virtual-network-gateway.md?pivots=vpn) ||
 | <img src="/azure/media/index/web-pubsub.svg" alt="Azure Web PubSub" width="24" /> Azure Web PubSub Service| [Reliability in Azure Web PubSub Service](reliability-web-pubsub.md)||
-| <img src="/azure/media/index/microsoft-fabric.svg" alt="Microsoft Fabric" width="24" /> Microsoft Fabric| [Reliability in Microsoft Fabric](reliability-fabric.md)||
+| <img src="/azure/media/index/microsoft-fabric.svg" alt="Microsoft Fabric" width="24" /> Microsoft Fabric| [Reliability in Microsoft Fabric](/fabric/security/reliability-fabric)||
 
 ## Related content
 
