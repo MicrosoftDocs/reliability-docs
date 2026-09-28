@@ -45,6 +45,6 @@ Chaos Studio is a single-region service and doesn't support service-enabled cros
 
 ## Next steps
 
-- [Create and run your first experiment](/azure/chaos-studio/chaos-studio-quickstart-azure-portal).
+- [Create a Chaos Studio Workspace and run a Scenario](/azure/chaos-studio/quickstart-create-workspace).
 - [Learn more about chaos engineering](/azure/chaos-studio/chaos-studio-chaos-engineering-overview).
 - [Reliability in Azure](/azure/reliability/overview)

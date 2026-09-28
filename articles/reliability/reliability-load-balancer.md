@@ -168,7 +168,7 @@ If the zone failure also affects your compute services in that zone, Load Balanc
 
 The Azure platform manages traffic routing, zone-down response, and recovery, so you don't need to initiate or validate availability zone failure processes.
 
-You can use Azure Chaos Studio to simulate the failure of a VM in a single zone. Chaos Studio provides [built-in faults for VMs](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct), including a fault that shuts down a VM. You can use these capabilities to simulate zone failures and test your failover processes.
+You can use Azure Chaos Studio to simulate the failure of VMs in a single zone. In Chaos Studio Workspaces, the [Compute Zone Down Scenario](/azure/chaos-studio/chaos-studio-scenarios#compute-zone-down) shuts down VMs and virtual machine scale set instances in a target availability zone. You can use this Scenario to simulate zone failures and test your failover processes.
 
 ## Resilience to region-wide failures
 

@@ -99,7 +99,7 @@ Azure DNS is a highly resilient service, with a 100% availability SLA when your 
 
 ### Test for service outages
 
-Azure Chaos Studio provides a set of faults to simulate problems with DNS resolution. For example, the Chaos Studio agent provides the [DNS Failure](/azure/chaos-studio/chaos-studio-fault-library#dns-failure) fault type, and Azure Kubernetes Service (AKS) Chaos Mesh provides the [DNS Chaos](/azure/chaos-studio/chaos-studio-fault-library#aks-chaos-mesh-dns-chaos) capability. You can use these fault types to test how your applications and infrastructure respond when DNS resolution requests fail, which might occur during a partial network failure.
+Azure Chaos Studio can simulate problems with DNS resolution. These simulations don't trigger an outage in Azure DNS. In Chaos Studio Workspaces, the [DNS Outage Scenario](/azure/chaos-studio/chaos-studio-scenarios#dns-outage) applies a network security group rule that blocks outbound traffic on port 53 to simulate DNS resolution failures. In Experiments (classic), the Chaos Studio agent provides the [DNS Failure](/azure/chaos-studio/chaos-studio-fault-library#dns-failure) fault type, and Azure Kubernetes Service (AKS) Chaos Mesh provides the [DNS Chaos](/azure/chaos-studio/chaos-studio-fault-library#aks-chaos-mesh-dns-chaos) capability. You can use these capabilities to test how your applications and infrastructure respond when DNS resolution requests fail, which might occur during a partial network failure.
 
 ## Resilience to portal and management tool outages
 
