@@ -52,9 +52,9 @@ In regions that support availability zones, the platform distributes a storage m
 
 Consider the effect of a zone failure in the context of how you use Storage Mover. The service orchestrates data migration and synchronization, and it typically isn't in the runtime path of your production workload. If a storage mover is unavailable during a zone failure, a migration or synchronization job is usually delayed rather than causing a production outage, and you can resume or retry the job after the service recovers. Storage Mover also doesn't offer an availability [service-level agreement (SLA)](#service-level-agreement), so your design shouldn't assume that the service is continuously available. If your workload depends on ongoing synchronization, evaluate whether this kind of delay is acceptable for your scenario.
 
-The following diagram shows a storage mover with infrastructure and configuration metadata spread across three zones:
+The following diagram shows an example of a storage mover with infrastructure and configuration metadata spread across three zones. This distribution is best effort and isn't guaranteed.
 
-:::image type="content" source="media/reliability-storage-mover/zone-redundant.svg" alt-text="Diagram of a zone-redundant storage mover that's spread across three availability zones." border="false":::
+:::image type="content" source="media/reliability-storage-mover/zone-redundant.svg" alt-text="Diagram of an example storage mover with infrastructure and configuration metadata spread across three availability zones." border="false":::
 
 > [!NOTE]
 > The reliability of any data migration also depends on the storage accounts and agents you use. For example, if your target storage account uses locally redundant storage (LRS), it isn't resilient to a zone failure. To make a migration resilient to a zone failure, use a zone-redundant target storage account.
