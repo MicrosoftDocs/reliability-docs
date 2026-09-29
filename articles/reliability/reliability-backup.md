@@ -87,8 +87,10 @@ Backup separately manages the availability zone configuration of the service and
 
     If you don't use ZRS, your backup data is considered *nonzonal* and might be stored in any zone. If any zone in the region has a problem, nonzonal backup data might be unavailable.
 
+The following diagram shows one example of how the Backup service and backup data might be distributed across availability zones in a region with three zones:
+
 :::image type="complex" source="./media/reliability-backup/zone-redundant.svg" alt-text="Diagram that shows the Backup core service, which is automatically zone-resilient, and zone-redundant backup storage." border="false":::
-   The diagram shows the zone-resilient architecture of Backup across three availability zones. Three columns represent availability zone 1, availability zone 2, and availability zone 3. A box labeled Backup core service spans all three zones. Below this box, the diagram shows a single row labeled ZRS that also spans all three availability zones. Below the ZRS row, another box spans all three availability zones. This box contains two cloud icons that represent a Backup vault and a Recovery Services vault.
+   The diagram shows one example of how the Backup service and backup data can be distributed across availability zones in a region with three zones. Three columns represent availability zone 1, availability zone 2, and availability zone 3. A box labeled Backup core service spans the three zones in this example. Below this box, the diagram shows a single row labeled ZRS that also spans the three zones. Below the ZRS row, another box spans the three zones. This box contains two cloud icons that represent a Backup vault and a Recovery Services vault.
 :::image-end:::
 
 ### Requirements
