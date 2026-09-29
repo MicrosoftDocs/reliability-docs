@@ -160,7 +160,7 @@ This section describes what to expect when a Log Analytics workspace is zone red
 
 ### Zone recovery
 
-When an availability zone recovers, Azure Monitor Logs automatically reintegrates the zone into the active service topology. The recovered zone starts processing ingestion and query requests in parallel with the other zones. Data that's replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all zones. You don't need to take action for zone recovery and reintegration.
+When an availability zone recovers, Azure Monitor Logs automatically reintegrates the zone into the active service topology. The recovered zone starts processing ingestion and query requests in parallel with the other zones. Data that's replicated to surviving zones during the outage remains intact, and normal synchronous replication resumes across all availability zones that the cluster uses. You don't need to take action for zone recovery and reintegration.
 
 ### Test for zone failures
 
