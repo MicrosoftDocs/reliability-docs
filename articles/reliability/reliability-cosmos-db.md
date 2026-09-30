@@ -451,9 +451,7 @@ To test multiregion write failover scenarios, you can take a write region offlin
 
 ## Backup and restore
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
-
-Data loss can occur because of accidental deletions or other problems in your application that cause data corruption. When you use a single-region account, data loss might also occur because of an unrecoverable disaster in the Azure Cosmos DB region. To help you protect against data loss, Azure Cosmos DB provides a set of backup and restore capabilities. You can configure backups and retention based on your recoverability requirements and cost requirements. For more information, see [Online backup and on-demand data restore in Azure Cosmos DB](/azure/cosmos-db/online-backup-and-restore).
+Multiregion replication helps keep your account available during outages. Backups address different risks by providing recovery points for accidental deletions or application problems that corrupt data. When you use a single-region account, data loss might also occur because of an unrecoverable disaster in the Azure Cosmos DB region. You can configure Azure Cosmos DB backups and retention based on your recoverability and cost requirements. For more information, see [Online backup and on-demand data restore in Azure Cosmos DB](/azure/cosmos-db/online-backup-and-restore).
 
 ## Resilience to service maintenance
 

@@ -101,7 +101,7 @@ Use [Azure Service Health](/azure/service-health/overview) to monitor the health
 
 ### Test for service outages
 
-Azure Chaos Studio provides faults that simulate DNS resolution failures from within some types of test workloads. These faults don't trigger an outage in Azure DNS. The Chaos Studio agent provides the [DNS Failure](/azure/chaos-studio/chaos-studio-fault-library#dns-failure) fault, and AKS Chaos Mesh provides the [DNS Chaos](/azure/chaos-studio/chaos-studio-fault-library#aks-chaos-mesh-dns-chaos) capability. Use these faults to test how your applications and infrastructure respond when DNS resolution fails, such as during a partial network failure.
+Azure Chaos Studio provides faults that simulate DNS resolution failures from within some types of test workloads. These faults don't trigger an outage in Azure DNS. In Chaos Studio Workspaces, the [DNS Outage Scenario](/azure/chaos-studio/chaos-studio-scenarios#dns-outage) applies a network security group rule that blocks outbound traffic on port 53 to simulate DNS resolution failures. In Experiments (classic), the Chaos Studio agent provides the [DNS Failure](/azure/chaos-studio/chaos-studio-fault-library#dns-failure) fault, and AKS Chaos Mesh provides the [DNS Chaos](/azure/chaos-studio/chaos-studio-fault-library#aks-chaos-mesh-dns-chaos) capability. Use these capabilities to test how your applications and infrastructure respond when DNS resolution fails, such as during a partial network failure.
 
 ## Resilience to portal and management tool outages
 

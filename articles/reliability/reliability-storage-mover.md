@@ -198,8 +198,6 @@ Azure Storage Mover is a migration and data movement orchestration service. It d
 
 To protect your Storage Mover configuration, define your resources using infrastructure as code, such as Bicep files, and store those definitions in source control. If you need to recreate a resource, you can redeploy it from your stored configuration.
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
-
 ## Resilience to service maintenance
 
 [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]

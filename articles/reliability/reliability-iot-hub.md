@@ -316,7 +316,7 @@ The IoT Hub service enables bulk export operations, which allow you to export th
 
 You can also export an existing IoT hub's Azure Resource Manager template (ARM template) to create a backup of the IoT hub's configuration. For more information, see [Manually migrate an IoT hub by using an ARM template](/azure/iot-hub/migrate-hub-arm).
 
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+Exports provide recovery points for the identity registry and resource configuration after accidental deletion or unwanted changes. They complement IoT Hub's availability features but don't replace them. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Resilience to service maintenance
 

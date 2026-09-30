@@ -234,9 +234,7 @@ When you re-enable the replica, Traffic Manager resumes routing traffic to the r
 
 ## Backup and restore
 
-Container Registry supports exporting container images and artifacts from your registry to external storage or alternative registries. Use Container Registry import and export capabilities or standard Docker commands to create copies of critical container images for disaster recovery scenarios.
-
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+Geo-replication improves the availability of registry content, but it doesn't create an independent recovery point for deleted or corrupted artifacts. Copy critical container images and artifacts to external storage or another registry. For Premium registries, you can use [ACR Transfer](/azure/container-registry/container-registry-transfer-prerequisites) to export artifacts to external storage. Alternatively, use standard Docker commands or ORAS to copy artifacts to another registry.
 
 ## Service-level agreement
 

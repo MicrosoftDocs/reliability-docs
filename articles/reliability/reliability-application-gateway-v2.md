@@ -248,8 +248,6 @@ For configuration management and disaster recovery, you should take the followin
 
 - Implement automated deployment pipelines for consistent gateway provisioning.
 
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
-
 ## Resilience to service maintenance
 
 Application Gateway v2 performs regular service upgrades and other maintenance tasks. To maintain your expected capacity during an upgrade, the platform automatically adds extra instances of your gateway during the upgrade process. However, you need to ensure that the gateway's subnet has sufficient free IP address space for the temporary instances to be created. For more information, see [How does Application Gateway handle routine maintenance?](/azure/application-gateway/application-gateway-faq#maintenance).

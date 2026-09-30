@@ -146,8 +146,6 @@ Azure Managed Grafana doesn't provide built-in backup or restore functionality f
 
 - Use automation or CI/CD pipelines to redeploy dashboards and other Grafana configuration.
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
-
 ## Resilience to service maintenance
 
 [!INCLUDE [Service maintenance description - transient fault](includes/reliability-maintenance-transient-fault-include.md)]

@@ -258,6 +258,8 @@ Notification Hubs doesn't provide a single built-in backup and restore feature f
 - Use infrastructure as code (IaC), such as Bicep, to define your namespace, hub, and policy configuration. Store those definitions in source control so that you can redeploy the resources when necessary.
 - Back up your device registration data by [exporting Azure Notification Hubs registrations in bulk](/azure/notification-hubs/export-modify-registrations-bulk).
 
+An exported registration set provides a recovery point after accidental deletion or unwanted changes. IaC preserves resource configuration, but it doesn't preserve device registration data. For more information about the different roles of redundancy and backup, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
+
 ## Resilience to service maintenance
 
 [!INCLUDE [Service maintenance (no special callouts)](includes/reliability-maintenance-include.md)]

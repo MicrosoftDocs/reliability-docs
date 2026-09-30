@@ -131,18 +131,19 @@ Your recovery time objective (RTO) depends on the size of your data, the time it
 
 ## Backup and restore
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+Backups and snapshots can provide recovery points for corruption, malicious changes, and some types of accidental deletion, but they don't keep storage available during an infrastructure outage. Protection from accidental volume deletion depends on the data protection option that you use. Use these options with the other approaches described in this guide. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
-Elastic SAN supports two types of backup:
+Elastic SAN supports two data protection options:
 
-- **Azure Elastic SAN backup:** This capability of Azure Backup offers a fully managed solution to schedule backups, set expiration timelines for recovery points, and recovery data to a new volume. It helps protect against data loss from accidental deletions, ransomware, and application updates. For more information, see [Azure Elastic SAN backup (preview)](/azure/backup/azure-elastic-san-backup-overview).
+- **Azure Elastic SAN backup:** This Azure Backup capability offers a fully managed solution to schedule backups, set expiration timelines for recovery points, and recover data to a new volume. Recovery points are independent of the source volume lifecycle, so this option helps protect against data loss from accidental volume deletion, ransomware, and application updates. For more information, see [Azure Elastic SAN backup](/azure/backup/azure-elastic-san-backup-overview).
 
-    > [!IMPORTANT]
-    > As this solution is covered by Microsoft's Supplemental Terms for Azure Previews, use it for testing, and not for production use.
+- **Elastic SAN volume snapshots:** You can create and manage snapshots based on your data protection requirements.
 
-- **Snapshots:** Alternatively, you can create and manage snapshots based on your data protection requirements.
+    Snapshots are incremental, point-in-time copies of your volumes that consume space from the total capacity of your Elastic SAN. Elastic SAN volume snapshots are deleted with the source volume, so unexported snapshots don't provide a recovery point for accidental volume deletion.
 
-    Azure Elastic SAN supports volume snapshots for data protection. Snapshots are incremental, point-in-time copies of your volumes that consume space from the total capacity of your Elastic SAN. To protect your data, create snapshots regularly. The frequency depends on how much data you can afford to lose (your RPO). You can create snapshots manually or build your own automation to create them on a schedule.
+    Create snapshots at a frequency that meets your recovery point objective (RPO). You can create snapshots manually or build your own automation to create them on a schedule.
+
+    Snapshots that you create while workloads are running might be only crash-consistent. When you need file-consistent recovery, freeze the volumes and flush pending writes before you create the snapshots. Coordinate snapshots across all volumes that contain related data, and use application-specific mechanisms when you require application-consistent recovery. For more information, see [Take a stable snapshot](/azure/storage/elastic-san/elastic-san-snapshots#take-a-stable-snapshot).
 
     Snapshots are stored within the same Elastic SAN as your volumes and use the same redundancy setting. To protect against region-wide failures, export your snapshots to managed disk snapshots and copy them to a different region. For more information, see [Export volume snapshot](/azure/storage/elastic-san/elastic-san-snapshots#export-volume-snapshot) and [Copy an incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions).
 

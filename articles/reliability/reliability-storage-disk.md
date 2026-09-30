@@ -208,7 +208,7 @@ When the failed availability zone recovers, managed disks recover automatically.
 
 ### Test for zone failures
 
-You can't directly simulate zone failures at the disk level, but you can use the Azure Chaos Studio support for [simulating zone-down events in virtual machine scale sets](/azure/chaos-studio/chaos-studio-fault-library#virtual-machine-scale-set) and [simulating the loss of an individual VM](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct).
+You can't directly simulate zone failures at the disk level, but you can use the Azure Chaos Studio Workspaces [Compute Zone Down Scenario](/azure/chaos-studio/chaos-studio-scenarios#compute-zone-down) to shut down the VMs and virtual machine scale set instances that use your disks in a target availability zone. To simulate the loss of an individual VM, you can use the [built-in VM faults](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct) in Experiments (classic).
 
 You should test your application's resilience to zone failures and managed disk behavior during outages. Monitor disk performance during simulated zone outages, and validate that your applications handle increased latency appropriately. Implement automated testing scenarios that verify your applications can handle temporary I/O delays and force detach operations for shared disks.
 
