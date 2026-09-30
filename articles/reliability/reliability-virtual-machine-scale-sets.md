@@ -186,7 +186,7 @@ If you add temporary instances to your scale set during a zone failure, when the
 
 ### Test for zone failures
 
-You can use Azure Chaos Studio to simulate the loss of VMs in one or more availability zones as part of an experiment. Chaos Studio provides [built-in faults for scale sets](/azure/chaos-studio/chaos-studio-fault-library#virtual-machine-scale-set), including the ability to shut down VMs in specific zones. You can use these capabilities to simulate zone-level failures and test your failover processes.
+You can use Azure Chaos Studio to simulate the loss of VMs in an availability zone. In Chaos Studio Workspaces, the [Compute Zone Down Scenario](/azure/chaos-studio/chaos-studio-scenarios#compute-zone-down) shuts down VMs and virtual machine scale set instances in a target availability zone. You can use this Scenario to simulate zone-level failures and test your failover processes.
 
 ## Resilience to region-wide failures
 

@@ -131,7 +131,7 @@ This section describes what to expect when VM instances are configured with avai
 
 ### Test for zone failures
 
-You can use Azure Chaos Studio to simulate the loss of a VM as part of an experiment. Chaos Studio provides [built-in faults for VMs](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct), including the ability to shut down a VM. You can use these capabilities to simulate zone-level failures and test your failover processes.
+You can use Azure Chaos Studio to simulate zone-level failures and test your failover processes. In Chaos Studio Workspaces, the [Compute Zone Down Scenario](/azure/chaos-studio/chaos-studio-scenarios#compute-zone-down) shuts down VMs and virtual machine scale set instances in a target availability zone. To shut down an individual VM, you can use the [built-in VM faults](/azure/chaos-studio/chaos-studio-fault-library#virtual-machines-service-direct) in Experiments (classic).
 
 ### Custom multi-zone solutions for resiliency
 
