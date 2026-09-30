@@ -227,6 +227,8 @@ For detailed disaster recovery procedures, see [Managed HSM disaster recovery](/
 
 Managed HSM supports full backup and restore of all keys, versions, attributes, tags, and role assignments. Backups are stored in an Azure Storage account. If your region supports it, we recommend that you back up your Managed HSM to an Azure Storage account that has geo-redundant storage (GRS) enabled.
 
+Full backups provide a recovery copy of your HSM contents, but they don't keep the HSM available during infrastructure failures. Use backups with the other capabilities described in this guide. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
+
 The HSM encrypts backups by using cryptographic keys associated with the HSM's security domain. You can only restore backups to an HSM with the same security domain.
 
 Managed HSM doesn't support scheduling backups, but you can build your own scheduler by using a service like Azure Functions or Azure Automation.

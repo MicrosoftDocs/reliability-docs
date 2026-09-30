@@ -221,7 +221,7 @@ You can test your cross-region replication configuration safely by using snapsho
 
 For further security, Azure NetApp Files [snapshots](/azure/azure-netapp-files/data-protection-disaster-recovery-options#snapshots) add stability, scalability, and fast recoverability without affecting performance. They provide the foundation for other redundancy solutions, including backup, cross-region replication, and cross-zone replication.
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)] 
+Use backups alongside snapshots and replication. Replication supports availability and disaster recovery, while backups provide independent recovery points for accidental deletion, corruption, or ransomware. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Resilience to service maintenance
 

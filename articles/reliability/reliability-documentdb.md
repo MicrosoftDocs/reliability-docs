@@ -232,9 +232,7 @@ Test your disaster recovery process regularly by promoting the replica cluster i
 
 ## Backup and restore
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
-
-Azure DocumentDB automatically takes continuous backups that enable point-in-time recovery (PITR). These automatic backups help you recover original versions after you accidentally delete or modify data. Azure DocumentDB takes backups without affecting the performance or availability of database operations.
+Replication and support for availability zones help keep a cluster available during infrastructure failures. Azure DocumentDB automatically takes continuous backups, which address a different risk by enabling point-in-time recovery (PITR) after you accidentally delete or modify data. Azure DocumentDB takes backups without affecting the performance or availability of database operations. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 Azure DocumentDB stores backups separately from the source data. In regions that support availability zones, the service stores backup snapshots in three availability zones. Azure DocumentDB manages these backups, and you can't export them. The service retains backups for 35 days for active clusters, 7 days for active burstable-tier (M10, M20, M25) clusters, and 7 days for deleted clusters.
 

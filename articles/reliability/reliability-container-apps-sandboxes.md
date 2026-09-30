@@ -101,8 +101,6 @@ Use a sandbox volume for data that must persist beyond the lifecycle of an indiv
 
 To recreate your sandbox deployment after accidental deletion or a region-wide failure, store your sandbox group configuration in version-controlled infrastructure-as-code templates, such as Bicep or Terraform. Keep your source disk images in a registry that meets your recovery requirements.
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
-
 ## Resilience to service maintenance
 
 [!INCLUDE [Service maintenance (transient fault handling)](includes/reliability-maintenance-transient-fault-include.md)]

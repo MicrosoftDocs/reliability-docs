@@ -468,10 +468,12 @@ To be ready for unexpected region outages, regularly test your responses to regi
 
 API Management doesn't store most runtime data. However, you can back up your API Management service configuration. You can also use backup and restore operations to replicate API Management service configurations between operational environments, such as development and staging.
 
+Service backups complement the availability and multiregion approaches described in this guide. Those approaches can keep gateways available during infrastructure failures, but they don't provide a recovery point for unwanted configuration changes or deletions. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
+
 > [!IMPORTANT]
 > A backup procedure includes runtime data such as users and subscriptions, which might not always be desirable.
 
-Backup is supported in Developer, Basic, Standard, and Premium (classic) tiers.
+Backup is supported in Developer, Basic, Standard, and Premium (classic) tiers. Backups expire after 30 days.
 
 For more information, see [How to implement disaster recovery by using service backup and restore in API Management](/azure/api-management/api-management-howto-disaster-recovery-backup-restore).
 

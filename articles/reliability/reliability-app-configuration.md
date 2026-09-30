@@ -221,7 +221,7 @@ One approach is to use your local machine or another environment where you have 
 
 You can use App Configuration to [export configuration data](/azure/azure-app-configuration/howto-import-export-data) from a store and use it as part of a broader backup strategy.
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+Replicas improve availability, but they don't provide a historical recovery point for unwanted configuration changes or deletions. An export provides an independent copy that you can restore. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Resilience to accidental deletion
 

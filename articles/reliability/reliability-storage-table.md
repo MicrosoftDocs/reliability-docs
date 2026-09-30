@@ -321,7 +321,7 @@ For Table Storage, a multiple-account approach requires you to manage data distr
 
 ## Backup and restore
 
-Table Storage doesn't provide traditional backup capabilities like point-in-time restore (PITR). However, you can implement custom backup strategies for table data. 
+Storage redundancy helps protect against infrastructure failures, but it doesn't provide a historical recovery point after accidental deletion or corruption. Table Storage doesn't provide traditional backup capabilities like point-in-time restore (PITR). However, you can implement custom backup strategies for table data.
 
 If you require built-in backup capabilities, consider moving to [Azure Cosmos DB for Table](/azure/cosmos-db/table/overview), which provides support for both periodic and continuous backups. For more information, see [Online backup and on-demand data restore in Azure Cosmos DB](/azure/cosmos-db/online-backup-and-restore).
 
@@ -333,7 +333,7 @@ For scenarios that require data backup from Table Storage, consider the followin
 
 When you design backup strategies for Table Storage, consider the partitioned nature of the data and ensure that your backup processes can handle large tables efficiently by processing multiple partitions in parallel.
 
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)] 
+For more information about how redundancy and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Service-level agreement
 

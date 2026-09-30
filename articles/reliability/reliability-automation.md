@@ -145,8 +145,6 @@ You can deploy separate Automation accounts into multiple regions and switch bet
 
 ## Backup and restore
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
-
 Azure Automation doesn't provide built-in backup for your Automation account configuration or runbook content. Keep your own copies outside the service so that you can redeploy them if needed.
 
 - **Use infrastructure as code (IaC) for automation account configuration.** Define automation accounts and related resources in Bicep files, ARM templates, or Terraform. Store the templates in source control and use your deployment pipeline to recreate the environment in the same or another region. Include certificates, variables, schedules, and credential references in your artifacts and deployment processes. Store secrets in services such as Azure Key Vault rather than embedding values directly in runbook code.

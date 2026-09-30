@@ -200,7 +200,9 @@ You can deploy multiple scale sets into different regions, but you need to imple
 
 [!INCLUDE [VM - Virtual machines backups](includes/virtual-machines/backup-include.md)]
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
+For scale sets that use Flexible orchestration, Azure Backup can protect individual VM instances and provide recovery points for accidental deletion or data corruption. Azure Backup doesn't support Uniform scale sets.
+
+VM backups provide recovery points for accidental deletion or data corruption, but they don't keep an application available during infrastructure failures. Use backups with the availability and disaster recovery approaches described in this guide. For more information about how the approaches each help to mitigate different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Resilience to VM reconfiguration
 

@@ -173,7 +173,7 @@ For more information, see [Guest updates and host maintenance overview](/azure/v
 
 [!INCLUDE [Virtual machines backups](includes/virtual-machines/backup-include.md)]
 
-[!INCLUDE [Backups include](includes/reliability-backups-include.md)]
+VM backups provide recovery points for accidental deletion or data corruption, but they don't keep an application available during infrastructure failures. Use backups with the availability and disaster recovery approaches described in this guide. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Service-level agreement
 

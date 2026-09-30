@@ -209,14 +209,14 @@ You can decide between different types of multiregion cluster configurations, wh
 
 ## Backup and restore
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
-
-Azure Data Explorer doesn't provide a native backup and restore capability. If you need to back up your data, consider the following approaches:
+Data replication supports availability, but it doesn't provide a historical recovery point for data that's accidentally deleted or corrupted. Azure Data Explorer doesn't provide a native backup and restore capability. To maintain an independent copy of your data, consider the following approaches:
 
 - [Continuous export](/kusto/management/data-export/continuous-data-export) periodically exports data to external storage and provides *exactly-once* export for supported data types.
 
 - [Data export to cloud storage](/kusto/management/data-export/export-data-to-storage) supports manual export of data to external storage.
 - Ingest raw data to Azure Data Explorer from an upstream source, like a data lake, that you can back up separately.
+
+For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 ## Resilience to accidental deletion
 

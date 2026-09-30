@@ -180,7 +180,7 @@ For more information, see the following articles:
 - [What is Azure Kubernetes Service backup?](/azure/backup/azure-kubernetes-service-backup-overview)
 - [Back up AKS by using Azure Backup](/azure/backup/azure-kubernetes-service-cluster-backup)
 
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
+Backups complement the availability features that keep an AKS workload running during infrastructure failures. Use backups to recover cluster resources and persistent volume data after accidental deletion or corruption, and use the other approaches in this guide to meet your workload's availability requirements. For more information, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 Strive to use stateless clusters that minimize the need for backup. Store data in external storage systems and databases instead of within your cluster.
 

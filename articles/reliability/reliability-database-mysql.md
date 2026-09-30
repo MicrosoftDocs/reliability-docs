@@ -357,7 +357,7 @@ Azure Database for MySQL automatically backs up your data, so you can restore it
 
     Use this capability to recover from accidental data modifications, application errors, or testing scenarios.
 
-[!INCLUDE [Backups description](includes/reliability-backups-include.md)]
+Backups provide a recovery path for data loss, but they don't keep your server available during an outage. Use backups with the high-availability and multiregion approaches described in this guide. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
 
 For more information, see [Backup and restore in Azure Database for MySQL](/azure/mysql/flexible-server/concepts-backup-restore).
 

@@ -320,8 +320,6 @@ Blob Storage provides multiple data protection mechanisms that complement redund
 
 For cross-region backup requirements, consider using **Azure Backup for blobs**, which provides centralized backup management and can store backup data in regions different from the source data. This service provides operational and vaulted backup options that have configurable retention policies and restore capabilities. For more information, see [Backup for blobs overview](/azure/backup/blob-backup-overview).
 
-[!INCLUDE [Backups include ](includes/reliability-backups-include.md)]
-
 ## Service-level agreement
 
 The service-level agreement (SLA) for Azure Storage describes the expected availability of the service and the conditions that must be met to achieve that availability expectation. The availability SLA you're eligible for depends on the storage tier and the replication type that you use. For more information, see [SLAs for Online Services](https://aka.ms/csla).
@@ -333,4 +331,3 @@ The service-level agreement (SLA) for Azure Storage describes the expected avail
 - [Disaster recovery and storage account failover](/azure/storage/common/storage-disaster-recovery-guidance)
 - [Use geo-redundancy to design highly available applications](/azure/storage/common/geo-redundant-design)
 - [Change how a storage account is replicated](/azure/storage/common/redundancy-migration)
-

@@ -242,6 +242,8 @@ A range of options support different resilience requirements. For more informati
 
 Azure VMware Solution automatically backs up management components, such as vCenter Server, NSX Manager, and HCX Manager if enabled. To restore components from these management backups, create an Azure support request.
 
+Management and workload backups provide recovery paths for accidental deletion or data corruption. They complement, rather than replace, the availability and disaster recovery measures for Azure VMware Solution. For more information about how replication and backup address different risks, see [Redundancy, replication, and backup](./concept-redundancy-replication-backup.md).
+
 For your VM workloads, Azure VMware Solution supports multiple backup approaches. For more information, see [Backup solutions for Azure VMware Solution VMs](/azure/azure-vmware/ecosystem-back-up-vms).
 
 ## Resilience to service maintenance
