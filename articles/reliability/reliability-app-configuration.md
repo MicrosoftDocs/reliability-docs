@@ -60,12 +60,12 @@ For other application configuration guidance, see [App Configuration FAQ](/azure
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
 
-App Configuration automatically provides zone redundancy in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
+App Configuration automatically provides zone redundancy by distributing each store across multiple availability zones in [regions that support availability zones](./regions-list.md). This redundancy provides high availability within a region without requiring any specific configuration.
 
-The following example shows an App Configuration store that uses three availability zones in a region:
+The following diagram shows an example of how App Configuration might provide zone redundancy in a region with three availability zones:
 
-:::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that shows a zone-redundant App Configuration store that spans three zones in the region.":::
-   The diagram shows availability zones 1, 2, and 3. The App Configuration store spans all three zones in the region.
+:::image type="complex" border="false" source="media/reliability-app-configuration/zone-redundant.svg" alt-text="Diagram that illustrates a zone-redundant App Configuration store spanning multiple availability zones.":::
+   The diagram shows an example region with availability zones 1, 2, and 3. The App Configuration store spans the three availability zones.
 :::image-end:::
 
 When an availability zone becomes unavailable, App Configuration automatically redirects your requests to other healthy availability zones to ensure high availability.
@@ -112,7 +112,7 @@ This section describes what to expect when you use a zone-redundant App Configur
 
 ### Zone recovery
 
-When a previously unavailable zone recovers, App Configuration automatically restores normal operations across all availability zones. You don't need to take any action to recover from a zone failure.
+When a previously unavailable zone recovers, App Configuration automatically restores normal zone-redundant operations for the store. You don't need to take any action to recover from a zone failure.
 
 ### Test for zone failures
 
