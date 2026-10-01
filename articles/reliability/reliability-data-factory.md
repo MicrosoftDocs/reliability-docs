@@ -62,6 +62,8 @@ You can use retry policies to configure parts of your pipeline to retry if there
 
 For more information about how to change or disable retry policies for your data factory triggers and activities, see [Pipeline runs and triggers](/azure/data-factory/concepts-pipeline-execution-triggers).
 
+During transient service slowdowns, your pipeline activities might be delayed instead of failing. To tolerate these delays, avoid overly short activity timeouts and configure retry policies so your pipelines can recover automatically when the underlying issue resolves.
+
 ## Resilience to availability zone failures
 
 [!INCLUDE [Resilience to availability zone failures](~/reusable-content/ce-skilling/azure/includes/reliability/reliability-availability-zone-description-include.md)]
